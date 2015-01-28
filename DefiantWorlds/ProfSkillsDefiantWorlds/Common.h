@@ -20,7 +20,7 @@ namespace DX = DirectX;
 // If this is okay with you guys, I don't really like using this 'using namespace' as it's not
 // professional coding conventions/standards. So, if possible, please no 'using namespace std'.
 // if you do not like this I guess I can make an exception :P I will leave tle though as, to
-// be honest, I have no idea what falls under this namespace.
+// be honest, I have no idea what actually falls under this namespace.
 using namespace tle;
 
 
