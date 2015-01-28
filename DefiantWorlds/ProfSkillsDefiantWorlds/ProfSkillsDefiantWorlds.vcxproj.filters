@@ -7,7 +7,7 @@
     <Filter Include="Main">
       <UniqueIdentifier>{750e0c8c-78cc-44e3-8237-e9726656861e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Globals">
+    <Filter Include="Common">
       <UniqueIdentifier>{1b45e466-4f14-4866-9017-3ee181ba785a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -15,13 +15,13 @@
     <ClCompile Include="ProfSkillsDefiantWorlds.cpp">
       <Filter>Main</Filter>
     </ClCompile>
-    <ClCompile Include="Globals.cpp">
-      <Filter>Globals</Filter>
+    <ClCompile Include="Common.cpp">
+      <Filter>Common</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Globals.h">
-      <Filter>Globals</Filter>
+    <ClInclude Include="Common.h">
+      <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
