@@ -26,29 +26,43 @@ BUGS:
 
 
 //-----------------------------------------------------
+// FUNCTION PROTOTYPE DECLERATIONS
+//-----------------------------------------------------
+
+// Engine-specific
+//----------------------
+void SetupEngine();
+
+
+//-----------------------------------------------------
 // MAIN
 //-----------------------------------------------------
 void main()
 {
-	// Create a 3D engine (using TLX engine here) and open a window for it
-	gpEngine->StartWindowed();
-
-	// Add default folder for meshes and other media
-	gpEngine->AddMediaFolder("..\\Media");
-
-	/**** Set up your scene here ****/
-
+	// Engine setup
+	SetupEngine();
 
 	// The main game loop, repeat until engine is stopped
 	while (gpEngine->IsRunning())
 	{
 		// Draw the scene
 		gpEngine->DrawScene();
-
-		/**** Update your scene each frame here ****/
-
 	}
 
 	// Delete the 3D engine now we are finished with it
 	gpEngine->Delete();
+}
+
+
+//-----------------------------------------------------
+// FUNCTION DEFINITIONS
+//-----------------------------------------------------
+
+// Engine-specific
+//----------------------
+void SetupEngine()
+{
+	// Do we want to define our own resolution? Maybe fullscreen?
+	gpEngine->StartWindowed();
+	gpEngine->AddMediaFolder("..\\Media");
 }

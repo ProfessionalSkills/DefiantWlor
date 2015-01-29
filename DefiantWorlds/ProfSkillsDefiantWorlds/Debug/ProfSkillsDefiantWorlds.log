@@ -1,8 +1,10 @@
-﻿Build started 28/01/2015 23:43:19.
+﻿Build started 29/01/2015 00:08:53.
      1>Project "C:\Users\Kyle\Source\Repos\DefiantWorlds\DefiantWorlds\ProfSkillsDefiantWorlds\ProfSkillsDefiantWorlds.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\ProgramData\TL-Engine\include" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MTd /GS /Gy /fp:fast /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Common.cpp ProfSkillsDefiantWorlds.cpp
          ProfSkillsDefiantWorlds.cpp
+         Generating Code...
+         Compiling...
          Common.cpp
          Generating Code...
        Link:
@@ -37,4 +39,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.60
+Time Elapsed 00:00:02.04
