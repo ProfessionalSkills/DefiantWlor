@@ -10,6 +10,9 @@
     <Filter Include="Common">
       <UniqueIdentifier>{1b45e466-4f14-4866-9017-3ee181ba785a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Front-End &amp; Levels">
+      <UniqueIdentifier>{ea6b630c-7bd4-4d50-a91c-58ca6aa55351}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ProfSkillsDefiantWorlds.cpp">
@@ -18,10 +21,16 @@
     <ClCompile Include="Common.cpp">
       <Filter>Common</Filter>
     </ClCompile>
+    <ClCompile Include="FrontEnd.cpp">
+      <Filter>Front-End &amp; Levels</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common.h">
       <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="FrontEnd.h">
+      <Filter>Front-End &amp; Levels</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
