@@ -1,3 +1,7 @@
+//-----------------------------------------------------
+// FILE: Main.cpp
+//-----------------------------------------------------
+
 /*
 PROJECT NAME:
 ProfSkillsDefiantWorlds
@@ -7,7 +11,7 @@ TODO:
 	- Main menu UI
 	- Create Earth world
 	- Create Mars world
-	- Create Universe 'fight' area
+	- Create Space 'fight' area
 	- Create debug camera to cycle between the 3 areas
 
 BUGS:
