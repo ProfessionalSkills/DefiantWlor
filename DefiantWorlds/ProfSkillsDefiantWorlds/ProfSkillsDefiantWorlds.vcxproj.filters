@@ -28,6 +28,9 @@
     <Filter Include="Game States\State Control Class">
       <UniqueIdentifier>{3807e616-d5a7-4f6a-89b2-975776c646e1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Utilities">
+      <UniqueIdentifier>{a86d0a96-6469-48fe-b8af-e72291515034}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ProfSkillsDefiantWorlds.cpp">
@@ -60,6 +63,9 @@
     <ClCompile Include="GameStateControl.cpp">
       <Filter>Game States\State Control Class</Filter>
     </ClCompile>
+    <ClCompile Include="Randomiser.cpp">
+      <Filter>Utilities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common.h">
@@ -88,6 +94,9 @@
     </ClInclude>
     <ClInclude Include="GameStateControl.h">
       <Filter>Game States\State Control Class</Filter>
+    </ClInclude>
+    <ClInclude Include="Randomiser.h">
+      <Filter>Utilities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

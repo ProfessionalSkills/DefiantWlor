@@ -27,13 +27,27 @@ private:
 	//--------------------------- 
 	IMesh* mpMshSkybox;
 	IMesh* mpMshPlanet;
+	IMesh* mpMshAtmosphere;
 
 
 	// MODELS
 	//--------------------------- 
 	IModel* mpMdlSkybox;
+	IModel* mpMdlAtmosphere;
 	IModel* mpMdlEarth;
+	IModel* mpMdlMars;
 
+
+	// ADDITIONAL VARIABLES
+	//--------------------------- 
+	DX::XMFLOAT3 mOrbitCentre;		// The position in which the planets orbit
+	float mEarthDistance;			// Distance of Earth from centre point
+	float mMarsDistance;			// Distance of Mars from centre point
+	float mEarthAngle;				// Angle to calculate position on orbital circle
+	float mMarsAngle;				// Angle to calculate position on orbital circle
+
+	float mMaxAngle;				// Maximum angle a planet can have before wrapping
+	float mMinAngle;				// Angle at which planet wraps to
 
 public:
 	// CONSTRUCTORS & DESTRUCTOR

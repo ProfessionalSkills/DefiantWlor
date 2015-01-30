@@ -32,6 +32,9 @@ CStateControl::CStateControl(EGameStates inStartState)
 			mpCurGameState = mpWorldState;
 			break;
 	}
+
+	// Setup scene
+	mpCurGameState->StateSetup();
 }
 
 CStateControl::~CStateControl()
@@ -45,6 +48,9 @@ CStateControl::~CStateControl()
 //-----------------------------------------------------
 void CStateControl::SetCurrentState(EGameStates inNewState)
 {
+	// Cleanup current state
+	mpCurGameState->StateCleanup();
+	
 	// Set new current state
 	switch (inNewState)
 	{
@@ -58,10 +64,16 @@ void CStateControl::SetCurrentState(EGameStates inNewState)
 		mpCurGameState = mpWorldState;
 		break;
 	}
+
+	OnStateChange();
 }
 
 
 //-----------------------------------------------------
 // GAME STATE CONTROL CLASS METHODS
 //-----------------------------------------------------
-
+void CStateControl::OnStateChange()
+{
+	// Call the setup function of the new state
+	mpCurGameState->StateSetup();
+}

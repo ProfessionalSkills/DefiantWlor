@@ -15,6 +15,8 @@
 #include <DirectXMath.h>		// Contains vector, matrices, etc. libraries 
 								// Everything here is contained in the DirectX namespace (see below)
 #include <string>
+#include <sstream>
+#include "Randomiser.h"
 
 // Renamed the DirectX namespace so that DirectX:: is not required all the time. Simply use DX:: instead.
 // e.g. Vector3 variable created by doing DX::XMFLOAT3 mPos; just as an example.
@@ -37,6 +39,16 @@ enum EGameStates
 
 
 //-----------------------------------------------------
+// GLOBAL VARIABLES
+//-----------------------------------------------------
+const float PI = 3.14159f;
+
+// Global pointer to the engine. Can be used by anything including this file
+extern I3DEngine*   gpEngine;
+extern CRandomiser* gpRandomiser;
+
+
+//-----------------------------------------------------
 // TEMPLATE FUNCTIONS
 //-----------------------------------------------------
 // Function takes any type of pointer, removes it and sets it to null
@@ -55,10 +67,11 @@ void SafeDelete(GenericPtr* inPtr)
 
 
 //-----------------------------------------------------
-// GLOBAL VARIABLES
+// HELPER MATHS FUNCTIONS
 //-----------------------------------------------------
-// Global pointer to the engine. Can be used by anything including this file
-extern I3DEngine* gpEngine;
+float Clampf(float inMin, float inMax, float inVal);
+float ToRadians(float inDegrees);
+float ToDegrees(float inRadians);
 
 
 #endif /* _COMMON_H_ */

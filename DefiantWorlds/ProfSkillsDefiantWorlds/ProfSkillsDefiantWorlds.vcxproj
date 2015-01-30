@@ -128,6 +128,7 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
     <ClCompile Include="HumanPlayer.cpp" />
     <ClCompile Include="MenuState.cpp" />
     <ClCompile Include="ProfSkillsDefiantWorlds.cpp" />
+    <ClCompile Include="Randomiser.cpp" />
     <ClCompile Include="SpaceState.cpp" />
     <ClCompile Include="WorldState.cpp" />
   </ItemGroup>
@@ -142,6 +143,7 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
     <ClInclude Include="GameStateControl.h" />
     <ClInclude Include="HumanPlayer.h" />
     <ClInclude Include="MenuState.h" />
+    <ClInclude Include="Randomiser.h" />
     <ClInclude Include="SpaceState.h" />
     <ClInclude Include="WorldState.h" />
   </ItemGroup>

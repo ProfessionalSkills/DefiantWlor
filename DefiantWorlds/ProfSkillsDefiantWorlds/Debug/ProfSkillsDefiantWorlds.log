@@ -1,4 +1,4 @@
-﻿Build started 30/01/2015 12:39:25.
+﻿Build started 30/01/2015 15:31:06.
      1>Project "C:\Users\kehobdey\Documents\GitHub\DefiantWorlds\DefiantWorlds\ProfSkillsDefiantWorlds\ProfSkillsDefiantWorlds.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\ProgramData\TL-Engine\include" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MTd /GS /Gy /fp:fast /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt MenuState.cpp
@@ -12,6 +12,7 @@
          Debug\HumanPlayer.obj
          Debug\MenuState.obj
          Debug\ProfSkillsDefiantWorlds.obj
+         Debug\Randomiser.obj
          Debug\SpaceState.obj
          Debug\WorldState.obj
          ProfSkillsDefiantWorlds.vcxproj -> C:\Users\kehobdey\Documents\GitHub\DefiantWorlds\DefiantWorlds\ProfSkillsDefiantWorlds\\ProfSkillsDefiantWorldsDebug.exe
@@ -24,4 +25,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.20
+Time Elapsed 00:00:01.23

@@ -13,12 +13,13 @@ TODO:
 	- Create Mars world
 	- Create Space 'fight' area
 	- Create debug camera to cycle between the 3 areas
+	- Get high res & open source texture of Earth. Currently just a high res placeholder.
 
 BUGS:
 	//----------------
 	- Desc:
-	- Poss. File:
-	- Poss. Location:
+	- Possible File:
+	- Possible Location:
 	//-----------------
 */
 
@@ -71,6 +72,13 @@ void main()
 	gpEngine->Timer();
 
 
+	// WINDOW TITLE
+	//------------------------------
+	float titleChangeCounter = 1.0f;
+	const std::string GAME_NAME = "Defiant Worlds";
+	std::stringstream caption;
+
+
 	// MAIN PROGRAM LOOP
 	//------------------------------
 	while (gpEngine->IsRunning())
@@ -79,6 +87,19 @@ void main()
 		//------------------------------
 		delta = gpEngine->Timer();
 		gpStateController->GetCurrentState()->StateUpdate(delta);
+
+		// Update window caption
+		if (titleChangeCounter >= 1.0f)
+		{
+			caption << GAME_NAME << "    FT: " << delta << "    FPS: " << 1.0f / delta;
+			gpEngine->SetWindowCaption(caption.str().c_str());
+			caption.str("");	// Clear the string stream
+			titleChangeCounter = 0.0f;
+		}
+		else
+		{
+			titleChangeCounter += delta;
+		}
 
 
 		// GLOBAL KEY PRESSES
@@ -102,7 +123,7 @@ void main()
 void SetupEngine()
 {
 	// Do we want to define our own resolution? Maybe fullscreen?
-	gpEngine->StartWindowed();
+	gpEngine->StartWindowed(1600, 960);
 	gpEngine->AddMediaFolder("..\\Media\\Models\\Skybox");
 	gpEngine->AddMediaFolder("..\\Media\\Models\\Planets");
 }

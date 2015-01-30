@@ -39,12 +39,16 @@ public:
 
 	// ACCESSORS
 	//---------------------------
-	inline IGameState* GetCurrentState() { return mpCurGameState; };
+	inline IGameState* GetCurrentState() const 
+	{
+		return mpCurGameState;
+	}
 
 
 	// METHODS
 	//---------------------------
-	
+private:
+	void OnStateChange();
 };
 
 
