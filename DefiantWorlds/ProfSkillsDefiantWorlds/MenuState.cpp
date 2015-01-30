@@ -33,7 +33,7 @@ void CMenuState::StateSetup()
 	mOrbitCentre = DX::XMFLOAT3(-80.0f, 0.0f, 50.0f);
 	mEarthDistance = 60.0f;
 	mMarsDistance = 100.0f;
-	mMinAngle = ToRadians(45.0f);
+	mMinAngle = ToRadians(50.0f);
 	mMaxAngle = ToRadians(125.0f);
 
 	mEarthAngle = gpRandomiser->GetRandomFloat(mMinAngle, mMaxAngle);

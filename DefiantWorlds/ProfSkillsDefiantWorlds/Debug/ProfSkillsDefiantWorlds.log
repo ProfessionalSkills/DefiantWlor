@@ -1,10 +1,10 @@
-﻿Build started 30/01/2015 15:37:52.
-     1>Project "C:\Users\kehobdey\Documents\GitHub\DefiantWorlds\DefiantWorlds\ProfSkillsDefiantWorlds\ProfSkillsDefiantWorlds.vcxproj" on node 2 (Build target(s)).
+﻿Build started 30/01/2015 18:41:57.
+     1>Project "C:\Users\Kyle\GitHub\Repos\DefiantWorlds\DefiantWorlds\ProfSkillsDefiantWorlds\ProfSkillsDefiantWorlds.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\ProgramData\TL-Engine\include" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MTd /GS /Gy /fp:fast /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt MenuState.cpp
          MenuState.cpp
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\kehobdey\Documents\GitHub\DefiantWorlds\DefiantWorlds\ProfSkillsDefiantWorlds\ProfSkillsDefiantWorldsDebug.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\ProgramData\TL-Engine\lib" "TL-Engine2013Debug.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST:NO /DEBUG /PDB:"C:\Users\kehobdey\Documents\GitHub\DefiantWorlds\DefiantWorlds\ProfSkillsDefiantWorlds\\ProfSkillsDefiantWorlds.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /IMPLIB:"C:\Users\kehobdey\Documents\GitHub\DefiantWorlds\DefiantWorlds\ProfSkillsDefiantWorlds\\ProfSkillsDefiantWorldsDebug.lib" /MACHINE:X86 /SAFESEH:NO Debug\AIPlayer.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Kyle\GitHub\Repos\DefiantWorlds\DefiantWorlds\ProfSkillsDefiantWorlds\ProfSkillsDefiantWorldsDebug.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\ProgramData\TL-Engine\lib" "TL-Engine2013Debug.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST:NO /DEBUG /PDB:"C:\Users\Kyle\GitHub\Repos\DefiantWorlds\DefiantWorlds\ProfSkillsDefiantWorlds\\ProfSkillsDefiantWorlds.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /IMPLIB:"C:\Users\Kyle\GitHub\Repos\DefiantWorlds\DefiantWorlds\ProfSkillsDefiantWorlds\\ProfSkillsDefiantWorldsDebug.lib" /MACHINE:X86 /SAFESEH:NO Debug\AIPlayer.obj
          Debug\BasePlayer.obj
          Debug\Common.obj
          Debug\BaseGameState.obj
@@ -15,14 +15,14 @@
          Debug\Randomiser.obj
          Debug\SpaceState.obj
          Debug\WorldState.obj
-         ProfSkillsDefiantWorlds.vcxproj -> C:\Users\kehobdey\Documents\GitHub\DefiantWorlds\DefiantWorlds\ProfSkillsDefiantWorlds\\ProfSkillsDefiantWorldsDebug.exe
+         ProfSkillsDefiantWorlds.vcxproj -> C:\Users\Kyle\GitHub\Repos\DefiantWorlds\DefiantWorlds\ProfSkillsDefiantWorlds\\ProfSkillsDefiantWorldsDebug.exe
        PostBuildEvent:
-         copy "C:\ProgramData\TL-Engine\3rd Party\Irrlicht-0.7\bin\VisualStudio\IrrlichtDebug.dll" "C:\Users\kehobdey\Documents\GitHub\DefiantWorlds\DefiantWorlds\ProfSkillsDefiantWorlds\\" > NUL
-         copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "C:\Users\kehobdey\Documents\GitHub\DefiantWorlds\DefiantWorlds\ProfSkillsDefiantWorlds\\" > NUL
+         copy "C:\ProgramData\TL-Engine\3rd Party\Irrlicht-0.7\bin\VisualStudio\IrrlichtDebug.dll" "C:\Users\Kyle\GitHub\Repos\DefiantWorlds\DefiantWorlds\ProfSkillsDefiantWorlds\\" > NUL
+         copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "C:\Users\Kyle\GitHub\Repos\DefiantWorlds\DefiantWorlds\ProfSkillsDefiantWorlds\\" > NUL
          
          :VCEnd
-     1>Done Building Project "C:\Users\kehobdey\Documents\GitHub\DefiantWorlds\DefiantWorlds\ProfSkillsDefiantWorlds\ProfSkillsDefiantWorlds.vcxproj" (Build target(s)).
+     1>Done Building Project "C:\Users\Kyle\GitHub\Repos\DefiantWorlds\DefiantWorlds\ProfSkillsDefiantWorlds\ProfSkillsDefiantWorlds.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:01.23
+Time Elapsed 00:00:01.15
