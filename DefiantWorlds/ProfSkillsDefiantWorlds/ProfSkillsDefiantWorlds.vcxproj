@@ -120,16 +120,30 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AIPlayer.cpp" />
+    <ClCompile Include="BasePlayer.cpp" />
     <ClCompile Include="Common.cpp" />
-    <ClCompile Include="FrontEnd.cpp" />
+    <ClCompile Include="BaseGameState.cpp" />
+    <ClCompile Include="GameStateControl.cpp" />
+    <ClCompile Include="HumanPlayer.cpp" />
+    <ClCompile Include="MenuState.cpp" />
     <ClCompile Include="ProfSkillsDefiantWorlds.cpp" />
+    <ClCompile Include="SpaceState.cpp" />
+    <ClCompile Include="WorldState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AIPlayer.h" />
+    <ClInclude Include="BasePlayer.h" />
     <ClInclude Include="Common.h" />
-    <ClInclude Include="FrontEnd.h" />
+    <ClInclude Include="BaseGameState.h" />
+    <ClInclude Include="GameStateControl.h" />
+    <ClInclude Include="HumanPlayer.h" />
+    <ClInclude Include="MenuState.h" />
+    <ClInclude Include="SpaceState.h" />
+    <ClInclude Include="WorldState.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

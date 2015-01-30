@@ -10,8 +10,23 @@
     <Filter Include="Common">
       <UniqueIdentifier>{1b45e466-4f14-4866-9017-3ee181ba785a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Front-End &amp; Levels">
+    <Filter Include="Players">
+      <UniqueIdentifier>{5e455993-7de2-4d30-8d14-d5b2b766efe3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game States">
       <UniqueIdentifier>{ea6b630c-7bd4-4d50-a91c-58ca6aa55351}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game States\Child State Classes">
+      <UniqueIdentifier>{8cf3cc49-4723-4758-9273-3652358a6042}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Players\Child Player Classes">
+      <UniqueIdentifier>{37f2f8e4-1825-404e-8165-3234ba1abff3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game States\Base State Class">
+      <UniqueIdentifier>{15c60e69-0063-4a03-a0c7-48b4429d2596}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game States\State Control Class">
+      <UniqueIdentifier>{3807e616-d5a7-4f6a-89b2-975776c646e1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -21,16 +36,58 @@
     <ClCompile Include="Common.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="FrontEnd.cpp">
-      <Filter>Front-End &amp; Levels</Filter>
+    <ClCompile Include="MenuState.cpp">
+      <Filter>Game States\Child State Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="SpaceState.cpp">
+      <Filter>Game States\Child State Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldState.cpp">
+      <Filter>Game States\Child State Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="BasePlayer.cpp">
+      <Filter>Players</Filter>
+    </ClCompile>
+    <ClCompile Include="HumanPlayer.cpp">
+      <Filter>Players\Child Player Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="AIPlayer.cpp">
+      <Filter>Players\Child Player Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseGameState.cpp">
+      <Filter>Game States\Base State Class</Filter>
+    </ClCompile>
+    <ClCompile Include="GameStateControl.cpp">
+      <Filter>Game States\State Control Class</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="FrontEnd.h">
-      <Filter>Front-End &amp; Levels</Filter>
+    <ClInclude Include="MenuState.h">
+      <Filter>Game States\Child State Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="SpaceState.h">
+      <Filter>Game States\Child State Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldState.h">
+      <Filter>Game States\Child State Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="BasePlayer.h">
+      <Filter>Players</Filter>
+    </ClInclude>
+    <ClInclude Include="HumanPlayer.h">
+      <Filter>Players\Child Player Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="AIPlayer.h">
+      <Filter>Players\Child Player Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseGameState.h">
+      <Filter>Game States\Base State Class</Filter>
+    </ClInclude>
+    <ClInclude Include="GameStateControl.h">
+      <Filter>Game States\State Control Class</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

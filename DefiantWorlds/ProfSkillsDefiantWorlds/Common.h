@@ -10,6 +10,8 @@
 // INCLUDES
 //-----------------------------------------------------
 #include <TL-Engine.h>			// TL-Engine stuff
+#include <vector>
+#include <list>
 #include <DirectXMath.h>		// Contains vector, matrices, etc. libraries 
 								// Everything here is contained in the DirectX namespace (see below)
 #include <string>
@@ -26,24 +28,30 @@ using namespace tle;
 
 
 //-----------------------------------------------------
-// MACROS
-//-----------------------------------------------------
-// SAFE_DELETE macro
-// Takes a pointer to an object, checks if exists, deallocates memory, sets to 0;
-#define SAFE_DELETE(ptr) \
-{ \
-	if (ptr) \
-	{ \
-		DELETE(ptr); \
-		(ptr) = nullptr; \
-	} \
-}
-
-
-//-----------------------------------------------------
 // ENUMERATIONS
 //-----------------------------------------------------
+enum EGameStates
+{
+	GS_MAIN_MENU, GS_WORLD, GS_SPACE
+};
 
+
+//-----------------------------------------------------
+// TEMPLATE FUNCTIONS
+//-----------------------------------------------------
+// Function takes any type of pointer, removes it and sets it to null
+template<class GenericPtr>
+void SafeDelete(GenericPtr* inPtr)
+{
+	// Check if the pointer exists
+	if (inPtr)
+	{
+		// Delete the pointer
+		delete inPtr;
+		// Set it to null
+		inPtr = nullptr;
+	}
+}
 
 
 //-----------------------------------------------------
@@ -51,7 +59,6 @@ using namespace tle;
 //-----------------------------------------------------
 // Global pointer to the engine. Can be used by anything including this file
 extern I3DEngine* gpEngine;
-
 
 
 #endif /* _COMMON_H_ */

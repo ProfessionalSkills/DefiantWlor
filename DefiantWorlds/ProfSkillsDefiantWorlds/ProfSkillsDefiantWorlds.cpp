@@ -26,7 +26,17 @@ BUGS:
 //-----------------------------------------------------
 // INCLUDES
 //-----------------------------------------------------
-#include "FrontEnd.h"
+#include "GameStateControl.h"
+
+
+//-----------------------------------------------------
+// MAIN GLOBALS
+//-----------------------------------------------------
+
+// Game State
+//----------------------
+CStateControl* gpStateController;
+
 
 
 //-----------------------------------------------------
@@ -36,6 +46,12 @@ BUGS:
 // Engine-specific
 //----------------------
 void SetupEngine();
+void CleanupEngine();
+
+// Scene
+//----------------------
+void Initialise();
+void Cleanup();
 
 
 //-----------------------------------------------------
@@ -43,18 +59,37 @@ void SetupEngine();
 //-----------------------------------------------------
 void main()
 {
-	// Engine setup
+	// ENGINE SETUP & INITIALISATION
+	//------------------------------
 	SetupEngine();
+	Initialise();
 
-	// The main game loop, repeat until engine is stopped
+	
+	// FRAMETIME
+	//------------------------------
+	float delta = 0.0f;
+	gpEngine->Timer();
+
+
+	// MAIN PROGRAM LOOP
+	//------------------------------
 	while (gpEngine->IsRunning())
 	{
-		// Draw the scene
-		gpEngine->DrawScene();
+		// UPDATE CURRENT STATE
+		//------------------------------
+		delta = gpEngine->Timer();
+		gpStateController->GetCurrentState()->StateUpdate(delta);
+
+
+		// GLOBAL KEY PRESSES
+		//------------------------------
+		if (gpEngine->KeyHit(Key_Escape))
+		{
+			gpEngine->Stop();
+		}
 	}
 
-	// Delete the 3D engine now we are finished with it
-	gpEngine->Delete();
+	Cleanup();
 }
 
 
@@ -68,5 +103,28 @@ void SetupEngine()
 {
 	// Do we want to define our own resolution? Maybe fullscreen?
 	gpEngine->StartWindowed();
-	gpEngine->AddMediaFolder("..\\Media");
+	gpEngine->AddMediaFolder("..\\Media\\Models\\Skybox");
+	gpEngine->AddMediaFolder("..\\Media\\Models\\Planets");
+}
+
+void CleanupEngine()
+{
+	gpEngine->Delete();
+}
+
+
+// Scene
+//----------------------
+void Initialise()
+{
+	// Initialise states
+	gpStateController = new CStateControl(GS_MAIN_MENU);
+}
+
+void Cleanup()
+{
+	// Cleanup variables
+
+	// Cleanup engine
+	CleanupEngine();
 }
