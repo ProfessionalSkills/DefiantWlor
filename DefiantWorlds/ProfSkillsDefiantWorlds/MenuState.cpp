@@ -42,7 +42,7 @@ void CMenuState::StateSetup()
 
 	// INITIALISE CAMERA
 	//------------------------------
-	mpCamMain = gpEngine->CreateCamera(kFPS, 0.0f, 0.0f, 0.0f);
+	mpCamMain = gpEngine->CreateCamera(kManual, 0.0f, 0.0f, 0.0f);
 
 
 	// INITIALISE SKYBOX
