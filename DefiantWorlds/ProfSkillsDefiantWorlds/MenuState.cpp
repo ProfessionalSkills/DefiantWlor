@@ -33,11 +33,8 @@ void CMenuState::StateSetup()
 	mOrbitCentre = DX::XMFLOAT3(-80.0f, 0.0f, 50.0f);
 	mEarthDistance = 60.0f;
 	mMarsDistance = 100.0f;
-	mMinAngle = ToRadians(50.0f);
-	mMaxAngle = ToRadians(125.0f);
-
-	mEarthAngle = gpRandomiser->GetRandomFloat(mMinAngle, mMaxAngle);
-	mMarsAngle = gpRandomiser->GetRandomFloat(mMinAngle, mMaxAngle);
+	mMinAngle = ToRadians(62.0f);
+	mMaxAngle = ToRadians(118.0f);
 
 
 	// INITIALISE CAMERA
@@ -54,11 +51,13 @@ void CMenuState::StateSetup()
 	// INITIALISE PLANETS
 	//------------------------------
 	// Earth
+	mEarthAngle = gpRandomiser->GetRandomFloat(mMinAngle, mMaxAngle);
 	mpMshPlanet = gpEngine->LoadMesh("Planet.x");
 	mpMdlEarth = mpMshPlanet->CreateModel(-20.0f, 0.0f, 45.0f);
 	mpMdlEarth->Scale(5.0f);
 
 	// Mars
+	mMarsAngle = gpRandomiser->GetRandomFloat(mMinAngle, mMaxAngle);
 	mpMdlMars = mpMshPlanet->CreateModel(30.0f, 0.0f, 45.0f);
 	mpMdlMars->SetSkin("Mars.jpg");
 	mpMdlMars->Scale(2.6f);
@@ -103,6 +102,14 @@ void CMenuState::StateUpdate(const float inDelta)
 	{
 		mMarsAngle = mMinAngle;
 	}
+
+
+	// STATE CHANGE TEST
+	//------------------------------
+	if (gpEngine->KeyHit(Key_Return))
+	{
+		gCurState = GS_WORLD;
+	}
 }
 
 void CMenuState::StateLoad()
@@ -117,5 +124,13 @@ void CMenuState::StateSave()
 
 void CMenuState::StateCleanup()
 {
+	mpMshAtmosphere->RemoveModel(mpMdlAtmosphere);
+	mpMshPlanet->RemoveModel(mpMdlMars);
+	mpMshPlanet->RemoveModel(mpMdlEarth);
+	mpMshSkybox->RemoveModel(mpMdlSkybox);
 
+	gpEngine->RemoveCamera(mpCamMain);
+	gpEngine->RemoveMesh(mpMshAtmosphere);
+	gpEngine->RemoveMesh(mpMshPlanet);
+	gpEngine->RemoveMesh(mpMshSkybox);
 }

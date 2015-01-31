@@ -43,6 +43,9 @@ enum EGameStates
 //-----------------------------------------------------
 const float PI = 3.14159f;
 
+// Store the current game state
+extern EGameStates gCurState;
+
 // Global pointer to the engine. Can be used by anything including this file
 extern I3DEngine*   gpEngine;
 extern CRandomiser* gpRandomiser;

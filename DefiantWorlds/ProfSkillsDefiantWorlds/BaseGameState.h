@@ -18,8 +18,7 @@
 //-----------------------------------------------------
 class IGameState
 {
-private:
-
+protected:
 
 public:
 	// CONSTRUCTORS & DESTRUCTOR

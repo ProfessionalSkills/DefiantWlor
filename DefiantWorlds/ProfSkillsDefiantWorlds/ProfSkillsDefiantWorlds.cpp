@@ -86,6 +86,11 @@ void main()
 		// UPDATE CURRENT STATE
 		//------------------------------
 		delta = gpEngine->Timer();
+
+		// Check if there has been a state change
+		gpStateController->Update();
+
+		// Call the update for the current state
 		gpStateController->GetCurrentState()->StateUpdate(delta);
 
 		// Update window caption

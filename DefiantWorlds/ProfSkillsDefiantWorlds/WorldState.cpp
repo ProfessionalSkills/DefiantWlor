@@ -33,8 +33,17 @@ void CWorldState::StateSetup()
 
 void CWorldState::StateUpdate(const float inDelta)
 {
-	// Draw the scene
+	// SCENE DRAW
+	//------------------------------
 	gpEngine->DrawScene();
+
+
+	// STATE CHANGE TEST
+	//------------------------------
+	if (gpEngine->KeyHit(Key_Return))
+	{
+		gCurState = GS_MAIN_MENU;
+	}
 }
 
 void CWorldState::StateLoad()

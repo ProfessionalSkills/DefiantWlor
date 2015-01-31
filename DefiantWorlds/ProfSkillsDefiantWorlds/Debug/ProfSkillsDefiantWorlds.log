@@ -1,4 +1,4 @@
-﻿Build started 30/01/2015 18:41:57.
+﻿Build started 31/01/2015 18:01:34.
      1>Project "C:\Users\Kyle\GitHub\Repos\DefiantWorlds\DefiantWorlds\ProfSkillsDefiantWorlds\ProfSkillsDefiantWorlds.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\ProgramData\TL-Engine\include" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MTd /GS /Gy /fp:fast /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt MenuState.cpp
@@ -25,4 +25,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.15
+Time Elapsed 00:00:00.93

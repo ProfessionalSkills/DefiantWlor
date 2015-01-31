@@ -19,6 +19,10 @@ CStateControl::CStateControl(EGameStates inStartState)
 	mpSpaceState = new CSpaceState();
 	mpWorldState = new CWorldState();
 
+	// Set global state
+	gCurState = inStartState;
+	mCurState = inStartState;
+
 	// Set current state
 	switch (inStartState)
 	{
@@ -48,7 +52,7 @@ CStateControl::~CStateControl()
 //-----------------------------------------------------
 void CStateControl::SetCurrentState(EGameStates inNewState)
 {
-	// Cleanup current state
+	// Before changing pointer, unload current level
 	mpCurGameState->StateCleanup();
 	
 	// Set new current state
@@ -72,6 +76,19 @@ void CStateControl::SetCurrentState(EGameStates inNewState)
 //-----------------------------------------------------
 // GAME STATE CONTROL CLASS METHODS
 //-----------------------------------------------------
+void CStateControl::Update()
+{
+	// Compare current state to global state to check for state changes
+	if (gCurState != mCurState)
+	{
+		// Update class' current stored state
+		mCurState = gCurState;
+
+		// Update polymorphic pointer
+		SetCurrentState(gCurState);
+	}
+}
+
 void CStateControl::OnStateChange()
 {
 	// Call the setup function of the new state
