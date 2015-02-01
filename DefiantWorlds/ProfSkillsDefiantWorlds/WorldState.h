@@ -18,6 +18,27 @@
 class CWorldState : public IGameState
 {
 private:
+	// CAMERAS
+	//--------------------------- 
+	ICamera* mpCamEarth;
+	ICamera* mpCamMars;
+
+
+	// MESHES
+	//---------------------------
+	IMesh* mpMshSkybox;
+
+
+	// MODELS
+	//---------------------------
+	IModel* mpMdlSkybox;
+
+
+	// ADDITIONAL VARIABLES
+	//---------------------------
+	S2DPointData* mpMousePos;
+	RECT          mBaseClip;		// The rectangle of the window (for undoing mouse clip)
+	RECT          mWindowClip;		// Limit the mouse to stay within the window
 
 
 public:

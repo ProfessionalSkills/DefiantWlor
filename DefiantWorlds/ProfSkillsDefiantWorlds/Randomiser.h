@@ -37,5 +37,4 @@ public:
 	float GetRandomFloat(double inMin, double inMax);
 };
 
-
 #endif /* _RANDOMISER_H_ */

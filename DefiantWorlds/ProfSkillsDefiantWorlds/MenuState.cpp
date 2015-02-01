@@ -30,14 +30,14 @@ void CMenuState::StateSetup()
 {
 	// INITIALISE ADDITIONAL VARIABLES
 	//------------------------------
-	mOrbitCentre = DX::XMFLOAT3(-80.0f, 0.0f, 50.0f);
-	mEarthDistance = 60.0f;
-	mMarsDistance = 100.0f;
-	mMinAngle = ToRadians(62.0f);
-	mMaxAngle = ToRadians(118.0f);
+	mOrbitCentre = DX::XMFLOAT3(-60.0f, 0.0f, 50.0f);
+	mEarthDistance = 35.0f;
+	mMarsDistance = 65.0f;
+	mMinAngle = ToRadians(33.0f);
+	mMaxAngle = ToRadians(150.0f);
 
 
-	// INITIALISE CAMERA
+	// INITIALISE CAMERAS
 	//------------------------------
 	mpCamMain = gpEngine->CreateCamera(kManual, 0.0f, 0.0f, 0.0f);
 
@@ -80,9 +80,9 @@ void CMenuState::StateUpdate(const float inDelta)
 
 	// ANIMATE ATMOSPHERE
 	//------------------------------
-	mpMdlAtmosphere->RotateLocalX(gpRandomiser->GetRandomFloat(0.0f, 0.8f) * inDelta);
-	mpMdlAtmosphere->RotateLocalY(gpRandomiser->GetRandomFloat(0.5f,  1.4f) * inDelta);
-	mpMdlAtmosphere->RotateLocalZ(gpRandomiser->GetRandomFloat(0.0f,  1.0f) * inDelta);
+	mpMdlAtmosphere->RotateLocalX(gpRandomiser->GetRandomFloat(0.0f, 1.6f) * inDelta);
+	mpMdlAtmosphere->RotateLocalY(gpRandomiser->GetRandomFloat(1.0f,  2.8f) * inDelta);
+	mpMdlAtmosphere->RotateLocalZ(gpRandomiser->GetRandomFloat(0.0f,  2.0f) * inDelta);
 
 
 	// CALCULATE PLANET ORBIT POSITIONS

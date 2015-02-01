@@ -16,6 +16,7 @@
 								// Everything here is contained in the DirectX namespace (see below)
 #include <string>
 #include <sstream>
+#include <Windows.h>
 #include "Randomiser.h"
 
 // Renamed the DirectX namespace so that DirectX:: is not required all the time. Simply use DX:: instead.
@@ -39,9 +40,25 @@ enum EGameStates
 
 
 //-----------------------------------------------------
+// STRUCTURES
+//-----------------------------------------------------
+struct S2DPointData
+{
+	int mPosX;
+	int mPosY;
+};
+
+
+//-----------------------------------------------------
 // GLOBAL VARIABLES
 //-----------------------------------------------------
 const float PI = 3.14159f;
+
+const size_t WINDOW_POS_X = 50U;
+const size_t WINDOW_POS_Y = 50U;
+
+const size_t WINDOW_WIDTH  = 1600U;
+const size_t WINDOW_HEIGHT = 900U;
 
 // Store the current game state
 extern EGameStates gCurState;

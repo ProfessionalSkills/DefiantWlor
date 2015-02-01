@@ -1,9 +1,6 @@
-﻿Build started 31/01/2015 18:01:34.
+﻿Build started 01/02/2015 22:18:27.
      1>Project "C:\Users\Kyle\GitHub\Repos\DefiantWorlds\DefiantWorlds\ProfSkillsDefiantWorlds\ProfSkillsDefiantWorlds.vcxproj" on node 2 (Build target(s)).
-     1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\ProgramData\TL-Engine\include" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MTd /GS /Gy /fp:fast /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt MenuState.cpp
-         MenuState.cpp
-       Link:
+     1>Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Kyle\GitHub\Repos\DefiantWorlds\DefiantWorlds\ProfSkillsDefiantWorlds\ProfSkillsDefiantWorldsDebug.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\ProgramData\TL-Engine\lib" "TL-Engine2013Debug.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST:NO /DEBUG /PDB:"C:\Users\Kyle\GitHub\Repos\DefiantWorlds\DefiantWorlds\ProfSkillsDefiantWorlds\\ProfSkillsDefiantWorlds.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /IMPLIB:"C:\Users\Kyle\GitHub\Repos\DefiantWorlds\DefiantWorlds\ProfSkillsDefiantWorlds\\ProfSkillsDefiantWorldsDebug.lib" /MACHINE:X86 /SAFESEH:NO Debug\AIPlayer.obj
          Debug\BasePlayer.obj
          Debug\Common.obj
@@ -15,6 +12,26 @@
          Debug\Randomiser.obj
          Debug\SpaceState.obj
          Debug\WorldState.obj
+         LINK : C:\Users\Kyle\GitHub\Repos\DefiantWorlds\DefiantWorlds\ProfSkillsDefiantWorlds\ProfSkillsDefiantWorldsDebug.exe not found or not built by the last incremental link; performing full link
+     1>TL-Engine2013Debug.lib(TL-Engine.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'TL-Engine2013Debug.lib(TL-Engine.obj)' or at 'C:\Users\Kyle\GitHub\Repos\DefiantWorlds\DefiantWorlds\ProfSkillsDefiantWorlds\vc120.pdb'; linking object as if no debug info
+     1>TL-Engine2013Debug.lib(Errors.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'TL-Engine2013Debug.lib(Errors.obj)' or at 'C:\Users\Kyle\GitHub\Repos\DefiantWorlds\DefiantWorlds\ProfSkillsDefiantWorlds\vc120.pdb'; linking object as if no debug info
+     1>TL-Engine2013Debug.lib(TLXSprite.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'TL-Engine2013Debug.lib(TLXSprite.obj)' or at 'C:\Users\Kyle\GitHub\Repos\DefiantWorlds\DefiantWorlds\ProfSkillsDefiantWorlds\vc120.pdb'; linking object as if no debug info
+     1>TL-Engine2013Debug.lib(TLXSceneNode.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'TL-Engine2013Debug.lib(TLXSceneNode.obj)' or at 'C:\Users\Kyle\GitHub\Repos\DefiantWorlds\DefiantWorlds\ProfSkillsDefiantWorlds\vc120.pdb'; linking object as if no debug info
+     1>TL-Engine2013Debug.lib(TLXModelNode.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'TL-Engine2013Debug.lib(TLXModelNode.obj)' or at 'C:\Users\Kyle\GitHub\Repos\DefiantWorlds\DefiantWorlds\ProfSkillsDefiantWorlds\vc120.pdb'; linking object as if no debug info
+     1>TL-Engine2013Debug.lib(TLXModel.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'TL-Engine2013Debug.lib(TLXModel.obj)' or at 'C:\Users\Kyle\GitHub\Repos\DefiantWorlds\DefiantWorlds\ProfSkillsDefiantWorlds\vc120.pdb'; linking object as if no debug info
+     1>TL-Engine2013Debug.lib(TLXMesh.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'TL-Engine2013Debug.lib(TLXMesh.obj)' or at 'C:\Users\Kyle\GitHub\Repos\DefiantWorlds\DefiantWorlds\ProfSkillsDefiantWorlds\vc120.pdb'; linking object as if no debug info
+     1>TL-Engine2013Debug.lib(TLXLight.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'TL-Engine2013Debug.lib(TLXLight.obj)' or at 'C:\Users\Kyle\GitHub\Repos\DefiantWorlds\DefiantWorlds\ProfSkillsDefiantWorlds\vc120.pdb'; linking object as if no debug info
+     1>TL-Engine2013Debug.lib(TLXFont.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'TL-Engine2013Debug.lib(TLXFont.obj)' or at 'C:\Users\Kyle\GitHub\Repos\DefiantWorlds\DefiantWorlds\ProfSkillsDefiantWorlds\vc120.pdb'; linking object as if no debug info
+     1>TL-Engine2013Debug.lib(TLXEngine.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'TL-Engine2013Debug.lib(TLXEngine.obj)' or at 'C:\Users\Kyle\GitHub\Repos\DefiantWorlds\DefiantWorlds\ProfSkillsDefiantWorlds\vc120.pdb'; linking object as if no debug info
+     1>TL-Engine2013Debug.lib(TLXCamera.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'TL-Engine2013Debug.lib(TLXCamera.obj)' or at 'C:\Users\Kyle\GitHub\Repos\DefiantWorlds\DefiantWorlds\ProfSkillsDefiantWorlds\vc120.pdb'; linking object as if no debug info
+     1>TL-Engine2013Debug.lib(IrrlichtSceneNode.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'TL-Engine2013Debug.lib(IrrlichtSceneNode.obj)' or at 'C:\Users\Kyle\GitHub\Repos\DefiantWorlds\DefiantWorlds\ProfSkillsDefiantWorlds\vc120.pdb'; linking object as if no debug info
+     1>TL-Engine2013Debug.lib(IrrlichtModel.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'TL-Engine2013Debug.lib(IrrlichtModel.obj)' or at 'C:\Users\Kyle\GitHub\Repos\DefiantWorlds\DefiantWorlds\ProfSkillsDefiantWorlds\vc120.pdb'; linking object as if no debug info
+     1>TL-Engine2013Debug.lib(IrrlichtMesh.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'TL-Engine2013Debug.lib(IrrlichtMesh.obj)' or at 'C:\Users\Kyle\GitHub\Repos\DefiantWorlds\DefiantWorlds\ProfSkillsDefiantWorlds\vc120.pdb'; linking object as if no debug info
+     1>TL-Engine2013Debug.lib(IrrlichtLight.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'TL-Engine2013Debug.lib(IrrlichtLight.obj)' or at 'C:\Users\Kyle\GitHub\Repos\DefiantWorlds\DefiantWorlds\ProfSkillsDefiantWorlds\vc120.pdb'; linking object as if no debug info
+     1>TL-Engine2013Debug.lib(IrrlichtInput.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'TL-Engine2013Debug.lib(IrrlichtInput.obj)' or at 'C:\Users\Kyle\GitHub\Repos\DefiantWorlds\DefiantWorlds\ProfSkillsDefiantWorlds\vc120.pdb'; linking object as if no debug info
+     1>TL-Engine2013Debug.lib(IrrlichtFont.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'TL-Engine2013Debug.lib(IrrlichtFont.obj)' or at 'C:\Users\Kyle\GitHub\Repos\DefiantWorlds\DefiantWorlds\ProfSkillsDefiantWorlds\vc120.pdb'; linking object as if no debug info
+     1>TL-Engine2013Debug.lib(IrrlichtEngine.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'TL-Engine2013Debug.lib(IrrlichtEngine.obj)' or at 'C:\Users\Kyle\GitHub\Repos\DefiantWorlds\DefiantWorlds\ProfSkillsDefiantWorlds\vc120.pdb'; linking object as if no debug info
+     1>TL-Engine2013Debug.lib(IrrlichtCamera.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'TL-Engine2013Debug.lib(IrrlichtCamera.obj)' or at 'C:\Users\Kyle\GitHub\Repos\DefiantWorlds\DefiantWorlds\ProfSkillsDefiantWorlds\vc120.pdb'; linking object as if no debug info
          ProfSkillsDefiantWorlds.vcxproj -> C:\Users\Kyle\GitHub\Repos\DefiantWorlds\DefiantWorlds\ProfSkillsDefiantWorlds\\ProfSkillsDefiantWorldsDebug.exe
        PostBuildEvent:
          copy "C:\ProgramData\TL-Engine\3rd Party\Irrlicht-0.7\bin\VisualStudio\IrrlichtDebug.dll" "C:\Users\Kyle\GitHub\Repos\DefiantWorlds\DefiantWorlds\ProfSkillsDefiantWorlds\\" > NUL
@@ -25,4 +42,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:00.93
+Time Elapsed 00:00:00.84
