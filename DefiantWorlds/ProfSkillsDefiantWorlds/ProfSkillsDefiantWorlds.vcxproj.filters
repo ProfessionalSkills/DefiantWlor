@@ -49,11 +49,35 @@
     <Filter Include="Entities\Buildings Classes\Child">
       <UniqueIdentifier>{82ef4de0-c5c2-4af7-8e3e-d4f622e2bf13}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Entities\Units Classes\Base">
+    <Filter Include="Entities\Units Classes\Base Units Class">
       <UniqueIdentifier>{34e89b49-7f84-4a83-b1fe-2a7123adc461}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Entities\Units Classes\Child">
+    <Filter Include="Entities\Units Classes\Space Units">
       <UniqueIdentifier>{90a5ab22-ef04-4bb3-9e36-264568461ac8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Units Classes\Ground Units">
+      <UniqueIdentifier>{bfccd992-3160-447d-a8f3-7151ea695ed3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Units Classes\Ait Units">
+      <UniqueIdentifier>{4c00aac9-273b-42ba-be1b-23ca41ade9b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Units Classes\Ground Units\Base">
+      <UniqueIdentifier>{c329c160-408b-4adf-8e5e-4eb88c2caad1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Units Classes\Ground Units\Child">
+      <UniqueIdentifier>{9bee837d-ac81-42f9-952a-42d82ffa5f5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Units Classes\Ait Units\Base">
+      <UniqueIdentifier>{186773b0-570d-4da7-a5c9-044077fd832f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Units Classes\Ait Units\Child">
+      <UniqueIdentifier>{5c9ee3b8-ee48-4253-98cb-36aed0130af6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Units Classes\Space Units\Base">
+      <UniqueIdentifier>{6c2254bb-5215-415a-8adf-5917193b663e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Units Classes\Space Units\Child">
+      <UniqueIdentifier>{b4d59712-0dd0-4284-bc97-1bb4908c2356}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -97,7 +121,7 @@
       <Filter>Entities\Buildings Classes\Base</Filter>
     </ClCompile>
     <ClCompile Include="BaseUnit.cpp">
-      <Filter>Entities\Units Classes\Base</Filter>
+      <Filter>Entities\Units Classes\Base Units Class</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -138,7 +162,7 @@
       <Filter>Entities\Buildings Classes\Base</Filter>
     </ClInclude>
     <ClInclude Include="BaseUnit.h">
-      <Filter>Entities\Units Classes\Base</Filter>
+      <Filter>Entities\Units Classes\Base Units Class</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
