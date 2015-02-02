@@ -79,6 +79,9 @@
     <Filter Include="Entities\Units Classes\Space Units\Child">
       <UniqueIdentifier>{b4d59712-0dd0-4284-bc97-1bb4908c2356}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Entities\Entity Manager Class">
+      <UniqueIdentifier>{bd8111d0-1868-4f8e-a1fc-ae800ca074bc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ProfSkillsDefiantWorlds.cpp">
@@ -123,6 +126,12 @@
     <ClCompile Include="BaseUnit.cpp">
       <Filter>Entities\Units Classes\Base Units Class</Filter>
     </ClCompile>
+    <ClCompile Include="EntityManager.cpp">
+      <Filter>Entities\Entity Manager Class</Filter>
+    </ClCompile>
+    <ClCompile Include="GameManager.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common.h">
@@ -163,6 +172,12 @@
     </ClInclude>
     <ClInclude Include="BaseUnit.h">
       <Filter>Entities\Units Classes\Base Units Class</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityManager.h">
+      <Filter>Entities\Entity Manager Class</Filter>
+    </ClInclude>
+    <ClInclude Include="GameManager.h">
+      <Filter>Main</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
