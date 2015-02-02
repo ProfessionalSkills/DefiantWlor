@@ -31,6 +31,30 @@
     <Filter Include="Utilities">
       <UniqueIdentifier>{a86d0a96-6469-48fe-b8af-e72291515034}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Entities">
+      <UniqueIdentifier>{c1c3bb3f-a22a-4b5d-b732-0b702e77b66e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Base Entity Class">
+      <UniqueIdentifier>{49851113-780c-4641-a580-952ddeec1555}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Units Classes">
+      <UniqueIdentifier>{634f5f22-459a-4e19-bbe6-d03266236675}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Buildings Classes">
+      <UniqueIdentifier>{e2b20cdf-3bbf-4b54-bcf5-227db41eb9f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Buildings Classes\Base">
+      <UniqueIdentifier>{afce3c67-3205-4d2f-983a-153914a8a825}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Buildings Classes\Child">
+      <UniqueIdentifier>{82ef4de0-c5c2-4af7-8e3e-d4f622e2bf13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Units Classes\Base">
+      <UniqueIdentifier>{34e89b49-7f84-4a83-b1fe-2a7123adc461}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Units Classes\Child">
+      <UniqueIdentifier>{90a5ab22-ef04-4bb3-9e36-264568461ac8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ProfSkillsDefiantWorlds.cpp">
@@ -66,6 +90,15 @@
     <ClCompile Include="Randomiser.cpp">
       <Filter>Utilities</Filter>
     </ClCompile>
+    <ClCompile Include="BaseEntity.cpp">
+      <Filter>Entities\Base Entity Class</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseBuilding.cpp">
+      <Filter>Entities\Buildings Classes\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseUnit.cpp">
+      <Filter>Entities\Units Classes\Base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common.h">
@@ -97,6 +130,15 @@
     </ClInclude>
     <ClInclude Include="Randomiser.h">
       <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseEntity.h">
+      <Filter>Entities\Base Entity Class</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseBuilding.h">
+      <Filter>Entities\Buildings Classes\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseUnit.h">
+      <Filter>Entities\Units Classes\Base</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

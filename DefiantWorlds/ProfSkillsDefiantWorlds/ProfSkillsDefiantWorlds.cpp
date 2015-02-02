@@ -21,6 +21,15 @@ BUGS:
 	- Possible File:
 	- Possible Location:
 	//-----------------
+
+NOTES:
+	- Entity interface class
+		- Derived classes for units and buildings
+		- Further derived classes for units and buildings
+	- 2D grid for buildable areas on Earth / Mars
+	- 3D grid for space battle
+	- Space battle outcome calculated in real-time rather than pre-determined
+	- Handling Player classes during state changes
 */
 
 
