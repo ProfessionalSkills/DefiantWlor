@@ -34,7 +34,7 @@ void CMenuState::StateSetup()
 	mEarthDistance = 35.0f;
 	mMarsDistance = 65.0f;
 	mMinAngle = ToRadians(33.0f);
-	mMaxAngle = ToRadians(150.0f);
+	mMaxAngle = ToRadians(145.0f);
 
 
 	// INITIALISE CAMERAS
@@ -53,12 +53,12 @@ void CMenuState::StateSetup()
 	// Earth
 	mEarthAngle = gpRandomiser->GetRandomFloat(mMinAngle, mMaxAngle);
 	mpMshPlanet = gpEngine->LoadMesh("Planet.x");
-	mpMdlEarth = mpMshPlanet->CreateModel(-20.0f, 0.0f, 45.0f);
+	mpMdlEarth = mpMshPlanet->CreateModel(-60.0f, 0.0f, 45.0f);
 	mpMdlEarth->Scale(5.0f);
 
 	// Mars
 	mMarsAngle = gpRandomiser->GetRandomFloat(mMinAngle, mMaxAngle);
-	mpMdlMars = mpMshPlanet->CreateModel(30.0f, 0.0f, 45.0f);
+	mpMdlMars = mpMshPlanet->CreateModel(-60.0f, 0.0f, 45.0f);
 	mpMdlMars->SetSkin("Mars.jpg");
 	mpMdlMars->Scale(2.6f);
 
