@@ -82,6 +82,12 @@
     <Filter Include="Entities\Entity Manager Class">
       <UniqueIdentifier>{bd8111d0-1868-4f8e-a1fc-ae800ca074bc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Players\Base Player Class">
+      <UniqueIdentifier>{112eb755-6301-44a1-a454-089574fbfc12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Manager Class">
+      <UniqueIdentifier>{79128ded-f93a-4b6e-93b7-de921199093c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ProfSkillsDefiantWorlds.cpp">
@@ -98,9 +104,6 @@
     </ClCompile>
     <ClCompile Include="WorldState.cpp">
       <Filter>Game States\Child State Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="BasePlayer.cpp">
-      <Filter>Players</Filter>
     </ClCompile>
     <ClCompile Include="HumanPlayer.cpp">
       <Filter>Players\Child Player Classes</Filter>
@@ -129,8 +132,11 @@
     <ClCompile Include="EntityManager.cpp">
       <Filter>Entities\Entity Manager Class</Filter>
     </ClCompile>
+    <ClCompile Include="BasePlayer.cpp">
+      <Filter>Players\Base Player Class</Filter>
+    </ClCompile>
     <ClCompile Include="GameManager.cpp">
-      <Filter>Main</Filter>
+      <Filter>Game Manager Class</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -145,9 +151,6 @@
     </ClInclude>
     <ClInclude Include="WorldState.h">
       <Filter>Game States\Child State Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="BasePlayer.h">
-      <Filter>Players</Filter>
     </ClInclude>
     <ClInclude Include="HumanPlayer.h">
       <Filter>Players\Child Player Classes</Filter>
@@ -176,8 +179,11 @@
     <ClInclude Include="EntityManager.h">
       <Filter>Entities\Entity Manager Class</Filter>
     </ClInclude>
+    <ClInclude Include="BasePlayer.h">
+      <Filter>Players\Base Player Class</Filter>
+    </ClInclude>
     <ClInclude Include="GameManager.h">
-      <Filter>Main</Filter>
+      <Filter>Game Manager Class</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

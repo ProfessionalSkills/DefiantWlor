@@ -44,7 +44,7 @@ NOTES:
 // MAIN GLOBALS
 //-----------------------------------------------------
 
-// Game State
+// Game Manager
 //----------------------
 CStateControl* gpStateController;
 
