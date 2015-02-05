@@ -91,6 +91,15 @@
     <Filter Include="Entities\Game Objects\Child\Agent\Child\Ground Units\Child">
       <UniqueIdentifier>{f336e3c0-12be-4ed3-81d6-8ff8a41279ba}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Entities\Particle Emitter\Base">
+      <UniqueIdentifier>{14fb83f3-61ee-4c33-936f-d207cfc40f30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Particle Emitter\Child">
+      <UniqueIdentifier>{bd62a927-a642-4ccd-bfb8-3040f8b62006}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Particles">
+      <UniqueIdentifier>{6467cfc2-0956-4ff9-b269-e9e3bd60801f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ProfSkillsDefiantWorlds.cpp">
@@ -165,6 +174,9 @@
     <ClCompile Include="Artillery.cpp">
       <Filter>Entities\Game Objects\Child\Agent\Child\Ground Units\Child</Filter>
     </ClCompile>
+    <ClCompile Include="ParticleEmitter.cpp">
+      <Filter>Entities\Particle Emitter\Base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common.h">
@@ -235,6 +247,12 @@
     </ClInclude>
     <ClInclude Include="Artillery.h">
       <Filter>Entities\Game Objects\Child\Agent\Child\Ground Units\Child</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleEmitter.h">
+      <Filter>Entities\Particle Emitter\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Particles.h">
+      <Filter>Entities\Particles</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
