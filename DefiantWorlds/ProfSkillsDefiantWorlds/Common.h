@@ -38,11 +38,16 @@ enum EGameStates
 	GS_MAIN_MENU, GS_WORLD, GS_SPACE
 };
 
+enum EObjectStates
+{
+	OBJ_CONSTRUCTING, OBJ_BUILT, OBJ_DAMAGED, OBJ_DEAD
+};
+
 
 //-----------------------------------------------------
 // STRUCTURES
 //-----------------------------------------------------
-struct S2DPointData
+struct SPointData
 {
 	int mPosX;
 	int mPosY;

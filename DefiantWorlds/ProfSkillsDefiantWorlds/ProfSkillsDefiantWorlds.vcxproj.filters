@@ -64,6 +64,21 @@
     <Filter Include="Entities\Game Objects\Child\Structure">
       <UniqueIdentifier>{77e926b3-2d1e-41ab-9bb2-215519c76de2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Entities\Game Objects\Child\Agent\Base">
+      <UniqueIdentifier>{aecc5f8e-a375-422d-8188-7dc2364765eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Game Objects\Child\Agent\Child">
+      <UniqueIdentifier>{da77e5ce-a281-4caa-9a6f-13e775607c19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Game Objects\Child\Agent\Child\Air Units">
+      <UniqueIdentifier>{5521f074-0422-48f9-a834-2bb7db649e12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Game Objects\Child\Agent\Child\Space Units">
+      <UniqueIdentifier>{179080e0-718e-49f1-afae-9c3e518c92b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Game Objects\Child\Agent\Child\Ground Units">
+      <UniqueIdentifier>{3a69434f-758f-48b4-8094-a88d79de6ef4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ProfSkillsDefiantWorlds.cpp">
@@ -105,6 +120,9 @@
     <ClCompile Include="GameObject.cpp">
       <Filter>Entities\Game Objects\Base</Filter>
     </ClCompile>
+    <ClCompile Include="GameAgent.cpp">
+      <Filter>Entities\Game Objects\Child\Agent\Base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common.h">
@@ -142,6 +160,9 @@
     </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>Entities\Game Objects\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="GameAgent.h">
+      <Filter>Entities\Game Objects\Child\Agent\Base</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

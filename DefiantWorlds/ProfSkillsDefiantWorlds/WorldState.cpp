@@ -30,7 +30,7 @@ void CWorldState::StateSetup()
 {
 	// INITIALISE ADDITIONAL VARIABLES
 	//------------------------------
-	mpMousePos = new S2DPointData();
+	mpMousePos = new SPointData();
 	mWindowClip = { 0 };
 	GetClipCursor(&mBaseClip);
 	GetWindowRect((HWND)gpEngine->GetWindow(), &mWindowClip);

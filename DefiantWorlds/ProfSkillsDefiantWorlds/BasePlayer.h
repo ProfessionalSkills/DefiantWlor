@@ -9,7 +9,7 @@
 //-----------------------------------------------------
 // INCLUDES
 //-----------------------------------------------------
-#include "GameObject.h"
+#include "GameAgent.h"
 
 
 //-----------------------------------------------------
@@ -37,7 +37,7 @@ private:
 	// LISTS
 	//---------------------------
 	// std::vector<CStructure*> mStructureList;
-	// std::vector<CGameAgent*> mWorldUnitsList;
+	std::vector<CGameAgent*> mWorldUnitsList;
 	// std::vector<CSpaceUnit*> mSpaceUnitsList;
 
 

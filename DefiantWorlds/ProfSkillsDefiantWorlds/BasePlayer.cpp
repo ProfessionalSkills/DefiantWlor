@@ -43,7 +43,7 @@ bool CPlayer::MineralTransaction(int amount)
 
 
 //-----------------------------------------------------
-// BASE PLAYER CLASS MUTATORS
+// BASE PLAYER CLASS METHODS
 //-----------------------------------------------------
 //bool CPlayer::PurchaseStructure(CStructure* structure, DX::XMFLOAT2 pos)
 
