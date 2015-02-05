@@ -41,12 +41,18 @@ private:
 	ALfloat listenerVel[3];
 	ALfloat listenerOri[6];
 
+	//Whether the sound is playing or not
+	//---------------------------
+	bool mIsPlaying;
+
+
 public:
 
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
-	CSound(); 
+	CSound(char* SoundFile, ALfloat mSourcePos[3], ALfloat mSourceVel[3]); 
 	~CSound();
+
 
 	void PlaySound();
 
