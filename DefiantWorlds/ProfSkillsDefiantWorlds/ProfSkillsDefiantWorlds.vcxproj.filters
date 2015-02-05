@@ -123,6 +123,9 @@
     <ClCompile Include="GameAgent.cpp">
       <Filter>Entities\Game Objects\Child\Agent\Base</Filter>
     </ClCompile>
+    <ClCompile Include="SoundObject.cpp">
+      <Filter>Entities\Sound</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common.h">
@@ -163,6 +166,9 @@
     </ClInclude>
     <ClInclude Include="GameAgent.h">
       <Filter>Entities\Game Objects\Child\Agent\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundObject.h">
+      <Filter>Entities\Sound</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
