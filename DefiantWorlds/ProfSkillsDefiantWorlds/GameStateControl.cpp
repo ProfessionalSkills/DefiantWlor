@@ -15,6 +15,7 @@
 CStateControl::CStateControl(EGameStates inStartState)
 {
 	// Initialise states
+	mpPlayState = new CPlayState();
 	mpMenuState = new CMenuState();
 	mpSpaceState = new CSpaceState();
 	mpWorldState = new CWorldState();
@@ -37,13 +38,25 @@ CStateControl::CStateControl(EGameStates inStartState)
 			break;
 	}
 
+	// Create players
+	mpPlayState->CreatePlayers();
+
+	// Ensure other play states have links to the same players
+	mpSpaceState->SetHumanPlayer(mpPlayState->GetHumanPlayer());
+	mpSpaceState->SetAIPlayer(mpPlayState->GetAIPlayer());
+	mpWorldState->SetHumanPlayer(mpPlayState->GetHumanPlayer());
+	mpWorldState->SetAIPlayer(mpPlayState->GetAIPlayer());
+
 	// Setup scene
 	mpCurGameState->StateSetup();
 }
 
 CStateControl::~CStateControl()
 {
-
+	SafeDelete(mpPlayState);
+	SafeDelete(mpMenuState);
+	SafeDelete(mpSpaceState);
+	SafeDelete(mpWorldState);
 }
 
 

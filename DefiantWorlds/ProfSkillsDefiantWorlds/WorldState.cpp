@@ -12,7 +12,7 @@
 //-----------------------------------------------------
 // SPACE STATE CLASS CONSTRUCTORS & DESTRUCTOR
 //-----------------------------------------------------
-CWorldState::CWorldState() : IGameState()
+CWorldState::CWorldState() : CPlayState()
 {
 
 }

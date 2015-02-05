@@ -121,17 +121,14 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AIPlayer.cpp" />
-    <ClCompile Include="BaseBuilding.cpp" />
-    <ClCompile Include="BaseEntity.cpp" />
     <ClCompile Include="BasePlayer.cpp" />
-    <ClCompile Include="BaseUnit.cpp" />
     <ClCompile Include="Common.cpp" />
     <ClCompile Include="BaseGameState.cpp" />
-    <ClCompile Include="EntityManager.cpp" />
-    <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameStateControl.cpp" />
     <ClCompile Include="HumanPlayer.cpp" />
     <ClCompile Include="MenuState.cpp" />
+    <ClCompile Include="PlayState.cpp" />
     <ClCompile Include="ProfSkillsDefiantWorlds.cpp" />
     <ClCompile Include="Randomiser.cpp" />
     <ClCompile Include="SpaceState.cpp" />
@@ -142,17 +139,14 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AIPlayer.h" />
-    <ClInclude Include="BaseBuilding.h" />
-    <ClInclude Include="BaseEntity.h" />
     <ClInclude Include="BasePlayer.h" />
-    <ClInclude Include="BaseUnit.h" />
     <ClInclude Include="Common.h" />
     <ClInclude Include="BaseGameState.h" />
-    <ClInclude Include="EntityManager.h" />
-    <ClInclude Include="GameManager.h" />
+    <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameStateControl.h" />
     <ClInclude Include="HumanPlayer.h" />
     <ClInclude Include="MenuState.h" />
+    <ClInclude Include="PlayState.h" />
     <ClInclude Include="Randomiser.h" />
     <ClInclude Include="SpaceState.h" />
     <ClInclude Include="WorldState.h" />

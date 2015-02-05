@@ -15,7 +15,7 @@
 //-----------------------------------------------------
 // HUMAN PLAYER CLASS
 //-----------------------------------------------------
-class CHumanPlayer : public IPlayer
+class CHumanPlayer : public CPlayer
 {
 private:
 
@@ -29,7 +29,7 @@ public:
 
 	// OVERRIDE METHODS
 	//---------------------------
-
+	void Update(float delta) override;
 };
 
 

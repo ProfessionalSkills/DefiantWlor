@@ -12,7 +12,7 @@
 //-----------------------------------------------------
 // MENU STATE CLASS CONSTRUCTORS & DESTRUCTOR
 //-----------------------------------------------------
-CHumanPlayer::CHumanPlayer() : IPlayer()
+CHumanPlayer::CHumanPlayer() : CPlayer()
 {
 
 }
@@ -26,4 +26,7 @@ CHumanPlayer::~CHumanPlayer()
 //-----------------------------------------------------
 // HUMAN PLAYER CLASS OVERRIDE METHODS
 //-----------------------------------------------------
+void CHumanPlayer::Update(float delta)
+{
 
+}

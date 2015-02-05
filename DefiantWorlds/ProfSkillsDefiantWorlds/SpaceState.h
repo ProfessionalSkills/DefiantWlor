@@ -9,13 +9,13 @@
 //-----------------------------------------------------
 // INCLUDES
 //-----------------------------------------------------
-#include "BaseGameState.h"
+#include "PlayState.h"
 
 
 //-----------------------------------------------------
 // SPACE STATE CLASS
 //-----------------------------------------------------
-class CSpaceState : public IGameState
+class CSpaceState : public CPlayState
 {
 private:
 

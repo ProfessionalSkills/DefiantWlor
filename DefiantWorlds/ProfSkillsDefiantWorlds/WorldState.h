@@ -9,13 +9,13 @@
 //-----------------------------------------------------
 // INCLUDES
 //-----------------------------------------------------
-#include "BaseGameState.h"
+#include "PlayState.h"
 
 
 //-----------------------------------------------------
 // WORLD STATE CLASS
 //-----------------------------------------------------
-class CWorldState : public IGameState
+class CWorldState : public CPlayState
 {
 private:
 	// CAMERAS

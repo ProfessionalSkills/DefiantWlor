@@ -15,7 +15,7 @@
 //-----------------------------------------------------
 // AI PLAYER CLASS
 //-----------------------------------------------------
-class CAIPlayer : public IPlayer
+class CAIPlayer : public CPlayer
 {
 private:
 
@@ -29,7 +29,7 @@ public:
 
 	// OVERRIDE METHODS
 	//---------------------------
-
+	void Update(float delta) override;
 };
 
 

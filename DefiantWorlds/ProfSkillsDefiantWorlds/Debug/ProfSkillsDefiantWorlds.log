@@ -1,28 +1,55 @@
-﻿Build started 02/02/2015 17:02:14.
-     1>Project "C:\Users\kehobdey\Documents\GitHub\DefiantWorlds\DefiantWorlds\ProfSkillsDefiantWorlds\ProfSkillsDefiantWorlds.vcxproj" on node 2 (Build target(s)).
+﻿Build started 05/02/2015 10:08:35.
+     1>Project "C:\Users\Kyle\GitHub\Repos\DefiantWorlds\DefiantWorlds\ProfSkillsDefiantWorlds\ProfSkillsDefiantWorlds.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\ProgramData\TL-Engine\include" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MTd /GS /Gy /fp:fast /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt MenuState.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\ProgramData\TL-Engine\include" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MTd /GS /Gy /fp:fast /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt AIPlayer.cpp BaseGameState.cpp BasePlayer.cpp GameStateControl.cpp HumanPlayer.cpp MenuState.cpp PlayState.cpp ProfSkillsDefiantWorlds.cpp SpaceState.cpp WorldState.cpp
+         BasePlayer.cpp
+     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\aiplayer.h(19): error C2504: 'CPlayer' : base class undefined
+     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\humanplayer.h(19): error C2504: 'CPlayer' : base class undefined
+         Generating Code...
+         Compiling...
+         AIPlayer.cpp
+     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\humanplayer.h(19): error C2504: 'CPlayer' : base class undefined
+     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\playstate.h(24): error C2143: syntax error : missing ';' before '*'
+     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\playstate.h(24): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\playstate.h(41): error C2143: syntax error : missing ';' before '*'
+     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\playstate.h(41): error C2433: 'CPlayState::CAIPlayer' : 'inline' not permitted on data declarations
+     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\playstate.h(41): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\playstate.h(42): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\playstate.h(44): warning C4183: 'GetAIPlayer': missing return type; assumed to be a member function returning 'int'
+     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\playstate.h(54): error C2061: syntax error : identifier 'CAIPlayer'
+     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\playstate.h(43): error C2065: 'mpAIPlayer' : undeclared identifier
+     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\playstate.h(56): error C2065: 'mpAIPlayer' : undeclared identifier
+     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\playstate.h(56): error C2065: 'player' : undeclared identifier
+         Generating Code...
+         Compiling...
+         GameStateControl.cpp
+         Generating Code...
+         Compiling...
+         WorldState.cpp
+     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\worldstate.cpp(80): warning C4018: '>' : signed/unsigned mismatch
+     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\worldstate.cpp(90): warning C4018: '>' : signed/unsigned mismatch
+         SpaceState.cpp
+         ProfSkillsDefiantWorlds.cpp
+         PlayState.cpp
+         HumanPlayer.cpp
+     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\aiplayer.h(19): error C2504: 'CPlayer' : base class undefined
+     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\playstate.h(23): error C2143: syntax error : missing ';' before '*'
+     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\playstate.h(23): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\playstate.h(36): error C2143: syntax error : missing ';' before '*'
+     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\playstate.h(36): error C2433: 'CPlayState::CHumanPlayer' : 'inline' not permitted on data declarations
+     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\playstate.h(36): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\playstate.h(37): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\playstate.h(39): warning C4183: 'GetHumanPlayer': missing return type; assumed to be a member function returning 'int'
+     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\playstate.h(49): error C2061: syntax error : identifier 'CHumanPlayer'
+     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\playstate.h(38): error C2065: 'mpHumanPlayer' : undeclared identifier
+     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\playstate.h(51): error C2065: 'mpHumanPlayer' : undeclared identifier
+     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\playstate.h(51): error C2065: 'player' : undeclared identifier
+         Generating Code...
+         Skipping... (no relevant changes detected)
          MenuState.cpp
-       Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\kehobdey\Documents\GitHub\DefiantWorlds\DefiantWorlds\ProfSkillsDefiantWorlds\ProfSkillsDefiantWorldsDebug.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\ProgramData\TL-Engine\lib" "TL-Engine2013Debug.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST:NO /DEBUG /PDB:"C:\Users\kehobdey\Documents\GitHub\DefiantWorlds\DefiantWorlds\ProfSkillsDefiantWorlds\\ProfSkillsDefiantWorlds.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /IMPLIB:"C:\Users\kehobdey\Documents\GitHub\DefiantWorlds\DefiantWorlds\ProfSkillsDefiantWorlds\\ProfSkillsDefiantWorldsDebug.lib" /MACHINE:X86 /SAFESEH:NO Debug\AIPlayer.obj
-         Debug\BasePlayer.obj
-         Debug\Common.obj
-         Debug\BaseGameState.obj
-         Debug\GameStateControl.obj
-         Debug\HumanPlayer.obj
-         Debug\MenuState.obj
-         Debug\ProfSkillsDefiantWorlds.obj
-         Debug\Randomiser.obj
-         Debug\SpaceState.obj
-         Debug\WorldState.obj
-         ProfSkillsDefiantWorlds.vcxproj -> C:\Users\kehobdey\Documents\GitHub\DefiantWorlds\DefiantWorlds\ProfSkillsDefiantWorlds\\ProfSkillsDefiantWorldsDebug.exe
-       PostBuildEvent:
-         copy "C:\ProgramData\TL-Engine\3rd Party\Irrlicht-0.7\bin\VisualStudio\IrrlichtDebug.dll" "C:\Users\kehobdey\Documents\GitHub\DefiantWorlds\DefiantWorlds\ProfSkillsDefiantWorlds\\" > NUL
-         copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "C:\Users\kehobdey\Documents\GitHub\DefiantWorlds\DefiantWorlds\ProfSkillsDefiantWorlds\\" > NUL
-         
-         :VCEnd
-     1>Done Building Project "C:\Users\kehobdey\Documents\GitHub\DefiantWorlds\DefiantWorlds\ProfSkillsDefiantWorlds\ProfSkillsDefiantWorlds.vcxproj" (Build target(s)).
+         BaseGameState.cpp
+     1>Done Building Project "C:\Users\Kyle\GitHub\Repos\DefiantWorlds\DefiantWorlds\ProfSkillsDefiantWorlds\ProfSkillsDefiantWorlds.vcxproj" (Build target(s)) -- FAILED.
 
-Build succeeded.
+Build FAILED.
 
-Time Elapsed 00:00:01.41
+Time Elapsed 00:00:04.23
