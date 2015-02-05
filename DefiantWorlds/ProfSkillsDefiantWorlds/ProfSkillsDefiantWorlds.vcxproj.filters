@@ -100,6 +100,12 @@
     <Filter Include="Entities\Particles">
       <UniqueIdentifier>{6467cfc2-0956-4ff9-b269-e9e3bd60801f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Entities\Game Objects\Child\Agent\Child\Air Units\Base">
+      <UniqueIdentifier>{e091b7a3-38a8-449c-b084-0f228ef67c70}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Game Objects\Child\Agent\Child\Air Units\Child">
+      <UniqueIdentifier>{38d4b859-20d6-421f-b3e2-654180ac4c5d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ProfSkillsDefiantWorlds.cpp">
@@ -177,6 +183,15 @@
     <ClCompile Include="ParticleEmitter.cpp">
       <Filter>Entities\Particle Emitter\Base</Filter>
     </ClCompile>
+    <ClCompile Include="AirUnit.cpp">
+      <Filter>Entities\Game Objects\Child\Agent\Child\Air Units\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Bomber.cpp">
+      <Filter>Entities\Game Objects\Child\Agent\Child\Air Units\Child</Filter>
+    </ClCompile>
+    <ClCompile Include="Fighter.cpp">
+      <Filter>Entities\Game Objects\Child\Agent\Child\Air Units\Child</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common.h">
@@ -253,6 +268,15 @@
     </ClInclude>
     <ClInclude Include="Particles.h">
       <Filter>Entities\Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="AirUnit.h">
+      <Filter>Entities\Game Objects\Child\Agent\Child\Air Units\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Bomber.h">
+      <Filter>Entities\Game Objects\Child\Agent\Child\Air Units\Child</Filter>
+    </ClInclude>
+    <ClInclude Include="Fighter.h">
+      <Filter>Entities\Game Objects\Child\Agent\Child\Air Units\Child</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
