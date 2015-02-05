@@ -26,7 +26,7 @@ const int MAX_SPACE_UNITS = 10;
 
 
 //-----------------------------------------------------
-// INTERFACE CLASS FOR PLAYERS
+// BASE CLASS FOR PLAYERS
 //-----------------------------------------------------
 class CPlayer
 {
