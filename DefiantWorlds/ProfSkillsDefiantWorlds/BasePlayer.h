@@ -9,7 +9,9 @@
 //-----------------------------------------------------
 // INCLUDES
 //-----------------------------------------------------
-#include "GameAgent.h"
+#include "SpaceFighter.h"
+#include "Mothership.h"
+#include "Transport.h"
 
 
 //-----------------------------------------------------
@@ -32,13 +34,13 @@ private:
 	int         mCurPopLimit;
 	int         mCurPop;
 	bool        mIsCommsDestroyed;
-
+	
 
 	// LISTS
 	//---------------------------
 	// std::vector<CStructure*> mStructureList;
 	std::vector<CGameAgent*> mWorldUnitsList;
-	// std::vector<CSpaceUnit*> mSpaceUnitsList;
+	std::vector<CSpaceUnit*> mSpaceUnitsList;
 
 
 public:

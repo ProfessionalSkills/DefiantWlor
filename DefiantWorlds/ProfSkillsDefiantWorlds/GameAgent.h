@@ -1,5 +1,5 @@
 //-----------------------------------------------------
-// FILE: GameObject.h
+// FILE: GameAgent.h
 //-----------------------------------------------------
 
 #ifndef _GAME_AGENT_H_
@@ -13,7 +13,7 @@
 
 
 //-----------------------------------------------------
-// INTERFACE CLASS FOR PLAYERS
+// GAME AGENT CLASS - CHILD OF GAME OBJECT
 //-----------------------------------------------------
 class CGameAgent : public CGameObject
 {
@@ -92,7 +92,7 @@ public:
 	//---------------------------
 	virtual bool Attack(CGameAgent* target) = 0;
 	//virtual void MoveTo(CTile* dest) = 0;
-	virtual bool Move(float delta);
+	virtual bool Move(float delta) = 0;
 
 private:
 	virtual bool Destroy() = 0;

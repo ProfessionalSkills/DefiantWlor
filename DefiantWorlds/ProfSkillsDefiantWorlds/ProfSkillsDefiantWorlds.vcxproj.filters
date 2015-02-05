@@ -79,6 +79,12 @@
     <Filter Include="Entities\Game Objects\Child\Agent\Child\Ground Units">
       <UniqueIdentifier>{3a69434f-758f-48b4-8094-a88d79de6ef4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Entities\Game Objects\Child\Agent\Child\Space Units\Base">
+      <UniqueIdentifier>{1f2f7e31-76a6-4b41-8733-1f42d7450018}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Game Objects\Child\Agent\Child\Space Units\Child">
+      <UniqueIdentifier>{76168edd-cf09-44ae-9bb0-c046bbf79c04}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ProfSkillsDefiantWorlds.cpp">
@@ -123,6 +129,18 @@
     <ClCompile Include="GameAgent.cpp">
       <Filter>Entities\Game Objects\Child\Agent\Base</Filter>
     </ClCompile>
+    <ClCompile Include="SpaceUnit.cpp">
+      <Filter>Entities\Game Objects\Child\Agent\Child\Space Units\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Mothership.cpp">
+      <Filter>Entities\Game Objects\Child\Agent\Child\Space Units\Child</Filter>
+    </ClCompile>
+    <ClCompile Include="SpaceFighter.cpp">
+      <Filter>Entities\Game Objects\Child\Agent\Child\Space Units\Child</Filter>
+    </ClCompile>
+    <ClCompile Include="Transport.cpp">
+      <Filter>Entities\Game Objects\Child\Agent\Child\Space Units\Child</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common.h">
@@ -163,6 +181,18 @@
     </ClInclude>
     <ClInclude Include="GameAgent.h">
       <Filter>Entities\Game Objects\Child\Agent\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="SpaceUnit.h">
+      <Filter>Entities\Game Objects\Child\Agent\Child\Space Units\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Mothership.h">
+      <Filter>Entities\Game Objects\Child\Agent\Child\Space Units\Child</Filter>
+    </ClInclude>
+    <ClInclude Include="SpaceFighter.h">
+      <Filter>Entities\Game Objects\Child\Agent\Child\Space Units\Child</Filter>
+    </ClInclude>
+    <ClInclude Include="Transport.h">
+      <Filter>Entities\Game Objects\Child\Agent\Child\Space Units\Child</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
