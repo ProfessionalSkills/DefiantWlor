@@ -25,15 +25,20 @@ protected:
 	//---------------------------
 	int mParticleNumber;
 	float mParticleSpeed;
-	vector<float> test;
+	vector<CParticle> mParticles;
 
 	//EMITTER MODEL SOURCE
 	IModel* parent;
 	
+	// CONSTRUCTORS & DESTRUCTOR
+	//---------------------------
+	CParticleEmitter();
+	~CParticleEmitter();
+
+
 	// VIRTUAL METHODS
 	//---------------------------
-	void UpdateSystem();
-
+	virtual void UpdateSystem();
 };
 
 

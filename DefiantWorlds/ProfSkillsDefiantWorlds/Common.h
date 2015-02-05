@@ -18,6 +18,7 @@
 #include <sstream>
 #include <Windows.h>
 #include "Randomiser.h"
+#include "Particles.h"
 
 // Renamed the DirectX namespace so that DirectX:: is not required all the time. Simply use DX:: instead.
 // e.g. Vector3 variable created by doing DX::XMFLOAT3 mPos; just as an example.
