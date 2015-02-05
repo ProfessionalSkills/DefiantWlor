@@ -91,6 +91,12 @@
     <Filter Include="Entities\Game Objects\Child\Agent\Child\Ground Units\Child">
       <UniqueIdentifier>{f336e3c0-12be-4ed3-81d6-8ff8a41279ba}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Entities\Game Objects\Child\Agent\Child\Air Units\Base">
+      <UniqueIdentifier>{c365b5cd-210d-438a-a26b-14db4f873fc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Game Objects\Child\Agent\Child\Air Units\Child">
+      <UniqueIdentifier>{133dce06-7a0d-440d-a52b-34cd0eef6ada}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ProfSkillsDefiantWorlds.cpp">
@@ -165,6 +171,15 @@
     <ClCompile Include="Artillery.cpp">
       <Filter>Entities\Game Objects\Child\Agent\Child\Ground Units\Child</Filter>
     </ClCompile>
+    <ClCompile Include="AirUnit.cpp">
+      <Filter>Entities\Game Objects\Child\Agent\Child\Air Units\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Fighter.cpp">
+      <Filter>Entities\Game Objects\Child\Agent\Child\Air Units\Child</Filter>
+    </ClCompile>
+    <ClCompile Include="Bomber.cpp">
+      <Filter>Entities\Game Objects\Child\Agent\Child\Air Units\Child</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common.h">
@@ -235,6 +250,15 @@
     </ClInclude>
     <ClInclude Include="Artillery.h">
       <Filter>Entities\Game Objects\Child\Agent\Child\Ground Units\Child</Filter>
+    </ClInclude>
+    <ClInclude Include="AirUnit.h">
+      <Filter>Entities\Game Objects\Child\Agent\Child\Air Units\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Fighter.h">
+      <Filter>Entities\Game Objects\Child\Agent\Child\Air Units\Child</Filter>
+    </ClInclude>
+    <ClInclude Include="Bomber.h">
+      <Filter>Entities\Game Objects\Child\Agent\Child\Air Units\Child</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

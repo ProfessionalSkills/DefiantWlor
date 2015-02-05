@@ -9,13 +9,15 @@
 //-----------------------------------------------------
 // INCLUDES
 //-----------------------------------------------------
-#include "SpaceFighter.h"
-#include "Mothership.h"
-#include "Transport.h"
-#include "Worker.h"
-#include "Infantry.h"
-#include "Tank.h"
-#include "Artillery.h"
+#include "SpaceFighter.h"		// Space unit
+#include "Mothership.h"			// Space unit
+#include "Transport.h"			// Space unit
+#include "Worker.h"				// Ground unit
+#include "Infantry.h"			// Ground unit
+#include "Tank.h"				// Ground unit	
+#include "Artillery.h"			// Ground unit
+#include "Bomber.h"				// Air unit
+#include "Fighter.h"			// Air unit
 
 
 //-----------------------------------------------------
