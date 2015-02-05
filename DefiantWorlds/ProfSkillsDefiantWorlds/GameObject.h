@@ -20,7 +20,7 @@ const int MAX_SPACE_UNITS = 10;
 
 
 //-----------------------------------------------------
-// INTERFACE CLASS FOR PLAYERS
+// GAME OBJECT CLASS
 //-----------------------------------------------------
 class CGameObject
 {
