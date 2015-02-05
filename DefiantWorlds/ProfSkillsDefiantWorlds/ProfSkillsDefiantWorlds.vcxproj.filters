@@ -85,6 +85,12 @@
     <Filter Include="Entities\Game Objects\Child\Agent\Child\Space Units\Child">
       <UniqueIdentifier>{3547574b-3f36-4f7e-bb83-a44824ded56a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Entities\Game Objects\Child\Agent\Child\Ground Units\Base">
+      <UniqueIdentifier>{66e4031d-2f3d-4d9f-bb8a-54ab5ad89b77}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Game Objects\Child\Agent\Child\Ground Units\Child">
+      <UniqueIdentifier>{f336e3c0-12be-4ed3-81d6-8ff8a41279ba}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ProfSkillsDefiantWorlds.cpp">
@@ -144,6 +150,21 @@
     <ClCompile Include="Transport.cpp">
       <Filter>Entities\Game Objects\Child\Agent\Child\Space Units\Child</Filter>
     </ClCompile>
+    <ClCompile Include="GroundUnit.cpp">
+      <Filter>Entities\Game Objects\Child\Agent\Child\Ground Units\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Worker.cpp">
+      <Filter>Entities\Game Objects\Child\Agent\Child\Ground Units\Child</Filter>
+    </ClCompile>
+    <ClCompile Include="Infantry.cpp">
+      <Filter>Entities\Game Objects\Child\Agent\Child\Ground Units\Child</Filter>
+    </ClCompile>
+    <ClCompile Include="Tank.cpp">
+      <Filter>Entities\Game Objects\Child\Agent\Child\Ground Units\Child</Filter>
+    </ClCompile>
+    <ClCompile Include="Artillery.cpp">
+      <Filter>Entities\Game Objects\Child\Agent\Child\Ground Units\Child</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common.h">
@@ -199,6 +220,21 @@
     </ClInclude>
     <ClInclude Include="Transport.h">
       <Filter>Entities\Game Objects\Child\Agent\Child\Space Units\Child</Filter>
+    </ClInclude>
+    <ClInclude Include="GroundUnit.h">
+      <Filter>Entities\Game Objects\Child\Agent\Child\Ground Units\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Worker.h">
+      <Filter>Entities\Game Objects\Child\Agent\Child\Ground Units\Child</Filter>
+    </ClInclude>
+    <ClInclude Include="Infantry.h">
+      <Filter>Entities\Game Objects\Child\Agent\Child\Ground Units\Child</Filter>
+    </ClInclude>
+    <ClInclude Include="Tank.h">
+      <Filter>Entities\Game Objects\Child\Agent\Child\Ground Units\Child</Filter>
+    </ClInclude>
+    <ClInclude Include="Artillery.h">
+      <Filter>Entities\Game Objects\Child\Agent\Child\Ground Units\Child</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

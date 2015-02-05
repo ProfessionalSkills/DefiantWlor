@@ -12,6 +12,10 @@
 #include "SpaceFighter.h"
 #include "Mothership.h"
 #include "Transport.h"
+#include "Worker.h"
+#include "Infantry.h"
+#include "Tank.h"
+#include "Artillery.h"
 
 
 //-----------------------------------------------------

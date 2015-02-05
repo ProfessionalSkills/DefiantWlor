@@ -121,12 +121,15 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AIPlayer.cpp" />
+    <ClCompile Include="Artillery.cpp" />
     <ClCompile Include="BasePlayer.cpp" />
     <ClCompile Include="Common.cpp" />
     <ClCompile Include="BaseGameState.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameStateControl.cpp" />
+    <ClCompile Include="GroundUnit.cpp" />
     <ClCompile Include="HumanPlayer.cpp" />
+    <ClCompile Include="Infantry.cpp" />
     <ClCompile Include="MenuState.cpp" />
     <ClCompile Include="Mothership.cpp" />
     <ClCompile Include="PlayState.cpp" />
@@ -137,7 +140,9 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
     <ClCompile Include="SpaceFighter.cpp" />
     <ClCompile Include="SpaceState.cpp" />
     <ClCompile Include="SpaceUnit.cpp" />
+    <ClCompile Include="Tank.cpp" />
     <ClCompile Include="Transport.cpp" />
+    <ClCompile Include="Worker.cpp" />
     <ClCompile Include="WorldState.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -145,13 +150,16 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AIPlayer.h" />
+    <ClInclude Include="Artillery.h" />
     <ClInclude Include="BasePlayer.h" />
     <ClInclude Include="GameAgent.h" />
     <ClInclude Include="Common.h" />
     <ClInclude Include="BaseGameState.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameStateControl.h" />
+    <ClInclude Include="GroundUnit.h" />
     <ClInclude Include="HumanPlayer.h" />
+    <ClInclude Include="Infantry.h" />
     <ClInclude Include="MenuState.h" />
     <ClInclude Include="Mothership.h" />
     <ClInclude Include="PlayState.h" />
@@ -160,7 +168,9 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
     <ClInclude Include="SpaceFighter.h" />
     <ClInclude Include="SpaceState.h" />
     <ClInclude Include="SpaceUnit.h" />
+    <ClInclude Include="Tank.h" />
     <ClInclude Include="Transport.h" />
+    <ClInclude Include="Worker.h" />
     <ClInclude Include="WorldState.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
