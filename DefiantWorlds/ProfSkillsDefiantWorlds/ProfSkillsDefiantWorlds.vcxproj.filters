@@ -79,6 +79,12 @@
     <Filter Include="Entities\Game Objects\Child\Agent\Child\Ground Units">
       <UniqueIdentifier>{3a69434f-758f-48b4-8094-a88d79de6ef4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Entities\Game Objects\Child\Agent\Child\Space Units\Base">
+      <UniqueIdentifier>{d0c35386-ec3b-4d22-b4f6-f2fea4a64332}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Game Objects\Child\Agent\Child\Space Units\Child">
+      <UniqueIdentifier>{3547574b-3f36-4f7e-bb83-a44824ded56a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ProfSkillsDefiantWorlds.cpp">
@@ -126,6 +132,18 @@
     <ClCompile Include="SoundObject.cpp">
       <Filter>Entities\Sound</Filter>
     </ClCompile>
+    <ClCompile Include="SpaceUnit.cpp">
+      <Filter>Entities\Game Objects\Child\Agent\Child\Space Units\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Mothership.cpp">
+      <Filter>Entities\Game Objects\Child\Agent\Child\Space Units\Child</Filter>
+    </ClCompile>
+    <ClCompile Include="SpaceFighter.cpp">
+      <Filter>Entities\Game Objects\Child\Agent\Child\Space Units\Child</Filter>
+    </ClCompile>
+    <ClCompile Include="Transport.cpp">
+      <Filter>Entities\Game Objects\Child\Agent\Child\Space Units\Child</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common.h">
@@ -169,6 +187,18 @@
     </ClInclude>
     <ClInclude Include="SoundObject.h">
       <Filter>Entities\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="SpaceUnit.h">
+      <Filter>Entities\Game Objects\Child\Agent\Child\Space Units\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Mothership.h">
+      <Filter>Entities\Game Objects\Child\Agent\Child\Space Units\Child</Filter>
+    </ClInclude>
+    <ClInclude Include="SpaceFighter.h">
+      <Filter>Entities\Game Objects\Child\Agent\Child\Space Units\Child</Filter>
+    </ClInclude>
+    <ClInclude Include="Transport.h">
+      <Filter>Entities\Game Objects\Child\Agent\Child\Space Units\Child</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -128,12 +128,16 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
     <ClCompile Include="GameStateControl.cpp" />
     <ClCompile Include="HumanPlayer.cpp" />
     <ClCompile Include="MenuState.cpp" />
+    <ClCompile Include="Mothership.cpp" />
     <ClCompile Include="PlayState.cpp" />
     <ClCompile Include="ProfSkillsDefiantWorlds.cpp" />
     <ClCompile Include="Randomiser.cpp" />
     <ClCompile Include="GameAgent.cpp" />
     <ClCompile Include="SoundObject.cpp" />
+    <ClCompile Include="SpaceFighter.cpp" />
     <ClCompile Include="SpaceState.cpp" />
+    <ClCompile Include="SpaceUnit.cpp" />
+    <ClCompile Include="Transport.cpp" />
     <ClCompile Include="WorldState.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -149,10 +153,14 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
     <ClInclude Include="GameStateControl.h" />
     <ClInclude Include="HumanPlayer.h" />
     <ClInclude Include="MenuState.h" />
+    <ClInclude Include="Mothership.h" />
     <ClInclude Include="PlayState.h" />
     <ClInclude Include="Randomiser.h" />
     <ClInclude Include="SoundObject.h" />
+    <ClInclude Include="SpaceFighter.h" />
     <ClInclude Include="SpaceState.h" />
+    <ClInclude Include="SpaceUnit.h" />
+    <ClInclude Include="Transport.h" />
     <ClInclude Include="WorldState.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
