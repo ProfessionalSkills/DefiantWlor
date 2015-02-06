@@ -28,7 +28,7 @@ CAirUnit::~CAirUnit()
 //-----------------------------------------------------
 bool CAirUnit::Attack(CGameAgent* target)
 {
-
+	return false;
 }
 
 //CAirUnit::void MoveTo(CTile* dest)
@@ -36,10 +36,10 @@ bool CAirUnit::Attack(CGameAgent* target)
 
 bool CAirUnit::Move(float delta)
 {
-
+	return false;
 }
 
 bool CAirUnit::Destroy()
 {
-
+	return false;
 }

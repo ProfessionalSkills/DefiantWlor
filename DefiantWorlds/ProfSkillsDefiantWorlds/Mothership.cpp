@@ -28,7 +28,7 @@ CMothership::~CMothership()
 //-----------------------------------------------------
 bool CMothership::Attack(CGameAgent* target)
 {
-
+	return false;
 }
 
 //CMothership::void MoveTo(CTile* dest)
@@ -36,10 +36,10 @@ bool CMothership::Attack(CGameAgent* target)
 
 bool CMothership::Move(float delta)
 {
-
+	return false;
 }
 
 bool CMothership::Destroy()
 {
-
+	return false;
 }

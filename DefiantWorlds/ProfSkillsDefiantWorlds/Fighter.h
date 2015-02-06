@@ -13,7 +13,7 @@
 
 
 //-----------------------------------------------------
-// FIGHTER CLASS - CHILD OF GROUND UNIT
+// FIGHTER CLASS - CHILD OF AIR UNIT
 //-----------------------------------------------------
 class CFighter : public CAirUnit
 {

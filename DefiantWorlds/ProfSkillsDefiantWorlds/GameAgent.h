@@ -24,7 +24,7 @@ private:
 	float mSpeed;
 	float mProductionTime;
 	float mProductionCost;
-	float mCurProductionTimeLeft;			// Countdown for time remaining until construction complete
+	float mCurProductionTimeLeft;				// Countdown for time remaining until construction complete
 	float mDamage;
 	//CParticleEmitter* mAttackParticleFX;
 	//CParticleEmitter* mDestroyParticleFX;

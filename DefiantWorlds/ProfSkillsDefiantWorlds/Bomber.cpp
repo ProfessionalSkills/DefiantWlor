@@ -28,7 +28,7 @@ CBomber::~CBomber()
 //-----------------------------------------------------
 bool CBomber::Attack(CGameAgent* target)
 {
-
+	return false;
 }
 
 //CBomber::void MoveTo(CTile* dest)
@@ -36,10 +36,10 @@ bool CBomber::Attack(CGameAgent* target)
 
 bool CBomber::Move(float delta)
 {
-
+	return false;
 }
 
 bool CBomber::Destroy()
 {
-
+	return false;
 }

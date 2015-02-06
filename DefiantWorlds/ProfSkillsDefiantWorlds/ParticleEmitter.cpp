@@ -20,4 +20,14 @@ CParticleEmitter::CParticleEmitter()
 
 CParticleEmitter::~CParticleEmitter()
 {
+
+}
+
+
+//-----------------------------------------------------
+// PARTICLE EMITTER CLASS METHODS
+//-----------------------------------------------------
+void CParticleEmitter::UpdateSystem()
+{
+
 }

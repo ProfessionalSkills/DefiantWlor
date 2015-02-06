@@ -28,7 +28,7 @@ CFighter::~CFighter()
 //-----------------------------------------------------
 bool CFighter::Attack(CGameAgent* target)
 {
-
+	return false;
 }
 
 //CFighter::void MoveTo(CTile* dest)
@@ -36,10 +36,10 @@ bool CFighter::Attack(CGameAgent* target)
 
 bool CFighter::Move(float delta)
 {
-
+	return false;
 }
 
 bool CFighter::Destroy()
 {
-
+	return false;
 }

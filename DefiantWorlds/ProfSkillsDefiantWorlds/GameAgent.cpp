@@ -28,12 +28,12 @@ CGameAgent::~CGameAgent()
 //-----------------------------------------------------
 bool CGameAgent::TakeDamage(float amount)
 {
-	
+	return false;
 }
 
 bool CGameAgent::Heal(float amount)
 {
-
+	return false;
 }
 
 
@@ -42,7 +42,5 @@ bool CGameAgent::Heal(float amount)
 //-----------------------------------------------------
 bool CGameAgent::Construct(float delta)
 {
-	// Update construction timer
-	// Simply scale y (proportionally to building height)
-	// Reset scale then set new scale proportional to how far through construction it is
+	return false;
 }

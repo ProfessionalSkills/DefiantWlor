@@ -58,7 +58,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\Program Files %28x86%29\OpenAL 1.1 SDK\freealut-1.1.0-bin\include;C:\Program Files %28x86%29\OpenAL 1.1 SDK\include;C:\ProgramData\TL-Engine\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Program Files %28x86%29\OpenAL 1.1 SDK\freealut-1.1.0-bin\include\AL;C:\Program Files %28x86%29\OpenAL 1.1 SDK\include;C:\ProgramData\TL-Engine\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <PrecompiledHeader>
@@ -80,7 +80,7 @@
       <OutputFile>$(SolutionDir)$(TargetName)$(TargetExt)</OutputFile>
       <SubSystem>Console</SubSystem>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
-      <AdditionalDependencies>TL-Engine2013Debug.lib;OpenAL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>TL-Engine2013Debug.lib;OpenAL32.lib;alut.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Message>Copying DLLs &amp; shaders...</Message>
@@ -123,27 +123,36 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
     <ClCompile Include="AIPlayer.cpp" />
     <ClCompile Include="AirUnit.cpp" />
     <ClCompile Include="Artillery.cpp" />
+    <ClCompile Include="Barracks.cpp" />
     <ClCompile Include="BasePlayer.cpp" />
     <ClCompile Include="Bomber.cpp" />
+    <ClCompile Include="ComCentre.cpp" />
     <ClCompile Include="Common.cpp" />
     <ClCompile Include="BaseGameState.cpp" />
     <ClCompile Include="Fighter.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameStateControl.cpp" />
     <ClCompile Include="GroundUnit.cpp" />
+    <ClCompile Include="Hellipad.cpp" />
+    <ClCompile Include="House.cpp" />
     <ClCompile Include="HumanPlayer.cpp" />
     <ClCompile Include="Infantry.cpp" />
     <ClCompile Include="MenuState.cpp" />
+    <ClCompile Include="Minerals.cpp" />
     <ClCompile Include="Mothership.cpp" />
     <ClCompile Include="ParticleEmitter.cpp" />
     <ClCompile Include="PlayState.cpp" />
+    <ClCompile Include="ProductionStructure.cpp" />
     <ClCompile Include="ProfSkillsDefiantWorlds.cpp" />
     <ClCompile Include="Randomiser.cpp" />
     <ClCompile Include="GameAgent.cpp" />
     <ClCompile Include="SoundObject.cpp" />
+    <ClCompile Include="SpaceCentre.cpp" />
     <ClCompile Include="SpaceFighter.cpp" />
     <ClCompile Include="SpaceState.cpp" />
     <ClCompile Include="SpaceUnit.cpp" />
+    <ClCompile Include="StaticStructure.cpp" />
+    <ClCompile Include="Structure.cpp" />
     <ClCompile Include="Tank.cpp" />
     <ClCompile Include="Transport.cpp" />
     <ClCompile Include="Worker.cpp" />
@@ -155,9 +164,11 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
   <ItemGroup>
     <ClInclude Include="AIPlayer.h" />
     <ClInclude Include="Artillery.h" />
+    <ClInclude Include="Barracks.h" />
     <ClInclude Include="BasePlayer.h" />
     <ClInclude Include="AirUnit.h" />
     <ClInclude Include="Bomber.h" />
+    <ClInclude Include="ComCentre.h" />
     <ClInclude Include="Fighter.h" />
     <ClInclude Include="GameAgent.h" />
     <ClInclude Include="Common.h" />
@@ -165,18 +176,25 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameStateControl.h" />
     <ClInclude Include="GroundUnit.h" />
+    <ClInclude Include="Hellipad.h" />
+    <ClInclude Include="House.h" />
     <ClInclude Include="HumanPlayer.h" />
     <ClInclude Include="Infantry.h" />
     <ClInclude Include="MenuState.h" />
+    <ClInclude Include="Minerals.h" />
     <ClInclude Include="Mothership.h" />
     <ClInclude Include="ParticleEmitter.h" />
     <ClInclude Include="Particles.h" />
     <ClInclude Include="PlayState.h" />
+    <ClInclude Include="ProductionStructure.h" />
     <ClInclude Include="Randomiser.h" />
     <ClInclude Include="SoundObject.h" />
+    <ClInclude Include="SpaceCentre.h" />
     <ClInclude Include="SpaceFighter.h" />
     <ClInclude Include="SpaceState.h" />
     <ClInclude Include="SpaceUnit.h" />
+    <ClInclude Include="StaticStructure.h" />
+    <ClInclude Include="Structure.h" />
     <ClInclude Include="Tank.h" />
     <ClInclude Include="Transport.h" />
     <ClInclude Include="Worker.h" />

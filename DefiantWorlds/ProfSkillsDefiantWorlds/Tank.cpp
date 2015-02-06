@@ -28,7 +28,7 @@ CTank::~CTank()
 //-----------------------------------------------------
 bool CTank::Attack(CGameAgent* target)
 {
-
+	return false;
 }
 
 //CTank::void MoveTo(CTile* dest)
@@ -36,10 +36,10 @@ bool CTank::Attack(CGameAgent* target)
 
 bool CTank::Move(float delta)
 {
-
+	return false;
 }
 
 bool CTank::Destroy()
 {
-
+	return false;
 }

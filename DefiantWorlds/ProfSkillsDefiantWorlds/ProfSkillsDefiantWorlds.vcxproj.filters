@@ -106,6 +106,30 @@
     <Filter Include="Entities\Game Objects\Child\Agent\Child\Air Units\Child">
       <UniqueIdentifier>{38d4b859-20d6-421f-b3e2-654180ac4c5d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Entities\Game Objects\Child\Structure\Base">
+      <UniqueIdentifier>{26a35360-28e7-4af4-b6de-fb468669fbcd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Game Objects\Child\Structure\Child">
+      <UniqueIdentifier>{28175e33-182d-4c32-ba1e-349f63b59912}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Game Objects\Child\Structure\Child\Static">
+      <UniqueIdentifier>{c2980e79-3c28-4bd8-a233-804a953e4881}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Game Objects\Child\Structure\Child\Production">
+      <UniqueIdentifier>{1cbd3ad1-4b5e-4720-8075-165d0fbadab6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Game Objects\Child\Structure\Child\Production\Base">
+      <UniqueIdentifier>{988f354f-9591-4663-ba0f-3b9d59e78460}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Game Objects\Child\Structure\Child\Production\Child">
+      <UniqueIdentifier>{d2099c92-b630-4d8f-ac08-6b126b1db062}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Game Objects\Child\Structure\Child\Static\Base">
+      <UniqueIdentifier>{8a2d9b0e-b623-4228-ab92-4990c3732485}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Game Objects\Child\Structure\Child\Static\Child">
+      <UniqueIdentifier>{5e5b40ae-1cf4-44ed-8f9b-4050755ad5d4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ProfSkillsDefiantWorlds.cpp">
@@ -192,6 +216,33 @@
     <ClCompile Include="Fighter.cpp">
       <Filter>Entities\Game Objects\Child\Agent\Child\Air Units\Child</Filter>
     </ClCompile>
+    <ClCompile Include="Minerals.cpp">
+      <Filter>Entities\Game Objects\Child\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="Structure.cpp">
+      <Filter>Entities\Game Objects\Child\Structure\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="StaticStructure.cpp">
+      <Filter>Entities\Game Objects\Child\Structure\Child\Static\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="House.cpp">
+      <Filter>Entities\Game Objects\Child\Structure\Child\Static\Child</Filter>
+    </ClCompile>
+    <ClCompile Include="ProductionStructure.cpp">
+      <Filter>Entities\Game Objects\Child\Structure\Child\Production\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="ComCentre.cpp">
+      <Filter>Entities\Game Objects\Child\Structure\Child\Production\Child</Filter>
+    </ClCompile>
+    <ClCompile Include="SpaceCentre.cpp">
+      <Filter>Entities\Game Objects\Child\Structure\Child\Production\Child</Filter>
+    </ClCompile>
+    <ClCompile Include="Barracks.cpp">
+      <Filter>Entities\Game Objects\Child\Structure\Child\Production\Child</Filter>
+    </ClCompile>
+    <ClCompile Include="Hellipad.cpp">
+      <Filter>Entities\Game Objects\Child\Structure\Child\Production\Child</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common.h">
@@ -277,6 +328,33 @@
     </ClInclude>
     <ClInclude Include="Fighter.h">
       <Filter>Entities\Game Objects\Child\Agent\Child\Air Units\Child</Filter>
+    </ClInclude>
+    <ClInclude Include="Minerals.h">
+      <Filter>Entities\Game Objects\Child\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="Structure.h">
+      <Filter>Entities\Game Objects\Child\Structure\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="StaticStructure.h">
+      <Filter>Entities\Game Objects\Child\Structure\Child\Static\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="House.h">
+      <Filter>Entities\Game Objects\Child\Structure\Child\Static\Child</Filter>
+    </ClInclude>
+    <ClInclude Include="ProductionStructure.h">
+      <Filter>Entities\Game Objects\Child\Structure\Child\Production\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="ComCentre.h">
+      <Filter>Entities\Game Objects\Child\Structure\Child\Production\Child</Filter>
+    </ClInclude>
+    <ClInclude Include="SpaceCentre.h">
+      <Filter>Entities\Game Objects\Child\Structure\Child\Production\Child</Filter>
+    </ClInclude>
+    <ClInclude Include="Barracks.h">
+      <Filter>Entities\Game Objects\Child\Structure\Child\Production\Child</Filter>
+    </ClInclude>
+    <ClInclude Include="Hellipad.h">
+      <Filter>Entities\Game Objects\Child\Structure\Child\Production\Child</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

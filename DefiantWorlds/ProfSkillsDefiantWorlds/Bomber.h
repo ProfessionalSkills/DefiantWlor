@@ -13,7 +13,7 @@
 
 
 //-----------------------------------------------------
-// BOMBER CLASS - CHILD OF GROUND UNIT
+// BOMBER CLASS - CHILD OF AIR UNIT
 //-----------------------------------------------------
 class CBomber : public CAirUnit
 {

@@ -28,7 +28,7 @@ CSpaceUnit::~CSpaceUnit()
 //-----------------------------------------------------
 bool CSpaceUnit::Attack(CGameAgent* target)
 {
-
+	return false;
 }
 
 //CSpaceUnit::void MoveTo(CTile* dest)
@@ -36,10 +36,10 @@ bool CSpaceUnit::Attack(CGameAgent* target)
 
 bool CSpaceUnit::Move(float delta)
 {
-
+	return false;
 }
 
 bool CSpaceUnit::Destroy()
 {
-
+	return false;
 }

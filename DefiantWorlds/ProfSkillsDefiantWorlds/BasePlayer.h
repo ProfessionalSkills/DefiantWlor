@@ -19,12 +19,13 @@
 #include "Bomber.h"				// Air unit
 #include "Fighter.h"			// Air unit
 
+#include "Minerals.h"			// Resource
 
-//-----------------------------------------------------
-// CONSTANTS
-//-----------------------------------------------------
-const int MAX_UNITS = 50;
-const int MAX_SPACE_UNITS = 10;
+#include "House.h"				// Static structure
+#include "Barracks.h"			// Production structure
+#include "ComCentre.h"			// Production structure
+#include "Hellipad.h"			// Production structure
+#include "SpaceCentre.h"		// Production structure
 
 
 //-----------------------------------------------------
@@ -44,7 +45,7 @@ private:
 
 	// LISTS
 	//---------------------------
-	// std::vector<CStructure*> mStructureList;
+	std::vector<CStructure*> mStructureList;
 	std::vector<CGameAgent*> mWorldUnitsList;
 	std::vector<CSpaceUnit*> mSpaceUnitsList;
 

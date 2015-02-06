@@ -40,9 +40,9 @@ private:
 	//---------------------------
 	const int EDGE_THRESHOLD = 50; // How far from the edge the mouse must be for edge scrolling
 
-	S2DPointData* mpMousePos;
-	RECT          mBaseClip;		// The rectangle of the window (for undoing mouse clip)
-	RECT          mWindowClip;		// Limit the mouse to stay within the window
+	SPointData* mpMousePos;
+	RECT        mBaseClip;		   // The rectangle of the window (for undoing mouse clip)
+	RECT        mWindowClip;	   // Limit the mouse to stay within the window
 
 
 public:

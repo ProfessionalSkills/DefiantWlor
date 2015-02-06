@@ -41,7 +41,7 @@ bool RepairUnit(CGroundUnit* unit)
 //-----------------------------------------------------
 bool CWorker::Attack(CGameAgent* target)
 {
-
+	return false;
 }
 
 //CWorker::void MoveTo(CTile* dest)
@@ -49,10 +49,10 @@ bool CWorker::Attack(CGameAgent* target)
 
 bool CWorker::Move(float delta)
 {
-
+	return false;
 }
 
 bool CWorker::Destroy()
 {
-
+	return false;
 }

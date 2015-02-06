@@ -28,7 +28,7 @@ CSpaceFighter::~CSpaceFighter()
 //-----------------------------------------------------
 bool CSpaceFighter::Attack(CGameAgent* target)
 {
-
+	return false;
 }
 
 //CSpaceFighter::void MoveTo(CTile* dest)
@@ -36,10 +36,10 @@ bool CSpaceFighter::Attack(CGameAgent* target)
 
 bool CSpaceFighter::Move(float delta)
 {
-
+	return false;
 }
 
 bool CSpaceFighter::Destroy()
 {
-
+	return false;
 }

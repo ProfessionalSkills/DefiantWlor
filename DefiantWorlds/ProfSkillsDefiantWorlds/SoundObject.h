@@ -8,10 +8,9 @@
 //-----------------------------------------------------
 // INCLUDES
 //-----------------------------------------------------
-#include "Common.h"
 #include <al.h>      // Main OpenAL functions
 #include <alc.h>     // OpenAL "context" functions (also part of main OpenAL API)
-#include <AL/alut.h> // OpenAL utility library - helper functions
+#include <alut.h>    // OpenAL utility library - helper functions
 
 
 //-----------------------------------------------------

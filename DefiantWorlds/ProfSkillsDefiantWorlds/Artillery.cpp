@@ -14,12 +14,12 @@
 //-----------------------------------------------------
 CArtillery::CArtillery()
 {
-
+	
 }
 
 CArtillery::~CArtillery()
 {
-
+	
 }
 
 
@@ -28,7 +28,7 @@ CArtillery::~CArtillery()
 //-----------------------------------------------------
 bool CArtillery::Attack(CGameAgent* target)
 {
-
+	return false;
 }
 
 //CArtillery::void MoveTo(CTile* dest)
@@ -36,10 +36,10 @@ bool CArtillery::Attack(CGameAgent* target)
 
 bool CArtillery::Move(float delta)
 {
-
+	return false;
 }
 
 bool CArtillery::Destroy()
 {
-
+	return false;
 }

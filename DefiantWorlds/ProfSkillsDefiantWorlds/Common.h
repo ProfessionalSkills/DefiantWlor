@@ -9,26 +9,19 @@
 //-----------------------------------------------------
 // INCLUDES
 //-----------------------------------------------------
-#include <TL-Engine.h>			// TL-Engine stuff
 #include <vector>
 #include <list>
+#include <queue>
 #include <DirectXMath.h>		// Contains vector, matrices, etc. libraries 
 								// Everything here is contained in the DirectX namespace (see below)
 #include <string>
 #include <sstream>
-#include <Windows.h>
-#include "Randomiser.h"
+#include "SoundObject.h"
 #include "Particles.h"
 
 // Renamed the DirectX namespace so that DirectX:: is not required all the time. Simply use DX:: instead.
 // e.g. Vector3 variable created by doing DX::XMFLOAT3 mPos; just as an example.
 namespace DX = DirectX;
-
-// If this is okay with you guys, I don't really like using this 'using namespace' as it's not
-// professional coding conventions/standards. So, if possible, please no 'using namespace std'.
-// if you do not like this I guess I can make an exception :P I will leave tle though as, to
-// be honest, I have no idea what actually falls under this namespace.
-using namespace tle;
 
 
 //-----------------------------------------------------
@@ -42,6 +35,12 @@ enum EGameStates
 enum EObjectStates
 {
 	OBJ_CONSTRUCTING, OBJ_BUILT, OBJ_DAMAGED, OBJ_DEAD
+};
+
+enum EGameAgentsList
+{
+	GA_FIGHTER, GA_BOMBER,   GA_MOTHERSHIP, GA_SPACE_FIGHTER, GA_TRANSPORT,
+	GA_WORKER,  GA_INFANTRY, GA_TANK,       GA_ARTILLERY
 };
 
 
@@ -65,6 +64,9 @@ const size_t WINDOW_POS_Y = 50U;
 
 const size_t WINDOW_WIDTH  = 1600U;
 const size_t WINDOW_HEIGHT = 900U;
+
+const int MAX_UNITS = 50;
+const int MAX_SPACE_UNITS = 10;
 
 // Store the current game state
 extern EGameStates gCurState;
