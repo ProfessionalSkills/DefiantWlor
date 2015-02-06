@@ -243,6 +243,15 @@
     <ClCompile Include="Hellipad.cpp">
       <Filter>Entities\Game Objects\Child\Structure\Child\Production\Child</Filter>
     </ClCompile>
+    <ClCompile Include="Particles.cpp">
+      <Filter>Entities\Particles</Filter>
+    </ClCompile>
+    <ClCompile Include="Smoke.cpp">
+      <Filter>Entities\Particle Emitter\Child</Filter>
+    </ClCompile>
+    <ClCompile Include="Explosion.cpp">
+      <Filter>Entities\Particle Emitter\Child</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common.h">
@@ -355,6 +364,12 @@
     </ClInclude>
     <ClInclude Include="Hellipad.h">
       <Filter>Entities\Game Objects\Child\Structure\Child\Production\Child</Filter>
+    </ClInclude>
+    <ClInclude Include="Smoke.h">
+      <Filter>Entities\Particle Emitter\Child</Filter>
+    </ClInclude>
+    <ClInclude Include="Explosion.h">
+      <Filter>Entities\Particle Emitter\Child</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
