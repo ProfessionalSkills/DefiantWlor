@@ -130,12 +130,6 @@
     <Filter Include="Entities\Game Objects\Child\Structure\Child\Static\Child">
       <UniqueIdentifier>{5e5b40ae-1cf4-44ed-8f9b-4050755ad5d4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="World Representation\Grid">
-      <UniqueIdentifier>{61e1b2f7-78e6-4f9b-bfc0-8417e546e5a4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="World Representation\Tile">
-      <UniqueIdentifier>{d9667676-bf49-418e-946a-9ba40a06a55e}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ProfSkillsDefiantWorlds.cpp">
@@ -249,11 +243,14 @@
     <ClCompile Include="Hellipad.cpp">
       <Filter>Entities\Game Objects\Child\Structure\Child\Production\Child</Filter>
     </ClCompile>
-    <ClCompile Include="Tile.cpp">
-      <Filter>World Representation\Tile</Filter>
+    <ClCompile Include="Particles.cpp">
+      <Filter>Entities\Particles</Filter>
     </ClCompile>
-    <ClCompile Include="Grid.cpp">
-      <Filter>World Representation\Grid</Filter>
+    <ClCompile Include="Smoke.cpp">
+      <Filter>Entities\Particle Emitter\Child</Filter>
+    </ClCompile>
+    <ClCompile Include="Explosion.cpp">
+      <Filter>Entities\Particle Emitter\Child</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -368,11 +365,11 @@
     <ClInclude Include="Hellipad.h">
       <Filter>Entities\Game Objects\Child\Structure\Child\Production\Child</Filter>
     </ClInclude>
-    <ClInclude Include="Tile.h">
-      <Filter>World Representation\Tile</Filter>
+    <ClInclude Include="Smoke.h">
+      <Filter>Entities\Particle Emitter\Child</Filter>
     </ClInclude>
-    <ClInclude Include="Grid.h">
-      <Filter>World Representation\Grid</Filter>
+    <ClInclude Include="Explosion.h">
+      <Filter>Entities\Particle Emitter\Child</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

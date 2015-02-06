@@ -129,6 +129,7 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
     <ClCompile Include="ComCentre.cpp" />
     <ClCompile Include="Common.cpp" />
     <ClCompile Include="BaseGameState.cpp" />
+    <ClCompile Include="Explosion.cpp" />
     <ClCompile Include="Fighter.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameStateControl.cpp" />
@@ -142,11 +143,13 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
     <ClCompile Include="Minerals.cpp" />
     <ClCompile Include="Mothership.cpp" />
     <ClCompile Include="ParticleEmitter.cpp" />
+    <ClCompile Include="Particles.cpp" />
     <ClCompile Include="PlayState.cpp" />
     <ClCompile Include="ProductionStructure.cpp" />
     <ClCompile Include="ProfSkillsDefiantWorlds.cpp" />
     <ClCompile Include="Randomiser.cpp" />
     <ClCompile Include="GameAgent.cpp" />
+    <ClCompile Include="Smoke.cpp" />
     <ClCompile Include="SoundObject.cpp" />
     <ClCompile Include="SpaceCentre.cpp" />
     <ClCompile Include="SpaceFighter.cpp" />
@@ -171,6 +174,7 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
     <ClInclude Include="AirUnit.h" />
     <ClInclude Include="Bomber.h" />
     <ClInclude Include="ComCentre.h" />
+    <ClInclude Include="Explosion.h" />
     <ClInclude Include="Fighter.h" />
     <ClInclude Include="GameAgent.h" />
     <ClInclude Include="Common.h" />
@@ -191,6 +195,7 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
     <ClInclude Include="PlayState.h" />
     <ClInclude Include="ProductionStructure.h" />
     <ClInclude Include="Randomiser.h" />
+    <ClInclude Include="Smoke.h" />
     <ClInclude Include="SoundObject.h" />
     <ClInclude Include="SpaceCentre.h" />
     <ClInclude Include="SpaceFighter.h" />

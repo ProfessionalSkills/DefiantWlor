@@ -11,8 +11,8 @@
 //-----------------------------------------------------
 #include <TL-Engine.h>			// TL-Engine stuff
 #include "Randomiser.h"
+#include "Common.h"
 using namespace tle;
-
 
 //-----------------------------------------------------
 // PARTICLE CLASS
@@ -22,9 +22,18 @@ class CParticle
 protected:
 	// PARTICLE DATA
 	//---------------------------
+	IMesh* mMesh;
 	IModel* mModel;
-	float mMoveVector[3];		// HIGGY:  You can change this to a DX::XMFLOAT3 variable. Uses intrinsics (calculations with multiple floats in one tick) - much like D3DXVECTOR3 you use in graphics, it contains an x, y, and z set of variables ;)
-	float lifeTime;
+	DX::XMFLOAT3 mMoveVector; //Thank Kyle :)
+	string mSkin;
+	float mLifeTime;
+
+	// CONSTRUCTORS & DESTRUCTOR
+	//---------------------------
+	CParticle(DX::XMFLOAT3 position);
+	~CParticle();
 };
+
+IMesh* CParticle::mMesh = I3DEngine->LoadMesh("particle.x");
 
 #endif
