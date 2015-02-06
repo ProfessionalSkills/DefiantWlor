@@ -1,110 +1,8 @@
-﻿Build started 06/02/2015 17:50:17.
+﻿Build started 06/02/2015 19:55:53.
      1>Project "C:\Users\Kyle\GitHub\Repos\DefiantWorlds\DefiantWorlds\ProfSkillsDefiantWorlds\ProfSkillsDefiantWorlds.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Program Files (x86)\OpenAL 1.1 SDK\freealut-1.1.0-bin\include\AL" /I"C:\Program Files (x86)\OpenAL 1.1 SDK\include" /I"C:\ProgramData\TL-Engine\include" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MTd /GS /Gy /fp:fast /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt AIPlayer.cpp AirUnit.cpp Artillery.cpp Barracks.cpp BaseGameState.cpp BasePlayer.cpp Bomber.cpp ComCentre.cpp Common.cpp Fighter.cpp GameAgent.cpp GameObject.cpp GameStateControl.cpp Grid.cpp GroundUnit.cpp Hellipad.cpp House.cpp HumanPlayer.cpp Infantry.cpp MenuState.cpp Minerals.cpp Mothership.cpp PlayState.cpp ProductionStructure.cpp ProfSkillsDefiantWorlds.cpp SpaceCentre.cpp SpaceFighter.cpp SpaceState.cpp SpaceUnit.cpp StaticStructure.cpp Structure.cpp Tank.cpp Tile.cpp Transport.cpp Worker.cpp WorldState.cpp
-         AIPlayer.cpp
-     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\gameobject.h(67): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\gameobject.h(72): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
-         Generating Code...
-         Compiling...
-         WorldState.cpp
-     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\gameobject.h(67): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\gameobject.h(72): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
-         Worker.cpp
-     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\gameobject.h(67): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\gameobject.h(72): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
-         Transport.cpp
-     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\gameobject.h(67): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\gameobject.h(72): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
-         Tile.cpp
-         Tank.cpp
-     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\gameobject.h(67): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\gameobject.h(72): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
-         Structure.cpp
-     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\gameobject.h(67): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\gameobject.h(72): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
-         StaticStructure.cpp
-     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\gameobject.h(67): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\gameobject.h(72): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
-         SpaceUnit.cpp
-     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\gameobject.h(67): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\gameobject.h(72): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
-         SpaceState.cpp
-     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\gameobject.h(67): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\gameobject.h(72): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
-         SpaceFighter.cpp
-     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\gameobject.h(67): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\gameobject.h(72): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
-         SpaceCentre.cpp
-     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\gameobject.h(67): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\gameobject.h(72): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
-         ProfSkillsDefiantWorlds.cpp
-     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\gameobject.h(67): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\gameobject.h(72): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
-         ProductionStructure.cpp
-     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\gameobject.h(67): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\gameobject.h(72): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
-         PlayState.cpp
-     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\gameobject.h(67): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\gameobject.h(72): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
-         Mothership.cpp
-     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\gameobject.h(67): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\gameobject.h(72): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
-         Minerals.cpp
-     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\gameobject.h(67): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\gameobject.h(72): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
-         MenuState.cpp
-         Infantry.cpp
-     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\gameobject.h(67): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\gameobject.h(72): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
-         HumanPlayer.cpp
-     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\gameobject.h(67): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\gameobject.h(72): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
-         House.cpp
-     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\gameobject.h(67): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\gameobject.h(72): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
-         Generating Code...
-         Compiling...
-         Hellipad.cpp
-     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\gameobject.h(67): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\gameobject.h(72): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
-         GroundUnit.cpp
-     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\gameobject.h(67): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\gameobject.h(72): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
-         Grid.cpp
-         GameStateControl.cpp
-     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\gameobject.h(67): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\gameobject.h(72): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
-         GameObject.cpp
-     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\gameobject.h(67): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\gameobject.h(72): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
-         GameAgent.cpp
-     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\gameobject.h(67): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\gameobject.h(72): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
-         Fighter.cpp
-     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\gameobject.h(67): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\gameobject.h(72): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
-         Common.cpp
-         ComCentre.cpp
-     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\gameobject.h(67): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\gameobject.h(72): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
-         Bomber.cpp
-     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\gameobject.h(67): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\gameobject.h(72): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
-         BasePlayer.cpp
-     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\gameobject.h(67): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\gameobject.h(72): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
-         BaseGameState.cpp
-         Barracks.cpp
-     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\gameobject.h(67): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\gameobject.h(72): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
-         Artillery.cpp
-     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\gameobject.h(67): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\gameobject.h(72): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
-         AirUnit.cpp
-     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\gameobject.h(67): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\gameobject.h(72): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
-         Generating Code...
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Program Files (x86)\OpenAL 1.1 SDK\freealut-1.1.0-bin\include\AL" /I"C:\Program Files (x86)\OpenAL 1.1 SDK\include" /I"C:\ProgramData\TL-Engine\include" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MTd /GS /Gy /fp:fast /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Explosion.cpp
+         Explosion.cpp
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Kyle\GitHub\Repos\DefiantWorlds\DefiantWorlds\ProfSkillsDefiantWorlds\ProfSkillsDefiantWorldsDebug.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Program Files (x86)\OpenAL 1.1 SDK\freealut-1.1.0-bin\lib" /LIBPATH:"C:\Program Files (x86)\OpenAL 1.1 SDK\libs\Win32" /LIBPATH:"C:\ProgramData\TL-Engine\lib" "TL-Engine2013Debug.lib" OpenAL32.lib alut.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST:NO /DEBUG /PDB:"C:\Users\Kyle\GitHub\Repos\DefiantWorlds\DefiantWorlds\ProfSkillsDefiantWorlds\\ProfSkillsDefiantWorlds.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /IMPLIB:"C:\Users\Kyle\GitHub\Repos\DefiantWorlds\DefiantWorlds\ProfSkillsDefiantWorlds\\ProfSkillsDefiantWorldsDebug.lib" /MACHINE:X86 /SAFESEH:NO Debug\AIPlayer.obj
          Debug\AirUnit.obj
@@ -115,6 +13,7 @@
          Debug\ComCentre.obj
          Debug\Common.obj
          Debug\BaseGameState.obj
+         Debug\Explosion.obj
          Debug\Fighter.obj
          Debug\GameObject.obj
          Debug\GameStateControl.obj
@@ -128,11 +27,13 @@
          Debug\Minerals.obj
          Debug\Mothership.obj
          Debug\ParticleEmitter.obj
+         Debug\Particles.obj
          Debug\PlayState.obj
          Debug\ProductionStructure.obj
          Debug\ProfSkillsDefiantWorlds.obj
          Debug\Randomiser.obj
          Debug\GameAgent.obj
+         Debug\Smoke.obj
          Debug\SoundObject.obj
          Debug\SpaceCentre.obj
          Debug\SpaceFighter.obj
@@ -156,4 +57,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:20.43
+Time Elapsed 00:00:01.24

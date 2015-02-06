@@ -12,6 +12,7 @@ protected:
 
 	//EMITTER MODEL SOURCE
 
+public:
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
 	CExplosion();
@@ -21,7 +22,6 @@ protected:
 	// VIRTUAL METHODS
 	//---------------------------
 	virtual void UpdateSystem();
-};
 };
 
 #endif

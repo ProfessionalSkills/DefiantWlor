@@ -26,6 +26,7 @@ c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\d
 c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\debug\barracks.obj
 c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\debug\baseplayer.obj
 c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\debug\bomber.obj
+c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\debug\comcentre.obj
 c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\debug\common.obj
 c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\debug\basegamestate.obj
 c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\debug\fighter.obj
@@ -36,7 +37,10 @@ c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\d
 c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\debug\house.obj
 c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\debug\humanplayer.obj
 c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\debug\infantry.obj
-c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\debug\comcentre.obj
+c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\debug\grid.obj
+c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\debug\tile.obj
+c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\debug\smoke.obj
+c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\debug\particles.obj
 c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\profskillsdefiantworldsdebug.ilk
 c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\profskillsdefiantworldsdebug.exe
 c:\users\kyle\github\repos\defiantworlds\defiantworlds\profskillsdefiantworlds\profskillsdefiantworlds.pdb

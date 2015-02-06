@@ -12,16 +12,11 @@
 #include <vector>
 #include <list>
 #include <queue>
-#include <DirectXMath.h>		// Contains vector, matrices, etc. libraries 
-								// Everything here is contained in the DirectX namespace (see below)
+
 #include <string>
 #include <sstream>
 #include "SoundObject.h"
 #include "Particles.h"
-
-// Renamed the DirectX namespace so that DirectX:: is not required all the time. Simply use DX:: instead.
-// e.g. Vector3 variable created by doing DX::XMFLOAT3 mPos; just as an example.
-namespace DX = DirectX;
 
 
 //-----------------------------------------------------

@@ -4,8 +4,8 @@ CExplosion::CExplosion()
 {
 	for (int i = 0; i < mParticleNumber; i++)
 	{
-		CParticle particle = new CParticle()
-		mParticles.push_back()
+		//CParticle particle = new CParticle()
+		//mParticles.push_back()
 	}
 }
 

@@ -23,5 +23,5 @@ CParticle::CParticle(DX::XMFLOAT3 position)
 
 CParticle::~CParticle()
 {
-	mMesh->RemoveModel(mModel);
+	//mMesh->RemoveModel(mModel);
 }
