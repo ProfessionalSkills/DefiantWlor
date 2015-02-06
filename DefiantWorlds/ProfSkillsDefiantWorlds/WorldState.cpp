@@ -47,15 +47,22 @@ void CWorldState::StateSetup()
 
 	// INITIALISE CAMERAS
 	//-----------------------------
-	mpCamEarth = gpEngine->CreateCamera(kManual, 0.0f, 500.0f, 0.0f);
+	mpCamEarth = gpEngine->CreateCamera(kManual, 0.0f, 200.0f, 0.0f);
 	mpCamEarth->RotateX(90.0f);
-	mpCamEarth->SetFarClip(30000.0f);
+	mpCamEarth->SetFarClip(3000.0f);
 
 
 	// INITIALISE SKYBOX
 	//-----------------------------
 	mpMshSkybox = gpEngine->LoadMesh("SkyboxWorld.x");
 	mpMdlSkybox = mpMshSkybox->CreateModel(0.0f, 0.0f, 0.0f);
+	mpMdlSkybox->Scale(0.5f);
+
+
+	// INITIALISE WORLDS
+	//-----------------------------
+	test = gpEngine->LoadMesh("Planet.x");
+	mpEarthGrid = new CGrid(DX::XMFLOAT3(0.0f, 0.0f, 0.0f), test);
 }
 
 void CWorldState::StateUpdate(const float inDelta)
@@ -70,6 +77,11 @@ void CWorldState::StateUpdate(const float inDelta)
 	// Update mouse position
 	mpMousePos->mPosX = gpEngine->GetMouseX();
 	mpMousePos->mPosY = gpEngine->GetMouseY();
+
+	if (gpEngine->KeyHit(Key_P))
+	{
+		int i = 5;
+	}
 
 	// Check for side scrolling
 	if (mpMousePos->mPosX < EDGE_THRESHOLD)

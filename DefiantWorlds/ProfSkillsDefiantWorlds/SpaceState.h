@@ -19,7 +19,6 @@ class CSpaceState : public CPlayState
 {
 private:
 
-
 public:
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------

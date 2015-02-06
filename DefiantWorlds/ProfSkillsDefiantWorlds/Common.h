@@ -51,6 +51,9 @@ struct SPointData
 {
 	int mPosX;
 	int mPosY;
+
+	SPointData() { mPosX = 0; mPosY = 0; }
+	SPointData(int x, int y) { mPosX = x; mPosY = y; }
 };
 
 
@@ -59,14 +62,18 @@ struct SPointData
 //-----------------------------------------------------
 const float PI = 3.14159f;
 
-const size_t WINDOW_POS_X = 50U;
-const size_t WINDOW_POS_Y = 50U;
+const int WINDOW_POS_X = 50;
+const int WINDOW_POS_Y = 50;
 
-const size_t WINDOW_WIDTH  = 1600U;
-const size_t WINDOW_HEIGHT = 900U;
+const int WINDOW_WIDTH  = 1600;
+const int WINDOW_HEIGHT = 900;
 
 const int MAX_UNITS = 50;
 const int MAX_SPACE_UNITS = 10;
+
+const int GRID_SIZE_X = 25;
+const int GRID_SIZE_Y = 25;
+const float  GRID_TILE_SIZE = 10.0f;
 
 // Store the current game state
 extern EGameStates gCurState;

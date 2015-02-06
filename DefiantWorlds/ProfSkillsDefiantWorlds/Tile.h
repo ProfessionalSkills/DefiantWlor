@@ -1,0 +1,87 @@
+//-----------------------------------------------------
+// FILE: Tile.h
+//-----------------------------------------------------
+
+#ifndef _TILE_H_
+#define _TILE_H_
+
+
+//-----------------------------------------------------
+// INCLUDES
+//-----------------------------------------------------
+#include "Common.h"
+
+
+//-----------------------------------------------------
+// TILE CLASS
+//-----------------------------------------------------
+class CTile
+{
+private:
+	SPointData   mTileGridPos;
+	DX::XMFLOAT3 mTileWorldPos;
+	bool         mTileUsed;
+	CTile*       mpParent;
+
+	IModel* mpMdlTest;
+
+
+public:
+	// CONSTRUCTORS & DESTRUCTOR
+	//---------------------------
+	CTile();
+	~CTile();
+
+
+	// ACCESSORS
+	//---------------------------
+	inline SPointData GetGridPos()
+	{
+		return mTileGridPos;
+	}
+
+	inline DX::XMFLOAT3 GetWorldPos()
+	{
+		return mTileWorldPos;
+	}
+
+	inline bool IsTileUsed()
+	{
+		return mTileUsed;
+	}
+
+	inline CTile* GetParent()
+	{
+		return mpParent;
+	}
+
+
+	// MUTATORS
+	//---------------------------
+	inline void SetGridPos(SPointData& gridPos)
+	{
+		mTileGridPos = gridPos;
+	}
+
+	inline void SetWorldPos(DX::XMFLOAT3& worldPos)
+	{
+		mTileWorldPos = worldPos;
+	}
+
+	inline void SetTileUsage(bool isUsed)
+	{
+		mTileUsed = isUsed;
+	}
+
+	inline void SetParent(CTile* pTile)
+	{
+		mpParent = pTile;
+	}
+
+
+	// METHODS
+	//--------------------------- 
+	void CreateTestModel(IMesh* msh);
+};
+
+#endif /* _TILE_H_ */

@@ -10,6 +10,7 @@
 // INCLUDES
 //-----------------------------------------------------
 #include "PlayState.h"
+#include "Grid.h"
 
 
 //-----------------------------------------------------
@@ -36,6 +37,10 @@ private:
 	IModel* mpMdlSkybox;
 
 
+	CGrid* mpEarthGrid;
+	CGrid* mpMarsGrid;
+
+
 	// ADDITIONAL VARIABLES
 	//---------------------------
 	const int EDGE_THRESHOLD = 50; // How far from the edge the mouse must be for edge scrolling
@@ -43,6 +48,8 @@ private:
 	SPointData* mpMousePos;
 	RECT        mBaseClip;		   // The rectangle of the window (for undoing mouse clip)
 	RECT        mWindowClip;	   // Limit the mouse to stay within the window
+
+	IMesh* test;
 
 
 public:
