@@ -30,7 +30,8 @@ void CWorldState::StateSetup()
 {
 	// INITIALISE ADDITIONAL VARIABLES
 	//------------------------------
-	mpMousePos = new SPointData();
+	mpMouseScreenPos = new SPointData();
+	mpMouseGridPos = new SPointData();
 	mWindowClip = { 0 };
 	GetClipCursor(&mBaseClip);
 	GetWindowRect((HWND)gpEngine->GetWindow(), &mWindowClip);
@@ -49,8 +50,10 @@ void CWorldState::StateSetup()
 	//-----------------------------
 	mpCamEarth = gpEngine->CreateCamera(kManual, 0.0f, 200.0f, 0.0f);
 	mpCamEarth->RotateX(90.0f);
-	mpCamEarth->SetFarClip(3000.0f);
+	mpCamEarth->SetNearClip(NEAR_CLIP);
+	mpCamEarth->SetFarClip(FAR_CLIP);
 
+	mpCamCurrent = mpCamEarth;
 
 	// INITIALISE SKYBOX
 	//-----------------------------
@@ -69,32 +72,32 @@ void CWorldState::StateUpdate(const float inDelta)
 {
 	// SCENE DRAW
 	//------------------------------
-	gpEngine->DrawScene();
+	gpEngine->DrawScene(mpCamCurrent);
 	
 
 	// MOUSE TRACKING
 	//------------------------------
 	// Update mouse position
-	mpMousePos->mPosX = gpEngine->GetMouseX();
-	mpMousePos->mPosY = gpEngine->GetMouseY();
+	mpMouseScreenPos->mPosX = gpEngine->GetMouseX();
+	mpMouseScreenPos->mPosY = gpEngine->GetMouseY();
 
 	// Check for side scrolling
-	if (mpMousePos->mPosX < EDGE_THRESHOLD)
+	if (mpMouseScreenPos->mPosX < EDGE_THRESHOLD)
 	{
 		// Mouse on left side of screen
 		mpCamEarth->MoveX(-CAM_MOVE_SPEED * inDelta);
 	}
-	if (mpMousePos->mPosX > WINDOW_WIDTH - EDGE_THRESHOLD)
+	if (mpMouseScreenPos->mPosX > WINDOW_WIDTH - EDGE_THRESHOLD)
 	{
 		// Mouse on right side of screen
 		mpCamEarth->MoveX(CAM_MOVE_SPEED * inDelta);
 	}
-	if (mpMousePos->mPosY < EDGE_THRESHOLD)
+	if (mpMouseScreenPos->mPosY < EDGE_THRESHOLD)
 	{
 		// Mouse on top side of screen
 		mpCamEarth->MoveZ(CAM_MOVE_SPEED * inDelta);
 	}
-	if (mpMousePos->mPosY > WINDOW_HEIGHT - EDGE_THRESHOLD)
+	if (mpMouseScreenPos->mPosY > WINDOW_HEIGHT - EDGE_THRESHOLD)
 	{
 		// Mouse on bottom side of screen
 		mpCamEarth->MoveZ(-CAM_MOVE_SPEED * inDelta);
@@ -105,6 +108,7 @@ void CWorldState::StateUpdate(const float inDelta)
 	//------------------------------
 	mpAIPlayer->Update(inDelta);
 	mpHumanPlayer->Update(inDelta);
+	
 
 
 	// STATE CHANGE TEST
@@ -127,7 +131,8 @@ void CWorldState::StateSave()
 
 void CWorldState::StateCleanup()
 {
-	SafeDelete(mpMousePos);
+	SafeDelete(mpMouseScreenPos);
+	SafeDelete(mpMouseGridPos);
 
 	mpMshSkybox->RemoveModel(mpMdlSkybox);
 

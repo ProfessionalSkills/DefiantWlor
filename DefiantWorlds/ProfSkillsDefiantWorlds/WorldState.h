@@ -23,6 +23,7 @@ private:
 	//--------------------------- 
 	ICamera* mpCamEarth;
 	ICamera* mpCamMars;
+	ICamera* mpCamCurrent;
 
 	const float CAM_MOVE_SPEED = 50.0f;
 
@@ -45,7 +46,8 @@ private:
 	//---------------------------
 	const int EDGE_THRESHOLD = 50; // How far from the edge the mouse must be for edge scrolling
 
-	SPointData* mpMousePos;
+	SPointData* mpMouseScreenPos;
+	SPointData* mpMouseGridPos;
 	RECT        mBaseClip;		   // The rectangle of the window (for undoing mouse clip)
 	RECT        mWindowClip;	   // Limit the mouse to stay within the window
 
