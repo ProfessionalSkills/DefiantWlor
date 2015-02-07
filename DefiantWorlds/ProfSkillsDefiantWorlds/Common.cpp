@@ -49,3 +49,19 @@ float ToDegrees(float inRadians)
 {
 	return (180 / PI) * inRadians;
 }
+
+DX::XMVECTOR XMMinusVectors(DX::XMVECTOR vec1, DX::XMVECTOR vec2)
+{
+	DX::XMFLOAT3 v1;
+	DX::XMFLOAT3 v2;
+	DX::XMFLOAT3 vResult;
+
+	DX::XMStoreFloat3(&v1, vec1);
+	DX::XMStoreFloat3(&v2, vec2);
+
+	vResult.x = v1.x - v2.x;
+	vResult.y = v1.y - v2.y;
+	vResult.z = v1.z - v2.z;
+
+	return DX::XMLoadFloat3(&vResult);
+}

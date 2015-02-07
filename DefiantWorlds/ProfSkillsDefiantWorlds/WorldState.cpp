@@ -34,7 +34,7 @@ void CWorldState::UpdateMatrices()
 	// XMMATRIX variables calculations
 	DX::XMMATRIX world = DX::XMLoadFloat4x4(&mCamWorldMatrix);
 	DX::XMMATRIX view = DX::XMMatrixInverse(NULL, DX::XMLoadFloat4x4(&mCamWorldMatrix));
-	DX::XMMATRIX proj = DX::XMMatrixPerspectiveFovLH(DX::XM_PI / 4.0f, 1.33f, NEAR_CLIP, FAR_CLIP);
+	DX::XMMATRIX proj = DX::XMMatrixPerspectiveFovLH(DX::XM_PI / 3.4f, (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, NEAR_CLIP, FAR_CLIP);
 	DX::XMMATRIX viewProj = view * proj;
 	DX::XMMATRIX invViewProj = DX::XMMatrixInverse(NULL, viewProj);
 
@@ -44,10 +44,36 @@ void CWorldState::UpdateMatrices()
 void CWorldState::CalculateMouseGridPos()
 {
 	// Convert mouse co-ordinates to have a -1 to 1 range
-	SPointData mousePoint(((2.0f * (float)mpMouseScreenPos->mPosX) / (float)WINDOW_WIDTH) - 1.0f,
+	DX::XMFLOAT2 mousePoint(((2.0f * (float)mpMouseScreenPos->mPosX) / (float)WINDOW_WIDTH) - 1.0f,
 		(((2.0f * (float)mpMouseScreenPos->mPosY) / (float)WINDOW_HEIGHT) - 1.0f) * -1.0f);
 
+	// Mouse vectors
+	DX::XMFLOAT3 nearVec(mousePoint.x, mousePoint.y, 0.0f);
+	DX::XMFLOAT3 farVec(mousePoint.x, mousePoint.y, 1.0f);
 
+	// Determine ray points
+	DX::XMVECTOR rayOrigin = DX::XMVector3TransformCoord(DX::XMLoadFloat3(&nearVec), DX::XMLoadFloat4x4(&mCamInvViewProj));
+	DX::XMVECTOR rayEnd = DX::XMVector3TransformCoord(DX::XMLoadFloat3(&farVec), DX::XMLoadFloat4x4(&mCamInvViewProj));
+	//DX::XMVECTOR rayDir = DX::XMVector3Normalize(XMMinusVectors(rayEnd, rayOrigin));
+	//DX::XMStoreFloat3(&mCamRayDir, rayDir);
+	DX::XMStoreFloat3(&mCamRayOrigin, rayOrigin);
+	DX::XMStoreFloat3(&mCamRayEnd, rayEnd);
+
+	// Get distance of line produced
+	DX::XMFLOAT3 distVec(mCamRayEnd.x - mCamRayOrigin.x, mCamRayEnd.y - mCamRayOrigin.y, mCamRayEnd.z - mCamRayOrigin.z);
+	float dist = sqrtf((distVec.x * distVec.x) + (distVec.y * distVec.y) + (distVec.z * distVec.z));
+
+	// Based on height of camera, get the ratio of line
+	float camHeight = mCamRayOrigin.y;
+	float ratio = camHeight / dist;
+
+	// Find point that divides segment into ratio (1-ratio):ratio
+	// This will calculate the world position of mouse at y = 0
+	mMouseWorldPos.x = ratio * mCamRayEnd.x + (1.0f - ratio) * mCamRayOrigin.x;
+	mMouseWorldPos.y = ratio * mCamRayEnd.y + (1.0f - ratio) * mCamRayOrigin.y;
+	mMouseWorldPos.z = ratio * mCamRayEnd.z + (1.0f - ratio) * mCamRayOrigin.z;
+
+	int i = 5;
 }
 
 
@@ -94,6 +120,7 @@ void CWorldState::StateSetup()
 	//-----------------------------
 	test = gpEngine->LoadMesh("Planet.x");
 	mpEarthGrid = new CGrid(DX::XMFLOAT3(0.0f, 0.0f, 0.0f), test);
+	testModel = test->CreateModel();
 }
 
 void CWorldState::StateUpdate(const float inDelta)
@@ -136,6 +163,8 @@ void CWorldState::StateUpdate(const float inDelta)
 	//---------------------------
 	UpdateMatrices();
 	CalculateMouseGridPos();
+
+	testModel->SetPosition(mMouseWorldPos.x, mMouseWorldPos.y, mMouseWorldPos.z);
 
 
 	// UPDATE PLAYERS

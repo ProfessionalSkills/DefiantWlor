@@ -30,6 +30,9 @@ private:
 	DX::XMFLOAT4X4 mCamWorldMatrix;
 	DX::XMFLOAT4X4 mCamInvViewProj;
 
+	DX::XMFLOAT3 mCamRayOrigin;
+	DX::XMFLOAT3 mCamRayEnd;
+
 
 	// MESHES
 	//---------------------------
@@ -39,7 +42,7 @@ private:
 	// MODELS
 	//---------------------------
 	IModel* mpMdlSkybox;
-
+	IModel* testModel;
 
 	CGrid* mpEarthGrid;
 	CGrid* mpMarsGrid;
@@ -49,10 +52,11 @@ private:
 	//---------------------------
 	const int EDGE_THRESHOLD = 50; // How far from the edge the mouse must be for edge scrolling
 
-	SPointData* mpMouseScreenPos;
-	SPointData* mpMouseGridPos;
-	RECT        mBaseClip;		   // The rectangle of the window (for undoing mouse clip)
-	RECT        mWindowClip;	   // Limit the mouse to stay within the window
+	SPointData*  mpMouseScreenPos;
+	SPointData*  mpMouseGridPos;
+	DX::XMFLOAT3 mMouseWorldPos;	// Position of mouse in 3D space at y = 0
+	RECT        mBaseClip;		    // The rectangle of the window (for undoing mouse clip)
+	RECT        mWindowClip;	    // Limit the mouse to stay within the window
 
 	IMesh* test;
 
