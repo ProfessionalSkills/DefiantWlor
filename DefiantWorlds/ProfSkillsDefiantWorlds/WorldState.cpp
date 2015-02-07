@@ -26,6 +26,34 @@ CWorldState::~CWorldState()
 //-----------------------------------------------------
 // MENU STATE CLASS OVERRIDE METHODS
 //-----------------------------------------------------
+void CWorldState::UpdateMatrices()
+{
+	// Store the current camera's model matrix
+	mpCamCurrent->GetMatrix(&mCamWorldMatrix.m[0][0]);
+
+	// XMMATRIX variables calculations
+	DX::XMMATRIX world = DX::XMLoadFloat4x4(&mCamWorldMatrix);
+	DX::XMMATRIX view = DX::XMMatrixInverse(NULL, DX::XMLoadFloat4x4(&mCamWorldMatrix));
+	DX::XMMATRIX proj = DX::XMMatrixPerspectiveFovLH(DX::XM_PI / 4.0f, 1.33f, NEAR_CLIP, FAR_CLIP);
+	DX::XMMATRIX viewProj = view * proj;
+	DX::XMMATRIX invViewProj = DX::XMMatrixInverse(NULL, viewProj);
+
+	DX::XMStoreFloat4x4(&mCamInvViewProj, invViewProj);
+}
+
+void CWorldState::CalculateMouseGridPos()
+{
+	// Convert mouse co-ordinates to have a -1 to 1 range
+	SPointData mousePoint(((2.0f * (float)mpMouseScreenPos->mPosX) / (float)WINDOW_WIDTH) - 1.0f,
+		(((2.0f * (float)mpMouseScreenPos->mPosY) / (float)WINDOW_HEIGHT) - 1.0f) * -1.0f);
+
+
+}
+
+
+//-----------------------------------------------------
+// MENU STATE CLASS OVERRIDE METHODS
+//-----------------------------------------------------
 void CWorldState::StateSetup()
 {
 	// INITIALISE ADDITIONAL VARIABLES
@@ -102,6 +130,12 @@ void CWorldState::StateUpdate(const float inDelta)
 		// Mouse on bottom side of screen
 		mpCamEarth->MoveZ(-CAM_MOVE_SPEED * inDelta);
 	}
+
+
+	// METHODS
+	//---------------------------
+	UpdateMatrices();
+	CalculateMouseGridPos();
 
 
 	// UPDATE PLAYERS

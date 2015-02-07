@@ -27,6 +27,9 @@ private:
 
 	const float CAM_MOVE_SPEED = 50.0f;
 
+	DX::XMFLOAT4X4 mCamWorldMatrix;
+	DX::XMFLOAT4X4 mCamInvViewProj;
+
 
 	// MESHES
 	//---------------------------
@@ -59,6 +62,12 @@ public:
 	//---------------------------
 	CWorldState();
 	virtual ~CWorldState();
+
+
+	// METHODS
+	//---------------------------
+	void UpdateMatrices();
+	void CalculateMouseGridPos();
 
 
 	// OVERRIDE METHODS
