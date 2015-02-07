@@ -32,6 +32,10 @@ public:
 	// METHODS
 	//--------------------------- 
 	CTile* GetTileData(SPointData gridPos);
+	CTile* GetTileToLeft(CTile* pTile);
+	CTile* GetTileToRight(CTile* pTile);
+	CTile* GetTileAbove(CTile* pTile);
+	CTile* GetTileBelow(CTile* pTile);
 };
 
 #endif /* _GRID_H_ */

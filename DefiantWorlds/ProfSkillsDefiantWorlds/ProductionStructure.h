@@ -26,7 +26,7 @@ class CProductionStructure : public CStructure
 private:
 	// DATA
 	//---------------------------
-	std::list<EGameAgentsList> mRespectiveAgentsList;
+	std::list<EGameAgentsTypes> mRespectiveAgentsList;
 	//std::queue<CGameAgents*> mpProductionQueue;
 
 

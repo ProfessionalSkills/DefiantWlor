@@ -45,9 +45,9 @@ private:
 
 	// LISTS
 	//---------------------------
-	std::vector<CStructure*> mStructureList;
-	std::vector<CGameAgent*> mWorldUnitsList;
-	std::vector<CSpaceUnit*> mSpaceUnitsList;
+	std::vector<CStructure*> mpStructureList;
+	std::vector<CGameAgent*> mpWorldUnitsList;
+	std::vector<CSpaceUnit*> mpSpaceUnitsList;
 
 
 public:
@@ -97,8 +97,8 @@ public:
 
 	// METHODS
 	//---------------------------
-	//bool PurchaseStructure(CStructure* structure, DX::XMFLOAT2 pos);
-	//bool QueueUnit(CStructure* structure, CGameAgent* unit);
+	bool PurchaseStructure(EGameStructureTypes strucType, CGrid* pGrid, CTile* pTile);
+	bool QueueUnit(CStructure* structure, CGameAgent* unit);
 
 
 	// VIRTUAL METHODS

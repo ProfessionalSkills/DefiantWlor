@@ -45,9 +45,39 @@ void CStructure::CreateStructure(DX::XMFLOAT3 pos)
 
 }
 
-void CStructure::CreateStructure(SPointData pos)
+bool CStructure::TestStructureArea(CGrid* pGrid, CTile* pTile)
 {
+	// pTile refers to the bottom left-most tile
+	// Check area based on structure size
+	SPointData gridPos = pTile->GetGridPos();
+	CTile* pNextTile;
 
+	// Loop through structure size
+	for (int x = 0; x < mStructureSize.mPosX; x++)
+	{
+		for (int y = 0; y < mStructureSize.mPosY; y++)
+		{
+			// Get current tile data
+			pNextTile = pGrid->GetTileData(SPointData(gridPos.mPosX + x, gridPos.mPosY + y));
+
+			// Check if pointer is null
+			if (!pNextTile)
+			{
+				// This tile is not within the grid - return false
+				return false;
+			}
+
+			// Check if tile is in use
+			if (pNextTile->IsTileUsed())
+			{
+				// Tile is used - return false
+				return false;
+			}
+		}
+	}
+	
+	// Area is free of other structures/resources
+	return true;
 }
 
 bool CStructure::Build(float delta)

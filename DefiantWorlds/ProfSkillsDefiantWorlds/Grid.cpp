@@ -43,9 +43,81 @@ CGrid::~CGrid()
 
 
 //-----------------------------------------------------
-// GRID CLASS METHODS
+// GRID CLASS ACCESSORS
 //-----------------------------------------------------
 CTile* CGrid::GetTileData(SPointData gridPos)
 {
+	// Ensure position is within grid boundaries
+	if (gridPos.mPosX < 0 || gridPos.mPosY < 0 || gridPos.mPosX >= GRID_SIZE_X || gridPos.mPosY >= GRID_SIZE_Y)
+	{
+		// Out of bounds - return null
+		return nullptr;
+	}
+	
+	// Get the grid position, and return the data
+	return mpGridArea[gridPos.mPosX][gridPos.mPosY];
+}
+
+CTile* CGrid::GetTileToLeft(CTile* pTile)
+{
+	SPointData gridPos = pTile->GetGridPos();
+
+	// Get new grid position & ensure is within bounds
+	gridPos.mPosX--;
+	if (gridPos.mPosX < 0)
+	{
+		// Out of bounds - return null
+		return nullptr;
+	}
+
+	// Within bounds - return tile at gridPos
+	return mpGridArea[gridPos.mPosX][gridPos.mPosY];
+}
+
+CTile* CGrid::GetTileToRight(CTile* pTile)
+{
+	SPointData gridPos = pTile->GetGridPos();
+
+	// Get new grid position & ensure is within bounds
+	gridPos.mPosX++;
+	if (gridPos.mPosX >= GRID_SIZE_X)
+	{
+		// Out of bounds - return null
+		return nullptr;
+	}
+
+	// Within bounds - return tile at gridPos
+	return mpGridArea[gridPos.mPosX][gridPos.mPosY];
+}
+
+CTile* CGrid::GetTileAbove(CTile* pTile)
+{
+	SPointData gridPos = pTile->GetGridPos();
+
+	// Get new grid position & ensure is within bounds
+	gridPos.mPosY++;
+	if (gridPos.mPosY >= GRID_SIZE_Y)
+	{
+		// Out of bounds - return null
+		return nullptr;
+	}
+
+	// Within bounds - return tile at gridPos
+	return mpGridArea[gridPos.mPosX][gridPos.mPosY];
+}
+
+CTile* CGrid::GetTileBelow(CTile* pTile)
+{
+	SPointData gridPos = pTile->GetGridPos();
+
+	// Get new grid position & ensure is within bounds
+	gridPos.mPosY--;
+	if (gridPos.mPosY < 0)
+	{
+		// Out of bounds - return null
+		return nullptr;
+	}
+
+	// Within bounds - return tile at gridPos
 	return mpGridArea[gridPos.mPosX][gridPos.mPosY];
 }

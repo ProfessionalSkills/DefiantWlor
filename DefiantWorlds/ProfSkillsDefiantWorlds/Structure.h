@@ -10,6 +10,7 @@
 // INCLUDES
 //-----------------------------------------------------
 #include "GameObject.h"
+#include "Grid.h"
 
 
 //-----------------------------------------------------
@@ -24,9 +25,13 @@ private:
 	float mBuildTime;
 	float mRepairSpeed;
 	float mCurBuildTimeLeft;			// Time left until structure is built
+	int   mBuildCost;
 	bool  mIsBuilt;
 	//CParticleEmitter* mDestroyParticleFX;
 	EObjectStates mState;
+
+	SPointData mStructureSize;			// Size in X and Y axis - used for determing clearance
+										// of area around the building when being placed
 
 
 public:
@@ -58,6 +63,11 @@ public:
 		return mCurBuildTimeLeft;
 	}
 
+	inline int GetBuildCost()
+	{
+		return mBuildCost;
+	}
+
 	inline EObjectStates GetState()
 	{
 		return mState;
@@ -72,8 +82,8 @@ public:
 
 	// METHODS
 	//---------------------------
-	void CreateStructure(DX::XMFLOAT3 pos);		// Creating with 3D coords
-	void CreateStructure(SPointData pos);		// Create with grid coordinates (grid coordinate of 'central' grid sqaure
+	void CreateStructure(DX::XMFLOAT3 pos);					// Creating with 3D coords
+	bool TestStructureArea(CGrid* pGrid, CTile* pTile);
 	bool Build(float delta);
 
 

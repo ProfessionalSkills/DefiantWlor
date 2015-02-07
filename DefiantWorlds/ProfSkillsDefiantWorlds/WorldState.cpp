@@ -78,11 +78,6 @@ void CWorldState::StateUpdate(const float inDelta)
 	mpMousePos->mPosX = gpEngine->GetMouseX();
 	mpMousePos->mPosY = gpEngine->GetMouseY();
 
-	if (gpEngine->KeyHit(Key_P))
-	{
-		int i = 5;
-	}
-
 	// Check for side scrolling
 	if (mpMousePos->mPosX < EDGE_THRESHOLD)
 	{
@@ -104,6 +99,12 @@ void CWorldState::StateUpdate(const float inDelta)
 		// Mouse on bottom side of screen
 		mpCamEarth->MoveZ(-CAM_MOVE_SPEED * inDelta);
 	}
+
+
+	// UPDATE PLAYERS
+	//------------------------------
+	mpAIPlayer->Update(inDelta);
+	mpHumanPlayer->Update(inDelta);
 
 
 	// STATE CHANGE TEST
