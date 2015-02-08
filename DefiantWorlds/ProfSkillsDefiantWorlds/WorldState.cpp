@@ -72,8 +72,6 @@ void CWorldState::CalculateMouseGridPos()
 	mMouseWorldPos.x = ratio * mCamRayEnd.x + (1.0f - ratio) * mCamRayOrigin.x;
 	mMouseWorldPos.y = ratio * mCamRayEnd.y + (1.0f - ratio) * mCamRayOrigin.y;
 	mMouseWorldPos.z = ratio * mCamRayEnd.z + (1.0f - ratio) * mCamRayOrigin.z;
-
-	int i = 5;
 }
 
 
@@ -88,7 +86,7 @@ void CWorldState::StateSetup()
 	mpMouseGridPos = new SPointData();
 	mWindowClip = { 0 };
 	GetClipCursor(&mBaseClip);
-	GetWindowRect((HWND)gpEngine->GetWindow(), &mWindowClip);
+	bool success = GetWindowRect((HWND)gpEngine->GetWindow(), &mWindowClip);
 
 	// Shrink the rectangle to not include side bars and window bar
 	mWindowClip.top += 30;
@@ -102,7 +100,7 @@ void CWorldState::StateSetup()
 
 	// INITIALISE CAMERAS
 	//-----------------------------
-	mpCamEarth = gpEngine->CreateCamera(kManual, 0.0f, 200.0f, 0.0f);
+	mpCamEarth = gpEngine->CreateCamera(kManual, 0.0f, 10.0f, 0.0f);
 	mpCamEarth->RotateX(90.0f);
 	mpCamEarth->SetNearClip(NEAR_CLIP);
 	mpCamEarth->SetFarClip(FAR_CLIP);

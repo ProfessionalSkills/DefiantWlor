@@ -77,8 +77,8 @@ const int GRID_SIZE_X = 25;
 const int GRID_SIZE_Y = 25;
 const float  GRID_TILE_SIZE = 10.0f;
 
-const float NEAR_CLIP = 1.0f;
-const float FAR_CLIP = 3000.0f;
+const float NEAR_CLIP = 0.1f;
+const float FAR_CLIP = 500.0f;
 
 // Store the current game state
 extern EGameStates gCurState;
