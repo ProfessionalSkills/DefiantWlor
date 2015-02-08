@@ -11,7 +11,8 @@
 #include <al.h>      // Main OpenAL functions
 #include <alc.h>     // OpenAL "context" functions (also part of main OpenAL API)
 #include <alut.h>    // OpenAL utility library - helper functions
-
+#include <string>
+using namespace std;
 
 //-----------------------------------------------------
 //  CLASS FOR SOUNDS
@@ -49,7 +50,7 @@ public:
 
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
-	CSound(char* SoundFile, ALfloat mSourcePos[3], ALfloat mSourceVel[3]); 
+	CSound(string SoundFile, ALfloat mSourcePos[3], ALfloat mSourceVel[3]); 
 	~CSound();
 
 

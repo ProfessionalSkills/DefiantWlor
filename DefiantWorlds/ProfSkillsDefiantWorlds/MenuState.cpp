@@ -69,6 +69,14 @@ void CMenuState::StateSetup()
 	mpMdlAtmosphere = mpMshAtmosphere->CreateModel(0.0f, 0.0f, 0.0f);
 	mpMdlAtmosphere->AttachToParent(mpMdlEarth);
 	mpMdlAtmosphere->Scale(1.02f);
+
+	// INITIALISE MUSIC
+	//------------------------------
+	string mMusicFile = "Intro.mp3";
+	ALfloat mSourcePos[3] = { mpCamMain->GetX(), mpCamMain->GetY(), mpCamMain->GetZ() };
+	ALfloat mSourceVel[3] = { 0.0f, 0.0f, 0.0f };
+	mMusic = new CSound(mMusicFile, mSourcePos, mSourceVel);
+	mMusic->PlaySound();
 }
 
 void CMenuState::StateUpdate(const float inDelta)
@@ -76,7 +84,6 @@ void CMenuState::StateUpdate(const float inDelta)
 	// SCENE DRAW
 	//------------------------------
 	gpEngine->DrawScene();
-
 
 	// ANIMATE ATMOSPHERE
 	//------------------------------
