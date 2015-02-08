@@ -34,7 +34,7 @@ void CWorldState::UpdateMatrices()
 	// XMMATRIX variables calculations
 	DX::XMMATRIX world = DX::XMLoadFloat4x4(&mCamWorldMatrix);
 	DX::XMMATRIX view = DX::XMMatrixInverse(NULL, DX::XMLoadFloat4x4(&mCamWorldMatrix));
-	DX::XMMATRIX proj = DX::XMMatrixPerspectiveFovLH(DX::XM_PI / 3.4f, (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, NEAR_CLIP, FAR_CLIP);
+	DX::XMMATRIX proj = DX::XMMatrixPerspectiveFovLH(DX::XM_PI / 3.4f, 1584.0f / 862.0f, NEAR_CLIP, FAR_CLIP);
 	DX::XMMATRIX viewProj = view * proj;
 	DX::XMMATRIX invViewProj = DX::XMMatrixInverse(NULL, viewProj);
 
@@ -44,8 +44,8 @@ void CWorldState::UpdateMatrices()
 void CWorldState::CalculateMouseGridPos()
 {
 	// Convert mouse co-ordinates to have a -1 to 1 range
-	DX::XMFLOAT2 mousePoint(((2.0f * (float)mpMouseScreenPos->mPosX) / (float)WINDOW_WIDTH) - 1.0f,
-		(((2.0f * (float)mpMouseScreenPos->mPosY) / (float)WINDOW_HEIGHT) - 1.0f) * -1.0f);
+	DX::XMFLOAT2 mousePoint(((2.0f * (float)mpMouseScreenPos->mPosX) / 1584.0f) - 1.0f,
+		(((2.0f * (float)mpMouseScreenPos->mPosY) / 862.0f) - 1.0f) * -1.0f);
 
 	// Mouse vectors
 	DX::XMFLOAT3 nearVec(mousePoint.x, mousePoint.y, 0.0f);
@@ -54,24 +54,11 @@ void CWorldState::CalculateMouseGridPos()
 	// Determine ray points
 	DX::XMVECTOR rayOrigin = DX::XMVector3TransformCoord(DX::XMLoadFloat3(&nearVec), DX::XMLoadFloat4x4(&mCamInvViewProj));
 	DX::XMVECTOR rayEnd = DX::XMVector3TransformCoord(DX::XMLoadFloat3(&farVec), DX::XMLoadFloat4x4(&mCamInvViewProj));
-	//DX::XMVECTOR rayDir = DX::XMVector3Normalize(XMMinusVectors(rayEnd, rayOrigin));
-	//DX::XMStoreFloat3(&mCamRayDir, rayDir);
 	DX::XMStoreFloat3(&mCamRayOrigin, rayOrigin);
 	DX::XMStoreFloat3(&mCamRayEnd, rayEnd);
 
-	// Get distance of line produced
-	DX::XMFLOAT3 distVec(mCamRayEnd.x - mCamRayOrigin.x, mCamRayEnd.y - mCamRayOrigin.y, mCamRayEnd.z - mCamRayOrigin.z);
-	float dist = sqrtf((distVec.x * distVec.x) + (distVec.y * distVec.y) + (distVec.z * distVec.z));
-
-	// Based on height of camera, get the ratio of line
-	float camHeight = mCamRayOrigin.y;
-	float ratio = camHeight / dist;
-
-	// Find point that divides segment into ratio (1-ratio):ratio
-	// This will calculate the world position of mouse at y = 0
-	mMouseWorldPos.x = ratio * mCamRayEnd.x + (1.0f - ratio) * mCamRayOrigin.x;
-	mMouseWorldPos.y = ratio * mCamRayEnd.y + (1.0f - ratio) * mCamRayOrigin.y;
-	mMouseWorldPos.z = ratio * mCamRayEnd.z + (1.0f - ratio) * mCamRayOrigin.z;
+	DX::XMVECTOR intersecVec = DX::XMPlaneIntersectLine(DX::XMLoadFloat3(&mYPlane), rayOrigin, rayEnd);
+	DX::XMStoreFloat3(&mMouseWorldPos, intersecVec);
 }
 
 
@@ -98,9 +85,23 @@ void CWorldState::StateSetup()
 	ClipCursor(&mWindowClip);
 
 
+	// CREATE Y = 0 PLANE
+	//-----------------------------
+	DX::XMFLOAT3 point(-10.0f, 0.0f, 50.0f);
+	DX::XMVECTOR point1 = DX::XMLoadFloat3(&point);
+	point = DX::XMFLOAT3(48.0f, 0.0f, 12.0f);
+	DX::XMVECTOR point2 = DX::XMLoadFloat3(&point);
+	point = DX::XMFLOAT3(26.0f, 0.0f, -30.0f);
+	DX::XMVECTOR point3 = DX::XMLoadFloat3(&point);
+
+	// Calculate plane coefficient
+	DX::XMVECTOR planeVec = DX::XMPlaneFromPoints(point1, point2, point3);
+	DX::XMStoreFloat3(&mYPlane, planeVec);
+
+
 	// INITIALISE CAMERAS
 	//-----------------------------
-	mpCamEarth = gpEngine->CreateCamera(kManual, 0.0f, 10.0f, 0.0f);
+	mpCamEarth = gpEngine->CreateCamera(kManual, 0.0f, 100.0f, 0.0f);
 	mpCamEarth->RotateX(90.0f);
 	mpCamEarth->SetNearClip(NEAR_CLIP);
 	mpCamEarth->SetFarClip(FAR_CLIP);

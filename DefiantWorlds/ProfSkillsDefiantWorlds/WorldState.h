@@ -34,6 +34,11 @@ private:
 	DX::XMFLOAT3 mCamRayEnd;
 
 
+	// GROUND PLANE
+	//--------------------------- 
+	DX::XMFLOAT3 mYPlane;
+
+
 	// MESHES
 	//---------------------------
 	IMesh* mpMshSkybox;
