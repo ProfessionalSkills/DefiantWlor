@@ -252,6 +252,8 @@
     <ClCompile Include="Explosion.cpp">
       <Filter>Entities\Particle Emitter\Child</Filter>
     </ClCompile>
+    <ClCompile Include="Grid.cpp" />
+    <ClCompile Include="Tile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common.h">
@@ -371,5 +373,7 @@
     <ClInclude Include="Explosion.h">
       <Filter>Entities\Particle Emitter\Child</Filter>
     </ClInclude>
+    <ClInclude Include="Grid.h" />
+    <ClInclude Include="Tile.h" />
   </ItemGroup>
 </Project>

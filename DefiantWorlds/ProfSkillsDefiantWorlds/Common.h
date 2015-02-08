@@ -113,7 +113,4 @@ float Clampf(float inMin, float inMax, float inVal);
 float ToRadians(float inDegrees);
 float ToDegrees(float inRadians);
 
-DX::XMVECTOR XMMinusVectors(DX::XMVECTOR vec1, DX::XMVECTOR vec2);
-
-
 #endif /* _COMMON_H_ */
