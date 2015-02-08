@@ -20,7 +20,7 @@ CSound::CSound(string mSoundFile, ALfloat mSourcePos[3], ALfloat mSourceVel[3])
 
 
 	//Obtains sound file 
-	mBuffer = alutCreateBufferFromFile("Intro.wav");
+	mBuffer = alutCreateBufferFromFile(mSoundFile.c_str());
 
 	//Generates sounds source
 	alGenSources(1, &mSource);
@@ -60,4 +60,9 @@ CSound::~CSound()
 void CSound::PlaySound()
 {
 	alSourcePlay(mSource);
+}
+
+void CSound::StopSound()
+{
+	alSourceStop(mSource);
 }

@@ -72,7 +72,7 @@ void CMenuState::StateSetup()
 
 	// INITIALISE MUSIC
 	//------------------------------
-	string mMusicFile = "Intro.mp3";
+	string mMusicFile = "Intro.wav";
 	ALfloat mSourcePos[3] = { mpCamMain->GetX(), mpCamMain->GetY(), mpCamMain->GetZ() };
 	ALfloat mSourceVel[3] = { 0.0f, 0.0f, 0.0f };
 	mMusic = new CSound(mMusicFile, mSourcePos, mSourceVel);
@@ -115,6 +115,7 @@ void CMenuState::StateUpdate(const float inDelta)
 	//------------------------------
 	if (gpEngine->KeyHit(Key_Return))
 	{
+		mMusic->StopSound();
 		gCurState = GS_WORLD;
 	}
 }

@@ -120,6 +120,16 @@ void CWorldState::StateSetup()
 	test = gpEngine->LoadMesh("Planet.x");
 	mpEarthGrid = new CGrid(DX::XMFLOAT3(0.0f, 0.0f, 0.0f), test);
 	testModel = test->CreateModel();
+
+	// INITIALISE MUSIC
+	//-----------------------------
+	string mMusicFile = "Perpetual Tension.wav"; //Sets the music file
+	ALfloat mSourcePos[3] = { mpCamEarth->GetX(), mpCamEarth->GetY(), mpCamEarth->GetZ() }; //Music source to camera position
+	ALfloat mSourceVel[3] = { 0.0f, 0.0f, 0.0f }; //No veloctiy of source
+	mMusic = new CSound(mMusicFile, mSourcePos, mSourceVel); //Initialise music
+	mMusic->PlaySound(); //Play music on loop
+
+
 }
 
 void CWorldState::StateUpdate(const float inDelta)

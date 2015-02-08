@@ -63,6 +63,8 @@ private:
 	RECT        mBaseClip;		    // The rectangle of the window (for undoing mouse clip)
 	RECT        mWindowClip;	    // Limit the mouse to stay within the window
 
+	CSound* mMusic; //Music
+
 	IMesh* test;
 
 

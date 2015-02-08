@@ -55,6 +55,7 @@ public:
 
 
 	void PlaySound();
+	void StopSound();
 
 };
 
