@@ -29,8 +29,13 @@ public:
 	~CGrid();
 
 
-	// METHODS
-	//--------------------------- 
+	// ACCESSORS
+	//---------------------------
+	inline DX::XMFLOAT3 GetGridStartPos()
+	{
+		return mGridStartPos;
+	}
+
 	CTile* GetTileData(SPointData gridPos);
 	CTile* GetTileToLeft(CTile* pTile);
 	CTile* GetTileToRight(CTile* pTile);

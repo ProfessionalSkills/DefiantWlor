@@ -19,7 +19,7 @@
 class CWorldState : public CPlayState
 {
 private:
-	// CAMERAS
+	// CAMERA DATA
 	//--------------------------- 
 	ICamera* mpCamEarth;
 	ICamera* mpCamMars;
@@ -29,9 +29,6 @@ private:
 
 	DX::XMFLOAT4X4 mCamWorldMatrix;
 	DX::XMFLOAT4X4 mCamInvViewProj;
-
-	DX::XMFLOAT3 mCamRayOrigin;
-	DX::XMFLOAT3 mCamRayEnd;
 
 
 	// GROUND PLANE
@@ -51,19 +48,31 @@ private:
 
 	CGrid* mpEarthGrid;
 	CGrid* mpMarsGrid;
+	
+
+	// FONT
+	//---------------------------
+	IFont* mFntDebug;
+
+
+	// MOUSE DATA
+	//---------------------------
+	SPointData*  mpMouseScreenPos;
+	SPointData*  mpMouseGridPos;
+	DX::XMFLOAT3 mMouseWorldPos;	// Position of mouse in 3D space at y = 0
+	RECT         mBaseClip;		    // The rectangle of the window (for undoing mouse clip)
+	RECT         mWindowClip;	    // Limit the mouse to stay within the window
+
+
+	// SOUND
+	//---------------------------
+	CSound* mMusic; //Music
 
 
 	// ADDITIONAL VARIABLES
 	//---------------------------
 	const int EDGE_THRESHOLD = 50; // How far from the edge the mouse must be for edge scrolling
-
-	SPointData*  mpMouseScreenPos;
-	SPointData*  mpMouseGridPos;
-	DX::XMFLOAT3 mMouseWorldPos;	// Position of mouse in 3D space at y = 0
-	RECT        mBaseClip;		    // The rectangle of the window (for undoing mouse clip)
-	RECT        mWindowClip;	    // Limit the mouse to stay within the window
-
-	CSound* mMusic; //Music
+	std::stringstream strStream;
 
 	IMesh* test;
 
@@ -79,6 +88,7 @@ public:
 	//---------------------------
 	void UpdateMatrices();
 	void CalculateMouseGridPos();
+	void DrawFontData();
 
 
 	// OVERRIDE METHODS

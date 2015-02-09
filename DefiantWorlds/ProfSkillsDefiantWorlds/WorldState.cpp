@@ -24,7 +24,7 @@ CWorldState::~CWorldState()
 
 
 //-----------------------------------------------------
-// MENU STATE CLASS OVERRIDE METHODS
+// MENU STATE CLASS METHODS
 //-----------------------------------------------------
 void CWorldState::UpdateMatrices()
 {
@@ -54,11 +54,27 @@ void CWorldState::CalculateMouseGridPos()
 	// Determine ray points
 	DX::XMVECTOR rayOrigin = DX::XMVector3TransformCoord(DX::XMLoadFloat3(&nearVec), DX::XMLoadFloat4x4(&mCamInvViewProj));
 	DX::XMVECTOR rayEnd = DX::XMVector3TransformCoord(DX::XMLoadFloat3(&farVec), DX::XMLoadFloat4x4(&mCamInvViewProj));
-	DX::XMStoreFloat3(&mCamRayOrigin, rayOrigin);
-	DX::XMStoreFloat3(&mCamRayEnd, rayEnd);
 
 	DX::XMVECTOR intersecVec = DX::XMPlaneIntersectLine(DX::XMLoadFloat3(&mYPlane), rayOrigin, rayEnd);
-	DX::XMStoreFloat3(&mMouseWorldPos, intersecVec);
+	DX::XMStoreFloat3(&mMouseWorldPos, intersecVec);		// Store the mouse's world position at y = 0
+
+	// Use the mouse's world position to determine the grid position
+	DX::XMFLOAT3 gridPos = mpEarthGrid->GetGridStartPos();		// Bottom left position of grid
+	mpMouseGridPos->mPosX = (mMouseWorldPos.x - gridPos.x) / GRID_TILE_SIZE;
+	mpMouseGridPos->mPosY = (mMouseWorldPos.z - gridPos.z) / GRID_TILE_SIZE;
+}
+
+void CWorldState::DrawFontData()
+{
+	// Draw Mouse world co-ordinates to screen
+	strStream << "X: " << mMouseWorldPos.x << "  Z: " << mMouseWorldPos.z;
+	mFntDebug->Draw(strStream.str(), 5, 5, kWhite, kLeft, kTop);
+	strStream.str("");
+
+	// Draw mouse grid co-ordinates
+	strStream << "X: " << mpMouseGridPos->mPosX << "  Y: " << mpMouseGridPos->mPosY;
+	mFntDebug->Draw(strStream.str(), 5, 15, kWhite, kLeft, kTop);
+	strStream.str("");
 }
 
 
@@ -101,12 +117,13 @@ void CWorldState::StateSetup()
 
 	// INITIALISE CAMERAS
 	//-----------------------------
-	mpCamEarth = gpEngine->CreateCamera(kManual, 0.0f, 100.0f, 0.0f);
+	mpCamEarth = gpEngine->CreateCamera(kManual, 0.0f, 120.0f, 0.0f);
 	mpCamEarth->RotateX(70.0f);
 	mpCamEarth->SetNearClip(NEAR_CLIP);
 	mpCamEarth->SetFarClip(FAR_CLIP);
 
 	mpCamCurrent = mpCamEarth;
+
 
 	// INITIALISE SKYBOX
 	//-----------------------------
@@ -120,6 +137,11 @@ void CWorldState::StateSetup()
 	test = gpEngine->LoadMesh("Planet.x");
 	mpEarthGrid = new CGrid(DX::XMFLOAT3(0.0f, 0.0f, 0.0f), test);
 	testModel = test->CreateModel();
+
+
+	// INITIALISE FONTS
+	//-----------------------------
+	mFntDebug = gpEngine->LoadFont("Font2.bmp", 15U);
 
 
 	// INITIALISE MUSIC
@@ -171,8 +193,10 @@ void CWorldState::StateUpdate(const float inDelta)
 	//---------------------------
 	UpdateMatrices();
 	CalculateMouseGridPos();
+	DrawFontData();
 
 	testModel->SetPosition(mMouseWorldPos.x, mMouseWorldPos.y, mMouseWorldPos.z);
+
 
 
 	// UPDATE PLAYERS

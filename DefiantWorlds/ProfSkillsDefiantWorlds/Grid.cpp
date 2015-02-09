@@ -27,9 +27,9 @@ CGrid::CGrid(DX::XMFLOAT3 gridStartPos, IMesh* msh)
 			tmp = mpGridArea[x][y];
 			tmp->SetGridPos(SPointData(x, y));
 			DX::XMFLOAT3 tilePos;
-			tilePos.x = gridStartPos.x + (GRID_TILE_SIZE * x);
+			tilePos.x = gridStartPos.x + (GRID_TILE_SIZE * x) + (GRID_TILE_SIZE / 2.0f);
 			tilePos.y = gridStartPos.y;
-			tilePos.z = gridStartPos.z + (GRID_TILE_SIZE * y);
+			tilePos.z = gridStartPos.z + (GRID_TILE_SIZE * y) + (GRID_TILE_SIZE / 2.0f);
 			tmp->SetWorldPos(tilePos);
 			tmp->CreateTestModel(msh);
 		}
