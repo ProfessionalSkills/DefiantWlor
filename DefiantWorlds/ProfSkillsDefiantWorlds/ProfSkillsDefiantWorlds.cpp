@@ -142,6 +142,7 @@ void SetupEngine()
 	gpEngine->AddMediaFolder("..\\Media\\Models\\Skybox");
 	gpEngine->AddMediaFolder("..\\Media\\Models\\Planets");
 	gpEngine->AddMediaFolder("..\\Media\\Models\\Structures");
+	gpEngine->AddMediaFolder("..\\Media\\Models\\Grid");
 
 	SetWindowPos((HWND)gpEngine->GetWindow(), HWND_TOP, WINDOW_POS_X, WINDOW_POS_Y, WINDOW_WIDTH, WINDOW_HEIGHT, 0U);
 }

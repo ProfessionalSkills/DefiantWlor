@@ -39,6 +39,7 @@ private:
 	// MESHES
 	//---------------------------
 	IMesh* mpMshSkybox;
+	IMesh* mpMshTile;
 
 
 	// MODELS
@@ -77,8 +78,6 @@ private:
 	//---------------------------
 	const int EDGE_THRESHOLD = 50; // How far from the edge the mouse must be for edge scrolling
 	std::stringstream strStream;
-
-	IMesh* test;
 
 	IMesh* buildTest;
 	IModel* mdlBuildTest;

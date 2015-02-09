@@ -169,8 +169,8 @@ void CWorldState::StateSetup()
 
 	// INITIALISE WORLDS
 	//-----------------------------
-	test = gpEngine->LoadMesh("Planet.x");
-	mpEarthGrid = new CGrid(DX::XMFLOAT3(0.0f, 0.0f, 0.0f), test);
+	mpMshTile = gpEngine->LoadMesh("Floor.x");
+	mpEarthGrid = new CGrid(DX::XMFLOAT3(0.0f, 0.1f, 0.0f), mpMshTile);
 
 
 	// INITIALISE FONTS
