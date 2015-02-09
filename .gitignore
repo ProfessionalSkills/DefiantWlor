@@ -6,6 +6,12 @@
 *.opensdf
 *.suo
 *.sdf
+*.tlog
+*.log
+*.lastbuildstate
+*.idb
+*.pdb
+*.ilk
 
 # Precompiled Headers
 *.gch
