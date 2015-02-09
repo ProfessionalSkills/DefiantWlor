@@ -34,6 +34,11 @@ CGrid::CGrid(DX::XMFLOAT3 gridStartPos, IMesh* msh)
 			tmp->CreateTestModel(msh);
 		}
 	}
+
+	// Calculate the end position of the grid
+	mGridEndPos.x = (GRID_TILE_SIZE * GRID_SIZE_X) + mGridStartPos.x;
+	mGridEndPos.y = mGridStartPos.y;
+	mGridEndPos.z = (GRID_TILE_SIZE * GRID_SIZE_Y) + mGridStartPos.z;
 }
 
 CGrid::~CGrid()

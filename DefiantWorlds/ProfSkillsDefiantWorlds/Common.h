@@ -28,6 +28,11 @@ enum EGameStates
 	GS_MAIN_MENU, GS_WORLD, GS_SPACE
 };
 
+enum EMouseStates
+{
+	MS_OUT_OF_GRID, MS_EARTH_GRID, MS_MARS_GRID
+};
+
 enum EObjectStates
 {
 	OBJ_CONSTRUCTING, OBJ_BUILT, OBJ_DAMAGED, OBJ_DEAD

@@ -75,6 +75,41 @@ void CWorldState::DrawFontData()
 	strStream << "X: " << mpMouseGridPos->mPosX << "  Y: " << mpMouseGridPos->mPosY;
 	mFntDebug->Draw(strStream.str(), 5, 15, kWhite, kLeft, kTop);
 	strStream.str("");
+
+	// Draw mouse state
+	strStream << "GRID: ";
+	switch (mMouseState)
+	{
+	case MS_EARTH_GRID:
+		strStream << "Earth";
+		break;
+	case MS_MARS_GRID:
+		strStream << "Mars";
+		break;
+	case MS_OUT_OF_GRID: 
+		strStream << "None";
+		break;
+	}
+
+	mFntDebug->Draw(strStream.str(), 5, 25, kWhite, kLeft, kTop);
+	strStream.str("");
+}
+
+EMouseStates CWorldState::UpdateMouseState()
+{
+	// Update position of the mouse
+	CalculateMouseGridPos();
+
+	// Check whether it is within earth boundary
+	if (mMouseWorldPos.x > mpEarthGrid->GetGridStartPos().x && mMouseWorldPos.x < mpEarthGrid->GetGridEndPos().x
+		&& mMouseWorldPos.z > mpEarthGrid->GetGridStartPos().z && mMouseWorldPos.z < mpEarthGrid->GetGridEndPos().z)
+	{
+		return MS_EARTH_GRID;
+	}
+	else
+	{
+		return MS_OUT_OF_GRID;
+	}
 }
 
 
@@ -118,7 +153,7 @@ void CWorldState::StateSetup()
 	// INITIALISE CAMERAS
 	//-----------------------------
 	mpCamEarth = gpEngine->CreateCamera(kManual, 0.0f, 120.0f, 0.0f);
-	mpCamEarth->RotateX(70.0f);
+	mpCamEarth->RotateX(50.0f);
 	mpCamEarth->SetNearClip(NEAR_CLIP);
 	mpCamEarth->SetFarClip(FAR_CLIP);
 
@@ -136,7 +171,6 @@ void CWorldState::StateSetup()
 	//-----------------------------
 	test = gpEngine->LoadMesh("Planet.x");
 	mpEarthGrid = new CGrid(DX::XMFLOAT3(0.0f, 0.0f, 0.0f), test);
-	testModel = test->CreateModel();
 
 
 	// INITIALISE FONTS
@@ -151,6 +185,10 @@ void CWorldState::StateSetup()
 	ALfloat mSourceVel[3] = { 0.0f, 0.0f, 0.0f }; //No veloctiy of source
 	mMusic = new CSound(mMusicFile, mSourcePos, mSourceVel); //Initialise music
 	mMusic->PlaySound(); //Play music on loop
+
+
+	buildTest = gpEngine->LoadMesh("Building09.x");
+	mdlBuildTest = buildTest->CreateModel();
 }
 
 void CWorldState::StateUpdate(const float inDelta)
@@ -192,10 +230,10 @@ void CWorldState::StateUpdate(const float inDelta)
 	// METHODS
 	//---------------------------
 	UpdateMatrices();
-	CalculateMouseGridPos();
+	mMouseState = UpdateMouseState();
 	DrawFontData();
 
-	testModel->SetPosition(mMouseWorldPos.x, mMouseWorldPos.y, mMouseWorldPos.z);
+	mdlBuildTest->SetPosition(mMouseWorldPos.x, mMouseWorldPos.y, mMouseWorldPos.z);
 
 
 

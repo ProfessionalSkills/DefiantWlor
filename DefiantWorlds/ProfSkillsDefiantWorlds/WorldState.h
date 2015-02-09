@@ -44,11 +44,13 @@ private:
 	// MODELS
 	//---------------------------
 	IModel* mpMdlSkybox;
-	IModel* testModel;
 
+
+	// GRIDS
+	//---------------------------
 	CGrid* mpEarthGrid;
 	CGrid* mpMarsGrid;
-	
+
 
 	// FONT
 	//---------------------------
@@ -62,6 +64,8 @@ private:
 	DX::XMFLOAT3 mMouseWorldPos;	// Position of mouse in 3D space at y = 0
 	RECT         mBaseClip;		    // The rectangle of the window (for undoing mouse clip)
 	RECT         mWindowClip;	    // Limit the mouse to stay within the window
+	
+	EMouseStates mMouseState;		// Stores whether mouse is within a grid or not - and which grid it is in
 
 
 	// SOUND
@@ -76,6 +80,9 @@ private:
 
 	IMesh* test;
 
+	IMesh* buildTest;
+	IModel* mdlBuildTest;
+
 
 public:
 	// CONSTRUCTORS & DESTRUCTOR
@@ -89,6 +96,8 @@ public:
 	void UpdateMatrices();
 	void CalculateMouseGridPos();
 	void DrawFontData();
+
+	EMouseStates UpdateMouseState();
 
 
 	// OVERRIDE METHODS
