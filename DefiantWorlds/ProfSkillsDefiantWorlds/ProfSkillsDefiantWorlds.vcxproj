@@ -59,7 +59,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\Program Files %28x86%29\OpenAL 1.1 SDK\freealut-1.1.0-bin\include\AL;C:\Program Files %28x86%29\OpenAL 1.1 SDK\include;C:\ProgramData\TL-Engine\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Program Files (x86)\OpenAL 1.1 SDK\include;C:\ProgramData\TL-Engine\include;C:\Program Files %28x86%29\OpenAL 1.1 SDK\freealut-1.1.0-bin\include\AL\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <PrecompiledHeader>
@@ -73,7 +73,7 @@
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\Program Files %28x86%29\OpenAL 1.1 SDK\freealut-1.1.0-bin\lib;C:\Program Files %28x86%29\OpenAL 1.1 SDK\libs\Win32;C:\ProgramData\TL-Engine\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Program Files (x86)\OpenAL 1.1 SDK\libs\Win32;C:\ProgramData\TL-Engine\lib;C:\Program Files %28x86%29\OpenAL 1.1 SDK\freealut-1.1.0-bin\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(OutDir)ProfSkillsDefiantWorlds.pdb</ProgramDatabaseFile>
       <DataExecutionPrevention>
@@ -81,7 +81,7 @@
       <OutputFile>$(SolutionDir)$(TargetName)$(TargetExt)</OutputFile>
       <SubSystem>Console</SubSystem>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
-      <AdditionalDependencies>"TL-Engine2013Debug.lib";"OpenAL32.lib";"alut.lib";%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>OpenAL32.lib;alut.lib;"TL-Engine2013Debug.lib";"OpenAL32.lib";"alut.lib";%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Message>Copying DLLs &amp; shaders...</Message>
@@ -92,7 +92,7 @@ copy "C:\Program Files (x86)\OpenAL 1.1 SDK\freealut-1.1.0-bin\lib\alut.dll"</Co
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\ProgramData\TL-Engine\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Program Files (x86)\OpenAL 1.1 SDK\include;C:\ProgramData\TL-Engine\include;C:\Program Files %28x86%29\OpenAL 1.1 SDK\freealut-1.1.0-bin\freealut-1.1.0-bin\include\AL\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <BufferSecurityCheck>false</BufferSecurityCheck>
@@ -104,14 +104,14 @@ copy "C:\Program Files (x86)\OpenAL 1.1 SDK\freealut-1.1.0-bin\lib\alut.dll"</Co
       <Optimization>MaxSpeed</Optimization>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\ProgramData\TL-Engine\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Program Files (x86)\OpenAL 1.1 SDK\libs\Win32;C:\ProgramData\TL-Engine\lib;C:\Program Files %28x86%29\OpenAL 1.1 SDK\freealut-1.1.0-bin\freealut-1.1.0-bin\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <DataExecutionPrevention>
       </DataExecutionPrevention>
       <OutputFile>$(SolutionDir)$(TargetName)$(TargetExt)</OutputFile>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>TL-Engine2013.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>OpenAL32.lib;alut.lib;TL-Engine2013.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Message>Copying DLLs &amp; shaders...</Message>

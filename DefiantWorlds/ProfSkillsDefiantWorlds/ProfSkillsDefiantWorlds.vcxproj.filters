@@ -130,6 +130,12 @@
     <Filter Include="Entities\Game Objects\Child\Structure\Child\Static\Child">
       <UniqueIdentifier>{5e5b40ae-1cf4-44ed-8f9b-4050755ad5d4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="World Representation\Grid">
+      <UniqueIdentifier>{e4a6ddda-9bf7-4e3f-a561-46cac21eaea0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="World Representation\Tile">
+      <UniqueIdentifier>{d4c460e8-023b-4bf2-b5b5-dd1d33d2d74c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ProfSkillsDefiantWorlds.cpp">
@@ -252,8 +258,12 @@
     <ClCompile Include="Explosion.cpp">
       <Filter>Entities\Particle Emitter\Child</Filter>
     </ClCompile>
-    <ClCompile Include="Grid.cpp" />
-    <ClCompile Include="Tile.cpp" />
+    <ClCompile Include="Grid.cpp">
+      <Filter>World Representation\Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>World Representation\Tile</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common.h">
@@ -373,7 +383,11 @@
     <ClInclude Include="Explosion.h">
       <Filter>Entities\Particle Emitter\Child</Filter>
     </ClInclude>
-    <ClInclude Include="Grid.h" />
-    <ClInclude Include="Tile.h" />
+    <ClInclude Include="Grid.h">
+      <Filter>World Representation\Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>World Representation\Tile</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

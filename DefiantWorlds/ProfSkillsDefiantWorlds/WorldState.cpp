@@ -102,7 +102,7 @@ void CWorldState::StateSetup()
 	// INITIALISE CAMERAS
 	//-----------------------------
 	mpCamEarth = gpEngine->CreateCamera(kManual, 0.0f, 100.0f, 0.0f);
-	mpCamEarth->RotateX(90.0f);
+	mpCamEarth->RotateX(70.0f);
 	mpCamEarth->SetNearClip(NEAR_CLIP);
 	mpCamEarth->SetFarClip(FAR_CLIP);
 
@@ -121,6 +121,7 @@ void CWorldState::StateSetup()
 	mpEarthGrid = new CGrid(DX::XMFLOAT3(0.0f, 0.0f, 0.0f), test);
 	testModel = test->CreateModel();
 
+
 	// INITIALISE MUSIC
 	//-----------------------------
 	string mMusicFile = "Perpetual Tension.wav"; //Sets the music file
@@ -128,8 +129,6 @@ void CWorldState::StateSetup()
 	ALfloat mSourceVel[3] = { 0.0f, 0.0f, 0.0f }; //No veloctiy of source
 	mMusic = new CSound(mMusicFile, mSourcePos, mSourceVel); //Initialise music
 	mMusic->PlaySound(); //Play music on loop
-
-
 }
 
 void CWorldState::StateUpdate(const float inDelta)
