@@ -26,19 +26,24 @@ namespace DX = DirectX;
 class CParticle
 {
 protected:
-	// PARTICLE DATA
-	//---------------------------
-	static IMesh* mMesh;
-	IModel* mModel;
-	DX::XMFLOAT3 mMoveVector; //Thank Kyle :)
-	string mSkin;
-	float mLifeTime;
 
 public:
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
-	CParticle(DX::XMFLOAT3 position);
+	CParticle();
 	~CParticle();
+
+	// PARTICLE STATIC MESH
+	//---------------------------
+	static IMesh* mMesh;
+
+	// PARTICLE DATA (ACCESSED BY PARTICLE SYSTEMS)
+	//---------------------------
+	IModel* mModel; //Particle Model
+	DirectX::XMFLOAT3 mMoveVector; //3D Particle Movement
+	DirectX::XMFLOAT3 mPosition; //Particle Position
+	string mSkin; //Particle texture
+	float mLifeTime; //Life time of Particle
 };
 
 //IMesh* CParticle::mMesh = gpEngine->LoadMesh("particle.x");
