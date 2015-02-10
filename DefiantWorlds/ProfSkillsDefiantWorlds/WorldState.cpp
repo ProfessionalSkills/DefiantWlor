@@ -140,6 +140,20 @@ void CWorldState::CheckKeyPresses()
 		pStructure = new CBarracks();
 		OnPlacingStructureChange(pStructure);
 	}
+
+	// 2 = Hellipad
+	if (gpEngine->KeyHit(Key_2))
+	{
+		pStructure = new CHellipad();
+		OnPlacingStructureChange(pStructure);
+	}
+
+	// 3 = Space Centre
+	if (gpEngine->KeyHit(Key_3))
+	{
+		pStructure = new CSpaceCentre();
+		OnPlacingStructureChange(pStructure);
+	}
 }
 
 

@@ -23,6 +23,9 @@ private:
 
 
 public:
+	static IMesh* mspMshStructure;
+
+
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
 	CSpaceCentre();
@@ -45,8 +48,8 @@ public:
 
 	// OVERRIDE METHODS
 	//---------------------------
-private:
-	bool Destroy();
+	void UnloadIModel() override;
+	bool Destroy() override;
 };
 
 #endif /* _SPACE_CENTRE_H_ */

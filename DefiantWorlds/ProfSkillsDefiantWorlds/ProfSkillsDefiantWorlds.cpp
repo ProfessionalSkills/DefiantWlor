@@ -150,6 +150,8 @@ void SetupEngine()
 	CTile::mspMshTile = gpEngine->LoadMesh("Tile.x");
 	CComCentre::mspMshStructure = gpEngine->LoadMesh("Building09.x");
 	CBarracks::mspMshStructure = gpEngine->LoadMesh("Building07.x");
+	CHellipad::mspMshStructure = gpEngine->LoadMesh("Building08.x");
+	CSpaceCentre::mspMshStructure = gpEngine->LoadMesh("Building03.x");
 }
 
 void CleanupEngine()
