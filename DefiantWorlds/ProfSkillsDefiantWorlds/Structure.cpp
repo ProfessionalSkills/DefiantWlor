@@ -40,25 +40,42 @@ bool CStructure::Repair(float amount)
 //-----------------------------------------------------
 // STRUCTURE CLASS METHODS
 //-----------------------------------------------------
-void CStructure::CreateStructure(DX::XMFLOAT3 pos)
+void CStructure::CreateStructure(CGrid* pGrid)
 {
+	// (*TO DOOOOOOO - call BUILD() to update construction of structure*)
 
+	// Mark the building's grid area as in use
+	CTile* pNextTile;
+
+	// Loop through structure size
+	for (int x = mGridPos.mPosX + mStructureBL.mPosX; x <= mGridPos.mPosX + mStructureTR.mPosX; x++)
+	{
+		for (int y = mGridPos.mPosY + mStructureBL.mPosY; y <= mGridPos.mPosY + mStructureTR.mPosY; y++)
+		{
+			// Get current tile data
+			pNextTile = pGrid->GetTileData(SPointData(x, y));
+
+			// Set state of tile
+			pNextTile->SetTileUsage(true);
+		}
+	}
 }
 
 bool CStructure::TestStructureArea(CGrid* pGrid, CTile* pTile)
 {
 	// pTile refers to the bottom left-most tile
 	// Check area based on structure size
-	SPointData gridPos = pTile->GetGridPos();
+	mGridPos = pTile->GetGridPos();
+	mWorldPos = pTile->GetWorldPos();
 	CTile* pNextTile;
 
 	// Loop through structure size
-	for (int x = gridPos.mPosX + mStructureBL.mPosX; x < gridPos.mPosX + mStructureTR.mPosX; x++)
+	for (int x = mGridPos.mPosX + mStructureBL.mPosX; x <= mGridPos.mPosX + mStructureTR.mPosX; x++)
 	{
-		for (int y = gridPos.mPosY + mStructureBL.mPosY; y < gridPos.mPosY + mStructureTR.mPosY; y++)
+		for (int y = mGridPos.mPosY + mStructureBL.mPosY; y <= mGridPos.mPosY + mStructureTR.mPosY; y++)
 		{
 			// Get current tile data
-			pNextTile = pGrid->GetTileData(SPointData(gridPos.mPosX + x, gridPos.mPosY + y));
+			pNextTile = pGrid->GetTileData(SPointData(x, y));
 
 			// Check if pointer is null
 			if (!pNextTile)

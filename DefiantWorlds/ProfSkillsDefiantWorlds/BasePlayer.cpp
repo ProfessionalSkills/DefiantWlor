@@ -14,7 +14,7 @@
 //-----------------------------------------------------
 CPlayer::CPlayer()
 {
-	
+	mNumMinerals = 10000;
 }
 
 CPlayer::~CPlayer()
@@ -65,7 +65,7 @@ bool CPlayer::PurchaseStructure(CStructure* pStructure, CGrid* pGrid, CTile* pTi
 
 
 	// Everything fine - build & add to vector
-	pStructure->Build();
+	pStructure->CreateStructure(pGrid);
 	mpStructureList.push_back(pStructure);
 	return true;
 }

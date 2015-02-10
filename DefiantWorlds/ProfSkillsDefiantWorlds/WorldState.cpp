@@ -93,7 +93,7 @@ void CWorldState::DrawFontData()
 		strStream << "None";
 		break;
 	}
-
+	strStream << "  USED: " << mpCurTile->IsTileUsed();
 	mFntDebug->Draw(strStream.str(), 5, 25, kWhite, kLeft, kTop);
 	strStream.str("");
 }
@@ -165,9 +165,8 @@ void CWorldState::CheckKeyPresses()
 			// Place the structure - check if successful
 			if (mpHumanPlayer->PurchaseStructure(mpPlacingStructure, mpEarthGrid, mpCurTile))
 			{
-				// Remove currently selected structure instance being held
-				pStructure = nullptr;
-				OnPlacingStructureChange(pStructure);
+				// Safe to point at nothing due to structure pointer passed on to Player's data
+				mpPlacingStructure = nullptr;
 			}
 		}
 		else
@@ -301,8 +300,8 @@ void CWorldState::StateUpdate()
 	//---------------------------
 	UpdateMatrices();
 	mMouseState = UpdateMouseState();
-	DrawFontData();
 	CheckKeyPresses();
+	DrawFontData();
 
 
 	// MODEL UPDATES
