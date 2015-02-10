@@ -26,9 +26,11 @@ private:
 	CTile*       mpParent;				// Only really used for pathfinding
 
 	IModel* mpMdlTest;
-
-
+	
 public:
+	static IMesh* mspMshTile;
+
+
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
 	CTile();
@@ -83,7 +85,7 @@ public:
 
 	// METHODS
 	//--------------------------- 
-	void CreateTestModel(IMesh* msh);
+	void CreateTestModel();
 };
 
 #endif /* _TILE_H_ */

@@ -27,7 +27,7 @@ private:
 public:
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
-	CGrid(DX::XMFLOAT3 gridStartPos, IMesh* msh);
+	CGrid(DX::XMFLOAT3 gridStartPos);
 	~CGrid();
 
 

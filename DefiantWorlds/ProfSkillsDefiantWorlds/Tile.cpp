@@ -8,6 +8,8 @@
 //-----------------------------------------------------
 #include "Tile.h"
 
+IMesh* CTile::mspMshTile = nullptr;
+
 
 //-----------------------------------------------------
 // TILE CLASS CONSTRUCTORS & DESTRUCTOR
@@ -29,7 +31,7 @@ CTile::~CTile()
 //-----------------------------------------------------
 // TILE CLASS METHODS
 //-----------------------------------------------------
-void CTile::CreateTestModel(IMesh* msh)
+void CTile::CreateTestModel()
 {
-	mpMdlTest = msh->CreateModel(mTileWorldPos.x, mTileWorldPos.y, mTileWorldPos.z);
+	mpMdlTest = CTile::mspMshTile->CreateModel(mTileWorldPos.x, mTileWorldPos.y, mTileWorldPos.z);
 }

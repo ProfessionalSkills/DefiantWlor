@@ -39,7 +39,6 @@ private:
 	// MESHES
 	//---------------------------
 	IMesh* mpMshSkybox;
-	IMesh* mpMshTile;
 
 
 	// MODELS

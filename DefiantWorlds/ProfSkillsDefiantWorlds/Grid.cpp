@@ -12,7 +12,7 @@
 //-----------------------------------------------------
 // GRID CLASS CONSTRUCTORS & DESTRUCTOR
 //-----------------------------------------------------
-CGrid::CGrid(DX::XMFLOAT3 gridStartPos, IMesh* msh)
+CGrid::CGrid(DX::XMFLOAT3 gridStartPos)
 {
 	mGridStartPos = gridStartPos;
 	
@@ -31,7 +31,7 @@ CGrid::CGrid(DX::XMFLOAT3 gridStartPos, IMesh* msh)
 			tilePos.y = gridStartPos.y;
 			tilePos.z = gridStartPos.z + (GRID_TILE_SIZE * y) + (GRID_TILE_SIZE / 2.0f);
 			tmp->SetWorldPos(tilePos);
-			tmp->CreateTestModel(msh);
+			tmp->CreateTestModel();
 		}
 	}
 

@@ -49,7 +49,6 @@ NOTES:
 CStateControl* gpStateController;
 
 
-
 //-----------------------------------------------------
 // FUNCTION PROTOTYPE DECLERATIONS
 //-----------------------------------------------------
@@ -145,6 +144,9 @@ void SetupEngine()
 	gpEngine->AddMediaFolder("..\\Media\\Models\\Grid");
 
 	SetWindowPos((HWND)gpEngine->GetWindow(), HWND_TOP, WINDOW_POS_X, WINDOW_POS_Y, WINDOW_WIDTH, WINDOW_HEIGHT, 0U);
+
+	// Load meshes
+	CTile::mspMshTile = gpEngine->LoadMesh("Tile.x");
 }
 
 void CleanupEngine()
