@@ -80,7 +80,7 @@ bool CStructure::TestStructureArea(CGrid* pGrid, CTile* pTile)
 	return true;
 }
 
-bool CStructure::Build(float delta)
+bool CStructure::Build()
 {
 	// Update build timer
 	// Simply scale y (proportionally to building height)

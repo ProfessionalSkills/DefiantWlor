@@ -77,7 +77,6 @@ void main()
 	
 	// FRAMETIME
 	//------------------------------
-	float delta = 0.0f;
 	gpEngine->Timer();
 
 
@@ -94,25 +93,25 @@ void main()
 	{
 		// UPDATE CURRENT STATE
 		//------------------------------
-		delta = gpEngine->Timer();
+		gFrameTime = gpEngine->Timer();
 
 		// Check if there has been a state change
 		gpStateController->Update();
 
 		// Call the update for the current state
-		gpStateController->GetCurrentState()->StateUpdate(delta);
+		gpStateController->GetCurrentState()->StateUpdate();
 
 		// Update window caption
 		if (titleChangeCounter >= 1.0f)
 		{
-			caption << GAME_NAME << "    FT: " << delta << "    FPS: " << 1.0f / delta;
+			caption << GAME_NAME << "    FT: " << gFrameTime << "    FPS: " << 1.0f / gFrameTime;
 			gpEngine->SetWindowCaption(caption.str().c_str());
 			caption.str("");	// Clear the string stream
 			titleChangeCounter = 0.0f;
 		}
 		else
 		{
-			titleChangeCounter += delta;
+			titleChangeCounter += gFrameTime;
 		}
 
 

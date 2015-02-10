@@ -117,7 +117,8 @@ EMouseStates CWorldState::UpdateMouseState()
 
 void CWorldState::CheckKeyPresses()
 {
-	// Check building numbers
+	// BUILDING PLACEMENT
+	//------------------------------
 	CStructure* pStructure;
 
 	// ESCAPE = no building is selected
@@ -153,6 +154,26 @@ void CWorldState::CheckKeyPresses()
 	{
 		pStructure = new CSpaceCentre();
 		OnPlacingStructureChange(pStructure);
+	}
+
+	// Left Click = place currently selected building
+	if (gpEngine->KeyHit(Mouse_LButton))
+	{
+		// Check if placing a structure
+		if (mpPlacingStructure)
+		{
+			// Place the structure - check if successful
+			if (mpHumanPlayer->PurchaseStructure(mpPlacingStructure, mpEarthGrid, mpCurTile))
+			{
+				// Remove currently selected structure instance being held
+				pStructure = nullptr;
+				OnPlacingStructureChange(pStructure);
+			}
+		}
+		else
+		{
+			// Not placing a structure - find out where they are clicking
+		}
 	}
 }
 
@@ -217,6 +238,9 @@ void CWorldState::StateSetup()
 	mpNullTile = new CTile();
 	mpNullTile->SetWorldPos(DX::XMFLOAT3(-2000.0f, 0.0f, 0.0f));
 
+	mpCamCurrent->SetPosition(mpEarthGrid->GetGridCentrePos().x, 120.0f,
+		0.0f);
+
 
 	// INITIALISE FONTS
 	//-----------------------------
@@ -237,7 +261,7 @@ void CWorldState::StateSetup()
 	mpPlacingStructure = nullptr;
 }
 
-void CWorldState::StateUpdate(const float inDelta)
+void CWorldState::StateUpdate()
 {
 	// SCENE DRAW
 	//------------------------------
@@ -254,22 +278,22 @@ void CWorldState::StateUpdate(const float inDelta)
 	if (mpMouseScreenPos->mPosX < EDGE_THRESHOLD)
 	{
 		// Mouse on left side of screen
-		mpCamEarth->MoveX(-CAM_MOVE_SPEED * inDelta);
+		mpCamEarth->MoveX(-CAM_MOVE_SPEED * gFrameTime);
 	}
 	if (mpMouseScreenPos->mPosX > WINDOW_WIDTH - EDGE_THRESHOLD)
 	{
 		// Mouse on right side of screen
-		mpCamEarth->MoveX(CAM_MOVE_SPEED * inDelta);
+		mpCamEarth->MoveX(CAM_MOVE_SPEED * gFrameTime);
 	}
 	if (mpMouseScreenPos->mPosY < EDGE_THRESHOLD)
 	{
 		// Mouse on top side of screen
-		mpCamEarth->MoveZ(CAM_MOVE_SPEED * inDelta);
+		mpCamEarth->MoveZ(CAM_MOVE_SPEED * gFrameTime);
 	}
 	if (mpMouseScreenPos->mPosY > WINDOW_HEIGHT - EDGE_THRESHOLD)
 	{
 		// Mouse on bottom side of screen
-		mpCamEarth->MoveZ(-CAM_MOVE_SPEED * inDelta);
+		mpCamEarth->MoveZ(-CAM_MOVE_SPEED * gFrameTime);
 	}
 
 
@@ -291,8 +315,8 @@ void CWorldState::StateUpdate(const float inDelta)
 
 	// UPDATE PLAYERS
 	//------------------------------
-	mpAIPlayer->Update(inDelta);
-	mpHumanPlayer->Update(inDelta);
+	mpAIPlayer->Update();
+	mpHumanPlayer->Update();
 	
 
 

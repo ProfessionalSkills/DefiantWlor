@@ -32,7 +32,7 @@ bool CProductionStructure::RemoveFromQueue()
 	return false;
 }
 
-bool CProductionStructure::UpdateProduction(float delta)
+bool CProductionStructure::UpdateProduction()
 {
 	return false;
 }

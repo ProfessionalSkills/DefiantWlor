@@ -47,7 +47,7 @@ bool CWorker::Attack(CGameAgent* target)
 //CWorker::void MoveTo(CTile* dest)
 
 
-bool CWorker::Move(float delta)
+bool CWorker::Move()
 {
 	return false;
 }

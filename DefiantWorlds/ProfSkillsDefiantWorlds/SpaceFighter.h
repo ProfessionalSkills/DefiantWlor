@@ -47,7 +47,7 @@ public:
 	//---------------------------
 	virtual bool Attack(CGameAgent* target);
 	//virtual void MoveTo(CTile* dest);
-	virtual bool Move(float delta);
+	virtual bool Move();
 
 private:
 	virtual bool Destroy();

@@ -79,7 +79,7 @@ void CMenuState::StateSetup()
 	mMusic->PlaySound();
 }
 
-void CMenuState::StateUpdate(const float inDelta)
+void CMenuState::StateUpdate()
 {
 	// SCENE DRAW
 	//------------------------------
@@ -87,16 +87,16 @@ void CMenuState::StateUpdate(const float inDelta)
 
 	// ANIMATE ATMOSPHERE
 	//------------------------------
-	mpMdlAtmosphere->RotateLocalX(gpRandomiser->GetRandomFloat(0.0f, 1.6f) * inDelta);
-	mpMdlAtmosphere->RotateLocalY(gpRandomiser->GetRandomFloat(1.0f,  2.8f) * inDelta);
-	mpMdlAtmosphere->RotateLocalZ(gpRandomiser->GetRandomFloat(0.0f,  2.0f) * inDelta);
+	mpMdlAtmosphere->RotateLocalX(gpRandomiser->GetRandomFloat(0.0f, 1.6f) * gFrameTime);
+	mpMdlAtmosphere->RotateLocalY(gpRandomiser->GetRandomFloat(1.0f,  2.8f) * gFrameTime);
+	mpMdlAtmosphere->RotateLocalZ(gpRandomiser->GetRandomFloat(0.0f,  2.0f) * gFrameTime);
 
 
 	// CALCULATE PLANET ORBIT POSITIONS
 	//------------------------------
 	mpMdlEarth->SetX(mOrbitCentre.x + mEarthDistance * sinf(mEarthAngle));
 	mpMdlEarth->SetY(mOrbitCentre.y + mEarthDistance* cosf(mEarthAngle));
-	mEarthAngle += inDelta * 0.01f;
+	mEarthAngle += gFrameTime * 0.01f;
 	if (mEarthAngle > mMaxAngle)
 	{
 		mEarthAngle = mMinAngle;
@@ -104,7 +104,7 @@ void CMenuState::StateUpdate(const float inDelta)
 
 	mpMdlMars->SetX(mOrbitCentre.x + mMarsDistance * sinf(mMarsAngle));
 	mpMdlMars->SetY(mOrbitCentre.y + mMarsDistance * cosf(mMarsAngle));
-	mMarsAngle += inDelta * 0.025f;
+	mMarsAngle += gFrameTime * 0.025f;
 	if (mMarsAngle > mMaxAngle)
 	{
 		mMarsAngle = mMinAngle;

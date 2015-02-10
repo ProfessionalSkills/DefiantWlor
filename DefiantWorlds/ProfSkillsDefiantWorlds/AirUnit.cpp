@@ -34,7 +34,7 @@ bool CAirUnit::Attack(CGameAgent* target)
 //CAirUnit::void MoveTo(CTile* dest)
 
 
-bool CAirUnit::Move(float delta)
+bool CAirUnit::Move()
 {
 	return false;
 }

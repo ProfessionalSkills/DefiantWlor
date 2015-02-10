@@ -34,7 +34,7 @@ bool CGroundUnit::Attack(CGameAgent* target)
 //CGroundUnit::void MoveTo(CTile* dest)
 
 
-bool CGroundUnit::Move(float delta)
+bool CGroundUnit::Move()
 {
 	return false;
 }

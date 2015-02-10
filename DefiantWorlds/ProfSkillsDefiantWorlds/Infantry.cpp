@@ -34,7 +34,7 @@ bool CInfantry::Attack(CGameAgent* target)
 //CInfantry::void MoveTo(CTile* dest)
 
 
-bool CInfantry::Move(float delta)
+bool CInfantry::Move()
 {
 	return false;
 }

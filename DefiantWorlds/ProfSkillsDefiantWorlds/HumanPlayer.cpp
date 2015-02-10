@@ -26,7 +26,7 @@ CHumanPlayer::~CHumanPlayer()
 //-----------------------------------------------------
 // HUMAN PLAYER CLASS OVERRIDE METHODS
 //-----------------------------------------------------
-void CHumanPlayer::Update(float delta)
+void CHumanPlayer::Update()
 {
 
 }

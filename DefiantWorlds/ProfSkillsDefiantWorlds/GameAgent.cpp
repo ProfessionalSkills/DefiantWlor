@@ -40,7 +40,7 @@ bool CGameAgent::Heal(float amount)
 //-----------------------------------------------------
 // GAME AGENT CLASS METHODS
 //-----------------------------------------------------
-bool CGameAgent::Construct(float delta)
+bool CGameAgent::Construct()
 {
 	return false;
 }

@@ -20,6 +20,7 @@ class CGrid
 private:
 	DX::XMFLOAT3 mGridStartPos;							// Where grid 0, 0 is in relation to world 0, 0, 0
 	DX::XMFLOAT3 mGridEndPos;
+	DX::XMFLOAT3 mGridCentrePos;
 
 	CTile*       mpGridArea[GRID_SIZE_X][GRID_SIZE_Y];
 
@@ -41,6 +42,11 @@ public:
 	inline DX::XMFLOAT3 GetGridEndPos()
 	{
 		return mGridEndPos;
+	}
+
+	inline DX::XMFLOAT3 GetGridCentrePos()
+	{
+		return mGridCentrePos;
 	}
 
 	CTile* GetTileData(SPointData gridPos);

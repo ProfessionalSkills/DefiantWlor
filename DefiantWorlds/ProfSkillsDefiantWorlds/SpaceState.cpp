@@ -31,7 +31,7 @@ void CSpaceState::StateSetup()
 
 }
 
-void CSpaceState::StateUpdate(const float inDelta)
+void CSpaceState::StateUpdate()
 {
 	// Draw the scene
 	gpEngine->DrawScene();

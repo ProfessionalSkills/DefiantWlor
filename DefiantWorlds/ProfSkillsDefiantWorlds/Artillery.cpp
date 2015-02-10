@@ -34,7 +34,7 @@ bool CArtillery::Attack(CGameAgent* target)
 //CArtillery::void MoveTo(CTile* dest)
 
 
-bool CArtillery::Move(float delta)
+bool CArtillery::Move()
 {
 	return false;
 }

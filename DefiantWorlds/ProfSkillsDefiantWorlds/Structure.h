@@ -83,7 +83,7 @@ public:
 	//---------------------------
 	void CreateStructure(DX::XMFLOAT3 pos);					// Creating with 3D coords
 	bool TestStructureArea(CGrid* pGrid, CTile* pTile);
-	bool Build(float delta);
+	bool Build();
 
 
 	// VIRTUAL METHODS

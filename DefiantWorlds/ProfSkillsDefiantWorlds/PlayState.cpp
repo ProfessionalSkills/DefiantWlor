@@ -32,7 +32,7 @@ void CPlayState::StateSetup()
 
 }
 
-void CPlayState::StateUpdate(const float inDelta)
+void CPlayState::StateUpdate()
 {
 
 }

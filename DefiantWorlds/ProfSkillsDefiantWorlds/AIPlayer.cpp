@@ -26,7 +26,7 @@ CAIPlayer::~CAIPlayer()
 //-----------------------------------------------------
 // HUMAN PLAYER CLASS OVERRIDE METHODS
 //-----------------------------------------------------
-void CAIPlayer::Update(float delta)
+void CAIPlayer::Update()
 {
 
 }

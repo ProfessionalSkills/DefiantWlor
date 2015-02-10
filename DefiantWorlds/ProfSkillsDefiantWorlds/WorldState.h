@@ -109,7 +109,7 @@ public:
 	// OVERRIDE METHODS
 	//---------------------------
 	void StateSetup() override;
-	void StateUpdate(const float inDelta) override;
+	void StateUpdate() override;
 	void StateCleanup() override;
 	void StateSave() override;
 	void StateLoad() override;

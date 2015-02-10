@@ -29,7 +29,7 @@ public:
 
 	// OVERRIDE METHODS
 	//---------------------------
-	void Update(float delta) override;
+	void Update() override;
 };
 
 

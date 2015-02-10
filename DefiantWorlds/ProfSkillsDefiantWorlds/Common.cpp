@@ -18,7 +18,7 @@
 I3DEngine*   gpEngine = New3DEngine(kTLX);
 CRandomiser* gpRandomiser = new CRandomiser();
 EGameStates  gCurState = GS_MAIN_MENU;
-
+float        gFrameTime = 0.0f;
 
 //-----------------------------------------------------
 // FUNCTION DEFINITIONS

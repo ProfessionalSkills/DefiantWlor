@@ -87,14 +87,14 @@ public:
 
 	// METHODS
 	//---------------------------
-	bool Construct(float delta);
+	bool Construct();
 
 
 	// VIRTUAL METHODS
 	//---------------------------
 	virtual bool Attack(CGameAgent* target) = 0;
 	//virtual void MoveTo(CTile* dest) = 0;
-	virtual bool Move(float delta) = 0;
+	virtual bool Move() = 0;
 	virtual void UnloadIModel() = 0;
 
 private:

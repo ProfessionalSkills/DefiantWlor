@@ -34,7 +34,7 @@ bool CFighter::Attack(CGameAgent* target)
 //CFighter::void MoveTo(CTile* dest)
 
 
-bool CFighter::Move(float delta)
+bool CFighter::Move()
 {
 	return false;
 }

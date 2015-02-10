@@ -39,6 +39,11 @@ CGrid::CGrid(DX::XMFLOAT3 gridStartPos)
 	mGridEndPos.x = (GRID_TILE_SIZE * GRID_SIZE_X) + mGridStartPos.x;
 	mGridEndPos.y = mGridStartPos.y;
 	mGridEndPos.z = (GRID_TILE_SIZE * GRID_SIZE_Y) + mGridStartPos.z;
+
+	// Calculate middle position of the grid
+	mGridCentrePos.x = (mGridEndPos.x - mGridStartPos.x) / 2.0f;
+	mGridCentrePos.y = (mGridEndPos.y - mGridStartPos.y) / 2.0f;
+	mGridCentrePos.z = (mGridEndPos.z - mGridStartPos.z) / 2.0f;
 }
 
 CGrid::~CGrid()

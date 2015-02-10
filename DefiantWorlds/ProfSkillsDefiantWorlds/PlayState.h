@@ -60,7 +60,7 @@ public:
 	// VIRTUAL METHODS
 	//---------------------------
 	virtual void StateSetup();
-	virtual void StateUpdate(const float inDelta);
+	virtual void StateUpdate();
 	virtual void StateCleanup();
 	virtual void StateSave();
 	virtual void StateLoad();

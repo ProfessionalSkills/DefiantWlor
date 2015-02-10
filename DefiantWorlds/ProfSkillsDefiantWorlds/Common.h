@@ -92,6 +92,9 @@ extern EGameStates gCurState;
 extern I3DEngine*   gpEngine;
 extern CRandomiser* gpRandomiser;
 
+// Global frametime
+extern float gFrameTime;
+
 
 //-----------------------------------------------------
 // TEMPLATE FUNCTIONS

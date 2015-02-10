@@ -34,7 +34,7 @@ bool CMothership::Attack(CGameAgent* target)
 //CMothership::void MoveTo(CTile* dest)
 
 
-bool CMothership::Move(float delta)
+bool CMothership::Move()
 {
 	return false;
 }

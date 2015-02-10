@@ -51,7 +51,7 @@ public:
 	//---------------------------
 	//bool AddToQueue(CGameAgent* agent);
 	bool RemoveFromQueue();
-	bool UpdateProduction(float delta);
+	bool UpdateProduction();
 	//CGameAgent* CreateAgent();		// Called when agent at front of production queue is finished
 
 

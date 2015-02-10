@@ -97,13 +97,13 @@ public:
 
 	// METHODS
 	//---------------------------
-	bool PurchaseStructure(EGameStructureTypes strucType, CGrid* pGrid, CTile* pTile);
+	bool PurchaseStructure(CStructure* pStructure, CGrid* pGrid, CTile* pTile);
 	bool QueueUnit(CStructure* structure, CGameAgent* unit);
 
 
 	// VIRTUAL METHODS
 	//---------------------------
-	virtual void Update(float delta) = 0;
+	virtual void Update() = 0;
 };
 
 

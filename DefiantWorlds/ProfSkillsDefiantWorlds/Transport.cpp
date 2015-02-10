@@ -34,7 +34,7 @@ bool CTransport::Attack(CGameAgent* target)
 //CTransport::void MoveTo(CTile* dest)
 
 
-bool CTransport::Move(float delta)
+bool CTransport::Move()
 {
 	return false;
 }
