@@ -82,8 +82,8 @@ const int GRID_SIZE_X = 30;
 const int GRID_SIZE_Y = 30;
 const float  GRID_TILE_SIZE = 10.0f;
 
-const float NEAR_CLIP = 0.1f;
-const float FAR_CLIP = 500.0f;
+const float NEAR_CLIP = 1.0f;
+const float FAR_CLIP = 1000.0f;
 
 // Store the current game state
 extern EGameStates gCurState;
@@ -94,6 +94,11 @@ extern CRandomiser* gpRandomiser;
 
 // Global frametime
 extern float gFrameTime;
+
+// HOOK - used for detecting mouse scrolling
+extern HHOOK gMSScrollHook;
+extern MSLLHOOKSTRUCT* gpMouseHookData;
+extern short gMouseWheelDelta;
 
 
 //-----------------------------------------------------
@@ -120,5 +125,14 @@ void SafeDelete(GenericPtr* inPtr)
 float Clampf(float inMin, float inMax, float inVal);
 float ToRadians(float inDegrees);
 float ToDegrees(float inRadians);
+
+
+//-----------------------------------------------------
+// HOOK FUNCTIONS - DETECTING MOUSE SCROLLING
+//-----------------------------------------------------
+void SetMouseHook();
+LRESULT __stdcall MouseHookCallback(int code, WPARAM wParam, LPARAM lParam);
+void ReleaseMouseHook();
+
 
 #endif /* _COMMON_H_ */

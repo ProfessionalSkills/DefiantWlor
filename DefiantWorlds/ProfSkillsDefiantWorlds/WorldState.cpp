@@ -117,6 +117,16 @@ EMouseStates CWorldState::UpdateMouseState()
 
 void CWorldState::CheckKeyPresses()
 {
+	// CHECK FOR SCROLLING
+	//------------------------------
+	if (gMouseWheelDelta != 0)
+	{
+		float moveAmount = ((float)gMouseWheelDelta * -CAM_SCROLL_SPEED) * gFrameTime;
+		mpCamCurrent->SetY(Clampf(CAM_MIN_HEIGHT, CAM_MAX_HEIGHT, mpCamCurrent->GetY() + moveAmount));
+		gMouseWheelDelta = 0;
+	}
+	
+
 	// BUILDING PLACEMENT
 	//------------------------------
 	CStructure* pStructure;
@@ -339,16 +349,18 @@ void CWorldState::StateSave()
 
 void CWorldState::StateCleanup()
 {
+	// Unclip cursor
+	ClipCursor(&mBaseClip);
+	
 	SafeDelete(mpMouseScreenPos);
 	SafeDelete(mpMouseGridPos);
+	SafeDelete(mpEarthGrid);
+	//SafeDelete(mpMarsGrid);
 
 	mpMshSkybox->RemoveModel(mpMdlSkybox);
 
 	gpEngine->RemoveMesh(mpMshSkybox);
 	gpEngine->RemoveCamera(mpCamEarth);
-
-	// Unclip cursor
-	ClipCursor(&mBaseClip);
 }
 
 

@@ -48,7 +48,14 @@ CGrid::CGrid(DX::XMFLOAT3 gridStartPos)
 
 CGrid::~CGrid()
 {
-
+	for (int x = 0; x < GRID_SIZE_X; x++)
+	{
+		for (int y = 0; y < GRID_SIZE_Y; y++)
+		{
+			CTile* tmp = mpGridArea[x][y];
+			SafeDelete(tmp);
+		}
+	}
 }
 
 

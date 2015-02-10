@@ -25,10 +25,14 @@ private:
 	ICamera* mpCamMars;
 	ICamera* mpCamCurrent;
 
-	const float CAM_MOVE_SPEED = 50.0f;
+	const float CAM_MOVE_SPEED = 80.0f;
+	const float CAM_SCROLL_SPEED = 20.0f;
+	const float CAM_MAX_HEIGHT = 200.0f;
+	const float CAM_MIN_HEIGHT = 30.0f;
 
 	DX::XMFLOAT4X4 mCamWorldMatrix;
 	DX::XMFLOAT4X4 mCamInvViewProj;
+	
 
 
 	// GROUND PLANE

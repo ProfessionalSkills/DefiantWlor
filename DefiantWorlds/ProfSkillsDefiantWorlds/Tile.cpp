@@ -24,7 +24,7 @@ CTile::CTile()
 
 CTile::~CTile()
 {
-
+	mspMshTile->RemoveModel(mpMdlTile);
 }
 
 
@@ -33,5 +33,5 @@ CTile::~CTile()
 //-----------------------------------------------------
 void CTile::CreateTestModel()
 {
-	mpMdlTest = CTile::mspMshTile->CreateModel(mTileWorldPos.x, mTileWorldPos.y, mTileWorldPos.z);
+	mpMdlTile = CTile::mspMshTile->CreateModel(mTileWorldPos.x, mTileWorldPos.y, mTileWorldPos.z);
 }

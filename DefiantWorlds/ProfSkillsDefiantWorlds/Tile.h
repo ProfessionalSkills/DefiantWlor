@@ -25,7 +25,7 @@ private:
 	CGameObject* mpObject;				// Pointer to the object taking up the tile space
 	CTile*       mpParent;				// Only really used for pathfinding
 
-	IModel* mpMdlTest;
+	IModel* mpMdlTile;
 	
 public:
 	static IMesh* mspMshTile;
