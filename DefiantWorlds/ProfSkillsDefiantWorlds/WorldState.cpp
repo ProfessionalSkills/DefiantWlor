@@ -10,7 +10,7 @@
 
 
 //-----------------------------------------------------
-// SPACE STATE CLASS CONSTRUCTORS & DESTRUCTOR
+// WORLD STATE CLASS CONSTRUCTORS & DESTRUCTOR
 //-----------------------------------------------------
 CWorldState::CWorldState() : CPlayState()
 {
@@ -24,7 +24,7 @@ CWorldState::~CWorldState()
 
 
 //-----------------------------------------------------
-// MENU STATE CLASS METHODS
+// WORLD STATE CLASS METHODS
 //-----------------------------------------------------
 void CWorldState::UpdateMatrices()
 {
@@ -115,9 +115,36 @@ EMouseStates CWorldState::UpdateMouseState()
 	}
 }
 
+void CWorldState::CheckKeyPresses()
+{
+	// Check building numbers
+	CStructure* pStructure;
+
+	// ESCAPE = no building is selected
+	if (gpEngine->KeyHit(Key_C))
+	{
+		pStructure = nullptr;
+		OnPlacingStructureChange(pStructure);
+	}
+
+	// 0 = CommsCentre
+	if (gpEngine->KeyHit(Key_0))
+	{
+		pStructure = new CComCentre();
+		OnPlacingStructureChange(pStructure);
+	}
+
+	// 1 = Barracks
+	if (gpEngine->KeyHit(Key_1))
+	{
+		pStructure = new CBarracks();
+		OnPlacingStructureChange(pStructure);
+	}
+}
+
 
 //-----------------------------------------------------
-// MENU STATE CLASS OVERRIDE METHODS
+// WORLD STATE CLASS OVERRIDE METHODS
 //-----------------------------------------------------
 void CWorldState::StateSetup()
 {
@@ -191,9 +218,9 @@ void CWorldState::StateSetup()
 	mMusic->PlaySound(); //Play music on loop
 
 
-	buildTest = gpEngine->LoadMesh("Building09.x");
-	mdlBuildTest = buildTest->CreateModel();
-	mdlBuildTest->Scale(0.85f);
+	// INITIALISE SELECTION DATA
+	//-----------------------------
+	mpPlacingStructure = nullptr;
 }
 
 void CWorldState::StateUpdate(const float inDelta)
@@ -237,9 +264,15 @@ void CWorldState::StateUpdate(const float inDelta)
 	UpdateMatrices();
 	mMouseState = UpdateMouseState();
 	DrawFontData();
+	CheckKeyPresses();
 
-	mdlBuildTest->SetPosition(mpCurTile->GetWorldPos().x, mpCurTile->GetWorldPos().y, mpCurTile->GetWorldPos().z);
 
+	// MODEL UPDATES
+	//---------------------------
+	if (mpPlacingStructure)
+	{
+		mpPlacingStructure->SetWorldPos(mpCurTile->GetWorldPos());
+	}
 
 
 	// UPDATE PLAYERS
@@ -279,4 +312,21 @@ void CWorldState::StateCleanup()
 
 	// Unclip cursor
 	ClipCursor(&mBaseClip);
+}
+
+
+//-----------------------------------------------------
+// WORLD STATE CLASS EVENT HANDLERS
+//-----------------------------------------------------
+void CWorldState::OnPlacingStructureChange(CStructure* selStructure)
+{
+	// Remove currently selected structure - if it exists
+	if (mpPlacingStructure)
+	{
+		mpPlacingStructure->UnloadIModel();
+		SafeDelete(mpPlacingStructure);
+	}
+
+	// Store pointer to new structure
+	mpPlacingStructure = selStructure;
 }

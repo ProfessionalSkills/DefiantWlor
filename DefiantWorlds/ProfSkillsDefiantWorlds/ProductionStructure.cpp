@@ -47,3 +47,8 @@ bool CProductionStructure::Destroy()
 {
 	return false;
 }
+
+void CProductionStructure::UnloadIModel()
+{
+
+}

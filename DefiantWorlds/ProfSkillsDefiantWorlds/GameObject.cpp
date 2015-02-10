@@ -17,11 +17,6 @@ CGameObject::CGameObject()
 
 }
 
-CGameObject::CGameObject(DX::XMFLOAT3 pos, float orientation)
-{
-
-}
-
 CGameObject::~CGameObject()
 {
 
@@ -38,7 +33,7 @@ void CGameObject::SetGridPos(SPointData pos)
 
 void CGameObject::SetWorldPos(DX::XMFLOAT3 pos)
 {
-
+	mpObjModel->SetPosition(pos.x, pos.y, pos.z);
 }
 
 void CGameObject::SetOrientation(float orientation)

@@ -23,20 +23,18 @@ protected:
 	DX::XMFLOAT3 mWorldPos;
 	SPointData   mGridPos;
 	float        mOrientation;
-	int          mPopCost;
+	float        mScale;
 
 
 	// TLE OBJECT DATA
 	//---------------------------
-	IMesh*  mpMesh;
-	IModel* mpModel;
+	IModel* mpObjModel;
 
 
 public:
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
 	CGameObject();
-	CGameObject(DX::XMFLOAT3 pos, float orientation);
 	virtual ~CGameObject();
 
 
@@ -93,7 +91,6 @@ public:
 
 	// VIRTUAL METHODS
 	//---------------------------
-	
 };
 
 

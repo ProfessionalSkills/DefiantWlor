@@ -30,3 +30,9 @@ bool CStaticStructure::Destroy()
 {
 	return false;
 }
+
+
+void CStaticStructure::UnloadIModel()
+{
+
+}

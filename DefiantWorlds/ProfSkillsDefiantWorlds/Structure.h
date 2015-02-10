@@ -18,7 +18,7 @@
 //-----------------------------------------------------
 class CStructure : public CGameObject
 {
-private:
+protected:
 	// DATA
 	//---------------------------
 	float mHealth;
@@ -26,7 +26,6 @@ private:
 	float mRepairSpeed;
 	float mCurBuildTimeLeft;			// Time left until structure is built
 	int   mBuildCost;
-	bool  mIsBuilt;
 	//CParticleEmitter* mDestroyParticleFX;
 	EObjectStates mState;
 
@@ -89,7 +88,7 @@ public:
 
 	// VIRTUAL METHODS
 	//---------------------------
-private:
+	virtual void UnloadIModel() = 0;
 	virtual bool Destroy() = 0;
 };
 

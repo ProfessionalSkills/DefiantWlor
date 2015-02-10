@@ -23,7 +23,7 @@ const int MAX_QUEUE_SIZE = 5;
 //-----------------------------------------------------
 class CProductionStructure : public CStructure
 {
-private:
+protected:
 	// DATA
 	//---------------------------
 	std::list<EGameAgentsTypes> mRespectiveAgentsList;
@@ -58,7 +58,7 @@ public:
 
 	// OVERRIDE METHODS
 	//---------------------------
-private:
+	virtual void UnloadIModel();
 	virtual bool Destroy();
 };
 

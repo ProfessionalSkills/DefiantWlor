@@ -10,6 +10,7 @@
 // INCLUDES
 //-----------------------------------------------------
 #include "GameObject.h"
+#include "Grid.h"
 
 
 //-----------------------------------------------------
@@ -31,6 +32,7 @@ private:
 	EObjectStates mState;
 	//CTile* mDestGridSq;
 	bool mIsMoving;
+	int  mPopCost;
 
 
 public:
@@ -93,6 +95,7 @@ public:
 	virtual bool Attack(CGameAgent* target) = 0;
 	//virtual void MoveTo(CTile* dest) = 0;
 	virtual bool Move(float delta) = 0;
+	virtual void UnloadIModel() = 0;
 
 private:
 	virtual bool Destroy() = 0;

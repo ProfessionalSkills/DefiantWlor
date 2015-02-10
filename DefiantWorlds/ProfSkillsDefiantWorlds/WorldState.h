@@ -75,13 +75,18 @@ private:
 	CSound* mMusic; //Music
 
 
+	// SELECTION DATA
+	//---------------------------
+	CStructure* mpPlacingStructure;
+	CStructure* mpCurSelectedStructure;
+	CGameAgent* mpCurSelectedAgent;
+	//CResource* mpCurSelectedResource;
+
+
 	// ADDITIONAL VARIABLES
 	//---------------------------
 	const int EDGE_THRESHOLD = 50; // How far from the edge the mouse must be for edge scrolling
 	std::stringstream strStream;
-
-	IMesh* buildTest;
-	IModel* mdlBuildTest;
 
 
 public:
@@ -96,6 +101,7 @@ public:
 	void UpdateMatrices();
 	void CalculateMouseGridPos();
 	void DrawFontData();
+	void CheckKeyPresses();
 
 	EMouseStates UpdateMouseState();
 
@@ -107,6 +113,11 @@ public:
 	void StateCleanup() override;
 	void StateSave() override;
 	void StateLoad() override;
+
+private:
+	// EVENT HANDLERS
+	//---------------------------
+	void OnPlacingStructureChange(CStructure* selStructure);
 };
 
 

@@ -142,11 +142,14 @@ void SetupEngine()
 	gpEngine->AddMediaFolder("..\\Media\\Models\\Planets");
 	gpEngine->AddMediaFolder("..\\Media\\Models\\Structures");
 	gpEngine->AddMediaFolder("..\\Media\\Models\\Grid");
+	gpEngine->AddMediaFolder("..\\Media\\Models\\Particles");
 
 	SetWindowPos((HWND)gpEngine->GetWindow(), HWND_TOP, WINDOW_POS_X, WINDOW_POS_Y, WINDOW_WIDTH, WINDOW_HEIGHT, 0U);
 
 	// Load meshes
 	CTile::mspMshTile = gpEngine->LoadMesh("Tile.x");
+	CComCentre::mspMshStructure = gpEngine->LoadMesh("Building09.x");
+	CBarracks::mspMshStructure = gpEngine->LoadMesh("Building07.x");
 }
 
 void CleanupEngine()
