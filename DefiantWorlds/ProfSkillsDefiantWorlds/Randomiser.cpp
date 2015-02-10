@@ -14,7 +14,9 @@
 //-----------------------------------------------------
 CRandomiser::CRandomiser()
 {
-
+	// Create seed
+	size_t seed = std::chrono::system_clock::now().time_since_epoch().count();
+	mGenerator.seed(seed);
 }
 
 CRandomiser::~CRandomiser()
@@ -28,10 +30,6 @@ CRandomiser::~CRandomiser()
 //-----------------------------------------------------
 int CRandomiser::GetRandomInt(int inMin, int inMax)
 {
-	// Create seed
-	size_t seed = std::chrono::system_clock::now().time_since_epoch().count();
-	mGenerator.seed(seed);
-
 	// Create distribution
 	std::uniform_int_distribution<int> distribution(inMin, inMax);
 
@@ -41,10 +39,6 @@ int CRandomiser::GetRandomInt(int inMin, int inMax)
 
 float CRandomiser::GetRandomFloat(double inMin, double inMax)
 {
-	// Create seed
-	size_t seed = std::chrono::system_clock::now().time_since_epoch().count();
-	mGenerator.seed(seed);
-
 	// Create distribution
 	std::uniform_real_distribution<double> distribution(inMin, inMax);
 

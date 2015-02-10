@@ -189,7 +189,6 @@ void CWorldState::StateSetup()
 
 	buildTest = gpEngine->LoadMesh("Building09.x");
 	mdlBuildTest = buildTest->CreateModel();
-	mdlBuildTest->Scale(0.5f);
 }
 
 void CWorldState::StateUpdate(const float inDelta)

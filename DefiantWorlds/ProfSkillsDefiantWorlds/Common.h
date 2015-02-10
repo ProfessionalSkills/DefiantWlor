@@ -78,8 +78,8 @@ const int WINDOW_HEIGHT = 900;
 const int MAX_UNITS = 50;
 const int MAX_SPACE_UNITS = 10;
 
-const int GRID_SIZE_X = 25;
-const int GRID_SIZE_Y = 25;
+const int GRID_SIZE_X = 30;
+const int GRID_SIZE_Y = 30;
 const float  GRID_TILE_SIZE = 10.0f;
 
 const float NEAR_CLIP = 0.1f;
