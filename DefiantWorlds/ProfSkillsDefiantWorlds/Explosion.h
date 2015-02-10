@@ -27,10 +27,6 @@ public:
 	void SetEmitPosition();
 	DirectX::XMFLOAT3 GetEmitPosition();
 	void UpdateSystem(float mFrameTime, IModel* emitter, IMesh* particleMesh, ICamera* myCamera);
-
-	// VIRTUAL METHODS
-	//---------------------------
-	virtual void UpdateSystem();
 };
 
 #endif

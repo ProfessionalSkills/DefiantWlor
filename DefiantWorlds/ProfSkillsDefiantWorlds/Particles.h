@@ -33,9 +33,11 @@ public:
 	CParticle();
 	~CParticle();
 
+
 	// PARTICLE STATIC MESH
 	//---------------------------
 	static IMesh* mMesh;
+
 
 	// PARTICLE DATA (ACCESSED BY PARTICLE SYSTEMS)
 	//---------------------------

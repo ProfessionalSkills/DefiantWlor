@@ -8,12 +8,14 @@
 //-----------------------------------------------------
 #include "Particles.h"
 
+IMesh* CParticle::mMesh = nullptr;
+
 
 //-----------------------------------------------------
 // PARTICLE EMITTER CLASS CONSTRUCTORS & DESTRUCTOR
 //-----------------------------------------------------
 
-CParticle::CParticle(DX::XMFLOAT3 position) 
+CParticle::CParticle() 
 {
 
 }
