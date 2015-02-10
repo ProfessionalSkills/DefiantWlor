@@ -76,17 +76,20 @@ void CWorldState::DrawFontData()
 	mFntDebug->Draw(strStream.str(), 5, 15, kWhite, kLeft, kTop);
 	strStream.str("");
 
-	// Draw mouse state
+	// Draw mouse state - and get current grid data
 	strStream << "GRID: ";
 	switch (mMouseState)
 	{
 	case MS_EARTH_GRID:
+		mpCurTile = mpEarthGrid->GetTileData(*mpMouseGridPos);
 		strStream << "Earth";
 		break;
 	case MS_MARS_GRID:
+		mpCurTile = mpMarsGrid->GetTileData(*mpMouseGridPos);
 		strStream << "Mars";
 		break;
 	case MS_OUT_OF_GRID: 
+		mpCurTile = mpNullTile;
 		strStream << "None";
 		break;
 	}
@@ -170,6 +173,8 @@ void CWorldState::StateSetup()
 	// INITIALISE WORLDS
 	//-----------------------------
 	mpEarthGrid = new CGrid(DX::XMFLOAT3(0.0f, 0.1f, 0.0f));
+	mpNullTile = new CTile();
+	mpNullTile->SetWorldPos(DX::XMFLOAT3(-2000.0f, 0.0f, 0.0f));
 
 
 	// INITIALISE FONTS
@@ -188,6 +193,7 @@ void CWorldState::StateSetup()
 
 	buildTest = gpEngine->LoadMesh("Building09.x");
 	mdlBuildTest = buildTest->CreateModel();
+	mdlBuildTest->Scale(0.85f);
 }
 
 void CWorldState::StateUpdate(const float inDelta)
@@ -232,7 +238,7 @@ void CWorldState::StateUpdate(const float inDelta)
 	mMouseState = UpdateMouseState();
 	DrawFontData();
 
-	mdlBuildTest->SetPosition(mMouseWorldPos.x, mMouseWorldPos.y, mMouseWorldPos.z);
+	mdlBuildTest->SetPosition(mpCurTile->GetWorldPos().x, mpCurTile->GetWorldPos().y, mpCurTile->GetWorldPos().z);
 
 
 

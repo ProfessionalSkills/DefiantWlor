@@ -53,9 +53,9 @@ bool CStructure::TestStructureArea(CGrid* pGrid, CTile* pTile)
 	CTile* pNextTile;
 
 	// Loop through structure size
-	for (int x = 0; x < mStructureSize.mPosX; x++)
+	for (int x = mStructureBL.mPosX; x < mStructureTR.mPosX; x++)
 	{
-		for (int y = 0; y < mStructureSize.mPosY; y++)
+		for (int y = mStructureBL.mPosY; y < mStructureTR.mPosY; y++)
 		{
 			// Get current tile data
 			pNextTile = pGrid->GetTileData(SPointData(gridPos.mPosX + x, gridPos.mPosY + y));

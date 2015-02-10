@@ -50,6 +50,8 @@ private:
 	//---------------------------
 	CGrid* mpEarthGrid;
 	CGrid* mpMarsGrid;
+	CTile* mpNullTile;
+	CTile* mpCurTile;
 
 
 	// FONT

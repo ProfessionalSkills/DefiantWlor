@@ -30,8 +30,8 @@ private:
 	//CParticleEmitter* mDestroyParticleFX;
 	EObjectStates mState;
 
-	SPointData mStructureSize;			// Size in X and Y axis - used for determing clearance
-										// of area around the building when being placed
+	SPointData mStructureBL;		// Amount of grid squares relative to the centre to find the bottom left grid square
+	SPointData mStructureTR;		// Same as above, but for top right grid square
 
 
 public:
