@@ -164,9 +164,9 @@ void CGrid::TurnOnTiles(CTile* gridPos, SPointData pointBL, SPointData pointTR)
 	ResetTilesModels();
 
 	// Loop through structure size
-	for (int x = origin.mPosX + (pointBL.mPosX - 1); x <= origin.mPosX + (pointTR.mPosX + 1); x++)
+	for (int x = origin.mPosX + pointBL.mPosX; x <= origin.mPosX + pointTR.mPosX; x++)
 	{
-		for (int y = origin.mPosY + (pointBL.mPosY - 1); y <= origin.mPosY + (pointTR.mPosY + 1); y++)
+		for (int y = origin.mPosY + pointBL.mPosY; y <= origin.mPosY + pointTR.mPosY; y++)
 		{
 			// Get current tile data
 			pNextTile = GetTileData(SPointData(x, y));

@@ -187,6 +187,7 @@ void CWorldState::CheckKeyPresses()
 			{
 				// Safe to point at nothing due to structure pointer passed on to Player's data
 				mpPlacingStructure = nullptr;
+				mpEarthGrid->ResetTilesModels();
 			}
 		}
 		else
@@ -246,7 +247,7 @@ void CWorldState::StateSetup()
 	// INITIALISE SKYBOX
 	//-----------------------------
 	mpMshSkybox = gpEngine->LoadMesh("SkyboxWorld.x");
-	mpMdlSkybox = mpMshSkybox->CreateModel(0.0f, 0.0f, 0.0f);
+	mpMdlSkybox = mpMshSkybox->CreateModel(0.0f, -1.0f, 0.0f);
 	mpMdlSkybox->Scale(0.5f);
 
 
@@ -258,6 +259,14 @@ void CWorldState::StateSetup()
 
 	mpCamCurrent->SetPosition(mpEarthGrid->GetGridCentrePos().x, 120.0f,
 		0.0f);
+
+	DX::XMFLOAT3 gridCentre = mpEarthGrid->GetGridCentrePos();
+	mpMdlSkybox->SetPosition(gridCentre.x, gridCentre.y, gridCentre.z);
+
+	mpMshGridArea = gpEngine->LoadMesh("Grid.x");
+	mpMdlGridArea = mpMshGridArea->CreateModel(gridCentre.x, 0.1f, gridCentre.z);
+	mpMdlGridArea->ScaleX(GRID_SIZE_X);
+	mpMdlGridArea->ScaleZ(GRID_SIZE_Y);
 
 
 	// INITIALISE FONTS

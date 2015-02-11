@@ -56,6 +56,10 @@ void CTile::CreateTileModel()
 	if (!mpMdlTile)
 	{
 		mpMdlTile = CTile::mspMshTile->CreateModel(mTileWorldPos.x, mTileWorldPos.y, mTileWorldPos.z);
+		if (mTileUsed)
+		{
+			mpMdlTile->SetSkin("tlxmul2_tileUsedTex.tga");
+		}
 	}
 }
 
