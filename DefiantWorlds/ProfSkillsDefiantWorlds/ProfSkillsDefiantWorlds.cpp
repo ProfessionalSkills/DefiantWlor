@@ -30,7 +30,6 @@ NOTES:
 	- 3D grid for space battle
 	- Space battle outcome calculated in real-time rather than pre-determined
 	- Handling Player classes during state changes
-	- Something tits
 */
 
 
