@@ -67,8 +67,6 @@ struct SPointData
 //-----------------------------------------------------
 // GLOBAL VARIABLES
 //-----------------------------------------------------
-const float PI = 3.14159f;
-
 const int WINDOW_POS_X = 50;
 const int WINDOW_POS_Y = 50;
 
@@ -78,8 +76,8 @@ const int WINDOW_HEIGHT = 900;
 const int MAX_UNITS = 50;
 const int MAX_SPACE_UNITS = 10;
 
-const int GRID_SIZE_X = 30;
-const int GRID_SIZE_Y = 30;
+const int GRID_SIZE_X = 50;
+const int GRID_SIZE_Y = 50;
 const float  GRID_TILE_SIZE = 10.0f;
 
 const float NEAR_CLIP = 1.0f;

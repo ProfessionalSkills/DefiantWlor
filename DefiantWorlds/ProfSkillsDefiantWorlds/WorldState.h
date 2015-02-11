@@ -66,7 +66,8 @@ private:
 	// MOUSE DATA
 	//---------------------------
 	SPointData*  mpMouseScreenPos;
-	SPointData*  mpMouseGridPos;
+	SPointData   mMouseGridPos;
+	SPointData	 mMousePrevGridPos;
 	DX::XMFLOAT3 mMouseWorldPos;	// Position of mouse in 3D space at y = 0
 	RECT         mBaseClip;		    // The rectangle of the window (for undoing mouse clip)
 	RECT         mWindowClip;	    // Limit the mouse to stay within the window
@@ -103,6 +104,7 @@ public:
 	// METHODS
 	//---------------------------
 	void UpdateMatrices();
+	void UpdateHeldStructure();
 	void CalculateMouseGridPos();
 	void DrawFontData();
 	void CheckKeyPresses();

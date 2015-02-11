@@ -22,7 +22,7 @@ private:
 	DX::XMFLOAT3 mGridEndPos;
 	DX::XMFLOAT3 mGridCentrePos;
 
-	CTile*       mpGridArea[GRID_SIZE_X][GRID_SIZE_Y];
+	CTile* mpGridArea[GRID_SIZE_X][GRID_SIZE_Y];
 
 
 public:
@@ -54,6 +54,12 @@ public:
 	CTile* GetTileToRight(CTile* pTile);
 	CTile* GetTileAbove(CTile* pTile);
 	CTile* GetTileBelow(CTile* pTile);
+
+
+	// METHODS
+	//---------------------------
+	void ResetTilesModels();
+	void TurnOnTiles(CTile* gridPos, SPointData pointBL, SPointData pointTR);
 };
 
 #endif /* _GRID_H_ */

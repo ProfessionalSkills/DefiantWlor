@@ -72,6 +72,16 @@ public:
 		return mState;
 	}
 
+	inline SPointData GetBLPosition()
+	{
+		return mStructureBL;
+	}
+
+	inline SPointData GetTRPosition()
+	{
+		return mStructureTR;
+	}
+
 
 	// MUTATORS
 	//---------------------------

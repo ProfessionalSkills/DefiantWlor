@@ -48,12 +48,12 @@ float Clampf(float inMin, float inMax, float inVal)
 
 float ToRadians(float inDegrees)
 {
-	return (PI / 180.0f) * inDegrees;
+	return (DX::XM_PI / 180.0f) * inDegrees;
 }
 
 float ToDegrees(float inRadians)
 {
-	return (180 / PI) * inRadians;
+	return (180.0f / DX::XM_PI) * inRadians;
 }
 
 

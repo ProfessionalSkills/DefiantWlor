@@ -26,6 +26,7 @@ private:
 	CTile*       mpParent;				// Only really used for pathfinding
 
 	IModel* mpMdlTile;
+
 	
 public:
 	static IMesh* mspMshTile;
@@ -72,10 +73,8 @@ public:
 		mTileWorldPos = worldPos;
 	}
 
-	inline void SetTileUsage(bool isUsed)
-	{
-		mTileUsed = isUsed;
-	}
+	void SetTileUsage(bool isUsed);
+
 
 	inline void SetParent(CTile* pTile)
 	{
@@ -85,7 +84,8 @@ public:
 
 	// METHODS
 	//--------------------------- 
-	void CreateTestModel();
+	void CreateTileModel();
+	void RemoveTileModel();
 };
 
 #endif /* _TILE_H_ */
