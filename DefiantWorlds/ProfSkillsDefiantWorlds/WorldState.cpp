@@ -253,7 +253,7 @@ void CWorldState::StateSetup()
 
 	// INITIALISE WORLDS
 	//-----------------------------
-	mpEarthGrid = new CGrid(DX::XMFLOAT3(0.0f, 0.1f, 0.0f));
+	mpEarthGrid = new CGrid(DX::XMFLOAT3(0.0f, 0.2f, 0.0f));
 	mpNullTile = new CTile();
 	mpNullTile->SetWorldPos(DX::XMFLOAT3(-2000.0f, 0.0f, 0.0f));
 
@@ -265,8 +265,8 @@ void CWorldState::StateSetup()
 
 	mpMshGridArea = gpEngine->LoadMesh("Grid.x");
 	mpMdlGridArea = mpMshGridArea->CreateModel(gridCentre.x, 0.1f, gridCentre.z);
-	mpMdlGridArea->ScaleX(GRID_SIZE_X);
-	mpMdlGridArea->ScaleZ(GRID_SIZE_Y);
+	mpMdlGridArea->ScaleX((GRID_SIZE_X * GRID_TILE_SIZE) / 2.0f);
+	mpMdlGridArea->ScaleZ((GRID_SIZE_Y * GRID_TILE_SIZE) / 2.0f);
 
 
 	// INITIALISE FONTS

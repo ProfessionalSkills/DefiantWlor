@@ -128,7 +128,7 @@ Mesh {
    0.000000;0.000000;0.000000;;
 
    TextureFilename {
-    "concrete.jpg";
+    "concrete2.jpg";
    }
   }
  }
