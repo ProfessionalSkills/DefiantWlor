@@ -15,8 +15,8 @@
 CGrid::CGrid(DX::XMFLOAT3 gridStartPos)
 {
 	mGridStartPos = gridStartPos;
-	
 	CTile* tmp;
+	
 
 	// Initialise array
 	for (int x = 0; x < GRID_SIZE_X; x++)
@@ -154,8 +154,9 @@ void CGrid::ResetTilesModels()
 	}
 }
 
-void CGrid::TurnOnTiles(CTile* gridPos, SPointData pointBL, SPointData pointTR)
+bool CGrid::TurnOnTiles(CTile* gridPos, SPointData pointBL, SPointData pointTR)
 {
+	bool badTiles = false;
 	SPointData origin = gridPos->GetGridPos();
 	
 	// Mark the building's grid area as in use
@@ -174,8 +175,26 @@ void CGrid::TurnOnTiles(CTile* gridPos, SPointData pointBL, SPointData pointTR)
 			// Set state of tile
 			if (pNextTile)
 			{
-				pNextTile->CreateTileModel();
+				// Only show up tiles if they are being used
+				if (pNextTile->IsTileUsed())
+				{
+					pNextTile->CreateTileModel();
+				}
+
+				// If a used tile has not been found yet, check if this is a red tile
+				if (!badTiles)
+				{
+					badTiles = pNextTile->IsTileUsed();
+				}
+			}
+			else
+			{
+				// Edge of map detected
+				badTiles = true;
 			}
 		}
 	}
+
+	// Return if there are any red tiles
+	return badTiles;
 }

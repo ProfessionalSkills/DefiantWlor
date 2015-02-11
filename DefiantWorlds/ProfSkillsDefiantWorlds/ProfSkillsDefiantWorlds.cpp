@@ -147,12 +147,17 @@ void SetupEngine()
 
 	SetWindowPos((HWND)gpEngine->GetWindow(), HWND_TOP, WINDOW_POS_X, WINDOW_POS_Y, WINDOW_WIDTH, WINDOW_HEIGHT, 0U);
 
-	// Load meshes
+	// Load static meshes
 	CTile::mspMshTile = gpEngine->LoadMesh("Tile.x");
-	CComCentre::mspMshStructure = gpEngine->LoadMesh("Building09.x");
-	CBarracks::mspMshStructure = gpEngine->LoadMesh("Building07.x");
-	CHellipad::mspMshStructure = gpEngine->LoadMesh("Building08.x");
-	CSpaceCentre::mspMshStructure = gpEngine->LoadMesh("Building03.x");
+
+	CComCentre::mspMshStructureBuilt = gpEngine->LoadMesh("ComCentreBuilt.x");
+	CComCentre::mspMshStructurePlacing = gpEngine->LoadMesh("ComCentrePlacing.x");
+	CBarracks::mspMshStructureBuilt = gpEngine->LoadMesh("BarracksBuilt.x");
+	CBarracks::mspMshStructurePlacing = gpEngine->LoadMesh("BarracksPlacing.x");
+	CHellipad::mspMshStructureBuilt = gpEngine->LoadMesh("HellipadBuilt.x");
+	CHellipad::mspMshStructurePlacing = gpEngine->LoadMesh("HellipadPlacing.x");
+	CSpaceCentre::mspMshStructureBuilt = gpEngine->LoadMesh("SpaceCentreBuilt.x");
+	CSpaceCentre::mspMshStructurePlacing = gpEngine->LoadMesh("SpaceCentrePlacing.x");
 }
 
 void CleanupEngine()

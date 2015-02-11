@@ -8,7 +8,8 @@
 //-----------------------------------------------------
 #include "Barracks.h"
 
-IMesh* CBarracks::mspMshStructure = nullptr;
+IMesh* CBarracks::mspMshStructureBuilt = nullptr;
+IMesh* CBarracks::mspMshStructurePlacing = nullptr;
 
 
 //-----------------------------------------------------
@@ -26,13 +27,13 @@ CBarracks::CBarracks()
 	mCurBuildTimeLeft = 0.0f;
 	mBuildCost = 0;
 
-	mState = OBJ_BUILT;
+	mState = OBJ_CONSTRUCTING;
 
 	mStructureBL = SPointData(-1, -1);
 	mStructureTR = SPointData(1, 1);
 
 	// Create the model
-	mpObjModel = mspMshStructure->CreateModel();
+	mpObjModel = mspMshStructurePlacing->CreateModel();
 	mpObjModel->Scale(mScale);
 }
 
@@ -52,5 +53,5 @@ bool CBarracks::Destroy()
 
 void CBarracks::UnloadIModel()
 {
-	mspMshStructure->RemoveModel(mpObjModel);
+	mspMshStructurePlacing->RemoveModel(mpObjModel);
 }

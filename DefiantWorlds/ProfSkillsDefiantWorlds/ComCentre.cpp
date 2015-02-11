@@ -8,8 +8,8 @@
 //-----------------------------------------------------
 #include "ComCentre.h"
 
-
-IMesh* CComCentre::mspMshStructure = nullptr;
+IMesh* CComCentre::mspMshStructureBuilt = nullptr;
+IMesh* CComCentre::mspMshStructurePlacing = nullptr;
 
 
 //-----------------------------------------------------
@@ -27,13 +27,13 @@ CComCentre::CComCentre()
 	mCurBuildTimeLeft = 0.0f;
 	mBuildCost = 0;
 
-	mState = OBJ_BUILT;
+	mState = OBJ_CONSTRUCTING;
 
 	mStructureBL = SPointData(-3, -3);
 	mStructureTR = SPointData(1, 3);
 
 	// Create the model
-	mpObjModel = mspMshStructure->CreateModel();
+	mpObjModel = mspMshStructurePlacing->CreateModel();
 	mpObjModel->Scale(mScale);
 }
 
@@ -53,5 +53,5 @@ bool CComCentre::Destroy()
 
 void CComCentre::UnloadIModel()
 {
-	mspMshStructure->RemoveModel(mpObjModel);
+	mspMshStructurePlacing->RemoveModel(mpObjModel);
 }

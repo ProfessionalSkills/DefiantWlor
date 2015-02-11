@@ -47,7 +47,15 @@ void CWorldState::UpdateHeldStructure()
 	if (mpPlacingStructure)
 	{		
 		mpPlacingStructure->SetWorldPos(mpCurTile->GetWorldPos());
-		mpEarthGrid->TurnOnTiles(mpCurTile, mpPlacingStructure->GetBLPosition(), mpPlacingStructure->GetTRPosition());
+		// When placing structure, check if any used tiles
+		if (mpEarthGrid->TurnOnTiles(mpCurTile, mpPlacingStructure->GetBLPosition(), mpPlacingStructure->GetTRPosition()))
+		{
+			mpPlacingStructure->SetBadTexture();
+		}
+		else
+		{
+			mpPlacingStructure->SetGoodTexture();
+		}
 	}
 }
 
@@ -236,7 +244,7 @@ void CWorldState::StateSetup()
 
 	// INITIALISE CAMERAS
 	//-----------------------------
-	mpCamEarth = gpEngine->CreateCamera(kManual, 0.0f, 120.0f, 0.0f);
+	mpCamEarth = gpEngine->CreateCamera(kManual, 0.0f, 230.0f, 0.0f);
 	mpCamEarth->RotateX(50.0f);
 	mpCamEarth->SetNearClip(NEAR_CLIP);
 	mpCamEarth->SetFarClip(FAR_CLIP);
@@ -257,8 +265,8 @@ void CWorldState::StateSetup()
 	mpNullTile = new CTile();
 	mpNullTile->SetWorldPos(DX::XMFLOAT3(-2000.0f, 0.0f, 0.0f));
 
-	mpCamCurrent->SetPosition(mpEarthGrid->GetGridCentrePos().x, 120.0f,
-		0.0f);
+	mpCamCurrent->SetPosition(mpEarthGrid->GetGridCentrePos().x, 230.0f,
+		-50.0f);
 
 	DX::XMFLOAT3 gridCentre = mpEarthGrid->GetGridCentrePos();
 	mpMdlSkybox->SetPosition(gridCentre.x, gridCentre.y, gridCentre.z);

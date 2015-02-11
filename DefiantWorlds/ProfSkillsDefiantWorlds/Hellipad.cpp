@@ -8,7 +8,8 @@
 //-----------------------------------------------------
 #include "Hellipad.h"
 
-IMesh* CHellipad::mspMshStructure = nullptr;
+IMesh* CHellipad::mspMshStructureBuilt = nullptr;
+IMesh* CHellipad::mspMshStructurePlacing = nullptr;
 
 
 //-----------------------------------------------------
@@ -26,13 +27,13 @@ CHellipad::CHellipad()
 	mCurBuildTimeLeft = 0.0f;
 	mBuildCost = 0;
 
-	mState = OBJ_BUILT;
+	mState = OBJ_CONSTRUCTING;
 
 	mStructureBL = SPointData(-2, -2);
 	mStructureTR = SPointData(2, 2);
 
 	// Create the model
-	mpObjModel = mspMshStructure->CreateModel();
+	mpObjModel = mspMshStructurePlacing->CreateModel();
 	mpObjModel->Scale(mScale);
 }
 
@@ -52,5 +53,5 @@ bool CHellipad::Destroy()
 
 void CHellipad::UnloadIModel()
 {
-	mspMshStructure->RemoveModel(mpObjModel);
+	mspMshStructurePlacing->RemoveModel(mpObjModel);
 }

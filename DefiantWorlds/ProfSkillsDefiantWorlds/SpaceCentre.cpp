@@ -8,7 +8,8 @@
 //-----------------------------------------------------
 #include "SpaceCentre.h"
 
-IMesh* CSpaceCentre::mspMshStructure = nullptr;
+IMesh* CSpaceCentre::mspMshStructureBuilt = nullptr;
+IMesh* CSpaceCentre::mspMshStructurePlacing = nullptr;
 
 
 //-----------------------------------------------------
@@ -26,13 +27,13 @@ CSpaceCentre::CSpaceCentre()
 	mCurBuildTimeLeft = 0.0f;
 	mBuildCost = 0;
 
-	mState = OBJ_BUILT;
+	mState = OBJ_CONSTRUCTING;
 
 	mStructureBL = SPointData(-1, -1);
 	mStructureTR = SPointData(1, 1);
 
 	// Create the model
-	mpObjModel = mspMshStructure->CreateModel();
+	mpObjModel = mspMshStructurePlacing->CreateModel();
 	mpObjModel->Scale(mScale);
 }
 
@@ -52,5 +53,5 @@ bool CSpaceCentre::Destroy()
 
 void CSpaceCentre::UnloadIModel()
 {
-	mspMshStructure->RemoveModel(mpObjModel);
+	mspMshStructurePlacing->RemoveModel(mpObjModel);
 }

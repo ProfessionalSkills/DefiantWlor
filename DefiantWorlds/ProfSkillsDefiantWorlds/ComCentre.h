@@ -23,7 +23,8 @@ private:
 	
 
 public:
-	static IMesh* mspMshStructure;
+	static IMesh* mspMshStructureBuilt;
+	static IMesh* mspMshStructurePlacing;
 
 
 	// CONSTRUCTORS & DESTRUCTOR

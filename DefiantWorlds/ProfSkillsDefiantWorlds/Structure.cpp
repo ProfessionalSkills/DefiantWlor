@@ -36,6 +36,21 @@ bool CStructure::Repair(float amount)
 	return false;
 }
 
+void CStructure::SetBadTexture()
+{
+	mpObjModel->SetSkin("bld-mt-bad_tlxadd.jpg");
+}
+
+void CStructure::SetGoodTexture()
+{
+	mpObjModel->SetSkin("bld-mt-good_tlxadd.jpg");
+}
+
+void CStructure::SetPlacedTexture()
+{
+	mpObjModel->SetSkin("bld-mt-placed_tlxadd.jpg");
+}
+
 
 //-----------------------------------------------------
 // STRUCTURE CLASS METHODS
@@ -59,6 +74,9 @@ void CStructure::CreateStructure(CGrid* pGrid)
 			pNextTile->SetTileUsage(true);
 		}
 	}
+
+	// Set to placed texture
+	SetPlacedTexture();
 }
 
 bool CStructure::TestStructureArea(CGrid* pGrid, CTile* pTile)
@@ -97,7 +115,7 @@ bool CStructure::TestStructureArea(CGrid* pGrid, CTile* pTile)
 	return true;
 }
 
-bool CStructure::Build()
+bool CStructure::Update()
 {
 	// Update build timer
 	// Simply scale y (proportionally to building height)

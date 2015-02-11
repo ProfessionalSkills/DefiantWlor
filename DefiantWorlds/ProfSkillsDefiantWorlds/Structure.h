@@ -87,13 +87,16 @@ public:
 	//---------------------------
 	bool TakeDamage(float amount);
 	bool Repair(float amount);
+	void SetBadTexture();
+	void SetGoodTexture();
+	void SetPlacedTexture();
 
 
 	// METHODS
 	//---------------------------
 	void CreateStructure(CGrid* pGrid);
 	bool TestStructureArea(CGrid* pGrid, CTile* pTile);
-	bool Build();
+	virtual bool Update();
 
 
 	// VIRTUAL METHODS
