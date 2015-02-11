@@ -31,7 +31,6 @@ CGrid::CGrid(DX::XMFLOAT3 gridStartPos)
 			tilePos.y = gridStartPos.y;
 			tilePos.z = gridStartPos.z + (GRID_TILE_SIZE * y) + (GRID_TILE_SIZE / 2.0f);
 			tmp->SetWorldPos(tilePos);
-			tmp->CreateTestModel();
 		}
 	}
 
@@ -137,4 +136,46 @@ CTile* CGrid::GetTileBelow(CTile* pTile)
 
 	// Within bounds - return tile at gridPos
 	return mpGridArea[gridPos.mPosX][gridPos.mPosY];
+}
+
+
+//-----------------------------------------------------
+// GRID CLASS METHODS
+//-----------------------------------------------------
+void CGrid::ResetTilesModels()
+{
+	// Loop through all tiles
+	for (int x = 0; x < GRID_SIZE_X; x++)
+	{
+		for (int y = 0; y < GRID_SIZE_Y; y++)
+		{
+			mpGridArea[x][y]->RemoveTileModel();
+		}
+	}
+}
+
+void CGrid::TurnOnTiles(CTile* gridPos, SPointData pointBL, SPointData pointTR)
+{
+	SPointData origin = gridPos->GetGridPos();
+	
+	// Mark the building's grid area as in use
+	CTile* pNextTile;
+
+	ResetTilesModels();
+
+	// Loop through structure size
+	for (int x = origin.mPosX + pointBL.mPosX; x <= origin.mPosX + pointTR.mPosX; x++)
+	{
+		for (int y = origin.mPosY + pointBL.mPosY; y <= origin.mPosY + pointTR.mPosY; y++)
+		{
+			// Get current tile data
+			pNextTile = GetTileData(SPointData(x, y));
+
+			// Set state of tile
+			if (pNextTile)
+			{
+				pNextTile->CreateTileModel();
+			}
+		}
+	}
 }

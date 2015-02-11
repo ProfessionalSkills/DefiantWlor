@@ -20,6 +20,7 @@ CTile::CTile()
 	mTileWorldPos = DX::XMFLOAT3(0.0f, 0.0f, 0.0f);
 	mTileUsed = false;
 	mpParent = nullptr;
+	mpMdlTile = nullptr;
 }
 
 CTile::~CTile()
@@ -29,9 +30,44 @@ CTile::~CTile()
 
 
 //-----------------------------------------------------
+// TILE CLASS MUTATORS
+//-----------------------------------------------------
+void CTile::SetTileUsage(bool isUsed)
+{
+	mTileUsed = isUsed;
+
+	// Apply texture based on the state of the tile
+	if (mTileUsed)
+	{
+		// Set red texture
+	}
+	else
+	{
+		// Set base texture
+	}
+}
+
+
+//-----------------------------------------------------
 // TILE CLASS METHODS
 //-----------------------------------------------------
-void CTile::CreateTestModel()
+void CTile::CreateTileModel()
 {
-	mpMdlTile = CTile::mspMshTile->CreateModel(mTileWorldPos.x, mTileWorldPos.y, mTileWorldPos.z);
+	if (!mpMdlTile)
+	{
+		mpMdlTile = CTile::mspMshTile->CreateModel(mTileWorldPos.x, mTileWorldPos.y, mTileWorldPos.z);
+		if (mTileUsed)
+		{
+			mpMdlTile->SetSkin("tlxmul2_tileUsedTex.tga");
+		}
+	}
+}
+
+void CTile::RemoveTileModel()
+{
+	if (mpMdlTile)
+	{
+		mspMshTile->RemoveModel(mpMdlTile);
+		mpMdlTile = nullptr;
+	}
 }
