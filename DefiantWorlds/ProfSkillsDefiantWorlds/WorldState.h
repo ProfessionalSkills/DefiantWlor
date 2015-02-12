@@ -27,7 +27,6 @@ private:
 
 	DX::XMFLOAT4X4 mCamWorldMatrix;
 	DX::XMFLOAT4X4 mCamInvViewProj;
-	
 
 
 	// GROUND PLANE

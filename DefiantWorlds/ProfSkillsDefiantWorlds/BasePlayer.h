@@ -40,7 +40,6 @@ protected:
 	int         mNumMinerals;
 	int         mCurPopLimit;
 	int         mCurPop;
-	bool        mIsCommsDestroyed;
 	
 
 	// LISTS
