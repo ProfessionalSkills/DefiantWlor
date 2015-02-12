@@ -7,17 +7,34 @@ PROJECT NAME:
 ProfSkillsDefiantWorlds
 
 TODO:
-	- Main menu objects
 	- Main menu UI
-	- Create Earth world
 	- Create Mars world
 	- Create Space 'fight' area
-	- Create debug camera to cycle between the 3 areas
 	- Get high res & open source texture of Earth. Currently just a high res placeholder.
+	- Send requests from buildings for units to be built.
+	- Get the queue working for each building type.
+	- Particle effects need to be fully implemented.
+	- More sounds.
+	- Implement first prototype of space warfare
+	- Update textures for earth cube map and mars cube map
+
+DONE:
+	- Main menu objects.
+	- Earth grid creation.
+	- Covert mouse from 2D to 3D coordinates.
+	- Get mouse's grid co-ordinate.
+	- Know which grid (earth or mars) the mouse is in.
+	- Know when the mouse is not pointing at any grid.
+	- Building selection for placement.
+	- Building placement.
+	- Building picking after placement.
+	- Each building takes a set amount of time to be built after being placed.
+	- Background music for main menu and in the world state.
+	- Particle effects written.
 
 BUGS:
 	//----------------
-	- Desc:
+	- Desc:					
 	- Possible File:
 	- Possible Location:
 	//-----------------

@@ -206,7 +206,7 @@ Frame {
 			0.220000;0.220000;0.220000;;
 			0.000000;0.000000;0.000000;;
 			TextureFilename {
-				"Sky1.jpg";
+				"EarthLeft.bmp";
 			}
 		}
 
@@ -216,7 +216,7 @@ Frame {
 			0.220000;0.220000;0.220000;;
 			0.000000;0.000000;0.000000;;
 			TextureFilename {
-				"Sky2.jpg";
+				"EarthFront.bmp";
 			}
 		}
 
@@ -226,7 +226,7 @@ Frame {
 			0.220000;0.220000;0.220000;;
 			0.000000;0.000000;0.000000;;
 			TextureFilename {
-				"Sky4.jpg";
+				"EarthRight.bmp";
 			}
 		}
 
@@ -236,7 +236,7 @@ Frame {
 			0.220000;0.220000;0.220000;;
 			0.000000;0.000000;0.000000;;
 			TextureFilename {
-				"Sky5.jpg";
+				"EarthBack.bmp";
 			}
 		}
 
@@ -246,7 +246,7 @@ Frame {
 			0.220000;0.220000;0.220000;;
 			0.000000;0.000000;0.000000;;
 			TextureFilename {
-				"Sky3.jpg";
+				"EarthTop.bmp";
 			}
 		}
 
@@ -256,7 +256,7 @@ Frame {
 			0.220000;0.220000;0.220000;;
 			0.000000;0.000000;0.000000;;
 			TextureFilename {
-				"Sky6.jpg";
+				"EarthBottom.jpg";
 			}
 		}
   }

@@ -39,12 +39,14 @@ private:
 	//---------------------------
 	IMesh* mpMshSkybox;
 	IMesh* mpMshGridArea;
+	IMesh* mpMshGrassArea;
 
 
 	// MODELS
 	//---------------------------
 	IModel* mpMdlSkybox;
 	IModel* mpMdlGridArea;
+	IModel* mpMdlGrassArea;
 
 
 	// GRIDS

@@ -273,12 +273,12 @@ void CWorldState::StateSetup()
 	//-----------------------------
 	mpMshSkybox = gpEngine->LoadMesh("SkyboxWorld.x");
 	mpMdlSkybox = mpMshSkybox->CreateModel(0.0f, -1.0f, 0.0f);
-	mpMdlSkybox->Scale(0.5f);
+	mpMdlSkybox->Scale(4.0f);
 
 
 	// INITIALISE WORLDS
 	//-----------------------------
-	mpEarthGrid = new CGrid(DX::XMFLOAT3(0.0f, 0.2f, 0.0f));
+	mpEarthGrid = new CGrid(DX::XMFLOAT3(0.0f, 0.3f, 0.0f));
 	mpNullTile = new CTile();
 	mpNullTile->SetWorldPos(DX::XMFLOAT3(-2000.0f, 0.0f, 0.0f));
 
@@ -289,9 +289,14 @@ void CWorldState::StateSetup()
 	mpMdlSkybox->SetPosition(gridCentre.x, gridCentre.y, gridCentre.z);
 
 	mpMshGridArea = gpEngine->LoadMesh("Grid.x");
-	mpMdlGridArea = mpMshGridArea->CreateModel(gridCentre.x, 0.1f, gridCentre.z);
+	mpMdlGridArea = mpMshGridArea->CreateModel(gridCentre.x, 0.2f, gridCentre.z);
 	mpMdlGridArea->ScaleX((GRID_SIZE_X * GRID_TILE_SIZE) / 2.0f);
 	mpMdlGridArea->ScaleZ((GRID_SIZE_Y * GRID_TILE_SIZE) / 2.0f);
+
+	mpMshGrassArea = gpEngine->LoadMesh("Grass.x");
+	mpMdlGrassArea = mpMshGrassArea->CreateModel(gridCentre.x, 0.1f, gridCentre.z);
+	mpMdlGrassArea->ScaleX(GRID_SIZE_X * GRID_TILE_SIZE * 2.0f);
+	mpMdlGrassArea->ScaleZ(GRID_SIZE_Y * GRID_TILE_SIZE * 2.0f);
 
 
 	// INITIALISE FONTS
