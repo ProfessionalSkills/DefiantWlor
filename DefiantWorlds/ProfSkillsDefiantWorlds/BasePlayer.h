@@ -82,11 +82,6 @@ public:
 		return mCurPopLimit;
 	}
 
-	inline bool GetCommsState()
-	{
-		return mIsCommsDestroyed;
-	}
-
 
 	// MUTATORS
 	//---------------------------

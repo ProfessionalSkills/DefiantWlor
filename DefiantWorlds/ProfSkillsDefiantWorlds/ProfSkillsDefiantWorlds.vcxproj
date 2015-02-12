@@ -81,7 +81,7 @@
       <OutputFile>$(SolutionDir)$(TargetName)$(TargetExt)</OutputFile>
       <SubSystem>Console</SubSystem>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
-      <AdditionalDependencies>OpenAL32.lib;alut.lib;"TL-Engine2013Debug.lib";"OpenAL32.lib";"alut.lib";%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>"OpenAL32.lib";"alut.lib";"TL-Engine2013Debug.lib";"OpenAL32.lib";"alut.lib";%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Message>Copying DLLs &amp; shaders...</Message>
