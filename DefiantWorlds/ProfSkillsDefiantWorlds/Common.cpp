@@ -63,7 +63,7 @@ float ToDegrees(float inRadians)
 void SetMouseHook()
 {
 	// Link the hook with the callback function below
-	gMSScrollHook = SetWindowsHookEx(WH_MOUSE_LL, MouseHookCallback, NULL, 0);
+	//gMSScrollHook = SetWindowsHookEx(WH_MOUSE_LL, MouseHookCallback, NULL, 0);
 }
 
 LRESULT __stdcall MouseHookCallback(int code, WPARAM wParam, LPARAM lParam)
@@ -86,5 +86,5 @@ LRESULT __stdcall MouseHookCallback(int code, WPARAM wParam, LPARAM lParam)
 void ReleaseMouseHook()
 {
 	// Release the mouse hook
-	UnhookWindowsHookEx(gMSScrollHook);
+	//UnhookWindowsHookEx(gMSScrollHook);
 }

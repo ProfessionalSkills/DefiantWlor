@@ -24,7 +24,7 @@ CComCentre::CComCentre()
 	mHealth = 1000.0f;
 	mBuildTime = 0.0f;
 	mRepairSpeed = 1.0f;
-	mCurBuildTimeLeft = 0.0f;
+	mCurBuildTimeLeft = mBuildTime;
 	mBuildCost = 0;
 
 	mState = OBJ_CONSTRUCTING;
@@ -46,6 +46,16 @@ CComCentre::~CComCentre()
 //-----------------------------------------------------
 // COM CENTRE CLASS OVERRIDE METHODS
 //-----------------------------------------------------
+void CComCentre::SetBuiltModel()
+{
+	// Remove the current model
+	mspMshStructurePlacing->RemoveModel(mpObjModel);
+
+	// Create new model with original mesh
+	mpObjModel = mspMshStructureBuilt->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
+	mpObjModel->Scale(mScale);
+}
+
 bool CComCentre::Destroy()
 {
 	return false;

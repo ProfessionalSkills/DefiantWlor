@@ -10,6 +10,7 @@
 // INCLUDES
 //-----------------------------------------------------
 #include "Structure.h"
+#include "GameAgent.h"
 
 
 //-----------------------------------------------------
@@ -27,7 +28,7 @@ protected:
 	// DATA
 	//---------------------------
 	std::list<EGameAgentsTypes> mRespectiveAgentsList;
-	//std::queue<CGameAgents*> mpProductionQueue;
+	std::queue<CGameAgent*> mpProductionQueue;
 
 
 public:
@@ -49,15 +50,16 @@ public:
 
 	// METHODS
 	//---------------------------
-	//bool AddToQueue(CGameAgent* agent);
+	bool AddToQueue(CGameAgent* agent);
 	bool RemoveFromQueue();
 	bool UpdateProduction();
-	//CGameAgent* CreateAgent();		// Called when agent at front of production queue is finished
-
+	CGameAgent* CreateAgent();		// Called when agent at front of production queue is finished
+	void Update() override;
 
 
 	// OVERRIDE METHODS
 	//---------------------------
+	virtual void SetBuiltModel();
 	virtual void UnloadIModel();
 	virtual bool Destroy();
 };

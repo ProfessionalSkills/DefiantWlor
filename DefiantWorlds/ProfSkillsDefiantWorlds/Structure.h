@@ -96,11 +96,12 @@ public:
 	//---------------------------
 	void CreateStructure(CGrid* pGrid);
 	bool TestStructureArea(CGrid* pGrid, CTile* pTile);
-	virtual bool Update();
 
 
 	// VIRTUAL METHODS
 	//---------------------------
+	virtual void Update() = 0;
+	virtual void SetBuiltModel() = 0;
 	virtual void UnloadIModel() = 0;
 	virtual bool Destroy() = 0;
 };

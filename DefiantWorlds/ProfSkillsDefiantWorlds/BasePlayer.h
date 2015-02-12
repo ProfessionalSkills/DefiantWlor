@@ -33,7 +33,7 @@
 //-----------------------------------------------------
 class CPlayer
 {
-private:
+protected:
 	// DATA
 	//---------------------------
 	std::string mName;
@@ -48,6 +48,10 @@ private:
 	std::vector<CStructure*> mpStructureList;
 	std::vector<CGameAgent*> mpWorldUnitsList;
 	std::vector<CSpaceUnit*> mpSpaceUnitsList;
+
+	std::vector<CStructure*>::iterator mpiterStructures;
+	std::vector<CGameAgent*>::iterator mpiterGameAgents;
+	std::vector<CSpaceUnit*>::iterator mpiterSpaceUnits;
 
 
 public:

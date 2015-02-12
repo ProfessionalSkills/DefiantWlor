@@ -49,6 +49,7 @@ public:
 
 	// OVERRIDE METHODS
 	//---------------------------
+	void SetBuiltModel() override;
 	void UnloadIModel() override;
 	bool Destroy() override;
 };

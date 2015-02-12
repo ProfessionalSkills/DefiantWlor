@@ -19,7 +19,7 @@ CHumanPlayer::CHumanPlayer() : CPlayer()
 
 CHumanPlayer::~CHumanPlayer()
 {
-
+	
 }
 
 
@@ -28,5 +28,9 @@ CHumanPlayer::~CHumanPlayer()
 //-----------------------------------------------------
 void CHumanPlayer::Update()
 {
-
+	// Loop through all structures & update them
+	for (mpiterStructures = mpStructureList.begin(); mpiterStructures != mpStructureList.end(); mpiterStructures++)
+	{
+		(*mpiterStructures)->Update();
+	}
 }

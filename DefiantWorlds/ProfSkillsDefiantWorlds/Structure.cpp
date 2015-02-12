@@ -114,11 +114,3 @@ bool CStructure::TestStructureArea(CGrid* pGrid, CTile* pTile)
 	// Area is free of other structures/resources
 	return true;
 }
-
-bool CStructure::Update()
-{
-	// Update build timer
-	// Simply scale y (proportionally to building height)
-	// Reset scale then set new scale proportional to how far through building time it is
-	return false;
-}
