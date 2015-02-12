@@ -158,6 +158,7 @@ void SetupEngine()
 	gpEngine->AddMediaFolder("..\\Media\\Models\\Structures");
 	gpEngine->AddMediaFolder("..\\Media\\Models\\Grid");
 	gpEngine->AddMediaFolder("..\\Media\\Models\\Particles");
+	gpEngine->AddMediaFolder("..\\Media\\Models\\Units");
 
 	SetWindowPos((HWND)gpEngine->GetWindow(), HWND_TOP, WINDOW_POS_X, WINDOW_POS_Y, WINDOW_WIDTH, WINDOW_HEIGHT, 0U);
 
