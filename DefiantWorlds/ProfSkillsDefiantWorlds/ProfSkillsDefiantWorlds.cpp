@@ -151,9 +151,6 @@ void main()
 //----------------------
 void SetupEngine()
 {
-	// Setup mouse wheel capture hook
-	SetMouseHook();
-	
 	// Do we want to define our own resolution? Maybe fullscreen?
 	gpEngine->StartWindowed(WINDOW_WIDTH, WINDOW_HEIGHT);
 	gpEngine->AddMediaFolder("..\\Media\\Models\\Skybox");
@@ -179,9 +176,6 @@ void SetupEngine()
 
 void CleanupEngine()
 {
-	// Cleanup mouse hook capture
-	ReleaseMouseHook();
-
 	// Cleanup engine
 	gpEngine->Delete();
 }

@@ -137,9 +137,10 @@ void CWorldState::CheckKeyPresses()
 {
 	// CHECK FOR SCROLLING
 	//------------------------------
+	gMouseWheelDelta = gpEngine->GetMouseWheelMovement();
 	if (gMouseWheelDelta != 0)
 	{
-		float moveAmount = ((float)gMouseWheelDelta * -CAM_SCROLL_SPEED) * gFrameTime;
+		float moveAmount = gFrameTime * CAM_SCROLL_SPEED;
 		mpCamCurrent->SetY(Clampf(CAM_MIN_HEIGHT, CAM_MAX_HEIGHT, mpCamCurrent->GetY() + moveAmount));
 		gMouseWheelDelta = 0;
 	}
