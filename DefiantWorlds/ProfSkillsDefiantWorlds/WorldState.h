@@ -106,6 +106,8 @@ public:
 	void DrawFontData();
 	void CheckKeyPresses();
 
+	void DisplaySelectedBuildingInfo();
+
 	EMouseStates UpdateMouseState();
 
 

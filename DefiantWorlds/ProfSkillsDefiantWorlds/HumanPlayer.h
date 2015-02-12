@@ -27,6 +27,11 @@ public:
 	virtual ~CHumanPlayer();
 
 
+	// METHODS
+	//---------------------------
+	CStructure* CheckStructureSelection(DX::XMFLOAT3 pos);
+
+
 	// OVERRIDE METHODS
 	//---------------------------
 	void Update() override;

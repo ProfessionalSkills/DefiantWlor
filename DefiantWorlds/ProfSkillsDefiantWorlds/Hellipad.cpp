@@ -28,6 +28,7 @@ CHellipad::CHellipad()
 	mBuildCost = 0;
 
 	mState = OBJ_CONSTRUCTING;
+	mStructureType = STR_HELLIPAD;
 
 	mStructureBL = SPointData(-2, -2);
 	mStructureTR = SPointData(2, 2);

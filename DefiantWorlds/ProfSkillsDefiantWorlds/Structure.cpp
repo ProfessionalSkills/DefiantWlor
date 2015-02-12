@@ -77,6 +77,13 @@ void CStructure::CreateStructure(CGrid* pGrid)
 
 	// Set to placed texture
 	SetPlacedTexture();
+
+	// Calculate axis aligned bounding box
+	float top = mWorldPos.z + ((float)mStructureTR.mPosY * GRID_TILE_SIZE) + (GRID_TILE_SIZE / 2.0f);
+	float bottom = mWorldPos.z + ((float)mStructureBL.mPosY * GRID_TILE_SIZE) - (GRID_TILE_SIZE / 2.0f);
+	float right = mWorldPos.x + ((float)mStructureTR.mPosX * GRID_TILE_SIZE) + (GRID_TILE_SIZE / 2.0f);
+	float left = mWorldPos.x + ((float)mStructureBL.mPosX * GRID_TILE_SIZE) - (GRID_TILE_SIZE / 2.0f);
+	mBoundingBox = SAABoundingBox(top, right, bottom, left);
 }
 
 bool CStructure::TestStructureArea(CGrid* pGrid, CTile* pTile)
@@ -113,4 +120,9 @@ bool CStructure::TestStructureArea(CGrid* pGrid, CTile* pTile)
 	
 	// Area is free of other structures/resources
 	return true;
+}
+
+bool CStructure::PointCollision(DX::XMFLOAT3 pos)
+{
+	return mBoundingBox.IsColliding(pos);
 }

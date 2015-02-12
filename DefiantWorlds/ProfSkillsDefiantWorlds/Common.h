@@ -46,7 +46,7 @@ enum EGameAgentsTypes
 
 enum EGameStructureTypes
 {
-	STR_HOUSE, STR_COMMS_CENTRE, STR_SPACE_CENTRE, STR_BARRACKS,
+	STR_HOUSE, STR_COM_CENTRE, STR_SPACE_CENTRE, STR_BARRACKS,
 	STR_HELLIPAD
 };
 
@@ -59,10 +59,55 @@ struct SPointData
 	int mPosX;
 	int mPosY;
 
-	SPointData() { mPosX = 0; mPosY = 0; }
-	SPointData(int x, int y) { mPosX = x; mPosY = y; }
+	SPointData() 
+	{
+		mPosX = 0;
+		mPosY = 0; 
+	}
+
+	SPointData(int x, int y)
+	{ 
+		mPosX = x;
+		mPosY = y;
+	}
 };
 
+struct SAABoundingBox		// Axis aligned bounding box
+{
+	float mTop;			// Max Z
+	float mRight;		// Max X
+	float mBottom;		// Min Z
+	float mLeft;		// Min X
+
+	SAABoundingBox()
+	{ 
+		mTop = 0.0f; 
+		mRight = 0.0f;
+		mBottom = 0.0f;
+		mLeft = 0.0f; 
+	}
+
+	SAABoundingBox(float top, float right, float bottom, float left)
+	{
+		mTop = top;
+		mRight = right;
+		mBottom = bottom;
+		mLeft = left;
+	}
+
+	bool IsColliding(DX::XMFLOAT3 pos)
+	{
+		if (pos.x >= mLeft && pos.x <= mRight && pos.z >= mBottom
+			&& pos.z <= mTop)
+		{
+			// Point within boundary
+			return true;
+		}
+
+		// No collision
+		return false;
+	}
+};
 
 //-----------------------------------------------------
 // GLOBAL VARIABLES

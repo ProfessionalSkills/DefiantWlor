@@ -27,10 +27,15 @@ protected:
 	float mCurBuildTimeLeft;			// Time left until structure is built
 	int   mBuildCost;
 	//CParticleEmitter* mDestroyParticleFX;
+
 	EObjectStates mState;
+	EGameStructureTypes mStructureType;
 
 	SPointData mStructureBL;		// Amount of grid squares relative to the centre to find the bottom left grid square
 	SPointData mStructureTR;		// Same as above, but for top right grid square
+	SAABoundingBox mBoundingBox;	// Axis aligned bounding box for this structure
+
+	std::stringstream mStrDisplay;	// used to output data about the building to the screen
 
 
 public:
@@ -96,11 +101,13 @@ public:
 	//---------------------------
 	void CreateStructure(CGrid* pGrid);
 	bool TestStructureArea(CGrid* pGrid, CTile* pTile);
+	bool PointCollision(DX::XMFLOAT3 pos);
 
 
 	// VIRTUAL METHODS
 	//---------------------------
 	virtual void Update() = 0;
+	virtual void DisplayInfo(IFont* font) = 0;
 	virtual void SetBuiltModel() = 0;
 	virtual void UnloadIModel() = 0;
 	virtual bool Destroy() = 0;

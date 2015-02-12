@@ -24,6 +24,25 @@ CHumanPlayer::~CHumanPlayer()
 
 
 //-----------------------------------------------------
+// HUMAN PLAYER CLASS METHODS
+//-----------------------------------------------------
+CStructure* CHumanPlayer::CheckStructureSelection(DX::XMFLOAT3 pos)
+{
+	// Loop through all structures
+	for (mpiterStructures = mpStructureList.begin(); mpiterStructures != mpStructureList.end(); mpiterStructures++)
+	{
+		// If there is a collision, return the pointer to that object
+		if ((*mpiterStructures)->PointCollision(pos))
+		{
+			return (*mpiterStructures);
+		}
+	}
+
+	return nullptr;
+}
+
+
+//-----------------------------------------------------
 // HUMAN PLAYER CLASS OVERRIDE METHODS
 //-----------------------------------------------------
 void CHumanPlayer::Update()

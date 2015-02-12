@@ -105,3 +105,49 @@ void CProductionStructure::Update()
 			break;
 	}
 }
+
+void CProductionStructure::DisplayInfo(IFont* font)
+{
+	mStrDisplay << "Structure: ";
+	
+	// Output selected building
+	switch (mStructureType)
+	{
+	case STR_BARRACKS:
+		mStrDisplay << "Barracks";
+		break;
+
+	case STR_COM_CENTRE:
+		mStrDisplay << "Command Centre";
+		break;
+
+	case STR_HELLIPAD:
+		mStrDisplay << "Hellipad";
+		break;
+
+	case STR_SPACE_CENTRE:
+		mStrDisplay << "Space Centre";
+		break;
+	}
+
+	font->Draw(mStrDisplay.str(), 5, 805, kWhite, kLeft, kTop);
+	mStrDisplay.str("");
+
+	// Check to see what state the building is in
+	if (mState == OBJ_CONSTRUCTING)
+	{
+		// Display the time left until build
+		mStrDisplay << "Build time left: " << static_cast<int>(mCurBuildTimeLeft);
+		font->Draw(mStrDisplay.str(), 5, 815, kWhite, kLeft, kTop);
+		mStrDisplay.str("");
+
+		// Show percentage completion
+		mStrDisplay << "Percentage Complete: " << static_cast<int>(((mBuildTime - mCurBuildTimeLeft) / mBuildTime) * 100.0f) << "%";
+		font->Draw(mStrDisplay.str(), 5, 825, kWhite, kLeft, kTop);
+		mStrDisplay.str("");
+	}
+	else
+	{
+
+	}
+}

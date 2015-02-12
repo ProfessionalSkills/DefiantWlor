@@ -28,6 +28,7 @@ CSpaceCentre::CSpaceCentre()
 	mBuildCost = 0;
 
 	mState = OBJ_CONSTRUCTING;
+	mStructureType = STR_SPACE_CENTRE;
 
 	mStructureBL = SPointData(-1, -1);
 	mStructureTR = SPointData(1, 1);

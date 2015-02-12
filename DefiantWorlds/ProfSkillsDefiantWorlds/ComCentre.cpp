@@ -28,6 +28,7 @@ CComCentre::CComCentre()
 	mBuildCost = 0;
 
 	mState = OBJ_CONSTRUCTING;
+	mStructureType = STR_COM_CENTRE;
 
 	mStructureBL = SPointData(-3, -3);
 	mStructureTR = SPointData(1, 3);

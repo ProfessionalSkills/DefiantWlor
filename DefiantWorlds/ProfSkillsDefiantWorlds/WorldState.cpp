@@ -187,6 +187,9 @@ void CWorldState::CheckKeyPresses()
 	// Left Click = place currently selected building
 	if (gpEngine->KeyHit(Mouse_LButton))
 	{
+		// Assume nothing is clicked on - reset all pointers (except PlacingStructure)
+		mpCurSelectedStructure = nullptr;
+		
 		// Check if placing a structure
 		if (mpPlacingStructure)
 		{
@@ -201,7 +204,18 @@ void CWorldState::CheckKeyPresses()
 		else
 		{
 			// Not placing a structure - find out where they are clicking
+			// Check if it's a building
+			mpCurSelectedStructure = mpHumanPlayer->CheckStructureSelection(mMouseWorldPos);
 		}
+	}
+}
+
+void CWorldState::DisplaySelectedBuildingInfo()
+{
+	// If an object is selected, display its info
+	if (mpCurSelectedStructure)
+	{
+		mpCurSelectedStructure->DisplayInfo(mFntDebug);
 	}
 }
 
@@ -213,6 +227,9 @@ void CWorldState::StateSetup()
 {
 	// INITIALISE ADDITIONAL VARIABLES
 	//------------------------------
+	mpCurSelectedAgent = nullptr;
+	mpCurSelectedStructure = nullptr;
+
 	mpMouseScreenPos = new SPointData();
 	mWindowClip = { 0 };
 	GetClipCursor(&mBaseClip);
@@ -338,6 +355,7 @@ void CWorldState::StateUpdate()
 	mMouseState = UpdateMouseState();
 	CheckKeyPresses();
 	DrawFontData();
+	DisplaySelectedBuildingInfo();
 
 
 	// MODEL UPDATES

@@ -24,7 +24,7 @@ public:
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
 	CAIPlayer();
-	virtual ~CAIPlayer();
+	virtual ~CAIPlayer();	
 
 
 	// OVERRIDE METHODS
