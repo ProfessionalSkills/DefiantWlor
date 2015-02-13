@@ -22,6 +22,53 @@ CProductionStructure::~CProductionStructure()
 
 }
 
+//-----------------------------------------------------
+// PRODUCTION STRUCTURE CLASS ACCESSORS
+//-----------------------------------------------------
+std::string CProductionStructure::GetAgentName(EGameAgentsTypes agentType)
+{
+	switch (agentType)
+	{
+	case GA_ARTILLERY:
+		return "Artillery";
+		break;
+
+	case GA_BOMBER:
+		return "Bomber";
+		break;
+
+	case GA_FIGHTER:
+		return "Fighter";
+		break;
+
+	case GA_INFANTRY:
+		return "Infantry";
+		break;
+
+	case GA_MOTHERSHIP:
+		return"Mothership";
+		break;
+
+	case GA_SPACE_FIGHTER:
+		return "Space Fighter";
+		break;
+
+	case GA_TANK:
+		return "Tank";
+		break;
+
+	case GA_TRANSPORT:
+		return "Transport Ship";
+		break;
+
+	case GA_WORKER:
+		return "Worker";
+		break;
+	}
+
+	return "UNKOWN";
+}
+
 
 //-----------------------------------------------------
 // PRODUCTION STRUCTURE CLASS METHODS
@@ -146,8 +193,43 @@ void CProductionStructure::DisplayInfo(IFont* font)
 		font->Draw(mStrDisplay.str(), 5, 825, kWhite, kLeft, kTop);
 		mStrDisplay.str("");
 	}
-	else
+	// Display additional data so long as the building is not dead
+	else if (mState != OBJ_DEAD)
 	{
+		// Display the status of the building
+		mStrDisplay << "Building Status: ";
+		switch (mState)
+		{
+		case OBJ_BUILT:
+			mStrDisplay << "New";
+			font->Draw(mStrDisplay.str(), 5, 815, kGreen, kLeft, kTop);
+			break;
 
+		case OBJ_DAMAGED:
+			mStrDisplay << "Damaged";
+			font->Draw(mStrDisplay.str(), 5, 815, 0xFD20, kLeft, kTop);
+			break;
+
+		case OBJ_WARNING:
+			mStrDisplay << "WARNING!";
+			font->Draw(mStrDisplay.str(), 5, 815, kRed, kLeft, kTop);
+			break;
+		}
+		mStrDisplay.str("");
+
+		size_t drawHeight = 805;
+		int    counter = 1;
+		// Display key presses for possible unit queuing
+		for (miterRespectiveAgents = mRespectiveAgentsList.begin(); miterRespectiveAgents != mRespectiveAgentsList.end(); miterRespectiveAgents++)
+		{
+			mStrDisplay << counter << ": " << GetAgentName(*miterRespectiveAgents);
+			font->Draw(mStrDisplay.str(), 240, drawHeight, kWhite, kLeft, kTop);
+			mStrDisplay.str("");
+
+			drawHeight += 10;
+			counter++;
+		}
+
+		// Display if a unit is queued and what unit
 	}
 }

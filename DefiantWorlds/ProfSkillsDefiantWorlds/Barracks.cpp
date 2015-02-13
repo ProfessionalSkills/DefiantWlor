@@ -36,6 +36,11 @@ CBarracks::CBarracks()
 	// Create the model
 	mpObjModel = mspMshStructurePlacing->CreateModel();
 	mpObjModel->Scale(mScale);
+	
+	// Define list of responsible agents
+	mRespectiveAgentsList.push_back(GA_ARTILLERY);
+	mRespectiveAgentsList.push_back(GA_INFANTRY);
+	mRespectiveAgentsList.push_back(GA_TANK);
 }
 
 CBarracks::~CBarracks()

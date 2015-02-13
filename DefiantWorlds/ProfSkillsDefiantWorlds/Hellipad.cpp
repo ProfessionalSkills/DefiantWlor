@@ -36,6 +36,10 @@ CHellipad::CHellipad()
 	// Create the model
 	mpObjModel = mspMshStructurePlacing->CreateModel();
 	mpObjModel->Scale(mScale);
+
+	// Define list of responsible agents
+	mRespectiveAgentsList.push_back(GA_FIGHTER);
+	mRespectiveAgentsList.push_back(GA_BOMBER);
 }
 
 CHellipad::~CHellipad()

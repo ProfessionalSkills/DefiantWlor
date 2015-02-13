@@ -36,6 +36,11 @@ CSpaceCentre::CSpaceCentre()
 	// Create the model
 	mpObjModel = mspMshStructurePlacing->CreateModel();
 	mpObjModel->Scale(mScale);
+
+	// Define list of responsible agents
+	mRespectiveAgentsList.push_back(GA_SPACE_FIGHTER);
+	mRespectiveAgentsList.push_back(GA_TRANSPORT);
+	mRespectiveAgentsList.push_back(GA_MOTHERSHIP);
 }
 
 CSpaceCentre::~CSpaceCentre()

@@ -30,6 +30,7 @@ protected:
 	std::list<EGameAgentsTypes> mRespectiveAgentsList;
 	std::queue<CGameAgent*> mpProductionQueue;
 
+	std::list<EGameAgentsTypes>::iterator miterRespectiveAgents;
 
 public:
 	// CONSTRUCTORS & DESTRUCTOR
@@ -40,7 +41,10 @@ public:
 
 	// ACCESSORS
 	//---------------------------
+private:
+	std::string GetAgentName(EGameAgentsTypes agentType);
 
+public:
 
 
 	// MUTATORS

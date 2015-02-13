@@ -36,6 +36,9 @@ CComCentre::CComCentre()
 	// Create the model
 	mpObjModel = mspMshStructurePlacing->CreateModel();
 	mpObjModel->Scale(mScale);
+
+	// Define list of responsible agents
+	mRespectiveAgentsList.push_back(GA_WORKER);
 }
 
 CComCentre::~CComCentre()
