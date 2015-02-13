@@ -26,10 +26,6 @@ CSpaceUnit::~CSpaceUnit()
 //-----------------------------------------------------
 // SPACE UNIT CLASS OVERRIDE METHODS
 //-----------------------------------------------------
-bool CSpaceUnit::Attack(CGameAgent* target)
-{
-	return false;
-}
 
 //CSpaceUnit::void MoveTo(CTile* dest)
 

@@ -26,8 +26,14 @@ CSpaceFighter::~CSpaceFighter()
 //-----------------------------------------------------
 // SPACE FIGHTER CLASS OVERRIDE METHODS
 //-----------------------------------------------------
-bool CSpaceFighter::Attack(CGameAgent* target)
+bool CSpaceUnit::Attack(CGameAgent* target, float hitMod, float damageMod)
 {
+	CRandomiser toHitRoll;
+	if (toHitRoll.GetRandomFloat(1.0,100.0) < (hitMod*mHitChance) * 100)
+	{
+		target->TakeDamage(mDamage*damageMod);
+		return true;
+	}
 	return false;
 }
 

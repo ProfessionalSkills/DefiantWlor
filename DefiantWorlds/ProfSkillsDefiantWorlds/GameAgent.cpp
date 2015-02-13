@@ -28,11 +28,13 @@ CGameAgent::~CGameAgent()
 //-----------------------------------------------------
 bool CGameAgent::TakeDamage(float amount)
 {
+	mHealth -= amount;
 	return false;
 }
 
 bool CGameAgent::Heal(float amount)
 {
+	mHealth += amount;
 	return false;
 }
 

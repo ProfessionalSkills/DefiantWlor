@@ -18,7 +18,7 @@
 //-----------------------------------------------------
 class CGameAgent : public CGameObject
 {
-private:
+protected:
 	// DATA
 	//---------------------------
 	float mHealth;
