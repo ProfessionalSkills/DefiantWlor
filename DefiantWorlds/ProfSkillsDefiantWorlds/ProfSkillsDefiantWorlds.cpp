@@ -151,9 +151,6 @@ void main()
 //----------------------
 void SetupEngine()
 {
-	// Setup mouse wheel capture hook
-	SetMouseHook();
-	
 	// Do we want to define our own resolution? Maybe fullscreen?
 	gpEngine->StartWindowed(WINDOW_WIDTH, WINDOW_HEIGHT);
 	gpEngine->AddMediaFolder("..\\Media\\Models\\Skybox");
@@ -161,6 +158,7 @@ void SetupEngine()
 	gpEngine->AddMediaFolder("..\\Media\\Models\\Structures");
 	gpEngine->AddMediaFolder("..\\Media\\Models\\Grid");
 	gpEngine->AddMediaFolder("..\\Media\\Models\\Particles");
+	gpEngine->AddMediaFolder("..\\Media\\Models\\Units");
 
 	SetWindowPos((HWND)gpEngine->GetWindow(), HWND_TOP, WINDOW_POS_X, WINDOW_POS_Y, WINDOW_WIDTH, WINDOW_HEIGHT, 0U);
 
@@ -179,9 +177,6 @@ void SetupEngine()
 
 void CleanupEngine()
 {
-	// Cleanup mouse hook capture
-	ReleaseMouseHook();
-
 	// Cleanup engine
 	gpEngine->Delete();
 }

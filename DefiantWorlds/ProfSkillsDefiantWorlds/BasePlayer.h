@@ -40,7 +40,6 @@ protected:
 	int         mNumMinerals;
 	int         mCurPopLimit;
 	int         mCurPop;
-	bool        mIsCommsDestroyed;
 	
 
 	// LISTS
@@ -81,11 +80,6 @@ public:
 	inline int GetCurrentPopLimit()
 	{
 		return mCurPopLimit;
-	}
-
-	inline bool GetCommsState()
-	{
-		return mIsCommsDestroyed;
 	}
 
 

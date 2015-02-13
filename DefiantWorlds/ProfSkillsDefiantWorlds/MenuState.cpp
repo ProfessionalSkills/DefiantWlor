@@ -70,6 +70,7 @@ void CMenuState::StateSetup()
 	mpMdlAtmosphere->AttachToParent(mpMdlEarth);
 	mpMdlAtmosphere->Scale(1.02f);
 
+
 	// INITIALISE MUSIC
 	//------------------------------
 	string mMusicFile = "Intro.wav";
@@ -87,8 +88,8 @@ void CMenuState::StateUpdate()
 
 	// ANIMATE ATMOSPHERE
 	//------------------------------
-	mpMdlAtmosphere->RotateLocalX(gpRandomiser->GetRandomFloat(0.0f, 1.6f) * gFrameTime);
-	mpMdlAtmosphere->RotateLocalY(gpRandomiser->GetRandomFloat(1.0f,  2.8f) * gFrameTime);
+	mpMdlAtmosphere->RotateLocalX(gpRandomiser->GetRandomFloat(0.0f, 2.6f) * gFrameTime);
+	mpMdlAtmosphere->RotateLocalY(gpRandomiser->GetRandomFloat(-1.0f,  2.8f) * gFrameTime);
 	mpMdlAtmosphere->RotateLocalZ(gpRandomiser->GetRandomFloat(0.0f,  2.0f) * gFrameTime);
 
 
