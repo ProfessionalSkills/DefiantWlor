@@ -264,6 +264,9 @@
     <ClCompile Include="Tile.cpp">
       <Filter>World Representation\Tile</Filter>
     </ClCompile>
+    <ClCompile Include="Fleet.cpp">
+      <Filter>Utilities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common.h">
@@ -388,6 +391,9 @@
     </ClInclude>
     <ClInclude Include="Tile.h">
       <Filter>World Representation\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="Fleet.h">
+      <Filter>Utilities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
