@@ -9,6 +9,7 @@
 #include "Common.h"
 #include "SpaceUnit.h"
 #include "Randomiser.h"
+
 //-----------------------------------------------------
 // FLEET CLASS
 //-----------------------------------------------------
@@ -19,8 +20,11 @@ private:
 	float mDamegMod;//modifys the ships damage acording to the chosen tactics
 	float mHitMod;//modifys the ships hit chance according to the choosen tactics
 	CFleet* mpEnemyFleet;
+	enum tactics {Targeted, Rapid, None};
+	tactics mFleetTactics;
 	
 	int mSize;
+
 public:
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
@@ -40,5 +44,7 @@ public:
 	// MUTATORS
 	//---------------------------
 	void SetEnemy(CFleet* myEnemy);//sets the fleet that this one will attack
+	void LaunchFleet(vector <CSpaceUnit*> possibleShips);//gets ships a player has, then adds a number of them to the fleet to attack
+	void SetTactic();
 };
 

@@ -3,23 +3,52 @@
 
 CFleet::CFleet()
 {
+	mDamegMod = 1.0f;
+	mHitMod = 1.0f;
+	mSize = 0;
+	mFleetTactics = None;
 }
 
 
 CFleet::~CFleet()
 {
+	//returns ships to the player class
 }
 
 
 void CFleet::Fight()
 {
-	
-	for (int i = 0; i < mSize; i++)
+	switch (mFleetTactics)
 	{
-		CRandomiser shipToAttack;
-		int target = shipToAttack.GetRandomInt(0, mpEnemyFleet->GetSize() - 1);
-		mpFleet[i]->Attack(mpEnemyFleet->GetShip(target), mHitMod, mDamegMod);
+		case tactics::None:
+			for (int i = 0; i < mSize; i++)
+			{
+				CRandomiser shipToAttack;
+				int target = shipToAttack.GetRandomInt(0, mpEnemyFleet->GetSize() - 1);
+				mpFleet[i]->Attack(mpEnemyFleet->GetShip(target), mHitMod, mDamegMod);
+			}
+			break;
+		case tactics::Rapid:
+			for (int i = 0; i < mSize; i++)
+			{
+				CRandomiser shipToAttack;
+				int target = shipToAttack.GetRandomInt(0, mpEnemyFleet->GetSize() - 1);
+				mpFleet[i]->Attack(mpEnemyFleet->GetShip(target), mHitMod, mDamegMod);
+				mpFleet[i]->Attack(mpEnemyFleet->GetShip(target), mHitMod, mDamegMod);
+			}
+			break;
+		case tactics::Targeted:
+			CRandomiser shipToAttack;
+			int target = shipToAttack.GetRandomInt(0, mpEnemyFleet->GetSize() - 1);
+			for (int i = 0; i < mSize; i++)
+			{
+				int variance = shipToAttack.GetRandomInt(target - 5, target + 5)%mSize;
+				mpFleet[i]->Attack(mpEnemyFleet->GetShip(variance), mHitMod, mDamegMod);
+			}
+			break;
 	}
+
+
 
 }
 
@@ -51,4 +80,18 @@ int CFleet::GetSize()
 void CFleet::SetEnemy(CFleet* myEnemy)
 {
 	mpEnemyFleet = myEnemy;
+}
+
+void CFleet::LaunchFleet(vector <CSpaceUnit*> possibleShips)
+{
+	//recives a vector of ships from player
+	//asks player how many it should add to the fleet
+	//pops them of player and onto fleet
+	//asks the player to choose some tactics
+	//moves game into space state?
+}
+
+void CFleet::SetTactic()
+{
+	//recives player input to set tactics, does so during launch attack
 }
