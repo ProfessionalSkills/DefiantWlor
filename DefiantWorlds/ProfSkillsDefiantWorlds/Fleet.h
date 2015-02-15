@@ -17,13 +17,19 @@ class CFleet
 {
 private:
 	vector <CSpaceUnit*> mpFleet;//contains the ships that are being sent to attack
+	CFleet* mpEnemyFleet;
+	int mSize;
+
+	// FLEET SHIP MODIFIERS
+	//---------------------------
 	float mDamegMod;//modifys the ships damage acording to the chosen tactics
 	float mHitMod;//modifys the ships hit chance according to the choosen tactics
-	CFleet* mpEnemyFleet;
+
+	// TACTICS
+	//---------------------------
 	enum tactics {Targeted, Rapid, None};
 	tactics mFleetTactics;
-	
-	int mSize;
+	int mTargetedFireVariance;
 
 public:
 	// CONSTRUCTORS & DESTRUCTOR
