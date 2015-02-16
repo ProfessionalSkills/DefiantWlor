@@ -39,8 +39,8 @@ bool CProductionStructure::AddToQueue(int agentIndex)
 	miterRespectiveAgents = mRespectiveAgentsList.begin();
 	std::advance(miterRespectiveAgents, agentIndex);
 
-	// Determine which agent is to be created
-	
+	// use copy constructor to duplicate the agent
+	mpProductionQueue.push((*miterRespectiveAgents));
 
 	// Success
 	return true;
@@ -59,6 +59,31 @@ bool CProductionStructure::UpdateProduction()
 CGameAgent* CProductionStructure::CreateAgent()
 {
 	return nullptr;
+}
+
+void CProductionStructure::UpdateKeyPresses()
+{
+	// UNIT CONSTRUCTION
+	//------------------------------
+	bool addedSuccess;
+
+	// 1 = First unit
+	if (gpEngine->KeyHit(Key_1))
+	{
+		addedSuccess = AddToQueue(0);
+	}
+
+	// 2 = Second unit
+	if (gpEngine->KeyHit(Key_2))
+	{
+		addedSuccess = AddToQueue(1);
+	}
+
+	// 3 = Third unit
+	if (gpEngine->KeyHit(Key_3))
+	{
+		addedSuccess = AddToQueue(2);
+	}
 }
 
 
@@ -102,28 +127,7 @@ void CProductionStructure::Update()
 			break;
 
 		case OBJ_BUILT:
-			// UNIT CONSTRUCTION
-			//------------------------------
-			bool addedSuccess;
-
-			// 1 = First unit
-			if (gpEngine->KeyHit(Key_1))
-			{
-				addedSuccess = AddToQueue(0);
-			}
-
-			// 2 = Second unit
-			if (gpEngine->KeyHit(Key_2))
-			{
-				addedSuccess = AddToQueue(1);
-			}
-
-			// 3 = Third unit
-			if (gpEngine->KeyHit(Key_3))
-			{
-				addedSuccess = AddToQueue(2);
-			}
-
+			
 			break;
 
 		case OBJ_DAMAGED:
@@ -219,6 +223,19 @@ void CProductionStructure::DisplayInfo(IFont* font)
 			counter++;
 		}
 
-		// Display if a unit is queued and what unit
+		mStrDisplay << "Queue Next: ";
+		if (mpProductionQueue.size() == 0)
+		{
+			mStrDisplay << "None";
+		}
+		else
+		{
+			mStrDisplay << mpProductionQueue.front()->GetAgentData()->mAgentName;
+		}
+		font->Draw(mStrDisplay.str(), 480, 805, kWhite, kLeft, kTop);
+		mStrDisplay.str("");
 	}
+
+	// Check for any keys being presses
+	UpdateKeyPresses();
 }

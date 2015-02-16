@@ -56,6 +56,7 @@ public:
 	bool RemoveFromQueue();
 	bool UpdateProduction();
 	CGameAgent* CreateAgent();		// Called when agent at front of production queue is finished
+	void UpdateKeyPresses();
 
 	void Update() override;
 	void DisplayInfo(IFont* font) override;
