@@ -37,6 +37,11 @@ bool CSpaceFighter::Attack(CGameAgent* target, float hitMod, float damageMod)
 	return false;
 }
 
+bool CSpaceFighter::Attack(CGameAgent* target)
+{
+	return false;
+}
+
 //CSpaceFighter::void MoveTo(CTile* dest)
 
 

@@ -40,10 +40,7 @@ bool CProductionStructure::AddToQueue(int agentIndex)
 	std::advance(miterRespectiveAgents, agentIndex);
 
 	// Determine which agent is to be created
-	switch ((*miterRespectiveAgents).mAgentType)
-	{
-		case 
-	}
+	
 
 	// Success
 	return true;
@@ -214,7 +211,7 @@ void CProductionStructure::DisplayInfo(IFont* font)
 		// Display key presses for possible unit queuing
 		for (miterRespectiveAgents = mRespectiveAgentsList.begin(); miterRespectiveAgents != mRespectiveAgentsList.end(); miterRespectiveAgents++)
 		{
-			mStrDisplay << counter << ": " << (*miterRespectiveAgents).mAgentName;
+			mStrDisplay << counter << ": " << (*miterRespectiveAgents)->GetAgentData()->mAgentName;
 			font->Draw(mStrDisplay.str(), 240, drawHeight, kWhite, kLeft, kTop);
 			mStrDisplay.str("");
 

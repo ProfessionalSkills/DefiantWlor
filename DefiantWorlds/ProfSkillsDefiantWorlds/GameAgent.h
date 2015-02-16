@@ -103,6 +103,11 @@ public:
 		return mState;
 	}
 
+	inline SAgentData* GetAgentData()
+	{
+		return &mAgentInfo;
+	}
+
 
 	// MUTATORS
 	//---------------------------

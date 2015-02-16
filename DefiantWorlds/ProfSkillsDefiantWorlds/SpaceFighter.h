@@ -46,6 +46,7 @@ public:
 	// OVERRIDE METHODS
 	//---------------------------
 	bool Attack(CGameAgent* target, float hitMod, float damageMod) override;
+	virtual bool Attack(CGameAgent* target);
 	//virtual void MoveTo(CTile* dest);
 	virtual bool Move();
 
