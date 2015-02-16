@@ -43,3 +43,8 @@ bool CAirUnit::Destroy()
 {
 	return false;
 }
+
+void CAirUnit::UnloadIModel()
+{
+
+}

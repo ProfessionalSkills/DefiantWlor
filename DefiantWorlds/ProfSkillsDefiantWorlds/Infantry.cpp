@@ -14,7 +14,7 @@
 //-----------------------------------------------------
 CInfantry::CInfantry()
 {
-
+	mAgentInfo = SAgentData(GAV_INFANTRY, "Infantry");
 }
 
 CInfantry::~CInfantry()

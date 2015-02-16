@@ -18,7 +18,7 @@
 //-----------------------------------------------------
 class CSpaceUnit : public CGameAgent
 {
-private:
+protected:
 	// DATA
 	//---------------------------
 	float mHitChance;
@@ -49,6 +49,7 @@ public:
 	virtual bool Attack(CGameAgent* target,float hitMod, float damageMod);
 	//virtual void MoveTo(CTile* dest);
 	virtual bool Move();
+	virtual void UnloadIModel();
 
 private:
 	virtual bool Destroy();

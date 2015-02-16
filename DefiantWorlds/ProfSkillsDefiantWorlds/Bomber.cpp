@@ -14,7 +14,20 @@
 //-----------------------------------------------------
 CBomber::CBomber()
 {
+	mAgentInfo = SAgentData(GAV_BOMBER, "Bomber");
 
+	mHealth;
+	mSpeed;
+	mProductionTime;
+	mProductionCost;
+	mCurProductionTimeLeft;				
+	mDamage;
+	//mAttackParticleFX;
+	//mDestroyParticleFX;
+	mState;
+	//mDestGridSq;
+	mIsMoving;
+	mPopCost;
 }
 
 CBomber::~CBomber()

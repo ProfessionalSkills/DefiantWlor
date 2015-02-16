@@ -10,6 +10,8 @@
 // INCLUDES
 //-----------------------------------------------------
 #include "ProductionStructure.h"
+#include "Bomber.h"
+#include "Fighter.h"
 
 
 //-----------------------------------------------------

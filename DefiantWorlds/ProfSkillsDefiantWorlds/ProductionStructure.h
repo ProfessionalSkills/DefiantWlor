@@ -20,21 +20,6 @@ const int MAX_QUEUE_SIZE = 5;
 
 
 //-----------------------------------------------------
-// STRUCTURE
-//-----------------------------------------------------
-struct SAgentData
-{
-	EGameAgentsTypes mAgentType;
-	std::string	     mAgentName;
-
-	SAgentData(EGameAgentsTypes agentType, std::string agentName)
-	{
-		mAgentType = agentType;
-		mAgentName = agentName;
-	}
-};
-
-//-----------------------------------------------------
 // PRODUCTION STRUCTURE CLASS - CHILD OF STRUCTURE
 //-----------------------------------------------------
 class CProductionStructure : public CStructure
@@ -42,10 +27,10 @@ class CProductionStructure : public CStructure
 protected:
 	// DATA
 	//---------------------------
-	std::list<SAgentData> mRespectiveAgentsList;
+	std::list<CGameAgent*> mRespectiveAgentsList;
 	std::queue<CGameAgent*> mpProductionQueue;
 
-	std::list<SAgentData>::iterator miterRespectiveAgents;
+	std::list<CGameAgent*>::iterator miterRespectiveAgents;
 
 
 public:

@@ -14,7 +14,7 @@
 //-----------------------------------------------------
 CArtillery::CArtillery()
 {
-	
+	mAgentInfo = SAgentData(GAV_ARTILLERY, "Artillery");
 }
 
 CArtillery::~CArtillery()

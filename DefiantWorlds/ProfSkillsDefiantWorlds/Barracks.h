@@ -10,6 +10,9 @@
 // INCLUDES
 //-----------------------------------------------------
 #include "ProductionStructure.h"
+#include "Artillery.h"
+#include "Tank.h"
+#include "Infantry.h"
 
 
 //-----------------------------------------------------

@@ -43,3 +43,8 @@ bool CGroundUnit::Destroy()
 {
 	return false;
 }
+
+void CGroundUnit::UnloadIModel()
+{
+
+}

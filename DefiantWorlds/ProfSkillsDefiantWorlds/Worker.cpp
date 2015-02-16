@@ -14,7 +14,7 @@
 //-----------------------------------------------------
 CWorker::CWorker()
 {
-
+	mAgentInfo = SAgentData(GAV_WORKER, "Worker");
 }
 
 CWorker::~CWorker()

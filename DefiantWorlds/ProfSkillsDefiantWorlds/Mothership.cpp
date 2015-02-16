@@ -14,7 +14,7 @@
 //-----------------------------------------------------
 CMothership::CMothership()
 {
-
+	mAgentInfo = SAgentData(GAV_MOTHERSHIP, "Mothership");
 }
 
 CMothership::~CMothership()

@@ -38,8 +38,8 @@ CHellipad::CHellipad()
 	mpObjModel->Scale(mScale);
 
 	// Define list of responsible agents
-	mRespectiveAgentsList.push_back(SAgentData(GA_FIGHTER, "Fighter"));
-	mRespectiveAgentsList.push_back(SAgentData(GA_BOMBER, "Bomber"));
+	mRespectiveAgentsList.push_back(new CFighter());
+	mRespectiveAgentsList.push_back(new CBomber());
 }
 
 CHellipad::~CHellipad()

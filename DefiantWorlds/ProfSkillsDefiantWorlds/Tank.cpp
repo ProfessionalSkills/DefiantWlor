@@ -14,7 +14,7 @@
 //-----------------------------------------------------
 CTank::CTank()
 {
-
+	mAgentInfo = SAgentData(GAV_TANK, "Tank");
 }
 
 CTank::~CTank()

@@ -14,6 +14,28 @@
 
 
 //-----------------------------------------------------
+// STRUCTURE
+//-----------------------------------------------------
+struct SAgentData
+{
+	EGameAgentVariations mAgentType;
+	std::string	         mAgentName;
+
+	SAgentData()
+	{
+		mAgentType = GAV_WORKER;
+		mAgentName = "NULL";
+	}
+
+	SAgentData(EGameAgentVariations agentType, std::string agentName)
+	{
+		mAgentType = agentType;
+		mAgentName = agentName;
+	}
+};
+
+
+//-----------------------------------------------------
 // GAME AGENT CLASS - CHILD OF GAME OBJECT
 //-----------------------------------------------------
 class CGameAgent : public CGameObject
@@ -21,6 +43,8 @@ class CGameAgent : public CGameObject
 protected:
 	// DATA
 	//---------------------------
+	SAgentData mAgentInfo;
+
 	float mHealth;
 	float mSpeed;
 	float mProductionTime;
@@ -78,6 +102,7 @@ public:
 	{
 		return mState;
 	}
+
 
 	// MUTATORS
 	//---------------------------

@@ -14,7 +14,7 @@
 //-----------------------------------------------------
 CTransport::CTransport()
 {
-
+	mAgentInfo = SAgentData(GAV_TRANSPORT, "Transport");
 }
 
 CTransport::~CTransport()

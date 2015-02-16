@@ -14,7 +14,7 @@
 //-----------------------------------------------------
 CFighter::CFighter()
 {
-
+	mAgentInfo = SAgentData(GAV_FIGHTER, "Fighter");
 }
 
 CFighter::~CFighter()

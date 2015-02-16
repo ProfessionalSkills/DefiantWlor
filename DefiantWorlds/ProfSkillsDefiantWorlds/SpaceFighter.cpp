@@ -14,7 +14,7 @@
 //-----------------------------------------------------
 CSpaceFighter::CSpaceFighter()
 {
-
+	mAgentInfo = SAgentData(GAV_SPACE_FIGHTER, "Space Fighter");
 }
 
 CSpaceFighter::~CSpaceFighter()
@@ -26,7 +26,7 @@ CSpaceFighter::~CSpaceFighter()
 //-----------------------------------------------------
 // SPACE FIGHTER CLASS OVERRIDE METHODS
 //-----------------------------------------------------
-bool CSpaceUnit::Attack(CGameAgent* target, float hitMod, float damageMod)
+bool CSpaceFighter::Attack(CGameAgent* target, float hitMod, float damageMod)
 {
 	CRandomiser toHitRoll;
 	if (toHitRoll.GetRandomFloat(1.0,100.0) < (hitMod*mHitChance) * 100)

@@ -28,7 +28,25 @@ CProductionStructure::~CProductionStructure()
 //-----------------------------------------------------
 bool CProductionStructure::AddToQueue(int agentIndex)
 {
-	return false;
+	// Get the size of the respective agents array and compare with index
+	if (agentIndex >= mRespectiveAgentsList.size())
+	{
+		// *** TO DO *** return error code rather than boolean
+		return false;
+	}
+
+	// Increment iterator to index
+	miterRespectiveAgents = mRespectiveAgentsList.begin();
+	std::advance(miterRespectiveAgents, agentIndex);
+
+	// Determine which agent is to be created
+	switch ((*miterRespectiveAgents).mAgentType)
+	{
+		case 
+	}
+
+	// Success
+	return true;
 }
 
 bool CProductionStructure::RemoveFromQueue()
