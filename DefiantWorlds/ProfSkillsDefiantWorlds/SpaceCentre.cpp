@@ -38,9 +38,9 @@ CSpaceCentre::CSpaceCentre()
 	mpObjModel->Scale(mScale);
 
 	// Define list of responsible agents
-	mRespectiveAgentsList.push_back(GA_SPACE_FIGHTER);
-	mRespectiveAgentsList.push_back(GA_TRANSPORT);
-	mRespectiveAgentsList.push_back(GA_MOTHERSHIP);
+	mRespectiveAgentsList.push_back(SAgentData(GA_SPACE_FIGHTER, "Space Fighter"));
+	mRespectiveAgentsList.push_back(SAgentData(GA_TRANSPORT, "Transport"));
+	mRespectiveAgentsList.push_back(SAgentData(GA_MOTHERSHIP, "Mothership"));
 }
 
 CSpaceCentre::~CSpaceCentre()

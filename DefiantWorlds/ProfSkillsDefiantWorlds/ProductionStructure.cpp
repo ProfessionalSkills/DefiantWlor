@@ -22,58 +22,11 @@ CProductionStructure::~CProductionStructure()
 
 }
 
-//-----------------------------------------------------
-// PRODUCTION STRUCTURE CLASS ACCESSORS
-//-----------------------------------------------------
-std::string CProductionStructure::GetAgentName(EGameAgentsTypes agentType)
-{
-	switch (agentType)
-	{
-	case GA_ARTILLERY:
-		return "Artillery";
-		break;
-
-	case GA_BOMBER:
-		return "Bomber";
-		break;
-
-	case GA_FIGHTER:
-		return "Fighter";
-		break;
-
-	case GA_INFANTRY:
-		return "Infantry";
-		break;
-
-	case GA_MOTHERSHIP:
-		return"Mothership";
-		break;
-
-	case GA_SPACE_FIGHTER:
-		return "Space Fighter";
-		break;
-
-	case GA_TANK:
-		return "Tank";
-		break;
-
-	case GA_TRANSPORT:
-		return "Transport Ship";
-		break;
-
-	case GA_WORKER:
-		return "Worker";
-		break;
-	}
-
-	return "UNKOWN";
-}
-
 
 //-----------------------------------------------------
 // PRODUCTION STRUCTURE CLASS METHODS
 //-----------------------------------------------------
-bool CProductionStructure::AddToQueue(CGameAgent* agent)
+bool CProductionStructure::AddToQueue(int agentIndex)
 {
 	return false;
 }
@@ -134,6 +87,27 @@ void CProductionStructure::Update()
 			break;
 
 		case OBJ_BUILT:
+			// UNIT CONSTRUCTION
+			//------------------------------
+			bool addedSuccess;
+
+			// 1 = First unit
+			if (gpEngine->KeyHit(Key_1))
+			{
+				addedSuccess = AddToQueue(0);
+			}
+
+			// 2 = Second unit
+			if (gpEngine->KeyHit(Key_2))
+			{
+				addedSuccess = AddToQueue(1);
+			}
+
+			// 3 = Third unit
+			if (gpEngine->KeyHit(Key_3))
+			{
+				addedSuccess = AddToQueue(2);
+			}
 
 			break;
 
@@ -222,7 +196,7 @@ void CProductionStructure::DisplayInfo(IFont* font)
 		// Display key presses for possible unit queuing
 		for (miterRespectiveAgents = mRespectiveAgentsList.begin(); miterRespectiveAgents != mRespectiveAgentsList.end(); miterRespectiveAgents++)
 		{
-			mStrDisplay << counter << ": " << GetAgentName(*miterRespectiveAgents);
+			mStrDisplay << counter << ": " << (*miterRespectiveAgents).mAgentName;
 			font->Draw(mStrDisplay.str(), 240, drawHeight, kWhite, kLeft, kTop);
 			mStrDisplay.str("");
 

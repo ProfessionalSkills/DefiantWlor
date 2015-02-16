@@ -146,51 +146,14 @@ void CWorldState::CheckKeyPresses()
 	}
 	
 
-	// BUILDING PLACEMENT
+	// CLICKING
 	//------------------------------
-	CStructure* pStructure;
-
-	// ESCAPE = no building is selected
-	if (gpEngine->KeyHit(Key_C))
-	{
-		pStructure = nullptr;
-		OnPlacingStructureChange(pStructure);
-	}
-
-	// 0 = CommsCentre
-	if (gpEngine->KeyHit(Key_0))
-	{
-		pStructure = new CComCentre();
-		OnPlacingStructureChange(pStructure);
-	}
-
-	// 1 = Barracks
-	if (gpEngine->KeyHit(Key_1))
-	{
-		pStructure = new CBarracks();
-		OnPlacingStructureChange(pStructure);
-	}
-
-	// 2 = Hellipad
-	if (gpEngine->KeyHit(Key_2))
-	{
-		pStructure = new CHellipad();
-		OnPlacingStructureChange(pStructure);
-	}
-
-	// 3 = Space Centre
-	if (gpEngine->KeyHit(Key_3))
-	{
-		pStructure = new CSpaceCentre();
-		OnPlacingStructureChange(pStructure);
-	}
-
 	// Left Click = place currently selected building
 	if (gpEngine->KeyHit(Mouse_LButton))
 	{
 		// Assume nothing is clicked on - reset all pointers (except PlacingStructure)
 		mpCurSelectedStructure = nullptr;
-		
+
 		// Check if placing a structure
 		if (mpPlacingStructure)
 		{
@@ -208,6 +171,62 @@ void CWorldState::CheckKeyPresses()
 			// Check if it's a building
 			mpCurSelectedStructure = mpHumanPlayer->CheckStructureSelection(mMouseWorldPos);
 		}
+	}
+
+
+	// Check if a building is currently selected
+	if (!mpCurSelectedStructure)
+	{
+		// BUILDING PLACEMENT
+		//------------------------------
+		CStructure* pStructure;
+
+		// C = no building is selected
+		if (gpEngine->KeyHit(Key_C))
+		{
+			pStructure = nullptr;
+			OnPlacingStructureChange(pStructure);
+		}
+
+		// 0 = CommsCentre
+		if (gpEngine->KeyHit(Key_0))
+		{
+			pStructure = new CComCentre();
+			OnPlacingStructureChange(pStructure);
+		}
+
+		// 1 = Barracks
+		if (gpEngine->KeyHit(Key_1))
+		{
+			pStructure = new CBarracks();
+			OnPlacingStructureChange(pStructure);
+		}
+
+		// 2 = Hellipad
+		if (gpEngine->KeyHit(Key_2))
+		{
+			pStructure = new CHellipad();
+			OnPlacingStructureChange(pStructure);
+		}
+
+		// 3 = Space Centre
+		if (gpEngine->KeyHit(Key_3))
+		{
+			pStructure = new CSpaceCentre();
+			OnPlacingStructureChange(pStructure);
+		}
+	}
+	else
+	{
+		// UNIT CONSTRUCTION
+		//------------------------------
+		// C = deselect current building
+		if (gpEngine->KeyHit(Key_C))
+		{
+			mpCurSelectedStructure = nullptr;
+		}
+
+		// Rest is handled in update function of selected building
 	}
 }
 

@@ -38,7 +38,7 @@ CComCentre::CComCentre()
 	mpObjModel->Scale(mScale);
 
 	// Define list of responsible agents
-	mRespectiveAgentsList.push_back(GA_WORKER);
+	mRespectiveAgentsList.push_back(SAgentData(GA_WORKER, "Worker"));
 }
 
 CComCentre::~CComCentre()

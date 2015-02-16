@@ -20,6 +20,21 @@ const int MAX_QUEUE_SIZE = 5;
 
 
 //-----------------------------------------------------
+// STRUCTURE
+//-----------------------------------------------------
+struct SAgentData
+{
+	EGameAgentsTypes mAgentType;
+	std::string	     mAgentName;
+
+	SAgentData(EGameAgentsTypes agentType, std::string agentName)
+	{
+		mAgentType = agentType;
+		mAgentName = agentName;
+	}
+};
+
+//-----------------------------------------------------
 // PRODUCTION STRUCTURE CLASS - CHILD OF STRUCTURE
 //-----------------------------------------------------
 class CProductionStructure : public CStructure
@@ -27,10 +42,11 @@ class CProductionStructure : public CStructure
 protected:
 	// DATA
 	//---------------------------
-	std::list<EGameAgentsTypes> mRespectiveAgentsList;
+	std::list<SAgentData> mRespectiveAgentsList;
 	std::queue<CGameAgent*> mpProductionQueue;
 
-	std::list<EGameAgentsTypes>::iterator miterRespectiveAgents;
+	std::list<SAgentData>::iterator miterRespectiveAgents;
+
 
 public:
 	// CONSTRUCTORS & DESTRUCTOR
@@ -41,9 +57,6 @@ public:
 
 	// ACCESSORS
 	//---------------------------
-private:
-	std::string GetAgentName(EGameAgentsTypes agentType);
-
 public:
 
 
@@ -54,7 +67,7 @@ public:
 
 	// METHODS
 	//---------------------------
-	bool AddToQueue(CGameAgent* agent);
+	bool AddToQueue(int agentIndex);
 	bool RemoveFromQueue();
 	bool UpdateProduction();
 	CGameAgent* CreateAgent();		// Called when agent at front of production queue is finished
