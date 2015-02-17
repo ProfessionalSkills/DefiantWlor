@@ -60,6 +60,12 @@ void CSpaceCentre::SetBuiltModel()
 	// Create new model with original mesh
 	mpObjModel = mspMshStructureBuilt->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
 	mpObjModel->Scale(mScale);
+
+	// If the x is beyond a certain distance, the object is on mars - set relevant skin
+	if (mpObjModel->GetX() > (GRID_SIZE_X * GRID_TILE_SIZE))
+	{
+		mpObjModel->SetSkin("bld-mt-mars.jpg");
+	}
 }
 
 bool CSpaceCentre::Destroy()

@@ -95,7 +95,7 @@ public:
 
 	// METHODS
 	//---------------------------
-	bool PurchaseStructure(CStructure* pStructure, CGrid* pGrid, CTile* pTile);
+	virtual bool PurchaseStructure(CStructure* pStructure, CGrid* pGrid, CTile* pTile);
 	bool QueueUnit(CStructure* structure, CGameAgent* unit);
 
 

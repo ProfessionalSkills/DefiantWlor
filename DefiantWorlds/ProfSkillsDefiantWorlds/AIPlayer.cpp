@@ -45,6 +45,31 @@ CStructure* CAIPlayer::CheckStructureSelection(DX::XMFLOAT3 pos)
 //-----------------------------------------------------
 // HUMAN PLAYER CLASS OVERRIDE METHODS
 //-----------------------------------------------------
+bool CAIPlayer::PurchaseStructure(CStructure* pStructure, CGrid* pGrid, CTile* pTile)
+{
+	// Check whether new building can be afforded
+	if (mNumMinerals - pStructure->GetBuildCost() < 0)
+	{
+		// Not enough minerals - return relevant error (* TO DOOOOOOO *)
+		return false;
+	}
+
+	// Check if building area is free
+	if (!pStructure->TestStructureArea(pGrid, pTile))
+	{
+		// Something blocking construction - return relevant error (* TO DOOOOOOO *)
+		return false;
+	}
+
+	// Check to ensure no vehicles in the nearby area
+
+
+	// Everything fine - build & add to vector
+	pStructure->CreateStructure(pGrid);
+	mpStructureList.push_back(pStructure);
+	return true;
+}
+
 void CAIPlayer::Update()
 {
 	// Loop through all structures & update them

@@ -34,6 +34,7 @@ public:
 
 	// OVERRIDE METHODS
 	//---------------------------
+	bool PurchaseStructure(CStructure* pStructure, CGrid* pGrid, CTile* pTile) override;
 	void Update() override;
 };
 
