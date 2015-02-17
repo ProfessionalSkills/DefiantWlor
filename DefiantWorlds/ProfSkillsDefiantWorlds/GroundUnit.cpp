@@ -26,7 +26,7 @@ CGroundUnit::~CGroundUnit()
 //-----------------------------------------------------
 // GROUND UNIT CLASS OVERRIDE METHODS
 //-----------------------------------------------------
-bool CGroundUnit::Attack(CGameAgent* target)
+bool CGroundUnit::Attack(CGameAgent* target, float hitMod, float damageMod)
 {
 	return false;
 }

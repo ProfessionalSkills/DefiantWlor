@@ -39,7 +39,7 @@ bool RepairUnit(CGroundUnit* unit)
 //-----------------------------------------------------
 // WORKER CLASS OVERRIDE METHODS
 //-----------------------------------------------------
-bool CWorker::Attack(CGameAgent* target)
+bool CWorker::Attack(CGameAgent* target, float hitMod, float damageMod)
 {
 	return false;
 }

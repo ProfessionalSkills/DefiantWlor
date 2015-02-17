@@ -26,7 +26,7 @@ CTank::~CTank()
 //-----------------------------------------------------
 // TANK CLASS OVERRIDE METHODS
 //-----------------------------------------------------
-bool CTank::Attack(CGameAgent* target)
+bool CTank::Attack(CGameAgent* target, float hitMod, float damageMod)
 {
 	return false;
 }

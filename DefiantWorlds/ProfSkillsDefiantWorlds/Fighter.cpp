@@ -26,7 +26,7 @@ CFighter::~CFighter()
 //-----------------------------------------------------
 // FIGHTER CLASS OVERRIDE METHODS
 //-----------------------------------------------------
-bool CFighter::Attack(CGameAgent* target)
+bool CFighter::Attack(CGameAgent* target, float hitMod, float damageMod)
 {
 	return false;
 }

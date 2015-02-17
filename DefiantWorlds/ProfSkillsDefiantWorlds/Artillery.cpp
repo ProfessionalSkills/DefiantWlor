@@ -26,7 +26,7 @@ CArtillery::~CArtillery()
 //-----------------------------------------------------
 // ARTILLERY CLASS OVERRIDE METHODS
 //-----------------------------------------------------
-bool CArtillery::Attack(CGameAgent* target)
+bool CArtillery::Attack(CGameAgent* target, float hitMod, float damageMod)
 {
 	return false;
 }

@@ -26,7 +26,7 @@ CTransport::~CTransport()
 //-----------------------------------------------------
 // TRANSPORT CLASS OVERRIDE METHODS
 //-----------------------------------------------------
-bool CTransport::Attack(CGameAgent* target)
+bool CTransport::Attack(CGameAgent* target, float hitMod, float damageMod)
 {
 	return false;
 }

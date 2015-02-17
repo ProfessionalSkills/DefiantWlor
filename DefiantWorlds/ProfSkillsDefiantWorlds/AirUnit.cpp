@@ -26,7 +26,7 @@ CAirUnit::~CAirUnit()
 //-----------------------------------------------------
 // AIR UNIT CLASS OVERRIDE METHODS
 //-----------------------------------------------------
-bool CAirUnit::Attack(CGameAgent* target)
+bool CAirUnit::Attack(CGameAgent* target, float hitMod, float damageMod)
 {
 	return false;
 }

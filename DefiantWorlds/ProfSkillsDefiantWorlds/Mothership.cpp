@@ -26,7 +26,7 @@ CMothership::~CMothership()
 //-----------------------------------------------------
 // MOTHERSHIP CLASS OVERRIDE METHODS
 //-----------------------------------------------------
-bool CMothership::Attack(CGameAgent* target)
+bool CMothership::Attack(CGameAgent* target, float hitMod, float damageMod)
 {
 	return false;
 }

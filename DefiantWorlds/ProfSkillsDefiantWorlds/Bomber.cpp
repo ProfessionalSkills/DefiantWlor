@@ -39,7 +39,7 @@ CBomber::~CBomber()
 //-----------------------------------------------------
 // BOMBER CLASS OVERRIDE METHODS
 //-----------------------------------------------------
-bool CBomber::Attack(CGameAgent* target)
+bool CBomber::Attack(CGameAgent* target, float hitMod, float damageMod)
 {
 	return false;
 }

@@ -26,7 +26,7 @@ CInfantry::~CInfantry()
 //-----------------------------------------------------
 // INFANTRY CLASS OVERRIDE METHODS
 //-----------------------------------------------------
-bool CInfantry::Attack(CGameAgent* target)
+bool CInfantry::Attack(CGameAgent* target, float hitMod, float damageMod)
 {
 	return false;
 }

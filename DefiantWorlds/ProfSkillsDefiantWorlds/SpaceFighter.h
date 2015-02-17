@@ -45,13 +45,12 @@ public:
 
 	// OVERRIDE METHODS
 	//---------------------------
-	bool Attack(CGameAgent* target, float hitMod, float damageMod) override;
-	virtual bool Attack(CGameAgent* target);
+	bool Attack(CGameAgent* target, float hitMod, float damageMod);
 	//virtual void MoveTo(CTile* dest);
-	virtual bool Move();
+	bool Move();
 
 private:
-	virtual bool Destroy();
+	bool Destroy();
 };
 
 #endif /* _SPACE_FIGHTER_H_ */

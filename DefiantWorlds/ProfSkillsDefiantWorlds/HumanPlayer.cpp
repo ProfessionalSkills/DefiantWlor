@@ -14,7 +14,8 @@
 //-----------------------------------------------------
 CHumanPlayer::CHumanPlayer() : CPlayer()
 {
-
+	// When initialised, create the command centre at the centre of the respective grid
+	
 }
 
 CHumanPlayer::~CHumanPlayer()
