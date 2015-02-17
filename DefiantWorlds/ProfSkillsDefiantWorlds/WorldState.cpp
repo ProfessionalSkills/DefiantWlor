@@ -353,6 +353,7 @@ void CWorldState::StateSetup()
 	mpMdlMarsGrassArea = mpMshGrassArea->CreateModel(gridCentre.x, 0.1f, gridCentre.z);
 	mpMdlMarsGrassArea->ScaleX(GRID_SIZE_X * GRID_TILE_SIZE * 2.0f);
 	mpMdlMarsGrassArea->ScaleZ(GRID_SIZE_Y * GRID_TILE_SIZE * 2.0f);
+	mpMdlMarsGrassArea->SetSkin("sand.jpg");
 
 
 	// INITIALISE CAMERAS
