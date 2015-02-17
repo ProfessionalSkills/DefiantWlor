@@ -47,14 +47,33 @@ void CWorldState::UpdateHeldStructure()
 	if (mpPlacingStructure)
 	{		
 		mpPlacingStructure->SetWorldPos(mpCurTile->GetWorldPos());
-		// When placing structure, check if any used tiles
-		if (mpEarthGrid->TurnOnTiles(mpCurTile, mpPlacingStructure->GetBLPosition(), mpPlacingStructure->GetTRPosition()))
+
+		// Determine current grid
+		switch (mMouseState)
 		{
-			mpPlacingStructure->SetBadTexture();
-		}
-		else
-		{
-			mpPlacingStructure->SetGoodTexture();
+		case MS_EARTH_GRID:
+			// When placing structure, check if any used tiles
+			if (mpEarthGrid->TurnOnTiles(mpCurTile, mpPlacingStructure->GetBLPosition(), mpPlacingStructure->GetTRPosition()))
+			{
+				mpPlacingStructure->SetBadTexture();
+			}
+			else
+			{
+				mpPlacingStructure->SetGoodTexture();
+			}
+			break;
+
+		case MS_MARS_GRID:
+			// When placing structure, check if any used tiles
+			if (mpMarsGrid->TurnOnTiles(mpCurTile, mpPlacingStructure->GetBLPosition(), mpPlacingStructure->GetTRPosition()))
+			{
+				mpPlacingStructure->SetBadTexture();
+			}
+			else
+			{
+				mpPlacingStructure->SetGoodTexture();
+			}
+			break;
 		}
 	}
 }
@@ -164,12 +183,27 @@ void CWorldState::CheckKeyPresses()
 		// Check if placing a structure
 		if (mpPlacingStructure)
 		{
-			// Place the structure - check if successful
-			if (mpHumanPlayer->PurchaseStructure(mpPlacingStructure, mpEarthGrid, mpCurTile))
+			switch (mMouseState)
 			{
-				// Safe to point at nothing due to structure pointer passed on to Player's data
-				mpPlacingStructure = nullptr;
-				mpEarthGrid->ResetTilesModels();
+			case MS_EARTH_GRID:
+				// Place the structure - check if successful
+				if (mpHumanPlayer->PurchaseStructure(mpPlacingStructure, mpEarthGrid, mpCurTile))
+				{
+					// Safe to point at nothing due to structure pointer passed on to Player's data
+					mpPlacingStructure = nullptr;
+					mpEarthGrid->ResetTilesModels();
+				}
+				break;
+
+			case MS_MARS_GRID:
+				// Place the structure - check if successful
+				if (mpAIPlayer->PurchaseStructure(mpPlacingStructure, mpMarsGrid, mpCurTile))
+				{
+					// Safe to point at nothing due to structure pointer passed on to Player's data
+					mpPlacingStructure = nullptr;
+					mpMarsGrid->ResetTilesModels();
+				}
+				break;
 			}
 		}
 		else
