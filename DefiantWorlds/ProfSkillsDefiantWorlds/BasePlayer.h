@@ -19,6 +19,8 @@
 #include "Bomber.h"				// Air unit
 #include "Fighter.h"			// Air unit
 
+#include "Fleet.h"				// Space Ship container
+
 #include "Minerals.h"			// Resource
 
 #include "House.h"				// Static structure
@@ -52,7 +54,7 @@ protected:
 	std::vector<CGameAgent*>::iterator mpiterGameAgents;
 	std::vector<CSpaceUnit*>::iterator mpiterSpaceUnits;
 
-
+	CFleet* fleet;
 public:
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
@@ -97,11 +99,12 @@ public:
 	//---------------------------
 	virtual bool PurchaseStructure(CStructure* pStructure, CGrid* pGrid, CTile* pTile);
 	bool QueueUnit(CStructure* structure, CGameAgent* unit);
-
+	void LaunchAttack();
 
 	// VIRTUAL METHODS
 	//---------------------------
 	virtual void Update() = 0;
+
 };
 
 

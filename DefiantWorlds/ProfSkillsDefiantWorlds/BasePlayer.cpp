@@ -74,3 +74,9 @@ bool CPlayer::QueueUnit(CStructure* structure, CGameAgent* unit)
 {
 	return false;
 }
+
+void CPlayer::LaunchAttack()
+{
+	fleet->LaunchFleet(mpSpaceUnitsList);
+	//transition into space state from hear
+}
