@@ -76,10 +76,10 @@ void CWorldState::CalculateMouseGridPos()
 	DX::XMVECTOR intersecVec = DX::XMPlaneIntersectLine(DX::XMLoadFloat3(&mYPlane), rayOrigin, rayEnd);
 	DX::XMStoreFloat3(&mMouseWorldPos, intersecVec);		// Store the mouse's world position at y = 0
 
+
 	// Use the mouse's world position to determine the grid position
-	DX::XMFLOAT3 gridPos = mpEarthGrid->GetGridStartPos();		// Bottom left position of grid
-	mMouseGridPos.mPosX = (mMouseWorldPos.x - gridPos.x) / GRID_TILE_SIZE;
-	mMouseGridPos.mPosY = (mMouseWorldPos.z - gridPos.z) / GRID_TILE_SIZE;
+	mMouseGridPos.mPosX = (mMouseWorldPos.x - mCurGridPos.x) / GRID_TILE_SIZE;
+	mMouseGridPos.mPosY = (mMouseWorldPos.z - mCurGridPos.z) / GRID_TILE_SIZE;
 }
 
 void CWorldState::DrawFontData()
@@ -111,26 +111,33 @@ void CWorldState::DrawFontData()
 		strStream << "None";
 		break;
 	}
-	strStream << "  USED: " << mpCurTile->IsTileUsed();
-	mFntDebug->Draw(strStream.str(), 5, 25, kWhite, kLeft, kTop);
-	strStream.str("");
+
+	if (mpCurTile)
+	{
+		strStream << "  USED: " << mpCurTile->IsTileUsed();
+		mFntDebug->Draw(strStream.str(), 5, 25, kWhite, kLeft, kTop);
+		strStream.str("");
+	}
 }
 
 EMouseStates CWorldState::UpdateMouseState()
 {
-	// Update position of the mouse
-	CalculateMouseGridPos();
-
 	// Check whether it is within earth boundary
 	if (mMouseWorldPos.x > mpEarthGrid->GetGridStartPos().x && mMouseWorldPos.x < mpEarthGrid->GetGridEndPos().x
 		&& mMouseWorldPos.z > mpEarthGrid->GetGridStartPos().z && mMouseWorldPos.z < mpEarthGrid->GetGridEndPos().z)
 	{
+		mCurGridPos = mpEarthGrid->GetGridStartPos();		// Bottom left position of grid
 		return MS_EARTH_GRID;
 	}
-	else
+	
+	if (mMouseWorldPos.x > mpMarsGrid->GetGridStartPos().x && mMouseWorldPos.x < mpMarsGrid->GetGridEndPos().x
+		&& mMouseWorldPos.z > mpMarsGrid->GetGridStartPos().z && mMouseWorldPos.z < mpMarsGrid->GetGridEndPos().z)
 	{
-		return MS_OUT_OF_GRID;
+		mCurGridPos = mpMarsGrid->GetGridStartPos();		// Bottom left position of grid
+		return MS_MARS_GRID;
 	}
+
+	return MS_OUT_OF_GRID;
 }
 
 void CWorldState::CheckKeyPresses()
@@ -168,8 +175,18 @@ void CWorldState::CheckKeyPresses()
 		else
 		{
 			// Not placing a structure - find out where they are clicking
-			// Check if it's a building
-			mpCurSelectedStructure = mpHumanPlayer->CheckStructureSelection(mMouseWorldPos);
+			switch (mMouseState)
+			{
+			case MS_EARTH_GRID:
+				// Check if it's a building
+				mpCurSelectedStructure = mpHumanPlayer->CheckStructureSelection(mMouseWorldPos);
+				break;
+
+			case MS_MARS_GRID:
+				// Check if it's a building
+				mpCurSelectedStructure = mpAIPlayer->CheckStructureSelection(mMouseWorldPos);
+				break;
+			}
 		}
 	}
 
@@ -223,10 +240,27 @@ void CWorldState::CheckKeyPresses()
 		// C = deselect current building
 		if (gpEngine->KeyHit(Key_C))
 		{
-			mpCurSelectedStructure = nullptr;
+			OnPlacingStructureChange(nullptr);
 		}
 
 		// Rest is handled in update function of selected building
+	}
+
+	// CAMERA CHANGE
+	//------------------------------
+	if (gpEngine->KeyHit(Key_Return))
+	{
+		if (mpCamCurrent == mpCamEarth)
+		{
+			mpCamCurrent = mpCamMars;
+		}
+		else
+		{
+			mpCamCurrent = mpCamEarth;
+		}
+
+		// Ensure no buildings can be brought over
+		OnPlacingStructureChange(nullptr);
 	}
 }
 
@@ -279,16 +313,6 @@ void CWorldState::StateSetup()
 	DX::XMStoreFloat3(&mYPlane, planeVec);
 
 
-	// INITIALISE CAMERAS
-	//-----------------------------
-	mpCamEarth = gpEngine->CreateCamera(kManual, 0.0f, 230.0f, 0.0f);
-	mpCamEarth->RotateX(50.0f);
-	mpCamEarth->SetNearClip(NEAR_CLIP);
-	mpCamEarth->SetFarClip(FAR_CLIP);
-
-	mpCamCurrent = mpCamEarth;
-
-
 	// INITIALISE SKYBOX
 	//-----------------------------
 	mpMshSkybox = gpEngine->LoadMesh("SkyboxWorld.x");
@@ -303,11 +327,8 @@ void CWorldState::StateSetup()
 	mpNullTile = new CTile();
 	mpNullTile->SetWorldPos(DX::XMFLOAT3(-2000.0f, 0.0f, 0.0f));
 
-	mpCamCurrent->SetPosition(mpEarthGrid->GetGridCentrePos().x, 230.0f,
-		(float)GRID_SIZE_Y);
-
 	DX::XMFLOAT3 gridCentre = mpEarthGrid->GetGridCentrePos();
-	mpMdlSkybox->SetPosition(gridCentre.x, gridCentre.y, gridCentre.z);
+	mpMdlSkybox->SetPosition(gridCentre.x, -1.0f, gridCentre.z);
 
 	mpMshGridArea = gpEngine->LoadMesh("Grid.x");
 	mpMdlEarthGridArea = mpMshGridArea->CreateModel(gridCentre.x, 0.2f, gridCentre.z);
@@ -320,8 +341,33 @@ void CWorldState::StateSetup()
 	mpMdlEarthGrassArea->ScaleZ(GRID_SIZE_Y * GRID_TILE_SIZE * 2.0f);
 	
 	// MARS
-	float marsXStart = (float)(GRID_SIZE_X * GRID_TILE_SIZE) + 100.0f;
+	float marsXStart = (float)(GRID_SIZE_X * GRID_TILE_SIZE) + 1500.0f;
 	mpMarsGrid = new CGrid(DX::XMFLOAT3(marsXStart, 0.3f, 0.0f));
+
+	gridCentre = mpMarsGrid->GetGridCentrePos();
+
+	mpMdlMarsGridArea = mpMshGridArea->CreateModel(gridCentre.x, 0.2f, gridCentre.z);
+	mpMdlMarsGridArea->ScaleX((GRID_SIZE_X * GRID_TILE_SIZE) / 2.0f);
+	mpMdlMarsGridArea->ScaleZ((GRID_SIZE_Y * GRID_TILE_SIZE) / 2.0f);
+
+	mpMdlMarsGrassArea = mpMshGrassArea->CreateModel(gridCentre.x, 0.1f, gridCentre.z);
+	mpMdlMarsGrassArea->ScaleX(GRID_SIZE_X * GRID_TILE_SIZE * 2.0f);
+	mpMdlMarsGrassArea->ScaleZ(GRID_SIZE_Y * GRID_TILE_SIZE * 2.0f);
+
+
+	// INITIALISE CAMERAS
+	//-----------------------------
+	mpCamEarth = gpEngine->CreateCamera(kManual, mpEarthGrid->GetGridCentrePos().x, 230.0f, (float)GRID_SIZE_Y);
+	mpCamEarth->RotateX(50.0f);
+	mpCamEarth->SetNearClip(NEAR_CLIP);
+	mpCamEarth->SetFarClip(FAR_CLIP);
+
+	mpCamMars = gpEngine->CreateCamera(kManual, mpMarsGrid->GetGridCentrePos().x, 230.0f, (float)GRID_SIZE_Y);
+	mpCamMars->RotateX(50.0f);
+	mpCamMars->SetNearClip(NEAR_CLIP);
+	mpCamMars->SetFarClip(FAR_CLIP);
+
+	mpCamCurrent = mpCamMars;
 
 
 	// INITIALISE FONTS
@@ -340,12 +386,25 @@ void CWorldState::StateSetup()
 
 	// CONSTRUCT COMMAND CENTRES
 	//-----------------------------
+	// EARTH
 	mpPlacingStructure = nullptr;
 	CStructure* pTemp = new CComCentre();
 	mpCurTile = mpEarthGrid->GetTileData(SPointData(GRID_SIZE_X / 2.0f, GRID_SIZE_Y / 2.0f));
 	OnPlacingStructureChange(pTemp);
 
 	if (mpHumanPlayer->PurchaseStructure(mpPlacingStructure, mpEarthGrid, mpCurTile))
+	{
+		mpPlacingStructure = nullptr;
+		mpEarthGrid->ResetTilesModels();
+	}
+
+	// MARS
+	mpPlacingStructure = nullptr;
+	pTemp = new CComCentre();
+	mpCurTile = mpMarsGrid->GetTileData(SPointData(GRID_SIZE_X / 2.0f, GRID_SIZE_Y / 2.0f));
+	OnPlacingStructureChange(pTemp);
+
+	if (mpAIPlayer->PurchaseStructure(mpPlacingStructure, mpMarsGrid, mpCurTile))
 	{
 		mpPlacingStructure = nullptr;
 		mpEarthGrid->ResetTilesModels();
@@ -369,28 +428,29 @@ void CWorldState::StateUpdate()
 	if (mpMouseScreenPos->mPosX < EDGE_THRESHOLD)
 	{
 		// Mouse on left side of screen
-		mpCamEarth->MoveX(-CAM_MOVE_SPEED * gFrameTime);
+		mpCamCurrent->MoveX(-CAM_MOVE_SPEED * gFrameTime);
 	}
 	if (mpMouseScreenPos->mPosX > WINDOW_WIDTH - EDGE_THRESHOLD)
 	{
 		// Mouse on right side of screen
-		mpCamEarth->MoveX(CAM_MOVE_SPEED * gFrameTime);
+		mpCamCurrent->MoveX(CAM_MOVE_SPEED * gFrameTime);
 	}
 	if (mpMouseScreenPos->mPosY < EDGE_THRESHOLD)
 	{
 		// Mouse on top side of screen
-		mpCamEarth->MoveZ(CAM_MOVE_SPEED * gFrameTime);
+		mpCamCurrent->MoveZ(CAM_MOVE_SPEED * gFrameTime);
 	}
 	if (mpMouseScreenPos->mPosY > WINDOW_HEIGHT - EDGE_THRESHOLD)
 	{
 		// Mouse on bottom side of screen
-		mpCamEarth->MoveZ(-CAM_MOVE_SPEED * gFrameTime);
+		mpCamCurrent->MoveZ(-CAM_MOVE_SPEED * gFrameTime);
 	}
 
 
 	// METHODS
 	//---------------------------
 	UpdateMatrices();
+	CalculateMouseGridPos();
 	mMouseState = UpdateMouseState();
 	CheckKeyPresses();
 	DrawFontData();
@@ -415,7 +475,7 @@ void CWorldState::StateUpdate()
 
 	// STATE CHANGE TEST
 	//------------------------------
-	if (gpEngine->KeyHit(Key_Return))
+	if (gpEngine->KeyHit(Key_Back))
 	{
 		gCurState = GS_MAIN_MENU;
 	}
