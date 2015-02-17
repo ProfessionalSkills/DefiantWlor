@@ -10,7 +10,19 @@
 // INCLUDES
 //-----------------------------------------------------
 #include "Structure.h"
-#include "GameAgent.h"
+
+#include "Artillery.h"
+#include "Tank.h"
+#include "Infantry.h"
+
+#include "Worker.h"
+
+#include "Bomber.h"
+#include "Fighter.h"
+
+#include "SpaceFighter.h"
+#include "Mothership.h"
+#include "Transport.h"
 
 
 //-----------------------------------------------------

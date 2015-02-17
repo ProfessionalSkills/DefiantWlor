@@ -16,18 +16,18 @@ CBomber::CBomber()
 {
 	mAgentInfo = SAgentData(GAV_BOMBER, "Bomber");
 
-	mHealth;
-	mSpeed;
-	mProductionTime;
-	mProductionCost;
-	mCurProductionTimeLeft;				
-	mDamage;
+	mHealth = 100.0f;
+	mSpeed = 1.0f;
+	mProductionTime = 10.0f;
+	mProductionCost = 0.0f;
+	mCurProductionTimeLeft = mProductionTime;				
+	mDamage = 1.0f;
 	//mAttackParticleFX;
 	//mDestroyParticleFX;
-	mState;
+	mState = OBJ_CONSTRUCTING;
 	//mDestGridSq;
-	mIsMoving;
-	mPopCost;
+	mIsMoving = false;
+	mPopCost = 1;
 }
 
 CBomber::~CBomber()

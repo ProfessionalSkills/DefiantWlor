@@ -44,5 +44,13 @@ bool CGameAgent::Heal(float amount)
 //-----------------------------------------------------
 bool CGameAgent::Construct()
 {
-	return false;
+	// Reduce construction time left
+	mCurProductionTimeLeft -= gFrameTime;
+
+	if (mCurProductionTimeLeft >= 0)
+	{
+		return false;
+	}
+	
+	return true;
 }

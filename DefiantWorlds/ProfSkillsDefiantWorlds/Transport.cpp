@@ -15,6 +15,19 @@
 CTransport::CTransport()
 {
 	mAgentInfo = SAgentData(GAV_TRANSPORT, "Transport");
+
+	mHealth = 100.0f;
+	mSpeed = 1.0f;
+	mProductionTime = 25.0f;
+	mProductionCost = 0.0f;
+	mCurProductionTimeLeft = mProductionTime;
+	mDamage = 1.0f;
+	//mAttackParticleFX;
+	//mDestroyParticleFX;
+	mState = OBJ_CONSTRUCTING;
+	//mDestGridSq;
+	mIsMoving = false;
+	mPopCost = 1;
 }
 
 CTransport::~CTransport()

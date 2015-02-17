@@ -35,12 +35,56 @@ bool CProductionStructure::AddToQueue(int agentIndex)
 		return false;
 	}
 
+	// Check if queue is at maximum
+	if (mpProductionQueue.size() >= MAX_QUEUE_SIZE)
+	{
+		// *** TO DO *** return error code rather than boolean
+		return false;
+	}
+
 	// Increment iterator to index
 	miterRespectiveAgents = mRespectiveAgentsList.begin();
 	std::advance(miterRespectiveAgents, agentIndex);
 
-	// use copy constructor to duplicate the agent
-	mpProductionQueue.push((*miterRespectiveAgents));
+	// Create instance based on created type
+	switch ((*miterRespectiveAgents)->GetAgentData()->mAgentType)
+	{
+	case GAV_ARTILLERY:
+		mpProductionQueue.push(new CArtillery());
+		break;
+
+	case GAV_BOMBER:
+		mpProductionQueue.push(new CBomber());
+		break;
+
+	case GAV_FIGHTER:
+		mpProductionQueue.push(new CFighter());
+		break;
+
+	case GAV_INFANTRY:
+		mpProductionQueue.push(new CInfantry());
+		break;
+
+	case GAV_MOTHERSHIP:
+		mpProductionQueue.push(new CMothership());
+		break;
+
+	case GAV_SPACE_FIGHTER:
+		mpProductionQueue.push(new CSpaceFighter());
+		break;
+
+	case GAV_TANK:
+		mpProductionQueue.push(new CTank());
+		break;
+
+	case GAV_TRANSPORT:
+		mpProductionQueue.push(new CTransport());
+		break;
+
+	case GAV_WORKER:
+		mpProductionQueue.push(new CWorker());
+		break;
+	}
 
 	// Success
 	return true;
@@ -48,6 +92,9 @@ bool CProductionStructure::AddToQueue(int agentIndex)
 
 bool CProductionStructure::RemoveFromQueue()
 {
+	CGameAgent* tmp = mpProductionQueue.front();
+	delete tmp;
+	mpProductionQueue.pop();
 	return false;
 }
 
@@ -127,7 +174,16 @@ void CProductionStructure::Update()
 			break;
 
 		case OBJ_BUILT:
-			
+			// Update the modle being built at front of queue
+			if (mpProductionQueue.size() != 0)
+			{
+				if (mpProductionQueue.front()->Construct())
+				{
+					// Unit fully constructed - for now remove from queue
+					RemoveFromQueue();
+				}
+			}
+
 			break;
 
 		case OBJ_DAMAGED:
@@ -234,8 +290,24 @@ void CProductionStructure::DisplayInfo(IFont* font)
 		}
 		font->Draw(mStrDisplay.str(), 480, 805, kWhite, kLeft, kTop);
 		mStrDisplay.str("");
+
+		// Display how long is left of the unit being constructed
+		if (mpProductionQueue.size() != 0)
+		{
+			// Display the time left until build
+			float timeLeft = mpProductionQueue.front()->GetCurProductionTimeLeft();
+			mStrDisplay << "Build time left: " << static_cast<int>(timeLeft);
+			font->Draw(mStrDisplay.str(), 725, 805, kWhite, kLeft, kTop);
+			mStrDisplay.str("");
+
+			// Show percentage completion
+			float buildTime = mpProductionQueue.front()->GetProductionTime();
+			mStrDisplay << "Percentage Complete: " << static_cast<int>(((buildTime - timeLeft) / buildTime) * 100.0f) << "%";
+			font->Draw(mStrDisplay.str(), 725, 815, kWhite, kLeft, kTop);
+			mStrDisplay.str("");
+		}
 	}
 
-	// Check for any keys being presses
-	UpdateKeyPresses();
+	if (mState != OBJ_CONSTRUCTING)
+		UpdateKeyPresses();
 }

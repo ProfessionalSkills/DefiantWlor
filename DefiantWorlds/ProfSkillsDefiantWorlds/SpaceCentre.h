@@ -10,9 +10,6 @@
 // INCLUDES
 //-----------------------------------------------------
 #include "ProductionStructure.h"
-#include "SpaceFighter.h"
-#include "Mothership.h"
-#include "Transport.h"
 
 
 //-----------------------------------------------------

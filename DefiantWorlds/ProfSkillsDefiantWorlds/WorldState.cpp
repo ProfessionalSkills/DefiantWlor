@@ -185,25 +185,25 @@ void CWorldState::CheckKeyPresses()
 		{
 			switch (mMouseState)
 			{
-			case MS_EARTH_GRID:
-				// Place the structure - check if successful
-				if (mpHumanPlayer->PurchaseStructure(mpPlacingStructure, mpEarthGrid, mpCurTile))
-				{
-					// Safe to point at nothing due to structure pointer passed on to Player's data
-					mpPlacingStructure = nullptr;
-					mpEarthGrid->ResetTilesModels();
-				}
-				break;
+				case MS_EARTH_GRID:
+					// Place the structure - check if successful
+					if (mpHumanPlayer->PurchaseStructure(mpPlacingStructure, mpEarthGrid, mpCurTile))
+					{
+						// Safe to point at nothing due to structure pointer passed on to Player's data
+						mpPlacingStructure = nullptr;
+						mpEarthGrid->ResetTilesModels();
+					}
+					break;
 
-			case MS_MARS_GRID:
-				// Place the structure - check if successful
-				if (mpAIPlayer->PurchaseStructure(mpPlacingStructure, mpMarsGrid, mpCurTile))
-				{
-					// Safe to point at nothing due to structure pointer passed on to Player's data
-					mpPlacingStructure = nullptr;
-					mpMarsGrid->ResetTilesModels();
-				}
-				break;
+				case MS_MARS_GRID:
+					// Place the structure - check if successful
+					if (mpAIPlayer->PurchaseStructure(mpPlacingStructure, mpMarsGrid, mpCurTile))
+					{
+						// Safe to point at nothing due to structure pointer passed on to Player's data
+						mpPlacingStructure = nullptr;
+						mpMarsGrid->ResetTilesModels();
+					}
+					break;
 			}
 		}
 		else
@@ -402,7 +402,7 @@ void CWorldState::StateSetup()
 	mpCamMars->SetNearClip(NEAR_CLIP);
 	mpCamMars->SetFarClip(FAR_CLIP);
 
-	mpCamCurrent = mpCamMars;
+	mpCamCurrent = mpCamEarth;
 
 
 	// INITIALISE FONTS
