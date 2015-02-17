@@ -333,9 +333,18 @@ void CWorldState::StateSetup()
 	mMusic->PlaySound(); //Play music on loop
 
 
-	// INITIALISE SELECTION DATA
+	// CONSTRUCT COMMAND CENTRES
 	//-----------------------------
 	mpPlacingStructure = nullptr;
+	CStructure* pTemp = new CComCentre();
+	mpCurTile = mpEarthGrid->GetTileData(SPointData(GRID_SIZE_X / 2.0f, GRID_SIZE_Y / 2.0f));
+	OnPlacingStructureChange(pTemp);
+
+	if (mpHumanPlayer->PurchaseStructure(mpPlacingStructure, mpEarthGrid, mpCurTile))
+	{
+		mpPlacingStructure = nullptr;
+		mpEarthGrid->ResetTilesModels();
+	}
 }
 
 void CWorldState::StateUpdate()
