@@ -137,7 +137,6 @@ const float CAM_MIN_HEIGHT = 30.0f;
 extern EGameStates gCurState;
 
 // Global pointer to the engine. Can be used by anything including this file
-extern I3DEngine*   gpEngine;
 extern CRandomiser* gpRandomiser;
 
 // Global frametime & mouse wheel delta

@@ -8,6 +8,7 @@
 //-----------------------------------------------------
 #include "Particles.h"
 
+I3DEngine*   gpEngine = New3DEngine(kTLX);
 IMesh* CParticle::mMesh = nullptr;
 
 

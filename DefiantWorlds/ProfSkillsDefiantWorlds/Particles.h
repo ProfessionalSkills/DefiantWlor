@@ -20,6 +20,8 @@ using namespace tle;
 namespace DX = DirectX;
 
 
+extern I3DEngine* gpEngine;
+
 //-----------------------------------------------------
 // PARTICLE CLASS
 //-----------------------------------------------------
