@@ -298,25 +298,30 @@ void CWorldState::StateSetup()
 
 	// INITIALISE WORLDS
 	//-----------------------------
+	// EARTH
 	mpEarthGrid = new CGrid(DX::XMFLOAT3(0.0f, 0.3f, 0.0f));
 	mpNullTile = new CTile();
 	mpNullTile->SetWorldPos(DX::XMFLOAT3(-2000.0f, 0.0f, 0.0f));
 
 	mpCamCurrent->SetPosition(mpEarthGrid->GetGridCentrePos().x, 230.0f,
-		-50.0f);
+		(float)GRID_SIZE_Y);
 
 	DX::XMFLOAT3 gridCentre = mpEarthGrid->GetGridCentrePos();
 	mpMdlSkybox->SetPosition(gridCentre.x, gridCentre.y, gridCentre.z);
 
 	mpMshGridArea = gpEngine->LoadMesh("Grid.x");
-	mpMdlGridArea = mpMshGridArea->CreateModel(gridCentre.x, 0.2f, gridCentre.z);
-	mpMdlGridArea->ScaleX((GRID_SIZE_X * GRID_TILE_SIZE) / 2.0f);
-	mpMdlGridArea->ScaleZ((GRID_SIZE_Y * GRID_TILE_SIZE) / 2.0f);
+	mpMdlEarthGridArea = mpMshGridArea->CreateModel(gridCentre.x, 0.2f, gridCentre.z);
+	mpMdlEarthGridArea->ScaleX((GRID_SIZE_X * GRID_TILE_SIZE) / 2.0f);
+	mpMdlEarthGridArea->ScaleZ((GRID_SIZE_Y * GRID_TILE_SIZE) / 2.0f);
 
 	mpMshGrassArea = gpEngine->LoadMesh("Grass.x");
-	mpMdlGrassArea = mpMshGrassArea->CreateModel(gridCentre.x, 0.1f, gridCentre.z);
-	mpMdlGrassArea->ScaleX(GRID_SIZE_X * GRID_TILE_SIZE * 2.0f);
-	mpMdlGrassArea->ScaleZ(GRID_SIZE_Y * GRID_TILE_SIZE * 2.0f);
+	mpMdlEarthGrassArea = mpMshGrassArea->CreateModel(gridCentre.x, 0.1f, gridCentre.z);
+	mpMdlEarthGrassArea->ScaleX(GRID_SIZE_X * GRID_TILE_SIZE * 2.0f);
+	mpMdlEarthGrassArea->ScaleZ(GRID_SIZE_Y * GRID_TILE_SIZE * 2.0f);
+	
+	// MARS
+	float marsXStart = (float)(GRID_SIZE_X * GRID_TILE_SIZE) + 100.0f;
+	mpMarsGrid = new CGrid(DX::XMFLOAT3(marsXStart, 0.3f, 0.0f));
 
 
 	// INITIALISE FONTS

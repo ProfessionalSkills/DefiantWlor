@@ -44,8 +44,10 @@ private:
 	// MODELS
 	//---------------------------
 	IModel* mpMdlSkybox;
-	IModel* mpMdlGridArea;
-	IModel* mpMdlGrassArea;
+	IModel* mpMdlEarthGridArea;
+	IModel* mpMdlEarthGrassArea;
+	IModel* mpMdlMarsGridArea;
+	IModel* mpMdlMarsGrassArea;
 
 
 	// GRIDS
