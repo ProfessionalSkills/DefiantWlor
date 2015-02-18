@@ -51,7 +51,8 @@ public:
 	// MUTATORS
 	//---------------------------
 	void SetEnemy(CFleet* myEnemy);//sets the fleet that this one will attack
-	void LaunchFleet(vector <CSpaceUnit*> possibleShips);//gets ships a player has, then adds a number of them to the fleet to attack
+	vector <CSpaceUnit*> LaunchFleet(vector <CSpaceUnit*> possibleShips);//gets ships a player has, then adds a number of them to the fleet to attack
+	vector <CSpaceUnit*> ReturnFleet(vector <CSpaceUnit*> returnShips);
 	void SetTactic();
 };
 

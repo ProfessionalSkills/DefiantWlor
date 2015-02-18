@@ -116,7 +116,7 @@ void CFleet::SetEnemy(CFleet* myEnemy)
 	mpEnemyFleet = myEnemy;
 }
 
-void CFleet::LaunchFleet(vector <CSpaceUnit*> possibleShips)
+vector <CSpaceUnit*> CFleet::LaunchFleet(vector <CSpaceUnit*> possibleShips)
 {
 	//temporary functionthat just transfers all of the ships from player onto fleet
 	if (possibleShips.size() != 0)
@@ -125,9 +125,10 @@ void CFleet::LaunchFleet(vector <CSpaceUnit*> possibleShips)
 		{
 			mpFleet.push_back(possibleShips[i]);
 			possibleShips.pop_back();
+			mSize++;
 		}
 	}
-
+	return possibleShips;
 	//recives a vector of ships from player
 	//asks player how many it should add to the fleet
 	//pops them of player and onto fleet
@@ -138,3 +139,14 @@ void CFleet::SetTactic()
 {
 	//recives player input to set tactics, does so during launch attack
 }
+
+vector <CSpaceUnit*> CFleet::ReturnFleet(vector <CSpaceUnit*> returnShips)
+{
+	for (int i = mSize-1; i >= 0; i--)
+	{
+		returnShips.push_back(mpFleet[i]);
+		mpFleet.pop_back();
+	}
+	return returnShips;
+}
+

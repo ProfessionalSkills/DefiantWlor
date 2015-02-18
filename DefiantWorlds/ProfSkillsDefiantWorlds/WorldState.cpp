@@ -296,7 +296,7 @@ void CWorldState::CheckKeyPresses()
 		// Ensure no buildings can be brought over
 		OnPlacingStructureChange(nullptr);
 	}
-
+	//temporary, just used to test the transfering of ships to the fleet
 	if (gpEngine->KeyHit(Key_R))
 	{
 		mpHumanPlayer->LaunchAttack();

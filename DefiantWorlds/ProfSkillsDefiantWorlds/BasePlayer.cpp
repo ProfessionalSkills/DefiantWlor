@@ -16,6 +16,12 @@ CPlayer::CPlayer()
 {
 	mNumMinerals = 10000;
 	mpFleet = new CFleet();
+	CSpaceFighter* Temp;
+	for (int i = 0; i < 10; i++)
+	{
+		Temp = new CSpaceFighter();
+		mpSpaceUnitsList.push_back(Temp);
+	}
 }
 
 CPlayer::~CPlayer()
@@ -79,7 +85,7 @@ bool CPlayer::QueueUnit(CStructure* structure, CGameAgent* unit)
 
 void CPlayer::LaunchAttack()
 {
-	mpFleet->LaunchFleet(mpSpaceUnitsList);
+	mpSpaceUnitsList=mpFleet->LaunchFleet(mpSpaceUnitsList);
 	//transition into space state from hear
 }
 
