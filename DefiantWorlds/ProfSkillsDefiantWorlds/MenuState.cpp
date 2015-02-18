@@ -78,6 +78,12 @@ void CMenuState::StateSetup()
 	ALfloat mSourceVel[3] = { 0.0f, 0.0f, 0.0f };
 	mMusic = new CSound(mMusicFile, mSourcePos, mSourceVel);
 	mMusic->PlaySound();
+
+
+	// CREATE SPRITES & BUTTONS
+	//------------------------------
+	mpSprBackground = gpEngine->CreateSprite("MenuBG.png", 400.0f, 50.0f, 0.9f);
+	mpSprLogo = gpEngine->CreateSprite("Logo.png", 800.0f, 100.0f, 0.8f);
 }
 
 void CMenuState::StateUpdate()

@@ -10,6 +10,7 @@
 // INCLUDES
 //-----------------------------------------------------
 #include "BaseGameState.h"
+#include "Button.h"
 
 
 //-----------------------------------------------------
@@ -38,6 +39,13 @@ private:
 	IModel* mpMdlMars;
 
 
+	// SPRITES & BUTTONS
+	//--------------------------- 
+	ISprite* mpSprBackground;
+	ISprite* mpSprLogo;
+	std::vector<CButton*> mpButtonList;
+
+
 	// ADDITIONAL VARIABLES
 	//--------------------------- 
 	DX::XMFLOAT3 mOrbitCentre;		// The position in which the planets orbit
@@ -56,6 +64,14 @@ public:
 	//---------------------------
 	CMenuState();
 	virtual ~CMenuState();
+
+
+	// METHODS
+	//---------------------------
+	void NewGame();
+	void LoadGame();
+	void ChangeSettings();
+	void Quit();
 
 
 	// OVERRIDE METHODS

@@ -267,6 +267,9 @@
     <ClCompile Include="Fleet.cpp">
       <Filter>Utilities</Filter>
     </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>Utilities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common.h">
@@ -393,6 +396,9 @@
       <Filter>World Representation\Tile</Filter>
     </ClInclude>
     <ClInclude Include="Fleet.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
       <Filter>Utilities</Filter>
     </ClInclude>
   </ItemGroup>

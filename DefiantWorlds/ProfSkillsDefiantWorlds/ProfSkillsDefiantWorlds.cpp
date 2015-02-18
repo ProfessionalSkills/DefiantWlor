@@ -160,6 +160,7 @@ void SetupEngine()
 	gpEngine->AddMediaFolder("..\\Media\\Models\\Particles");
 	gpEngine->AddMediaFolder("..\\Media\\Models\\Units");
 	gpEngine->AddMediaFolder("..\\Media\\Models\\Units\\Aircraft\\Scifi");
+	gpEngine->AddMediaFolder("..\\Media\\User Interface");
 
 	SetWindowPos((HWND)gpEngine->GetWindow(), HWND_TOP, WINDOW_POS_X, WINDOW_POS_Y, WINDOW_WIDTH, WINDOW_HEIGHT, 0U);
 
