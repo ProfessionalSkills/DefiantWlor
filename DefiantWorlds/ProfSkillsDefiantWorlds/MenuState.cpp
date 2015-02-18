@@ -148,4 +148,6 @@ void CMenuState::StateCleanup()
 	gpEngine->RemoveMesh(mpMshAtmosphere);
 	gpEngine->RemoveMesh(mpMshPlanet);
 	gpEngine->RemoveMesh(mpMshSkybox);
+	gpEngine->RemoveSprite(mpSprBackground);
+	gpEngine->RemoveSprite(mpSprLogo);
 }
