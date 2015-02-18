@@ -82,9 +82,6 @@
     <Filter Include="Entities\Game Objects\Child\Agent\Child\Space Units\Base">
       <UniqueIdentifier>{d0c35386-ec3b-4d22-b4f6-f2fea4a64332}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Entities\Game Objects\Child\Agent\Child\Space Units\Child">
-      <UniqueIdentifier>{3547574b-3f36-4f7e-bb83-a44824ded56a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Entities\Game Objects\Child\Agent\Child\Ground Units\Base">
       <UniqueIdentifier>{66e4031d-2f3d-4d9f-bb8a-54ab5ad89b77}</UniqueIdentifier>
     </Filter>
@@ -135,6 +132,9 @@
     </Filter>
     <Filter Include="World Representation\Tile">
       <UniqueIdentifier>{d4c460e8-023b-4bf2-b5b5-dd1d33d2d74c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Game Objects\Child\Agent\Child\Space Units\Child">
+      <UniqueIdentifier>{3547574b-3f36-4f7e-bb83-a44824ded56a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

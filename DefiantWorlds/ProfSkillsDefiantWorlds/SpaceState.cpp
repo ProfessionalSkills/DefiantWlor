@@ -28,13 +28,20 @@ CSpaceState::~CSpaceState()
 //-----------------------------------------------------
 void CSpaceState::StateSetup()
 {
-
+	mpPlayerOneFleet = mpHumanPlayer->GetFleet();
+	mpPlayerTwoFleet = mpAIPlayer->GetFleet();
+	mpPlayerOneFleet->SetEnemy(mpPlayerTwoFleet);
+	mpPlayerTwoFleet->SetEnemy(mpPlayerOneFleet);
 }
 
 void CSpaceState::StateUpdate()
 {
 	// Draw the scene
 	gpEngine->DrawScene();
+	mpPlayerOneFleet->Fight();
+	mpPlayerTwoFleet->Fight();
+	mpPlayerOneFleet->UpdateCondition();
+	mpPlayerTwoFleet->UpdateCondition();
 }
 
 void CSpaceState::StateLoad()

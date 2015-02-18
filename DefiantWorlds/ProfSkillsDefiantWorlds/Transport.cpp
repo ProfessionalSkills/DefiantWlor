@@ -56,3 +56,8 @@ bool CTransport::Destroy()
 {
 	return false;
 }
+
+void CTransport::LoadModel(float x, float y, float z)
+{
+	return;
+}

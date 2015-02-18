@@ -84,7 +84,15 @@ void CFleet::UpdateCondition()
 		}
 	}
 }
-
+/*
+void CFleet::LoadShipModels()
+{
+	for (int i = 0; i < mSize; i++)
+	{
+		mpFleet[i]->LoadModel(0, i, 0);
+	}
+}
+*/
 //-----------------------------------------------------
 // FLEET CLASS ACCESSORS
 //-----------------------------------------------------
@@ -110,11 +118,20 @@ void CFleet::SetEnemy(CFleet* myEnemy)
 
 void CFleet::LaunchFleet(vector <CSpaceUnit*> possibleShips)
 {
+	//temporary functionthat just transfers all of the ships from player onto fleet
+	if (possibleShips.size() != 0)
+	{
+		for (int i = possibleShips.size() - 1; i >= 0; i--)
+		{
+			mpFleet.push_back(possibleShips[i]);
+			possibleShips.pop_back();
+		}
+	}
+
 	//recives a vector of ships from player
 	//asks player how many it should add to the fleet
 	//pops them of player and onto fleet
 	//asks the player to choose some tactics
-	//moves game into space state?
 }
 
 void CFleet::SetTactic()

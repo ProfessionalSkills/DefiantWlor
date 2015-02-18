@@ -41,6 +41,7 @@ public:
 	//---------------------------
 	void UpdateCondition();//gets rid of dead ships and checks to see if the fleet has been defeated
 	void Fight();//attacks another fleet
+	void LoadShipModels();
 
 	// ACCESSORS
 	//---------------------------

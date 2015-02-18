@@ -42,8 +42,8 @@ public:
 
 	// METHODS
 	//---------------------------
-
-
+	void LoadModel(float x, float y, float z);
+	void RemoveModel();
 	// OVERRIDE METHODS
 	//---------------------------
 	bool Attack(CGameAgent* target, float hitMod, float damageMod);

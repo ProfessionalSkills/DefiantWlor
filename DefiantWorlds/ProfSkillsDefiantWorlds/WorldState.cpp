@@ -296,6 +296,11 @@ void CWorldState::CheckKeyPresses()
 		// Ensure no buildings can be brought over
 		OnPlacingStructureChange(nullptr);
 	}
+
+	if (gpEngine->KeyHit(Key_R))
+	{
+		mpHumanPlayer->LaunchAttack();
+	}
 }
 
 void CWorldState::DisplaySelectedBuildingInfo()
