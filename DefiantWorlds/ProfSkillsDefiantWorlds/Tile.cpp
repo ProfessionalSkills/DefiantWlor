@@ -25,7 +25,7 @@ CTile::CTile()
 
 CTile::~CTile()
 {
-	mspMshTile->RemoveModel(mpMdlTile);
+	RemoveTileModel();
 }
 
 
@@ -35,16 +35,6 @@ CTile::~CTile()
 void CTile::SetTileUsage(bool isUsed)
 {
 	mTileUsed = isUsed;
-
-	// Apply texture based on the state of the tile
-	if (mTileUsed)
-	{
-		// Set red texture
-	}
-	else
-	{
-		// Set base texture
-	}
 }
 
 

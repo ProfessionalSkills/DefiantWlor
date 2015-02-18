@@ -301,6 +301,15 @@ void CWorldState::CheckKeyPresses()
 	{
 		mpHumanPlayer->LaunchAttack();
 	}
+
+
+	// RETURN TO MENU TEST
+	//------------------------------
+	if (gpEngine->KeyHit(Key_M))
+	{
+		mMusic->StopSound();
+		gCurState = GS_MAIN_MENU;
+	}
 }
 
 void CWorldState::DisplaySelectedBuildingInfo()
