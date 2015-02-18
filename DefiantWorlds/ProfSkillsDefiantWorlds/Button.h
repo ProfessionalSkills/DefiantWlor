@@ -19,7 +19,6 @@ class CButton
 private:
 	// BUTTON PROPERTIES
 	//---------------------------
-	std::string mName;
 	SPointData mPosition;
 	SAABoundingBox mBoundingBox;
 

@@ -26,6 +26,15 @@ CStructure::~CStructure()
 //-----------------------------------------------------
 // STRUCTURE CLASS MUTATORS
 //-----------------------------------------------------
+void CStructure::SetState(EObjectStates newState)
+{
+	// If the state is set to constructing, the building cannot be deleted
+	if (mState != OBJ_CONSTRUCTING)
+	{
+		mState = newState;
+	}
+}
+
 bool CStructure::TakeDamage(float amount)
 {
 	return false;

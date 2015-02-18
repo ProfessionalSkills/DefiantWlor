@@ -103,6 +103,8 @@ public:
 		mBuildLoc = gridPos;
 	}
 
+	void SetState(EObjectStates newState);
+
 	bool TakeDamage(float amount);
 	bool Repair(float amount);
 	void SetBadTexture();

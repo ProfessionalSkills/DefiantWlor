@@ -131,14 +131,6 @@ void CProductionStructure::UpdateKeyPresses()
 	{
 		addedSuccess = AddToQueue(2);
 	}
-
-	
-	// BUILDING DESTRUCTION
-	//------------------------------
-	if (gpEngine->KeyHit(Key_D))
-	{
-		mState = OBJ_DEAD;
-	}
 }
 
 

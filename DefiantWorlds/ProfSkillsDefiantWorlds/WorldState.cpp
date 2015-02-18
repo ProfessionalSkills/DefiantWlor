@@ -317,6 +317,18 @@ void CWorldState::DisplaySelectedBuildingInfo()
 	// If an object is selected, display its info
 	if (mpCurSelectedStructure)
 	{
+		// BUILDING DESTRUCTION
+		//------------------------------
+		if (gpEngine->KeyHit(Key_D))
+		{
+			// Set object to be deleted
+			mpCurSelectedStructure->SetState(OBJ_DEAD);
+			// pointer set to null
+			mpCurSelectedStructure = nullptr;
+			// Leave function so next function call is not executed
+			return;
+		}
+		
 		mpCurSelectedStructure->DisplayInfo(mFntDebug);
 	}
 }
