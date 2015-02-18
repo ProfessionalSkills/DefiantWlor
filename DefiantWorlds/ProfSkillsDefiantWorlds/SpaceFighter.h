@@ -23,6 +23,7 @@ private:
 
 
 public:
+	static IMesh* mspMshSpaceFighter;
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
 	CSpaceFighter();

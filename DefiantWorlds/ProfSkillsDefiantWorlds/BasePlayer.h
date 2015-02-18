@@ -54,7 +54,7 @@ protected:
 	std::vector<CGameAgent*>::iterator mpiterGameAgents;
 	std::vector<CSpaceUnit*>::iterator mpiterSpaceUnits;
 
-	CFleet* fleet;
+	CFleet* mpFleet;
 public:
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
@@ -82,6 +82,11 @@ public:
 	inline int GetCurrentPopLimit()
 	{
 		return mCurPopLimit;
+	}
+
+	inline CFleet* GetFleet()
+	{
+		return mpFleet;
 	}
 
 

@@ -23,6 +23,7 @@ private:
 
 
 public:
+	static IMesh* mspMshTransport;
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
 	CTransport();

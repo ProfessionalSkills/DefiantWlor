@@ -23,6 +23,7 @@ private:
 
 
 public:
+	static IMesh* mspMshBomber;
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
 	CBomber();
