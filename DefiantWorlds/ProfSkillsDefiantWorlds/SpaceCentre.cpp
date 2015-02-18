@@ -68,12 +68,14 @@ void CSpaceCentre::SetBuiltModel()
 	}
 }
 
-bool CSpaceCentre::Destroy()
-{
-	return false;
-}
-
 void CSpaceCentre::UnloadIModel()
 {
-	mspMshStructurePlacing->RemoveModel(mpObjModel);
+	if (mState == OBJ_BUILT || mState == OBJ_DAMAGED || mState == OBJ_DEAD || mState == OBJ_WARNING)
+	{
+		mspMshStructureBuilt->RemoveModel(mpObjModel);
+	}
+	else
+	{
+		mspMshStructurePlacing->RemoveModel(mpObjModel);
+	}
 }

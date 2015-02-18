@@ -14,7 +14,7 @@
 //-----------------------------------------------------
 CStructure::CStructure()
 {
-
+	mpGrid = nullptr;
 }
 
 CStructure::~CStructure()
@@ -57,8 +57,8 @@ void CStructure::SetPlacedTexture()
 //-----------------------------------------------------
 void CStructure::CreateStructure(CGrid* pGrid)
 {
-	// (*TO DOOOOOOO - call BUILD() to update construction of structure*)
-
+	mpGrid = pGrid;
+	
 	// Mark the building's grid area as in use
 	CTile* pNextTile;
 
@@ -125,4 +125,26 @@ bool CStructure::TestStructureArea(CGrid* pGrid, CTile* pTile)
 bool CStructure::PointCollision(DX::XMFLOAT3 pos)
 {
 	return mBoundingBox.IsColliding(pos);
+}
+
+void CStructure::Destroy()
+{
+	// Mark the building's grid area as in use
+	CTile* pNextTile;
+
+	// Loop through structure size
+	for (int x = mGridPos.mPosX + mStructureBL.mPosX; x <= mGridPos.mPosX + mStructureTR.mPosX; x++)
+	{
+		for (int y = mGridPos.mPosY + mStructureBL.mPosY; y <= mGridPos.mPosY + mStructureTR.mPosY; y++)
+		{
+			// Get current tile data
+			pNextTile = mpGrid->GetTileData(SPointData(x, y));
+
+			// Set state of tile
+			pNextTile->SetTileUsage(false);
+		}
+	}
+
+	// Remove the model
+	UnloadIModel();
 }

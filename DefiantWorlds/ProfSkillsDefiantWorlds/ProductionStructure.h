@@ -70,7 +70,7 @@ public:
 	CGameAgent* CreateAgent();		// Called when agent at front of production queue is finished
 	void UpdateKeyPresses();
 
-	void Update() override;
+	bool Update() override;
 	void DisplayInfo(IFont* font) override;
 
 
@@ -78,7 +78,6 @@ public:
 	//---------------------------
 	virtual void SetBuiltModel();
 	virtual void UnloadIModel();
-	virtual bool Destroy();
 };
 
 #endif /* _PRODUCTION_STRUCTURE_H_ */

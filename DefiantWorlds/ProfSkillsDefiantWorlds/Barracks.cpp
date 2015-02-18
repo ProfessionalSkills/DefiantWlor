@@ -68,12 +68,14 @@ void CBarracks::SetBuiltModel()
 	}
 }
 
-bool CBarracks::Destroy()
-{
-	return false;
-}
-
 void CBarracks::UnloadIModel()
 {
-	mspMshStructurePlacing->RemoveModel(mpObjModel);
+	if (mState == OBJ_BUILT || mState == OBJ_DAMAGED || mState == OBJ_DEAD || mState == OBJ_WARNING)
+	{
+		mspMshStructureBuilt->RemoveModel(mpObjModel);
+	}
+	else
+	{
+		mspMshStructurePlacing->RemoveModel(mpObjModel);
+	}
 }

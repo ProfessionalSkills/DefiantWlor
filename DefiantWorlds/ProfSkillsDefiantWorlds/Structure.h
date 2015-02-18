@@ -31,6 +31,8 @@ protected:
 	EObjectStates mState;
 	EGameStructureTypes mStructureType;
 
+	CGrid* mpGrid;
+
 	SPointData mBuildLoc;			// Grid position of the placement of building
 	SPointData mStructureBL;		// Amount of grid squares relative to the centre to find the bottom left grid square
 	SPointData mStructureTR;		// Same as above, but for top right grid square
@@ -113,15 +115,17 @@ public:
 	void CreateStructure(CGrid* pGrid);
 	bool TestStructureArea(CGrid* pGrid, CTile* pTile);
 	bool PointCollision(DX::XMFLOAT3 pos);
+	void Destroy();
 
 
 	// VIRTUAL METHODS
 	//---------------------------
-	virtual void Update() = 0;
+	// Method called each frome - boolean returns is false when the object has been destroyed
+	virtual bool Update() = 0;
+
 	virtual void DisplayInfo(IFont* font) = 0;
 	virtual void SetBuiltModel() = 0;
 	virtual void UnloadIModel() = 0;
-	virtual bool Destroy() = 0;
 };
 
 #endif /* _STRUCTURE_H_ */

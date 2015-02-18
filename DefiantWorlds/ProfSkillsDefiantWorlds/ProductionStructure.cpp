@@ -131,17 +131,20 @@ void CProductionStructure::UpdateKeyPresses()
 	{
 		addedSuccess = AddToQueue(2);
 	}
+
+	
+	// BUILDING DESTRUCTION
+	//------------------------------
+	if (gpEngine->KeyHit(Key_D))
+	{
+		mState = OBJ_DEAD;
+	}
 }
 
 
 //-----------------------------------------------------
 // PRODUCTION STRUCTURE CLASS OVERRIDE METHODS
 //-----------------------------------------------------
-bool CProductionStructure::Destroy()
-{
-	return false;
-}
-
 void CProductionStructure::UnloadIModel()
 {
 
@@ -152,7 +155,7 @@ void CProductionStructure::SetBuiltModel()
 
 }
 
-void CProductionStructure::Update()
+bool CProductionStructure::Update()
 {
 	// Determine state of the structure
 	switch (mState)
@@ -170,6 +173,8 @@ void CProductionStructure::Update()
 				// Change status of the building to 'built'
 				mState = OBJ_BUILT;
 			}
+			// Object still alive
+			return true;
 
 			break;
 
@@ -183,20 +188,31 @@ void CProductionStructure::Update()
 					RemoveFromQueue();
 				}
 			}
+			// Object still alive
+			return true;
 
 			break;
 
 		case OBJ_DAMAGED:
+			// Object still alive
+			return true;
 
 			break;
 
 		case OBJ_WARNING:
+			// Object still alive
+			return true;
 
 			break;
 
 		case OBJ_DEAD:
-			// Call Destroy function until destruction animation is finished. Then deallocate the object
-			// and ensure area it was in can be built upon i.e. grid tiles no longer in use
+
+			// ONCE THE PARTICLES FOR THE DESTRUCTION OF BUILDING HAS FINISHED
+			// only then call the destory! - Particles not yet implemented
+			Destroy();
+
+			// Object no longer alive
+			return false;
 
 			break;
 	}
