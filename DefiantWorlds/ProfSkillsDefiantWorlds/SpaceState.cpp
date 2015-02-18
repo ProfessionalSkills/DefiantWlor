@@ -28,7 +28,8 @@ CSpaceState::~CSpaceState()
 //-----------------------------------------------------
 void CSpaceState::StateSetup()
 {
-
+	mpPlayerOneFleet = mpHumanPlayer->GetFleet();
+	mpPlayerTwoFleet = mpAIPlayer->GetFleet();
 }
 
 void CSpaceState::StateUpdate()

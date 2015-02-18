@@ -85,6 +85,14 @@ void CFleet::UpdateCondition()
 	}
 }
 
+void CFleet::LoadShipModels()
+{
+	for (int i = 0; i < mSize; i++)
+	{
+		mpFleet[i]->LoadModel(0, i, 0);
+	}
+}
+
 //-----------------------------------------------------
 // FLEET CLASS ACCESSORS
 //-----------------------------------------------------

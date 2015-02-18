@@ -174,6 +174,7 @@ void SetupEngine()
 	CHellipad::mspMshStructurePlacing = gpEngine->LoadMesh("HellipadPlacing.x");
 	CSpaceCentre::mspMshStructureBuilt = gpEngine->LoadMesh("SpaceCentreBuilt.x");
 	CSpaceCentre::mspMshStructurePlacing = gpEngine->LoadMesh("SpaceCentrePlacing.x");
+	CSpaceFighter::mspMshSpaceFighter = gpEngine->LoadMesh("Spaceship02Battlecruiser.x");
 }
 
 void CleanupEngine()

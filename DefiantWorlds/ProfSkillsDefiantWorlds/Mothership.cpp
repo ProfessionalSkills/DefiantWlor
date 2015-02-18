@@ -56,3 +56,8 @@ bool CMothership::Destroy()
 {
 	return false;
 }
+
+void CMothership::LoadModel(float x, float y, float z)
+{
+	return;
+}

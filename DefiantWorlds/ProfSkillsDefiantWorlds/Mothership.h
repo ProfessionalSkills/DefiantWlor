@@ -49,6 +49,7 @@ public:
 	bool Attack(CGameAgent* target, float hitMod, float damageMod);
 	//virtual void MoveTo(CTile* dest);
 	bool Move();
+	void LoadModel(float x, float y, float z);
 
 private:
 	bool Destroy();

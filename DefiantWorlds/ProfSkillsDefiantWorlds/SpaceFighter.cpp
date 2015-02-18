@@ -7,7 +7,7 @@
 // INCLUDES
 //-----------------------------------------------------
 #include "SpaceFighter.h"
-
+IMesh* CSpaceFighter::mspMshSpaceFighter = nullptr;
 
 //-----------------------------------------------------
 // SPACE FIGHTER CLASS CONSTRUCTORS & DESTRUCTOR
@@ -35,6 +35,22 @@ CSpaceFighter::~CSpaceFighter()
 
 }
 
+//-----------------------------------------------------
+// SPACE FIGHTER CLASS METHODS
+//-----------------------------------------------------
+void CSpaceFighter::LoadModel(float x,float y, float z)
+{
+	mpObjModel = mspMshSpaceFighter->CreateModel(x, y, z);
+	mpObjModel->SetSkin("Spaceship02Battlecruiser.jpg");
+}
+
+void CSpaceFighter::RemoveModel()
+{
+	if (mpObjModel != 0)
+	{
+		mspMshSpaceFighter->RemoveModel(mpObjModel);
+	}
+}
 
 //-----------------------------------------------------
 // SPACE FIGHTER CLASS OVERRIDE METHODS
