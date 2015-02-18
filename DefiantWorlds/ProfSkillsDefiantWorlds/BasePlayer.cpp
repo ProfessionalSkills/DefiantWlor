@@ -15,6 +15,7 @@
 CPlayer::CPlayer()
 {
 	mNumMinerals = 10000;
+	mpFleet = new CFleet();
 }
 
 CPlayer::~CPlayer()
@@ -81,3 +82,5 @@ void CPlayer::LaunchAttack()
 	mpFleet->LaunchFleet(mpSpaceUnitsList);
 	//transition into space state from hear
 }
+
+

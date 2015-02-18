@@ -18,6 +18,8 @@
 class CSpaceState : public CPlayState
 {
 private:
+	CFleet* mpPlayerOneFleet;
+	CFleet* mpPlayerTwoFleet;
 
 public:
 	// CONSTRUCTORS & DESTRUCTOR
