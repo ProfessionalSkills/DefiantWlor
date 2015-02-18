@@ -139,3 +139,14 @@ void CFleet::SetTactic()
 {
 	//recives player input to set tactics, does so during launch attack
 }
+
+vector <CSpaceUnit*> CFleet::ReturnFleet(vector <CSpaceUnit*> returnShips)
+{
+	for (int i = mSize-1; i >= 0; i--)
+	{
+		returnShips.push_back(mpFleet[i]);
+		mpFleet.pop_back();
+	}
+	return returnShips;
+}
+
