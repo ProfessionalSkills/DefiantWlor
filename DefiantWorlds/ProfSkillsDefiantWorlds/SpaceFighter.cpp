@@ -32,7 +32,7 @@ CSpaceFighter::CSpaceFighter()
 
 CSpaceFighter::~CSpaceFighter()
 {
-
+	//RemoveModel();
 }
 
 //-----------------------------------------------------

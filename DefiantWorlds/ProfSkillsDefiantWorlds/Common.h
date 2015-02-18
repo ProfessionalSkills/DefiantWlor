@@ -18,6 +18,7 @@
 #include <sstream>
 #include "SoundObject.h"
 #include "Particles.h"
+#include <iostream>
 
 
 //-----------------------------------------------------
