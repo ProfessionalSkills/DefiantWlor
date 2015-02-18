@@ -31,6 +31,7 @@ protected:
 	EObjectStates mState;
 	EGameStructureTypes mStructureType;
 
+	SPointData mBuildLoc;			// Grid position of the placement of building
 	SPointData mStructureBL;		// Amount of grid squares relative to the centre to find the bottom left grid square
 	SPointData mStructureTR;		// Same as above, but for top right grid square
 	SAABoundingBox mBoundingBox;	// Axis aligned bounding box for this structure
@@ -87,9 +88,19 @@ public:
 		return mStructureTR;
 	}
 
+	inline SPointData GetBuildLocation()
+	{
+		return mBuildLoc;
+	}
+
 
 	// MUTATORS
 	//---------------------------
+	inline void SetBuildLocation(SPointData &gridPos)
+	{
+		mBuildLoc = gridPos;
+	}
+
 	bool TakeDamage(float amount);
 	bool Repair(float amount);
 	void SetBadTexture();

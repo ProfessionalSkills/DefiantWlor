@@ -66,6 +66,7 @@ bool CAIPlayer::PurchaseStructure(CStructure* pStructure, CGrid* pGrid, CTile* p
 
 	// Everything fine - build & add to vector
 	pStructure->CreateStructure(pGrid);
+	pStructure->SetBuildLocation(pTile->GetGridPos());
 	mpStructureList.push_back(pStructure);
 	return true;
 }
