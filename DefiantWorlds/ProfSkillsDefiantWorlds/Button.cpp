@@ -31,7 +31,8 @@ CButton::CButton(std::string spriteName, std::string spriteMOName, SPointData po
 
 CButton::~CButton()
 {
-
+	gpEngine->RemoveSprite(mpSprBasic);
+	gpEngine->RemoveSprite(mpSprMO);
 }
 
 
