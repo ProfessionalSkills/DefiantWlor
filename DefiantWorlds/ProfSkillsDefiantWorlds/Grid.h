@@ -59,7 +59,7 @@ public:
 	// METHODS
 	//---------------------------
 	void ResetTilesModels();
-	bool TurnOnTiles(CTile* gridPos, SPointData pointBL, SPointData pointTR);
+	bool TurnOnTiles(CTile* gridPos, SPointData pointBL, SPointData pointTR, SPointData pointSpawn);
 };
 
 #endif /* _GRID_H_ */

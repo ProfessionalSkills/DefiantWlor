@@ -154,13 +154,14 @@ void CGrid::ResetTilesModels()
 	}
 }
 
-bool CGrid::TurnOnTiles(CTile* gridPos, SPointData pointBL, SPointData pointTR)
+bool CGrid::TurnOnTiles(CTile* gridPos, SPointData pointBL, SPointData pointTR, SPointData pointSpawn)
 {
 	bool badTiles = false;
 	SPointData origin = gridPos->GetGridPos();
 	
 	// Mark the building's grid area as in use
 	CTile* pNextTile;
+	SPointData gridPoint;
 
 	ResetTilesModels();
 
@@ -169,8 +170,11 @@ bool CGrid::TurnOnTiles(CTile* gridPos, SPointData pointBL, SPointData pointTR)
 	{
 		for (int y = origin.mPosY + pointBL.mPosY; y <= origin.mPosY + pointTR.mPosY; y++)
 		{
+			gridPoint.mPosX = x;
+			gridPoint.mPosY = y;
+			
 			// Get current tile data
-			pNextTile = GetTileData(SPointData(x, y));
+			pNextTile = GetTileData(gridPoint);
 
 			// Set state of tile
 			if (pNextTile)
@@ -194,6 +198,33 @@ bool CGrid::TurnOnTiles(CTile* gridPos, SPointData pointBL, SPointData pointTR)
 			}
 		}
 	}
+
+	// Also set spawning grid tile to unused
+	gridPoint.mPosX = origin.mPosX + pointSpawn.mPosX;
+	gridPoint.mPosY = origin.mPosY + pointSpawn.mPosY;
+	pNextTile = GetTileData(gridPoint);
+
+	// Set state of tile
+	if (pNextTile)
+	{
+		// Only show up tiles if they are being used
+		if (pNextTile->IsTileUsed())
+		{
+			pNextTile->CreateTileModel();
+		}
+
+		// If a used tile has not been found yet, check if this is a red tile
+		if (!badTiles)
+		{
+			badTiles = pNextTile->IsTileUsed();
+		}
+	}
+	else
+	{
+		// Edge of map detected
+		badTiles = true;
+	}
+
 
 	// Return if there are any red tiles
 	return badTiles;

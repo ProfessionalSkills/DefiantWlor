@@ -67,7 +67,8 @@ void CStructure::SetPlacedTexture()
 void CStructure::CreateStructure(CGrid* pGrid)
 {
 	mpGrid = pGrid;
-	
+	SPointData gridPoint;
+
 	// Mark the building's grid area as in use
 	CTile* pNextTile;
 
@@ -76,13 +77,25 @@ void CStructure::CreateStructure(CGrid* pGrid)
 	{
 		for (int y = mGridPos.mPosY + mStructureBL.mPosY; y <= mGridPos.mPosY + mStructureTR.mPosY; y++)
 		{
+			gridPoint.mPosX = x;
+			gridPoint.mPosY = y;
+
 			// Get current tile data
-			pNextTile = pGrid->GetTileData(SPointData(x, y));
+			pNextTile = pGrid->GetTileData(gridPoint);
 
 			// Set state of tile
 			pNextTile->SetTileUsage(true);
 		}
 	}
+
+	// Also set spawning grid tile to used
+	gridPoint.mPosX = mGridPos.mPosX + mGridSpawnLoc.mPosX;
+	gridPoint.mPosY = mGridPos.mPosY + mGridSpawnLoc.mPosY;
+	pNextTile = pGrid->GetTileData(gridPoint);
+	pNextTile->SetTileUsage(true);
+
+	// Store spawn world location
+	mWorldSpawnLoc = pNextTile->GetWorldPos();
 
 	// Set to placed texture
 	SetPlacedTexture();
@@ -102,14 +115,18 @@ bool CStructure::TestStructureArea(CGrid* pGrid, CTile* pTile)
 	mGridPos = pTile->GetGridPos();
 	mWorldPos = pTile->GetWorldPos();
 	CTile* pNextTile;
+	SPointData gridPoint;
 
 	// Loop through structure size
 	for (int x = mGridPos.mPosX + mStructureBL.mPosX; x <= mGridPos.mPosX + mStructureTR.mPosX; x++)
 	{
 		for (int y = mGridPos.mPosY + mStructureBL.mPosY; y <= mGridPos.mPosY + mStructureTR.mPosY; y++)
 		{
+			gridPoint.mPosX = x;
+			gridPoint.mPosY = y;
+
 			// Get current tile data
-			pNextTile = pGrid->GetTileData(SPointData(x, y));
+			pNextTile = pGrid->GetTileData(gridPoint);
 
 			// Check if pointer is null
 			if (!pNextTile)
@@ -126,7 +143,27 @@ bool CStructure::TestStructureArea(CGrid* pGrid, CTile* pTile)
 			}
 		}
 	}
-	
+
+	// Also set spawning grid tile to unused
+	gridPoint.mPosX = mGridPos.mPosX + mGridSpawnLoc.mPosX;
+	gridPoint.mPosY = mGridPos.mPosY + mGridSpawnLoc.mPosY;
+	pNextTile = pGrid->GetTileData(gridPoint);
+
+	// Check if pointer is null
+	if (!pNextTile)
+	{
+		// This tile is not within the grid - return false
+		return false;
+	}
+
+	// Check if tile is in use
+	if (pNextTile->IsTileUsed())
+	{
+		// Tile is used - return false
+		return false;
+	}
+
+
 	// Area is free of other structures/resources
 	return true;
 }
@@ -140,19 +177,29 @@ void CStructure::Destroy()
 {
 	// Mark the building's grid area as in use
 	CTile* pNextTile;
+	SPointData gridPoint;
 
 	// Loop through structure size
 	for (int x = mGridPos.mPosX + mStructureBL.mPosX; x <= mGridPos.mPosX + mStructureTR.mPosX; x++)
 	{
 		for (int y = mGridPos.mPosY + mStructureBL.mPosY; y <= mGridPos.mPosY + mStructureTR.mPosY; y++)
 		{
+			gridPoint.mPosX = x;
+			gridPoint.mPosY = y;
+
 			// Get current tile data
-			pNextTile = mpGrid->GetTileData(SPointData(x, y));
+			pNextTile = mpGrid->GetTileData(gridPoint);
 
 			// Set state of tile
 			pNextTile->SetTileUsage(false);
 		}
 	}
+
+	// Also set spawning grid tile to unused
+	gridPoint.mPosX = mGridPos.mPosX + mGridSpawnLoc.mPosX;
+	gridPoint.mPosY = mGridPos.mPosY + mGridSpawnLoc.mPosY;
+	pNextTile = mpGrid->GetTileData(gridPoint);
+	pNextTile->SetTileUsage(false);
 
 	// Remove the model
 	UnloadIModel();

@@ -53,7 +53,7 @@ void CWorldState::UpdateHeldStructure()
 		{
 		case MS_EARTH_GRID:
 			// When placing structure, check if any used tiles
-			if (mpEarthGrid->TurnOnTiles(mpCurTile, mpPlacingStructure->GetBLPosition(), mpPlacingStructure->GetTRPosition()))
+			if (mpEarthGrid->TurnOnTiles(mpCurTile, mpPlacingStructure->GetBLPosition(), mpPlacingStructure->GetTRPosition(), mpPlacingStructure->GetGridSpawnLocation()))
 			{
 				mpPlacingStructure->SetBadTexture();
 			}
@@ -65,7 +65,7 @@ void CWorldState::UpdateHeldStructure()
 
 		case MS_MARS_GRID:
 			// When placing structure, check if any used tiles
-			if (mpMarsGrid->TurnOnTiles(mpCurTile, mpPlacingStructure->GetBLPosition(), mpPlacingStructure->GetTRPosition()))
+			if (mpMarsGrid->TurnOnTiles(mpCurTile, mpPlacingStructure->GetBLPosition(), mpPlacingStructure->GetTRPosition(), mpPlacingStructure->GetGridSpawnLocation()))
 			{
 				mpPlacingStructure->SetBadTexture();
 			}

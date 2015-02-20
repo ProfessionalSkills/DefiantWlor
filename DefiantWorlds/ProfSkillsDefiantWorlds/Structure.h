@@ -41,6 +41,12 @@ protected:
 	std::stringstream mStrDisplay;	// used to output data about the building to the screen
 
 
+	// UNIT SPAWNING VARIABLES
+	//---------------------------
+	SPointData mGridSpawnLoc;			// The single grid square in which units spawn (relative to building centre)
+	DX::XMFLOAT3 mWorldSpawnLoc;		// The calculated world position of the above grid square
+
+
 public:
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
@@ -95,6 +101,16 @@ public:
 		return mBuildLoc;
 	}
 
+	inline SPointData GetGridSpawnLocation()
+	{
+		return mGridSpawnLoc;
+	}
+
+	inline DX::XMFLOAT3 GetWorldSpawnLocation()
+	{
+		return mWorldSpawnLoc;
+	}
+
 
 	// MUTATORS
 	//---------------------------
@@ -114,10 +130,10 @@ public:
 
 	// METHODS
 	//---------------------------
-	virtual void CreateStructure(CGrid* pGrid);
-	virtual bool TestStructureArea(CGrid* pGrid, CTile* pTile);
+	void CreateStructure(CGrid* pGrid);
+	bool TestStructureArea(CGrid* pGrid, CTile* pTile);
 	bool PointCollision(DX::XMFLOAT3 pos);
-	virtual void Destroy();
+	void Destroy();
 
 
 	// VIRTUAL METHODS
