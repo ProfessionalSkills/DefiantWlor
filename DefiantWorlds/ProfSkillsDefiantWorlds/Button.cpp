@@ -13,7 +13,7 @@
 // BUTTON CLASS CONSTRUCTOR & DESTRUCTOR
 //-----------------------------------------------------
 CButton::CButton(std::string spriteName, std::string spriteMOName, SPointData pos, SAABoundingBox boundingBox,
-	void(*ClickResponseFunc)(void))
+	void (*ClickResponseFunc)(void))
 {
 	// Passed values
 	mPosition = pos;

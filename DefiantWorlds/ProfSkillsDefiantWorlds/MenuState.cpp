@@ -24,6 +24,30 @@ CMenuState::~CMenuState()
 
 
 //-----------------------------------------------------
+// MENU STATE CLASS METHODS
+//-----------------------------------------------------
+void CMenuState::NewGame()
+{
+	gCurState = GS_WORLD;
+}
+
+void CMenuState::LoadGame()
+{
+
+}
+
+void CMenuState::ChangeSettings()
+{
+
+}
+
+void CMenuState::Quit()
+{
+
+}
+
+
+//-----------------------------------------------------
 // MENU STATE CLASS OVERRIDE METHODS
 //-----------------------------------------------------
 void CMenuState::StateSetup()
@@ -84,6 +108,9 @@ void CMenuState::StateSetup()
 	//------------------------------
 	mpSprBackground = gpEngine->CreateSprite("MenuBG.png", 400.0f, 50.0f, 0.9f);
 	mpSprLogo = gpEngine->CreateSprite("Logo.png", 800.0f, 100.0f, 0.8f);
+
+	CButton* pNewButton = new CButton("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 350), SAABoundingBox(400.0f, 1215.0f, 350.0f, 815.0f), NewGame);
+	mpButtonList.push_back(pNewButton);
 }
 
 void CMenuState::StateUpdate()
@@ -118,11 +145,42 @@ void CMenuState::StateUpdate()
 	}
 
 
+	// UPDATE BUTTONS
+	//------------------------------
+	mMousePos.x = (int)gpEngine->GetMouseX();
+	mMousePos.y = (int)gpEngine->GetMouseY();
+	for (miterButtons = mpButtonList.begin(); miterButtons != mpButtonList.end(); miterButtons++)
+	{
+		// Check if the mouse is colliding with the object
+		if ((*miterButtons)->GetBoundingBox().IsColliding(DX::XMFLOAT3(mMousePos.x, 0.0f, mMousePos.y)))
+		{
+			(*miterButtons)->SetMouseOver(true);
+		}
+		else
+		{
+			(*miterButtons)->SetMouseOver(false);
+		}
+
+		// Check for click
+		if (gpEngine->KeyHit(Mouse_LButton))
+		{
+			// Check if the mouse is over the button
+			if ((*miterButtons)->GetMouseOver())
+			{
+				// Raise click flag
+				(*miterButtons)->SetClick(true);
+			}
+		}
+
+		// Update the button
+		(*miterButtons)->Update();
+	}
+
+
 	// STATE CHANGE TEST
 	//------------------------------
 	if (gpEngine->KeyHit(Key_Return))
 	{
-		mMusic->StopSound();
 		gCurState = GS_WORLD;
 	}
 }
@@ -139,6 +197,8 @@ void CMenuState::StateSave()
 
 void CMenuState::StateCleanup()
 {
+	mMusic->StopSound();
+	
 	mpMshAtmosphere->RemoveModel(mpMdlAtmosphere);
 	mpMshPlanet->RemoveModel(mpMdlMars);
 	mpMshPlanet->RemoveModel(mpMdlEarth);
@@ -150,4 +210,18 @@ void CMenuState::StateCleanup()
 	gpEngine->RemoveMesh(mpMshSkybox);
 	gpEngine->RemoveSprite(mpSprBackground);
 	gpEngine->RemoveSprite(mpSprLogo);
+
+	// Remove buttons
+	while (!mpButtonList.empty())
+	{
+		CButton* tmp;
+		tmp = mpButtonList.back();
+		if (tmp)
+		{
+			delete tmp;
+			tmp = nullptr;
+		}
+
+		mpButtonList.pop_back();
+	}
 }

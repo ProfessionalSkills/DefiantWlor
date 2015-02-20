@@ -44,10 +44,13 @@ private:
 	ISprite* mpSprBackground;
 	ISprite* mpSprLogo;
 	std::vector<CButton*> mpButtonList;
+	std::vector<CButton*>::iterator miterButtons;
 
 
 	// ADDITIONAL VARIABLES
 	//--------------------------- 
+	DX::XMFLOAT2 mMousePos;			// Position of mouse on screen
+
 	DX::XMFLOAT3 mOrbitCentre;		// The position in which the planets orbit
 	float mEarthDistance;			// Distance of Earth from centre point
 	float mMarsDistance;			// Distance of Mars from centre point
@@ -68,10 +71,10 @@ public:
 
 	// METHODS
 	//---------------------------
-	void NewGame();
-	void LoadGame();
-	void ChangeSettings();
-	void Quit();
+	static void NewGame();
+	static void LoadGame();
+	static void ChangeSettings();
+	static void Quit();
 
 
 	// OVERRIDE METHODS

@@ -25,7 +25,7 @@ private:
 	bool mMouseIsOver;
 	bool mClicked;
 
-	void (*mClickResponseFunc)(void);
+	void(*mClickResponseFunc)(void);
 
 
 	// BUTTON VISUALS
@@ -47,6 +47,11 @@ public:
 	inline SAABoundingBox GetBoundingBox()
 	{
 		return mBoundingBox;
+	}
+
+	inline bool GetMouseOver()
+	{
+		return mMouseIsOver;
 	}
 
 
