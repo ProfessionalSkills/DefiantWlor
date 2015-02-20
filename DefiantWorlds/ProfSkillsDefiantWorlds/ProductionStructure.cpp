@@ -423,6 +423,7 @@ void CProductionStructure::DisplayInfo(IFont* font)
 			counter++;
 		}
 
+		// Display queue data
 		mStrDisplay << "Queue Next: ";
 		if (mpProductionQueue.size() == 0)
 		{
@@ -433,6 +434,10 @@ void CProductionStructure::DisplayInfo(IFont* font)
 			mStrDisplay << mpProductionQueue.front()->GetAgentData()->mAgentName;
 		}
 		font->Draw(mStrDisplay.str(), 480, 805, kWhite, kLeft, kTop);
+		mStrDisplay.str("");
+
+		mStrDisplay << "Queue Size: " << mpProductionQueue.size();
+		font->Draw(mStrDisplay.str(), 480, 815, kWhite, kLeft, kTop);
 		mStrDisplay.str("");
 
 		// Display how long is left of the unit being constructed

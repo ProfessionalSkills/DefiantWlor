@@ -18,6 +18,7 @@ CFleet::CFleet()
 	mSize = 0;
 	mFleetTactics = None;
 	mTargetedFireVariance = 5;
+	mTarget = new CRandomiser();
 }
 
 CFleet::~CFleet()
@@ -36,8 +37,7 @@ void CFleet::Fight()
 			//just gets each ship to attack one random enemy ship, no effects on accuracy or damage
 			for (int i = 0; i < mSize; i++)
 			{
-				CRandomiser shipToAttack;
-				int target = shipToAttack.GetRandomInt(0, mpEnemyFleet->GetSize() - 1);
+				int target = mTarget->GetRandomInt(0, mpEnemyFleet->GetSize() - 1);
 				mpFleet[i]->Attack(mpEnemyFleet->GetShip(target), mHitMod, mDamegMod);
 			}
 
@@ -47,8 +47,7 @@ void CFleet::Fight()
 			//reduces accuracy of the ship
 			for (int i = 0; i < mSize; i++)
 			{
-				CRandomiser shipToAttack;
-				int target = shipToAttack.GetRandomInt(0, mpEnemyFleet->GetSize() - 1);
+				int target = mTarget->GetRandomInt(0, mpEnemyFleet->GetSize() - 1);
 				mpFleet[i]->Attack(mpEnemyFleet->GetShip(target), mHitMod, mDamegMod);
 				mpFleet[i]->Attack(mpEnemyFleet->GetShip(target), mHitMod, mDamegMod);
 			}
@@ -57,11 +56,10 @@ void CFleet::Fight()
 		case tactics::Targeted:
 			//picks a section of the enemy fleet to attack
 			//only attacks ship withn a range of that target
-			CRandomiser shipToAttack;
-			int target = shipToAttack.GetRandomInt(0, mpEnemyFleet->GetSize() - 1);
+			int target = mTarget->GetRandomInt(0, mpEnemyFleet->GetSize() - 1);
 			for (int i = 0; i < mSize; i++)
 			{
-				int variance = shipToAttack.GetRandomInt(target - mTargetedFireVariance, target + mTargetedFireVariance) % mSize;
+				int variance = mTarget->GetRandomInt(target - mTargetedFireVariance, target + mTargetedFireVariance) % mSize;
 				mpFleet[i]->Attack(mpEnemyFleet->GetShip(variance), mHitMod, mDamegMod);
 			}
 
