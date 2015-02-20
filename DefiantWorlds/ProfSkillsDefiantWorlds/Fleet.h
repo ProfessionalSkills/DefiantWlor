@@ -30,6 +30,7 @@ private:
 	enum tactics {Targeted, Rapid, None};
 	tactics mFleetTactics;
 	int mTargetedFireVariance;
+	CRandomiser* mTarget;
 
 public:
 	// CONSTRUCTORS & DESTRUCTOR
