@@ -26,7 +26,3 @@ CHouse::~CHouse()
 //-----------------------------------------------------
 // HOUSE CLASS OVERRIDE METHODS
 //-----------------------------------------------------
-bool CHouse::Destroy()
-{
-	return false;
-}

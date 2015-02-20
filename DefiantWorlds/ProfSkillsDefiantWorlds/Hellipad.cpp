@@ -32,6 +32,7 @@ CHellipad::CHellipad()
 
 	mStructureBL = SPointData(-2, -2);
 	mStructureTR = SPointData(2, 2);
+	mGridSpawnLoc = SPointData(0, -1);
 
 	// Create the model
 	mpObjModel = mspMshStructurePlacing->CreateModel();

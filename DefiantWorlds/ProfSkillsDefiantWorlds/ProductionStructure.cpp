@@ -137,6 +137,142 @@ void CProductionStructure::UpdateKeyPresses()
 //-----------------------------------------------------
 // PRODUCTION STRUCTURE CLASS OVERRIDE METHODS
 //-----------------------------------------------------
+void CProductionStructure::CreateStructure(CGrid* pGrid)
+{
+	mpGrid = pGrid;
+	SPointData gridPoint;
+
+	// Mark the building's grid area as in use
+	CTile* pNextTile;
+
+	// Loop through structure size
+	for (int x = mGridPos.mPosX + mStructureBL.mPosX; x <= mGridPos.mPosX + mStructureTR.mPosX; x++)
+	{
+		for (int y = mGridPos.mPosY + mStructureBL.mPosY; y <= mGridPos.mPosY + mStructureTR.mPosY; y++)
+		{
+			gridPoint.mPosX = x;
+			gridPoint.mPosY = y;
+			
+			// Get current tile data
+			pNextTile = pGrid->GetTileData(gridPoint);
+
+			// Set state of tile
+			pNextTile->SetTileUsage(true);
+		}
+	}
+
+	// Also set spawning grid tile to used
+	gridPoint.mPosX = mGridPos.mPosX + mGridSpawnLoc.mPosX;
+	gridPoint.mPosY = mGridPos.mPosY + mGridSpawnLoc.mPosY;
+	pNextTile = pGrid->GetTileData(gridPoint);
+	pNextTile->SetTileUsage(true);
+	
+	// Store spawn world location
+	mWorldSpawnLoc = pNextTile->GetWorldPos();
+
+	// Set to placed texture
+	SetPlacedTexture();
+
+	// Calculate axis aligned bounding box
+	float top = mWorldPos.z + ((float)mStructureTR.mPosY * GRID_TILE_SIZE) + (GRID_TILE_SIZE / 2.0f);
+	float bottom = mWorldPos.z + ((float)mStructureBL.mPosY * GRID_TILE_SIZE) - (GRID_TILE_SIZE / 2.0f);
+	float right = mWorldPos.x + ((float)mStructureTR.mPosX * GRID_TILE_SIZE) + (GRID_TILE_SIZE / 2.0f);
+	float left = mWorldPos.x + ((float)mStructureBL.mPosX * GRID_TILE_SIZE) - (GRID_TILE_SIZE / 2.0f);
+	mBoundingBox = SAABoundingBox(top, right, bottom, left);
+}
+
+bool CProductionStructure::TestStructureArea(CGrid* pGrid, CTile* pTile)
+{
+	// pTile refers to the bottom left-most tile
+	// Check area based on structure size
+	mGridPos = pTile->GetGridPos();
+	mWorldPos = pTile->GetWorldPos();
+	CTile* pNextTile;
+	SPointData gridPoint;
+
+	// Loop through structure size
+	for (int x = mGridPos.mPosX + mStructureBL.mPosX; x <= mGridPos.mPosX + mStructureTR.mPosX; x++)
+	{
+		for (int y = mGridPos.mPosY + mStructureBL.mPosY; y <= mGridPos.mPosY + mStructureTR.mPosY; y++)
+		{
+			gridPoint.mPosX = x;
+			gridPoint.mPosY = y;
+			
+			// Get current tile data
+			pNextTile = pGrid->GetTileData(gridPoint);
+
+			// Check if pointer is null
+			if (!pNextTile)
+			{
+				// This tile is not within the grid - return false
+				return false;
+			}
+
+			// Check if tile is in use
+			if (pNextTile->IsTileUsed())
+			{
+				// Tile is used - return false
+				return false;
+			}
+		}
+	}
+
+	// Also set spawning grid tile to unused
+	gridPoint.mPosX = mGridPos.mPosX + mGridSpawnLoc.mPosX;
+	gridPoint.mPosY = mGridPos.mPosY + mGridSpawnLoc.mPosY;
+	pNextTile = pGrid->GetTileData(gridPoint);
+	
+	// Check if pointer is null
+	if (!pNextTile)
+	{
+		// This tile is not within the grid - return false
+		return false;
+	}
+
+	// Check if tile is in use
+	if (pNextTile->IsTileUsed())
+	{
+		// Tile is used - return false
+		return false;
+	}
+
+
+	// Area is free of other structures/resources
+	return true;
+}
+
+void CProductionStructure::Destroy()
+{
+	// Mark the building's grid area as in use
+	CTile* pNextTile;
+	SPointData gridPoint;
+
+	// Loop through structure size
+	for (int x = mGridPos.mPosX + mStructureBL.mPosX; x <= mGridPos.mPosX + mStructureTR.mPosX; x++)
+	{
+		for (int y = mGridPos.mPosY + mStructureBL.mPosY; y <= mGridPos.mPosY + mStructureTR.mPosY; y++)
+		{
+			gridPoint.mPosX = x;
+			gridPoint.mPosY = y;
+			
+			// Get current tile data
+			pNextTile = mpGrid->GetTileData(gridPoint);
+
+			// Set state of tile
+			pNextTile->SetTileUsage(false);
+		}
+	}
+
+	// Also set spawning grid tile to unused
+	gridPoint.mPosX = mGridPos.mPosX + mGridSpawnLoc.mPosX;
+	gridPoint.mPosY = mGridPos.mPosY + mGridSpawnLoc.mPosY;
+	pNextTile = mpGrid->GetTileData(gridPoint);
+	pNextTile->SetTileUsage(false);
+
+	// Remove the model
+	UnloadIModel();
+}
+
 void CProductionStructure::UnloadIModel()
 {
 

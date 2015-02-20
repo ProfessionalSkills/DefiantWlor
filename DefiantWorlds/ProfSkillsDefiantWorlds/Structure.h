@@ -114,10 +114,10 @@ public:
 
 	// METHODS
 	//---------------------------
-	void CreateStructure(CGrid* pGrid);
-	bool TestStructureArea(CGrid* pGrid, CTile* pTile);
+	virtual void CreateStructure(CGrid* pGrid);
+	virtual bool TestStructureArea(CGrid* pGrid, CTile* pTile);
 	bool PointCollision(DX::XMFLOAT3 pos);
-	void Destroy();
+	virtual void Destroy();
 
 
 	// VIRTUAL METHODS

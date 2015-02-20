@@ -45,6 +45,12 @@ protected:
 	std::list<CGameAgent*>::iterator miterRespectiveAgents;
 
 
+	// UNIT SPAWNING VARIABLES
+	//---------------------------
+	SPointData mGridSpawnLoc;			// The single grid square in which units spawn (relative to building centre)
+	DX::XMFLOAT3 mWorldSpawnLoc;		// The calculated world position of the above grid square
+
+
 public:
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
@@ -76,6 +82,10 @@ public:
 
 	// OVERRIDE METHODS
 	//---------------------------
+	void CreateStructure(CGrid* pGrid) override;
+	bool TestStructureArea(CGrid* pGrid, CTile* pTile) override;
+	void Destroy() override;
+
 	virtual void SetBuiltModel();
 	virtual void UnloadIModel();
 };

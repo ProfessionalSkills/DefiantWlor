@@ -26,12 +26,6 @@ CStaticStructure::~CStaticStructure()
 //-----------------------------------------------------
 // STATIC STRUCTURE CLASS OVERRIDE METHODS
 //-----------------------------------------------------
-bool CStaticStructure::Destroy()
-{
-	return false;
-}
-
-
 void CStaticStructure::UnloadIModel()
 {
 

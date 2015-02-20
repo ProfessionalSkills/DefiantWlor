@@ -46,7 +46,7 @@ public:
 	// OVERRIDE METHODS
 	//---------------------------
 	virtual void UnloadIModel();
-	virtual bool Destroy();
+	//virtual bool Destroy();
 };
 
 #endif /* _STATIC_STRUCTURE_H_ */

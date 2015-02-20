@@ -46,7 +46,7 @@ public:
 	// OVERRIDE METHODS
 	//---------------------------
 private:
-	bool Destroy();
+	//bool Destroy();
 };
 
 #endif /* _HOUSE_H_ */

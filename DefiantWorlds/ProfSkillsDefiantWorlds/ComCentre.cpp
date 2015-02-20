@@ -32,6 +32,7 @@ CComCentre::CComCentre()
 
 	mStructureBL = SPointData(-3, -3);
 	mStructureTR = SPointData(1, 3);
+	mGridSpawnLoc = SPointData(-4, -2);
 
 	// Create the model
 	mpObjModel = mspMshStructurePlacing->CreateModel();
