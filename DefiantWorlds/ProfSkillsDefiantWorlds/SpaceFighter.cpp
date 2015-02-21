@@ -28,7 +28,7 @@ CSpaceFighter::CSpaceFighter()
 	//mDestGridSq;
 	mIsMoving = false;
 	mPopCost = 1;
-	mHitChance = 1.0f;
+	mHitChance = 0.7f;
 }
 
 CSpaceFighter::~CSpaceFighter()
