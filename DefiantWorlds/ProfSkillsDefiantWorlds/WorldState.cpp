@@ -304,14 +304,15 @@ void CWorldState::CheckKeyPresses()
 	if (gpEngine->KeyHit(Key_R))
 	{
 		mpHumanPlayer->LaunchAttack();
+		mpAIPlayer->LaunchAttack();
 	}
 
 	//test to return fleet
 	if (gpEngine->KeyHit(Key_T))
 	{
 		CFleet* test = mpHumanPlayer->GetFleet();
+
 		mpHumanPlayer->SetSpaceUnitList(test->ReturnFleet(mpHumanPlayer->GetSpaceUnitList()));
-		test = 0;
 	}
 
 	//temp functions to test space setup
@@ -319,6 +320,7 @@ void CWorldState::CheckKeyPresses()
 	{
 		CFleet* mpPlayerOneFleet = mpHumanPlayer->GetFleet();
 		CFleet* mpPlayerTwoFleet = mpAIPlayer->GetFleet();
+
 		mpPlayerOneFleet->SetEnemy(mpPlayerTwoFleet);
 		mpPlayerTwoFleet->SetEnemy(mpPlayerOneFleet);
 	}
@@ -328,13 +330,17 @@ void CWorldState::CheckKeyPresses()
 	{
 		CFleet* mpPlayerOneFleet = mpHumanPlayer->GetFleet();
 		CFleet* mpPlayerTwoFleet = mpAIPlayer->GetFleet();
-		//fleets attack each other according to tactics
-		mpPlayerOneFleet->Fight();
-		mpPlayerTwoFleet->Fight();
+		for (int i = 0; i < 1000; i++)
+		{
+			//fleets attack each other according to tactics
+			mpPlayerOneFleet->Fight();
+			mpPlayerTwoFleet->Fight();
 
-		//finds and removes dead ships
-		mpPlayerOneFleet->UpdateCondition();
-		mpPlayerTwoFleet->UpdateCondition();
+			//finds and removes dead ships
+			mpPlayerOneFleet->UpdateCondition();
+			mpPlayerTwoFleet->UpdateCondition();
+		}
+		mpPlayerOneFleet = 0;
 	}
 
 	
