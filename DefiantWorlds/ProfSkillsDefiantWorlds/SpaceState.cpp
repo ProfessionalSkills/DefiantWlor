@@ -56,5 +56,8 @@ void CSpaceState::StateSave()
 
 void CSpaceState::StateCleanup()
 {
-
+	mpPlayerOneFleet = nullptr;
+	mpPlayerTwoFleet = nullptr;
+	mpPlayerOneFleet->SetEnemy(nullptr);
+	mpPlayerTwoFleet->SetEnemy(nullptr);
 }

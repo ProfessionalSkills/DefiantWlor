@@ -311,7 +311,7 @@ void CWorldState::CheckKeyPresses()
 
 	if (gpEngine->KeyHit(Key_Y))
 	{
-
+		
 	}
 
 	// RETURN TO MENU TEST
