@@ -301,7 +301,13 @@ void CWorldState::CheckKeyPresses()
 	{
 		mpHumanPlayer->LaunchAttack();
 	}
-
+	//test to return fleet
+	if (gpEngine->KeyHit(Key_T))
+	{
+		CFleet* test = mpHumanPlayer->GetFleet();
+		mpHumanPlayer->SetSpaceUnitList(test->ReturnFleet(mpHumanPlayer->GetSpaceUnitList()));
+		test = 0;
+	}
 
 	// RETURN TO MENU TEST
 	//------------------------------

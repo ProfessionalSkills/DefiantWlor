@@ -144,6 +144,7 @@ vector <CSpaceUnit*> CFleet::ReturnFleet(vector <CSpaceUnit*> returnShips)
 	{
 		returnShips.push_back(mpFleet[i]);
 		mpFleet.pop_back();
+		mSize--;
 	}
 	return returnShips;
 }

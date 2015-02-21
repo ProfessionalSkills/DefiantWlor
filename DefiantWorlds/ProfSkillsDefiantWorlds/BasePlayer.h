@@ -89,6 +89,10 @@ public:
 		return mpFleet;
 	}
 
+	inline std::vector<CSpaceUnit*> GetSpaceUnitList()
+	{
+		return mpSpaceUnitsList;
+	}
 
 	// MUTATORS
 	//---------------------------
@@ -97,6 +101,13 @@ public:
 		mName = name;
 	}
 
+	inline void SetSpaceUnitList(std::vector<CSpaceUnit*> newUnits)
+	{
+		for (int i = 0; i < newUnits.size(); i++)
+		{
+			mpSpaceUnitsList.push_back(newUnits[i]);
+		}
+	}
 	bool MineralTransaction(int amount);
 
 
