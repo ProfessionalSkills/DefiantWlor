@@ -296,11 +296,16 @@ void CWorldState::CheckKeyPresses()
 		// Ensure no buildings can be brought over
 		OnPlacingStructureChange(nullptr);
 	}
+
+	// TEST FUNCTIONS FOR SPACE
+	//------------------------------
+
 	//temporary, just used to test the transfering of ships to the fleet
 	if (gpEngine->KeyHit(Key_R))
 	{
 		mpHumanPlayer->LaunchAttack();
 	}
+
 	//test to return fleet
 	if (gpEngine->KeyHit(Key_T))
 	{
@@ -309,10 +314,30 @@ void CWorldState::CheckKeyPresses()
 		test = 0;
 	}
 
+	//temp functions to test space setup
 	if (gpEngine->KeyHit(Key_Y))
 	{
-		
+		CFleet* mpPlayerOneFleet = mpHumanPlayer->GetFleet();
+		CFleet* mpPlayerTwoFleet = mpAIPlayer->GetFleet();
+		mpPlayerOneFleet->SetEnemy(mpPlayerTwoFleet);
+		mpPlayerTwoFleet->SetEnemy(mpPlayerOneFleet);
 	}
+
+	//temp function to test space fighting
+	if (gpEngine->KeyHit(Key_U))
+	{
+		CFleet* mpPlayerOneFleet = mpHumanPlayer->GetFleet();
+		CFleet* mpPlayerTwoFleet = mpAIPlayer->GetFleet();
+		//fleets attack each other according to tactics
+		mpPlayerOneFleet->Fight();
+		mpPlayerTwoFleet->Fight();
+
+		//finds and removes dead ships
+		mpPlayerOneFleet->UpdateCondition();
+		mpPlayerTwoFleet->UpdateCondition();
+	}
+
+	
 
 	// RETURN TO MENU TEST
 	//------------------------------
