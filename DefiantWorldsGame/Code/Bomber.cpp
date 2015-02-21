@@ -15,7 +15,7 @@
 CBomber::CBomber()
 {
 	mAgentInfo = SAgentData(GAV_BOMBER, "Bomber");
-
+	mpObjMesh = gpEngine->LoadMesh("SR-17blackbird.x");
 	mHealth = 100.0f;
 	mSpeed = 1.0f;
 	mProductionTime = 10.0f;
@@ -42,11 +42,6 @@ CBomber::~CBomber()
 bool CBomber::Attack(CGameAgent* target, float hitMod, float damageMod)
 {
 	return false;
-}
-
-void CBomber::Spawn(CGrid* pGrid, SPointData pCentre)
-{
-
 }
 
 //CBomber::void MoveTo(CTile* dest)

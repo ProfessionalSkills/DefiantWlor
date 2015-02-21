@@ -8,14 +8,14 @@
 //-----------------------------------------------------
 #include "Worker.h"
 
-
+//IMesh* CWorker::mpObjMesh = nullptr;
 //-----------------------------------------------------
 // WORKER CLASS CONSTRUCTORS & DESTRUCTOR
 //-----------------------------------------------------
 CWorker::CWorker()
 {
 	mAgentInfo = SAgentData(GAV_WORKER, "Worker");
-
+	mpObjMesh = gpEngine->LoadMesh("army_truck.x");
 	mHealth = 100.0f;
 	mSpeed = 1.0f;
 	mProductionTime = 5.0f;
@@ -55,11 +55,6 @@ bool RepairUnit(CGroundUnit* unit)
 bool CWorker::Attack(CGameAgent* target, float hitMod, float damageMod)
 {
 	return false;
-}
-
-void CWorker::Spawn(CGrid* pGrid, SPointData pCentre)
-{
-
 }
 
 //CWorker::void MoveTo(CTile* dest)

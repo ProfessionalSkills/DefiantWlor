@@ -161,7 +161,10 @@ void SetupEngine()
 	gpEngine->AddMediaFolder("..\\Media\\Models\\Particles");
 	gpEngine->AddMediaFolder("..\\Media\\Models\\Units");
 	gpEngine->AddMediaFolder("..\\Media\\Models\\Units\\Vehicles\\SciFi");
+	gpEngine->AddMediaFolder("..\\Media\\Models\\Units\\Vehicles\\Military");
 	gpEngine->AddMediaFolder("..\\Media\\Models\\Units\\Aircraft\\Scifi");
+	gpEngine->AddMediaFolder("..\\Media\\Models\\Units\\Aircraft\\Modern\\SR-17blackbird");
+	gpEngine->AddMediaFolder("..\\Media\\Models\\Units\\Aircraft\\Modern\\apache");
 	gpEngine->AddMediaFolder("..\\Media\\User Interface");
 
 	SetWindowPos((HWND)gpEngine->GetWindow(), HWND_TOP, WINDOW_POS_X, WINDOW_POS_Y, WINDOW_WIDTH, WINDOW_HEIGHT, 0U);
@@ -177,7 +180,7 @@ void SetupEngine()
 	CSpaceCentre::mspMshStructureBuilt = gpEngine->LoadMesh("SpaceCentreBuilt.x");
 	CSpaceCentre::mspMshStructurePlacing = gpEngine->LoadMesh("SpaceCentrePlacing.x");
 	CSpaceFighter::mspMshSpaceFighter = gpEngine->LoadMesh("Spaceship02Battlecruiser.x");
-	CTank::mpObjMesh = gpEngine->LoadMesh("HoverTank01.x");
+
 }
 
 void CleanupEngine()
