@@ -31,39 +31,42 @@ CFleet::~CFleet()
 //-----------------------------------------------------
 void CFleet::Fight()
 {
-	switch (mFleetTactics)
+	if (mpEnemyFleet->GetSize() != 0)
 	{
-		case tactics::None:
-			//just gets each ship to attack one random enemy ship, no effects on accuracy or damage
-			for (int i = 0; i < mSize; i++)
-			{
+		switch (mFleetTactics)
+		{
+			case tactics::None:
+				//just gets each ship to attack one random enemy ship, no effects on accuracy or damage
+				for (int i = 0; i < mSize; i++)
+				{
+					int target = mTarget->GetRandomInt(0, mpEnemyFleet->GetSize() - 1);
+					mpFleet[i]->Attack(mpEnemyFleet->GetShip(target), mHitMod, mDamegMod);
+				}
+
+				break;
+			case tactics::Rapid:
+				//gets each ship to attack the same enemy twice
+				//reduces accuracy of the ship
+				for (int i = 0; i < mSize; i++)
+				{
+					int target = mTarget->GetRandomInt(0, mpEnemyFleet->GetSize() - 1);
+					mpFleet[i]->Attack(mpEnemyFleet->GetShip(target), mHitMod, mDamegMod);
+					mpFleet[i]->Attack(mpEnemyFleet->GetShip(target), mHitMod, mDamegMod);
+				}
+
+				break;
+			case tactics::Targeted:
+				//picks a section of the enemy fleet to attack
+				//only attacks ship withn a range of that target
 				int target = mTarget->GetRandomInt(0, mpEnemyFleet->GetSize() - 1);
-				mpFleet[i]->Attack(mpEnemyFleet->GetShip(target), mHitMod, mDamegMod);
-			}
+				for (int i = 0; i < mSize; i++)
+				{
+					int variance = mTarget->GetRandomInt(target - mTargetedFireVariance, target + mTargetedFireVariance) % mSize;
+					mpFleet[i]->Attack(mpEnemyFleet->GetShip(variance), mHitMod, mDamegMod);
+				}
 
-			break;
-		case tactics::Rapid:
-			//gets each ship to attack the same enemy twice
-			//reduces accuracy of the ship
-			for (int i = 0; i < mSize; i++)
-			{
-				int target = mTarget->GetRandomInt(0, mpEnemyFleet->GetSize() - 1);
-				mpFleet[i]->Attack(mpEnemyFleet->GetShip(target), mHitMod, mDamegMod);
-				mpFleet[i]->Attack(mpEnemyFleet->GetShip(target), mHitMod, mDamegMod);
-			}
-
-			break;
-		case tactics::Targeted:
-			//picks a section of the enemy fleet to attack
-			//only attacks ship withn a range of that target
-			int target = mTarget->GetRandomInt(0, mpEnemyFleet->GetSize() - 1);
-			for (int i = 0; i < mSize; i++)
-			{
-				int variance = mTarget->GetRandomInt(target - mTargetedFireVariance, target + mTargetedFireVariance) % mSize;
-				mpFleet[i]->Attack(mpEnemyFleet->GetShip(variance), mHitMod, mDamegMod);
-			}
-
-			break;
+				break;
+		}
 	}
 }
 

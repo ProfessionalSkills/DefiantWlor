@@ -309,6 +309,11 @@ void CWorldState::CheckKeyPresses()
 		test = 0;
 	}
 
+	if (gpEngine->KeyHit(Key_Y))
+	{
+
+	}
+
 	// RETURN TO MENU TEST
 	//------------------------------
 	if (gpEngine->KeyHit(Key_M))

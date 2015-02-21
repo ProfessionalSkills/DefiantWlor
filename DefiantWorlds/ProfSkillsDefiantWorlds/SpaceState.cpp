@@ -37,7 +37,7 @@ void CSpaceState::StateSetup()
 void CSpaceState::StateUpdate()
 {
 	// Draw the scene
-	gpEngine->DrawScene();
+	//gpEngine->DrawScene();
 	mpPlayerOneFleet->Fight();
 	mpPlayerTwoFleet->Fight();
 	mpPlayerOneFleet->UpdateCondition();
