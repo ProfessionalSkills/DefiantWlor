@@ -21,7 +21,7 @@ class CStateControl
 {
 private:
 	IGameState*  mpCurGameState;		// Polymorphic pointer to the current game state
-	CPlayState*  mpPlayState;			// Handles creation of players - ensures there is only one instance
+	CPlayState*  mpPlayState;			// Handles creation of players
 	CMenuState*  mpMenuState;			// Data for the main menu state
 	CSpaceState* mpSpaceState;			// Data for the space state
 	CWorldState* mpWorldState;			// Data for the building on world state (includes both Earth and Mars loaded)

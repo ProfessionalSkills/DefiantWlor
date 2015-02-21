@@ -16,11 +16,12 @@ CPlayState::CPlayState() : IGameState()
 {
 	mpHumanPlayer = nullptr;
 	mpAIPlayer = nullptr;
+	mPlayersCreated = false;
 }
 
 CPlayState::~CPlayState()
 {
-	RemovePlayers();
+
 }
 
 
@@ -66,10 +67,14 @@ void CPlayState::CreatePlayers()
 	{
 		mpAIPlayer = new CAIPlayer();
 	}
+
+	mPlayersCreated = true;
 }
 
 void CPlayState::RemovePlayers()
 {
 	SafeDelete(mpHumanPlayer);
 	SafeDelete(mpAIPlayer);
+
+	mPlayersCreated = false;
 }

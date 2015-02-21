@@ -22,6 +22,7 @@ class CPlayState : public IGameState
 protected:
 	CHumanPlayer* mpHumanPlayer;
 	CAIPlayer*    mpAIPlayer;
+	bool mPlayersCreated;
 
 
 public:
@@ -41,6 +42,11 @@ public:
 	inline CAIPlayer* GetAIPlayer()
 	{
 		return mpAIPlayer;
+	}
+
+	inline bool ArePlayersCreated()
+	{
+		return mPlayersCreated;
 	}
 
 

@@ -26,7 +26,11 @@ CPlayer::CPlayer()
 
 CPlayer::~CPlayer()
 {
-	
+	for (mpiterStructures = mpStructureList.begin(); mpiterStructures != mpStructureList.end(); mpiterStructures++)
+	{
+		// Remove all models
+		(*mpiterStructures)->UnloadIModel();
+	}
 }
 
 

@@ -356,7 +356,7 @@ void CWorldState::StateSetup()
 	mWindowClip.bottom -= 8;
 
 	// Set the cursor's limits
-	ClipCursor(&mWindowClip);
+	//ClipCursor(&mWindowClip);
 
 
 	// CREATE Y = 0 PLANE
@@ -559,7 +559,7 @@ void CWorldState::StateCleanup()
 	
 	SafeDelete(mpMouseScreenPos);
 	SafeDelete(mpEarthGrid);
-	//SafeDelete(mpMarsGrid);
+	SafeDelete(mpMarsGrid);
 
 	mpMshSkybox->RemoveModel(mpMdlSkybox);
 
