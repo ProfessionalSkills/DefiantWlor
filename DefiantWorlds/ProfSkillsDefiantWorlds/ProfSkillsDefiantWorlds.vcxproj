@@ -147,6 +147,8 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
     <ClCompile Include="Mothership.cpp" />
     <ClCompile Include="ParticleEmitter.cpp" />
     <ClCompile Include="Particles.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerManager.cpp" />
     <ClCompile Include="PlayState.cpp" />
     <ClCompile Include="ProductionStructure.cpp" />
     <ClCompile Include="ProfSkillsDefiantWorlds.cpp" />
@@ -197,6 +199,8 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
     <ClInclude Include="Mothership.h" />
     <ClInclude Include="ParticleEmitter.h" />
     <ClInclude Include="Particles.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerManager.h" />
     <ClInclude Include="PlayState.h" />
     <ClInclude Include="ProductionStructure.h" />
     <ClInclude Include="Randomiser.h" />
