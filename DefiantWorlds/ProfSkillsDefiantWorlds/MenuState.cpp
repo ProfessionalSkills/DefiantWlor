@@ -191,14 +191,6 @@ void CMenuState::StateUpdate()
 		// Update the button
 		(*miterButtons)->Update();
 	}
-
-
-	// STATE CHANGE TEST
-	//------------------------------
-	if (gpEngine->KeyHit(Key_Return))
-	{
-		gCurState = GS_WORLD;
-	}
 }
 
 void CMenuState::StateLoad()

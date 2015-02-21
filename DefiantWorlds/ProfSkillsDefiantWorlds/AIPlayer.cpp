@@ -76,6 +76,13 @@ void CAIPlayer::Update()
 	// Loop through all structures & update them
 	for (mpiterStructures = mpStructureList.begin(); mpiterStructures != mpStructureList.end(); mpiterStructures++)
 	{
-		(*mpiterStructures)->Update();
+		if (!(*mpiterStructures)->Update())
+		{
+			// The current structure has been destroyed
+			CStructure* tmp = (*mpiterStructures);
+			SafeDelete(tmp);
+			mpStructureList.erase(mpiterStructures);
+			break;
+		}
 	}
 }
