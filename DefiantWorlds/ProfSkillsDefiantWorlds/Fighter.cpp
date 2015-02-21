@@ -15,7 +15,7 @@
 CFighter::CFighter()
 {
 	mAgentInfo = SAgentData(GAV_FIGHTER, "Fighter");
-
+	mpObjMesh = gpEngine->LoadMesh("apache.x");
 	mHealth = 100.0f;
 	mSpeed = 1.0f;
 	mProductionTime = 15.0f;
@@ -44,10 +44,6 @@ bool CFighter::Attack(CGameAgent* target, float hitMod, float damageMod)
 	return false;
 }
 
-void CFighter::Spawn(CGrid* pGrid, SPointData pCentre)
-{
-
-}
 
 //CFighter::void MoveTo(CTile* dest)
 
