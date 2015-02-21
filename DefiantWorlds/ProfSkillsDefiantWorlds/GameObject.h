@@ -30,7 +30,6 @@ protected:
 	//---------------------------
 	IModel* mpObjModel;
 
-
 public:
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------

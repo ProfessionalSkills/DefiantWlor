@@ -8,14 +8,14 @@
 //-----------------------------------------------------
 #include "Infantry.h"
 
-
+//IMesh* CInfantry::mpObjMesh = nullptr;
 //-----------------------------------------------------
 // INFANTRY CLASS CONSTRUCTORS & DESTRUCTOR
 //-----------------------------------------------------
 CInfantry::CInfantry()
 {
 	mAgentInfo = SAgentData(GAV_INFANTRY, "Infantry");
-
+	mpObjMesh = gpEngine->LoadMesh("transportTruck.x");
 	mHealth = 100.0f;
 	mSpeed = 1.0f;
 	mProductionTime = 10.0f;
@@ -42,11 +42,6 @@ CInfantry::~CInfantry()
 bool CInfantry::Attack(CGameAgent* target, float hitMod, float damageMod)
 {
 	return false;
-}
-
-void CInfantry::Spawn(CGrid* pGrid, SPointData pCentre)
-{
-
 }
 
 //CInfantry::void MoveTo(CTile* dest)

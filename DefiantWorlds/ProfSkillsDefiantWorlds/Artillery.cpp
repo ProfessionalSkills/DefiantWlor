@@ -16,6 +16,7 @@ CArtillery::CArtillery()
 {
 	mAgentInfo = SAgentData(GAV_ARTILLERY, "Artillery");
 
+	mpObjMesh = gpEngine->LoadMesh("marsAA.x");
 	mHealth = 100.0f;
 	mSpeed = 1.0f;
 	mProductionTime = 15.0f;
@@ -44,10 +45,6 @@ bool CArtillery::Attack(CGameAgent* target, float hitMod, float damageMod)
 	return false;
 }
 
-void CArtillery::Spawn(CGrid* pGrid, SPointData pCentre)
-{
-
-}
 
 //CArtillery::void MoveTo(CTile* dest)
 

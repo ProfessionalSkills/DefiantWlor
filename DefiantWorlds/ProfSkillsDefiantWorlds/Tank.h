@@ -31,7 +31,6 @@ public:
 
 	// STATIC MESH
 	//---------------------------
-	static IMesh* mpObjMesh;
 
 	// ACCESSORS
 	//---------------------------
@@ -50,7 +49,7 @@ public:
 	// OVERRIDE METHODS
 	//---------------------------
 	bool Attack(CGameAgent* target, float hitMod, float damageMod);
-	void Spawn(CGrid* pGrid, SPointData pCentre);
+	//void Spawn(CGrid* pGrid, SPointData pCentre);
 	//virtual void MoveTo(CTile* dest);
 	bool Move();
 

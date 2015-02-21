@@ -28,6 +28,7 @@ public:
 	CGroundUnit();
 	virtual ~CGroundUnit();
 
+	IMesh* mpObjMesh;
 
 	// ACCESSORS
 	//---------------------------
@@ -49,7 +50,7 @@ public:
 	//virtual void MoveTo(CTile* dest);
 	virtual bool Move();
 	virtual void UnloadIModel();
-	virtual void Spawn(CGrid* pGrid, SPointData pCentre);
+	void Spawn(CGrid* pGrid, SPointData pCentre);
 
 private:
 	virtual bool Destroy();
