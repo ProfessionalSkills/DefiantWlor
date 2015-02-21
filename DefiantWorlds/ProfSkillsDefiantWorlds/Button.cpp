@@ -7,18 +7,19 @@
 // INCLUDES
 //-----------------------------------------------------
 #include "Button.h"
+#include "MenuState.h"
 
 
 //-----------------------------------------------------
 // BUTTON CLASS CONSTRUCTOR & DESTRUCTOR
 //-----------------------------------------------------
 CButton::CButton(std::string spriteName, std::string spriteMOName, SPointData pos, SAABoundingBox boundingBox,
-	void (*ClickResponseFunc)(void))
+	ClickResponseFunc callbackFunc)
 {
 	// Passed values
 	mPosition = pos;
 	mBoundingBox = boundingBox;
-	mClickResponseFunc = ClickResponseFunc;
+	mCallback = callbackFunc;
 
 	// Default values
 	mMouseIsOver = false;
@@ -58,7 +59,8 @@ void CButton::Update()
 	if (mClicked)
 	{
 		// Call the response function
-		mClickResponseFunc();
+		CMenuState tmp;
+		(tmp.*mCallback)();
 		mClicked = false;
 	}
 }

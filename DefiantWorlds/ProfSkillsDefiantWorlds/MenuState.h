@@ -47,6 +47,11 @@ private:
 	std::vector<CButton*>::iterator miterButtons;
 
 
+	// FONTS
+	//--------------------------- 
+	IFont* mpButtonFont;
+
+
 	// ADDITIONAL VARIABLES
 	//--------------------------- 
 	DX::XMFLOAT2 mMousePos;			// Position of mouse on screen
@@ -71,10 +76,10 @@ public:
 
 	// METHODS
 	//---------------------------
-	static void NewGame();
-	static void LoadGame();
-	static void ChangeSettings();
-	static void Quit();
+	void NewGame();
+	void LoadGame();
+	void ChangeSettings();
+	void Quit();
 
 
 	// OVERRIDE METHODS

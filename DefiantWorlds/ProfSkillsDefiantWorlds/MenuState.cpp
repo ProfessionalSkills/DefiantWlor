@@ -43,7 +43,7 @@ void CMenuState::ChangeSettings()
 
 void CMenuState::Quit()
 {
-
+	gpEngine->Stop();
 }
 
 
@@ -104,12 +104,23 @@ void CMenuState::StateSetup()
 	mMusic->PlaySound();
 
 
-	// CREATE SPRITES & BUTTONS
+	// CREATE SPRITES, BUTTONS & FONTS
 	//------------------------------
+	mpButtonFont = gpEngine->LoadFont("font2.bmp", 15U);
+
 	mpSprBackground = gpEngine->CreateSprite("MenuBG.png", 400.0f, 50.0f, 0.9f);
 	mpSprLogo = gpEngine->CreateSprite("Logo.png", 800.0f, 100.0f, 0.8f);
 
-	CButton* pNewButton = new CButton("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 350), SAABoundingBox(400.0f, 1215.0f, 350.0f, 815.0f), NewGame);
+	CButton* pNewButton = new CButton("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 350), SAABoundingBox(400.0f, 1215.0f, 350.0f, 815.0f), &CMenuState::NewGame);
+	mpButtonList.push_back(pNewButton);
+
+	pNewButton = new CButton("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 420), SAABoundingBox(470.0f, 1215.0f, 420.0f, 815.0f), &CMenuState::LoadGame);
+	mpButtonList.push_back(pNewButton);
+
+	pNewButton = new CButton("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 490), SAABoundingBox(540.0f, 1215.0f, 490.0f, 815.0f), &CMenuState::ChangeSettings);
+	mpButtonList.push_back(pNewButton);
+
+	pNewButton = new CButton("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 560), SAABoundingBox(610.0f, 1215.0f, 560.0f, 815.0f), &CMenuState::Quit);
 	mpButtonList.push_back(pNewButton);
 }
 
@@ -147,6 +158,11 @@ void CMenuState::StateUpdate()
 
 	// UPDATE BUTTONS
 	//------------------------------
+	mpButtonFont->Draw("NEW GAME", 1015, 365, kWhite, kCentre, kTop);
+	mpButtonFont->Draw("LOAD GAME", 1015, 435, kWhite, kCentre, kTop);
+	mpButtonFont->Draw("CHANGE SETTINGS", 1015, 505, kWhite, kCentre, kTop);
+	mpButtonFont->Draw("QUIT GAME", 1015, 575, kWhite, kCentre, kTop);
+
 	mMousePos.x = (int)gpEngine->GetMouseX();
 	mMousePos.y = (int)gpEngine->GetMouseY();
 	for (miterButtons = mpButtonList.begin(); miterButtons != mpButtonList.end(); miterButtons++)
@@ -161,11 +177,11 @@ void CMenuState::StateUpdate()
 			(*miterButtons)->SetMouseOver(false);
 		}
 
-		// Check for click
-		if (gpEngine->KeyHit(Mouse_LButton))
+		// Check for click 
+		if ((*miterButtons)->GetMouseOver())
 		{
 			// Check if the mouse is over the button
-			if ((*miterButtons)->GetMouseOver())
+			if (gpEngine->KeyHit(Mouse_LButton))
 			{
 				// Raise click flag
 				(*miterButtons)->SetClick(true);

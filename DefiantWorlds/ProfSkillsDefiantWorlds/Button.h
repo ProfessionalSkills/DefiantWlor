@@ -14,6 +14,8 @@
 //-----------------------------------------------------
 // BUTTON CLASS
 //-----------------------------------------------------
+class CMenuState;
+
 class CButton
 {
 private:
@@ -25,7 +27,8 @@ private:
 	bool mMouseIsOver;
 	bool mClicked;
 
-	void(*mClickResponseFunc)(void);
+	typedef void (CMenuState::*ClickResponseFunc)(void);
+	ClickResponseFunc mCallback;
 
 
 	// BUTTON VISUALS
@@ -38,7 +41,7 @@ public:
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
 	CButton(std::string spriteName, std::string spriteMOName, SPointData pos, SAABoundingBox boundingBox,
-		void (*ClickResponseFunc)(void));
+		ClickResponseFunc callbackFunc);
 	~CButton();
 
 
