@@ -43,7 +43,7 @@ bool CMothership::Attack(CGameAgent* target, float hitMod, float damageMod)
 {
 	return false;
 }
-void CMothership::Spawn()
+void CMothership::Spawn(CGrid* pGrid, SPointData pCentre)
 {
 
 }

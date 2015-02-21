@@ -44,7 +44,7 @@ bool CInfantry::Attack(CGameAgent* target, float hitMod, float damageMod)
 	return false;
 }
 
-void CInfantry::Spawn()
+void CInfantry::Spawn(CGrid* pGrid, SPointData pCentre)
 {
 
 }

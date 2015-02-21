@@ -66,7 +66,7 @@ bool CSpaceFighter::Attack(CGameAgent* target, float hitMod, float damageMod)
 	return false;
 }
 
-void CSpaceFighter::Spawn()
+void CSpaceFighter::Spawn(CGrid* pGrid, SPointData pCentre)
 {
 
 }

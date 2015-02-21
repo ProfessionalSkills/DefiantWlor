@@ -160,6 +160,7 @@ void SetupEngine()
 	gpEngine->AddMediaFolder("..\\Media\\Models\\Grid");
 	gpEngine->AddMediaFolder("..\\Media\\Models\\Particles");
 	gpEngine->AddMediaFolder("..\\Media\\Models\\Units");
+	gpEngine->AddMediaFolder("..\\Media\\Models\\Units\\Vehicles\\SciFi");
 	gpEngine->AddMediaFolder("..\\Media\\Models\\Units\\Aircraft\\Scifi");
 	gpEngine->AddMediaFolder("..\\Media\\User Interface");
 
@@ -167,7 +168,6 @@ void SetupEngine()
 
 	// Load static meshes
 	CTile::mspMshTile = gpEngine->LoadMesh("Tile.x");
-
 	CComCentre::mspMshStructureBuilt = gpEngine->LoadMesh("ComCentreBuilt.x");
 	CComCentre::mspMshStructurePlacing = gpEngine->LoadMesh("ComCentrePlacing.x");
 	CBarracks::mspMshStructureBuilt = gpEngine->LoadMesh("BarracksBuilt.x");
@@ -177,6 +177,7 @@ void SetupEngine()
 	CSpaceCentre::mspMshStructureBuilt = gpEngine->LoadMesh("SpaceCentreBuilt.x");
 	CSpaceCentre::mspMshStructurePlacing = gpEngine->LoadMesh("SpaceCentrePlacing.x");
 	CSpaceFighter::mspMshSpaceFighter = gpEngine->LoadMesh("Spaceship02Battlecruiser.x");
+	CTank::mpObjMesh = gpEngine->LoadMesh("HoverTank01.x");
 }
 
 void CleanupEngine()

@@ -57,7 +57,7 @@ bool CWorker::Attack(CGameAgent* target, float hitMod, float damageMod)
 	return false;
 }
 
-void CWorker::Spawn()
+void CWorker::Spawn(CGrid* pGrid, SPointData pCentre)
 {
 
 }

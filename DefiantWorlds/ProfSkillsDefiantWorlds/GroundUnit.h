@@ -49,7 +49,7 @@ public:
 	//virtual void MoveTo(CTile* dest);
 	virtual bool Move();
 	virtual void UnloadIModel();
-	virtual void Spawn(); 
+	virtual void Spawn(CGrid* pGrid, SPointData pCentre);
 
 private:
 	virtual bool Destroy();

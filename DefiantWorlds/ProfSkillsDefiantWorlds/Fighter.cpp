@@ -44,7 +44,7 @@ bool CFighter::Attack(CGameAgent* target, float hitMod, float damageMod)
 	return false;
 }
 
-void CFighter::Spawn()
+void CFighter::Spawn(CGrid* pGrid, SPointData pCentre)
 {
 
 }

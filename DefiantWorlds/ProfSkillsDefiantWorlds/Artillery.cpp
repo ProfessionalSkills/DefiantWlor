@@ -44,7 +44,7 @@ bool CArtillery::Attack(CGameAgent* target, float hitMod, float damageMod)
 	return false;
 }
 
-void CArtillery::Spawn()
+void CArtillery::Spawn(CGrid* pGrid, SPointData pCentre)
 {
 
 }

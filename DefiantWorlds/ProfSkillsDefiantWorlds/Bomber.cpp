@@ -44,7 +44,7 @@ bool CBomber::Attack(CGameAgent* target, float hitMod, float damageMod)
 	return false;
 }
 
-void CBomber::Spawn()
+void CBomber::Spawn(CGrid* pGrid, SPointData pCentre)
 {
 
 }

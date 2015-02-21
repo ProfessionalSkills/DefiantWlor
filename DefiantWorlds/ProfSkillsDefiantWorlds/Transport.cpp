@@ -44,7 +44,7 @@ bool CTransport::Attack(CGameAgent* target, float hitMod, float damageMod)
 	return false;
 }
 
-void CTransport::Spawn()
+void CTransport::Spawn(CGrid* pGrid, SPointData pCentre)
 {
 
 }

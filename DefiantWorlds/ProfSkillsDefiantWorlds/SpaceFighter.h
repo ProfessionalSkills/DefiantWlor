@@ -46,7 +46,7 @@ public:
 	void RemoveModel();
 	// OVERRIDE METHODS
 	//---------------------------
-	void Spawn();
+	void Spawn(CGrid* pGrid, SPointData pCentre);
 	bool Attack(CGameAgent* target, float hitMod, float damageMod);
 	//virtual void MoveTo(CTile* dest);
 	bool Move();
