@@ -153,7 +153,7 @@ bool CProductionStructure::Update()
 {
 	// Determine state of the structure
 	switch (mState)
-	{
+	{ 
 		case OBJ_CONSTRUCTING:
 			// Update the timer left until construction is finished
 			mCurBuildTimeLeft -= gFrameTime;
