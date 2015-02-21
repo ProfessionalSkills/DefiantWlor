@@ -340,7 +340,7 @@ void CWorldState::CheckKeyPresses()
 			mpPlayerOneFleet->UpdateCondition();
 			mpPlayerTwoFleet->UpdateCondition();
 		}
-		mpPlayerOneFleet = 0;
+		//mpPlayerOneFleet = 0; //used to put a break point at the end of the function
 	}
 
 	
