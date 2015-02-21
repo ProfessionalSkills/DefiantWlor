@@ -136,12 +136,6 @@
     <Filter Include="Entities\Game Objects\Child\Agent\Child\Space Units\Child">
       <UniqueIdentifier>{3547574b-3f36-4f7e-bb83-a44824ded56a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Players\Player Manager">
-      <UniqueIdentifier>{7eed07bd-6756-4632-bce2-a3f8678d7b4f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Players\Player Class">
-      <UniqueIdentifier>{388afd13-e2c4-41d6-9372-691e4692cb13}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ProfSkillsDefiantWorlds.cpp">
@@ -276,12 +270,6 @@
     <ClCompile Include="Button.cpp">
       <Filter>Utilities</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerManager.cpp">
-      <Filter>Players\Player Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Players\Player Class</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common.h">
@@ -412,12 +400,6 @@
     </ClInclude>
     <ClInclude Include="Button.h">
       <Filter>Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerManager.h">
-      <Filter>Players\Player Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Players\Player Class</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
