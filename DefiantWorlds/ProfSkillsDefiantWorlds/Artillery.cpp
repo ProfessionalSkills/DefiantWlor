@@ -44,6 +44,11 @@ bool CArtillery::Attack(CGameAgent* target, float hitMod, float damageMod)
 	return false;
 }
 
+void CArtillery::Spawn()
+{
+
+}
+
 //CArtillery::void MoveTo(CTile* dest)
 
 

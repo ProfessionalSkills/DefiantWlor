@@ -43,6 +43,11 @@ bool CMothership::Attack(CGameAgent* target, float hitMod, float damageMod)
 {
 	return false;
 }
+void CMothership::Spawn()
+{
+
+}
+
 
 //CMothership::void MoveTo(CTile* dest)
 

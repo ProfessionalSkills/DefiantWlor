@@ -31,6 +31,11 @@ bool CSpaceUnit::Attack(CGameAgent* target, float hitMod, float damageMod)
 	return false;
 }
 
+void CSpaceUnit::Spawn()
+{
+
+}
+
 //CSpaceUnit::void MoveTo(CTile* dest)
 
 

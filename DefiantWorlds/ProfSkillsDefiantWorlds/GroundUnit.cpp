@@ -33,6 +33,11 @@ bool CGroundUnit::Attack(CGameAgent* target, float hitMod, float damageMod)
 
 //CGroundUnit::void MoveTo(CTile* dest)
 
+void CGroundUnit::Spawn()
+{
+
+}
+
 
 bool CGroundUnit::Move()
 {

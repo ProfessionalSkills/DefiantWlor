@@ -57,6 +57,11 @@ bool CWorker::Attack(CGameAgent* target, float hitMod, float damageMod)
 	return false;
 }
 
+void CWorker::Spawn()
+{
+
+}
+
 //CWorker::void MoveTo(CTile* dest)
 
 

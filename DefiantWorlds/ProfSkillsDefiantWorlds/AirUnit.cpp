@@ -31,6 +31,11 @@ bool CAirUnit::Attack(CGameAgent* target, float hitMod, float damageMod)
 	return false;
 }
 
+void CAirUnit::Spawn()
+{
+
+}
+
 //CAirUnit::void MoveTo(CTile* dest)
 
 

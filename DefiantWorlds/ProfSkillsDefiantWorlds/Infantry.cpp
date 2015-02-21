@@ -44,6 +44,11 @@ bool CInfantry::Attack(CGameAgent* target, float hitMod, float damageMod)
 	return false;
 }
 
+void CInfantry::Spawn()
+{
+
+}
+
 //CInfantry::void MoveTo(CTile* dest)
 
 

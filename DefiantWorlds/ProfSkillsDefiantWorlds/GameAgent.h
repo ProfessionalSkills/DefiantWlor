@@ -123,6 +123,7 @@ public:
 	// VIRTUAL METHODS
 	//---------------------------
 	virtual bool Attack(CGameAgent* target, float hitMod, float damageMod) = 0;
+	virtual void Spawn() = 0; //Spawns the Unit into the game 
 	//virtual void MoveTo(CTile* dest) = 0;
 	virtual bool Move() = 0;
 	virtual void UnloadIModel() = 0;

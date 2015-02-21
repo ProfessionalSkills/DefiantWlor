@@ -44,6 +44,11 @@ bool CBomber::Attack(CGameAgent* target, float hitMod, float damageMod)
 	return false;
 }
 
+void CBomber::Spawn()
+{
+
+}
+
 //CBomber::void MoveTo(CTile* dest)
 
 

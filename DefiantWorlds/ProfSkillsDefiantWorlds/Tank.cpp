@@ -44,6 +44,10 @@ bool CTank::Attack(CGameAgent* target, float hitMod, float damageMod)
 	return false;
 }
 
+void CTank::Spawn()
+{
+
+}
 //CTank::void MoveTo(CTile* dest)
 
 
