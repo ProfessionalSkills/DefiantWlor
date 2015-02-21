@@ -1,24 +1,32 @@
 //-----------------------------------------------------
-// FILE: Minerals.cpp
+// FILE: Player.h
 //-----------------------------------------------------
+
+#ifndef _PLAYER_MANAGER_H_
+#define _PLAYER_MANAGER_H_
 
 
 //-----------------------------------------------------
 // INCLUDES
 //-----------------------------------------------------
-#include "Minerals.h"
+#include "Player.h"
 
 
 //-----------------------------------------------------
-// MINERALS CLASS CONSTRUCTORS & DESTRUCTOR
+// PLAYER CLASS
 //-----------------------------------------------------
-CMinerals::CMinerals()
+class CPlayer
 {
+public:
+	const size_t NUM_AI_PLAYERS = 1U;
 
-}
 
-CMinerals::~CMinerals()
-{
+private:
+	// PRIVATE CONSTRUCTOR
+	//---------------------------
+	CPlayer();
 
-}
+};
 
+
+#endif /* _BASE_PLAYER_H_ */
