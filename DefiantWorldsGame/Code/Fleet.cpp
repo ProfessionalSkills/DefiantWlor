@@ -85,15 +85,15 @@ void CFleet::UpdateCondition()
 		}
 	}
 }
-/*
-void CFleet::LoadShipModels()
+
+void CFleet::LoadShipModels(float xPos)
 {
 	for (int i = 0; i < mSize; i++)
 	{
-		mpFleet[i]->LoadModel(0, i, 0);
+		mpFleet[i]->LoadModel(xPos, i, 0.0f);
 	}
 }
-*/
+
 //-----------------------------------------------------
 // FLEET CLASS ACCESSORS
 //-----------------------------------------------------

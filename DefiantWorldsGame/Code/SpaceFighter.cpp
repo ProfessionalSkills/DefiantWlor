@@ -29,11 +29,12 @@ CSpaceFighter::CSpaceFighter()
 	mIsMoving = false;
 	mPopCost = 1;
 	mHitChance = 0.7f;
+	mScale = 0.1f;
 }
 
 CSpaceFighter::~CSpaceFighter()
 {
-	//RemoveModel();
+	RemoveModel();
 }
 
 //-----------------------------------------------------
@@ -43,6 +44,15 @@ void CSpaceFighter::LoadModel(float x,float y, float z)
 {
 	mpObjModel = mspMshSpaceFighter->CreateModel(x, y, z);
 	mpObjModel->SetSkin("Spaceship02Battlecruiser.jpg");
+	if (z < 0.0f)
+	{
+		mpObjModel->RotateLocalY(90.0f); 
+	}
+	else
+	{
+		mpObjModel->RotateLocalY(-90.0f);
+	}
+	mpObjModel->Scale(mScale);
 }
 
 void CSpaceFighter::RemoveModel()

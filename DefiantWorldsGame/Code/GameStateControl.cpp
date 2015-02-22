@@ -75,6 +75,10 @@ void CStateControl::SetCurrentState(EGameStates inNewState)
 		mpPlayState->RemovePlayers();
 		break;
 	case GS_SPACE:
+		if (!mpPlayState->ArePlayersCreated())
+		{
+			mpPlayState->CreatePlayers();
+		}
 		mpCurGameState = mpSpaceState;
 
 		// Pass on player pointers to state
