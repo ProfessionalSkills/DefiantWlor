@@ -18,8 +18,28 @@
 class CSpaceState : public CPlayState
 {
 private:
+	// CAMERAS
+	//--------------------------- 
+	ICamera* mpCamMain;
+
+
+	// MESHES
+	//--------------------------- 
+	IMesh* mpMshSkybox;
+
+	// MODELS
+	//--------------------------- 
+	IModel* mpMdlSkybox;
+
+	// FLEET
+	//---------------------------
 	CFleet* mpPlayerOneFleet;
 	CFleet* mpPlayerTwoFleet;
+
+	// SOUND
+	//---------------------------
+	CSound* mMusic;
+
 
 public:
 	// CONSTRUCTORS & DESTRUCTOR
