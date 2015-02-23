@@ -12,10 +12,12 @@
 //-----------------------------------------------------
 // BASE PLAYER CLASS CONSTRUCTORS & DESTRUCTOR
 //-----------------------------------------------------
-CPlayer::CPlayer()
+CPlayer::CPlayer(EFactions playerFaction)
 {
 	mNumMinerals = 10000;
 	mpFleet = new CFleet();
+	mPlayerFaction = playerFaction;
+	
 	CSpaceFighter* Temp;
 	for (int i = 0; i < 10; i++)
 	{

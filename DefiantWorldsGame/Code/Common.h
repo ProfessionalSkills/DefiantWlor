@@ -139,6 +139,8 @@ const float CAM_SCROLL_SPEED = 5000.0f;
 const float CAM_MAX_HEIGHT = 250.0f;
 const float CAM_MIN_HEIGHT = 30.0f;
 
+const int MAX_AI_NUM = 1;
+
 // Store the current game state
 extern EGameStates gCurState;
 

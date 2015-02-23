@@ -56,11 +56,13 @@ protected:
 	std::vector<CSpaceUnit*>::iterator mpiterSpaceUnits;
 
 	CFleet* mpFleet;
+
+
 public:
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
-	CPlayer();
-	virtual ~CPlayer();
+	CPlayer(EFactions playerFaction);
+	~CPlayer();
 
 
 	// ACCESSORS
@@ -95,6 +97,12 @@ public:
 		return mpSpaceUnitsList;
 	}
 
+	inline EFactions GetPlayerFaction()
+	{
+		return mPlayerFaction;
+	}
+
+
 	// MUTATORS
 	//---------------------------
 	inline void SetPlayerName(std::string name)
@@ -109,6 +117,7 @@ public:
 			mpSpaceUnitsList.push_back(newUnits[i]);
 		}
 	}
+
 	bool MineralTransaction(int amount);
 
 

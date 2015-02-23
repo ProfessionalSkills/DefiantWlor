@@ -18,11 +18,6 @@
 class CPlayerManager
 {
 public:
-	// CONSTANTS
-	//---------------------------
-	static const int MAX_AI_NUM = 1;
-
-
 	// CONSTRUCTOR & DESTRUCTOR
 	//---------------------------
 	CPlayerManager();
@@ -33,6 +28,7 @@ public:
 	//---------------------------
 	void CreatePlayers(EFactions humanFaction, int numAI);
 	void RemovePlayers();
+	void UpdatePlayers();
 
 
 	// ACCESSORS
@@ -42,7 +38,7 @@ public:
 		return mpHuman;
 	}
 
-	inline CPlayer* GetAIPlayer(int index)
+	inline CPlayer* GetAIPlayer(int index = 1)
 	{
 		return mpAI[index];
 	}
@@ -57,6 +53,8 @@ private:
 	//---------------------------
 	CPlayer* mpHuman;
 	CPlayer* mpAI[MAX_AI_NUM];
+
+	int mNumAI;
 };
 
 
