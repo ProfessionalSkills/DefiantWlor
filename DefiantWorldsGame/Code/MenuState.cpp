@@ -29,6 +29,8 @@ CMenuState::~CMenuState()
 void CMenuState::NewGame()
 {
 	gCurState = GS_WORLD;
+
+	// Create new players
 }
 
 void CMenuState::LoadGame()

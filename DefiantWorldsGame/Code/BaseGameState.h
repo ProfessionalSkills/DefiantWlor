@@ -10,6 +10,8 @@
 // INCLUDES
 //-----------------------------------------------------
 #include "Common.h"
+#include "PlayerManager.h"
+
 
 //-----------------------------------------------------
 // INTERFACE CLASS FOR GAME STATES
@@ -17,6 +19,10 @@
 class CGameState
 {
 protected:
+	// PLAYER MANAGER
+	//---------------------------
+	CPlayerManager* mpPlayerManager;
+
 
 public:
 	// CONSTRUCTORS & DESTRUCTOR
@@ -32,6 +38,14 @@ public:
 	virtual void StateCleanup() = 0;
 	virtual void StateSave() = 0;
 	virtual void StateLoad() = 0;
+
+
+	// ACCESORS
+	//---------------------------
+	CPlayerManager* GetPlayerManager()
+	{
+		return mpPlayerManager;
+	}
 };
 
 
