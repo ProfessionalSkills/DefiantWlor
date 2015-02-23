@@ -8,6 +8,8 @@
 //-----------------------------------------------------
 #include "Artillery.h"
 
+IMesh* CArtillery::mspMshArtillery = nullptr;
+
 
 //-----------------------------------------------------
 // ARTILLERY CLASS CONSTRUCTORS & DESTRUCTOR
@@ -15,8 +17,6 @@
 CArtillery::CArtillery()
 {
 	mAgentInfo = SAgentData(GAV_ARTILLERY, "Artillery");
-
-	mpObjMesh = gpEngine->LoadMesh("marsAA.x");
 	mHealth = 100.0f;
 	mSpeed = 1.0f;
 	mProductionTime = 15.0f;
@@ -57,4 +57,9 @@ bool CArtillery::Move()
 bool CArtillery::Destroy()
 {
 	return false;
+}
+
+IModel* CArtillery::CreateModel(DX::XMFLOAT3 pos)
+{
+	return mspMshArtillery->CreateModel(pos.x, pos.y, pos.z);
 }

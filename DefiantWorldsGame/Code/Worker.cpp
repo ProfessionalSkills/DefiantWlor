@@ -8,14 +8,15 @@
 //-----------------------------------------------------
 #include "Worker.h"
 
-//IMesh* CWorker::mpObjMesh = nullptr;
+IMesh* CWorker::mspMshWorker = nullptr;
+
+
 //-----------------------------------------------------
 // WORKER CLASS CONSTRUCTORS & DESTRUCTOR
 //-----------------------------------------------------
 CWorker::CWorker()
 {
 	mAgentInfo = SAgentData(GAV_WORKER, "Worker");
-	mpObjMesh = gpEngine->LoadMesh("army_truck.x");
 	mHealth = 100.0f;
 	mSpeed = 1.0f;
 	mProductionTime = 5.0f;
@@ -68,4 +69,9 @@ bool CWorker::Move()
 bool CWorker::Destroy()
 {
 	return false;
+}
+
+IModel* CWorker::CreateModel(DX::XMFLOAT3 pos)
+{
+	return mspMshWorker->CreateModel(pos.x, pos.y, pos.z);
 }

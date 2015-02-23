@@ -8,7 +8,7 @@
 //-----------------------------------------------------
 #include "Tank.h"
 
-//IMesh* CTank::mpObjMesh = nullptr;
+IMesh* CTank::mspMshTank = nullptr;
 
 //-----------------------------------------------------
 // TANK CLASS CONSTRUCTORS & DESTRUCTOR
@@ -16,8 +16,6 @@
 CTank::CTank()
 {
 	mAgentInfo = SAgentData(GAV_TANK, "Tank");
-
-	mpObjMesh = gpEngine->LoadMesh("HoverTank01.x");
 	mHealth = 100.0f;
 	mSpeed = 1.0f;
 	mProductionTime = 2.0f;
@@ -57,4 +55,9 @@ bool CTank::Move()
 bool CTank::Destroy()
 {
 	return false;
+}
+
+IModel* CTank::CreateModel(DX::XMFLOAT3 pos)
+{
+	return mspMshTank->CreateModel(pos.x, pos.y, pos.z);
 }

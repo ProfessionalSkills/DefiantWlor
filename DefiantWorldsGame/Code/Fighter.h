@@ -24,6 +24,8 @@ private:
 
 public:
 	static IMesh* mspMshFighter;
+
+
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
 	CFighter();
@@ -52,6 +54,7 @@ public:
 
 private:
 	bool Destroy();
+	IModel* CreateModel(DX::XMFLOAT3 pos) override;
 };
 
 #endif /* _FIGHTER_H_ */

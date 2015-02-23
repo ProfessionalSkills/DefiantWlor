@@ -28,8 +28,6 @@ public:
 	CAirUnit();
 	virtual ~CAirUnit();
 
-	IMesh* mpObjMesh;
-
 	// ACCESSORS
 	//---------------------------
 
@@ -55,6 +53,7 @@ public:
 
 private:
 	virtual bool Destroy();
+	virtual IModel* CreateModel(DX::XMFLOAT3 pos) = 0;
 };
 
 #endif /* _AIR_UNIT_H_ */

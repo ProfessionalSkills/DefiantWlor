@@ -8,6 +8,8 @@
 //-----------------------------------------------------
 #include "Bomber.h"
 
+IMesh* CBomber::mspMshBomber = nullptr;
+
 
 //-----------------------------------------------------
 // BOMBER CLASS CONSTRUCTORS & DESTRUCTOR
@@ -15,7 +17,6 @@
 CBomber::CBomber()
 {
 	mAgentInfo = SAgentData(GAV_BOMBER, "Bomber");
-	mpObjMesh = gpEngine->LoadMesh("SR-17blackbird.x");
 	mHealth = 100.0f;
 	mSpeed = 1.0f;
 	mProductionTime = 10.0f;
@@ -55,4 +56,9 @@ bool CBomber::Move()
 bool CBomber::Destroy()
 {
 	return false;
+}
+
+IModel* CBomber::CreateModel(DX::XMFLOAT3 pos)
+{
+	return mspMshBomber->CreateModel(pos.x, pos.y, pos.z);
 }

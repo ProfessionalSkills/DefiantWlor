@@ -297,6 +297,7 @@ void CWorldState::CheckKeyPresses()
 		mpCurSelectedStructure = nullptr;
 	}
 
+
 	// TEST FUNCTIONS FOR SPACE
 	//------------------------------
 

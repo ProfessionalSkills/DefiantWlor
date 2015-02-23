@@ -8,6 +8,8 @@
 //-----------------------------------------------------
 #include "Fighter.h"
 
+IMesh* CFighter::mspMshFighter = nullptr;
+
 
 //-----------------------------------------------------
 // FIGHTER CLASS CONSTRUCTORS & DESTRUCTOR
@@ -15,7 +17,6 @@
 CFighter::CFighter()
 {
 	mAgentInfo = SAgentData(GAV_FIGHTER, "Fighter");
-	mpObjMesh = gpEngine->LoadMesh("apache.x");
 	mHealth = 100.0f;
 	mSpeed = 1.0f;
 	mProductionTime = 15.0f;
@@ -56,4 +57,9 @@ bool CFighter::Move()
 bool CFighter::Destroy()
 {
 	return false;
+}
+
+IModel* CFighter::CreateModel(DX::XMFLOAT3 pos)
+{
+	return mspMshFighter->CreateModel(pos.x, pos.y, pos.z);
 }

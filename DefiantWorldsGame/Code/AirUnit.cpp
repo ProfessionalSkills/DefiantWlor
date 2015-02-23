@@ -52,7 +52,7 @@ void CAirUnit::Spawn(CGrid* pGrid, SPointData pCentre)
 					//Sets the tile usage so vehicles cannot overlap and spawns the vehicle in
 					spawnTiles[i]->SetTileUsage(true);
 					freeTileFound = true;
-					mpObjModel = mpObjMesh->CreateModel(spawnTiles[i]->GetWorldPos().x, 30.0f, spawnTiles[i]->GetWorldPos().z);
+					mpObjModel = CreateModel(DX::XMFLOAT3(spawnTiles[i]->GetWorldPos().x, 30.0f, spawnTiles[i]->GetWorldPos().z));
 					mpObjModel->Scale(2.0f);
 				}
 			}

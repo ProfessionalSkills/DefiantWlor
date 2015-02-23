@@ -53,7 +53,7 @@ void CGroundUnit::Spawn(CGrid* pGrid, SPointData pCentre)
 					//Sets the tile usage so vehicles cannot overlap and spawns the vehicle in
 					spawnTiles[i]->SetTileUsage(true);
 					freeTileFound = true;
-					mpObjModel = mpObjMesh->CreateModel(spawnTiles[i]->GetWorldPos().x, 1.0f, spawnTiles[i]->GetWorldPos().z);
+					mpObjModel = CreateModel(DX::XMFLOAT3(spawnTiles[i]->GetWorldPos().x, 1.0f, spawnTiles[i]->GetWorldPos().z));
 					mpObjModel->Scale(2.0f);
 				}
 			}
@@ -66,6 +66,9 @@ void CGroundUnit::Spawn(CGrid* pGrid, SPointData pCentre)
 			spawnTiles[3] = pGrid->GetTileToRight(pGrid->GetTileData(spawnTiles[3]->GetGridPos()));
 		}
 	}
+
+	// HIGGY
+	// Don't remove the tiles! There is only one copy of them. The function GetTile<x>() does not allocate new memory - it just returns a pointer to the tile you want data for :)
 
 	//for (int i = 0; i < 4; i++)
 	//{

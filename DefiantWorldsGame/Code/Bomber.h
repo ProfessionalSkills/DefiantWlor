@@ -24,6 +24,8 @@ private:
 
 public:
 	static IMesh* mspMshBomber;
+
+
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
 	CBomber();
@@ -51,7 +53,8 @@ public:
 	bool Move();
 
 private:
-	bool Destroy();
+	bool Destroy() override;
+	IModel* CreateModel(DX::XMFLOAT3 pos) override;
 };
 
 #endif /* _BOMBER_H_ */

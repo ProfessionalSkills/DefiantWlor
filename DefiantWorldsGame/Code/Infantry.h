@@ -23,6 +23,9 @@ private:
 
 
 public:
+	static IMesh* mspMshInfantry;
+
+
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
 	CInfantry();
@@ -51,6 +54,7 @@ public:
 
 private:
 	bool Destroy();
+	IModel* CreateModel(DX::XMFLOAT3 pos) override;
 };
 
 #endif /* _INFANTRY_H_ */

@@ -23,6 +23,9 @@ private:
 
 
 public:
+	static IMesh* mspMshWorker;
+
+
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
 	CWorker();
@@ -54,6 +57,7 @@ public:
 
 private:
 	virtual bool Destroy();
+	IModel* CreateModel(DX::XMFLOAT3 pos) override;
 };
 
 #endif /* _WORKER_H_ */

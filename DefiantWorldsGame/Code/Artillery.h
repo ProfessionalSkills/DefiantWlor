@@ -23,11 +23,13 @@ private:
 
 
 public:
+	static IMesh* mspMshArtillery;
+
+
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
 	CArtillery();
 	virtual ~CArtillery();
-
 
 	// ACCESSORS
 	//---------------------------
@@ -51,6 +53,7 @@ public:
 
 private:
 	bool Destroy();
+	IModel* CreateModel(DX::XMFLOAT3 pos) override;
 };
 
 #endif /* _ARTILLERY_H_ */

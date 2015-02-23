@@ -181,6 +181,12 @@ void SetupEngine()
 	CSpaceCentre::mspMshStructurePlacing = gpEngine->LoadMesh("SpaceCentrePlacing.x");
 	CSpaceFighter::mspMshSpaceFighter = gpEngine->LoadMesh("Spaceship02Battlecruiser.x");
 
+	CBomber::mspMshBomber = gpEngine->LoadMesh("SR-17blackbird.x");
+	CFighter::mspMshFighter = gpEngine->LoadMesh("apache.x");
+	CWorker::mspMshWorker = gpEngine->LoadMesh("army_truck.x");
+	CTank::mspMshTank = gpEngine->LoadMesh("HoverTank01.x");
+	CInfantry::mspMshInfantry = gpEngine->LoadMesh("transportTruck.x");
+	CArtillery::mspMshArtillery = gpEngine->LoadMesh("marsAA.x");
 }
 
 void CleanupEngine()

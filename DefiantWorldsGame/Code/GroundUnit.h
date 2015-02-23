@@ -28,7 +28,6 @@ public:
 	CGroundUnit();
 	virtual ~CGroundUnit();
 
-	IMesh* mpObjMesh;
 
 	// ACCESSORS
 	//---------------------------
@@ -54,6 +53,7 @@ public:
 
 private:
 	virtual bool Destroy();
+	virtual IModel* CreateModel(DX::XMFLOAT3 pos) = 0;
 };
 
 #endif /* _GROUND_UNIT_H_ */

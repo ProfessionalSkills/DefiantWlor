@@ -23,6 +23,9 @@ private:
 
 
 public:
+	static IMesh* mspMshTank;
+
+
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
 	CTank();
@@ -55,6 +58,7 @@ public:
 
 private:
 	virtual bool Destroy();
+	IModel* CreateModel(DX::XMFLOAT3 pos) override;
 };
 
 #endif /* _TANK_H_ */
