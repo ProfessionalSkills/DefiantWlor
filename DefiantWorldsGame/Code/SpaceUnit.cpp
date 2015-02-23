@@ -53,3 +53,8 @@ void CSpaceUnit::UnloadIModel()
 {
 
 }
+
+void CSpaceUnit::LoadModel(float x, float y, float z)
+{
+
+}

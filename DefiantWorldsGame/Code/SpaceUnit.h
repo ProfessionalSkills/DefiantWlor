@@ -52,9 +52,6 @@ public:
 	virtual bool Move();
 	virtual void UnloadIModel();
 	virtual void LoadModel(float x, float y, float z);
-
-
-private:
 	virtual bool Destroy();
 };
 
