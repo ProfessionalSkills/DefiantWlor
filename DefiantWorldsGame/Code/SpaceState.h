@@ -47,6 +47,9 @@ private:
 	CRTSPlayer* mpHumanPlayer;
 	CRTSPlayer* mpAIPlayer;
 
+	// MISC
+	//---------------------------
+	float mUpdateTime;// used to limit the number of times the fleets can attack each other in a second
 
 public:
 	// CONSTRUCTORS & DESTRUCTOR
