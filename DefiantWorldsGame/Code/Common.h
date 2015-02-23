@@ -51,6 +51,11 @@ enum EGameStructureTypes
 	STR_HELLIPAD
 };
 
+enum EFactions
+{
+	FAC_EARTH_DEFENSE_FORCE, FAC_THE_CRIMSON_LEGION
+};
+
 
 //-----------------------------------------------------
 // STRUCTURES

@@ -21,10 +21,10 @@ protected:
 	// DATA
 	//---------------------------
 	DX::XMFLOAT3 mWorldPos;
-	SPointData   mGridPos;
-	float        mOrientation;
-	float        mScale;
-
+	SPointData mGridPos;
+	float mOrientation;
+	float mScale;
+	EFactions mFaction;
 
 	// TLE OBJECT DATA
 	//---------------------------

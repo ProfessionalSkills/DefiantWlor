@@ -39,9 +39,10 @@ protected:
 	// DATA
 	//---------------------------
 	std::string mName;
-	int         mNumMinerals;
-	int         mCurPopLimit;
-	int         mCurPop;
+	EFactions mPlayerFaction;
+	int mNumMinerals;
+	int mCurPopLimit;
+	int mCurPop;
 
 
 	// LISTS
