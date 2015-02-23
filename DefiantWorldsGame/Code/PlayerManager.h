@@ -33,12 +33,12 @@ public:
 
 	// ACCESSORS
 	//---------------------------
-	inline CPlayer* GetHumanPlayer()
+	inline CRTSPlayer* GetHumanPlayer()
 	{
 		return mpHuman;
 	}
 
-	inline CPlayer* GetAIPlayer(int index = 1)
+	inline CRTSPlayer* GetAIPlayer(int index = 1)
 	{
 		return mpAI[index];
 	}
@@ -51,8 +51,8 @@ public:
 private:
 	// PLAYERS
 	//---------------------------
-	CPlayer* mpHuman;
-	CPlayer* mpAI[MAX_AI_NUM];
+	CRTSPlayer* mpHuman;
+	CRTSPlayer* mpAI[MAX_AI_NUM];
 
 	int mNumAI;
 };

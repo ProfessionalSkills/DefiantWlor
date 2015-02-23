@@ -14,15 +14,15 @@
 //-----------------------------------------------------
 // INTERFACE CLASS FOR GAME STATES
 //-----------------------------------------------------
-class IGameState
+class CGameState
 {
 protected:
 
 public:
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
-	IGameState();
-	virtual ~IGameState();
+	CGameState();
+	virtual ~CGameState();
 
 
 	// VIRTUAL METHODS

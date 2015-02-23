@@ -16,7 +16,7 @@
 //-----------------------------------------------------
 // MENU STATE CLASS
 //-----------------------------------------------------
-class CMenuState : public IGameState
+class CMenuState : public CGameState
 {
 private:
 	// CAMERAS

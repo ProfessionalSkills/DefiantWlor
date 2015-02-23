@@ -12,12 +12,12 @@
 //-----------------------------------------------------
 // GAME STATE CLASS CONSTRUCTORS & DESTRUCTOR
 //-----------------------------------------------------
-IGameState::IGameState()
+CGameState::CGameState()
 {
 
 }
 
-IGameState::~IGameState()
+CGameState::~CGameState()
 {
 
 }

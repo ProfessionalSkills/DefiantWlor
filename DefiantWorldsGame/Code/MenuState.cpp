@@ -12,7 +12,7 @@
 //-----------------------------------------------------
 // MENU STATE CLASS CONSTRUCTORS & DESTRUCTOR
 //-----------------------------------------------------
-CMenuState::CMenuState() : IGameState()
+CMenuState::CMenuState() : CGameState()
 {
 	
 }

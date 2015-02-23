@@ -17,7 +17,7 @@
 //-----------------------------------------------------
 // PLAY STATE CLASS
 //-----------------------------------------------------
-class CPlayState : public IGameState
+class CPlayState : public CGameState
 {
 protected:
 	CHumanPlayer* mpHumanPlayer;

@@ -12,7 +12,7 @@
 //-----------------------------------------------------
 // SPACE STATE CLASS CONSTRUCTORS & DESTRUCTOR
 //-----------------------------------------------------
-CPlayState::CPlayState() : IGameState()
+CPlayState::CPlayState() : CGameState()
 {
 	mpHumanPlayer = nullptr;
 	mpAIPlayer = nullptr;

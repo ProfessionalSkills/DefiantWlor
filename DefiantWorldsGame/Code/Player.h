@@ -33,7 +33,7 @@
 //-----------------------------------------------------
 // BASE CLASS FOR PLAYERS
 //-----------------------------------------------------
-class CPlayer
+class CRTSPlayer
 {
 protected:
 	// DATA
@@ -61,8 +61,8 @@ protected:
 public:
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
-	CPlayer(EFactions playerFaction);
-	~CPlayer();
+	CRTSPlayer(EFactions playerFaction);
+	~CRTSPlayer();
 
 
 	// ACCESSORS

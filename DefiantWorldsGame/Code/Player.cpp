@@ -12,7 +12,7 @@
 //-----------------------------------------------------
 // BASE PLAYER CLASS CONSTRUCTORS & DESTRUCTOR
 //-----------------------------------------------------
-CPlayer::CPlayer(EFactions playerFaction)
+CRTSPlayer::CRTSPlayer(EFactions playerFaction)
 {
 	mNumMinerals = 10000;
 	mpFleet = new CFleet();
@@ -26,7 +26,7 @@ CPlayer::CPlayer(EFactions playerFaction)
 	}
 }
 
-CPlayer::~CPlayer()
+CRTSPlayer::~CRTSPlayer()
 {
 	for (mpiterStructures = mpStructureList.begin(); mpiterStructures != mpStructureList.end(); mpiterStructures++)
 	{
@@ -39,7 +39,7 @@ CPlayer::~CPlayer()
 //-----------------------------------------------------
 // PLAYER CLASS MUTATORS
 //-----------------------------------------------------
-bool CPlayer::MineralTransaction(int amount)
+bool CRTSPlayer::MineralTransaction(int amount)
 {
 	if (mNumMinerals + amount < 0)
 	{
@@ -58,7 +58,7 @@ bool CPlayer::MineralTransaction(int amount)
 //-----------------------------------------------------
 // PLAYER CLASS METHODS
 //-----------------------------------------------------
-bool CPlayer::PurchaseStructure(CStructure* pStructure, CGrid* pGrid, CTile* pTile)
+bool CRTSPlayer::PurchaseStructure(CStructure* pStructure, CGrid* pGrid, CTile* pTile)
 {
 	// Check whether new building can be afforded
 	if (mNumMinerals - pStructure->GetBuildCost() < 0)
@@ -84,18 +84,18 @@ bool CPlayer::PurchaseStructure(CStructure* pStructure, CGrid* pGrid, CTile* pTi
 	return true;
 }
 
-bool CPlayer::QueueUnit(CStructure* structure, CGameAgent* unit)
+bool CRTSPlayer::QueueUnit(CStructure* structure, CGameAgent* unit)
 {
 	return false;
 }
 
-void CPlayer::LaunchAttack()
+void CRTSPlayer::LaunchAttack()
 {
-	mpSpaceUnitsList = mpFleet->LaunchFleet(mpSpaceUnitsList);
+	//mpSpaceUnitsList = mpFleet->LaunchFleet(mpSpaceUnitsList);
 	//transition into space state from hear
 }
 
-CStructure* CPlayer::CheckStructureSelection(DX::XMFLOAT3 pos)
+CStructure* CRTSPlayer::CheckStructureSelection(DX::XMFLOAT3 pos)
 {
 	// Loop through all structures
 	for (mpiterStructures = mpStructureList.begin(); mpiterStructures != mpStructureList.end(); mpiterStructures++)
@@ -110,7 +110,7 @@ CStructure* CPlayer::CheckStructureSelection(DX::XMFLOAT3 pos)
 	return nullptr;
 }
 
-void CPlayer::Update()
+void CRTSPlayer::Update()
 {
 	// Loop through all structures & update them
 	for (mpiterStructures = mpStructureList.begin(); mpiterStructures != mpStructureList.end(); mpiterStructures++)

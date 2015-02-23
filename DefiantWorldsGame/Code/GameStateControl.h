@@ -20,7 +20,7 @@
 class CStateControl
 {
 private:
-	IGameState*  mpCurGameState;		// Polymorphic pointer to the current game state
+	CGameState*  mpCurGameState;		// Polymorphic pointer to the current game state
 	CPlayState*  mpPlayState;			// Handles creation of players
 	CMenuState*  mpMenuState;			// Data for the main menu state
 	CSpaceState* mpSpaceState;			// Data for the space state
@@ -43,7 +43,7 @@ public:
 
 	// ACCESSORS
 	//---------------------------
-	inline IGameState* GetCurrentState() 
+	inline CGameState* GetCurrentState() 
 	{
 		return mpCurGameState;
 	}
