@@ -7,6 +7,7 @@
 // INCLUDES
 //-----------------------------------------------------
 #include "BaseGameState.h"
+#include "GameStateControl.h"
 
 
 //-----------------------------------------------------
@@ -14,7 +15,7 @@
 //-----------------------------------------------------
 CGameState::CGameState()
 {
-
+	
 }
 
 CGameState::~CGameState()

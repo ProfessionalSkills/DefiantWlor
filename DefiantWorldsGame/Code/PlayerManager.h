@@ -38,7 +38,7 @@ public:
 		return mpHuman;
 	}
 
-	inline CRTSPlayer* GetAIPlayer(int index = 1)
+	inline CRTSPlayer* GetAIPlayer(int index = 0)
 	{
 		return mpAI[index];
 	}

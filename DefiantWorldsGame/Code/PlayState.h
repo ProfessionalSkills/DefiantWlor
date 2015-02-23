@@ -10,8 +10,6 @@
 // INCLUDES
 //-----------------------------------------------------
 #include "BaseGameState.h"
-#include "AIPlayer.h"
-#include "HumanPlayer.h"
 
 
 //-----------------------------------------------------
@@ -20,9 +18,6 @@
 class CPlayState : public CGameState
 {
 protected:
-	CHumanPlayer* mpHumanPlayer;
-	CAIPlayer*    mpAIPlayer;
-	bool mPlayersCreated;
 
 
 public:
@@ -34,33 +29,11 @@ public:
 
 	// ACCESSORS
 	//---------------------------
-	inline CHumanPlayer* GetHumanPlayer()
-	{
-		return mpHumanPlayer;
-	}
-
-	inline CAIPlayer* GetAIPlayer()
-	{
-		return mpAIPlayer;
-	}
-
-	inline bool ArePlayersCreated()
-	{
-		return mPlayersCreated;
-	}
 
 
 	// MUTATORS
 	//---------------------------
-	inline void SetHumanPlayer(CHumanPlayer* player)
-	{
-		mpHumanPlayer = player;
-	}
 
-	inline void SetAIPlayer(CAIPlayer* player)
-	{
-		mpAIPlayer = player;
-	}
 
 
 	// VIRTUAL METHODS
@@ -74,8 +47,6 @@ public:
 
 	// METHODS
 	//---------------------------
-	void CreatePlayers();
-	void RemovePlayers();
 };
 
 

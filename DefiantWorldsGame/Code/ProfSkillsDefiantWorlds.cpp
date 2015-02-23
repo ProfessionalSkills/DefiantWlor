@@ -201,7 +201,7 @@ void CleanupEngine()
 void Initialise()
 {
 	// Initialise states
-	gpStateController = new CStateControl(GS_MAIN_MENU);
+	gpStateController = CStateControl::GetInstance();
 }
 
 void Cleanup()

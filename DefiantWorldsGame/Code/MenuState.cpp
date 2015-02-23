@@ -7,6 +7,7 @@
 // INCLUDES
 //-----------------------------------------------------
 #include "MenuState.h"
+#include "GameStateControl.h"
 
 
 //-----------------------------------------------------
@@ -30,12 +31,17 @@ void CMenuState::NewGame()
 {
 	gCurState = GS_WORLD;
 
-	// Create new players
+	// Unload any previous players & create new players
+	CPlayerManager* pPlayerManager = CStateControl::GetInstance()->GetPlayerManager();
+	pPlayerManager->RemovePlayers();
+	pPlayerManager->CreatePlayers(FAC_EARTH_DEFENSE_FORCE, 1);
 }
 
 void CMenuState::LoadGame()
 {
+	gCurState = GS_WORLD;
 
+	// Don't remove or loapd new players
 }
 
 void CMenuState::ChangeSettings()

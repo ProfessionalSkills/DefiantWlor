@@ -95,6 +95,13 @@ private:
 	std::stringstream strStream;
 
 
+	// PLAYERS
+	//---------------------------
+	CPlayerManager* mpPlayerManager;
+	CRTSPlayer* mpHumanPlayer;
+	CRTSPlayer* mpAIPlayer;
+
+
 public:
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------

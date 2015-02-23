@@ -14,7 +14,14 @@
 //-----------------------------------------------------
 CPlayerManager::CPlayerManager()
 {
+	// Initialise null pointers
+	mpHuman = nullptr;
 
+	// Loop through and update each AI
+	for (int i = 0; i < MAX_AI_NUM; i++)
+	{
+		mpAI[i] = nullptr;
+	}
 }
 
 CPlayerManager::~CPlayerManager()

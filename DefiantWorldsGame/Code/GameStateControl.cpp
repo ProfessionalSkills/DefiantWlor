@@ -8,6 +8,8 @@
 //-----------------------------------------------------
 #include "GameStateControl.h"
 
+CStateControl* CStateControl::mspSingleton = nullptr;
+
 
 //-----------------------------------------------------
 // GAME STATE CONTROL CLASS CONSTRUCTORS & DESTRUCTOR
@@ -15,10 +17,13 @@
 CStateControl::CStateControl(EGameStates inStartState)
 {
 	// Initialise states
-	mpPlayState = new CPlayState();
+	//mpPlayState = new CPlayState();
 	mpMenuState = new CMenuState();
 	mpSpaceState = new CSpaceState();
 	mpWorldState = new CWorldState();
+
+	// Initialise player manager
+	mpPlayerManager = new CPlayerManager();
 
 	// Set global state
 	gCurState = inStartState;
@@ -39,10 +44,10 @@ CStateControl::CStateControl(EGameStates inStartState)
 	}
 
 	// Ensure other play states have links to the same players
-	mpSpaceState->SetHumanPlayer(mpPlayState->GetHumanPlayer());
+	/*mpSpaceState->SetHumanPlayer(mpPlayState->GetHumanPlayer());
 	mpSpaceState->SetAIPlayer(mpPlayState->GetAIPlayer());
 	mpWorldState->SetHumanPlayer(mpPlayState->GetHumanPlayer());
-	mpWorldState->SetAIPlayer(mpPlayState->GetAIPlayer());
+	mpWorldState->SetAIPlayer(mpPlayState->GetAIPlayer());*/
 
 	// Setup scene
 	mpCurGameState->StateSetup();
@@ -50,7 +55,9 @@ CStateControl::CStateControl(EGameStates inStartState)
 
 CStateControl::~CStateControl()
 {
-	SafeDelete(mpPlayState);
+	SafeDelete(mpPlayerManager);
+	
+	//SafeDelete(mpPlayState);
 	SafeDelete(mpMenuState);
 	SafeDelete(mpSpaceState);
 	SafeDelete(mpWorldState);
@@ -72,30 +79,30 @@ void CStateControl::SetCurrentState(EGameStates inNewState)
 		mpCurGameState = mpMenuState;
 
 		// Remove players
-		mpPlayState->RemovePlayers();
+		//mpPlayState->RemovePlayers();
 		break;
 	case GS_SPACE:
-		if (!mpPlayState->ArePlayersCreated())
-		{
-			mpPlayState->CreatePlayers();
-		}
+		//if (!mpPlayState->ArePlayersCreated())
+		//{
+		//	mpPlayState->CreatePlayers();
+		//}
 		mpCurGameState = mpSpaceState;
 
 		// Pass on player pointers to state
-		mpSpaceState->SetHumanPlayer(mpPlayState->GetHumanPlayer());
-		mpSpaceState->SetAIPlayer(mpPlayState->GetAIPlayer());
+		//mpSpaceState->SetHumanPlayer(mpPlayState->GetHumanPlayer());
+		//mpSpaceState->SetAIPlayer(mpPlayState->GetAIPlayer());
 		break;
 	case GS_WORLD:
 		mpCurGameState = mpWorldState;
 
-		if (!mpPlayState->ArePlayersCreated())
-		{
-			mpPlayState->CreatePlayers();
-		}
+		//if (!mpPlayState->ArePlayersCreated())
+		//{
+		//	mpPlayState->CreatePlayers();
+		//}
 
 		// Pass on player pointers to state
-		mpWorldState->SetHumanPlayer(mpPlayState->GetHumanPlayer());
-		mpWorldState->SetAIPlayer(mpPlayState->GetAIPlayer());
+		//mpWorldState->SetHumanPlayer(mpPlayState->GetHumanPlayer());
+		//mpWorldState->SetAIPlayer(mpPlayState->GetAIPlayer());
 		break;
 	}
 

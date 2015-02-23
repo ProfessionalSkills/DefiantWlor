@@ -121,11 +121,9 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="AIPlayer.cpp" />
     <ClCompile Include="AirUnit.cpp" />
     <ClCompile Include="Artillery.cpp" />
     <ClCompile Include="Barracks.cpp" />
-    <ClCompile Include="BasePlayer.cpp" />
     <ClCompile Include="Bomber.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="ComCentre.cpp" />
@@ -140,7 +138,6 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
     <ClCompile Include="GroundUnit.cpp" />
     <ClCompile Include="Hellipad.cpp" />
     <ClCompile Include="House.cpp" />
-    <ClCompile Include="HumanPlayer.cpp" />
     <ClCompile Include="Infantry.cpp" />
     <ClCompile Include="MenuState.cpp" />
     <ClCompile Include="Minerals.cpp" />
@@ -172,10 +169,8 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AIPlayer.h" />
     <ClInclude Include="Artillery.h" />
     <ClInclude Include="Barracks.h" />
-    <ClInclude Include="BasePlayer.h" />
     <ClInclude Include="AirUnit.h" />
     <ClInclude Include="Bomber.h" />
     <ClInclude Include="Button.h" />
@@ -192,7 +187,6 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
     <ClInclude Include="GroundUnit.h" />
     <ClInclude Include="Hellipad.h" />
     <ClInclude Include="House.h" />
-    <ClInclude Include="HumanPlayer.h" />
     <ClInclude Include="Infantry.h" />
     <ClInclude Include="MenuState.h" />
     <ClInclude Include="Minerals.h" />

@@ -7,6 +7,7 @@
 // INCLUDES
 //-----------------------------------------------------
 #include "WorldState.h"
+#include "GameStateControl.h"
 
 
 //-----------------------------------------------------
@@ -423,6 +424,13 @@ void CWorldState::StateSetup()
 	mpMdlSkybox->Scale(4.0f);
 
 
+	// PLAYERS
+	//-----------------------------
+	mpPlayerManager = CStateControl::GetInstance()->GetPlayerManager();
+	mpHumanPlayer = mpPlayerManager->GetHumanPlayer();
+	mpAIPlayer = mpPlayerManager->GetAIPlayer(0);
+
+
 	// INITIALISE WORLDS
 	//-----------------------------
 	// EARTH
@@ -572,8 +580,7 @@ void CWorldState::StateUpdate()
 
 	// UPDATE PLAYERS
 	//------------------------------
-	mpAIPlayer->Update();
-	mpHumanPlayer->Update();
+	mpPlayerManager->UpdatePlayers();
 	
 
 

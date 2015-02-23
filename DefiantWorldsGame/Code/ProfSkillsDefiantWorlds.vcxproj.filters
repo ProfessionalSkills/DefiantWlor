@@ -19,9 +19,6 @@
     <Filter Include="Game States\Child State Classes">
       <UniqueIdentifier>{8cf3cc49-4723-4758-9273-3652358a6042}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Players\Child Player Classes">
-      <UniqueIdentifier>{37f2f8e4-1825-404e-8165-3234ba1abff3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game States\Base State Class">
       <UniqueIdentifier>{15c60e69-0063-4a03-a0c7-48b4429d2596}</UniqueIdentifier>
     </Filter>
@@ -33,9 +30,6 @@
     </Filter>
     <Filter Include="Entities">
       <UniqueIdentifier>{c1c3bb3f-a22a-4b5d-b732-0b702e77b66e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Players\Base Player Class">
-      <UniqueIdentifier>{112eb755-6301-44a1-a454-089574fbfc12}</UniqueIdentifier>
     </Filter>
     <Filter Include="Entities\Game Objects">
       <UniqueIdentifier>{da0611d9-7fc0-4456-b305-66d42df82345}</UniqueIdentifier>
@@ -159,12 +153,6 @@
     <ClCompile Include="WorldState.cpp">
       <Filter>Game States\Child State Classes</Filter>
     </ClCompile>
-    <ClCompile Include="HumanPlayer.cpp">
-      <Filter>Players\Child Player Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="AIPlayer.cpp">
-      <Filter>Players\Child Player Classes</Filter>
-    </ClCompile>
     <ClCompile Include="BaseGameState.cpp">
       <Filter>Game States\Base State Class</Filter>
     </ClCompile>
@@ -173,9 +161,6 @@
     </ClCompile>
     <ClCompile Include="Randomiser.cpp">
       <Filter>Utilities</Filter>
-    </ClCompile>
-    <ClCompile Include="BasePlayer.cpp">
-      <Filter>Players\Base Player Class</Filter>
     </ClCompile>
     <ClCompile Include="PlayState.cpp">
       <Filter>Game States\Child State Classes</Filter>
@@ -296,12 +281,6 @@
     <ClInclude Include="WorldState.h">
       <Filter>Game States\Child State Classes</Filter>
     </ClInclude>
-    <ClInclude Include="HumanPlayer.h">
-      <Filter>Players\Child Player Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="AIPlayer.h">
-      <Filter>Players\Child Player Classes</Filter>
-    </ClInclude>
     <ClInclude Include="BaseGameState.h">
       <Filter>Game States\Base State Class</Filter>
     </ClInclude>
@@ -310,9 +289,6 @@
     </ClInclude>
     <ClInclude Include="Randomiser.h">
       <Filter>Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="BasePlayer.h">
-      <Filter>Players\Base Player Class</Filter>
     </ClInclude>
     <ClInclude Include="PlayState.h">
       <Filter>Game States\Child State Classes</Filter>

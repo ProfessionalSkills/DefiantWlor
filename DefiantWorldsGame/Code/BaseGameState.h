@@ -16,12 +16,11 @@
 //-----------------------------------------------------
 // INTERFACE CLASS FOR GAME STATES
 //-----------------------------------------------------
+class CStateControl;
+
 class CGameState
 {
 protected:
-	// PLAYER MANAGER
-	//---------------------------
-	CPlayerManager* mpPlayerManager;
 
 
 public:
@@ -42,10 +41,6 @@ public:
 
 	// ACCESORS
 	//---------------------------
-	CPlayerManager* GetPlayerManager()
-	{
-		return mpPlayerManager;
-	}
 };
 
 

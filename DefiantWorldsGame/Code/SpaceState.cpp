@@ -7,6 +7,7 @@
 // INCLUDES
 //-----------------------------------------------------
 #include "SpaceState.h"
+#include "GameStateControl.h"
 
 
 //-----------------------------------------------------
@@ -30,8 +31,9 @@ void CSpaceState::StateSetup()
 {
 	// FLEET SETUP
 	//------------------------------
-	mpPlayerOneFleet = mpHumanPlayer->GetFleet();
-	mpPlayerTwoFleet = mpAIPlayer->GetFleet();
+	CPlayerManager* pPlayerManager = CStateControl::GetInstance()->GetPlayerManager();
+	mpPlayerOneFleet = pPlayerManager->GetHumanPlayer()->GetFleet();
+	mpPlayerTwoFleet = pPlayerManager->GetAIPlayer(0)->GetFleet();
 
 	mpPlayerOneFleet->SetEnemy(mpPlayerTwoFleet);
 	mpPlayerTwoFleet->SetEnemy(mpPlayerOneFleet);
@@ -51,8 +53,8 @@ void CSpaceState::StateSetup()
 	//------------------------------
 
 	//temp, for testing only//
-	mpHumanPlayer->LaunchAttack();
-	mpAIPlayer->LaunchAttack();
+	pPlayerManager->GetHumanPlayer()->LaunchAttack();
+	pPlayerManager->GetAIPlayer(0)->LaunchAttack();
 	//----------------------------//
 
 	mpPlayerOneFleet->LoadShipModels(-mDisplacement);
