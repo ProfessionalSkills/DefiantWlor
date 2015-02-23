@@ -267,18 +267,16 @@ void CWorldState::CheckKeyPresses()
 			OnPlacingStructureChange(pStructure);
 		}
 	}
-	else
-	{
-		// UNIT CONSTRUCTION
-		//------------------------------
-		// C = deselect current building
-		if (gpEngine->KeyHit(Key_C))
-		{
-			OnPlacingStructureChange(nullptr);
-		}
 
-		// Rest is handled in update function of selected building
+
+	// UNIT CONSTRUCTION
+	//------------------------------
+	// C = deselect current building
+	if (gpEngine->KeyHit(Key_C))
+	{
+		OnPlacingStructureChange(nullptr);
 	}
+
 
 	// CAMERA CHANGE
 	//------------------------------
@@ -295,6 +293,8 @@ void CWorldState::CheckKeyPresses()
 
 		// Ensure no buildings can be brought over
 		OnPlacingStructureChange(nullptr);
+		mpCurSelectedAgent = nullptr;
+		mpCurSelectedStructure = nullptr;
 	}
 
 	// TEST FUNCTIONS FOR SPACE
