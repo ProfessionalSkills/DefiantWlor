@@ -34,7 +34,6 @@ private:
 	// STATE CONTROL
 	//---------------------------
 	CGameState*  mpCurGameState;		// Polymorphic pointer to the current game state
-	//CPlayState*  mpPlayState;			
 	CMenuState*  mpMenuState;			// Data for the main menu state
 	CSpaceState* mpSpaceState;			// Data for the space state
 	CWorldState* mpWorldState;			// Data for the building on world state (includes both Earth and Mars loaded)

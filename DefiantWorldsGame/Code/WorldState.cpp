@@ -13,7 +13,7 @@
 //-----------------------------------------------------
 // WORLD STATE CLASS CONSTRUCTORS & DESTRUCTOR
 //-----------------------------------------------------
-CWorldState::CWorldState() : CPlayState()
+CWorldState::CWorldState() : CGameState()
 {
 
 }

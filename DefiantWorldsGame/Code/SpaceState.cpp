@@ -13,7 +13,7 @@
 //-----------------------------------------------------
 // SPACE STATE CLASS CONSTRUCTORS & DESTRUCTOR
 //-----------------------------------------------------
-CSpaceState::CSpaceState() : CPlayState()
+CSpaceState::CSpaceState() : CGameState()
 {
 	mDisplacement = 20.0f;
 }
@@ -29,11 +29,17 @@ CSpaceState::~CSpaceState()
 //-----------------------------------------------------
 void CSpaceState::StateSetup()
 {
+	// PLAYERS
+	//-----------------------------
+	mpPlayerManager = CStateControl::GetInstance()->GetPlayerManager();
+	mpHumanPlayer = mpPlayerManager->GetHumanPlayer();
+	mpAIPlayer = mpPlayerManager->GetAIPlayer(0);
+
+	
 	// FLEET SETUP
 	//------------------------------
-	CPlayerManager* pPlayerManager = CStateControl::GetInstance()->GetPlayerManager();
-	mpPlayerOneFleet = pPlayerManager->GetHumanPlayer()->GetFleet();
-	mpPlayerTwoFleet = pPlayerManager->GetAIPlayer(0)->GetFleet();
+	mpPlayerOneFleet = mpHumanPlayer->GetFleet();
+	mpPlayerTwoFleet = mpAIPlayer->GetFleet();
 
 	mpPlayerOneFleet->SetEnemy(mpPlayerTwoFleet);
 	mpPlayerTwoFleet->SetEnemy(mpPlayerOneFleet);
@@ -53,8 +59,8 @@ void CSpaceState::StateSetup()
 	//------------------------------
 
 	//temp, for testing only//
-	pPlayerManager->GetHumanPlayer()->LaunchAttack();
-	pPlayerManager->GetAIPlayer(0)->LaunchAttack();
+	mpHumanPlayer->LaunchAttack();
+	mpAIPlayer->LaunchAttack();
 	//----------------------------//
 
 	mpPlayerOneFleet->LoadShipModels(-mDisplacement);

@@ -43,12 +43,6 @@ CStateControl::CStateControl(EGameStates inStartState)
 			break;
 	}
 
-	// Ensure other play states have links to the same players
-	/*mpSpaceState->SetHumanPlayer(mpPlayState->GetHumanPlayer());
-	mpSpaceState->SetAIPlayer(mpPlayState->GetAIPlayer());
-	mpWorldState->SetHumanPlayer(mpPlayState->GetHumanPlayer());
-	mpWorldState->SetAIPlayer(mpPlayState->GetAIPlayer());*/
-
 	// Setup scene
 	mpCurGameState->StateSetup();
 }
@@ -56,8 +50,7 @@ CStateControl::CStateControl(EGameStates inStartState)
 CStateControl::~CStateControl()
 {
 	SafeDelete(mpPlayerManager);
-	
-	//SafeDelete(mpPlayState);
+
 	SafeDelete(mpMenuState);
 	SafeDelete(mpSpaceState);
 	SafeDelete(mpWorldState);
@@ -78,31 +71,14 @@ void CStateControl::SetCurrentState(EGameStates inNewState)
 	case GS_MAIN_MENU:
 		mpCurGameState = mpMenuState;
 
-		// Remove players
-		//mpPlayState->RemovePlayers();
 		break;
 	case GS_SPACE:
-		//if (!mpPlayState->ArePlayersCreated())
-		//{
-		//	mpPlayState->CreatePlayers();
-		//}
 		mpCurGameState = mpSpaceState;
 
-		// Pass on player pointers to state
-		//mpSpaceState->SetHumanPlayer(mpPlayState->GetHumanPlayer());
-		//mpSpaceState->SetAIPlayer(mpPlayState->GetAIPlayer());
 		break;
 	case GS_WORLD:
 		mpCurGameState = mpWorldState;
 
-		//if (!mpPlayState->ArePlayersCreated())
-		//{
-		//	mpPlayState->CreatePlayers();
-		//}
-
-		// Pass on player pointers to state
-		//mpWorldState->SetHumanPlayer(mpPlayState->GetHumanPlayer());
-		//mpWorldState->SetAIPlayer(mpPlayState->GetAIPlayer());
 		break;
 	}
 

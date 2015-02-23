@@ -9,13 +9,13 @@
 //-----------------------------------------------------
 // INCLUDES
 //-----------------------------------------------------
-#include "PlayState.h"
+#include "BaseGameState.h"
 
 
 //-----------------------------------------------------
 // SPACE STATE CLASS
 //-----------------------------------------------------
-class CSpaceState : public CPlayState
+class CSpaceState : public CGameState
 {
 private:
 	// CAMERAS
@@ -40,6 +40,12 @@ private:
 	// SOUND
 	//---------------------------
 	CSound* mMusic;
+
+	// PLAYERS
+	//---------------------------
+	CPlayerManager* mpPlayerManager;
+	CRTSPlayer* mpHumanPlayer;
+	CRTSPlayer* mpAIPlayer;
 
 
 public:

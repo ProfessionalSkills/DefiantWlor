@@ -162,9 +162,6 @@
     <ClCompile Include="Randomiser.cpp">
       <Filter>Utilities</Filter>
     </ClCompile>
-    <ClCompile Include="PlayState.cpp">
-      <Filter>Game States\Child State Classes</Filter>
-    </ClCompile>
     <ClCompile Include="GameObject.cpp">
       <Filter>Entities\Game Objects\Base</Filter>
     </ClCompile>
@@ -289,9 +286,6 @@
     </ClInclude>
     <ClInclude Include="Randomiser.h">
       <Filter>Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayState.h">
-      <Filter>Game States\Child State Classes</Filter>
     </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>Entities\Game Objects\Base</Filter>
