@@ -135,15 +135,6 @@ public:
 	void StateLoad() override;
 
 
-	// POINTER METHODS FOR BUTTONS
-	//---------------------------
-	void SelectSpaceCentre()
-	{
-		CStructure*	pStructure = new CSpaceCentre();
-		OnPlacingStructureChange(pStructure);
-	}
-
-
 private:
 	// EVENT HANDLERS
 	//---------------------------

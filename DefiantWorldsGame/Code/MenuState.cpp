@@ -119,16 +119,16 @@ void CMenuState::StateSetup()
 	mpSprBackground = gpEngine->CreateSprite("MenuBG.png", 400.0f, 50.0f, 0.9f);
 	mpSprLogo = gpEngine->CreateSprite("Logo.png", 800.0f, 100.0f, 0.8f);
 
-	CButton* pNewButton = new CButton("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 350), SAABoundingBox(400.0f, 1215.0f, 350.0f, 815.0f), &CMenuState::NewGame);
+	CButton* pNewButton = new CButton("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 350), SAABoundingBox(400.0f, 1215.0f, 350.0f, 815.0f), "New Game");
 	mpButtonList.push_back(pNewButton);
 
-	pNewButton = new CButton("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 420), SAABoundingBox(470.0f, 1215.0f, 420.0f, 815.0f), &CMenuState::LoadGame);
+	pNewButton = new CButton("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 420), SAABoundingBox(470.0f, 1215.0f, 420.0f, 815.0f), "Load Game");
 	mpButtonList.push_back(pNewButton);
 
-	pNewButton = new CButton("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 490), SAABoundingBox(540.0f, 1215.0f, 490.0f, 815.0f), &CMenuState::ChangeSettings);
+	pNewButton = new CButton("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 490), SAABoundingBox(540.0f, 1215.0f, 490.0f, 815.0f), "Change Settings");
 	mpButtonList.push_back(pNewButton);
 
-	pNewButton = new CButton("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 560), SAABoundingBox(610.0f, 1215.0f, 560.0f, 815.0f), &CMenuState::Quit);
+	pNewButton = new CButton("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 560), SAABoundingBox(610.0f, 1215.0f, 560.0f, 815.0f), "Quit");
 	mpButtonList.push_back(pNewButton);
 }
 
@@ -192,7 +192,24 @@ void CMenuState::StateUpdate()
 			if (gpEngine->KeyHit(Mouse_LButton))
 			{
 				// Raise click flag
-				(*miterButtons)->SetClick(true);
+				std::string purpose = *(*miterButtons)->GetPurpose();
+
+				if (purpose == "New Game")
+				{
+					NewGame();
+				}
+				else if (purpose == "Load Game")
+				{
+					LoadGame();
+				}
+				else if (purpose == "Change Settings")
+				{
+					ChangeSettings();
+				}
+				else
+				{
+					Quit();
+				}
 			}
 		}
 

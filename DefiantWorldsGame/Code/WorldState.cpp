@@ -490,7 +490,7 @@ void CWorldState::StateSetup()
 	CButton* pNewButton = nullptr;
 
 	pNewButton = new CButton("DefSpaceCentreButton.png", "SelSpaceCentreButton.png", SPointData(1219, 695),
-		SAABoundingBox(793.0f, 1297.0f, 695.0f, 1219.0f), &CWorldState::SelectSpaceCentre);
+		SAABoundingBox(772.0f, 1322.0f, 695.0f, 1219.0f), "Space Centre");
 	mpButtonList.push_back(pNewButton);
 
 
@@ -602,7 +602,13 @@ void CWorldState::StateUpdate()
 			if (gpEngine->KeyHit(Mouse_RButton))
 			{
 				// Raise click flag
-				(*miterButtons)->SetClick(true);
+				std::string purpose = *(*miterButtons)->GetPurpose();
+
+				if (purpose == "Space Centre")
+				{
+					CStructure* pStructure = new CSpaceCentre();
+					OnPlacingStructureChange(pStructure);
+				}
 			}
 		}
 
