@@ -309,7 +309,7 @@ void CWorldState::CheckKeyPresses()
 		mpAIPlayer->LaunchAttack();
 		gCurState = GS_SPACE;
 	}
-
+	/*
 	//test to return fleet
 	if (gpEngine->KeyHit(Key_T))
 	{
@@ -346,7 +346,7 @@ void CWorldState::CheckKeyPresses()
 		//mpPlayerOneFleet = 0; //used to put a break point at the end of the function
 	}
 
-	
+	*/
 
 	// RETURN TO MENU TEST
 	//------------------------------
