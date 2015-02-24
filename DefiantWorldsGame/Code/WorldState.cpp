@@ -451,55 +451,10 @@ void CWorldState::StateSetup()
 	mpAIPlayer = mpPlayerManager->GetAIPlayer(0);
 
 
-	// INITIALISE WORLDS
+	// INITIALISE NULL TILE
 	//-----------------------------
-	// EARTH
-	mpEarthGrid = new CGrid(DX::XMFLOAT3(0.0f, 0.3f, 0.0f));
 	mpNullTile = new CTile();
 	mpNullTile->SetWorldPos(DX::XMFLOAT3(-2000.0f, 0.0f, 0.0f));
-
-	DX::XMFLOAT3 gridCentre = mpEarthGrid->GetGridCentrePos();
-	mpMdlSkybox->SetPosition(gridCentre.x, -1.0f, gridCentre.z);
-
-	mpMshGridArea = gpEngine->LoadMesh("Grid.x");
-	mpMdlEarthGridArea = mpMshGridArea->CreateModel(gridCentre.x, 0.2f, gridCentre.z);
-	mpMdlEarthGridArea->ScaleX((GRID_SIZE_X * GRID_TILE_SIZE) / 2.0f);
-	mpMdlEarthGridArea->ScaleZ((GRID_SIZE_Y * GRID_TILE_SIZE) / 2.0f);
-
-	mpMshGrassArea = gpEngine->LoadMesh("Grass.x");
-	mpMdlEarthGrassArea = mpMshGrassArea->CreateModel(gridCentre.x, 0.1f, gridCentre.z);
-	mpMdlEarthGrassArea->ScaleX(GRID_SIZE_X * GRID_TILE_SIZE * 2.0f);
-	mpMdlEarthGrassArea->ScaleZ(GRID_SIZE_Y * GRID_TILE_SIZE * 2.0f);
-	
-	// MARS
-	float marsXStart = (float)(GRID_SIZE_X * GRID_TILE_SIZE) + 1500.0f;
-	mpMarsGrid = new CGrid(DX::XMFLOAT3(marsXStart, 0.3f, 0.0f));
-
-	gridCentre = mpMarsGrid->GetGridCentrePos();
-
-	mpMdlMarsGridArea = mpMshGridArea->CreateModel(gridCentre.x, 0.2f, gridCentre.z);
-	mpMdlMarsGridArea->ScaleX((GRID_SIZE_X * GRID_TILE_SIZE) / 2.0f);
-	mpMdlMarsGridArea->ScaleZ((GRID_SIZE_Y * GRID_TILE_SIZE) / 2.0f);
-
-	mpMdlMarsGrassArea = mpMshGrassArea->CreateModel(gridCentre.x, 0.1f, gridCentre.z);
-	mpMdlMarsGrassArea->ScaleX(GRID_SIZE_X * GRID_TILE_SIZE * 2.0f);
-	mpMdlMarsGrassArea->ScaleZ(GRID_SIZE_Y * GRID_TILE_SIZE * 2.0f);
-	mpMdlMarsGrassArea->SetSkin("sand.jpg");
-
-
-	// INITIALISE CAMERAS
-	//-----------------------------
-	mpCamEarth = gpEngine->CreateCamera(kManual, mpEarthGrid->GetGridCentrePos().x, 230.0f, (float)GRID_SIZE_Y);
-	mpCamEarth->RotateX(50.0f);
-	mpCamEarth->SetNearClip(NEAR_CLIP);
-	mpCamEarth->SetFarClip(FAR_CLIP);
-
-	mpCamMars = gpEngine->CreateCamera(kManual, mpMarsGrid->GetGridCentrePos().x, 230.0f, (float)GRID_SIZE_Y);
-	mpCamMars->RotateX(50.0f);
-	mpCamMars->SetNearClip(NEAR_CLIP);
-	mpCamMars->SetFarClip(FAR_CLIP);
-
-	mpCamCurrent = mpCamEarth;
 
 
 	// INITIALISE USER INTERFACE
@@ -521,20 +476,45 @@ void CWorldState::StateSetup()
 	mpButtonList.push_back(pNewButton);
 
 
-	// INITIALISE MUSIC
-	//-----------------------------
-	string mMusicFile = "Perpetual Tension.wav"; //Sets the music file
-	ALfloat mSourcePos[3] = { mpCamEarth->GetX(), mpCamEarth->GetY(), mpCamEarth->GetZ() }; //Music source to camera position
-	ALfloat mSourceVel[3] = { 0.0f, 0.0f, 0.0f }; //No veloctiy of source
-	mMusic = new CSound(mMusicFile, mSourcePos, mSourceVel); //Initialise music
-	mMusic->PlaySound(); //Play music on loop
-
-
 	// CONSTRUCT COMMAND CENTRES
 	//-----------------------------
 	// if players have already been initialised, this is not necessary
 	if (!mpPlayerManager->ArePlayersInitialised())
 	{
+		// INITIALISE WORLDS
+		//-----------------------------
+		// EARTH
+		mpEarthGrid = new CGrid(DX::XMFLOAT3(0.0f, 0.3f, 0.0f));
+		
+		DX::XMFLOAT3 gridCentre = mpEarthGrid->GetGridCentrePos();
+		mpMdlSkybox->SetPosition(gridCentre.x, -1.0f, gridCentre.z);
+
+		mpMshGridArea = gpEngine->LoadMesh("Grid.x");
+		mpMdlEarthGridArea = mpMshGridArea->CreateModel(gridCentre.x, 0.2f, gridCentre.z);
+		mpMdlEarthGridArea->ScaleX((GRID_SIZE_X * GRID_TILE_SIZE) / 2.0f);
+		mpMdlEarthGridArea->ScaleZ((GRID_SIZE_Y * GRID_TILE_SIZE) / 2.0f);
+
+		mpMshGrassArea = gpEngine->LoadMesh("Grass.x");
+		mpMdlEarthGrassArea = mpMshGrassArea->CreateModel(gridCentre.x, 0.1f, gridCentre.z);
+		mpMdlEarthGrassArea->ScaleX(GRID_SIZE_X * GRID_TILE_SIZE * 2.0f);
+		mpMdlEarthGrassArea->ScaleZ(GRID_SIZE_Y * GRID_TILE_SIZE * 2.0f);
+
+		// MARS
+		float marsXStart = (float)(GRID_SIZE_X * GRID_TILE_SIZE) + 1500.0f;
+		mpMarsGrid = new CGrid(DX::XMFLOAT3(marsXStart, 0.3f, 0.0f));
+
+		gridCentre = mpMarsGrid->GetGridCentrePos();
+
+		mpMdlMarsGridArea = mpMshGridArea->CreateModel(gridCentre.x, 0.2f, gridCentre.z);
+		mpMdlMarsGridArea->ScaleX((GRID_SIZE_X * GRID_TILE_SIZE) / 2.0f);
+		mpMdlMarsGridArea->ScaleZ((GRID_SIZE_Y * GRID_TILE_SIZE) / 2.0f);
+
+		mpMdlMarsGrassArea = mpMshGrassArea->CreateModel(gridCentre.x, 0.1f, gridCentre.z);
+		mpMdlMarsGrassArea->ScaleX(GRID_SIZE_X * GRID_TILE_SIZE * 2.0f);
+		mpMdlMarsGrassArea->ScaleZ(GRID_SIZE_Y * GRID_TILE_SIZE * 2.0f);
+		mpMdlMarsGrassArea->SetSkin("sand.jpg");
+		
+		
 		// EARTH
 		mpPlacingStructure = nullptr;
 		CStructure* pTemp = new CComCentre();
@@ -565,11 +545,39 @@ void CWorldState::StateSetup()
 	}
 	else
 	{
-		// CONSTRUCT BUILDINGS
+		// RE-CONSTRUCT BUILDINGS
 		//-----------------------------
 		mpHumanPlayer->LoadStructureModels();
 		mpAIPlayer->LoadStructureModels();
+
+		// Re-assign previous grid data
+		mpEarthGrid = mpHumanPlayer->GetPlayerGrid();
+		mpMarsGrid = mpAIPlayer->GetPlayerGrid();
 	}
+
+
+	// INITIALISE CAMERAS
+	//-----------------------------
+	mpCamEarth = gpEngine->CreateCamera(kManual, mpEarthGrid->GetGridCentrePos().x, 230.0f, (float)GRID_SIZE_Y);
+	mpCamEarth->RotateX(50.0f);
+	mpCamEarth->SetNearClip(NEAR_CLIP);
+	mpCamEarth->SetFarClip(FAR_CLIP);
+
+	mpCamMars = gpEngine->CreateCamera(kManual, mpMarsGrid->GetGridCentrePos().x, 230.0f, (float)GRID_SIZE_Y);
+	mpCamMars->RotateX(50.0f);
+	mpCamMars->SetNearClip(NEAR_CLIP);
+	mpCamMars->SetFarClip(FAR_CLIP);
+
+	mpCamCurrent = mpCamEarth;
+
+
+	// INITIALISE MUSIC
+	//-----------------------------
+	string mMusicFile = "Perpetual Tension.wav"; //Sets the music file
+	ALfloat mSourcePos[3] = { mpCamEarth->GetX(), mpCamEarth->GetY(), mpCamEarth->GetZ() }; //Music source to camera position
+	ALfloat mSourceVel[3] = { 0.0f, 0.0f, 0.0f }; //No veloctiy of source
+	mMusic = new CSound(mMusicFile, mSourcePos, mSourceVel); //Initialise music
+	mMusic->PlaySound(); //Play music on loop
 }
 
 void CWorldState::StateUpdate()
@@ -605,6 +613,11 @@ void CWorldState::StateUpdate()
 	{
 		// Mouse on bottom side of screen
 		mpCamCurrent->MoveZ(-CAM_MOVE_SPEED * gFrameTime);
+	}
+
+	if (gpEngine->KeyHit(Key_H))
+	{
+		int i = 5;
 	}
 
 
@@ -701,12 +714,14 @@ void CWorldState::StateSave()
 
 void CWorldState::StateCleanup()
 {
+	// Temporarily store grid state
+	mpHumanPlayer->StorePlayerGridState(mpEarthGrid);
+	mpAIPlayer->StorePlayerGridState(mpMarsGrid);
+
 	// Unclip cursor
 	ClipCursor(&mBaseClip);
 	
 	SafeDelete(mpMouseScreenPos);
-	SafeDelete(mpEarthGrid);
-	SafeDelete(mpMarsGrid);
 
 	mpMshSkybox->RemoveModel(mpMdlSkybox);
 

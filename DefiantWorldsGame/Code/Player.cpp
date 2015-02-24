@@ -18,6 +18,8 @@ CRTSPlayer::CRTSPlayer(EFactions playerFaction)
 	mpFleet = new CFleet();
 	mPlayerFaction = playerFaction;
 	
+	mpPlayerGrid = nullptr;
+
 	CSpaceFighter* Temp;
 	for (int i = 0; i < 10; i++)
 	{

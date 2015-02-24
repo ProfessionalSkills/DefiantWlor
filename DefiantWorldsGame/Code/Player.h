@@ -44,6 +44,8 @@ protected:
 	int mCurPopLimit;
 	int mCurPop;
 
+	CGrid* mpPlayerGrid;
+
 
 	// LISTS
 	//---------------------------
@@ -107,6 +109,11 @@ public:
 		return mPlayerFaction;
 	}
 
+	inline CGrid* GetPlayerGrid()
+	{
+		return mpPlayerGrid;
+	}
+
 
 	// MUTATORS
 	//---------------------------
@@ -121,6 +128,11 @@ public:
 		{
 			mpSpaceUnitsList.push_back(newUnits[i]);
 		}
+	}
+
+	inline void StorePlayerGridState(CGrid* pGrid)
+	{
+		mpPlayerGrid = pGrid;
 	}
 
 	bool MineralTransaction(int amount);
