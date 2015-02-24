@@ -93,6 +93,9 @@ void CSpaceState::StateUpdate()
 		//finds and removes dead ships
 		mpPlayerOneFleet->UpdateCondition();
 		mpPlayerTwoFleet->UpdateCondition();
+
+		//reset timer
+		mTimeSinceUpdate = 0.0f;
 	}
 }
 
