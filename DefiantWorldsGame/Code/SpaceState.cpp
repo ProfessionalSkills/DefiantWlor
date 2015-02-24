@@ -16,6 +16,8 @@
 CSpaceState::CSpaceState() : CGameState()
 {
 	mDisplacement = 20.0f;
+	mTimeSinceUpdate = 0.0f;
+	mTimeToUpdate = 0.1f;
 }
 
 CSpaceState::~CSpaceState()
@@ -80,13 +82,18 @@ void CSpaceState::StateUpdate()
 	// Draw the scene
 	gpEngine->DrawScene();
 
-	//fleets attack each other according to tactics
-	mpPlayerOneFleet->Fight();
-	mpPlayerTwoFleet->Fight();
+	//update time, used to slow down the speed of the fight
+	mTimeSinceUpdate += gFrameTime;
+	if (mTimeSinceUpdate >= mTimeToUpdate)
+	{
+		//fleets attack each other according to tactics
+		mpPlayerOneFleet->Fight();
+		mpPlayerTwoFleet->Fight();
 
-	//finds and removes dead ships
-	mpPlayerOneFleet->UpdateCondition();
-	mpPlayerTwoFleet->UpdateCondition();
+		//finds and removes dead ships
+		mpPlayerOneFleet->UpdateCondition();
+		mpPlayerTwoFleet->UpdateCondition();
+	}
 }
 
 void CSpaceState::StateLoad()

@@ -307,6 +307,7 @@ void CWorldState::CheckKeyPresses()
 	{
 		mpHumanPlayer->LaunchAttack();
 		mpAIPlayer->LaunchAttack();
+		gCurState = GS_SPACE;
 	}
 
 	//test to return fleet
@@ -615,6 +616,8 @@ void CWorldState::StateCleanup()
 
 	gpEngine->RemoveMesh(mpMshSkybox);
 	gpEngine->RemoveCamera(mpCamEarth);
+
+	mMusic->StopSound();
 }
 
 

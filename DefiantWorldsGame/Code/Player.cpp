@@ -91,8 +91,7 @@ bool CRTSPlayer::QueueUnit(CStructure* structure, CGameAgent* unit)
 
 void CRTSPlayer::LaunchAttack()
 {
-	//mpSpaceUnitsList = mpFleet->LaunchFleet(mpSpaceUnitsList);
-	//transition into space state from hear
+	mpSpaceUnitsList = mpFleet->LaunchFleet(mpSpaceUnitsList);
 }
 
 CStructure* CRTSPlayer::CheckStructureSelection(DX::XMFLOAT3 pos)

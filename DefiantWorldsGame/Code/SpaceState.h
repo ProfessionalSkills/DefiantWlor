@@ -47,6 +47,10 @@ private:
 	CRTSPlayer* mpHumanPlayer;
 	CRTSPlayer* mpAIPlayer;
 
+	// MISC
+	//---------------------------
+	float mTimeToUpdate;
+	float mTimeSinceUpdate;
 
 public:
 	// CONSTRUCTORS & DESTRUCTOR
