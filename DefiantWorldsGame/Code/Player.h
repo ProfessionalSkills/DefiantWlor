@@ -97,6 +97,11 @@ public:
 		return mpSpaceUnitsList;
 	}
 
+	inline int GetAmountOfStructures()
+	{
+		return mpStructureList.size();
+	}
+
 	inline EFactions GetPlayerFaction()
 	{
 		return mPlayerFaction;

@@ -97,7 +97,7 @@ void CHellipad::LoadIModel()
 	else
 	{
 		// Create the model
-		mpObjModel = mspMshStructurePlacing->CreateModel();
+		mpObjModel = mspMshStructurePlacing->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
 		mpObjModel->Scale(mScale);
 	}
 }
