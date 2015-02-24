@@ -31,7 +31,7 @@ enum EGameStates
 
 enum EMouseStates
 {
-	MS_OUT_OF_GRID, MS_EARTH_GRID, MS_MARS_GRID
+	MS_OUT_OF_GRID, MS_EARTH_GRID, MS_MARS_GRID, MS_UI
 };
 
 enum EObjectStates

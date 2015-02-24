@@ -96,7 +96,6 @@ void CWorldState::CalculateMouseGridPos()
 	DX::XMVECTOR intersecVec = DX::XMPlaneIntersectLine(DX::XMLoadFloat3(&mYPlane), rayOrigin, rayEnd);
 	DX::XMStoreFloat3(&mMouseWorldPos, intersecVec);		// Store the mouse's world position at y = 0
 
-
 	// Use the mouse's world position to determine the grid position
 	mMouseGridPos.mPosX = (mMouseWorldPos.x - mCurGridPos.x) / GRID_TILE_SIZE;
 	mMouseGridPos.mPosY = (mMouseWorldPos.z - mCurGridPos.z) / GRID_TILE_SIZE;
@@ -130,6 +129,10 @@ void CWorldState::DrawFontData()
 		mpCurTile = mpNullTile;
 		strStream << "None";
 		break;
+	case MS_UI:
+		mpCurTile = mpNullTile;
+		strStream << "None";
+		break;
 	}
 
 	if (mpCurTile)
@@ -142,6 +145,12 @@ void CWorldState::DrawFontData()
 
 EMouseStates CWorldState::UpdateMouseState()
 {
+	// Check if on UI
+	if (mpMouseScreenPos->mPosY > 685)
+	{
+		return MS_UI;
+	}
+	
 	// Check whether it is within earth boundary
 	if (mMouseWorldPos.x > mpEarthGrid->GetGridStartPos().x && mMouseWorldPos.x < mpEarthGrid->GetGridEndPos().x
 		&& mMouseWorldPos.z > mpEarthGrid->GetGridStartPos().z && mMouseWorldPos.z < mpEarthGrid->GetGridEndPos().z)
@@ -150,6 +159,7 @@ EMouseStates CWorldState::UpdateMouseState()
 		return MS_EARTH_GRID;
 	}
 	
+	// Check if in mars boundary
 	if (mMouseWorldPos.x > mpMarsGrid->GetGridStartPos().x && mMouseWorldPos.x < mpMarsGrid->GetGridEndPos().x
 		&& mMouseWorldPos.z > mpMarsGrid->GetGridStartPos().z && mMouseWorldPos.z < mpMarsGrid->GetGridEndPos().z)
 	{
