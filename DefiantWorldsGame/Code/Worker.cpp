@@ -49,6 +49,14 @@ bool RepairUnit(CGroundUnit* unit)
 	return false;
 }
 
+void CWorker::UnloadIModel()
+{
+	if (mpObjModel != 0)
+	{
+		mspMshWorker->RemoveModel(mpObjModel);
+	}
+}
+
 
 //-----------------------------------------------------
 // WORKER CLASS OVERRIDE METHODS

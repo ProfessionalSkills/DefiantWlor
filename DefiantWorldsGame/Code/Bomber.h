@@ -44,7 +44,7 @@ public:
 
 	// METHODS
 	//---------------------------
-
+	void UnloadIModel();
 
 	// OVERRIDE METHODS
 	//---------------------------

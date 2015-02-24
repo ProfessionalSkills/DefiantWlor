@@ -36,6 +36,18 @@ CInfantry::~CInfantry()
 
 }
 
+//-----------------------------------------------------
+// INFANTRY CLASS METHODS
+//-----------------------------------------------------
+
+void CInfantry::UnloadIModel()
+{
+	if (mpObjModel != 0)
+	{
+		mspMshInfantry->RemoveModel(mpObjModel);
+	}
+}
+
 
 //-----------------------------------------------------
 // INFANTRY CLASS OVERRIDE METHODS

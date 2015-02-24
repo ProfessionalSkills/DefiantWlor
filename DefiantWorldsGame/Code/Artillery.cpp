@@ -36,6 +36,17 @@ CArtillery::~CArtillery()
 	
 }
 
+//-----------------------------------------------------
+// ARTILLERY CLASS METHODS
+//-----------------------------------------------------
+
+void CArtillery::UnloadIModel()
+{
+	if (mpObjModel != 0)
+	{
+		mspMshArtillery->RemoveModel(mpObjModel);
+	}
+}
 
 //-----------------------------------------------------
 // ARTILLERY CLASS OVERRIDE METHODS

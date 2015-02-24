@@ -135,6 +135,8 @@ public:
 	void Update();
 	void LoadStructureModels();
 	void UnloadStructureModels();
+	void LoadUnitModels();
+	void UnloadUnitModels();
 };
 
 

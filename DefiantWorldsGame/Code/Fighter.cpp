@@ -36,6 +36,18 @@ CFighter::~CFighter()
 
 }
 
+//-----------------------------------------------------
+// FIGHTER CLASS METHODS
+//-----------------------------------------------------
+
+void CFighter::UnloadIModel()
+{
+	if (mpObjModel != 0)
+	{
+		mspMshFighter->RemoveModel(mpObjModel);
+	}
+}
+
 
 //-----------------------------------------------------
 // FIGHTER CLASS OVERRIDE METHODS
