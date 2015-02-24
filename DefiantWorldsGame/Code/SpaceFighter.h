@@ -43,7 +43,7 @@ public:
 	// METHODS
 	//---------------------------
 	void LoadModel(float x, float y, float z);
-	void RemoveModel();
+	void UnloadIModel();
 	// OVERRIDE METHODS
 	//---------------------------
 	void Spawn(CGrid* pGrid, SPointData pCentre);

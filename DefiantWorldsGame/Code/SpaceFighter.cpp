@@ -34,7 +34,7 @@ CSpaceFighter::CSpaceFighter()
 
 CSpaceFighter::~CSpaceFighter()
 {
-	RemoveModel();
+	UnloadIModel();
 }
 
 //-----------------------------------------------------
@@ -55,7 +55,7 @@ void CSpaceFighter::LoadModel(float x,float y, float z)
 	mpObjModel->Scale(mScale);
 }
 
-void CSpaceFighter::RemoveModel()
+void CSpaceFighter::UnloadIModel()
 {
 	if (mpObjModel != 0)
 	{

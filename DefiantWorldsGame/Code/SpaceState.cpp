@@ -82,6 +82,11 @@ void CSpaceState::StateUpdate()
 	// Draw the scene
 	gpEngine->DrawScene();
 
+	if (gpEngine->KeyHit(Key_R))
+	{
+		gCurState = GS_WORLD;
+	}
+
 	//update time, used to slow down the speed of the fight
 	mTimeSinceUpdate += gFrameTime;
 	if (mTimeSinceUpdate >= mTimeToUpdate)
@@ -111,12 +116,6 @@ void CSpaceState::StateSave()
 
 void CSpaceState::StateCleanup()
 {
-	//set pointers to null
-	mpPlayerOneFleet = nullptr;
-	mpPlayerTwoFleet = nullptr;
-
-	mpPlayerOneFleet->SetEnemy(nullptr);
-	mpPlayerTwoFleet->SetEnemy(nullptr);
 
 	//stop sound
 	mMusic->StopSound();
@@ -124,4 +123,11 @@ void CSpaceState::StateCleanup()
 	//unload models
 	mpMshSkybox->RemoveModel(mpMdlSkybox);
 
+
+	mpHumanPlayer->SetSpaceUnitList(mpPlayerOneFleet->ReturnFleet(mpHumanPlayer->GetSpaceUnitList()));
+	mpAIPlayer->SetSpaceUnitList(mpPlayerTwoFleet->ReturnFleet(mpAIPlayer->GetSpaceUnitList()));
+
+	//set pointers to null
+	mpPlayerOneFleet = nullptr;
+	mpPlayerTwoFleet = nullptr;
 }
