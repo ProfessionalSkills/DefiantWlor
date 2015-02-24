@@ -30,3 +30,7 @@ void CStaticStructure::UnloadIModel()
 {
 
 }
+void CStaticStructure::LoadIModel()
+{
+
+}

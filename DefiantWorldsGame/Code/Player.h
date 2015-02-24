@@ -128,6 +128,8 @@ public:
 	bool QueueUnit(CStructure* structure, CGameAgent* unit);
 	void LaunchAttack();
 	void Update();
+	void LoadStructureModels();
+	void UnloadStructureModels();
 };
 
 

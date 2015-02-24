@@ -124,3 +124,20 @@ void CRTSPlayer::Update()
 		}
 	}
 }
+
+void CRTSPlayer::LoadStructureModels()
+{
+	for (int i = 0; i < mpStructureList.size(); i++)
+	{
+		mpStructureList[i]->LoadIModel();
+	}
+}
+
+void CRTSPlayer::UnloadStructureModels()
+{
+	// Loop through all structures & unload their models
+	for (int i = 0; i < mpStructureList.size();i++)
+	{
+		mpStructureList[i]->UnloadIModel();
+	}
+}

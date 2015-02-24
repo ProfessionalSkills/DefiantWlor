@@ -522,6 +522,10 @@ void CWorldState::StateSetup()
 		mpPlacingStructure = nullptr;
 		mpEarthGrid->ResetTilesModels();
 	}
+
+	// CONSTRUCT BUILDINGS
+	//-----------------------------
+	mpHumanPlayer->LoadStructureModels();
 }
 
 void CWorldState::StateUpdate()
@@ -613,6 +617,9 @@ void CWorldState::StateCleanup()
 	SafeDelete(mpMarsGrid);
 
 	mpMshSkybox->RemoveModel(mpMdlSkybox);
+
+	//used to unload the structure models
+	mpHumanPlayer->UnloadStructureModels();
 
 	gpEngine->RemoveMesh(mpMshSkybox);
 	gpEngine->RemoveCamera(mpCamEarth);

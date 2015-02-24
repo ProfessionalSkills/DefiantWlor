@@ -51,6 +51,7 @@ public:
 	//---------------------------
 	void SetBuiltModel() override;
 	void UnloadIModel() override;
+	void LoadIModel()override;
 };
 
 #endif /* _COM_CENTRE_H_ */

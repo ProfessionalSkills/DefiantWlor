@@ -144,6 +144,7 @@ public:
 	virtual void DisplayInfo(IFont* font) = 0;
 	virtual void SetBuiltModel() = 0;
 	virtual void UnloadIModel() = 0;
+	virtual void LoadIModel()=0;
 };
 
 #endif /* _STRUCTURE_H_ */

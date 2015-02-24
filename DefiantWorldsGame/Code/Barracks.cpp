@@ -80,3 +80,25 @@ void CBarracks::UnloadIModel()
 		mspMshStructurePlacing->RemoveModel(mpObjModel);
 	}
 }
+
+void CBarracks::LoadIModel()
+{
+	if (mState == OBJ_BUILT || mState == OBJ_DAMAGED || mState == OBJ_DEAD || mState == OBJ_WARNING)
+	{
+		// Create new model with original mesh
+		mpObjModel = mspMshStructureBuilt->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
+		mpObjModel->Scale(mScale);
+
+		// If the x is beyond a certain distance, the object is on mars - set relevant skin
+		if (mpObjModel->GetX() > (GRID_SIZE_X * GRID_TILE_SIZE))
+		{
+			mpObjModel->SetSkin("bld-mt-mars.jpg");
+		}
+	}
+	else
+	{
+		// Create the model
+		mpObjModel = mspMshStructurePlacing->CreateModel();
+		mpObjModel->Scale(mScale);
+	}
+}

@@ -46,6 +46,7 @@ public:
 	// OVERRIDE METHODS
 	//---------------------------
 	virtual void UnloadIModel();
+	virtual void LoadIModel();
 	//virtual bool Destroy();
 };
 

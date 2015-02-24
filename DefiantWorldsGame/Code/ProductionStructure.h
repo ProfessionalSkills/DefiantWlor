@@ -78,6 +78,7 @@ public:
 	//---------------------------
 	virtual void SetBuiltModel();
 	virtual void UnloadIModel();
+	virtual void LoadIModel()=0;
 };
 
 #endif /* _PRODUCTION_STRUCTURE_H_ */
