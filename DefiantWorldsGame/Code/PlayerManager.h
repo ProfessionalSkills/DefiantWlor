@@ -43,9 +43,23 @@ public:
 		return mpAI[index];
 	}
 
+	inline bool ArePlayersInitialised()
+	{
+		return mPlayerDataInitialised;
+	}
+
 
 	// MUTATORS
 	//---------------------------
+	inline void PlayersInitialised()
+	{
+		mPlayerDataInitialised = true;
+	}
+
+	inline void PlayersUnloaded()
+	{
+		mPlayerDataInitialised = false;
+	}
 
 
 private:
@@ -55,6 +69,8 @@ private:
 	CRTSPlayer* mpAI[MAX_AI_NUM];
 
 	int mNumAI;
+
+	bool mPlayerDataInitialised;
 };
 
 
