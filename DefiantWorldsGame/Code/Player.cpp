@@ -114,7 +114,7 @@ void CRTSPlayer::Update()
 	// Loop through all structures & update them
 	for (mpiterStructures = mpStructureList.begin(); mpiterStructures != mpStructureList.end(); mpiterStructures++)
 	{
-		if (!(*mpiterStructures)->Update())
+		if (!(*mpiterStructures)->Update(mpWorldUnitsList))
 		{
 			// The current structure has been destroyed
 			CStructure* tmp = (*mpiterStructures);

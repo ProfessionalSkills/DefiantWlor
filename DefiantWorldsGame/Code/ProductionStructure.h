@@ -11,18 +11,6 @@
 //-----------------------------------------------------
 #include "Structure.h"
 
-#include "Artillery.h"
-#include "Tank.h"
-#include "Infantry.h"
-
-#include "Worker.h"
-
-#include "Bomber.h"
-#include "Fighter.h"
-
-#include "SpaceFighter.h"
-#include "Mothership.h"
-#include "Transport.h"
 
 
 //-----------------------------------------------------
@@ -70,7 +58,7 @@ public:
 	CGameAgent* CreateAgent();		// Called when agent at front of production queue is finished
 	void UpdateKeyPresses();
 
-	bool Update() override;
+	bool Update(std::vector<CGameAgent*>& mpWorldUnitsList) override;
 	void DisplayInfo(IFont* font) override;
 
 

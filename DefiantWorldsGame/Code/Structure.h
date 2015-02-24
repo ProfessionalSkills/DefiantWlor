@@ -12,6 +12,19 @@
 #include "GameObject.h"
 #include "Grid.h"
 
+#include "Artillery.h"
+#include "Tank.h"
+#include "Infantry.h"
+
+#include "Worker.h"
+
+#include "Bomber.h"
+#include "Fighter.h"
+
+#include "SpaceFighter.h"
+#include "Mothership.h"
+#include "Transport.h"
+
 
 //-----------------------------------------------------
 // STRUCTURE CLASS - CHILD OF GAME OBJECT
@@ -139,7 +152,7 @@ public:
 	// VIRTUAL METHODS
 	//---------------------------
 	// Method called each frome - boolean returns is false when the object has been destroyed
-	virtual bool Update() = 0;
+	virtual bool Update(std::vector<CGameAgent*>& mpWorldUnitsList) = 0;
 
 	virtual void DisplayInfo(IFont* font) = 0;
 	virtual void SetBuiltModel() = 0;

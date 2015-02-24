@@ -45,7 +45,7 @@ bool CProductionStructure::AddToQueue(int agentIndex)
 	// Increment iterator to index
 	miterRespectiveAgents = mRespectiveAgentsList.begin();
 	std::advance(miterRespectiveAgents, agentIndex);
-
+	
 	// Create instance based on created type
 	switch ((*miterRespectiveAgents)->GetAgentData()->mAgentType)
 	{
@@ -94,7 +94,7 @@ bool CProductionStructure::RemoveFromQueue()
 {
 	CGameAgent* tmp = mpProductionQueue.front();
 	tmp->Spawn(mpGrid, GetBuildLocation());
-	
+
 	//delete tmp;
 	mpProductionQueue.pop();
 	return false;
@@ -149,7 +149,7 @@ void CProductionStructure::SetBuiltModel()
 
 }
 
-bool CProductionStructure::Update()
+bool CProductionStructure::Update(std::vector<CGameAgent*>& mpWorldUnitsList)
 {
 	// Determine state of the structure
 	switch (mState)
@@ -179,6 +179,7 @@ bool CProductionStructure::Update()
 				if (mpProductionQueue.front()->Construct())
 				{
 					// Unit fully constructed - for now remove from queue
+					mpWorldUnitsList.push_back(mpProductionQueue.front());
 					RemoveFromQueue();
 				}
 			}
