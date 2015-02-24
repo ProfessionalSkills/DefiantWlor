@@ -87,6 +87,11 @@ void CSpaceState::StateUpdate()
 		gCurState = GS_WORLD;
 	}
 
+	if (gpEngine->KeyHit(Key_M))
+	{
+		gCurState = GS_MAIN_MENU;
+	}
+
 	//update time, used to slow down the speed of the fight
 	mTimeSinceUpdate += gFrameTime;
 	if (mTimeSinceUpdate >= mTimeToUpdate)
