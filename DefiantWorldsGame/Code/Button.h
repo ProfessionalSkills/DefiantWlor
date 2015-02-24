@@ -15,6 +15,8 @@
 // BUTTON CLASS
 //-----------------------------------------------------
 class CMenuState;
+class CWorldState;
+class CSpaceState;
 
 class CButton
 {
@@ -26,9 +28,14 @@ private:
 
 	bool mMouseIsOver;
 	bool mClicked;
+	int  mState;		// 0 = menu, 1 = World, 2 = Space
 
-	typedef void (CMenuState::*ClickResponseFunc)(void);
-	ClickResponseFunc mCallback;
+	typedef void (CMenuState::*ClickResponseMenu)(void);
+	typedef void (CWorldState::*ClickResponseWorld)(void);
+	typedef void (CSpaceState::*ClickResponseSpace)(void);
+	ClickResponseMenu mMenuCallback;
+	ClickResponseWorld mWorldCallback;
+	ClickResponseSpace mSpaceCallback;
 
 
 	// BUTTON VISUALS
@@ -41,7 +48,11 @@ public:
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
 	CButton(std::string spriteName, std::string spriteMOName, SPointData pos, SAABoundingBox boundingBox,
-		ClickResponseFunc callbackFunc);
+		ClickResponseMenu callbackFunc);
+	CButton(std::string spriteName, std::string spriteMOName, SPointData pos, SAABoundingBox boundingBox,
+		ClickResponseWorld callbackFunc);
+	CButton(std::string spriteName, std::string spriteMOName, SPointData pos, SAABoundingBox boundingBox,
+		ClickResponseSpace callbackFunc);
 	~CButton();
 
 

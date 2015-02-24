@@ -486,7 +486,12 @@ void CWorldState::StateSetup()
 	// INITIALISE USER INTERFACE
 	//-----------------------------
 	mFntDebug = gpEngine->LoadFont("Font2.bmp", 15U);
-	mpMainUI = gpEngine->CreateSprite("WorldUI.png", 0.0f, 0.0f, 0.0f);
+	mpMainUI = gpEngine->CreateSprite("WorldUI.png", 0.0f, 0.0f, 0.9f);
+	CButton* pNewButton = nullptr;
+
+	pNewButton = new CButton("DefSpaceCentreButton.png", "SelSpaceCentreButton.png", SPointData(1219, 695),
+		SAABoundingBox(793.0f, 1297.0f, 695.0f, 1219.0f), &CWorldState::SelectSpaceCentre);
+	mpButtonList.push_back(pNewButton);
 
 
 	// INITIALISE MUSIC
@@ -523,6 +528,7 @@ void CWorldState::StateSetup()
 		mpPlacingStructure = nullptr;
 		mpEarthGrid->ResetTilesModels();
 	}
+	mpPlacingStructure = nullptr;
 
 	// CONSTRUCT BUILDINGS
 	//-----------------------------
@@ -573,6 +579,36 @@ void CWorldState::StateUpdate()
 	CheckKeyPresses();
 	DrawFontData();
 	DisplaySelectedBuildingInfo();
+
+
+	// BUTTON UPDATES
+	//---------------------------
+	for (miterButtons = mpButtonList.begin(); miterButtons != mpButtonList.end(); miterButtons++)
+	{
+		// Check if the mouse is colliding with the object
+		if ((*miterButtons)->GetBoundingBox().IsColliding(DX::XMFLOAT3(mpMouseScreenPos->mPosX, 0.0f, mpMouseScreenPos->mPosY)))
+		{
+			(*miterButtons)->SetMouseOver(true);
+		}
+		else
+		{
+			(*miterButtons)->SetMouseOver(false);
+		}
+
+		// Check for click 
+		if ((*miterButtons)->GetMouseOver())
+		{
+			// Check if the mouse is over the button
+			if (gpEngine->KeyHit(Mouse_RButton))
+			{
+				// Raise click flag
+				(*miterButtons)->SetClick(true);
+			}
+		}
+
+		// Update the button
+		(*miterButtons)->Update();
+	}
 
 
 	// MODEL UPDATES

@@ -11,6 +11,7 @@
 //-----------------------------------------------------
 #include "BaseGameState.h"
 #include "Grid.h"
+#include "Button.h"
 
 
 //-----------------------------------------------------
@@ -62,6 +63,8 @@ private:
 	//---------------------------
 	IFont* mFntDebug;
 	ISprite* mpMainUI;
+	std::vector<CButton*> mpButtonList;
+	std::vector<CButton*>::iterator miterButtons;
 
 
 	// MOUSE DATA
@@ -130,6 +133,16 @@ public:
 	void StateCleanup() override;
 	void StateSave() override;
 	void StateLoad() override;
+
+
+	// POINTER METHODS FOR BUTTONS
+	//---------------------------
+	void SelectSpaceCentre()
+	{
+		CStructure*	pStructure = new CSpaceCentre();
+		OnPlacingStructureChange(pStructure);
+	}
+
 
 private:
 	// EVENT HANDLERS
