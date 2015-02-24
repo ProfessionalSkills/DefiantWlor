@@ -86,13 +86,14 @@ void CComCentre::UnloadIModel()
 
 void CComCentre::LoadIModel()
 {
-	if (mpObjModel != nullptr)
+	if (mpObjModel == nullptr)
 	{
 		if (mState == OBJ_CONSTRUCTING)
 		{
 			// Create the model
 			mpObjModel = mspMshStructurePlacing->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
 			mpObjModel->Scale(mScale);
+			mpObjModel->SetSkin("bld-mt-placed_tlxadd.jpg");
 		}
 		else
 		{
