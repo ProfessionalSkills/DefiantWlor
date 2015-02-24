@@ -621,6 +621,8 @@ void CWorldState::StateCleanup()
 
 	//used to unload the structure models
 	mpHumanPlayer->UnloadStructureModels();
+	//mpAIPlayer->UnloadStructureModels();//causes a crash if you change from world state to any other state whilst on mars
+	mpHumanPlayer->UnloadUnitModels();
 
 	gpEngine->RemoveSprite(mpMainUI);
 	gpEngine->RemoveMesh(mpMshSkybox);

@@ -141,3 +141,16 @@ void CRTSPlayer::UnloadStructureModels()
 		mpStructureList[i]->UnloadIModel();
 	}
 }
+
+void CRTSPlayer::LoadUnitModels()
+{
+	//loads units back into their original postion
+}
+
+void CRTSPlayer::UnloadUnitModels()
+{
+	for (int i = 0; i < mpWorldUnitsList.size(); i++)
+	{
+		mpWorldUnitsList[i]->UnloadIModel();
+	}
+}
