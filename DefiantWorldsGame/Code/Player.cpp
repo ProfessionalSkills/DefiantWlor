@@ -35,6 +35,9 @@ CRTSPlayer::~CRTSPlayer()
 		// Remove all models
 		(*mpiterStructures)->UnloadIModel();
 	}
+
+	// Handle removal of the grids
+	SafeDelete(mpPlayerGrid);
 }
 
 
