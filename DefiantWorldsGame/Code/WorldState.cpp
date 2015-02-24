@@ -508,8 +508,12 @@ void CWorldState::StateSetup()
 	mpMainUI = gpEngine->CreateSprite("WorldUI.png", 0.0f, 0.0f, 0.9f);
 	CButton* pNewButton = nullptr;
 
-	pNewButton = new CButton("DefSpaceCentreButton.png", "SelSpaceCentreButton.png", SPointData(1219, 695),
-		SAABoundingBox(772.0f, 1322.0f, 695.0f, 1219.0f), "Space Centre");
+	pNewButton = new CButton("DefBarracksButton.png", "SelBarracksButton.png", SPointData(1229, 705),
+		SAABoundingBox(782.0f, 1332.0f, 705.0f, 1229.0f), "Barracks");
+	mpButtonList.push_back(pNewButton);
+
+	pNewButton = new CButton("DefSpaceCentreButton.png", "SelSpaceCentreButton.png", SPointData(1352, 705),
+		SAABoundingBox(782.0f, 1429.0f, 705.0f, 1352.0f), "Space Centre");
 	mpButtonList.push_back(pNewButton);
 
 
@@ -626,6 +630,11 @@ void CWorldState::StateUpdate()
 				if (purpose == "Space Centre")
 				{
 					CStructure* pStructure = new CSpaceCentre();
+					OnPlacingStructureChange(pStructure);
+				}
+				else if (purpose == "Barracks")
+				{
+					CStructure* pStructure = new CBarracks();
 					OnPlacingStructureChange(pStructure);
 				}
 
