@@ -47,7 +47,7 @@ public:
 	virtual bool Attack(CGameAgent* target, float hitMod, float damageMod);
 	//virtual void MoveTo(CTile* dest);
 	virtual bool Move();
-	virtual void UnloadIModel();
+	virtual void UnloadIModel() = 0;
 
 	void Spawn(CGrid* pGrid, SPointData pCentre);
 

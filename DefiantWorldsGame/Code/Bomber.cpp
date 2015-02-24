@@ -36,6 +36,17 @@ CBomber::~CBomber()
 
 }
 
+//-----------------------------------------------------
+// BOMBER CLASS METHODS
+//-----------------------------------------------------
+
+void CBomber::UnloadIModel()
+{
+	if (mpObjModel != 0)
+	{
+		mspMshBomber->RemoveModel(mpObjModel);
+	}
+}
 
 //-----------------------------------------------------
 // BOMBER CLASS OVERRIDE METHODS

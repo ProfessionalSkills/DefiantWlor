@@ -47,7 +47,7 @@ public:
 	//bool RepairBuilding(CStructure* structure);
 	//bool CollectResources(CResources* resource);
 	bool RepairUnit(CGroundUnit* unit);
-
+	void UnloadIModel();
 
 	// OVERRIDE METHODS
 	//---------------------------

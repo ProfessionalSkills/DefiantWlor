@@ -35,6 +35,17 @@ CTank::~CTank()
 
 }
 
+//-----------------------------------------------------
+// TANK CLASS METHODS
+//-----------------------------------------------------
+
+void CTank::UnloadIModel()
+{
+	if (mpObjModel != 0)
+	{
+		mspMshTank->RemoveModel(mpObjModel);
+	}
+}
 
 //-----------------------------------------------------
 // TANK CLASS OVERRIDE METHODS
