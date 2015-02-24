@@ -58,9 +58,10 @@ private:
 	CTile* mpCurTile;
 
 
-	// FONT
+	// USER INTERFACE
 	//---------------------------
 	IFont* mFntDebug;
+	ISprite* mpMainUI;
 
 
 	// MOUSE DATA

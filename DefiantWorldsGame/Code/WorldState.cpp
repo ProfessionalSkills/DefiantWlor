@@ -483,9 +483,10 @@ void CWorldState::StateSetup()
 	mpCamCurrent = mpCamEarth;
 
 
-	// INITIALISE FONTS
+	// INITIALISE USER INTERFACE
 	//-----------------------------
 	mFntDebug = gpEngine->LoadFont("Font2.bmp", 15U);
+	mpMainUI = gpEngine->CreateSprite("WorldUI.png", 0.0f, 0.0f, 0.0f);
 
 
 	// INITIALISE MUSIC
@@ -621,6 +622,7 @@ void CWorldState::StateCleanup()
 	//used to unload the structure models
 	mpHumanPlayer->UnloadStructureModels();
 
+	gpEngine->RemoveSprite(mpMainUI);
 	gpEngine->RemoveMesh(mpMshSkybox);
 	gpEngine->RemoveCamera(mpCamEarth);
 
