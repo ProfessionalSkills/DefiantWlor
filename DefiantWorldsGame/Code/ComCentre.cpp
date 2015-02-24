@@ -69,24 +69,32 @@ void CComCentre::SetBuiltModel()
 
 void CComCentre::UnloadIModel()
 {
-	if (mpObjModel != 0)
+	if (mpObjModel != nullptr)
 	{
-		if (mState == OBJ_BUILT || mState == OBJ_DAMAGED || mState == OBJ_DEAD || mState == OBJ_WARNING)
-		{
-			mspMshStructureBuilt->RemoveModel(mpObjModel);
-		}
-		else
+		if (mState == OBJ_CONSTRUCTING)
 		{
 			mspMshStructurePlacing->RemoveModel(mpObjModel);
 		}
+		else
+		{
+			mspMshStructureBuilt->RemoveModel(mpObjModel);
+		}
+
+		mpObjModel = nullptr;
 	}
 }
 
 void CComCentre::LoadIModel()
 {
-	if (mpObjModel != 0)
+	if (mpObjModel != nullptr)
 	{
-		if (mState == OBJ_BUILT || mState == OBJ_DAMAGED || mState == OBJ_DEAD || mState == OBJ_WARNING)
+		if (mState == OBJ_CONSTRUCTING)
+		{
+			// Create the model
+			mpObjModel = mspMshStructurePlacing->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
+			mpObjModel->Scale(mScale);
+		}
+		else
 		{
 			// Create new model with original mesh
 			mpObjModel = mspMshStructureBuilt->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
@@ -97,13 +105,6 @@ void CComCentre::LoadIModel()
 			{
 				mpObjModel->SetSkin("bld-mt-mars.jpg");
 			}
-
-		}
-		else
-		{
-			// Create the model
-			mpObjModel = mspMshStructurePlacing->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
-			mpObjModel->Scale(mScale);
 		}
 	}
 }

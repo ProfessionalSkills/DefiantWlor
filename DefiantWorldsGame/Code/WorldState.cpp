@@ -532,34 +532,44 @@ void CWorldState::StateSetup()
 
 	// CONSTRUCT COMMAND CENTRES
 	//-----------------------------
-	// EARTH
-	mpPlacingStructure = nullptr;
-	CStructure* pTemp = new CComCentre();
-	mpCurTile = mpEarthGrid->GetTileData(SPointData(GRID_SIZE_X / 2.0f, GRID_SIZE_Y / 2.0f));
-	OnPlacingStructureChange(pTemp);
-
-	if (mpHumanPlayer->PurchaseStructure(mpPlacingStructure, mpEarthGrid, mpCurTile))
+	// if players have already been initialised, this is not necessary
+	if (!mpPlayerManager->ArePlayersInitialised())
 	{
+		// EARTH
 		mpPlacingStructure = nullptr;
-		mpEarthGrid->ResetTilesModels();
+		CStructure* pTemp = new CComCentre();
+		mpCurTile = mpEarthGrid->GetTileData(SPointData(GRID_SIZE_X / 2.0f, GRID_SIZE_Y / 2.0f));
+		OnPlacingStructureChange(pTemp);
+
+		if (mpHumanPlayer->PurchaseStructure(mpPlacingStructure, mpEarthGrid, mpCurTile))
+		{
+			mpPlacingStructure = nullptr;
+			mpEarthGrid->ResetTilesModels();
+		}
+
+		// MARS
+		mpPlacingStructure = nullptr;
+		pTemp = new CComCentre();
+		mpCurTile = mpMarsGrid->GetTileData(SPointData(GRID_SIZE_X / 2.0f, GRID_SIZE_Y / 2.0f));
+		OnPlacingStructureChange(pTemp);
+
+		if (mpAIPlayer->PurchaseStructure(mpPlacingStructure, mpMarsGrid, mpCurTile))
+		{
+			mpPlacingStructure = nullptr;
+			mpEarthGrid->ResetTilesModels();
+		}
+		mpPlacingStructure = nullptr;
+
+		// Set players to initialised
+		mpPlayerManager->PlayersInitialised();
 	}
-
-	// MARS
-	mpPlacingStructure = nullptr;
-	pTemp = new CComCentre();
-	mpCurTile = mpMarsGrid->GetTileData(SPointData(GRID_SIZE_X / 2.0f, GRID_SIZE_Y / 2.0f));
-	OnPlacingStructureChange(pTemp);
-
-	if (mpAIPlayer->PurchaseStructure(mpPlacingStructure, mpMarsGrid, mpCurTile))
+	else
 	{
-		mpPlacingStructure = nullptr;
-		mpEarthGrid->ResetTilesModels();
+		// CONSTRUCT BUILDINGS
+		//-----------------------------
+		mpHumanPlayer->LoadStructureModels();
+		mpAIPlayer->LoadStructureModels();
 	}
-	mpPlacingStructure = nullptr;
-
-	// CONSTRUCT BUILDINGS
-	//-----------------------------
-	mpHumanPlayer->LoadStructureModels();
 }
 
 void CWorldState::StateUpdate()
@@ -702,7 +712,7 @@ void CWorldState::StateCleanup()
 
 	//used to unload the structure models
 	mpHumanPlayer->UnloadStructureModels();
-	//mpAIPlayer->UnloadStructureModels();//causes a crash if you change from world state to any other state whilst on mars
+	mpAIPlayer->UnloadStructureModels();
 	mpHumanPlayer->UnloadUnitModels();
 
 	gpEngine->RemoveSprite(mpMainUI);
@@ -710,6 +720,14 @@ void CWorldState::StateCleanup()
 	gpEngine->RemoveCamera(mpCamEarth);
 
 	mMusic->StopSound();
+
+	// Loop through buttons and remove them
+	while (!mpButtonList.empty())
+	{
+		CButton* pTmp = mpButtonList.back();
+		SafeDelete(pTmp);
+		mpButtonList.pop_back();
+	}
 }
 
 
