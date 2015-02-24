@@ -180,6 +180,7 @@ void CWorldState::CheckKeyPresses()
 	{
 		// Assume nothing is clicked on - reset all pointers (except PlacingStructure)
 		mpCurSelectedStructure = nullptr;
+		mMouseClicked = true;
 
 		// Check if placing a structure
 		if (mpPlacingStructure)
@@ -193,6 +194,7 @@ void CWorldState::CheckKeyPresses()
 						// Safe to point at nothing due to structure pointer passed on to Player's data
 						mpPlacingStructure = nullptr;
 						mpEarthGrid->ResetTilesModels();
+						mMouseClicked = false;
 					}
 					break;
 
@@ -203,6 +205,7 @@ void CWorldState::CheckKeyPresses()
 						// Safe to point at nothing due to structure pointer passed on to Player's data
 						mpPlacingStructure = nullptr;
 						mpMarsGrid->ResetTilesModels();
+						mMouseClicked = false;
 					}
 					break;
 			}
@@ -221,6 +224,11 @@ void CWorldState::CheckKeyPresses()
 				// Check if it's a building
 				mpCurSelectedStructure = mpAIPlayer->CheckStructureSelection(mMouseWorldPos);
 				break;
+			}
+
+			if (mpCurSelectedStructure)
+			{
+				mMouseClicked = false;
 			}
 		}
 	}
@@ -402,6 +410,7 @@ void CWorldState::StateSetup()
 
 	// Set the cursor's limits
 	//ClipCursor(&mWindowClip);
+	mMouseClicked = false;
 
 
 	// CREATE Y = 0 PLANE
@@ -599,7 +608,7 @@ void CWorldState::StateUpdate()
 		if ((*miterButtons)->GetMouseOver())
 		{
 			// Check if the mouse is over the button
-			if (gpEngine->KeyHit(Mouse_RButton))
+			if (mMouseClicked)
 			{
 				// Raise click flag
 				std::string purpose = *(*miterButtons)->GetPurpose();
@@ -609,6 +618,8 @@ void CWorldState::StateUpdate()
 					CStructure* pStructure = new CSpaceCentre();
 					OnPlacingStructureChange(pStructure);
 				}
+
+				mMouseClicked = false;
 			}
 		}
 
