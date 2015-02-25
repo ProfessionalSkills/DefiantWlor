@@ -634,10 +634,6 @@ void CWorldState::StateUpdate()
 	CalculateMouseGridPos();
 	mMouseState = UpdateMouseState();
 	DrawFontData();
-	if (gpEngine->KeyHit(Key_H))
-	{
-		int i = 5;
-	}
 	DisplaySelectedBuildingInfo();
 
 
