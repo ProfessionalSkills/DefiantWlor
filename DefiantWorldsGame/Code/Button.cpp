@@ -40,6 +40,18 @@ CButton::~CButton()
 
 
 //-----------------------------------------------------
+// BUTTON CLASS MUTATORS
+//-----------------------------------------------------
+void CButton::SetMouseOver(bool mouseOver)
+{
+	if (!mIsHidden)
+	{
+		mMouseIsOver = mouseOver;
+	}
+}
+
+
+//-----------------------------------------------------
 // BUTTON CLASS METHODS
 //-----------------------------------------------------
 void CButton::Update()

@@ -71,10 +71,7 @@ public:
 
 	// MUTATORS
 	//---------------------------
-	inline void SetMouseOver(bool mouseOver)
-	{
-		mMouseIsOver = mouseOver;
-	}
+	void SetMouseOver(bool mouseOver);
 
 
 	// METHODS

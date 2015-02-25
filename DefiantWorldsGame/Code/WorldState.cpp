@@ -380,6 +380,7 @@ void CWorldState::DisplaySelectedBuildingInfo()
 	// If an object is selected, display its info
 	if (mpCurSelectedStructure)
 	{
+		// Show building & unit related buttons
 		mpButtonDelete->Show();
 		
 		// BUILDING DESTRUCTION
@@ -395,10 +396,21 @@ void CWorldState::DisplaySelectedBuildingInfo()
 		}
 		
 		mpCurSelectedStructure->DisplayInfo(mFntDebug);
+
+		// Hide building construction buttons
+		mpButtonBarracks->Hide();
+		mpButtonHellipad->Hide();
+		mpButtonSpaceCentre->Hide();
 	}
 	else
 	{
+		// Hide building & unit related buttons
 		mpButtonDelete->Hide();
+
+		// Show building construction buttons
+		mpButtonBarracks->Show();
+		mpButtonHellipad->Show();
+		mpButtonSpaceCentre->Show();
 	}
 }
 
@@ -471,18 +483,21 @@ void CWorldState::StateSetup()
 
 	pNewButton = new CButton("DefBarracksButton.png", "SelBarracksButton.png", SPointData(1219, 695),
 		SAABoundingBox(772.0f, 1322.0f, 695.0f, 1219.0f), "Barracks");
+	mpButtonBarracks = pNewButton;
 	mpButtonList.push_back(pNewButton);
 
 	pNewButton = new CButton("DefHellipadButton.png", "SelHellipadButton.png", SPointData(1219, 782),
 		SAABoundingBox(879.0f, 1322.0f, 782.0f, 1219.0f), "Hellipad");
+	mpButtonHellipad = pNewButton;
 	mpButtonList.push_back(pNewButton);
 
-	pNewButton = new CButton("DefSpaceCentreButton.png", "SelSpaceCentreButton.png", SPointData(1332, 695),
-		SAABoundingBox(772.0f, 1429.0f, 695.0f, 1332.0f), "Space Centre");
+	pNewButton = new CButton("DefSpaceCentreButton.png", "SelSpaceCentreButton.png", SPointData(1342, 695),
+		SAABoundingBox(772.0f, 1439.0f, 695.0f, 1342.0f), "Space Centre");
+	mpButtonSpaceCentre = pNewButton;
 	mpButtonList.push_back(pNewButton);
 
-	pNewButton = new CButton("DefDeleteButton.png", "SelDeleteButton.png", SPointData(1445, 782),
-		SAABoundingBox(879.0f, 1522.0f, 782.0f, 1445.0f), "Delete");
+	pNewButton = new CButton("DefDeleteButton.png", "SelDeleteButton.png", SPointData(1465, 782),
+		SAABoundingBox(879.0f, 1542.0f, 782.0f, 1465.0f), "Delete");
 	pNewButton->Hide();
 	mpButtonDelete = pNewButton;
 	mpButtonList.push_back(pNewButton);

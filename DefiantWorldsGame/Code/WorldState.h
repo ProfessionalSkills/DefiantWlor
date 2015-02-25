@@ -68,6 +68,10 @@ private:
 
 	CButton* mpButtonDelete;
 
+	CButton* mpButtonBarracks;
+	CButton* mpButtonHellipad;
+	CButton* mpButtonSpaceCentre;
+
 
 	// MOUSE DATA
 	//---------------------------
