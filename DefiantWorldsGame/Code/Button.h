@@ -27,6 +27,7 @@ private:
 	SAABoundingBox mBoundingBox;
 
 	bool mMouseIsOver;
+	bool mIsHidden;
 
 	std::string mPurpose;
 
@@ -62,6 +63,11 @@ public:
 		return &mPurpose;
 	}
 
+	inline bool IsHidden()
+	{
+		return mIsHidden;
+	}
+
 
 	// MUTATORS
 	//---------------------------
@@ -74,6 +80,8 @@ public:
 	// METHODS
 	//---------------------------
 	void Update();
+	void Show();
+	void Hide();
 };
 
 

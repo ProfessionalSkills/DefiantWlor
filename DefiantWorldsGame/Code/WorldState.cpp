@@ -131,7 +131,7 @@ void CWorldState::DrawFontData()
 		break;
 	case MS_UI:
 		mpCurTile = mpNullTile;
-		strStream << "None";
+		strStream << "UI";
 		break;
 	}
 
@@ -380,6 +380,8 @@ void CWorldState::DisplaySelectedBuildingInfo()
 	// If an object is selected, display its info
 	if (mpCurSelectedStructure)
 	{
+		mpButtonDelete->Show();
+		
 		// BUILDING DESTRUCTION
 		//------------------------------
 		if (gpEngine->KeyHit(Key_D))
@@ -393,6 +395,10 @@ void CWorldState::DisplaySelectedBuildingInfo()
 		}
 		
 		mpCurSelectedStructure->DisplayInfo(mFntDebug);
+	}
+	else
+	{
+		mpButtonDelete->Hide();
 	}
 }
 
@@ -473,6 +479,12 @@ void CWorldState::StateSetup()
 
 	pNewButton = new CButton("DefSpaceCentreButton.png", "SelSpaceCentreButton.png", SPointData(1332, 695),
 		SAABoundingBox(772.0f, 1429.0f, 695.0f, 1332.0f), "Space Centre");
+	mpButtonList.push_back(pNewButton);
+
+	pNewButton = new CButton("DefDeleteButton.png", "SelDeleteButton.png", SPointData(1445, 782),
+		SAABoundingBox(879.0f, 1522.0f, 782.0f, 1445.0f), "Delete");
+	pNewButton->Hide();
+	mpButtonDelete = pNewButton;
 	mpButtonList.push_back(pNewButton);
 
 
@@ -615,11 +627,6 @@ void CWorldState::StateUpdate()
 		mpCamCurrent->MoveZ(-CAM_MOVE_SPEED * gFrameTime);
 	}
 
-	if (gpEngine->KeyHit(Key_H))
-	{
-		int i = 5;
-	}
-
 
 	// METHODS
 	//---------------------------
@@ -628,6 +635,10 @@ void CWorldState::StateUpdate()
 	mMouseState = UpdateMouseState();
 	CheckKeyPresses();
 	DrawFontData();
+	if (gpEngine->KeyHit(Key_H))
+	{
+		int i = 5;
+	}
 	DisplaySelectedBuildingInfo();
 
 
@@ -668,6 +679,16 @@ void CWorldState::StateUpdate()
 				{
 					CStructure* pStructure = new CHellipad();
 					OnPlacingStructureChange(pStructure);
+				}
+				else if (purpose == "Delete")
+				{
+					if (mpCurSelectedStructure)
+					{
+						// Set object to be deleted
+						mpCurSelectedStructure->SetState(OBJ_DEAD);
+						// pointer set to null
+						mpCurSelectedStructure = nullptr;
+					}
 				}
 
 				mMouseClicked = false;
