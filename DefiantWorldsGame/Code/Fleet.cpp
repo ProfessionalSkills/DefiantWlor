@@ -141,7 +141,7 @@ void CFleet::SetTactic()
 	//recives player input to set tactics, does so during launch attack
 }
 
-vector <CGameAgent*>* CFleet::ReturnFleet(vector <CGameAgent*>* returnShips)
+void CFleet::ReturnFleet(vector <CGameAgent*>* returnShips)
 {
 	for (int i = mSize-1; i >= 0; i--)
 	{
@@ -150,6 +150,5 @@ vector <CGameAgent*>* CFleet::ReturnFleet(vector <CGameAgent*>* returnShips)
 		mpFleet.pop_back();
 		mSize--;
 	}
-	return returnShips;
 }
 

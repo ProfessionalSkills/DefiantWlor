@@ -53,7 +53,7 @@ public:
 	//---------------------------
 	void SetEnemy(CFleet* myEnemy);//sets the fleet that this one will attack
 	vector <CGameAgent*>* LaunchFleet(vector <CGameAgent*>* possibleShips);//gets ships a player has, then adds a number of them to the fleet to attack
-	vector <CGameAgent*>* ReturnFleet(vector <CGameAgent*>* returnShips);
+	void ReturnFleet(vector <CGameAgent*>* returnShips);
 	void SetTactic();
 };
 
