@@ -15,7 +15,7 @@
 CRandomiser::CRandomiser()
 {
 	// Create seed
-	size_t seed = std::chrono::system_clock::now().time_since_epoch().count();
+	unsigned long seed = static_cast<unsigned long>(std::chrono::system_clock::now().time_since_epoch().count());
 	mGenerator.seed(seed);
 }
 

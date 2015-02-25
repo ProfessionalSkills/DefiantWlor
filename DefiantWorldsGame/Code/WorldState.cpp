@@ -97,8 +97,8 @@ void CWorldState::CalculateMouseGridPos()
 	DX::XMStoreFloat3(&mMouseWorldPos, intersecVec);		// Store the mouse's world position at y = 0
 
 	// Use the mouse's world position to determine the grid position
-	mMouseGridPos.mPosX = (mMouseWorldPos.x - mCurGridPos.x) / GRID_TILE_SIZE;
-	mMouseGridPos.mPosY = (mMouseWorldPos.z - mCurGridPos.z) / GRID_TILE_SIZE;
+	mMouseGridPos.mPosX = (int)((mMouseWorldPos.x - mCurGridPos.x) / GRID_TILE_SIZE);
+	mMouseGridPos.mPosY = (int)((mMouseWorldPos.z - mCurGridPos.z) / GRID_TILE_SIZE);
 }
 
 void CWorldState::DrawFontData()
@@ -174,7 +174,7 @@ void CWorldState::CheckKeyPresses()
 {
 	// CHECK FOR SCROLLING
 	//------------------------------
-	gMouseWheelDelta = gpEngine->GetMouseWheelMovement() * -1;
+	gMouseWheelDelta = gpEngine->GetMouseWheelMovement() * -1.0f;
 	if (gMouseWheelDelta != 0)
 	{
 		float moveAmount = gFrameTime * CAM_SCROLL_SPEED * gMouseWheelDelta;
@@ -428,7 +428,7 @@ void CWorldState::StateSetup()
 	mpMouseScreenPos = new SPointData();
 	mWindowClip = { 0 };
 	GetClipCursor(&mBaseClip);
-	bool success = GetWindowRect((HWND)gpEngine->GetWindow(), &mWindowClip);
+	GetWindowRect((HWND)gpEngine->GetWindow(), &mWindowClip);
 
 	// Shrink the rectangle to not include side bars and window bar
 	mWindowClip.top += 30;
@@ -545,7 +545,7 @@ void CWorldState::StateSetup()
 		// EARTH
 		mpPlacingStructure = nullptr;
 		CStructure* pTemp = new CComCentre();
-		mpCurTile = mpEarthGrid->GetTileData(SPointData(GRID_SIZE_X / 2.0f, GRID_SIZE_Y / 2.0f));
+		mpCurTile = mpEarthGrid->GetTileData(SPointData((int)(GRID_SIZE_X / 2.0f), (int)(GRID_SIZE_Y / 2.0f)));
 		OnPlacingStructureChange(pTemp);
 
 		if (mpHumanPlayer->PurchaseStructure(mpPlacingStructure, mpEarthGrid, mpCurTile))
@@ -557,7 +557,7 @@ void CWorldState::StateSetup()
 		// MARS
 		mpPlacingStructure = nullptr;
 		pTemp = new CComCentre();
-		mpCurTile = mpMarsGrid->GetTileData(SPointData(GRID_SIZE_X / 2.0f, GRID_SIZE_Y / 2.0f));
+		mpCurTile = mpMarsGrid->GetTileData(SPointData((int)(GRID_SIZE_X / 2.0f), (int)(GRID_SIZE_Y / 2.0f)));
 		OnPlacingStructureChange(pTemp);
 
 		if (mpAIPlayer->PurchaseStructure(mpPlacingStructure, mpMarsGrid, mpCurTile))
@@ -666,7 +666,7 @@ void CWorldState::StateUpdate()
 	for (miterButtons = mpButtonList.begin(); miterButtons != mpButtonList.end(); miterButtons++)
 	{
 		// Check if the mouse is colliding with the object
-		if ((*miterButtons)->GetBoundingBox().IsColliding(DX::XMFLOAT3(mpMouseScreenPos->mPosX, 0.0f, mpMouseScreenPos->mPosY)))
+		if ((*miterButtons)->GetBoundingBox().IsColliding(DX::XMFLOAT3((float)mpMouseScreenPos->mPosX, 0.0f, (float)mpMouseScreenPos->mPosY)))
 		{
 			(*miterButtons)->SetMouseOver(true);
 		}

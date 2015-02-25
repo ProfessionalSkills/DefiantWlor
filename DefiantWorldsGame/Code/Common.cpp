@@ -18,7 +18,7 @@
 CRandomiser* gpRandomiser = new CRandomiser();
 EGameStates  gCurState = GS_MAIN_MENU;
 float        gFrameTime = 0.0f;
-short        gMouseWheelDelta = 0;
+float        gMouseWheelDelta = 0.0f;
 
 
 //-----------------------------------------------------
