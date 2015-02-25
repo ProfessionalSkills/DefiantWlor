@@ -18,7 +18,7 @@ CMothership::CMothership()
 
 	mHealth = 100.0f;
 	mSpeed = 1.0f;
-	mProductionTime = 40.0f;
+	mProductionTime = 4.0f;
 	mProductionCost = 0.0f;
 	mCurProductionTimeLeft = mProductionTime;
 	mDamage = 4.0f;
@@ -29,7 +29,7 @@ CMothership::CMothership()
 	mIsMoving = false;
 	mPopCost = 1;
 	mHitChance = 0.5f;
-	mScale = 0.4f;
+	mScale = 0.2f;
 }
 
 CMothership::~CMothership()

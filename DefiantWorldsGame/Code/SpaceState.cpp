@@ -60,12 +60,6 @@ void CSpaceState::StateSetup()
 
 	// LOAD MODELS
 	//------------------------------
-
-	//temp, for testing only//
-	mpHumanPlayer->LaunchAttack();
-	mpAIPlayer->LaunchAttack();
-	//----------------------------//
-
 	mpPlayerOneFleet->LoadShipModels(-mDisplacement);
 	mpPlayerTwoFleet->LoadShipModels(mDisplacement);
 
@@ -77,6 +71,12 @@ void CSpaceState::StateSetup()
 	mMusic = new CSound(mMusicFile, mSourcePos, mSourceVel);
 	mMusic->PlaySound();
 
+	//doesn't play sound yet, maybe has problems with small sound files?
+	mMusicFile = "SpaceLaser.wav";
+	ALfloat mSourceVel2[3] = { 1.0f, 0.0f, 0.0f };
+	mFiringSound = new CSound(mMusicFile, mSourcePos, mSourceVel2);
+	mFiringSound->PlaySound();
+
 	mpMdlSkybox->AttachToParent(mpCamMain);
 }
 
@@ -86,7 +86,6 @@ void CSpaceState::StateUpdate()
 	gpEngine->DrawScene();
 
 	mpCamMain->RotateLocalZ(mCamRotSpeed*gFrameTime);
-
 	if (gpEngine->KeyHit(Key_R))
 	{
 		gCurState = GS_WORLD;
@@ -128,13 +127,12 @@ void CSpaceState::StateSave()
 
 void CSpaceState::StateCleanup()
 {
-
 	//stop sound
 	mMusic->StopSound();
+	mFiringSound->StopSound();
 
 	//unload models
 	mpMshSkybox->RemoveModel(mpMdlSkybox);
-
 
 	mpPlayerOneFleet->ReturnFleet(mpHumanPlayer->GetSpaceUnitList());
 	mpPlayerTwoFleet->ReturnFleet(mpAIPlayer->GetSpaceUnitList());

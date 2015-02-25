@@ -18,7 +18,7 @@ CSpaceFighter::CSpaceFighter()
 
 	mHealth = 100.0f;
 	mSpeed = 1.0f;
-	mProductionTime = 20.0f;
+	mProductionTime = 2.0f;
 	mProductionCost = 0.0f;
 	mCurProductionTimeLeft = mProductionTime;
 	mDamage = 1.0f;

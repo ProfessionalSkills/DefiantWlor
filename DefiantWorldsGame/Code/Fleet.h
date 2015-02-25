@@ -32,6 +32,11 @@ private:
 	int mTargetedFireVariance;
 	CRandomiser* mTarget;
 
+	// POSITIONING
+	//---------------------------
+	const int mFleetRowSize;//maximum size of a row of ships
+	const int mFleetRowSeperation;//distance between each row of ships
+
 public:
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------

@@ -11,7 +11,7 @@
 //-----------------------------------------------------
 // FLEET CLASS CONSTRUCTORS & DESTRUCTOR
 //-----------------------------------------------------
-CFleet::CFleet()
+CFleet::CFleet() :mFleetRowSize(10), mFleetRowSeperation(7)
 {
 	mDamegMod = 1.0f;
 	mHitMod = 1.0f;
@@ -90,7 +90,8 @@ void CFleet::LoadShipModels(float xPos)
 {
 	for (int i = 0; i < mSize; i++)
 	{
-		mpFleet[i]->LoadModel(xPos, i, 0.0f);
+		//uses intager deviosion to seperate ships into rows of x, where x is the fleet row size, and each row is seperated by a distance of fleet row seperation
+		mpFleet[i]->LoadModel(xPos - (i / mFleetRowSize) * mFleetRowSeperation, i - (i / mFleetRowSize) * mFleetRowSize, 0.0f);
 	}
 }
 
