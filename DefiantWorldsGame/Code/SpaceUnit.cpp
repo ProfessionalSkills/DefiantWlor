@@ -54,6 +54,11 @@ void CSpaceUnit::UnloadIModel()
 
 }
 
+void CSpaceUnit::LoadIModel()
+{
+
+}
+
 void CSpaceUnit::LoadModel(float x, float y, float z)
 {
 

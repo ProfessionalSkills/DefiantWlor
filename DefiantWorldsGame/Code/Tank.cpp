@@ -48,6 +48,16 @@ void CTank::UnloadIModel()
 	}
 }
 
+void CTank::LoadIModel()
+{
+	if (mpObjModel == nullptr)
+	{
+		mpObjModel = mspMshTank->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
+		mpObjModel->Scale(mScale);
+	}
+}
+
+
 //-----------------------------------------------------
 // TANK CLASS OVERRIDE METHODS
 //-----------------------------------------------------

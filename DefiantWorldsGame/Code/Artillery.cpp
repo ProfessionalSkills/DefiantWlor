@@ -49,6 +49,15 @@ void CArtillery::UnloadIModel()
 	}
 }
 
+void CArtillery::LoadIModel()
+{
+	if (mpObjModel == nullptr)
+	{
+		mpObjModel = mspMshArtillery->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
+		mpObjModel->Scale(mScale);
+	}
+}
+
 
 //-----------------------------------------------------
 // ARTILLERY CLASS OVERRIDE METHODS

@@ -42,12 +42,22 @@ CBomber::~CBomber()
 
 void CBomber::UnloadIModel()
 {
-	if (mpObjModel != 0)
+	if (mpObjModel != nullptr)
 	{
 		mspMshBomber->RemoveModel(mpObjModel);
 		mpObjModel = nullptr;
 	}
 }
+
+void CBomber::LoadIModel()
+{
+	if (mpObjModel == nullptr)
+	{
+		mpObjModel = mspMshBomber->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
+		mpObjModel->Scale(mScale);
+	}
+}
+
 
 //-----------------------------------------------------
 // BOMBER CLASS OVERRIDE METHODS

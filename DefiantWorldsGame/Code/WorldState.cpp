@@ -768,7 +768,9 @@ void CWorldState::StateCleanup()
 	//used to unload the structure models
 	mpHumanPlayer->UnloadStructureModels();
 	mpAIPlayer->UnloadStructureModels();
+
 	mpHumanPlayer->UnloadUnitModels();
+	mpAIPlayer->UnloadUnitModels();
 
 	gpEngine->RemoveSprite(mpMainUI);
 	gpEngine->RemoveMesh(mpMshSkybox);

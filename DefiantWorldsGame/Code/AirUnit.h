@@ -48,6 +48,7 @@ public:
 	//virtual void MoveTo(CTile* dest);
 	virtual bool Move();
 	virtual void UnloadIModel() = 0;
+	virtual void LoadIModel() = 0;
 
 	void Spawn(CGrid* pGrid, SPointData pCentre);
 

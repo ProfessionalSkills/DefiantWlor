@@ -49,6 +49,15 @@ void CInfantry::UnloadIModel()
 	}
 }
 
+void CInfantry::LoadIModel()
+{
+	if (mpObjModel == nullptr)
+	{
+		mpObjModel = mspMshInfantry->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
+		mpObjModel->Scale(mScale);
+	}
+}
+
 
 //-----------------------------------------------------
 // INFANTRY CLASS OVERRIDE METHODS

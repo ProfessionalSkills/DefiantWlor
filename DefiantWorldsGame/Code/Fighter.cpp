@@ -49,6 +49,15 @@ void CFighter::UnloadIModel()
 	}
 }
 
+void CFighter::LoadIModel()
+{
+	if (mpObjModel == nullptr)
+	{
+		mpObjModel = mspMshFighter->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
+		mpObjModel->Scale(mScale);
+	}
+}
+
 
 //-----------------------------------------------------
 // FIGHTER CLASS OVERRIDE METHODS

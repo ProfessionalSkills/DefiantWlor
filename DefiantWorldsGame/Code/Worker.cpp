@@ -58,6 +58,15 @@ void CWorker::UnloadIModel()
 	}
 }
 
+void CWorker::LoadIModel()
+{
+	if (mpObjModel == nullptr)
+	{
+		mpObjModel = mspMshWorker->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
+		mpObjModel->Scale(mScale);
+	}
+}
+
 
 //-----------------------------------------------------
 // WORKER CLASS OVERRIDE METHODS

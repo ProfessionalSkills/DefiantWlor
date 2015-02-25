@@ -127,6 +127,7 @@ public:
 	//virtual void MoveTo(CTile* dest) = 0;
 	virtual bool Move() = 0;
 	virtual void UnloadIModel() = 0;
+	virtual void LoadIModel() = 0;
 
 private:
 	virtual bool Destroy() = 0;

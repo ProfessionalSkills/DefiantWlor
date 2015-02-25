@@ -48,6 +48,7 @@ public:
 	//bool CollectResources(CResources* resource);
 	bool RepairUnit(CGroundUnit* unit);
 	void UnloadIModel();
+	void LoadIModel();
 
 	// OVERRIDE METHODS
 	//---------------------------
