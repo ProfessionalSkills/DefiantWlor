@@ -54,6 +54,7 @@ void CWorker::UnloadIModel()
 	if (mpObjModel != 0)
 	{
 		mspMshWorker->RemoveModel(mpObjModel);
+		mpObjModel = nullptr;
 	}
 }
 

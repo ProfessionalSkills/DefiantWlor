@@ -45,6 +45,7 @@ void CBomber::UnloadIModel()
 	if (mpObjModel != 0)
 	{
 		mspMshBomber->RemoveModel(mpObjModel);
+		mpObjModel = nullptr;
 	}
 }
 

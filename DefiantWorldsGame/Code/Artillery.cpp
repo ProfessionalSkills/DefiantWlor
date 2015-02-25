@@ -45,6 +45,7 @@ void CArtillery::UnloadIModel()
 	if (mpObjModel != 0)
 	{
 		mspMshArtillery->RemoveModel(mpObjModel);
+		mpObjModel = nullptr;
 	}
 }
 

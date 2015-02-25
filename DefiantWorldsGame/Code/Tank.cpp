@@ -44,6 +44,7 @@ void CTank::UnloadIModel()
 	if (mpObjModel != 0)
 	{
 		mspMshTank->RemoveModel(mpObjModel);
+		mpObjModel = nullptr;
 	}
 }
 

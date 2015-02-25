@@ -13,11 +13,12 @@
 //-----------------------------------------------------
 // SPACE STATE CLASS CONSTRUCTORS & DESTRUCTOR
 //-----------------------------------------------------
-CSpaceState::CSpaceState() : CGameState()
+CSpaceState::CSpaceState() :mTimeToUpdate(0.1f), mCamRotSpeed(0.7), CGameState() 
+
 {
 	mDisplacement = 20.0f;
 	mTimeSinceUpdate = 0.0f;
-	mTimeToUpdate = 0.1f;
+	
 }
 
 CSpaceState::~CSpaceState()
@@ -84,7 +85,7 @@ void CSpaceState::StateUpdate()
 	// Draw the scene
 	gpEngine->DrawScene();
 
-	mpCamMain->RotateLocalZ(0.002);
+	mpCamMain->RotateLocalZ(mCamRotSpeed*gFrameTime);
 
 	if (gpEngine->KeyHit(Key_R))
 	{

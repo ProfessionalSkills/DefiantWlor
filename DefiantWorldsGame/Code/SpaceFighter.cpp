@@ -60,6 +60,7 @@ void CSpaceFighter::UnloadIModel()
 	if (mpObjModel != 0)
 	{
 		mspMshSpaceFighter->RemoveModel(mpObjModel);
+		mpObjModel = nullptr;
 	}
 }
 

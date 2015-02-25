@@ -45,6 +45,7 @@ void CFighter::UnloadIModel()
 	if (mpObjModel != 0)
 	{
 		mspMshFighter->RemoveModel(mpObjModel);
+		mpObjModel = nullptr;
 	}
 }
 

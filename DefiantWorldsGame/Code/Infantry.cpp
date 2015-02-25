@@ -45,6 +45,7 @@ void CInfantry::UnloadIModel()
 	if (mpObjModel != 0)
 	{
 		mspMshInfantry->RemoveModel(mpObjModel);
+		mpObjModel = nullptr;
 	}
 }
 

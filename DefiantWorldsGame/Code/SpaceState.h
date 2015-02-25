@@ -49,8 +49,10 @@ private:
 
 	// MISC
 	//---------------------------
-	float mTimeToUpdate;
+	const float mTimeToUpdate;
+	const float mCamRotSpeed;
 	float mTimeSinceUpdate;
+
 
 public:
 	// CONSTRUCTORS & DESTRUCTOR
