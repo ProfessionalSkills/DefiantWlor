@@ -153,7 +153,11 @@ void main()
 void SetupEngine()
 {
 	// Do we want to define our own resolution? Maybe fullscreen?
+	//setting up windows
 	gpEngine->StartWindowed(WINDOW_WIDTH, WINDOW_HEIGHT);
+	SetWindowPos((HWND)gpEngine->GetWindow(), HWND_TOP, WINDOW_POS_X, WINDOW_POS_Y, WINDOW_WIDTH, WINDOW_HEIGHT, 0U);
+
+	//Get Media Folders
 	gpEngine->AddMediaFolder("..\\Media\\Models\\Skybox");
 	gpEngine->AddMediaFolder("..\\Media\\Models\\Planets");
 	gpEngine->AddMediaFolder("..\\Media\\Models\\Structures");
@@ -166,25 +170,45 @@ void SetupEngine()
 	gpEngine->AddMediaFolder("..\\Media\\Models\\Units\\Aircraft\\Modern");
 	gpEngine->AddMediaFolder("..\\Media\\User Interface");
 
-	SetWindowPos((HWND)gpEngine->GetWindow(), HWND_TOP, WINDOW_POS_X, WINDOW_POS_Y, WINDOW_WIDTH, WINDOW_HEIGHT, 0U);
+	
 
 	// Load static meshes
 	CTile::mspMshTile = gpEngine->LoadMesh("Tile.x");
+
+	//Structure Meshes
+	//Command Centre
 	CComCentre::mspMshStructureBuilt = gpEngine->LoadMesh("ComCentreBuilt.x");
 	CComCentre::mspMshStructurePlacing = gpEngine->LoadMesh("ComCentrePlacing.x");
+	//Barracks
 	CBarracks::mspMshStructureBuilt = gpEngine->LoadMesh("BarracksBuilt.x");
 	CBarracks::mspMshStructurePlacing = gpEngine->LoadMesh("BarracksPlacing.x");
+	//Helipad
 	CHellipad::mspMshStructureBuilt = gpEngine->LoadMesh("HellipadBuilt.x");
 	CHellipad::mspMshStructurePlacing = gpEngine->LoadMesh("HellipadPlacing.x");
+	//Space Centre
 	CSpaceCentre::mspMshStructureBuilt = gpEngine->LoadMesh("SpaceCentreBuilt.x");
 	CSpaceCentre::mspMshStructurePlacing = gpEngine->LoadMesh("SpaceCentrePlacing.x");
 	
+	//Spaceship Meshes
+	//Space Fighter
 	CSpaceFighter::mspMshSpaceFighter = gpEngine->LoadMesh("SciFiBattleship01.x");
+	//Mothership
+	CMothership::mspMshMothership = gpEngine->LoadMesh("Spaceship01Battlecruiser.x");
+	//Transport
+	CTransport::mspMshTransport = gpEngine->LoadMesh("Spaceship01CommandModule.x");
+
+	//Ground Unit Meshes
+	//Bomber
 	CBomber::mspMshBomber = gpEngine->LoadMesh("HeliScout.x");
+	//Fighter
 	CFighter::mspMshFighter = gpEngine->LoadMesh("Helicopter.x");
+	//Worker
 	CWorker::mspMshWorker = gpEngine->LoadMesh("army_truck.x");
+	//Tank
 	CTank::mspMshTank = gpEngine->LoadMesh("HoverTank01.x");
+	//Infantry
 	CInfantry::mspMshInfantry = gpEngine->LoadMesh("warrior.x");
+	//Artillery
 	CArtillery::mspMshArtillery = gpEngine->LoadMesh("marsAA.x");
 }
 

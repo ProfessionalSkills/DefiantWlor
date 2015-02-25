@@ -7,6 +7,7 @@
 // INCLUDES
 //-----------------------------------------------------
 #include "Transport.h"
+IMesh* CTransport::mspMshTransport = nullptr;
 
 
 //-----------------------------------------------------
@@ -21,13 +22,15 @@ CTransport::CTransport()
 	mProductionTime = 25.0f;
 	mProductionCost = 0.0f;
 	mCurProductionTimeLeft = mProductionTime;
-	mDamage = 1.0f;
+	mDamage = 0.5f;
 	//mAttackParticleFX;
 	//mDestroyParticleFX;
 	mState = OBJ_CONSTRUCTING;
 	//mDestGridSq;
 	mIsMoving = false;
-	mPopCost = 1;
+	mPopCost = 1;	
+	mHitChance = 0.4f;
+	mScale = 0.3f;
 }
 
 CTransport::~CTransport()
@@ -49,6 +52,22 @@ void CTransport::Spawn(CGrid* pGrid, SPointData pCentre)
 
 }
 
+void CTransport::LoadModel(float x, float y, float z)
+{
+	mpObjModel = mspMshTransport->CreateModel(x, y, z);
+	//mpObjModel->SetSkin("Spaceship02Battlecruiser.jpg");
+	if (x < 0.0f)
+	{
+		mpObjModel->RotateLocalY(90.0f);
+	}
+	else
+	{
+		mpObjModel->RotateLocalY(-90.0f);
+	}
+	mpObjModel->Scale(mScale);
+}
+
+
 //CTransport::void MoveTo(CTile* dest)
 
 
@@ -60,9 +79,4 @@ bool CTransport::Move()
 bool CTransport::Destroy()
 {
 	return false;
-}
-
-void CTransport::LoadModel(float x, float y, float z)
-{
-	return;
 }
