@@ -98,11 +98,13 @@ void CSpaceState::StateUpdate()
 	{
 		//fleets attack each other according to tactics
 		mpPlayerOneFleet->Fight();
+		mpPlayerTwoFleet->UpdateCondition();
+
 		mpPlayerTwoFleet->Fight();
 
 		//finds and removes dead ships
 		mpPlayerOneFleet->UpdateCondition();
-		mpPlayerTwoFleet->UpdateCondition();
+		
 
 		//reset timer
 		mTimeSinceUpdate = 0.0f;

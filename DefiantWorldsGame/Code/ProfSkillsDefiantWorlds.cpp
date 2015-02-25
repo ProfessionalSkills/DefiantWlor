@@ -179,8 +179,8 @@ void SetupEngine()
 	CHellipad::mspMshStructurePlacing = gpEngine->LoadMesh("HellipadPlacing.x");
 	CSpaceCentre::mspMshStructureBuilt = gpEngine->LoadMesh("SpaceCentreBuilt.x");
 	CSpaceCentre::mspMshStructurePlacing = gpEngine->LoadMesh("SpaceCentrePlacing.x");
-	CSpaceFighter::mspMshSpaceFighter = gpEngine->LoadMesh("Spaceship02Battlecruiser.x");
-
+	
+	CSpaceFighter::mspMshSpaceFighter = gpEngine->LoadMesh("SciFiBattleship01.x");
 	CBomber::mspMshBomber = gpEngine->LoadMesh("SR-17blackbird.x");
 	CFighter::mspMshFighter = gpEngine->LoadMesh("apache.x");
 	CWorker::mspMshWorker = gpEngine->LoadMesh("army_truck.x");
