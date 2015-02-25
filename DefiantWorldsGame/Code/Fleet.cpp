@@ -117,15 +117,15 @@ void CFleet::SetEnemy(CFleet* myEnemy)
 	mpEnemyFleet = myEnemy;
 }
 
-vector <CGameAgent*> CFleet::LaunchFleet(vector <CGameAgent*> possibleShips)
+vector <CGameAgent*>* CFleet::LaunchFleet(vector <CGameAgent*>* possibleShips)
 {
 	//temporary functionthat just transfers all of the ships from player onto fleet
-	if (possibleShips.size() != 0)
+	if (possibleShips->size() != 0)
 	{
-		for (int i = possibleShips.size() - 1; i >= 0; i--)
+		for (int i = possibleShips->size() - 1; i >= 0; i--)
 		{
-			mpFleet.push_back(possibleShips[i]);
-			possibleShips.pop_back();
+			mpFleet.push_back((*possibleShips)[i]);
+			possibleShips->pop_back();
 			mSize++;
 		}
 	}
@@ -141,12 +141,12 @@ void CFleet::SetTactic()
 	//recives player input to set tactics, does so during launch attack
 }
 
-vector <CGameAgent*> CFleet::ReturnFleet(vector <CGameAgent*> returnShips)
+vector <CGameAgent*>* CFleet::ReturnFleet(vector <CGameAgent*>* returnShips)
 {
 	for (int i = mSize-1; i >= 0; i--)
 	{
 		mpFleet[i]->UnloadIModel();
-		returnShips.push_back(mpFleet[i]);
+		returnShips->push_back(mpFleet[i]);
 		mpFleet.pop_back();
 		mSize--;
 	}

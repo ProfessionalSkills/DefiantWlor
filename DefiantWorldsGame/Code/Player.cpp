@@ -20,12 +20,12 @@ CRTSPlayer::CRTSPlayer(EFactions playerFaction)
 	
 	mpPlayerGrid = nullptr;
 
-	CSpaceFighter* Temp;
-	for (int i = 0; i < 10; i++)
-	{
-		Temp = new CSpaceFighter();
-		mpSpaceUnitsList.push_back(Temp);
-	}
+	//CSpaceFighter* Temp;
+	//for (int i = 0; i < 10; i++)
+	//{
+	//	Temp = new CSpaceFighter();
+	//	mpSpaceUnitsList.push_back(Temp);
+	//}
 }
 
 CRTSPlayer::~CRTSPlayer()
@@ -96,7 +96,7 @@ bool CRTSPlayer::QueueUnit(CStructure* structure, CGameAgent* unit)
 
 void CRTSPlayer::LaunchAttack()
 {
-	mpSpaceUnitsList = mpFleet->LaunchFleet(mpSpaceUnitsList);
+	mpSpaceUnitsList = (*mpFleet->LaunchFleet(&mpSpaceUnitsList));
 }
 
 CStructure* CRTSPlayer::CheckStructureSelection(DX::XMFLOAT3 pos)

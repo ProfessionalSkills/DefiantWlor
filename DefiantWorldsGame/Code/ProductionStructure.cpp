@@ -183,12 +183,12 @@ bool CProductionStructure::Update(CRTSPlayer* pPlayer)
 					if (mStructureType == STR_SPACE_CENTRE)
 					{
 						// Space units list
-						pPlayer->GetSpaceUnitList().push_back(mpProductionQueue.front());
+						pPlayer->GetSpaceUnitList()->push_back(mpProductionQueue.front());
 					}
 					else
 					{
 						// World units list
-						pPlayer->GetWorldUnitList().push_back(mpProductionQueue.front());
+						pPlayer->GetWorldUnitList()->push_back(mpProductionQueue.front());
 					}
 					// Remove form queue
 					RemoveFromQueue();

@@ -94,14 +94,14 @@ public:
 		return mpFleet;
 	}
 
-	inline std::vector<CGameAgent*> GetSpaceUnitList()
+	inline std::vector<CGameAgent*>* GetSpaceUnitList()
 	{
-		return mpSpaceUnitsList;
+		return &mpSpaceUnitsList;
 	}
 
-	inline std::vector<CGameAgent*> GetWorldUnitList()
+	inline std::vector<CGameAgent*>* GetWorldUnitList()
 	{
-		return mpWorldUnitsList;
+		return &mpWorldUnitsList;
 	}
 
 	inline int GetAmountOfStructures()
@@ -127,11 +127,11 @@ public:
 		mName = name;
 	}
 
-	inline void SetSpaceUnitList(std::vector<CGameAgent*> newUnits)
+	inline void SetSpaceUnitList(std::vector<CGameAgent*>* newUnits)
 	{
-		for (int i = 0; i < newUnits.size(); i++)
+		for (int i = 0; i < newUnits->size(); i++)
 		{
-			mpSpaceUnitsList.push_back(newUnits[i]);
+			mpSpaceUnitsList.push_back((*newUnits)[i]);
 		}
 	}
 
