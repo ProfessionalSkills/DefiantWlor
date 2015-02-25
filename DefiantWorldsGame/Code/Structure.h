@@ -29,6 +29,8 @@
 //-----------------------------------------------------
 // STRUCTURE CLASS - CHILD OF GAME OBJECT
 //-----------------------------------------------------
+class CRTSPlayer;
+
 class CStructure : public CGameObject
 {
 protected:
@@ -152,7 +154,7 @@ public:
 	// VIRTUAL METHODS
 	//---------------------------
 	// Method called each frome - boolean returns is false when the object has been destroyed
-	virtual bool Update(std::vector<CGameAgent*>& mpWorldUnitsList) = 0;
+	virtual bool Update(CRTSPlayer* pPlayer) = 0;
 
 	virtual void DisplayInfo(IFont* font) = 0;
 	virtual void SetBuiltModel() = 0;

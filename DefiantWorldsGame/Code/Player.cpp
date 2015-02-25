@@ -119,7 +119,8 @@ void CRTSPlayer::Update()
 	// Loop through all structures & update them
 	for (mpiterStructures = mpStructureList.begin(); mpiterStructures != mpStructureList.end(); mpiterStructures++)
 	{
-		if (!(*mpiterStructures)->Update(mpWorldUnitsList))
+		// Call update function for this structure
+		if (!(*mpiterStructures)->Update(this))
 		{
 			// The current structure has been destroyed
 			CStructure* tmp = (*mpiterStructures);
@@ -128,6 +129,8 @@ void CRTSPlayer::Update()
 			break;
 		}
 	}
+
+	// Loop through all units (NOT SPACE) & update them
 }
 
 void CRTSPlayer::LoadStructureModels()

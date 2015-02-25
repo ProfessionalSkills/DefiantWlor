@@ -49,6 +49,10 @@ public:
 	virtual bool Move();
 	virtual void UnloadIModel() = 0;
 	virtual void LoadIModel() = 0;
+	void LoadModel(float x, float y, float z)
+	{
+
+	}
 
 	void Spawn(CGrid* pGrid, SPointData pCentre);
 

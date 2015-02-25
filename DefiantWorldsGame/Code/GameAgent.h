@@ -128,6 +128,7 @@ public:
 	virtual bool Move() = 0;
 	virtual void UnloadIModel() = 0;
 	virtual void LoadIModel() = 0;
+	virtual void LoadModel(float x, float y, float z) = 0;
 
 private:
 	virtual bool Destroy() = 0;

@@ -51,11 +51,11 @@ protected:
 	//---------------------------
 	std::vector<CStructure*> mpStructureList;
 	std::vector<CGameAgent*> mpWorldUnitsList;
-	std::vector<CSpaceUnit*> mpSpaceUnitsList;
+	std::vector<CGameAgent*> mpSpaceUnitsList;
 
 	std::vector<CStructure*>::iterator mpiterStructures;
 	std::vector<CGameAgent*>::iterator mpiterGameAgents;
-	std::vector<CSpaceUnit*>::iterator mpiterSpaceUnits;
+	std::vector<CGameAgent*>::iterator mpiterSpaceUnits;
 
 	CFleet* mpFleet;
 
@@ -94,9 +94,14 @@ public:
 		return mpFleet;
 	}
 
-	inline std::vector<CSpaceUnit*> GetSpaceUnitList()
+	inline std::vector<CGameAgent*> GetSpaceUnitList()
 	{
 		return mpSpaceUnitsList;
+	}
+
+	inline std::vector<CGameAgent*> GetWorldUnitList()
+	{
+		return mpWorldUnitsList;
 	}
 
 	inline int GetAmountOfStructures()
@@ -122,7 +127,7 @@ public:
 		mName = name;
 	}
 
-	inline void SetSpaceUnitList(std::vector<CSpaceUnit*> newUnits)
+	inline void SetSpaceUnitList(std::vector<CGameAgent*> newUnits)
 	{
 		for (int i = 0; i < newUnits.size(); i++)
 		{

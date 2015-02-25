@@ -58,7 +58,7 @@ public:
 	CGameAgent* CreateAgent();		// Called when agent at front of production queue is finished
 	void UpdateKeyPresses();
 
-	bool Update(std::vector<CGameAgent*>& mpWorldUnitsList) override;
+	bool Update(CRTSPlayer* pPlayer) override;
 	void DisplayInfo(IFont* font) override;
 
 

@@ -77,7 +77,7 @@ void CFleet::UpdateCondition()
 	{
 		if (mpFleet[i]->GetHealth() < 0.0f)
 		{
-			CSpaceUnit*temp = mpFleet[i];
+			CGameAgent*temp = mpFleet[i];
 			mpFleet[i] = mpFleet[mSize - 1];
 			mpFleet.pop_back();
 			delete temp;
@@ -98,7 +98,7 @@ void CFleet::LoadShipModels(float xPos)
 // FLEET CLASS ACCESSORS
 //-----------------------------------------------------
 
-CSpaceUnit* CFleet::GetShip(int i)
+CGameAgent* CFleet::GetShip(int i)
 {
 	return mpFleet[i];
 }
@@ -117,7 +117,7 @@ void CFleet::SetEnemy(CFleet* myEnemy)
 	mpEnemyFleet = myEnemy;
 }
 
-vector <CSpaceUnit*> CFleet::LaunchFleet(vector <CSpaceUnit*> possibleShips)
+vector <CGameAgent*> CFleet::LaunchFleet(vector <CGameAgent*> possibleShips)
 {
 	//temporary functionthat just transfers all of the ships from player onto fleet
 	if (possibleShips.size() != 0)
@@ -141,7 +141,7 @@ void CFleet::SetTactic()
 	//recives player input to set tactics, does so during launch attack
 }
 
-vector <CSpaceUnit*> CFleet::ReturnFleet(vector <CSpaceUnit*> returnShips)
+vector <CGameAgent*> CFleet::ReturnFleet(vector <CGameAgent*> returnShips)
 {
 	for (int i = mSize-1; i >= 0; i--)
 	{

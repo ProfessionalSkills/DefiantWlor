@@ -7,6 +7,7 @@
 // INCLUDES
 //-----------------------------------------------------
 #include "ProductionStructure.h"
+#include "Player.h"
 
 
 //-----------------------------------------------------
@@ -149,7 +150,7 @@ void CProductionStructure::SetBuiltModel()
 
 }
 
-bool CProductionStructure::Update(std::vector<CGameAgent*>& mpWorldUnitsList)
+bool CProductionStructure::Update(CRTSPlayer* pPlayer)
 {
 	// Determine state of the structure
 	switch (mState)
@@ -169,7 +170,7 @@ bool CProductionStructure::Update(std::vector<CGameAgent*>& mpWorldUnitsList)
 			}
 			// Object still alive
 			return true;
-
+			
 			break;
 
 		case OBJ_BUILT:
@@ -178,8 +179,18 @@ bool CProductionStructure::Update(std::vector<CGameAgent*>& mpWorldUnitsList)
 			{
 				if (mpProductionQueue.front()->Construct())
 				{
-					// Unit fully constructed - for now remove from queue
-					mpWorldUnitsList.push_back(mpProductionQueue.front());
+					// Unit fully constructed - add to units list
+					if (mStructureType == STR_SPACE_CENTRE)
+					{
+						// Space units list
+						pPlayer->GetSpaceUnitList().push_back(mpProductionQueue.front());
+					}
+					else
+					{
+						// World units list
+						pPlayer->GetWorldUnitList().push_back(mpProductionQueue.front());
+					}
+					// Remove form queue
 					RemoveFromQueue();
 				}
 			}
