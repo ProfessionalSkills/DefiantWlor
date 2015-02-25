@@ -48,6 +48,10 @@ void CButton::SetMouseOver(bool mouseOver)
 	{
 		mMouseIsOver = mouseOver;
 	}
+	else
+	{
+		mMouseIsOver = false;
+	}
 }
 
 

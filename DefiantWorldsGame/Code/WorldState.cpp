@@ -672,6 +672,9 @@ void CWorldState::StateUpdate()
 			(*miterButtons)->SetMouseOver(false);
 		}
 
+		// Update the button
+		(*miterButtons)->Update();
+
 		// Check for click 
 		if ((*miterButtons)->GetMouseOver())
 		{
@@ -711,9 +714,6 @@ void CWorldState::StateUpdate()
 				}
 			}
 		}
-
-		// Update the button
-		(*miterButtons)->Update();
 	}
 
 	CheckKeyPresses();
