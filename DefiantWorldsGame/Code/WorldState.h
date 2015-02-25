@@ -66,6 +66,8 @@ private:
 	std::vector<CButton*> mpButtonList;
 	std::vector<CButton*>::iterator miterButtons;
 
+	CButton* mpButtonDelete;
+
 
 	// MOUSE DATA
 	//---------------------------

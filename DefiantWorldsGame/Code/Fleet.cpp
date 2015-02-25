@@ -16,7 +16,7 @@ CFleet::CFleet()
 	mDamegMod = 1.0f;
 	mHitMod = 1.0f;
 	mSize = 0;
-	mFleetTactics = None;
+	mFleetTactics = Rapid;
 	mTargetedFireVariance = 5;
 	mTarget = new CRandomiser();
 }

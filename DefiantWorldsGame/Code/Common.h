@@ -157,7 +157,7 @@ extern short gMouseWheelDelta;
 //-----------------------------------------------------
 // Function takes any type of pointer, removes it and sets it to null
 template<class GenericPtr>
-void SafeDelete(GenericPtr* inPtr)
+void SafeDelete(GenericPtr*& inPtr)
 {
 	// Check if the pointer exists
 	if (inPtr)

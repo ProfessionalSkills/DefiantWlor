@@ -75,12 +75,16 @@ void CSpaceState::StateSetup()
 	ALfloat mSourceVel[3] = { 0.0f, 0.0f, 0.0f };
 	mMusic = new CSound(mMusicFile, mSourcePos, mSourceVel);
 	mMusic->PlaySound();
+
+	mpMdlSkybox->AttachToParent(mpCamMain);
 }
 
 void CSpaceState::StateUpdate()
 {
 	// Draw the scene
 	gpEngine->DrawScene();
+
+	mpCamMain->RotateLocalZ(0.002);
 
 	if (gpEngine->KeyHit(Key_R))
 	{
@@ -98,11 +102,13 @@ void CSpaceState::StateUpdate()
 	{
 		//fleets attack each other according to tactics
 		mpPlayerOneFleet->Fight();
+		mpPlayerTwoFleet->UpdateCondition();
+
 		mpPlayerTwoFleet->Fight();
 
 		//finds and removes dead ships
 		mpPlayerOneFleet->UpdateCondition();
-		mpPlayerTwoFleet->UpdateCondition();
+		
 
 		//reset timer
 		mTimeSinceUpdate = 0.0f;

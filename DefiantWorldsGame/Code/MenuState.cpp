@@ -34,6 +34,7 @@ void CMenuState::NewGame()
 	// Unload any previous players & create new players
 	CPlayerManager* pPlayerManager = CStateControl::GetInstance()->GetPlayerManager();
 	pPlayerManager->RemovePlayers();
+	pPlayerManager->PlayersUnloaded();
 	pPlayerManager->CreatePlayers(FAC_EARTH_DEFENSE_FORCE, 1);
 }
 

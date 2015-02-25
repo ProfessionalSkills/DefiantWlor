@@ -131,7 +131,7 @@ void CWorldState::DrawFontData()
 		break;
 	case MS_UI:
 		mpCurTile = mpNullTile;
-		strStream << "None";
+		strStream << "UI";
 		break;
 	}
 
@@ -186,11 +186,10 @@ void CWorldState::CheckKeyPresses()
 	// CLICKING
 	//------------------------------
 	// Left Click = place currently selected building
-	if (gpEngine->KeyHit(Mouse_LButton))
+	if (mMouseClicked)
 	{
 		// Assume nothing is clicked on - reset all pointers (except PlacingStructure)
 		mpCurSelectedStructure = nullptr;
-		mMouseClicked = true;
 
 		// Check if placing a structure
 		if (mpPlacingStructure)
@@ -243,6 +242,7 @@ void CWorldState::CheckKeyPresses()
 		}
 	}
 
+	mMouseClicked = false;
 
 	// Check if a building is currently selected
 	if (!mpCurSelectedStructure)
@@ -380,6 +380,8 @@ void CWorldState::DisplaySelectedBuildingInfo()
 	// If an object is selected, display its info
 	if (mpCurSelectedStructure)
 	{
+		mpButtonDelete->Show();
+		
 		// BUILDING DESTRUCTION
 		//------------------------------
 		if (gpEngine->KeyHit(Key_D))
@@ -393,6 +395,10 @@ void CWorldState::DisplaySelectedBuildingInfo()
 		}
 		
 		mpCurSelectedStructure->DisplayInfo(mFntDebug);
+	}
+	else
+	{
+		mpButtonDelete->Hide();
 	}
 }
 
@@ -451,55 +457,10 @@ void CWorldState::StateSetup()
 	mpAIPlayer = mpPlayerManager->GetAIPlayer(0);
 
 
-	// INITIALISE WORLDS
+	// INITIALISE NULL TILE
 	//-----------------------------
-	// EARTH
-	mpEarthGrid = new CGrid(DX::XMFLOAT3(0.0f, 0.3f, 0.0f));
 	mpNullTile = new CTile();
 	mpNullTile->SetWorldPos(DX::XMFLOAT3(-2000.0f, 0.0f, 0.0f));
-
-	DX::XMFLOAT3 gridCentre = mpEarthGrid->GetGridCentrePos();
-	mpMdlSkybox->SetPosition(gridCentre.x, -1.0f, gridCentre.z);
-
-	mpMshGridArea = gpEngine->LoadMesh("Grid.x");
-	mpMdlEarthGridArea = mpMshGridArea->CreateModel(gridCentre.x, 0.2f, gridCentre.z);
-	mpMdlEarthGridArea->ScaleX((GRID_SIZE_X * GRID_TILE_SIZE) / 2.0f);
-	mpMdlEarthGridArea->ScaleZ((GRID_SIZE_Y * GRID_TILE_SIZE) / 2.0f);
-
-	mpMshGrassArea = gpEngine->LoadMesh("Grass.x");
-	mpMdlEarthGrassArea = mpMshGrassArea->CreateModel(gridCentre.x, 0.1f, gridCentre.z);
-	mpMdlEarthGrassArea->ScaleX(GRID_SIZE_X * GRID_TILE_SIZE * 2.0f);
-	mpMdlEarthGrassArea->ScaleZ(GRID_SIZE_Y * GRID_TILE_SIZE * 2.0f);
-	
-	// MARS
-	float marsXStart = (float)(GRID_SIZE_X * GRID_TILE_SIZE) + 1500.0f;
-	mpMarsGrid = new CGrid(DX::XMFLOAT3(marsXStart, 0.3f, 0.0f));
-
-	gridCentre = mpMarsGrid->GetGridCentrePos();
-
-	mpMdlMarsGridArea = mpMshGridArea->CreateModel(gridCentre.x, 0.2f, gridCentre.z);
-	mpMdlMarsGridArea->ScaleX((GRID_SIZE_X * GRID_TILE_SIZE) / 2.0f);
-	mpMdlMarsGridArea->ScaleZ((GRID_SIZE_Y * GRID_TILE_SIZE) / 2.0f);
-
-	mpMdlMarsGrassArea = mpMshGrassArea->CreateModel(gridCentre.x, 0.1f, gridCentre.z);
-	mpMdlMarsGrassArea->ScaleX(GRID_SIZE_X * GRID_TILE_SIZE * 2.0f);
-	mpMdlMarsGrassArea->ScaleZ(GRID_SIZE_Y * GRID_TILE_SIZE * 2.0f);
-	mpMdlMarsGrassArea->SetSkin("sand.jpg");
-
-
-	// INITIALISE CAMERAS
-	//-----------------------------
-	mpCamEarth = gpEngine->CreateCamera(kManual, mpEarthGrid->GetGridCentrePos().x, 230.0f, (float)GRID_SIZE_Y);
-	mpCamEarth->RotateX(50.0f);
-	mpCamEarth->SetNearClip(NEAR_CLIP);
-	mpCamEarth->SetFarClip(FAR_CLIP);
-
-	mpCamMars = gpEngine->CreateCamera(kManual, mpMarsGrid->GetGridCentrePos().x, 230.0f, (float)GRID_SIZE_Y);
-	mpCamMars->RotateX(50.0f);
-	mpCamMars->SetNearClip(NEAR_CLIP);
-	mpCamMars->SetFarClip(FAR_CLIP);
-
-	mpCamCurrent = mpCamEarth;
 
 
 	// INITIALISE USER INTERFACE
@@ -520,6 +481,107 @@ void CWorldState::StateSetup()
 		SAABoundingBox(772.0f, 1429.0f, 695.0f, 1332.0f), "Space Centre");
 	mpButtonList.push_back(pNewButton);
 
+	pNewButton = new CButton("DefDeleteButton.png", "SelDeleteButton.png", SPointData(1445, 782),
+		SAABoundingBox(879.0f, 1522.0f, 782.0f, 1445.0f), "Delete");
+	pNewButton->Hide();
+	mpButtonDelete = pNewButton;
+	mpButtonList.push_back(pNewButton);
+
+
+	// CONSTRUCT COMMAND CENTRES
+	//-----------------------------
+	// if players have already been initialised, this is not necessary
+	if (!mpPlayerManager->ArePlayersInitialised())
+	{
+		// INITIALISE WORLDS
+		//-----------------------------
+		// EARTH
+		mpEarthGrid = new CGrid(DX::XMFLOAT3(0.0f, 0.3f, 0.0f));
+		
+		DX::XMFLOAT3 gridCentre = mpEarthGrid->GetGridCentrePos();
+		mpMdlSkybox->SetPosition(gridCentre.x, -1.0f, gridCentre.z);
+
+		mpMshGridArea = gpEngine->LoadMesh("Grid.x");
+		mpMdlEarthGridArea = mpMshGridArea->CreateModel(gridCentre.x, 0.2f, gridCentre.z);
+		mpMdlEarthGridArea->ScaleX((GRID_SIZE_X * GRID_TILE_SIZE) / 2.0f);
+		mpMdlEarthGridArea->ScaleZ((GRID_SIZE_Y * GRID_TILE_SIZE) / 2.0f);
+
+		mpMshGrassArea = gpEngine->LoadMesh("Grass.x");
+		mpMdlEarthGrassArea = mpMshGrassArea->CreateModel(gridCentre.x, 0.1f, gridCentre.z);
+		mpMdlEarthGrassArea->ScaleX(GRID_SIZE_X * GRID_TILE_SIZE * 2.0f);
+		mpMdlEarthGrassArea->ScaleZ(GRID_SIZE_Y * GRID_TILE_SIZE * 2.0f);
+
+		// MARS
+		float marsXStart = (float)(GRID_SIZE_X * GRID_TILE_SIZE) + 1500.0f;
+		mpMarsGrid = new CGrid(DX::XMFLOAT3(marsXStart, 0.3f, 0.0f));
+
+		gridCentre = mpMarsGrid->GetGridCentrePos();
+
+		mpMdlMarsGridArea = mpMshGridArea->CreateModel(gridCentre.x, 0.2f, gridCentre.z);
+		mpMdlMarsGridArea->ScaleX((GRID_SIZE_X * GRID_TILE_SIZE) / 2.0f);
+		mpMdlMarsGridArea->ScaleZ((GRID_SIZE_Y * GRID_TILE_SIZE) / 2.0f);
+
+		mpMdlMarsGrassArea = mpMshGrassArea->CreateModel(gridCentre.x, 0.1f, gridCentre.z);
+		mpMdlMarsGrassArea->ScaleX(GRID_SIZE_X * GRID_TILE_SIZE * 2.0f);
+		mpMdlMarsGrassArea->ScaleZ(GRID_SIZE_Y * GRID_TILE_SIZE * 2.0f);
+		mpMdlMarsGrassArea->SetSkin("sand.jpg");
+		
+		
+		// EARTH
+		mpPlacingStructure = nullptr;
+		CStructure* pTemp = new CComCentre();
+		mpCurTile = mpEarthGrid->GetTileData(SPointData(GRID_SIZE_X / 2.0f, GRID_SIZE_Y / 2.0f));
+		OnPlacingStructureChange(pTemp);
+
+		if (mpHumanPlayer->PurchaseStructure(mpPlacingStructure, mpEarthGrid, mpCurTile))
+		{
+			mpPlacingStructure = nullptr;
+			mpEarthGrid->ResetTilesModels();
+		}
+
+		// MARS
+		mpPlacingStructure = nullptr;
+		pTemp = new CComCentre();
+		mpCurTile = mpMarsGrid->GetTileData(SPointData(GRID_SIZE_X / 2.0f, GRID_SIZE_Y / 2.0f));
+		OnPlacingStructureChange(pTemp);
+
+		if (mpAIPlayer->PurchaseStructure(mpPlacingStructure, mpMarsGrid, mpCurTile))
+		{
+			mpPlacingStructure = nullptr;
+			mpEarthGrid->ResetTilesModels();
+		}
+		mpPlacingStructure = nullptr;
+
+		// Set players to initialised
+		mpPlayerManager->PlayersInitialised();
+	}
+	else
+	{
+		// RE-CONSTRUCT BUILDINGS
+		//-----------------------------
+		mpHumanPlayer->LoadStructureModels();
+		mpAIPlayer->LoadStructureModels();
+
+		// Re-assign previous grid data
+		mpEarthGrid = mpHumanPlayer->GetPlayerGrid();
+		mpMarsGrid = mpAIPlayer->GetPlayerGrid();
+	}
+
+
+	// INITIALISE CAMERAS
+	//-----------------------------
+	mpCamEarth = gpEngine->CreateCamera(kManual, mpEarthGrid->GetGridCentrePos().x, 230.0f, (float)GRID_SIZE_Y);
+	mpCamEarth->RotateX(50.0f);
+	mpCamEarth->SetNearClip(NEAR_CLIP);
+	mpCamEarth->SetFarClip(FAR_CLIP);
+
+	mpCamMars = gpEngine->CreateCamera(kManual, mpMarsGrid->GetGridCentrePos().x, 230.0f, (float)GRID_SIZE_Y);
+	mpCamMars->RotateX(50.0f);
+	mpCamMars->SetNearClip(NEAR_CLIP);
+	mpCamMars->SetFarClip(FAR_CLIP);
+
+	mpCamCurrent = mpCamEarth;
+
 
 	// INITIALISE MUSIC
 	//-----------------------------
@@ -528,38 +590,6 @@ void CWorldState::StateSetup()
 	ALfloat mSourceVel[3] = { 0.0f, 0.0f, 0.0f }; //No veloctiy of source
 	mMusic = new CSound(mMusicFile, mSourcePos, mSourceVel); //Initialise music
 	mMusic->PlaySound(); //Play music on loop
-
-
-	// CONSTRUCT COMMAND CENTRES
-	//-----------------------------
-	// EARTH
-	mpPlacingStructure = nullptr;
-	CStructure* pTemp = new CComCentre();
-	mpCurTile = mpEarthGrid->GetTileData(SPointData(GRID_SIZE_X / 2.0f, GRID_SIZE_Y / 2.0f));
-	OnPlacingStructureChange(pTemp);
-
-	if (mpHumanPlayer->PurchaseStructure(mpPlacingStructure, mpEarthGrid, mpCurTile))
-	{
-		mpPlacingStructure = nullptr;
-		mpEarthGrid->ResetTilesModels();
-	}
-
-	// MARS
-	mpPlacingStructure = nullptr;
-	pTemp = new CComCentre();
-	mpCurTile = mpMarsGrid->GetTileData(SPointData(GRID_SIZE_X / 2.0f, GRID_SIZE_Y / 2.0f));
-	OnPlacingStructureChange(pTemp);
-
-	if (mpAIPlayer->PurchaseStructure(mpPlacingStructure, mpMarsGrid, mpCurTile))
-	{
-		mpPlacingStructure = nullptr;
-		mpEarthGrid->ResetTilesModels();
-	}
-	mpPlacingStructure = nullptr;
-
-	// CONSTRUCT BUILDINGS
-	//-----------------------------
-	mpHumanPlayer->LoadStructureModels();
 }
 
 void CWorldState::StateUpdate()
@@ -603,13 +633,22 @@ void CWorldState::StateUpdate()
 	UpdateMatrices();
 	CalculateMouseGridPos();
 	mMouseState = UpdateMouseState();
-	CheckKeyPresses();
 	DrawFontData();
+	if (gpEngine->KeyHit(Key_H))
+	{
+		int i = 5;
+	}
 	DisplaySelectedBuildingInfo();
 
 
 	// BUTTON UPDATES
 	//---------------------------
+	if (gpEngine->KeyHit(Mouse_LButton))
+	{
+		// Raise click flag
+		mMouseClicked = true;
+	}
+
 	for (miterButtons = mpButtonList.begin(); miterButtons != mpButtonList.end(); miterButtons++)
 	{
 		// Check if the mouse is colliding with the object
@@ -628,32 +667,45 @@ void CWorldState::StateUpdate()
 			// Check if the mouse is over the button
 			if (mMouseClicked)
 			{
-				// Raise click flag
 				std::string purpose = *(*miterButtons)->GetPurpose();
 
 				if (purpose == "Space Centre")
 				{
 					CStructure* pStructure = new CSpaceCentre();
 					OnPlacingStructureChange(pStructure);
+					mMouseClicked = false;
 				}
 				else if (purpose == "Barracks")
 				{
 					CStructure* pStructure = new CBarracks();
 					OnPlacingStructureChange(pStructure);
+					mMouseClicked = false;
 				}
 				else if (purpose == "Hellipad")
 				{
 					CStructure* pStructure = new CHellipad();
 					OnPlacingStructureChange(pStructure);
+					mMouseClicked = false;
 				}
-
-				mMouseClicked = false;
+				else if (purpose == "Delete")
+				{
+					if (mpCurSelectedStructure)
+					{
+						// Set object to be deleted
+						mpCurSelectedStructure->SetState(OBJ_DEAD);
+						// pointer set to null
+						mpCurSelectedStructure = nullptr;
+					}
+					mMouseClicked = false;
+				}
 			}
 		}
 
 		// Update the button
 		(*miterButtons)->Update();
 	}
+
+	CheckKeyPresses();
 
 
 	// MODEL UPDATES
@@ -691,18 +743,20 @@ void CWorldState::StateSave()
 
 void CWorldState::StateCleanup()
 {
+	// Temporarily store grid state
+	mpHumanPlayer->StorePlayerGridState(mpEarthGrid);
+	mpAIPlayer->StorePlayerGridState(mpMarsGrid);
+
 	// Unclip cursor
 	ClipCursor(&mBaseClip);
 	
 	SafeDelete(mpMouseScreenPos);
-	SafeDelete(mpEarthGrid);
-	SafeDelete(mpMarsGrid);
 
 	mpMshSkybox->RemoveModel(mpMdlSkybox);
 
 	//used to unload the structure models
 	mpHumanPlayer->UnloadStructureModels();
-	//mpAIPlayer->UnloadStructureModels();//causes a crash if you change from world state to any other state whilst on mars
+	mpAIPlayer->UnloadStructureModels();
 	mpHumanPlayer->UnloadUnitModels();
 
 	gpEngine->RemoveSprite(mpMainUI);
@@ -710,6 +764,14 @@ void CWorldState::StateCleanup()
 	gpEngine->RemoveCamera(mpCamEarth);
 
 	mMusic->StopSound();
+
+	// Loop through buttons and remove them
+	while (!mpButtonList.empty())
+	{
+		CButton* pTmp = mpButtonList.back();
+		SafeDelete(pTmp);
+		mpButtonList.pop_back();
+	}
 }
 
 

@@ -18,6 +18,8 @@ CRTSPlayer::CRTSPlayer(EFactions playerFaction)
 	mpFleet = new CFleet();
 	mPlayerFaction = playerFaction;
 	
+	mpPlayerGrid = nullptr;
+
 	CSpaceFighter* Temp;
 	for (int i = 0; i < 10; i++)
 	{
@@ -33,6 +35,9 @@ CRTSPlayer::~CRTSPlayer()
 		// Remove all models
 		(*mpiterStructures)->UnloadIModel();
 	}
+
+	// Handle removal of the grids
+	SafeDelete(mpPlayerGrid);
 }
 
 
