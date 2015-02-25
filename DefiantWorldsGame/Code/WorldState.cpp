@@ -186,11 +186,10 @@ void CWorldState::CheckKeyPresses()
 	// CLICKING
 	//------------------------------
 	// Left Click = place currently selected building
-	if (gpEngine->KeyHit(Mouse_LButton))
+	if (mMouseClicked)
 	{
 		// Assume nothing is clicked on - reset all pointers (except PlacingStructure)
 		mpCurSelectedStructure = nullptr;
-		mMouseClicked = true;
 
 		// Check if placing a structure
 		if (mpPlacingStructure)
@@ -243,6 +242,7 @@ void CWorldState::CheckKeyPresses()
 		}
 	}
 
+	mMouseClicked = false;
 
 	// Check if a building is currently selected
 	if (!mpCurSelectedStructure)
@@ -633,7 +633,6 @@ void CWorldState::StateUpdate()
 	UpdateMatrices();
 	CalculateMouseGridPos();
 	mMouseState = UpdateMouseState();
-	CheckKeyPresses();
 	DrawFontData();
 	if (gpEngine->KeyHit(Key_H))
 	{
@@ -644,6 +643,12 @@ void CWorldState::StateUpdate()
 
 	// BUTTON UPDATES
 	//---------------------------
+	if (gpEngine->KeyHit(Mouse_LButton))
+	{
+		// Raise click flag
+		mMouseClicked = true;
+	}
+
 	for (miterButtons = mpButtonList.begin(); miterButtons != mpButtonList.end(); miterButtons++)
 	{
 		// Check if the mouse is colliding with the object
@@ -662,23 +667,25 @@ void CWorldState::StateUpdate()
 			// Check if the mouse is over the button
 			if (mMouseClicked)
 			{
-				// Raise click flag
 				std::string purpose = *(*miterButtons)->GetPurpose();
 
 				if (purpose == "Space Centre")
 				{
 					CStructure* pStructure = new CSpaceCentre();
 					OnPlacingStructureChange(pStructure);
+					mMouseClicked = false;
 				}
 				else if (purpose == "Barracks")
 				{
 					CStructure* pStructure = new CBarracks();
 					OnPlacingStructureChange(pStructure);
+					mMouseClicked = false;
 				}
 				else if (purpose == "Hellipad")
 				{
 					CStructure* pStructure = new CHellipad();
 					OnPlacingStructureChange(pStructure);
+					mMouseClicked = false;
 				}
 				else if (purpose == "Delete")
 				{
@@ -689,15 +696,16 @@ void CWorldState::StateUpdate()
 						// pointer set to null
 						mpCurSelectedStructure = nullptr;
 					}
+					mMouseClicked = false;
 				}
-
-				mMouseClicked = false;
 			}
 		}
 
 		// Update the button
 		(*miterButtons)->Update();
 	}
+
+	CheckKeyPresses();
 
 
 	// MODEL UPDATES
