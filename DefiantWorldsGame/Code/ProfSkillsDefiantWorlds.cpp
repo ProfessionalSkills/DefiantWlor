@@ -162,9 +162,8 @@ void SetupEngine()
 	gpEngine->AddMediaFolder("..\\Media\\Models\\Units");
 	gpEngine->AddMediaFolder("..\\Media\\Models\\Units\\Vehicles\\SciFi");
 	gpEngine->AddMediaFolder("..\\Media\\Models\\Units\\Vehicles\\Military");
-	gpEngine->AddMediaFolder("..\\Media\\Models\\Units\\Aircraft\\Scifi");
-	gpEngine->AddMediaFolder("..\\Media\\Models\\Units\\Aircraft\\Modern\\SR-17blackbird");
-	gpEngine->AddMediaFolder("..\\Media\\Models\\Units\\Aircraft\\Modern\\apache");
+	gpEngine->AddMediaFolder("..\\Media\\Models\\Units\\Aircraft\\SciFi");
+	gpEngine->AddMediaFolder("..\\Media\\Models\\Units\\Aircraft\\Modern");
 	gpEngine->AddMediaFolder("..\\Media\\User Interface");
 
 	SetWindowPos((HWND)gpEngine->GetWindow(), HWND_TOP, WINDOW_POS_X, WINDOW_POS_Y, WINDOW_WIDTH, WINDOW_HEIGHT, 0U);
@@ -181,11 +180,11 @@ void SetupEngine()
 	CSpaceCentre::mspMshStructurePlacing = gpEngine->LoadMesh("SpaceCentrePlacing.x");
 	
 	CSpaceFighter::mspMshSpaceFighter = gpEngine->LoadMesh("SciFiBattleship01.x");
-	CBomber::mspMshBomber = gpEngine->LoadMesh("SR-17blackbird.x");
-	CFighter::mspMshFighter = gpEngine->LoadMesh("apache.x");
+	CBomber::mspMshBomber = gpEngine->LoadMesh("HeliScout.x");
+	CFighter::mspMshFighter = gpEngine->LoadMesh("Helicopter.x");
 	CWorker::mspMshWorker = gpEngine->LoadMesh("army_truck.x");
 	CTank::mspMshTank = gpEngine->LoadMesh("HoverTank01.x");
-	CInfantry::mspMshInfantry = gpEngine->LoadMesh("transportTruck.x");
+	CInfantry::mspMshInfantry = gpEngine->LoadMesh("warrior.x");
 	CArtillery::mspMshArtillery = gpEngine->LoadMesh("marsAA.x");
 }
 
