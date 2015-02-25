@@ -20,12 +20,12 @@ CRTSPlayer::CRTSPlayer(EFactions playerFaction)
 	
 	mpPlayerGrid = nullptr;
 
-	//CSpaceFighter* Temp;
-	//for (int i = 0; i < 10; i++)
-	//{
-	//	Temp = new CSpaceFighter();
-	//	mpSpaceUnitsList.push_back(Temp);
-	//}
+	CSpaceFighter* Temp;
+	for (int i = 0; i < 10; i++)
+	{
+		Temp = new CSpaceFighter();
+		mpSpaceUnitsList.push_back(Temp);
+	}
 }
 
 CRTSPlayer::~CRTSPlayer()

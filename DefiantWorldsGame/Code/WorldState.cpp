@@ -577,6 +577,9 @@ void CWorldState::StateSetup()
 		mpHumanPlayer->LoadStructureModels();
 		mpAIPlayer->LoadStructureModels();
 
+		mpHumanPlayer->LoadUnitModels();
+		mpAIPlayer->LoadUnitModels();
+
 		// Re-assign previous grid data
 		mpEarthGrid = mpHumanPlayer->GetPlayerGrid();
 		mpMarsGrid = mpAIPlayer->GetPlayerGrid();
