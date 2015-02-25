@@ -52,7 +52,7 @@ public:
 
 	// METHODS
 	//---------------------------
-	bool AddToQueue(int agentIndex);
+	bool AddToQueue(size_t agentIndex);
 	bool RemoveFromQueue();
 	bool UpdateProduction();
 	CGameAgent* CreateAgent();		// Called when agent at front of production queue is finished

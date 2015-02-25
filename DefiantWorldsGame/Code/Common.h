@@ -149,7 +149,7 @@ extern CRandomiser* gpRandomiser;
 
 // Global frametime & mouse wheel delta
 extern float gFrameTime;
-extern short gMouseWheelDelta;
+extern float gMouseWheelDelta;
 
 
 //-----------------------------------------------------

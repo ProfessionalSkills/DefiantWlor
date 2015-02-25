@@ -172,8 +172,8 @@ void CMenuState::StateUpdate()
 	mpButtonFont->Draw("CHANGE SETTINGS", 1015, 505, kWhite, kCentre, kTop);
 	mpButtonFont->Draw("QUIT GAME", 1015, 575, kWhite, kCentre, kTop);
 
-	mMousePos.x = (int)gpEngine->GetMouseX();
-	mMousePos.y = (int)gpEngine->GetMouseY();
+	mMousePos.x = (float)gpEngine->GetMouseX();
+	mMousePos.y = (float)gpEngine->GetMouseY();
 	for (miterButtons = mpButtonList.begin(); miterButtons != mpButtonList.end(); miterButtons++)
 	{
 		// Check if the mouse is colliding with the object

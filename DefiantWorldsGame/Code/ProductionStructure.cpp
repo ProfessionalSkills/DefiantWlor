@@ -27,7 +27,7 @@ CProductionStructure::~CProductionStructure()
 //-----------------------------------------------------
 // PRODUCTION STRUCTURE CLASS METHODS
 //-----------------------------------------------------
-bool CProductionStructure::AddToQueue(int agentIndex)
+bool CProductionStructure::AddToQueue(size_t agentIndex)
 {
 	// Get the size of the respective agents array and compare with index
 	if (agentIndex >= mRespectiveAgentsList.size())
@@ -219,6 +219,11 @@ bool CProductionStructure::Update(CRTSPlayer* pPlayer)
 
 			// Object no longer alive
 			return false;
+
+			break;
+
+		default:
+			return true;
 
 			break;
 	}

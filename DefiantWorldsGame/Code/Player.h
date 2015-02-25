@@ -129,7 +129,7 @@ public:
 
 	inline void SetSpaceUnitList(std::vector<CGameAgent*>* newUnits)
 	{
-		for (int i = 0; i < newUnits->size(); i++)
+		for (size_t i = 0; i < newUnits->size(); i++)
 		{
 			mpSpaceUnitsList.push_back((*newUnits)[i]);
 		}

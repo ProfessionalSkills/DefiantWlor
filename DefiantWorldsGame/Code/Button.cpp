@@ -28,8 +28,8 @@ CButton::CButton(std::string spriteName, std::string spriteMOName, SPointData po
 	mIsHidden = false;
 
 	// Create sprite
-	mpSprBasic = gpEngine->CreateSprite(spriteName, pos.mPosX, pos.mPosY, 0.0f);
-	mpSprMO = gpEngine->CreateSprite(spriteMOName, pos.mPosX, pos.mPosY, -1.0f);
+	mpSprBasic = gpEngine->CreateSprite(spriteName, (float)pos.mPosX, (float)pos.mPosY, 0.0f);
+	mpSprMO = gpEngine->CreateSprite(spriteMOName, (float)pos.mPosX, (float)pos.mPosY, -1.0f);
 }
 
 CButton::~CButton()

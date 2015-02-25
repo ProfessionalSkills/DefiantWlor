@@ -90,7 +90,7 @@ void CFleet::LoadShipModels(float xPos)
 {
 	for (int i = 0; i < mSize; i++)
 	{
-		mpFleet[i]->LoadModel(xPos, i, 0.0f);
+		mpFleet[i]->LoadModel(xPos, (float)i, 0.0f);
 	}
 }
 

@@ -59,12 +59,12 @@ public:
 		return mGridPos;
 	}
 
-	inline float GetGridX()
+	inline int GetGridX()
 	{
 		return mGridPos.mPosX;
 	}
 
-	inline float GetGridY()
+	inline int GetGridY()
 	{
 		return mGridPos.mPosY;
 	}

@@ -135,7 +135,7 @@ void CRTSPlayer::Update()
 
 void CRTSPlayer::LoadStructureModels()
 {
-	for (int i = 0; i < mpStructureList.size(); i++)
+	for (size_t i = 0; i < mpStructureList.size(); i++)
 	{
 		mpStructureList[i]->LoadIModel();
 	}
@@ -144,7 +144,7 @@ void CRTSPlayer::LoadStructureModels()
 void CRTSPlayer::UnloadStructureModels()
 {
 	// Loop through all structures & unload their models
-	for (int i = 0; i < mpStructureList.size();i++)
+	for (size_t i = 0; i < mpStructureList.size();i++)
 	{
 		mpStructureList[i]->UnloadIModel();
 	}
@@ -153,7 +153,7 @@ void CRTSPlayer::UnloadStructureModels()
 void CRTSPlayer::LoadUnitModels()
 {
 	//loads units back into their original postion
-	for (int i = 0; i < mpWorldUnitsList.size(); i++)
+	for (size_t i = 0; i < mpWorldUnitsList.size(); i++)
 	{
 		//mpWorldUnitsList[i]->LoadIModel();
 	}
@@ -161,7 +161,7 @@ void CRTSPlayer::LoadUnitModels()
 
 void CRTSPlayer::UnloadUnitModels()
 {
-	for (int i = 0; i < mpWorldUnitsList.size(); i++)
+	for (size_t i = 0; i < mpWorldUnitsList.size(); i++)
 	{
 		mpWorldUnitsList[i]->UnloadIModel();
 	}
