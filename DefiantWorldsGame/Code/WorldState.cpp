@@ -838,6 +838,21 @@ void CWorldState::StateCleanup()
 	gpEngine->RemoveCamera(mpCamEarth);
 
 	mMusic->StopSound();
+
+	// Unload buttons
+	while (!mpGenericButtonList.empty())
+	{
+		CAdvancedButton<CWorldState, void>* pButton = mpGenericButtonList.back();
+		SafeDelete(pButton);
+		mpGenericButtonList.pop_back();
+	}
+
+	while (!mpUnitsButtonList.empty())
+	{
+		CAdvancedButton<CWorldState, void, int>* pButton = mpUnitsButtonList.back();
+		SafeDelete(pButton);
+		mpUnitsButtonList.pop_back();
+	}
 }
 
 
