@@ -207,7 +207,7 @@ void SetupEngine()
 	//Tank
 	CTank::mspMshTank = gpEngine->LoadMesh("HoverTank01.x");
 	//Infantry
-	CInfantry::mspMshInfantry = gpEngine->LoadMesh("warrior.x");
+	CInfantry::mspMshInfantry = gpEngine->LoadMesh("tigerAusfH.x");
 	//Artillery
 	CArtillery::mspMshArtillery = gpEngine->LoadMesh("marsAA.x");
 }
