@@ -170,65 +170,6 @@ EMouseStates CWorldState::UpdateMouseState()
 	return MS_OUT_OF_GRID;
 }
 
-void CWorldState::CheckButtonClicks(CButton* pButton)
-{
-	std::string purpose = (*pButton->GetPurpose());
-
-	if (purpose == "Space Centre")
-	{
-		CStructure* pStructure = new CSpaceCentre();
-		OnPlacingStructureChange(pStructure);
-		mMouseClicked = false;
-	}
-	else if (purpose == "Barracks")
-	{
-		CStructure* pStructure = new CBarracks();
-		OnPlacingStructureChange(pStructure);
-		mMouseClicked = false;
-	}
-	else if (purpose == "Hellipad")
-	{
-		CStructure* pStructure = new CHellipad();
-		OnPlacingStructureChange(pStructure);
-		mMouseClicked = false;
-	}
-	else if (purpose == "Delete")
-	{
-		if (mpCurSelectedStructure)
-		{
-			// Set object to be deleted
-			mpCurSelectedStructure->SetState(OBJ_DEAD);
-			// pointer set to null
-			mpCurSelectedStructure = nullptr;
-		}
-		mMouseClicked = false;
-	}
-	else if (purpose == "Infantry")
-	{
-		if (mpCurSelectedStructure)
-		{
-			mpCurSelectedStructure->AddToQueue(1);
-		}
-		mMouseClicked = false;
-	}
-	else if (purpose == "Artillery")
-	{
-		if (mpCurSelectedStructure)
-		{
-			mpCurSelectedStructure->AddToQueue(0);
-		}
-		mMouseClicked = false;
-	}
-	else if (purpose == "Tank")
-	{
-		if (mpCurSelectedStructure)
-		{
-			mpCurSelectedStructure->AddToQueue(2);
-		}
-		mMouseClicked = false;
-	}
-}
-
 void CWorldState::CheckKeyPresses()
 {
 	// CHECK FOR SCROLLING
@@ -575,41 +516,41 @@ void CWorldState::StateSetup()
 	//-----------------------------
 	mFntDebug = gpEngine->LoadFont("Font2.bmp", 15U);
 	mpMainUI = gpEngine->CreateSprite("WorldUI.png", 0.0f, 0.0f, 0.9f);
-	CButton* pNewButton = nullptr;
+	CAdvancedButton<CWorldState, void>* pNewButton = nullptr;
 
-	pNewButton = new CButton("DefBarracksButton.png", "SelBarracksButton.png", SPointData(1219, 695),
-		SAABoundingBox(772.0f, 1322.0f, 695.0f, 1219.0f), "Barracks");
+	pNewButton = new CAdvancedButton<CWorldState, void>("DefBarracksButton.png", "SelBarracksButton.png", SPointData(1219, 695),
+		SAABoundingBox(772.0f, 1322.0f, 695.0f, 1219.0f), *this, &CWorldState::CreateBarracks);
 	mpButtonBarracks = pNewButton;
-	mpButtonList.push_back(pNewButton);
+	mpGenericButtonList.push_back(pNewButton);
 
-	pNewButton = new CButton("DefHellipadButton.png", "SelHellipadButton.png", SPointData(1219, 782),
-		SAABoundingBox(879.0f, 1322.0f, 782.0f, 1219.0f), "Hellipad");
+	pNewButton = new CAdvancedButton<CWorldState, void>("DefHellipadButton.png", "SelHellipadButton.png", SPointData(1219, 782),
+		SAABoundingBox(879.0f, 1322.0f, 782.0f, 1219.0f), *this, &CWorldState::CreateHellipad);
 	mpButtonHellipad = pNewButton;
-	mpButtonList.push_back(pNewButton);
+	mpGenericButtonList.push_back(pNewButton);
 
-	pNewButton = new CButton("DefSpaceCentreButton.png", "SelSpaceCentreButton.png", SPointData(1342, 695),
-		SAABoundingBox(772.0f, 1439.0f, 695.0f, 1342.0f), "Space Centre");
+	pNewButton = new CAdvancedButton<CWorldState, void>("DefSpaceCentreButton.png", "SelSpaceCentreButton.png", SPointData(1342, 695),
+		SAABoundingBox(772.0f, 1439.0f, 695.0f, 1342.0f), *this, &CWorldState::CreateSpaceCentre);
 	mpButtonSpaceCentre = pNewButton;
-	mpButtonList.push_back(pNewButton);
+	mpGenericButtonList.push_back(pNewButton);
 
-	pNewButton = new CButton("DefDeleteButton.png", "SelDeleteButton.png", SPointData(1465, 782),
-		SAABoundingBox(879.0f, 1542.0f, 782.0f, 1465.0f), "Delete");
+	pNewButton = new CAdvancedButton<CWorldState, void>("DefDeleteButton.png", "SelDeleteButton.png", SPointData(1465, 782),
+		SAABoundingBox(879.0f, 1542.0f, 782.0f, 1465.0f), *this, &CWorldState::DeleteStructure);
 	pNewButton->Hide();
 	mpButtonDelete = pNewButton;
-	mpButtonList.push_back(pNewButton);
+	mpGenericButtonList.push_back(pNewButton);
 
-	mpBarracksButtons = new SStructureButtons(3);
-	mpBarracksButtons->mpButtons[0] = new CButton("DefInfantryButton.png", "SelInfantryButton.png", SPointData(1219, 695),
-		SAABoundingBox(772.0f, 1322.0f, 695.0f, 1219.0f), "Infantry");
-	mpBarracksButtons->mpButtons[1] = new CButton("DefArtilleryButton.png", "SelArtilleryButton.png", SPointData(1219, 782),
-		SAABoundingBox(879.0f, 1322.0f, 782.0f, 1219.0f), "Artillery");
-	mpBarracksButtons->mpButtons[2] = new CButton("DefTankButton.png", "SelTankButton.png", SPointData(1342, 695),
-		SAABoundingBox(772.0f, 1439.0f, 695.0f, 1342.0f), "Tank");
+	mpBarracksButtons = new SStructureButtons<CWorldState>(3);
+	mpBarracksButtons->mpButtons[0] = new CAdvancedButton<CWorldState, void, int>("DefInfantryButton.png", "SelInfantryButton.png", SPointData(1219, 695),
+		SAABoundingBox(772.0f, 1322.0f, 695.0f, 1219.0f), *this, &CWorldState::QueueUnit);
+	mpBarracksButtons->mpButtons[1] = new CAdvancedButton<CWorldState, void, int>("DefArtilleryButton.png", "SelArtilleryButton.png", SPointData(1219, 782),
+		SAABoundingBox(879.0f, 1322.0f, 782.0f, 1219.0f), *this, &CWorldState::QueueUnit);
+	mpBarracksButtons->mpButtons[2] = new CAdvancedButton<CWorldState, void, int>("DefTankButton.png", "SelTankButton.png", SPointData(1342, 695),
+		SAABoundingBox(772.0f, 1439.0f, 695.0f, 1342.0f), *this, &CWorldState::QueueUnit);
 	mpBarracksButtons->Hide();
 
 	for (int i = 0; i < mpBarracksButtons->mNumButtons; i++)
 	{
-		mpButtonList.push_back(mpBarracksButtons->mpButtons[i]);
+		mpUnitsButtonList.push_back(mpBarracksButtons->mpButtons[i]);
 	}
 	
 	//mpHellipadButtons;
@@ -777,32 +718,38 @@ void CWorldState::StateUpdate()
 		mMouseClicked = true;
 	}
 
-	for (miterButtons = mpButtonList.begin(); miterButtons != mpButtonList.end(); miterButtons++)
+	// Loop through generic buttons
+	for (miterGenericButtons = mpGenericButtonList.begin(); miterGenericButtons != mpGenericButtonList.end(); miterGenericButtons++)
 	{
+		CAdvancedButton<CWorldState, void>* pButton = (*miterGenericButtons);
 		// Check if the mouse is colliding with the object
-		if ((*miterButtons)->GetBoundingBox().IsColliding(DX::XMFLOAT3((float)mpMouseScreenPos->mPosX, 0.0f, (float)mpMouseScreenPos->mPosY)))
+		if (pButton->GetBoundingBox().IsColliding(DX::XMFLOAT3((float)mpMouseScreenPos->mPosX, 0.0f, (float)mpMouseScreenPos->mPosY)))
 		{
-			(*miterButtons)->SetMouseOver(true);
+			pButton->SetMouseOver(true);
 		}
 		else
 		{
-			(*miterButtons)->SetMouseOver(false);
+			pButton->SetMouseOver(false);
 		}
 
 		// Update the button
-		(*miterButtons)->Update();
+		pButton->Update();
 
 		// Check for click 
-		if ((*miterButtons)->GetMouseOver())
+		if (pButton->GetMouseOver())
 		{
 			// Check if the mouse is over the button
 			if (mMouseClicked)
 			{
-				CheckButtonClicks((*miterButtons));
+				pButton->Execute();
 			}
 		}
 	}
 
+	// Loop through building unit buttons
+
+
+	// Loop through key presses
 	CheckKeyPresses();
 
 
@@ -864,14 +811,6 @@ void CWorldState::StateCleanup()
 	gpEngine->RemoveCamera(mpCamEarth);
 
 	mMusic->StopSound();
-
-	// Loop through buttons and remove them
-	while (!mpButtonList.empty())
-	{
-		CButton* pTmp = mpButtonList.back();
-		SafeDelete(pTmp);
-		mpButtonList.pop_back();
-	}
 }
 
 
@@ -891,4 +830,38 @@ void CWorldState::OnPlacingStructureChange(CStructure* selStructure)
 	mpPlacingStructure = selStructure;
 
 	UpdateHeldStructure();
+}
+
+
+//-----------------------------------------------------
+// WORLD STATE CLASS BUTTON EVENT FUNCTIONS
+//-----------------------------------------------------
+void CWorldState::QueueUnit(int)
+{
+
+}
+
+void CWorldState::CreateBarracks()
+{
+
+}
+
+void CWorldState::CreateHellipad()
+{
+
+}
+
+void CWorldState::CreateSpaceCentre()
+{
+
+}
+
+void CWorldState::CreateHouse()
+{
+
+}
+
+void CWorldState::DeleteStructure()
+{
+
 }

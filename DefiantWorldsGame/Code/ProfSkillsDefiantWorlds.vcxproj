@@ -165,6 +165,7 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
     <ClCompile Include="WorldState.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AdvancedButton.h" />
     <ClInclude Include="Artillery.h" />
     <ClInclude Include="Barracks.h" />
     <ClInclude Include="AirUnit.h" />
