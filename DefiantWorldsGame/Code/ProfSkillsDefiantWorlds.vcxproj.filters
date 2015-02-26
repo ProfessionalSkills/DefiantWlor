@@ -386,5 +386,8 @@
     <ClInclude Include="PlayerManager.h">
       <Filter>Players\Player Manager</Filter>
     </ClInclude>
+    <ClInclude Include="AdvancedButton.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -122,16 +122,20 @@ void CMenuState::StateSetup()
 	mpSprBackground = gpEngine->CreateSprite("MenuBG.png", 400.0f, 50.0f, 0.9f);
 	mpSprLogo = gpEngine->CreateSprite("Logo.png", 800.0f, 100.0f, 0.8f);
 
-	CButton* pNewButton = new CButton("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 350), SAABoundingBox(400.0f, 1215.0f, 350.0f, 815.0f), "New Game");
+	CAdvancedButton<CMenuState, void>* pNewButton = new CAdvancedButton<CMenuState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 350),
+		SAABoundingBox(400.0f, 1215.0f, 350.0f, 815.0f), *this, &CMenuState::NewGame);
 	mpButtonList.push_back(pNewButton);
 
-	pNewButton = new CButton("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 420), SAABoundingBox(470.0f, 1215.0f, 420.0f, 815.0f), "Load Game");
+	pNewButton = new CAdvancedButton<CMenuState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 420),
+		SAABoundingBox(470.0f, 1215.0f, 420.0f, 815.0f), *this, &CMenuState::LoadGame);
 	mpButtonList.push_back(pNewButton);
 
-	pNewButton = new CButton("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 490), SAABoundingBox(540.0f, 1215.0f, 490.0f, 815.0f), "Change Settings");
+	pNewButton = new CAdvancedButton<CMenuState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 490),
+		SAABoundingBox(540.0f, 1215.0f, 490.0f, 815.0f), *this, &CMenuState::ChangeSettings);
 	mpButtonList.push_back(pNewButton);
 
-	pNewButton = new CButton("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 560), SAABoundingBox(610.0f, 1215.0f, 560.0f, 815.0f), "Quit");
+	pNewButton = new CAdvancedButton<CMenuState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 560),
+		SAABoundingBox(610.0f, 1215.0f, 560.0f, 815.0f), *this, &CMenuState::Quit);
 	mpButtonList.push_back(pNewButton);
 }
 
@@ -178,46 +182,30 @@ void CMenuState::StateUpdate()
 	mMousePos.y = (float)gpEngine->GetMouseY();
 	for (miterButtons = mpButtonList.begin(); miterButtons != mpButtonList.end(); miterButtons++)
 	{
+		CAdvancedButton<CMenuState, void>* pButton = (*miterButtons);
 		// Check if the mouse is colliding with the object
-		if ((*miterButtons)->GetBoundingBox().IsColliding(DX::XMFLOAT3(mMousePos.x, 0.0f, mMousePos.y)))
+		if (pButton->GetBoundingBox().IsColliding(DX::XMFLOAT3(mMousePos.x, 0.0f, mMousePos.y)))
 		{
-			(*miterButtons)->SetMouseOver(true);
+			pButton->SetMouseOver(true);
 		}
 		else
 		{
-			(*miterButtons)->SetMouseOver(false);
+			pButton->SetMouseOver(false);
 		}
 
 		// Check for click 
-		if ((*miterButtons)->GetMouseOver())
+		if (pButton->GetMouseOver())
 		{
 			// Check if the mouse is over the button
 			if (gpEngine->KeyHit(Mouse_LButton))
 			{
 				// Raise click flag
-				std::string purpose = *(*miterButtons)->GetPurpose();
-
-				if (purpose == "New Game")
-				{
-					NewGame();
-				}
-				else if (purpose == "Load Game")
-				{
-					LoadGame();
-				}
-				else if (purpose == "Change Settings")
-				{
-					ChangeSettings();
-				}
-				else
-				{
-					Quit();
-				}
+				pButton->Execute();
 			}
 		}
 
 		// Update the button
-		(*miterButtons)->Update();
+		pButton->Update();
 	}
 }
 
@@ -250,7 +238,7 @@ void CMenuState::StateCleanup()
 	// Remove buttons
 	while (!mpButtonList.empty())
 	{
-		CButton* tmp;
+		CAdvancedButton<CMenuState, void>* tmp;
 		tmp = mpButtonList.back();
 		if (tmp)
 		{

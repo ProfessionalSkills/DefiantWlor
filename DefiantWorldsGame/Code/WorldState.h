@@ -11,7 +11,7 @@
 //-----------------------------------------------------
 #include "BaseGameState.h"
 #include "Grid.h"
-#include "Button.h"
+#include "AdvancedButton.h"
 
 
 //-----------------------------------------------------
@@ -63,19 +63,22 @@ private:
 	//---------------------------
 	IFont* mFntDebug;
 	ISprite* mpMainUI;
-	std::vector<CButton*> mpButtonList;
-	std::vector<CButton*>::iterator miterButtons;
+	std::vector<CAdvancedButton<CWorldState, void>*> mpGenericButtonList;
+	std::vector<CAdvancedButton<CWorldState, void>*>::iterator miterGenericButtons;
 
-	SStructureButtons* mpBarracksButtons;
-	SStructureButtons* mpHellipadButtons;
-	SStructureButtons* mpSpaceCentreButtons;
-	SStructureButtons* mpComCentreButtons;
+	std::vector<CAdvancedButton<CWorldState, void, int>*> mpUnitsButtonList;
+	std::vector<CAdvancedButton<CWorldState, void, int>*>::iterator miterUnitsButtons;
 
-	CButton* mpButtonDelete;
+	SStructureButtons<CWorldState>* mpBarracksButtons;
+	SStructureButtons<CWorldState>* mpHellipadButtons;
+	SStructureButtons<CWorldState>* mpSpaceCentreButtons;
+	SStructureButtons<CWorldState>* mpComCentreButtons;
 
-	CButton* mpButtonBarracks;
-	CButton* mpButtonHellipad;
-	CButton* mpButtonSpaceCentre;
+	CAdvancedButton<CWorldState, void>* mpButtonDelete;
+
+	CAdvancedButton<CWorldState, void>* mpButtonBarracks;
+	CAdvancedButton<CWorldState, void>* mpButtonHellipad;
+	CAdvancedButton<CWorldState, void>* mpButtonSpaceCentre;
 
 
 	// MOUSE DATA
@@ -131,12 +134,21 @@ public:
 	void UpdateHeldStructure();
 	void CalculateMouseGridPos();
 	void DrawFontData();
-	void CheckButtonClicks(CButton* pButton);
 	void CheckKeyPresses();
 
 	void DisplaySelectedBuildingInfo();
 
 	EMouseStates UpdateMouseState();
+
+
+	// BUTTON METHODS
+	//---------------------------
+	void QueueUnit(int);
+	void CreateBarracks();
+	void CreateHellipad();
+	void CreateSpaceCentre();
+	void CreateHouse();
+	void DeleteStructure();
 
 
 	// OVERRIDE METHODS

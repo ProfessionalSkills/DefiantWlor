@@ -10,7 +10,7 @@
 // INCLUDES
 //-----------------------------------------------------
 #include "BaseGameState.h"
-#include "Button.h"
+#include "AdvancedButton.h"
 
 
 //-----------------------------------------------------
@@ -43,8 +43,8 @@ private:
 	//--------------------------- 
 	ISprite* mpSprBackground;
 	ISprite* mpSprLogo;
-	std::vector<CButton*> mpButtonList;
-	std::vector<CButton*>::iterator miterButtons;
+	std::vector<CAdvancedButton<CMenuState, void>*> mpButtonList;
+	std::vector<CAdvancedButton<CMenuState, void>*>::iterator miterButtons;
 
 
 	// FONTS
