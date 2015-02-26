@@ -203,7 +203,7 @@ void SetupEngine()
 	//Fighter
 	CFighter::mspMshFighter = gpEngine->LoadMesh("Helicopter.x");
 	//Worker
-	CWorker::mspMshWorker = gpEngine->LoadMesh("army_truck.x");
+	CWorker::mspMshWorker = gpEngine->LoadMesh("transportTruck_german.x");
 	//Tank
 	CTank::mspMshTank = gpEngine->LoadMesh("HoverTank01.x");
 	//Infantry

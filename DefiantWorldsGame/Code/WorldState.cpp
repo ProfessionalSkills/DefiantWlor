@@ -259,11 +259,11 @@ void CWorldState::CheckKeyPresses()
 		}
 
 		// 0 = CommsCentre
-		if (gpEngine->KeyHit(Key_0))
-		{
-			pStructure = new CComCentre();
-			OnPlacingStructureChange(pStructure);
-		}
+		//if (gpEngine->KeyHit(Key_0))
+		//{
+		//	pStructure = new CComCentre();
+		//	OnPlacingStructureChange(pStructure);
+		//}
 
 		// 1 = Barracks
 		if (gpEngine->KeyHit(Key_1))
@@ -388,6 +388,8 @@ void CWorldState::DisplaySelectedBuildingInfo()
 		case STR_BARRACKS:
 			// Hide other buildings' buttons
 			mpHellipadButtons->Hide();
+			mpSpaceCentreButtons->Hide();
+			mpComCentreButtons->Hide();
 
 			// Show this building's buttons
 			mpBarracksButtons->Show();
@@ -397,14 +399,17 @@ void CWorldState::DisplaySelectedBuildingInfo()
 			// Hide other buildings' buttons
 			mpBarracksButtons->Hide();
 			mpHellipadButtons->Hide();
+			mpSpaceCentreButtons->Hide();
 
 			// Show this building's buttons
-			
+			mpComCentreButtons->Show();
 			break;
 
 		case STR_HELLIPAD:
 			// Hide other buildings' buttons
 			mpBarracksButtons->Hide();
+			mpSpaceCentreButtons->Hide();
+			mpComCentreButtons->Hide();
 
 			// Show this building's buttons
 			mpHellipadButtons->Show();
@@ -414,9 +419,10 @@ void CWorldState::DisplaySelectedBuildingInfo()
 			// Hide other buildings' buttons
 			mpBarracksButtons->Hide();
 			mpHellipadButtons->Hide();
+			mpComCentreButtons->Hide();
 
 			// Show this building's buttons
-			
+			mpSpaceCentreButtons->Show();
 			break;
 		}
 
@@ -446,6 +452,8 @@ void CWorldState::DisplaySelectedBuildingInfo()
 		mpButtonDelete->Hide();
 		mpBarracksButtons->Hide();
 		mpHellipadButtons->Hide();
+		mpSpaceCentreButtons->Hide();
+		mpComCentreButtons->Hide();
 
 		// Show building construction buttons
 		mpButtonBarracks->Show();
@@ -542,6 +550,7 @@ void CWorldState::StateSetup()
 	mpButtonDelete = pNewButton;
 	mpGenericButtonList.push_back(pNewButton);
 
+	// Barracks units buttons
 	mpBarracksButtons = new SStructureButtons<CWorldState>(3);
 	mpBarracksButtons->mpButtons[0] = new CAdvancedButton<CWorldState, void, int>("DefInfantryButton.png", "SelInfantryButton.png", SPointData(1219, 695),
 		SAABoundingBox(772.0f, 1322.0f, 695.0f, 1219.0f), *this, &CWorldState::QueueUnit);
@@ -556,6 +565,7 @@ void CWorldState::StateSetup()
 		mpUnitsButtonList.push_back(mpBarracksButtons->mpButtons[i]);
 	}
 	
+	// hellipad units buttons
 	mpHellipadButtons = new SStructureButtons<CWorldState>(2);
 	mpHellipadButtons->mpButtons[0] = new CAdvancedButton<CWorldState, void, int>("DefFighterButton.png", "SelFighterButton.png", SPointData(1219, 695),
 		SAABoundingBox(772.0f, 1322.0f, 695.0f, 1219.0f), *this, &CWorldState::QueueUnit);
@@ -567,8 +577,31 @@ void CWorldState::StateSetup()
 		mpUnitsButtonList.push_back(mpHellipadButtons->mpButtons[i]);
 	}
 
-	//mpSpaceCentreButtons;
-	//mpComCentreButtons;
+	// Space centre units buttons
+	mpSpaceCentreButtons = new SStructureButtons<CWorldState>(3);
+	mpSpaceCentreButtons->mpButtons[0] = new CAdvancedButton<CWorldState, void, int>("DefSpaceFighterButton.png", "SelSpaceFighterButton.png", SPointData(1219, 695),
+		SAABoundingBox(772.0f, 1322.0f, 695.0f, 1219.0f), *this, &CWorldState::QueueUnit);
+	mpSpaceCentreButtons->mpButtons[1] = new CAdvancedButton<CWorldState, void, int>("DefTransportButton.png", "SelTransportButton.png", SPointData(1219, 782),
+		SAABoundingBox(879.0f, 1322.0f, 782.0f, 1219.0f), *this, &CWorldState::QueueUnit);
+	mpSpaceCentreButtons->mpButtons[2] = new CAdvancedButton<CWorldState, void, int>("DefMothershipButton.png", "SelMothershipButton.png", SPointData(1342, 695),
+		SAABoundingBox(772.0f, 1439.0f, 695.0f, 1342.0f), *this, &CWorldState::QueueUnit);
+	mpSpaceCentreButtons->Hide();
+
+	for (int i = 0; i < mpSpaceCentreButtons->mNumButtons; i++)
+	{
+		mpUnitsButtonList.push_back(mpSpaceCentreButtons->mpButtons[i]);
+	}
+
+	// Command centre units buttons
+	mpComCentreButtons = new SStructureButtons<CWorldState>(1);
+	mpComCentreButtons->mpButtons[0] = new CAdvancedButton<CWorldState, void, int>("DefWorkerButton.png", "SelWorkerButton.png", SPointData(1219, 695),
+		SAABoundingBox(772.0f, 1322.0f, 695.0f, 1219.0f), *this, &CWorldState::QueueUnit);
+	mpComCentreButtons->Hide();
+
+	for (int i = 0; i < mpComCentreButtons->mNumButtons; i++)
+	{
+		mpUnitsButtonList.push_back(mpComCentreButtons->mpButtons[i]);
+	}
 
 
 	// CONSTRUCT COMMAND CENTRES
@@ -789,6 +822,18 @@ void CWorldState::StateUpdate()
 				}
 
 				index = mpHellipadButtons->GetMouseOverIndex();
+				if (index != -1)
+				{
+					pButton->Execute(index);
+				}
+
+				index = mpComCentreButtons->GetMouseOverIndex();
+				if (index != -1)
+				{
+					pButton->Execute(index);
+				}
+
+				index = mpSpaceCentreButtons->GetMouseOverIndex();
 				if (index != -1)
 				{
 					pButton->Execute(index);
