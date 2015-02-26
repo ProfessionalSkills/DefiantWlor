@@ -200,6 +200,20 @@ struct SStructureButtons
 			}
 		}
 	}
+
+	// Returns the index of the button which is being hovered over
+	int GetMouseOverIndex()
+	{
+		for (int i = 0; i < mNumButtons; i++)
+		{
+			if (mpButtons[i]->GetMouseOver())
+			{
+				return i;
+			}
+		}
+
+		return -1;
+	}
 };
 
 
