@@ -16,20 +16,28 @@ CSpaceFighter::CSpaceFighter()
 {
 	mAgentInfo = SAgentData(GAV_SPACE_FIGHTER, "Space Fighter");
 
+	//Game Values
 	mHealth = 100.0f;
 	mSpeed = 1.0f;
+	mDamage = 1.0f;
+	mPopCost = 1;
+	mHitChance = 0.7f;
+	mFleetPosition = front;
+
+	//Production Values
 	mProductionTime = 2.0f;
 	mProductionCost = 0.0f;
 	mCurProductionTimeLeft = mProductionTime;
-	mDamage = 1.0f;
+
+	//Model Values
+	mScale = 0.3f;
+
+	//Misc
 	//mAttackParticleFX;
 	//mDestroyParticleFX;
 	mState = OBJ_CONSTRUCTING;
 	//mDestGridSq;
 	mIsMoving = false;
-	mPopCost = 1;
-	mHitChance = 0.7f;
-	mScale = 0.3f;
 }
 
 CSpaceFighter::~CSpaceFighter()
