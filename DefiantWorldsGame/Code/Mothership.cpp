@@ -16,20 +16,28 @@ CMothership::CMothership()
 {
 	mAgentInfo = SAgentData(GAV_MOTHERSHIP, "Mothership");
 
+	//Game Values
 	mHealth = 100.0f;
 	mSpeed = 1.0f;
+	mDamage = 4.0f;
+	mPopCost = 1;
+	mHitChance = 0.5f;
+	mFleetPosition = back;
+
+	//Production Values
 	mProductionTime = 4.0f;
 	mProductionCost = 0.0f;
 	mCurProductionTimeLeft = mProductionTime;
-	mDamage = 4.0f;
+
+	//Model Values
+	mScale = 0.2f;
+
+	//Misc
 	//mAttackParticleFX;
 	//mDestroyParticleFX;
 	mState = OBJ_CONSTRUCTING;
 	//mDestGridSq;
 	mIsMoving = false;
-	mPopCost = 1;
-	mHitChance = 0.5f;
-	mScale = 0.2f;
 }
 
 CMothership::~CMothership()

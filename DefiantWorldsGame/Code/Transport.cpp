@@ -15,22 +15,29 @@ IMesh* CTransport::mspMshTransport = nullptr;
 //-----------------------------------------------------
 CTransport::CTransport()
 {
-	mAgentInfo = SAgentData(GAV_TRANSPORT, "Transport");
-
+	//Game Values
 	mHealth = 100.0f;
 	mSpeed = 1.0f;
+	mDamage = 0.5f;
+	mHitChance = 0.4f;
+	mFleetPosition = centre;
+	mPopCost = 1;	
+
+	//Production Values
 	mProductionTime = 25.0f;
 	mProductionCost = 0.0f;
 	mCurProductionTimeLeft = mProductionTime;
-	mDamage = 0.5f;
+	
+	//Model Values
+	mScale = 0.3f;
+	
+	//Misc
 	//mAttackParticleFX;
 	//mDestroyParticleFX;
 	mState = OBJ_CONSTRUCTING;
 	//mDestGridSq;
 	mIsMoving = false;
-	mPopCost = 1;	
-	mHitChance = 0.4f;
-	mScale = 0.3f;
+	mAgentInfo = SAgentData(GAV_TRANSPORT, "Transport");
 }
 
 CTransport::~CTransport()
