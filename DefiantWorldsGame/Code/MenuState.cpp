@@ -64,8 +64,10 @@ void CMenuState::StateSetup()
 	// INITIALISE ADDITIONAL VARIABLES
 	//------------------------------
 	mOrbitCentre = DX::XMFLOAT3(-60.0f, 0.0f, 50.0f);
+
 	mEarthDistance = 35.0f;
 	mMarsDistance = 65.0f;
+
 	mMinAngle = ToRadians(33.0f);
 	mMaxAngle = ToRadians(145.0f);
 

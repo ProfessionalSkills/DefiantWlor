@@ -156,7 +156,7 @@ void CRTSPlayer::LoadUnitModels()
 	//loads units back into their original postion
 	for (size_t i = 0; i < mpWorldUnitsList.size(); i++)
 	{
-		//mpWorldUnitsList[i]->LoadIModel();
+		mpWorldUnitsList[i]->LoadIModel();
 	}
 }
 

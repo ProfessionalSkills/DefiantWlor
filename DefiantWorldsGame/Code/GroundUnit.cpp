@@ -54,6 +54,9 @@ void CGroundUnit::Spawn(CGrid* pGrid, SPointData pCentre)
 					spawnTiles[i]->SetTileUsage(true);
 					freeTileFound = true;
 					mpObjModel = CreateModel(DX::XMFLOAT3(spawnTiles[i]->GetWorldPos().x, 1.0f, spawnTiles[i]->GetWorldPos().z));
+					mWorldPos.x = spawnTiles[i]->GetWorldPos().x;
+					mWorldPos.y = 1.0f;
+					mWorldPos.z = spawnTiles[i]->GetWorldPos().z;
 					mpObjModel->Scale(2.0f);
 				}
 			}
