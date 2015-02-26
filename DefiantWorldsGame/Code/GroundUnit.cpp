@@ -13,7 +13,7 @@
 //-----------------------------------------------------
 CGroundUnit::CGroundUnit()
 {
-
+	mScale = 2.0f;
 }
 
 CGroundUnit::~CGroundUnit()
@@ -57,7 +57,7 @@ void CGroundUnit::Spawn(CGrid* pGrid, SPointData pCentre)
 					mWorldPos.x = spawnTiles[i]->GetWorldPos().x;
 					mWorldPos.y = 1.0f;
 					mWorldPos.z = spawnTiles[i]->GetWorldPos().z;
-					mpObjModel->Scale(2.0f);
+					mpObjModel->Scale(mScale);
 				}
 			}
 		}
