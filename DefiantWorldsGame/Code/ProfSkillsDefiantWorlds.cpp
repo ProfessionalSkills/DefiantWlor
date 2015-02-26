@@ -193,9 +193,9 @@ void SetupEngine()
 	//Space Fighter
 	CSpaceFighter::mspMshSpaceFighter = gpEngine->LoadMesh("SciFiBattleship01.x");
 	//Mothership
-	CMothership::mspMshMothership = gpEngine->LoadMesh("Spaceship01Battlecruiser.x");
+	CMothership::mspMshMothership = gpEngine->LoadMesh("Spaceship02Battlecruiser.x");
 	//Transport
-	CTransport::mspMshTransport = gpEngine->LoadMesh("Spaceship01CommandModule.x");
+	CTransport::mspMshTransport = gpEngine->LoadMesh("Spaceship01Battlecruiser.x");
 
 	//Ground Unit Meshes
 	//Bomber

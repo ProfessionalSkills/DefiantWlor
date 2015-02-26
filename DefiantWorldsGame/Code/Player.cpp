@@ -85,6 +85,7 @@ bool CRTSPlayer::PurchaseStructure(CStructure* pStructure, CGrid* pGrid, CTile* 
 	// Everything fine - build & add to vector
 	pStructure->CreateStructure(pGrid);
 	pStructure->SetBuildLocation(pTile->GetGridPos());
+	pStructure->SetFaction(mPlayerFaction);
 	mpStructureList.push_back(pStructure);
 	return true;
 }

@@ -61,7 +61,7 @@ void CComCentre::SetBuiltModel()
 	mpObjModel->Scale(mScale);
 
 	// If the x is beyond a certain distance, the object is on mars - set relevant skin
-	if (mpObjModel->GetX() > (GRID_SIZE_X * GRID_TILE_SIZE))
+	if (mFaction == FAC_THE_CRIMSON_LEGION)
 	{
 		mpObjModel->SetSkin("bld-mt-mars.jpg");
 	}
@@ -102,7 +102,7 @@ void CComCentre::LoadIModel()
 			mpObjModel->Scale(mScale);
 
 			// If the x is beyond a certain distance, the object is on mars - set relevant skin
-			if (mpObjModel->GetX() > (GRID_SIZE_X * GRID_TILE_SIZE))
+			if (mFaction == FAC_THE_CRIMSON_LEGION)
 			{
 				mpObjModel->SetSkin("bld-mt-mars.jpg");
 			}

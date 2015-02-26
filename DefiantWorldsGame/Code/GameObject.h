@@ -74,9 +74,19 @@ public:
 		return mOrientation;
 	}
 
+	inline EFactions GetFaction()
+	{
+		return mFaction;
+	}
+
 
 	// MUTATORS
 	//---------------------------
+	inline void SetFaction(EFactions faction)
+	{
+		mFaction = faction;
+	}
+
 	void SetGridPos(SPointData pos);
 	void SetWorldPos(DX::XMFLOAT3 pos);
 	void SetOrientation(float orientation);
