@@ -40,9 +40,15 @@ protected:
 	//---------------------------
 	std::string mName;
 	EFactions mPlayerFaction;
+
 	int mNumMinerals;
 	int mCurPopLimit;
 	int mCurPop;
+
+	int mNumSpaceFighter;
+	int mNumMothership;
+	int mNumTransport;
+
 
 	CGrid* mpPlayerGrid;
 
@@ -119,6 +125,21 @@ public:
 		return mpPlayerGrid;
 	}
 
+	inline int GetNumSpaceFighter()
+	{
+		return mNumSpaceFighter;
+	}
+
+	inline int GetNumTransport()
+	{
+		return mNumTransport;
+	}
+
+	inline int GetNumMothership()
+	{
+		return mNumMothership;
+	}
+
 
 	// MUTATORS
 	//---------------------------
@@ -142,7 +163,9 @@ public:
 
 	bool MineralTransaction(int amount);
 
-
+	void SetNumSpaceFighter(int NumShips);
+	void SetNumTransport(int NumShips);
+	void SetNumMothership(int NumShips);
 	// METHODS
 	//---------------------------
 	bool PurchaseStructure(CStructure* pStructure, CGrid* pGrid, CTile* pTile);

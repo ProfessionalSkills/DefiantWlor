@@ -16,7 +16,7 @@
 //-----------------------------------------------------
 // SPACE UNIT CLASS - CHILD OF GAME AGENT
 //-----------------------------------------------------
-enum eFleetPos { front, centre, back };
+
 
 class CSpaceUnit : public CGameAgent
 {
@@ -24,7 +24,7 @@ protected:
 	// DATA
 	//---------------------------
 	float mHitChance;
-	eFleetPos mFleetPosition;
+
 
 public:
 	// CONSTRUCTORS & DESTRUCTOR
@@ -34,7 +34,7 @@ public:
 
 	// ACCESSORS
 	//---------------------------
-	eFleetPos GetPosType();
+	
 
 	// MUTATORS
 	//---------------------------

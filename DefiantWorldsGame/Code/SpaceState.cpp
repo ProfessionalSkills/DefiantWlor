@@ -134,8 +134,8 @@ void CSpaceState::StateCleanup()
 	//unload models
 	mpMshSkybox->RemoveModel(mpMdlSkybox);
 
-	mpPlayerOneFleet->ReturnFleet(mpHumanPlayer->GetSpaceUnitList());
-	mpPlayerTwoFleet->ReturnFleet(mpAIPlayer->GetSpaceUnitList());
+	mpPlayerOneFleet->ReturnFleet(mpHumanPlayer);
+	mpPlayerTwoFleet->ReturnFleet(mpAIPlayer);
 
 	//set pointers to null
 	mpPlayerOneFleet = nullptr;

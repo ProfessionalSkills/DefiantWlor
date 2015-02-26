@@ -7,18 +7,29 @@
 // INCLUDES
 //-----------------------------------------------------
 #include "Fleet.h"
+#include "GameStateControl.h"
+
 
 //-----------------------------------------------------
 // FLEET CLASS CONSTRUCTORS & DESTRUCTOR
 //-----------------------------------------------------
 CFleet::CFleet() :mFleetRowSize(10), mFleetRowSeperation(7)
 {
+	//Value Mods
 	mDamegMod = 1.0f;
 	mHitMod = 1.0f;
 	mSize = 0;
-	mFleetTactics = Rapid;
 	mTargetedFireVariance = 5;
+
+	//Tactics
+	mFleetTactics = None;
+
+	//Misc
 	mTarget = new CRandomiser();
+
+	mNumMothership = 0;
+	mNumSpaceFighter = 0;
+	mNumTransport = 0;
 }
 
 CFleet::~CFleet()
@@ -77,6 +88,19 @@ void CFleet::UpdateCondition()
 	{
 		if (mpFleet[i]->GetHealth() < 0.0f)
 		{
+			switch (mpFleet[i]->GetPosType())
+			{
+			case front:
+				mNumSpaceFighter--;
+				break;
+			case centre:
+				mNumTransport--;
+				break;
+			case back:
+				mNumMothership--;
+				break;
+			}
+
 			CGameAgent*temp = mpFleet[i];
 			mpFleet[i] = mpFleet[mSize - 1];
 			mpFleet.pop_back();
@@ -86,12 +110,45 @@ void CFleet::UpdateCondition()
 	}
 }
 
+int YSwitch(int x)
+{
+	if (x < -5 || x>5) x = 0;
+	if (x > 0) return x*-1;
+	else return (x*-1) + 1;
+}
+
 void CFleet::LoadShipModels(float xPos)
 {
+	int SpaceFighterLoaded = 0;
+	int TransportLoaded = 0;
+	int MothershipLoaded = 0;
+
+	int SpaceFighterY = 0;
+	int TransportY = 0;
+	int MothershipY = 0;
+
+	int TransportRowsBack = (mNumSpaceFighter / mFleetRowSize)+1;
+	int MotherShipRowsBack = (mNumTransport / mFleetRowSize) + TransportRowsBack + 1;
+
 	for (int i = 0; i < mSize; i++)
 	{
 		//uses intager deviosion to seperate ships into rows of x, where x is the fleet row size, and each row is seperated by a distance of fleet row seperation
-		mpFleet[i]->LoadModel(xPos - (float)((i / mFleetRowSize) * mFleetRowSeperation), (float)(i - (i / mFleetRowSize) * mFleetRowSize), 0.0f);
+		switch (mpFleet[i]->GetPosType())
+		{
+		case front:
+			mpFleet[i]->LoadModel(xPos - (float)((SpaceFighterLoaded / mFleetRowSize) * mFleetRowSeperation), (float)SpaceFighterY, 0.0f);
+			SpaceFighterLoaded++;
+			SpaceFighterY = YSwitch(SpaceFighterY);
+			break;
+		case centre:
+			mpFleet[i]->LoadModel(xPos - (float)(((TransportLoaded / mFleetRowSize) + TransportRowsBack) * mFleetRowSeperation), (float)(TransportLoaded - (TransportLoaded / mFleetRowSize) * mFleetRowSize), 0.0f);
+			TransportLoaded++;
+			break;
+		case back:
+			mpFleet[i]->LoadModel(xPos - (float)(((MothershipLoaded / mFleetRowSize) + MotherShipRowsBack) * mFleetRowSeperation), (float)(MothershipLoaded - (MothershipLoaded / mFleetRowSize) * mFleetRowSize), 0.0f);
+			MothershipLoaded++;
+			break;
+		}
 	}
 }
 
@@ -125,6 +182,18 @@ vector <CGameAgent*>* CFleet::LaunchFleet(vector <CGameAgent*>* possibleShips)
 	{
 		for (int i = possibleShips->size() - 1; i >= 0; i--)
 		{
+			switch ((*possibleShips)[i]->GetPosType())
+			{
+			case front:
+				mNumSpaceFighter++;
+				break;
+			case centre:
+				mNumTransport++;
+				break;
+			case back:
+				mNumMothership++;
+				break;
+			}
 			mpFleet.push_back((*possibleShips)[i]);
 			possibleShips->pop_back();
 			mSize++;
@@ -142,14 +211,22 @@ void CFleet::SetTactic()
 	//recives player input to set tactics, does so during launch attack
 }
 
-void CFleet::ReturnFleet(vector <CGameAgent*>* returnShips)
+void CFleet::ReturnFleet(CRTSPlayer* Player)
 {
 	for (int i = mSize-1; i >= 0; i--)
 	{
 		mpFleet[i]->UnloadIModel();
-		returnShips->push_back(mpFleet[i]);
+		Player->GetSpaceUnitList()->push_back(mpFleet[i]);
 		mpFleet.pop_back();
 		mSize--;
 	}
+
+	Player->SetNumMothership(mNumMothership);
+	Player->SetNumSpaceFighter(mNumSpaceFighter);
+	Player->SetNumTransport(mNumTransport);
+
+	mNumMothership = 0;
+	mNumSpaceFighter = 0;
+	mNumTransport = 0;
 }
 

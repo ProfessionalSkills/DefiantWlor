@@ -22,6 +22,13 @@ CGameAgent::~CGameAgent()
 
 }
 
+//-----------------------------------------------------
+// GAME AGENT CLASS ACCESSORS
+//-----------------------------------------------------
+eFleetPos CGameAgent::GetPosType()
+{
+	return mFleetPosition;
+}
 
 //-----------------------------------------------------
 // GAME AGENT CLASS MUTATORS

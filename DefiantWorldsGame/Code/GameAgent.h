@@ -11,7 +11,7 @@
 //-----------------------------------------------------
 #include "GameObject.h"
 #include "Grid.h"
-
+enum eFleetPos { front, centre, back };
 
 //-----------------------------------------------------
 // STRUCTURE
@@ -58,7 +58,7 @@ protected:
 	bool mIsMoving;
 	int  mPopCost;
 
-
+	eFleetPos mFleetPosition;
 public:
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
@@ -108,6 +108,7 @@ public:
 		return &mAgentInfo;
 	}
 
+	eFleetPos GetPosType();
 
 	// MUTATORS
 	//---------------------------

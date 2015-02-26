@@ -24,12 +24,12 @@ CTransport::CTransport()
 	mPopCost = 1;	
 
 	//Production Values
-	mProductionTime = 25.0f;
+	mProductionTime = 0.5f;
 	mProductionCost = 0.0f;
 	mCurProductionTimeLeft = mProductionTime;
 	
 	//Model Values
-	mScale = 0.3f;
+	mScale = 0.1f;
 	
 	//Misc
 	//mAttackParticleFX;

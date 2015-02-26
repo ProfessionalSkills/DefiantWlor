@@ -17,6 +17,9 @@ CRTSPlayer::CRTSPlayer(EFactions playerFaction)
 	mNumMinerals = 10000;
 	mpFleet = new CFleet();
 	mPlayerFaction = playerFaction;
+	mNumMothership = 0;
+	mNumSpaceFighter = 0;
+	mNumTransport = 0;
 	
 	mpPlayerGrid = nullptr;
 
@@ -57,6 +60,21 @@ bool CRTSPlayer::MineralTransaction(int amount)
 		mNumMinerals += amount;
 		return true;
 	}
+}
+
+void CRTSPlayer::SetNumSpaceFighter(int numShips)
+{
+	mNumSpaceFighter = numShips;
+}
+
+void CRTSPlayer::SetNumTransport(int numShips)
+{
+	mNumTransport = numShips;
+}
+
+void CRTSPlayer::SetNumMothership(int numShips)
+{
+	mNumMothership = numShips;
 }
 
 
