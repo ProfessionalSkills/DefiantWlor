@@ -66,6 +66,11 @@ private:
 	std::vector<CButton*> mpButtonList;
 	std::vector<CButton*>::iterator miterButtons;
 
+	SStructureButtons* mpBarracksButtons;
+	SStructureButtons* mpHellipadButtons;
+	SStructureButtons* mpSpaceCentreButtons;
+	SStructureButtons* mpComCentreButtons;
+
 	CButton* mpButtonDelete;
 
 	CButton* mpButtonBarracks;
@@ -126,6 +131,7 @@ public:
 	void UpdateHeldStructure();
 	void CalculateMouseGridPos();
 	void DrawFontData();
+	void CheckButtonClicks(CButton* pButton);
 	void CheckKeyPresses();
 
 	void DisplaySelectedBuildingInfo();

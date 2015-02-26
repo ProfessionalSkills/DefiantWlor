@@ -45,6 +45,7 @@ public:
 
 	// OVERRIDE METHODS
 	//---------------------------
+	bool AddToQueue(size_t agentIndex);
 	virtual void UnloadIModel();
 	virtual void LoadIModel();
 	//virtual bool Destroy();

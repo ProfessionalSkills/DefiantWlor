@@ -58,6 +58,44 @@ enum EFactions
 
 
 //-----------------------------------------------------
+// GLOBAL VARIABLES
+//-----------------------------------------------------
+const int WINDOW_POS_X = 50;
+const int WINDOW_POS_Y = 50;
+
+const int WINDOW_WIDTH = 1600;
+const int WINDOW_HEIGHT = 900;
+
+const int MAX_UNITS = 50;
+const int MAX_SPACE_UNITS = 10;
+
+const int GRID_SIZE_X = 60;
+const int GRID_SIZE_Y = 60;
+const float GRID_TILE_SIZE = 10.0f;
+
+const float NEAR_CLIP = 1.0f;
+const float FAR_CLIP = 10000.0f;
+
+const float CAM_MOVE_SPEED = 100.0f;
+const float CAM_SCROLL_SPEED = 5000.0f;
+const float CAM_MAX_HEIGHT = 250.0f;
+const float CAM_MIN_HEIGHT = 30.0f;
+
+const int MAX_AI_NUM = 1;
+const int MAX_STRUCTURE_BUTTONS = 5;
+
+// Store the current game state
+extern EGameStates gCurState;
+
+// Global pointer to the engine. Can be used by anything including this file
+extern CRandomiser* gpRandomiser;
+
+// Global frametime & mouse wheel delta
+extern float gFrameTime;
+extern float gMouseWheelDelta;
+
+
+//-----------------------------------------------------
 // STRUCTURES
 //-----------------------------------------------------
 struct SPointData
@@ -114,42 +152,6 @@ struct SAABoundingBox		// Axis aligned bounding box
 		return false;
 	}
 };
-
-//-----------------------------------------------------
-// GLOBAL VARIABLES
-//-----------------------------------------------------
-const int WINDOW_POS_X = 50;
-const int WINDOW_POS_Y = 50;
-
-const int WINDOW_WIDTH  = 1600;
-const int WINDOW_HEIGHT = 900;
-
-const int MAX_UNITS = 50;
-const int MAX_SPACE_UNITS = 10;
-
-const int GRID_SIZE_X = 60;
-const int GRID_SIZE_Y = 60;
-const float GRID_TILE_SIZE = 10.0f;
-
-const float NEAR_CLIP = 1.0f;
-const float FAR_CLIP = 10000.0f;
-
-const float CAM_MOVE_SPEED = 100.0f;
-const float CAM_SCROLL_SPEED = 5000.0f;
-const float CAM_MAX_HEIGHT = 250.0f;
-const float CAM_MIN_HEIGHT = 30.0f;
-
-const int MAX_AI_NUM = 1;
-
-// Store the current game state
-extern EGameStates gCurState;
-
-// Global pointer to the engine. Can be used by anything including this file
-extern CRandomiser* gpRandomiser;
-
-// Global frametime & mouse wheel delta
-extern float gFrameTime;
-extern float gMouseWheelDelta;
 
 
 //-----------------------------------------------------

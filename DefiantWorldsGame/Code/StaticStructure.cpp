@@ -26,6 +26,11 @@ CStaticStructure::~CStaticStructure()
 //-----------------------------------------------------
 // STATIC STRUCTURE CLASS OVERRIDE METHODS
 //-----------------------------------------------------
+bool CStaticStructure::AddToQueue(size_t agentIndex)
+{
+	return false;
+}
+
 void CStaticStructure::UnloadIModel()
 {
 

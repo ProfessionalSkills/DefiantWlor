@@ -126,6 +126,11 @@ public:
 		return mWorldSpawnLoc;
 	}
 
+	inline EGameStructureTypes GetStructureType()
+	{
+		return mStructureType;
+	}
+
 
 	// MUTATORS
 	//---------------------------
@@ -155,6 +160,7 @@ public:
 	//---------------------------
 	// Method called each frome - boolean returns is false when the object has been destroyed
 	virtual bool Update(CRTSPlayer* pPlayer) = 0;
+	virtual bool AddToQueue(size_t agentIndex) = 0;
 
 	virtual void DisplayInfo(IFont* font) = 0;
 	virtual void SetBuiltModel() = 0;

@@ -170,6 +170,65 @@ EMouseStates CWorldState::UpdateMouseState()
 	return MS_OUT_OF_GRID;
 }
 
+void CWorldState::CheckButtonClicks(CButton* pButton)
+{
+	std::string purpose = (*pButton->GetPurpose());
+
+	if (purpose == "Space Centre")
+	{
+		CStructure* pStructure = new CSpaceCentre();
+		OnPlacingStructureChange(pStructure);
+		mMouseClicked = false;
+	}
+	else if (purpose == "Barracks")
+	{
+		CStructure* pStructure = new CBarracks();
+		OnPlacingStructureChange(pStructure);
+		mMouseClicked = false;
+	}
+	else if (purpose == "Hellipad")
+	{
+		CStructure* pStructure = new CHellipad();
+		OnPlacingStructureChange(pStructure);
+		mMouseClicked = false;
+	}
+	else if (purpose == "Delete")
+	{
+		if (mpCurSelectedStructure)
+		{
+			// Set object to be deleted
+			mpCurSelectedStructure->SetState(OBJ_DEAD);
+			// pointer set to null
+			mpCurSelectedStructure = nullptr;
+		}
+		mMouseClicked = false;
+	}
+	else if (purpose == "Infantry")
+	{
+		if (mpCurSelectedStructure)
+		{
+			mpCurSelectedStructure->AddToQueue(1);
+		}
+		mMouseClicked = false;
+	}
+	else if (purpose == "Artillery")
+	{
+		if (mpCurSelectedStructure)
+		{
+			mpCurSelectedStructure->AddToQueue(0);
+		}
+		mMouseClicked = false;
+	}
+	else if (purpose == "Tank")
+	{
+		if (mpCurSelectedStructure)
+		{
+			mpCurSelectedStructure->AddToQueue(2);
+		}
+		mMouseClicked = false;
+	}
+}
+
 void CWorldState::CheckKeyPresses()
 {
 	// CHECK FOR SCROLLING
@@ -383,6 +442,42 @@ void CWorldState::DisplaySelectedBuildingInfo()
 		// Show building & unit related buttons
 		mpButtonDelete->Show();
 		
+		switch (mpCurSelectedStructure->GetStructureType())
+		{
+		case STR_BARRACKS:
+			// Hide other buildings' buttons
+
+
+			// Show this building's buttons
+			mpBarracksButtons->Show();
+			break;
+
+		case STR_COM_CENTRE:
+			// Hide other buildings' buttons
+			mpBarracksButtons->Hide();
+
+			// Show this building's buttons
+			
+			break;
+
+		case STR_HELLIPAD:
+			// Hide other buildings' buttons
+			mpBarracksButtons->Hide();
+
+			// Show this building's buttons
+			
+			break;
+
+		case STR_SPACE_CENTRE:
+			// Hide other buildings' buttons
+			mpBarracksButtons->Hide();
+
+			// Show this building's buttons
+			
+			break;
+		}
+
+
 		// BUILDING DESTRUCTION
 		//------------------------------
 		if (gpEngine->KeyHit(Key_D))
@@ -406,6 +501,7 @@ void CWorldState::DisplaySelectedBuildingInfo()
 	{
 		// Hide building & unit related buttons
 		mpButtonDelete->Hide();
+		mpBarracksButtons->Hide();
 
 		// Show building construction buttons
 		mpButtonBarracks->Show();
@@ -501,6 +597,24 @@ void CWorldState::StateSetup()
 	pNewButton->Hide();
 	mpButtonDelete = pNewButton;
 	mpButtonList.push_back(pNewButton);
+
+	mpBarracksButtons = new SStructureButtons(3);
+	mpBarracksButtons->mpButtons[0] = new CButton("DefInfantryButton.png", "SelInfantryButton.png", SPointData(1219, 695),
+		SAABoundingBox(772.0f, 1322.0f, 695.0f, 1219.0f), "Infantry");
+	mpBarracksButtons->mpButtons[1] = new CButton("DefArtilleryButton.png", "SelArtilleryButton.png", SPointData(1219, 782),
+		SAABoundingBox(879.0f, 1322.0f, 782.0f, 1219.0f), "Artillery");
+	mpBarracksButtons->mpButtons[2] = new CButton("DefTankButton.png", "SelTankButton.png", SPointData(1342, 695),
+		SAABoundingBox(772.0f, 1439.0f, 695.0f, 1342.0f), "Tank");
+	mpBarracksButtons->Hide();
+
+	for (int i = 0; i < mpBarracksButtons->mNumButtons; i++)
+	{
+		mpButtonList.push_back(mpBarracksButtons->mpButtons[i]);
+	}
+	
+	//mpHellipadButtons;
+	//mpSpaceCentreButtons;
+	//mpComCentreButtons;
 
 
 	// CONSTRUCT COMMAND CENTRES
@@ -684,37 +798,7 @@ void CWorldState::StateUpdate()
 			// Check if the mouse is over the button
 			if (mMouseClicked)
 			{
-				std::string purpose = *(*miterButtons)->GetPurpose();
-
-				if (purpose == "Space Centre")
-				{
-					CStructure* pStructure = new CSpaceCentre();
-					OnPlacingStructureChange(pStructure);
-					mMouseClicked = false;
-				}
-				else if (purpose == "Barracks")
-				{
-					CStructure* pStructure = new CBarracks();
-					OnPlacingStructureChange(pStructure);
-					mMouseClicked = false;
-				}
-				else if (purpose == "Hellipad")
-				{
-					CStructure* pStructure = new CHellipad();
-					OnPlacingStructureChange(pStructure);
-					mMouseClicked = false;
-				}
-				else if (purpose == "Delete")
-				{
-					if (mpCurSelectedStructure)
-					{
-						// Set object to be deleted
-						mpCurSelectedStructure->SetState(OBJ_DEAD);
-						// pointer set to null
-						mpCurSelectedStructure = nullptr;
-					}
-					mMouseClicked = false;
-				}
+				CheckButtonClicks((*miterButtons));
 			}
 		}
 	}
