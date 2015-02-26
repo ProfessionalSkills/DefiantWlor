@@ -39,8 +39,8 @@ CBarracks::CBarracks()
 	mpObjModel->Scale(mScale);
 	
 	// Define list of responsible agents
-	mRespectiveAgentsList.push_back(new CArtillery());
 	mRespectiveAgentsList.push_back(new CInfantry());
+	mRespectiveAgentsList.push_back(new CArtillery());
 	mRespectiveAgentsList.push_back(new CTank());
 }
 

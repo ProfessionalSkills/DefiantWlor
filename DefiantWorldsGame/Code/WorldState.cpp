@@ -747,7 +747,34 @@ void CWorldState::StateUpdate()
 	}
 
 	// Loop through building unit buttons
+	int counter = 0;
+	for (miterUnitsButtons = mpUnitsButtonList.begin(); miterUnitsButtons != mpUnitsButtonList.end(); miterUnitsButtons++)
+	{
+		CAdvancedButton<CWorldState, void, int>* pButton = (*miterUnitsButtons);
+		// Check if the mouse is colliding with the object
+		if (pButton->GetBoundingBox().IsColliding(DX::XMFLOAT3((float)mpMouseScreenPos->mPosX, 0.0f, (float)mpMouseScreenPos->mPosY)))
+		{
+			pButton->SetMouseOver(true);
+		}
+		else
+		{
+			pButton->SetMouseOver(false);
+		}
 
+		// Update the button
+		pButton->Update();
+
+		// Check for click 
+		if (pButton->GetMouseOver())
+		{
+			// Check if the mouse is over the button
+			if (mMouseClicked)
+			{
+				pButton->Execute(counter);
+			}
+		}
+		counter++;
+	}
 
 	// Loop through key presses
 	CheckKeyPresses();
@@ -836,32 +863,49 @@ void CWorldState::OnPlacingStructureChange(CStructure* selStructure)
 //-----------------------------------------------------
 // WORLD STATE CLASS BUTTON EVENT FUNCTIONS
 //-----------------------------------------------------
-void CWorldState::QueueUnit(int)
+void CWorldState::QueueUnit(int unit)
 {
+	if (!mpCurSelectedStructure) return;
 
+	mpCurSelectedStructure->AddToQueue(unit);
+	mMouseClicked = false;
 }
 
 void CWorldState::CreateBarracks()
 {
-
+	CStructure* pStructure = new CBarracks();
+	OnPlacingStructureChange(pStructure);
+	mMouseClicked = false;
 }
 
 void CWorldState::CreateHellipad()
 {
-
+	CStructure* pStructure = new CHellipad();
+	OnPlacingStructureChange(pStructure);
+	mMouseClicked = false;
 }
 
 void CWorldState::CreateSpaceCentre()
 {
-
+	CStructure* pStructure = new CSpaceCentre();
+	OnPlacingStructureChange(pStructure);
+	mMouseClicked = false;
 }
 
 void CWorldState::CreateHouse()
 {
-
+	mMouseClicked = false;
 }
 
 void CWorldState::DeleteStructure()
 {
-
+	if (!mpCurSelectedStructure) return;
+	
+	// Set object to be deleted
+	mpCurSelectedStructure->SetState(OBJ_DEAD);
+	// pointer set to null
+	mpCurSelectedStructure = nullptr;
+	// Leave function so next function call is not executed
+	return;
+	mMouseClicked = false;
 }
