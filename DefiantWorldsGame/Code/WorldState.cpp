@@ -387,7 +387,7 @@ void CWorldState::DisplaySelectedBuildingInfo()
 		{
 		case STR_BARRACKS:
 			// Hide other buildings' buttons
-
+			mpHellipadButtons->Hide();
 
 			// Show this building's buttons
 			mpBarracksButtons->Show();
@@ -396,6 +396,7 @@ void CWorldState::DisplaySelectedBuildingInfo()
 		case STR_COM_CENTRE:
 			// Hide other buildings' buttons
 			mpBarracksButtons->Hide();
+			mpHellipadButtons->Hide();
 
 			// Show this building's buttons
 			
@@ -406,12 +407,13 @@ void CWorldState::DisplaySelectedBuildingInfo()
 			mpBarracksButtons->Hide();
 
 			// Show this building's buttons
-			
+			mpHellipadButtons->Show();
 			break;
 
 		case STR_SPACE_CENTRE:
 			// Hide other buildings' buttons
 			mpBarracksButtons->Hide();
+			mpHellipadButtons->Hide();
 
 			// Show this building's buttons
 			
@@ -443,6 +445,7 @@ void CWorldState::DisplaySelectedBuildingInfo()
 		// Hide building & unit related buttons
 		mpButtonDelete->Hide();
 		mpBarracksButtons->Hide();
+		mpHellipadButtons->Hide();
 
 		// Show building construction buttons
 		mpButtonBarracks->Show();
@@ -553,7 +556,17 @@ void CWorldState::StateSetup()
 		mpUnitsButtonList.push_back(mpBarracksButtons->mpButtons[i]);
 	}
 	
-	//mpHellipadButtons;
+	mpHellipadButtons = new SStructureButtons<CWorldState>(2);
+	mpHellipadButtons->mpButtons[0] = new CAdvancedButton<CWorldState, void, int>("DefFighterButton.png", "SelFighterButton.png", SPointData(1219, 695),
+		SAABoundingBox(772.0f, 1322.0f, 695.0f, 1219.0f), *this, &CWorldState::QueueUnit);
+	mpHellipadButtons->mpButtons[1] = new CAdvancedButton<CWorldState, void, int>("DefBomberButton.png", "SelBomberButton.png", SPointData(1219, 782),
+		SAABoundingBox(879.0f, 1322.0f, 782.0f, 1219.0f), *this, &CWorldState::QueueUnit);
+
+	for (int i = 0; i < mpHellipadButtons->mNumButtons; i++)
+	{
+		mpUnitsButtonList.push_back(mpHellipadButtons->mpButtons[i]);
+	}
+
 	//mpSpaceCentreButtons;
 	//mpComCentreButtons;
 
@@ -747,7 +760,6 @@ void CWorldState::StateUpdate()
 	}
 
 	// Loop through building unit buttons
-	int counter = 0;
 	for (miterUnitsButtons = mpUnitsButtonList.begin(); miterUnitsButtons != mpUnitsButtonList.end(); miterUnitsButtons++)
 	{
 		CAdvancedButton<CWorldState, void, int>* pButton = (*miterUnitsButtons);
@@ -770,10 +782,19 @@ void CWorldState::StateUpdate()
 			// Check if the mouse is over the button
 			if (mMouseClicked)
 			{
-				pButton->Execute(counter);
+				int index = mpBarracksButtons->GetMouseOverIndex();
+				if (index != -1)
+				{
+					pButton->Execute(index);
+				}
+
+				index = mpHellipadButtons->GetMouseOverIndex();
+				if (index != -1)
+				{
+					pButton->Execute(index);
+				}
 			}
 		}
-		counter++;
 	}
 
 	// Loop through key presses
