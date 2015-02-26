@@ -22,6 +22,13 @@ CSpaceUnit::~CSpaceUnit()
 
 }
 
+//-----------------------------------------------------
+// SPACE UNIT CLASS ACCESSOR METHODS
+//-----------------------------------------------------
+eFleetPos CSpaceUnit::GetPosType()
+{
+	return mFleetPosition;
+}
 
 //-----------------------------------------------------
 // SPACE UNIT CLASS OVERRIDE METHODS

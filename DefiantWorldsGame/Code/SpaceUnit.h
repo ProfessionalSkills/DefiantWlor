@@ -34,7 +34,7 @@ public:
 
 	// ACCESSORS
 	//---------------------------
-	virtual eFleetPos GetPosType();
+	eFleetPos GetPosType();
 
 	// MUTATORS
 	//---------------------------
