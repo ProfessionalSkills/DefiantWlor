@@ -16,12 +16,15 @@
 //-----------------------------------------------------
 // SPACE UNIT CLASS - CHILD OF GAME AGENT
 //-----------------------------------------------------
+enum eFleetPos { front, centre, back };
+
 class CSpaceUnit : public CGameAgent
 {
 protected:
 	// DATA
 	//---------------------------
 	float mHitChance;
+	eFleetPos mFleetPosition;
 
 public:
 	// CONSTRUCTORS & DESTRUCTOR
@@ -29,20 +32,15 @@ public:
 	CSpaceUnit();
 	virtual ~CSpaceUnit();
 
-
 	// ACCESSORS
 	//---------------------------
-	
-
+	virtual eFleetPos GetPosType();
 
 	// MUTATORS
 	//---------------------------
-	
-
 
 	// METHODS
 	//---------------------------
-	
 
 	// OVERRIDE METHODS
 	//---------------------------
@@ -54,6 +52,7 @@ public:
 	virtual void LoadIModel();
 	virtual void LoadModel(float x, float y, float z);
 	virtual bool Destroy();
+	
 };
 
 #endif /* _SPACE_UNIT_H_ */
