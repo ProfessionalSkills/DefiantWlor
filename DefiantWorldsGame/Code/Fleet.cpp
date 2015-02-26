@@ -91,7 +91,7 @@ void CFleet::LoadShipModels(float xPos)
 	for (int i = 0; i < mSize; i++)
 	{
 		//uses intager deviosion to seperate ships into rows of x, where x is the fleet row size, and each row is seperated by a distance of fleet row seperation
-		mpFleet[i]->LoadModel(xPos - (i / mFleetRowSize) * mFleetRowSeperation, i - (i / mFleetRowSize) * mFleetRowSize, 0.0f);
+		mpFleet[i]->LoadModel(xPos - (float)((i / mFleetRowSize) * mFleetRowSeperation), (float)(i - (i / mFleetRowSize) * mFleetRowSize), 0.0f);
 	}
 }
 
