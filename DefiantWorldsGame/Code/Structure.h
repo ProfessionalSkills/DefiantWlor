@@ -52,7 +52,7 @@ protected:
 	SPointData mBuildLoc;			// Grid position of the placement of building
 	SPointData mStructureBL;		// Amount of grid squares relative to the centre to find the bottom left grid square
 	SPointData mStructureTR;		// Same as above, but for top right grid square
-	SAABBNew mBoundingBox;			// Axis aligned bounding box for this structure
+	SBoundingCube mBoundingBox;			// Axis aligned bounding box for this structure
 
 	std::stringstream mStrDisplay;	// used to output data about the building to the screen
 

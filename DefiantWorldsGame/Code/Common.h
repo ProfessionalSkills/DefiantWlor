@@ -115,13 +115,13 @@ struct SPointData
 	}
 };
 
-struct SAABBNew
+struct SBoundingCube
 {
 	DX::BoundingBox mBox;
 
-	SAABBNew(){};
+	SBoundingCube(){};
 
-	SAABBNew(DX::XMFLOAT3 point1, DX::XMFLOAT3 point2)
+	SBoundingCube(DX::XMFLOAT3 point1, DX::XMFLOAT3 point2)
 	{
 		//mBox.CreateFromPoints(mBox, numPoints, pPoints, 12);
 		mBox.CreateFromPoints(mBox, DX::XMLoadFloat3(&point1), DX::XMLoadFloat3(&point2));

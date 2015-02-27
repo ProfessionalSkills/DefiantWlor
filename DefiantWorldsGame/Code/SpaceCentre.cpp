@@ -43,7 +43,7 @@ CSpaceCentre::CSpaceCentre()
 	mRespectiveAgentsList.push_back(new CTransport());
 	mRespectiveAgentsList.push_back(new CMothership());
 
-	mHeight = 70.0f;
+	mHeight = 60.0f;
 }
 
 CSpaceCentre::~CSpaceCentre()
