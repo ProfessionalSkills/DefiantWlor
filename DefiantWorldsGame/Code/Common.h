@@ -13,7 +13,6 @@
 #include <list>
 #include <queue>
 
-#include <DirectXCollision.h>
 #include <string>
 #include <sstream>
 #include "SoundObject.h"
@@ -113,6 +112,26 @@ struct SPointData
 	{ 
 		mPosX = x;
 		mPosY = y;
+	}
+};
+
+struct SAABBNew
+{
+	DX::BoundingBox mBox;
+
+	SAABBNew(){};
+
+	SAABBNew(DX::XMFLOAT3 point1, DX::XMFLOAT3 point2)
+	{
+		//mBox.CreateFromPoints(mBox, numPoints, pPoints, 12);
+		mBox.CreateFromPoints(mBox, DX::XMLoadFloat3(&point1), DX::XMLoadFloat3(&point2));
+		//IMesh* msh = gpEngine->LoadMesh("");
+	}
+
+	bool GetCollisionDistance(DX::XMVECTOR origin, DX::XMVECTOR direction,
+		float& distance)
+	{
+		return mBox.Intersects(origin, direction, distance);
 	}
 };
 

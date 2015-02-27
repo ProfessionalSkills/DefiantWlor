@@ -118,13 +118,15 @@ void CRTSPlayer::LaunchAttack()
 	mpSpaceUnitsList = (*mpFleet->LaunchFleet(&mpSpaceUnitsList));
 }
 
-CStructure* CRTSPlayer::CheckStructureSelection(DX::XMFLOAT3 pos)
+CStructure* CRTSPlayer::CheckStructureSelection(DX::XMFLOAT3 origin, DX::XMFLOAT3 direction)
 {
+	float distance = 9999.0f;	// Will eventually be used to detect closest object
+
 	// Loop through all structures
 	for (mpiterStructures = mpStructureList.begin(); mpiterStructures != mpStructureList.end(); mpiterStructures++)
 	{
 		// If there is a collision, return the pointer to that object
-		if ((*mpiterStructures)->PointCollision(pos))
+		if ((*mpiterStructures)->RayCollision(origin, direction, distance))
 		{
 			return (*mpiterStructures);
 		}

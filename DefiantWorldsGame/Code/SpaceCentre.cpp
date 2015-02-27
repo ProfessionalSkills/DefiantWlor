@@ -42,6 +42,8 @@ CSpaceCentre::CSpaceCentre()
 	mRespectiveAgentsList.push_back(new CSpaceFighter());
 	mRespectiveAgentsList.push_back(new CTransport());
 	mRespectiveAgentsList.push_back(new CMothership());
+
+	mHeight = 30.0f;
 }
 
 CSpaceCentre::~CSpaceCentre()

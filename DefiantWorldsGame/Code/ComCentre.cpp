@@ -40,6 +40,8 @@ CComCentre::CComCentre()
 
 	// Define list of responsible agents
 	mRespectiveAgentsList.push_back(new CWorker());
+
+	mHeight = 30.0f;
 }
 
 CComCentre::~CComCentre()

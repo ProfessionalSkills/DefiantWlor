@@ -92,6 +92,21 @@ void CWorldState::CalculateMouseGridPos()
 	// Determine ray points
 	DX::XMVECTOR rayOrigin = DX::XMVector3TransformCoord(DX::XMLoadFloat3(&nearVec), DX::XMLoadFloat4x4(&mCamInvViewProj));
 	DX::XMVECTOR rayEnd = DX::XMVector3TransformCoord(DX::XMLoadFloat3(&farVec), DX::XMLoadFloat4x4(&mCamInvViewProj));
+	
+	DX::XMFLOAT3 end;
+	DX::XMFLOAT3 dir;
+
+	DX::XMStoreFloat3(&end, rayEnd);
+	DX::XMStoreFloat3(&mMouseOrigin, rayOrigin);
+
+	dir.x = end.x - mMouseOrigin.x;
+	dir.y = end.y - mMouseOrigin.y;
+	dir.z = end.z - mMouseOrigin.z;
+
+	// Normalise to determine final direction vector
+	DX::XMVECTOR normalised = DX::XMVector3Normalize(DX::XMLoadFloat3(&dir));
+	DX::XMStoreFloat3(&mMouseDirection, normalised);
+
 
 	DX::XMVECTOR intersecVec = DX::XMPlaneIntersectLine(DX::XMLoadFloat3(&mYPlane), rayOrigin, rayEnd);
 	DX::XMStoreFloat3(&mMouseWorldPos, intersecVec);		// Store the mouse's world position at y = 0
@@ -226,12 +241,12 @@ void CWorldState::CheckKeyPresses()
 			{
 			case MS_EARTH_GRID:
 				// Check if it's a building
-				mpCurSelectedStructure = mpHumanPlayer->CheckStructureSelection(mMouseWorldPos);
+				mpCurSelectedStructure = mpHumanPlayer->CheckStructureSelection(mMouseOrigin, mMouseDirection);
 				break;
 
 			case MS_MARS_GRID:
 				// Check if it's a building
-				mpCurSelectedStructure = mpAIPlayer->CheckStructureSelection(mMouseWorldPos);
+				mpCurSelectedStructure = mpAIPlayer->CheckStructureSelection(mMouseOrigin, mMouseDirection);
 				break;
 			}
 

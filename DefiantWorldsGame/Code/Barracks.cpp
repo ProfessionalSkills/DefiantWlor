@@ -42,6 +42,8 @@ CBarracks::CBarracks()
 	mRespectiveAgentsList.push_back(new CInfantry());
 	mRespectiveAgentsList.push_back(new CArtillery());
 	mRespectiveAgentsList.push_back(new CTank());
+
+	mHeight = 10.0f;
 }
 
 CBarracks::~CBarracks()

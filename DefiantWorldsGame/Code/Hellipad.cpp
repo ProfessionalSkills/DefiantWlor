@@ -41,6 +41,8 @@ CHellipad::CHellipad()
 	// Define list of responsible agents
 	mRespectiveAgentsList.push_back(new CFighter());
 	mRespectiveAgentsList.push_back(new CBomber());
+
+	mHeight = 20.0f;
 }
 
 CHellipad::~CHellipad()

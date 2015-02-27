@@ -40,6 +40,7 @@ protected:
 	float mBuildTime;
 	float mRepairSpeed;
 	float mCurBuildTimeLeft;			// Time left until structure is built
+	float mHeight;
 	int   mBuildCost;
 	//CParticleEmitter* mDestroyParticleFX;
 
@@ -51,7 +52,7 @@ protected:
 	SPointData mBuildLoc;			// Grid position of the placement of building
 	SPointData mStructureBL;		// Amount of grid squares relative to the centre to find the bottom left grid square
 	SPointData mStructureTR;		// Same as above, but for top right grid square
-	SAABoundingBox mBoundingBox;	// Axis aligned bounding box for this structure
+	SAABBNew mBoundingBox;			// Axis aligned bounding box for this structure
 
 	std::stringstream mStrDisplay;	// used to output data about the building to the screen
 
@@ -152,7 +153,7 @@ public:
 	//---------------------------
 	void CreateStructure(CGrid* pGrid);
 	bool TestStructureArea(CGrid* pGrid, CTile* pTile);
-	bool PointCollision(DX::XMFLOAT3 pos);
+	bool RayCollision(DX::XMFLOAT3 origin, DX::XMFLOAT3 direction, float& distance);
 	void Destroy();
 
 

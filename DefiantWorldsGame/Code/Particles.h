@@ -10,7 +10,8 @@
 // INCLUDES
 //-----------------------------------------------------
 #include <TL-Engine.h>			// TL-Engine stuff
-#include <DirectXMath.h>		
+#include <DirectXMath.h>
+#include <DirectXCollision.h>
 #include "Randomiser.h"
 
 using namespace tle;

@@ -86,6 +86,10 @@ private:
 	SPointData*  mpMouseScreenPos;
 	SPointData   mMouseGridPos;
 	SPointData	 mMousePrevGridPos;
+
+	DX::XMFLOAT3 mMouseDirection;	// Direction of ray for mouse
+	DX::XMFLOAT3 mMouseOrigin;
+
 	DX::XMFLOAT3 mMouseWorldPos;	// Position of mouse in 3D space at y = 0
 	DX::XMFLOAT3 mCurGridPos;		// The start position of the grid currently being interacted with
 	RECT         mBaseClip;		    // The rectangle of the window (for undoing mouse clip)
