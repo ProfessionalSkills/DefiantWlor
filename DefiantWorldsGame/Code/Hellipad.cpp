@@ -42,7 +42,7 @@ CHellipad::CHellipad()
 	mRespectiveAgentsList.push_back(new CFighter());
 	mRespectiveAgentsList.push_back(new CBomber());
 
-	mHeight = 20.0f;
+	mHeight = 45.0f;
 }
 
 CHellipad::~CHellipad()
