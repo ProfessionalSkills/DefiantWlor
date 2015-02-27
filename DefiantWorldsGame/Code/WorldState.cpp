@@ -252,7 +252,7 @@ void CWorldState::CheckKeyPresses()
 		CStructure* pStructure;
 
 		// C = no building is selected
-		if (gpEngine->KeyHit(Key_C))
+		if (gpEngine->KeyHit(Mouse_RButton))
 		{
 			pStructure = nullptr;
 			OnPlacingStructureChange(pStructure);
@@ -291,7 +291,7 @@ void CWorldState::CheckKeyPresses()
 	// UNIT CONSTRUCTION
 	//------------------------------
 	// C = deselect current building
-	if (gpEngine->KeyHit(Key_C))
+	if (gpEngine->KeyHit(Mouse_RButton))
 	{
 		OnPlacingStructureChange(nullptr);
 	}
