@@ -54,6 +54,11 @@ void CAirUnit::Spawn(CGrid* pGrid, SPointData pCentre)
 					freeTileFound = true;
 					mpObjModel = CreateModel(DX::XMFLOAT3(spawnTiles[i]->GetWorldPos().x, 30.0f, spawnTiles[i]->GetWorldPos().z));
 					mpObjModel->Scale(2.0f);
+
+					DX::XMFLOAT3 centre = { mpObjModel->GetX(), mpObjModel->GetY(), mpObjModel->GetZ() };
+					float radius = 8.0f;
+
+					mBoundingSphere = SBoundingSphere(centre, radius);
 				}
 			}
 		}

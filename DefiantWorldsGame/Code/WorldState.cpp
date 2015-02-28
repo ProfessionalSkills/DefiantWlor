@@ -242,7 +242,11 @@ void CWorldState::CheckKeyPresses()
 			case MS_EARTH_GRID:
 				// Check if it's a building
 				mpCurSelectedStructure = mpHumanPlayer->CheckStructureSelection(mMouseOrigin, mMouseDirection);
-				mpCurSelectedAgent = mpHumanPlayer->CheckAgentSelection(mMouseOrigin, mMouseDirection);
+				if (mpCurSelectedStructure == nullptr)
+				{
+					mpCurSelectedAgent = mpHumanPlayer->CheckAgentSelection(mMouseOrigin, mMouseDirection);
+				}
+				
 				break;
 
 			case MS_MARS_GRID:
@@ -808,7 +812,12 @@ void CWorldState::StateUpdate()
 	mMouseState = UpdateMouseState();
 	DrawFontData();
 	DisplaySelectedBuildingInfo();
-	DisplaySelectedAgentInfo();
+	if (mpCurSelectedAgent != nullptr)
+	{
+		DisplaySelectedAgentInfo();
+	}
+
+
 
 	// BUTTON UPDATES
 	//---------------------------
