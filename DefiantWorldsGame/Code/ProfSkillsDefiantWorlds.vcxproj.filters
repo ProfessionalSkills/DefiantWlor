@@ -252,14 +252,17 @@
     <ClCompile Include="Fleet.cpp">
       <Filter>Utilities</Filter>
     </ClCompile>
-    <ClCompile Include="Button.cpp">
-      <Filter>Utilities</Filter>
-    </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Players\Player</Filter>
     </ClCompile>
     <ClCompile Include="PlayerManager.cpp">
       <Filter>Players\Player Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="AIPlayer.cpp">
+      <Filter>Players\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="BuildRequest.cpp">
+      <Filter>Utilities</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -377,9 +380,6 @@
     <ClInclude Include="Fleet.h">
       <Filter>Utilities</Filter>
     </ClInclude>
-    <ClInclude Include="Button.h">
-      <Filter>Utilities</Filter>
-    </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>Players\Player</Filter>
     </ClInclude>
@@ -387,6 +387,12 @@
       <Filter>Players\Player Manager</Filter>
     </ClInclude>
     <ClInclude Include="AdvancedButton.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="AIPlayer.h">
+      <Filter>Players\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="BuildRequest.h">
       <Filter>Utilities</Filter>
     </ClInclude>
   </ItemGroup>

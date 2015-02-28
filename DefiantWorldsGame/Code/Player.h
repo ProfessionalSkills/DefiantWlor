@@ -70,7 +70,7 @@ public:
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
 	CRTSPlayer(EFactions playerFaction);
-	~CRTSPlayer();
+	virtual ~CRTSPlayer();
 
 
 	// ACCESSORS
@@ -166,6 +166,8 @@ public:
 	void SetNumSpaceFighter(int NumShips);
 	void SetNumTransport(int NumShips);
 	void SetNumMothership(int NumShips);
+
+
 	// METHODS
 	//---------------------------
 	bool PurchaseStructure(CStructure* pStructure, CGrid* pGrid, CTile* pTile);
@@ -173,7 +175,7 @@ public:
 	CGameAgent* CheckAgentSelection(DX::XMFLOAT3 origin, DX::XMFLOAT3 direction);
 	bool QueueUnit(CStructure* structure, CGameAgent* unit);
 	void LaunchAttack();
-	void Update();
+	virtual void Update();
 	void LoadStructureModels();
 	void UnloadStructureModels();
 	void LoadUnitModels();
