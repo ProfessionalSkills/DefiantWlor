@@ -34,7 +34,7 @@ public:
 
 	// METHODS
 	//---------------------------
-	void Update() override;
+	void Update();
 
 
 private:

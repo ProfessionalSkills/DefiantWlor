@@ -171,8 +171,8 @@ public:
 	// METHODS
 	//---------------------------
 	bool PurchaseStructure(CStructure* pStructure, CGrid* pGrid, CTile* pTile);
-	CStructure* CheckStructureSelection(DX::XMFLOAT3 origin, DX::XMFLOAT3 direction);
-	CGameAgent* CheckAgentSelection(DX::XMFLOAT3 origin, DX::XMFLOAT3 direction);
+	void CheckGameObjectSelection(CStructure*& pStructure, CGameAgent*& pGameAgent,
+		DX::XMFLOAT3 origin, DX::XMFLOAT3 direction);
 	bool QueueUnit(CStructure* structure, CGameAgent* unit);
 	void LaunchAttack();
 	virtual void Update();

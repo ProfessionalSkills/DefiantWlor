@@ -118,42 +118,46 @@ void CRTSPlayer::LaunchAttack()
 	mpSpaceUnitsList = (*mpFleet->LaunchFleet(&mpSpaceUnitsList));
 }
 
-CStructure* CRTSPlayer::CheckStructureSelection(DX::XMFLOAT3 origin, DX::XMFLOAT3 direction)
+void CRTSPlayer::CheckGameObjectSelection(CStructure*& pStructure, CGameAgent*& pGameAgent,
+	DX::XMFLOAT3 origin, DX::XMFLOAT3 direction)
 {
-	float distance = 9999.0f;	// Will eventually be used to detect closest object
-	float newD = 0;
-	CStructure* pClosest = nullptr;
-
-	// Loop through all structures
-	for (mpiterStructures = mpStructureList.begin(); mpiterStructures != mpStructureList.end(); mpiterStructures++)
-	{
-		// If there is a collision, return the pointer to that object
-		if ((*mpiterStructures)->RayCollision(origin, direction, newD) && newD < distance)
-		{
-			pClosest = (*mpiterStructures);
-			distance = newD;
-		}
-	}
-	return pClosest;
-}
-
-CGameAgent* CRTSPlayer::CheckAgentSelection(DX::XMFLOAT3 origin, DX::XMFLOAT3 direction)
-{
-	float distance = 9999.0f;	// Will eventually be used to detect closest object
-	float newD = 0;
-	CGameAgent* pClosest = nullptr;
+	float curDist = 99999.0f;
+	float newDist = 0;
+	
+	// FIRST CHECK UNITS
+	pGameAgent = nullptr;
 
 	// Loop through all structures
 	for (mpiterGameAgents = mpWorldUnitsList.begin(); mpiterGameAgents != mpWorldUnitsList.end(); mpiterGameAgents++)
 	{
 		// If there is a collision, return the pointer to that object
-		if ((*mpiterGameAgents)->RayCollision(origin, direction, newD) && newD < distance)
+		if ((*mpiterGameAgents)->RayCollision(origin, direction, newDist) && newDist < curDist)
 		{
-			pClosest = (*mpiterGameAgents);
-			distance = newD;
+			pGameAgent = (*mpiterGameAgents);
+			curDist = newDist;
 		}
 	}
-	return pClosest;
+
+
+	// THEN CHECK BUILDINGS
+	pStructure = nullptr;
+
+	// Loop through all structures
+	for (mpiterStructures = mpStructureList.begin(); mpiterStructures != mpStructureList.end(); mpiterStructures++)
+	{
+		// If there is a collision, return the pointer to that object
+		if ((*mpiterStructures)->RayCollision(origin, direction, newDist) && newDist < curDist)
+		{
+			pStructure = (*mpiterStructures);
+			curDist = newDist;
+		}
+	}
+
+	// If structure is pointing at something, game agent cannot
+	if (pStructure)
+	{
+		pGameAgent = nullptr;
+	}
 }
 
 void CRTSPlayer::Update()

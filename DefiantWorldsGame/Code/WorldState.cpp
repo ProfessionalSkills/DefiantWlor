@@ -240,18 +240,14 @@ void CWorldState::CheckKeyPresses()
 			switch (mMouseState)
 			{
 			case MS_EARTH_GRID:
-				// Check if it's a building
-				mpCurSelectedStructure = mpHumanPlayer->CheckStructureSelection(mMouseOrigin, mMouseDirection);
-				if (mpCurSelectedStructure == nullptr)
-				{
-					mpCurSelectedAgent = mpHumanPlayer->CheckAgentSelection(mMouseOrigin, mMouseDirection);
-				}
+				mpHumanPlayer->CheckGameObjectSelection(mpCurSelectedStructure, mpCurSelectedAgent,
+					mMouseOrigin, mMouseDirection);
 				
 				break;
 
 			case MS_MARS_GRID:
-				// Check if it's a building
-				mpCurSelectedStructure = mpAIPlayer->CheckStructureSelection(mMouseOrigin, mMouseDirection);
+				mpAIPlayer->CheckGameObjectSelection(mpCurSelectedStructure, mpCurSelectedAgent,
+					mMouseOrigin, mMouseDirection);
 				break;
 			}
 
