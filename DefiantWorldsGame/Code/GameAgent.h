@@ -20,7 +20,7 @@ struct SAgentData
 {
 	EGameAgentVariations mAgentType;
 	std::string	         mAgentName;
-
+	
 	SAgentData()
 	{
 		mAgentType = GAV_WORKER;
@@ -44,6 +44,7 @@ protected:
 	// DATA
 	//---------------------------
 	SAgentData mAgentInfo;
+	std::stringstream mStrDisplay;
 	SBoundingSphere mBoundingSphere;
 	float mHealth;
 	float mSpeed;
