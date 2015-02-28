@@ -44,7 +44,7 @@ protected:
 	// DATA
 	//---------------------------
 	SAgentData mAgentInfo;
-
+	SBoundingSphere mBoundingSphere;
 	float mHealth;
 	float mSpeed;
 	float mProductionTime;
@@ -103,6 +103,11 @@ public:
 		return mState;
 	}
 
+	inline void SetAgentState(EObjectStates newState)
+	{
+		mState = newState;
+	}
+
 	inline SAgentData* GetAgentData()
 	{
 		return &mAgentInfo;
@@ -125,6 +130,8 @@ public:
 	//---------------------------
 	virtual bool Attack(CGameAgent* target, float hitMod, float damageMod) = 0;
 	virtual void Spawn(CGrid* pGrid, SPointData pCentre) = 0; //Spawns the Unit into the game 
+	bool RayCollision(DX::XMFLOAT3 origin, DX::XMFLOAT3 direction, float& distance);
+	void DisplayInfo(IFont* font);
 	//virtual void MoveTo(CTile* dest) = 0;
 	virtual bool Move() = 0;
 	virtual void UnloadIModel() = 0;

@@ -14,6 +14,7 @@
 CGroundUnit::CGroundUnit()
 {
 	mScale = 2.0f;
+
 }
 
 CGroundUnit::~CGroundUnit()
@@ -58,6 +59,11 @@ void CGroundUnit::Spawn(CGrid* pGrid, SPointData pCentre)
 					mWorldPos.y = 1.0f;
 					mWorldPos.z = spawnTiles[i]->GetWorldPos().z;
 					mpObjModel->Scale(mScale);
+
+					DX::XMFLOAT3 centre = { mpObjModel->GetX(), mpObjModel->GetY(), mpObjModel->GetZ() };
+					float radius = 5.0f;
+
+					mBoundingSphere = SBoundingSphere(centre, radius);
 				}
 			}
 		}

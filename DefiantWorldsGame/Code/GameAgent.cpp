@@ -45,6 +45,17 @@ bool CGameAgent::Heal(float amount)
 	return false;
 }
 
+bool CGameAgent::RayCollision(DX::XMFLOAT3 origin, DX::XMFLOAT3 direction, float& distance)
+{
+	return mBoundingSphere.GetCollisionDistance(DX::XMLoadFloat3(&origin),
+		DX::XMLoadFloat3(&direction), distance);
+}
+
+
+void CGameAgent::DisplayInfo(IFont* font)
+{
+	
+}
 
 //-----------------------------------------------------
 // GAME AGENT CLASS METHODS

@@ -242,6 +242,7 @@ void CWorldState::CheckKeyPresses()
 			case MS_EARTH_GRID:
 				// Check if it's a building
 				mpCurSelectedStructure = mpHumanPlayer->CheckStructureSelection(mMouseOrigin, mMouseDirection);
+				mpCurSelectedAgent = mpHumanPlayer->CheckAgentSelection(mMouseOrigin, mMouseDirection);
 				break;
 
 			case MS_MARS_GRID:
@@ -260,7 +261,7 @@ void CWorldState::CheckKeyPresses()
 	mMouseClicked = false;
 
 	// Check if a building is currently selected
-	if (!mpCurSelectedStructure)
+	if (!mpCurSelectedStructure && !mpCurSelectedAgent)
 	{
 		// BUILDING PLACEMENT
 		//------------------------------
@@ -474,6 +475,44 @@ void CWorldState::DisplaySelectedBuildingInfo()
 		mpButtonBarracks->Show();
 		mpButtonHellipad->Show();
 		mpButtonSpaceCentre->Show();
+	}
+}
+
+void CWorldState::DisplaySelectedAgentInfo()
+{
+	// If an object is selected, display its info
+	if (mpCurSelectedAgent)
+	{
+		mpButtonDelete->Show();
+		mpHellipadButtons->Hide();
+		mpSpaceCentreButtons->Hide();
+		mpComCentreButtons->Hide();
+		mpBarracksButtons->Hide();
+
+		// Show this building's buttons
+		// BUILDING DESTRUCTION
+		//------------------------------
+		if (gpEngine->KeyHit(Key_D))
+		{
+			// Set object to be deleted
+			mpCurSelectedAgent->SetAgentState(OBJ_DEAD);
+			// pointer set to null
+			mpCurSelectedAgent = nullptr;
+			// Leave function so next function call is not executed
+			return;
+		}
+
+		mpCurSelectedAgent->DisplayInfo(mFntDebug);
+
+		// Hide building construction buttons
+		mpButtonBarracks->Hide();
+		mpButtonHellipad->Hide();
+		mpButtonSpaceCentre->Hide();
+	}
+
+	else
+	{
+
 	}
 }
 
@@ -769,7 +808,7 @@ void CWorldState::StateUpdate()
 	mMouseState = UpdateMouseState();
 	DrawFontData();
 	DisplaySelectedBuildingInfo();
-
+	DisplaySelectedAgentInfo();
 
 	// BUTTON UPDATES
 	//---------------------------

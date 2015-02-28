@@ -141,6 +141,7 @@ public:
 	void CheckKeyPresses();
 
 	void DisplaySelectedBuildingInfo();
+	void DisplaySelectedAgentInfo();
 
 	EMouseStates UpdateMouseState();
 

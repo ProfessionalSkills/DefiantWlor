@@ -134,6 +134,26 @@ struct SBoundingCube
 	}
 };
 
+struct SBoundingSphere
+{
+	DX::BoundingSphere mSphere;
+
+	SBoundingSphere(){};
+
+	SBoundingSphere(const DX::XMFLOAT3 &centre, float radius)
+	{
+		mSphere.Center = centre;
+		mSphere.Radius = radius;
+	}
+
+	bool GetCollisionDistance(DX::XMVECTOR origin, DX::XMVECTOR direction,
+		float& distance)
+	{
+		return mSphere.Intersects(origin, direction, distance);
+	}
+
+};
+
 struct SAABoundingBox		// Axis aligned bounding box
 {
 	float mTop;			// Max Z

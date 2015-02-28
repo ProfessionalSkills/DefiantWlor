@@ -134,7 +134,25 @@ CStructure* CRTSPlayer::CheckStructureSelection(DX::XMFLOAT3 origin, DX::XMFLOAT
 			distance = newD;
 		}
 	}
+	return pClosest;
+}
 
+CGameAgent* CRTSPlayer::CheckAgentSelection(DX::XMFLOAT3 origin, DX::XMFLOAT3 direction)
+{
+	float distance = 9999.0f;	// Will eventually be used to detect closest object
+	float newD = 0;
+	CGameAgent* pClosest = nullptr;
+
+	// Loop through all structures
+	for (mpiterGameAgents = mpWorldUnitsList.begin(); mpiterGameAgents != mpWorldUnitsList.end(); mpiterGameAgents++)
+	{
+		// If there is a collision, return the pointer to that object
+		if ((*mpiterGameAgents)->RayCollision(origin, direction, newD) && newD < distance)
+		{
+			pClosest = (*mpiterGameAgents);
+			distance = newD;
+		}
+	}
 	return pClosest;
 }
 

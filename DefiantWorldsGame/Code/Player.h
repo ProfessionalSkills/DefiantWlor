@@ -170,6 +170,7 @@ public:
 	//---------------------------
 	bool PurchaseStructure(CStructure* pStructure, CGrid* pGrid, CTile* pTile);
 	CStructure* CheckStructureSelection(DX::XMFLOAT3 origin, DX::XMFLOAT3 direction);
+	CGameAgent* CheckAgentSelection(DX::XMFLOAT3 origin, DX::XMFLOAT3 direction);
 	bool QueueUnit(CStructure* structure, CGameAgent* unit);
 	void LaunchAttack();
 	void Update();
