@@ -261,6 +261,9 @@
     <ClCompile Include="PlayerManager.cpp">
       <Filter>Players\Player Manager</Filter>
     </ClCompile>
+    <ClCompile Include="AIPlayer.cpp">
+      <Filter>Players\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common.h">
@@ -388,6 +391,9 @@
     </ClInclude>
     <ClInclude Include="AdvancedButton.h">
       <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="AIPlayer.h">
+      <Filter>Players\Player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

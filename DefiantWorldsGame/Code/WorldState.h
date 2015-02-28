@@ -122,7 +122,7 @@ private:
 	//---------------------------
 	CPlayerManager* mpPlayerManager;
 	CRTSPlayer* mpHumanPlayer;
-	CRTSPlayer* mpAIPlayer;
+	CRTSAIPlayer* mpAIPlayer;
 
 
 public:

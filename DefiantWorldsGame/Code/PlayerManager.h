@@ -9,7 +9,7 @@
 //-----------------------------------------------------
 // INCLUDES
 //-----------------------------------------------------
-#include "Player.h"
+#include "AIPlayer.h"
 
 
 //-----------------------------------------------------
@@ -38,7 +38,7 @@ public:
 		return mpHuman;
 	}
 
-	inline CRTSPlayer* GetAIPlayer(int index = 0)
+	inline CRTSAIPlayer* GetAIPlayer(int index = 0)
 	{
 		return mpAI[index];
 	}
@@ -66,7 +66,7 @@ private:
 	// PLAYERS
 	//---------------------------
 	CRTSPlayer* mpHuman;
-	CRTSPlayer* mpAI[MAX_AI_NUM];
+	CRTSAIPlayer* mpAI[MAX_AI_NUM];
 
 	int mNumAI;
 
