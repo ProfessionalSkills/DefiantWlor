@@ -63,5 +63,5 @@ void CRTSAIPlayer::Update()
 bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 {
 	// Check if the item is a building or an agent
-
+	return false;
 }
