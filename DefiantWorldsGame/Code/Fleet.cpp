@@ -13,7 +13,7 @@
 //-----------------------------------------------------
 // FLEET CLASS CONSTRUCTORS & DESTRUCTOR
 //-----------------------------------------------------
-CFleet::CFleet() :mFleetRowSize(10), mFleetRowSeperation(7)
+CFleet::CFleet() :mFleetRowSize(15), mFleetRowSeperation(7)
 {
 	//Value Mods
 	mDamegMod = 1.0f;
@@ -31,7 +31,7 @@ CFleet::CFleet() :mFleetRowSize(10), mFleetRowSeperation(7)
 	mNumSpaceFighter = 0;
 	mNumTransport = 0;
 
-	mFleetWidth = 4;
+	mFleetWidth = (mFleetRowSize/2)-1;
 }
 
 CFleet::~CFleet()
