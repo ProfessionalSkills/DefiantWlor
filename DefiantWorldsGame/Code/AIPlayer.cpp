@@ -14,7 +14,10 @@
 //-----------------------------------------------------
 CRTSAIPlayer::CRTSAIPlayer(EFactions playerFaction) : CRTSPlayer(playerFaction)
 {
-
+	// Initialise first 10 tasks of AI player
+	mpTaskQ.push(new CBuildRequest((EQueueObjectType)0x103, 20));
+	unsigned int ti = mpTaskQ.top()->GetObjectType();
+	EQueueObjectType t = (EQueueObjectType)ti;
 }
 
 CRTSAIPlayer::~CRTSAIPlayer()

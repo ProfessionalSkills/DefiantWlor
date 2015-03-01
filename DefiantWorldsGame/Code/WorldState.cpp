@@ -251,7 +251,7 @@ void CWorldState::CheckKeyPresses()
 				break;
 			}
 
-			if (mpCurSelectedStructure)
+			if (mpCurSelectedStructure || mpCurSelectedAgent)
 			{
 				mMouseClicked = false;
 			}
@@ -273,13 +273,6 @@ void CWorldState::CheckKeyPresses()
 			pStructure = nullptr;
 			OnPlacingStructureChange(pStructure);
 		}
-
-		// 0 = CommsCentre
-		//if (gpEngine->KeyHit(Key_0))
-		//{
-		//	pStructure = new CComCentre();
-		//	OnPlacingStructureChange(pStructure);
-		//}
 
 		// 1 = Barracks
 		if (gpEngine->KeyHit(Key_1))

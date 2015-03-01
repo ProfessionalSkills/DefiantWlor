@@ -10,6 +10,16 @@
 // INCLUDES
 //-----------------------------------------------------
 #include "Player.h"
+#include "BuildRequest.h"
+
+
+struct SSortByPriority
+{
+	bool operator() (CBuildRequest* lhs, CBuildRequest* rhs)
+	{
+		return lhs->GetObjectPriority() > rhs->GetObjectPriority();
+	}
+};
 
 
 //-----------------------------------------------------
@@ -40,7 +50,7 @@ public:
 private:
 	// PRIORIY QUEUE OF TASKS
 	//---------------------------
-	
+	std::priority_queue<CBuildRequest*, std::vector<CBuildRequest*>, SSortByPriority> mpTaskQ;
 };
 
 
