@@ -26,9 +26,9 @@ public:
 
 	// ACCESSORS
 	//---------------------------
-	inline unsigned int GetObjectType()
+	inline EQueueObjectType GetObjectType()
 	{
-		return mQueueObj & 0xFF00;
+		return mQueueObj;
 	}
 
 	inline int GetObjectPriority()

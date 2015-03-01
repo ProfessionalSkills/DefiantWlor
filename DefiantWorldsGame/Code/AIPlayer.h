@@ -44,13 +44,21 @@ public:
 
 	// METHODS
 	//---------------------------
+	// base update function called each frame
 	void Update();
+	// This function is for attempting to resolve the item at the top of
+	// the AI player's priority queue of things to do. Returns success of
+	// implementing the item (i.e. enough funds, chose a successful position, etc.)
+	bool ResolveItem(EQueueObjectType qObject);
 
 
 private:
+	const float UPDATE_TIME;
+
 	// PRIORIY QUEUE OF TASKS
 	//---------------------------
 	std::priority_queue<CBuildRequest*, std::vector<CBuildRequest*>, SSortByPriority> mpTaskQ;
+	float mUpdateTime;			// Time between the AI doing tasks - can be determined by difficulty level perhaps?
 };
 
 
