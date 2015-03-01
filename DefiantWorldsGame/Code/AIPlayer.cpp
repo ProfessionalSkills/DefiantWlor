@@ -42,16 +42,20 @@ void CRTSAIPlayer::Update()
 	// Check if it is time for the AI to perform an action
 	if (mUpdateTime <= 0)
 	{
-		if (ResolveItem(mpTaskQ.top()->GetObjectType()))
+		// Check to see if there is data in the list
+		if (!mpTaskQ.empty())
 		{
-			// If item was resolved, remove it
-			CBuildRequest* pRequest = mpTaskQ.top();
-			SafeDelete(pRequest);
-			mpTaskQ.pop();
+			if (ResolveItem(mpTaskQ.top()->GetObjectType()))
+			{
+				// If item was resolved, remove it
+				CBuildRequest* pRequest = mpTaskQ.top();
+				SafeDelete(pRequest);
+				mpTaskQ.pop();
+			}
 		}
 
 		// Reset update time
-		mUpdateTime = UPDATE_TIME;
+		mUpdateTime = CRTSAIPlayer::UPDATE_TIME;
 	}
 	else
 	{
@@ -62,6 +66,55 @@ void CRTSAIPlayer::Update()
 
 bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 {
+	// Building and agent pointer
+	CStructure* pStructure = nullptr;
+	CGameAgent* pGameAgent = nullptr;
+
+	CTile* pSpawnTile = nullptr;
+	
 	// Check if the item is a building or an agent
-	return false;
+	switch (qObject)
+	{
+	case Q_BARRACKS:
+		pStructure = new CBarracks();
+		break;
+
+	case Q_HELLIPAD:
+		pStructure = new CHellipad();
+		break;
+
+	case Q_SPACE_CENTRE:
+		pStructure = new CSpaceCentre();
+		break;
+
+	case Q_HOUSE:
+		// NOT YET IMPLEMENTED
+		return true;
+		break;
+	}
+
+	// Get a random grid position in which to spawn the unit & get the respective tile
+	CRandomiser randomiser;
+	int gridX = randomiser.GetRandomInt(1, GRID_SIZE_X - 1);
+	int gridY = randomiser.GetRandomInt(1, GRID_SIZE_Y - 1);
+
+	pSpawnTile = mpPlayerGrid->GetTileData(SPointData(gridX, gridY));
+
+	// Check if the tile is already being used
+	if (pSpawnTile->IsTileUsed())
+	{
+		return false;
+	}
+
+	// Attempt to create the object
+	// Check if unit or building ******
+	// Check for sufficient funds *****
+	// Check success of building purchase
+	if (!PurchaseStructure(pStructure, mpPlayerGrid, pSpawnTile))
+	{
+		return false;
+	}
+
+	// SUCCESS
+	return true;
 }

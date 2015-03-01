@@ -728,6 +728,10 @@ void CWorldState::StateSetup()
 
 		// Set players to initialised
 		mpPlayerManager->PlayersInitialised();
+
+		// Set grids for each player for easy referal
+		mpHumanPlayer->StorePlayerGridState(mpEarthGrid);
+		mpAIPlayer->StorePlayerGridState(mpMarsGrid);
 	}
 	else
 	{
@@ -949,7 +953,7 @@ void CWorldState::StateSave()
 
 void CWorldState::StateCleanup()
 {
-	// Temporarily store grid state
+	// Store grid state
 	mpHumanPlayer->StorePlayerGridState(mpEarthGrid);
 	mpAIPlayer->StorePlayerGridState(mpMarsGrid);
 
