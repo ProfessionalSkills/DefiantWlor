@@ -133,6 +133,9 @@
     <Filter Include="Players\Player">
       <UniqueIdentifier>{e613033a-4474-4f15-a0c9-a18ad58d9c1e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Pathfinding">
+      <UniqueIdentifier>{a81d0aa8-8853-4b39-93db-5616bbedfd4b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ProfSkillsDefiantWorlds.cpp">
@@ -264,6 +267,9 @@
     <ClCompile Include="BuildRequest.cpp">
       <Filter>Utilities</Filter>
     </ClCompile>
+    <ClCompile Include="BestFirst.cpp">
+      <Filter>Pathfinding</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common.h">
@@ -394,6 +400,9 @@
     </ClInclude>
     <ClInclude Include="BuildRequest.h">
       <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="BestFirst.h">
+      <Filter>Pathfinding</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

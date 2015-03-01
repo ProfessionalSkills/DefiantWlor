@@ -127,7 +127,7 @@ void CRTSPlayer::CheckGameObjectSelection(CStructure*& pStructure, CGameAgent*& 
 	// FIRST CHECK UNITS
 	pGameAgent = nullptr;
 
-	// Loop through all structures
+	// Loop through all Units
 	for (mpiterGameAgents = mpWorldUnitsList.begin(); mpiterGameAgents != mpWorldUnitsList.end(); mpiterGameAgents++)
 	{
 		// If there is a collision, return the pointer to that object

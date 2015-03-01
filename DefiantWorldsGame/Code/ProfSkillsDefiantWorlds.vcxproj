@@ -125,6 +125,7 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
     <ClCompile Include="AirUnit.cpp" />
     <ClCompile Include="Artillery.cpp" />
     <ClCompile Include="Barracks.cpp" />
+    <ClCompile Include="BestFirst.cpp" />
     <ClCompile Include="Bomber.cpp" />
     <ClCompile Include="BuildRequest.cpp" />
     <ClCompile Include="ComCentre.cpp" />
@@ -171,6 +172,7 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
     <ClInclude Include="Artillery.h" />
     <ClInclude Include="Barracks.h" />
     <ClInclude Include="AirUnit.h" />
+    <ClInclude Include="BestFirst.h" />
     <ClInclude Include="Bomber.h" />
     <ClInclude Include="BuildRequest.h" />
     <ClInclude Include="ComCentre.h" />

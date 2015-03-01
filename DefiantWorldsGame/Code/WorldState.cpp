@@ -201,7 +201,7 @@ void CWorldState::CheckKeyPresses()
 	// CLICKING
 	//------------------------------
 	// Left Click = place currently selected building
-	if (mMouseClicked)
+	if (mLMouseClicked)
 	{
 		// Assume nothing is clicked on - reset all pointers (except PlacingStructure)
 		mpCurSelectedStructure = nullptr;
@@ -218,7 +218,7 @@ void CWorldState::CheckKeyPresses()
 						// Safe to point at nothing due to structure pointer passed on to Player's data
 						mpPlacingStructure = nullptr;
 						mpEarthGrid->ResetTilesModels();
-						mMouseClicked = false;
+						mLMouseClicked = false;
 					}
 					break;
 
@@ -229,7 +229,7 @@ void CWorldState::CheckKeyPresses()
 						// Safe to point at nothing due to structure pointer passed on to Player's data
 						mpPlacingStructure = nullptr;
 						mpMarsGrid->ResetTilesModels();
-						mMouseClicked = false;
+						mLMouseClicked = false;
 					}
 					break;
 			}
@@ -253,12 +253,22 @@ void CWorldState::CheckKeyPresses()
 
 			if (mpCurSelectedStructure || mpCurSelectedAgent)
 			{
-				mMouseClicked = false;
+				mLMouseClicked = false;
 			}
 		}
 	}
 
-	mMouseClicked = false;
+	if (mRMouseClicked)
+	{
+		if (mpCurSelectedAgent)
+		{
+			if (!mpCurTile->IsTileUsed())
+			{
+				mRMouseClicked = false;
+			}
+		}
+	}
+	mLMouseClicked = false;
 
 	// Check if a building is currently selected
 	if (!mpCurSelectedStructure && !mpCurSelectedAgent)
@@ -533,7 +543,8 @@ void CWorldState::StateSetup()
 
 	// Set the cursor's limits
 	//ClipCursor(&mWindowClip);
-	mMouseClicked = false;
+	mLMouseClicked = false;
+	mRMouseClicked = false;
 
 
 	// CREATE Y = 0 PLANE
@@ -813,7 +824,12 @@ void CWorldState::StateUpdate()
 	if (gpEngine->KeyHit(Mouse_LButton))
 	{
 		// Raise click flag
-		mMouseClicked = true;
+		mLMouseClicked = true;
+	}
+
+	if (gpEngine->KeyHit(Mouse_RButton))
+	{
+		mRMouseClicked = true;
 	}
 
 	// Loop through generic buttons
@@ -837,7 +853,7 @@ void CWorldState::StateUpdate()
 		if (pButton->GetMouseOver())
 		{
 			// Check if the mouse is over the button
-			if (mMouseClicked)
+			if (mLMouseClicked)
 			{
 				pButton->Execute();
 			}
@@ -865,7 +881,7 @@ void CWorldState::StateUpdate()
 		if (pButton->GetMouseOver())
 		{
 			// Check if the mouse is over the button
-			if (mMouseClicked)
+			if (mLMouseClicked)
 			{
 				int index = mpBarracksButtons->GetMouseOverIndex();
 				if (index != -1)
@@ -1001,33 +1017,33 @@ void CWorldState::QueueUnit(int unit)
 	if (!mpCurSelectedStructure) return;
 
 	mpCurSelectedStructure->AddToQueue(unit);
-	mMouseClicked = false;
+	mLMouseClicked = false;
 }
 
 void CWorldState::CreateBarracks()
 {
 	CStructure* pStructure = new CBarracks();
 	OnPlacingStructureChange(pStructure);
-	mMouseClicked = false;
+	mLMouseClicked = false;
 }
 
 void CWorldState::CreateHellipad()
 {
 	CStructure* pStructure = new CHellipad();
 	OnPlacingStructureChange(pStructure);
-	mMouseClicked = false;
+	mLMouseClicked = false;
 }
 
 void CWorldState::CreateSpaceCentre()
 {
 	CStructure* pStructure = new CSpaceCentre();
 	OnPlacingStructureChange(pStructure);
-	mMouseClicked = false;
+	mLMouseClicked = false;
 }
 
 void CWorldState::CreateHouse()
 {
-	mMouseClicked = false;
+	mLMouseClicked = false;
 }
 
 void CWorldState::DeleteStructure()
@@ -1040,5 +1056,5 @@ void CWorldState::DeleteStructure()
 	mpCurSelectedStructure = nullptr;
 	// Leave function so next function call is not executed
 	return;
-	mMouseClicked = false;
+	mLMouseClicked = false;
 }

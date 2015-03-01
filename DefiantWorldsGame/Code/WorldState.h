@@ -94,8 +94,9 @@ private:
 	DX::XMFLOAT3 mCurGridPos;		// The start position of the grid currently being interacted with
 	RECT         mBaseClip;		    // The rectangle of the window (for undoing mouse clip)
 	RECT         mWindowClip;	    // Limit the mouse to stay within the window
-	bool mMouseClicked;
-	
+	bool mLMouseClicked;
+	bool mRMouseClicked;
+
 	EMouseStates mMouseState;		// Stores whether mouse is within a grid or not - and which grid it is in
 
 
