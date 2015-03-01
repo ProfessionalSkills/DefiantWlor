@@ -30,6 +30,8 @@ CFleet::CFleet() :mFleetRowSize(10), mFleetRowSeperation(7)
 	mNumMothership = 0;
 	mNumSpaceFighter = 0;
 	mNumTransport = 0;
+
+	mFleetWidth = 4;
 }
 
 CFleet::~CFleet()
@@ -110,9 +112,9 @@ void CFleet::UpdateCondition()
 	}
 }
 
-int YSwitch(int x)
+int CFleet::YSwitch(int x)
 {
-	if (x < -5 || x>5) x = 0;
+	if (x < -mFleetWidth || x>mFleetWidth) return 0;
 	if (x > 0) return x*-1;
 	else return (x*-1) + 1;
 }
@@ -133,21 +135,47 @@ void CFleet::LoadShipModels(float xPos)
 	for (int i = 0; i < mSize; i++)
 	{
 		//uses intager deviosion to seperate ships into rows of x, where x is the fleet row size, and each row is seperated by a distance of fleet row seperation
-		switch (mpFleet[i]->GetPosType())
+		if (xPos < 0.0f)
 		{
-		case front:
-			mpFleet[i]->LoadModel(xPos - (float)((SpaceFighterLoaded / mFleetRowSize) * mFleetRowSeperation), (float)SpaceFighterY, 0.0f);
-			SpaceFighterLoaded++;
-			SpaceFighterY = YSwitch(SpaceFighterY);
-			break;
-		case centre:
-			mpFleet[i]->LoadModel(xPos - (float)(((TransportLoaded / mFleetRowSize) + TransportRowsBack) * mFleetRowSeperation), (float)(TransportLoaded - (TransportLoaded / mFleetRowSize) * mFleetRowSize), 0.0f);
-			TransportLoaded++;
-			break;
-		case back:
-			mpFleet[i]->LoadModel(xPos - (float)(((MothershipLoaded / mFleetRowSize) + MotherShipRowsBack) * mFleetRowSeperation), (float)(MothershipLoaded - (MothershipLoaded / mFleetRowSize) * mFleetRowSize), 0.0f);
-			MothershipLoaded++;
-			break;
+			switch (mpFleet[i]->GetPosType())
+			{
+			case front:
+				mpFleet[i]->LoadModel(xPos - (float)((SpaceFighterLoaded / mFleetRowSize) * mFleetRowSeperation), (float)SpaceFighterY, 0.0f);
+				SpaceFighterLoaded++;
+				SpaceFighterY = YSwitch(SpaceFighterY);
+				break;
+			case centre:
+				mpFleet[i]->LoadModel(xPos - (float)(((TransportLoaded / mFleetRowSize) + TransportRowsBack) * mFleetRowSeperation), (float)(TransportLoaded - (TransportLoaded / mFleetRowSize) * mFleetRowSize), 0.0f);
+				TransportLoaded++;
+				break;
+			case back:
+				mpFleet[i]->LoadModel(xPos - (float)(((MothershipLoaded / mFleetRowSize) + MotherShipRowsBack) * mFleetRowSeperation), (float)(MothershipLoaded - (MothershipLoaded / mFleetRowSize) * mFleetRowSize), 0.0f);
+				MothershipLoaded++;
+				break;
+			default:
+				break;
+			}
+		}
+		else
+		{
+			switch (mpFleet[i]->GetPosType())
+			{
+			case front:
+				mpFleet[i]->LoadModel(xPos + (float)((SpaceFighterLoaded / mFleetRowSize) * mFleetRowSeperation), (float)SpaceFighterY, 0.0f);
+				SpaceFighterLoaded++;
+				SpaceFighterY = YSwitch(SpaceFighterY);
+				break;
+			case centre:
+				mpFleet[i]->LoadModel(xPos + (float)(((TransportLoaded / mFleetRowSize) + TransportRowsBack) * mFleetRowSeperation), (float)(TransportLoaded - (TransportLoaded / mFleetRowSize) * mFleetRowSize), 0.0f);
+				TransportLoaded++;
+				break;
+			case back:
+				mpFleet[i]->LoadModel(xPos + (float)(((MothershipLoaded / mFleetRowSize) + MotherShipRowsBack) * mFleetRowSeperation), (float)(MothershipLoaded - (MothershipLoaded / mFleetRowSize) * mFleetRowSize), 0.0f);
+				MothershipLoaded++;
+				break;
+			default:
+				break;
+			}
 		}
 	}
 }
