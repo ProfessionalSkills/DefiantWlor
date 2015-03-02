@@ -12,8 +12,6 @@
 #include "Player.h"
 #include "BuildRequest.h"
 
-typedef std::unordered_multimap<EGameStructureTypes, CStructure*> GS_MultiMap;
-
 struct SSortByPriority
 {
 	bool operator() (CBuildRequest* lhs, CBuildRequest* rhs)
@@ -66,8 +64,6 @@ private:
 	// CONTAINERS
 	//---------------------------
 	std::priority_queue<CBuildRequest*, std::vector<CBuildRequest*>, SSortByPriority> mpTaskQ;
-	GS_MultiMap mpStructuresMap;
-	GS_MultiMap::iterator miterStructuresMap;
 
 
 	// MISC

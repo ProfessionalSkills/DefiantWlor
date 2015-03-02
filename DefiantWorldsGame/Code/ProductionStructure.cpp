@@ -188,7 +188,8 @@ bool CProductionStructure::Update(CRTSPlayer* pPlayer)
 					else
 					{
 						// World units list
-						pPlayer->GetWorldUnitList()->push_back(mpProductionQueue.front());
+						EGameAgentVariations agentVar = mpProductionQueue.front()->GetAgentData()->mAgentType;
+						pPlayer->GetWorldUnitList()->insert(GA_MultiMap::value_type(agentVar, mpProductionQueue.front()));
 					}
 					// Remove form queue
 					RemoveFromQueue();

@@ -12,7 +12,7 @@
 //-----------------------------------------------------
 // AI PLAYER CLASS CONSTRUCTOR & DESTRUCTOR
 //-----------------------------------------------------
-CRTSAIPlayer::CRTSAIPlayer(EFactions playerFaction) : CRTSPlayer(playerFaction), UPDATE_TIME(10.0f)
+CRTSAIPlayer::CRTSAIPlayer(EFactions playerFaction) : CRTSPlayer(playerFaction), UPDATE_TIME(0.1f)
 {
 	mpRandomiser = new CRandomiser();
 
@@ -23,20 +23,6 @@ CRTSAIPlayer::CRTSAIPlayer(EFactions playerFaction) : CRTSPlayer(playerFaction),
 	mpTaskQ.push(new CBuildRequest(Q_BARRACKS, 7));
 	mpTaskQ.push(new CBuildRequest(Q_BARRACKS, 9));
 	mpTaskQ.push(new CBuildRequest(Q_INFANTRY, 20));
-
-	// Multimap test
-	//mpMap.insert(GS_MultiMap::value_type(STR_BARRACKS, 1));
-	//mpMap.insert(GS_MultiMap::value_type(STR_BARRACKS, 3));
-	//mpMap.insert(GS_MultiMap::value_type(STR_HELLIPAD, 1));
-	//mpMap.insert(GS_MultiMap::value_type(STR_SPACE_CENTRE, 5));
-	//mpMap.insert(GS_MultiMap::value_type(STR_BARRACKS, 9));
-
-
-	//auto range = mpMap.equal_range(STR_BARRACKS);
-	//for (auto iter = range.first; iter != range.second; ++iter)
-	//{
-	//	int i = 5;
-	//}
 
 	// Set default mUpdateTime
 	mUpdateTime = UPDATE_TIME;

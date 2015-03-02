@@ -33,10 +33,10 @@ CRTSPlayer::CRTSPlayer(EFactions playerFaction)
 
 CRTSPlayer::~CRTSPlayer()
 {
-	for (mpiterStructures = mpStructureList.begin(); mpiterStructures != mpStructureList.end(); mpiterStructures++)
+	for (miterStructuresMap = mpStructuresMap.begin(); miterStructuresMap != mpStructuresMap.end(); miterStructuresMap++)
 	{
 		// Remove all models
-		(*mpiterStructures)->UnloadIModel();
+		miterStructuresMap->second->UnloadIModel();
 	}
 
 	// Handle removal of the grids
@@ -104,7 +104,7 @@ bool CRTSPlayer::PurchaseStructure(CStructure* pStructure, CGrid* pGrid, CTile* 
 	pStructure->CreateStructure(pGrid);
 	pStructure->SetBuildLocation(pTile->GetGridPos());
 	pStructure->SetFaction(mPlayerFaction);
-	mpStructureList.push_back(pStructure);
+	mpStructuresMap.insert(GS_MultiMap::value_type(pStructure->GetStructureType(), pStructure));
 	return true;
 }
 
@@ -128,12 +128,12 @@ void CRTSPlayer::CheckGameObjectSelection(CStructure*& pStructure, CGameAgent*& 
 	pGameAgent = nullptr;
 
 	// Loop through all Units
-	for (mpiterGameAgents = mpWorldUnitsList.begin(); mpiterGameAgents != mpWorldUnitsList.end(); mpiterGameAgents++)
+	for (miterUnitsMap = mpUnitsMap.begin(); miterUnitsMap != mpUnitsMap.end(); miterUnitsMap++)
 	{
 		// If there is a collision, return the pointer to that object
-		if ((*mpiterGameAgents)->RayCollision(origin, direction, newDist) && newDist < curDist)
+		if (miterUnitsMap->second->RayCollision(origin, direction, newDist) && newDist < curDist)
 		{
-			pGameAgent = (*mpiterGameAgents);
+			pGameAgent = miterUnitsMap->second;
 			curDist = newDist;
 		}
 	}
@@ -143,12 +143,12 @@ void CRTSPlayer::CheckGameObjectSelection(CStructure*& pStructure, CGameAgent*& 
 	pStructure = nullptr;
 
 	// Loop through all structures
-	for (mpiterStructures = mpStructureList.begin(); mpiterStructures != mpStructureList.end(); mpiterStructures++)
+	for (miterStructuresMap = mpStructuresMap.begin(); miterStructuresMap != mpStructuresMap.end(); miterStructuresMap++)
 	{
 		// If there is a collision, return the pointer to that object
-		if ((*mpiterStructures)->RayCollision(origin, direction, newDist) && newDist < curDist)
+		if (miterStructuresMap->second->RayCollision(origin, direction, newDist) && newDist < curDist)
 		{
-			pStructure = (*mpiterStructures);
+			pStructure = miterStructuresMap->second;
 			curDist = newDist;
 		}
 	}
@@ -163,15 +163,15 @@ void CRTSPlayer::CheckGameObjectSelection(CStructure*& pStructure, CGameAgent*& 
 void CRTSPlayer::Update()
 {
 	// Loop through all structures & update them
-	for (mpiterStructures = mpStructureList.begin(); mpiterStructures != mpStructureList.end(); mpiterStructures++)
+	for (miterStructuresMap = mpStructuresMap.begin(); miterStructuresMap != mpStructuresMap.end(); miterStructuresMap++)
 	{
 		// Call update function for this structure
-		if (!(*mpiterStructures)->Update(this))
+		if (!miterStructuresMap->second->Update(this))
 		{
 			// The current structure has been destroyed
-			CStructure* tmp = (*mpiterStructures);
+			CStructure* tmp = miterStructuresMap->second;
 			SafeDelete(tmp);
-			mpStructureList.erase(mpiterStructures);
+			mpStructuresMap.erase(miterStructuresMap);
 			break;
 		}
 	}
@@ -181,34 +181,34 @@ void CRTSPlayer::Update()
 
 void CRTSPlayer::LoadStructureModels()
 {
-	for (size_t i = 0; i < mpStructureList.size(); i++)
+	for (miterStructuresMap = mpStructuresMap.begin(); miterStructuresMap != mpStructuresMap.end(); miterStructuresMap++)
 	{
-		mpStructureList[i]->LoadIModel();
+		miterStructuresMap->second->LoadIModel();
 	}
 }
 
 void CRTSPlayer::UnloadStructureModels()
 {
 	// Loop through all structures & unload their models
-	for (size_t i = 0; i < mpStructureList.size();i++)
+	for (miterStructuresMap = mpStructuresMap.begin(); miterStructuresMap != mpStructuresMap.end(); miterStructuresMap++)
 	{
-		mpStructureList[i]->UnloadIModel();
+		miterStructuresMap->second->UnloadIModel();
 	}
 }
 
 void CRTSPlayer::LoadUnitModels()
 {
 	//loads units back into their original postion
-	for (size_t i = 0; i < mpWorldUnitsList.size(); i++)
+	for (miterUnitsMap = mpUnitsMap.begin(); miterUnitsMap != mpUnitsMap.end(); miterUnitsMap++)
 	{
-		mpWorldUnitsList[i]->LoadIModel();
+		miterUnitsMap->second->LoadIModel();
 	}
 }
 
 void CRTSPlayer::UnloadUnitModels()
 {
-	for (size_t i = 0; i < mpWorldUnitsList.size(); i++)
+	for (miterUnitsMap = mpUnitsMap.begin(); miterUnitsMap != mpUnitsMap.end(); miterUnitsMap++)
 	{
-		mpWorldUnitsList[i]->UnloadIModel();
+		miterUnitsMap->second->UnloadIModel();
 	}
 }

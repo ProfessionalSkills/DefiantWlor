@@ -30,6 +30,11 @@
 #include "SpaceCentre.h"		// Production structure
 
 
+typedef std::unordered_multimap<EGameStructureTypes, CStructure*> GS_MultiMap;
+typedef std::unordered_multimap<EGameAgentVariations, CGameAgent*> GA_MultiMap;
+typedef std::unordered_multimap<EGameAgentVariations, CSpaceUnit*> SU_MultiMap;
+
+
 //-----------------------------------------------------
 // BASE CLASS FOR PLAYERS
 //-----------------------------------------------------
@@ -55,12 +60,17 @@ protected:
 
 	// LISTS
 	//---------------------------
-	std::vector<CStructure*> mpStructureList;
-	std::vector<CGameAgent*> mpWorldUnitsList;
+	GS_MultiMap mpStructuresMap;
+	GA_MultiMap mpUnitsMap;
+
+	GS_MultiMap::iterator miterStructuresMap;
+	GA_MultiMap::iterator miterUnitsMap;
+
+
+	//std::vector<CGameAgent*> mpWorldUnitsList;
 	std::vector<CGameAgent*> mpSpaceUnitsList;
 
-	std::vector<CStructure*>::iterator mpiterStructures;
-	std::vector<CGameAgent*>::iterator mpiterGameAgents;
+	//std::vector<CGameAgent*>::iterator mpiterGameAgents;
 	std::vector<CGameAgent*>::iterator mpiterSpaceUnits;
 
 	CFleet* mpFleet;
@@ -105,14 +115,14 @@ public:
 		return &mpSpaceUnitsList;
 	}
 
-	inline std::vector<CGameAgent*>* GetWorldUnitList()
+	inline GA_MultiMap* GetWorldUnitList()
 	{
-		return &mpWorldUnitsList;
+		return &mpUnitsMap;
 	}
 
 	inline int GetAmountOfStructures()
 	{
-		return mpStructureList.size();
+		return mpStructuresMap.size();
 	}
 
 	inline EFactions GetPlayerFaction()
