@@ -17,13 +17,13 @@ CRTSAIPlayer::CRTSAIPlayer(EFactions playerFaction) : CRTSPlayer(playerFaction),
 	mpRandomiser = new CRandomiser();
 
 	// Initialise first 10 tasks of AI player
-	mpTaskQ.push(new CBuildRequest(Q_BARRACKS, 5));
-	mpTaskQ.push(new CBuildRequest(Q_HELLIPAD, 10));
-	mpTaskQ.push(new CBuildRequest(Q_SPACE_CENTRE, 1));
-	mpTaskQ.push(new CBuildRequest(Q_BARRACKS, 7));
-	mpTaskQ.push(new CBuildRequest(Q_BARRACKS, 9));
-	mpTaskQ.push(new CBuildRequest(Q_INFANTRY, 20));
-	mpTaskQ.push(new CBuildRequest(Q_TANK, 18));
+	//mpTaskQ.push(new CBuildRequest(Q_BARRACKS, 5));
+	//mpTaskQ.push(new CBuildRequest(Q_HELLIPAD, 10));
+	//mpTaskQ.push(new CBuildRequest(Q_SPACE_CENTRE, 1));
+	//mpTaskQ.push(new CBuildRequest(Q_BARRACKS, 7));
+	//mpTaskQ.push(new CBuildRequest(Q_BARRACKS, 9));
+	//mpTaskQ.push(new CBuildRequest(Q_INFANTRY, 20));
+	//mpTaskQ.push(new CBuildRequest(Q_TANK, 18));
 	mpTaskQ.push(new CBuildRequest(Q_ARTILLERY, 19));
 
 	// Set default mUpdateTime
@@ -111,7 +111,7 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 			if (range.first == mpStructuresMap.end())
 			{
 				// Move the item down in priority
-				mpTaskQ.top()->DecreasePriority();
+				DecreaseTopItem();
 				// Add request for a barracks as top priority
 				mpTaskQ.push(new CBuildRequest(Q_BARRACKS, 1));
 				return false;
@@ -142,7 +142,7 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 			if (range.first == mpStructuresMap.end())
 			{
 				// Move the item down in priority
-				mpTaskQ.top()->DecreasePriority();
+				DecreaseTopItem();
 				// Add request for a barracks as top priority
 				mpTaskQ.push(new CBuildRequest(Q_BARRACKS, 1));
 				return false;
@@ -173,9 +173,9 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 			if (range.first == mpStructuresMap.end())
 			{
 				// Move the item down in priority
-				mpTaskQ.top()->DecreasePriority();
+				DecreaseTopItem();
 				// Add request for a barracks as top priority
-				mpTaskQ.push(new CBuildRequest(Q_BARRACKS, 1));
+				mpTaskQ.push(new CBuildRequest(Q_BARRACKS, 100));
 				return false;
 			}
 
@@ -204,7 +204,7 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 			if (range.first == mpStructuresMap.end())
 			{
 				// Move the item down in priority
-				mpTaskQ.top()->DecreasePriority();
+				DecreaseTopItem();
 				// Add request for a barracks as top priority
 				mpTaskQ.push(new CBuildRequest(Q_SPACE_CENTRE, 1));
 				return false;
@@ -236,7 +236,7 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 			if (range.first == mpStructuresMap.end())
 			{
 				// Move the item down in priority
-				mpTaskQ.top()->DecreasePriority();
+				DecreaseTopItem();
 				// Add request for a barracks as top priority
 				mpTaskQ.push(new CBuildRequest(Q_SPACE_CENTRE, 1));
 				return false;
@@ -268,7 +268,7 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 			if (range.first == mpStructuresMap.end())
 			{
 				// Move the item down in priority
-				mpTaskQ.top()->DecreasePriority();
+				DecreaseTopItem();
 				// Add request for a barracks as top priority
 				mpTaskQ.push(new CBuildRequest(Q_SPACE_CENTRE, 1));
 				return false;
@@ -300,7 +300,7 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 			if (range.first == mpStructuresMap.end())
 			{
 				// Move the item down in priority
-				mpTaskQ.top()->DecreasePriority();
+				DecreaseTopItem();
 				return false;
 			}
 
@@ -330,7 +330,7 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 			if (range.first == mpStructuresMap.end())
 			{
 				// Move the item down in priority
-				mpTaskQ.top()->DecreasePriority();
+				DecreaseTopItem();
 				// Add request for a barracks as top priority
 				mpTaskQ.push(new CBuildRequest(Q_HELLIPAD, 1));
 				return false;
@@ -362,7 +362,7 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 			if (range.first == mpStructuresMap.end())
 			{
 				// Move the item down in priority
-				mpTaskQ.top()->DecreasePriority();
+				DecreaseTopItem();
 				// Add request for a barracks as top priority
 				mpTaskQ.push(new CBuildRequest(Q_HELLIPAD, 1));
 				return false;
@@ -427,4 +427,12 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 
 	// SUCCESS
 	return true;
+}
+
+void CRTSAIPlayer::DecreaseTopItem()
+{
+	CBuildRequest* pRequest = mpTaskQ.top();
+	mpTaskQ.pop();
+	pRequest->DecreasePriority();
+	mpTaskQ.push(pRequest);
 }

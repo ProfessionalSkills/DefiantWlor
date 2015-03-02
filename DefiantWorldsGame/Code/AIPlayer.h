@@ -14,7 +14,7 @@
 
 struct SSortByPriority
 {
-	bool operator() (CBuildRequest* lhs, CBuildRequest* rhs)
+	bool operator() (CBuildRequest* lhs, CBuildRequest* rhs) const
 	{
 		return lhs->GetObjectPriority() > rhs->GetObjectPriority();
 	}
@@ -54,6 +54,9 @@ private:
 	// the AI player's priority queue of things to do. Returns success of
 	// implementing the item (i.e. enough funds, chose a successful position, etc.)
 	bool ResolveItem(EQueueObjectType qObject);
+	// As you cannot adjust values within a priority queue wthout removing, editing, then pushing back on again, this function
+	// deals with that process for the top() element of the priority queue
+	void DecreaseTopItem();
 
 
 	// CONSTANTS
@@ -63,7 +66,7 @@ private:
 
 	// CONTAINERS
 	//---------------------------
-	std::priority_queue<CBuildRequest*, std::vector<CBuildRequest*>, SSortByPriority> mpTaskQ;
+	std::priority_queue<CBuildRequest*, std::deque<CBuildRequest*>, SSortByPriority> mpTaskQ;
 
 
 	// MISC
