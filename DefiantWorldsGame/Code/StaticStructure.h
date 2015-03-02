@@ -31,7 +31,10 @@ public:
 
 	// ACCESSORS
 	//---------------------------
-
+	int GetQueueSize()
+	{
+		return -1;
+	}
 
 
 	// MUTATORS

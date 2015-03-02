@@ -12,12 +12,31 @@
 //-----------------------------------------------------
 // AI PLAYER CLASS CONSTRUCTOR & DESTRUCTOR
 //-----------------------------------------------------
-CRTSAIPlayer::CRTSAIPlayer(EFactions playerFaction) : CRTSPlayer(playerFaction), UPDATE_TIME(5.0f)
+CRTSAIPlayer::CRTSAIPlayer(EFactions playerFaction) : CRTSPlayer(playerFaction), UPDATE_TIME(10.0f)
 {
+	mpRandomiser = new CRandomiser();
+
 	// Initialise first 10 tasks of AI player
-	mpTaskQ.push(new CBuildRequest(Q_BARRACKS, 20));
-	mpTaskQ.push(new CBuildRequest(Q_HELLIPAD, 15));
-	mpTaskQ.push(new CBuildRequest(Q_SPACE_CENTRE, 30));
+	mpTaskQ.push(new CBuildRequest(Q_BARRACKS, 5));
+	mpTaskQ.push(new CBuildRequest(Q_HELLIPAD, 10));
+	mpTaskQ.push(new CBuildRequest(Q_SPACE_CENTRE, 1));
+	mpTaskQ.push(new CBuildRequest(Q_BARRACKS, 7));
+	mpTaskQ.push(new CBuildRequest(Q_BARRACKS, 9));
+	mpTaskQ.push(new CBuildRequest(Q_INFANTRY, 20));
+
+	// Multimap test
+	//mpMap.insert(GS_MultiMap::value_type(STR_BARRACKS, 1));
+	//mpMap.insert(GS_MultiMap::value_type(STR_BARRACKS, 3));
+	//mpMap.insert(GS_MultiMap::value_type(STR_HELLIPAD, 1));
+	//mpMap.insert(GS_MultiMap::value_type(STR_SPACE_CENTRE, 5));
+	//mpMap.insert(GS_MultiMap::value_type(STR_BARRACKS, 9));
+
+
+	//auto range = mpMap.equal_range(STR_BARRACKS);
+	//for (auto iter = range.first; iter != range.second; ++iter)
+	//{
+	//	int i = 5;
+	//}
 
 	// Set default mUpdateTime
 	mUpdateTime = UPDATE_TIME;
@@ -66,6 +85,9 @@ void CRTSAIPlayer::Update()
 
 bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 {
+	int lowest = 5;
+	int qSize = 0;
+
 	// Building and agent pointer
 	CStructure* pStructure = nullptr;
 	CGameAgent* pGameAgent = nullptr;
@@ -91,18 +113,45 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 		// NOT YET IMPLEMENTED
 		return true;
 		break;
+
+	case Q_INFANTRY:
+		// Infantry is from barracks - get all instances of barracks
+		auto range = mpStructuresMap.equal_range(STR_BARRACKS);
+		for (auto iter = range.first; iter != range.second; ++iter)
+		{
+			// Find one with the lowest queue
+			qSize = iter->second->GetQueueSize();
+			if (qSize < lowest)
+			{
+				lowest = qSize;
+				pStructure = iter->second;
+			}
+		}
+
+		// Using the lowest queued structure - produce an infantry unit
+		if (pStructure)
+		{
+			pStructure->AddToQueue(0);
+		}
+		
+		return true;
+
+		break;
 	}
 
 	// Get a random grid position in which to spawn the unit & get the respective tile
-	CRandomiser randomiser;
-	int gridX = randomiser.GetRandomInt(1, GRID_SIZE_X - 1);
-	int gridY = randomiser.GetRandomInt(1, GRID_SIZE_Y - 1);
+	int gridX = mpRandomiser->GetRandomInt(1, GRID_SIZE_X - 1);
+	int gridY = mpRandomiser->GetRandomInt(1, GRID_SIZE_Y - 1);
 
 	pSpawnTile = mpPlayerGrid->GetTileData(SPointData(gridX, gridY));
+	pStructure->SetWorldPos(pSpawnTile->GetWorldPos());
 
 	// Check if the tile is already being used
 	if (pSpawnTile->IsTileUsed())
 	{
+		pStructure->UnloadIModel();
+		SafeDelete(pStructure);
+		SafeDelete(pGameAgent);
 		return false;
 	}
 
@@ -112,7 +161,16 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 	// Check success of building purchase
 	if (!PurchaseStructure(pStructure, mpPlayerGrid, pSpawnTile))
 	{
+		pStructure->UnloadIModel();
+		SafeDelete(pStructure);
+		SafeDelete(pGameAgent);
 		return false;
+	}
+
+	// Add building to map (if it is a building)
+	if (pStructure)
+	{
+		mpStructuresMap.insert(GS_MultiMap::value_type(pStructure->GetStructureType(), pStructure));
 	}
 
 	// SUCCESS

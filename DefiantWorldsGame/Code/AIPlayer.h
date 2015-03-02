@@ -12,6 +12,7 @@
 #include "Player.h"
 #include "BuildRequest.h"
 
+typedef std::unordered_multimap<EGameStructureTypes, CStructure*> GS_MultiMap;
 
 struct SSortByPriority
 {
@@ -38,26 +39,40 @@ public:
 	//---------------------------
 
 
+
 	// MUTATORS
 	//---------------------------
+
 
 
 	// METHODS
 	//---------------------------
 	// base update function called each frame
 	void Update();
+
+
+private:
 	// This function is for attempting to resolve the item at the top of
 	// the AI player's priority queue of things to do. Returns success of
 	// implementing the item (i.e. enough funds, chose a successful position, etc.)
 	bool ResolveItem(EQueueObjectType qObject);
 
 
-private:
+	// CONSTANTS
+	//---------------------------
 	const float UPDATE_TIME;
 
-	// PRIORIY QUEUE OF TASKS
+
+	// CONTAINERS
 	//---------------------------
 	std::priority_queue<CBuildRequest*, std::vector<CBuildRequest*>, SSortByPriority> mpTaskQ;
+	GS_MultiMap mpStructuresMap;
+	GS_MultiMap::iterator miterStructuresMap;
+
+
+	// MISC
+	//---------------------------
+	CRandomiser* mpRandomiser;
 	float mUpdateTime;			// Time between the AI doing tasks - can be determined by difficulty level perhaps?
 };
 

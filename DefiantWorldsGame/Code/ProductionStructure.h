@@ -42,7 +42,10 @@ public:
 
 	// ACCESSORS
 	//---------------------------
-public:
+	int GetQueueSize()
+	{
+		return mpProductionQueue.size();
+	}
 
 
 	// MUTATORS
