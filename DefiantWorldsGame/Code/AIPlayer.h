@@ -46,7 +46,7 @@ public:
 	// METHODS
 	//---------------------------
 	// base update function called each frame
-	void Update();
+	void Update() override;
 
 
 private:

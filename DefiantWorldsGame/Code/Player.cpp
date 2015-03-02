@@ -177,6 +177,18 @@ void CRTSPlayer::Update()
 	}
 
 	// Loop through all units (NOT SPACE) & update them
+	for (miterUnitsMap = mpUnitsMap.begin(); miterUnitsMap != mpUnitsMap.end(); miterUnitsMap++)
+	{
+		//// Call update function for this structure
+		//if (!miterUnitsMap->second->Update(this))
+		//{
+		//	// The current structure has been destroyed
+		//	CGameAgent* tmp = miterUnitsMap->second;
+		//	SafeDelete(tmp);
+		//	mpUnitsMap.erase(miterUnitsMap);
+		//	break;
+		//}
+	}
 }
 
 void CRTSPlayer::LoadStructureModels()
