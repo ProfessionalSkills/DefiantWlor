@@ -44,6 +44,7 @@ protected:
 	// DATA
 	//---------------------------
 	SAgentData mAgentInfo;
+	CTile* mPathTarget;
 	std::stringstream mStrDisplay;
 	SBoundingSphere mBoundingSphere;
 	float mHealth;
@@ -112,6 +113,16 @@ public:
 	inline SAgentData* GetAgentData()
 	{
 		return &mAgentInfo;
+	}
+
+	inline void SetPathTarget(CTile* pathTile)
+	{
+		mPathTarget = pathTile;
+	}
+
+	inline CTile* GetPathTarget()
+	{
+		return mPathTarget;
 	}
 
 	eFleetPos GetPosType();

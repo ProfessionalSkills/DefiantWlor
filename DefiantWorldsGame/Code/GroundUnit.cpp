@@ -88,6 +88,7 @@ void CGroundUnit::Spawn(CGrid* pGrid, SPointData pCentre)
 
 bool CGroundUnit::Move()
 {
+	mpObjModel->SetPosition(mPathTarget->GetWorldPos().x, mPathTarget->GetWorldPos().y , mPathTarget->GetWorldPos().z);
 	return false;
 }
 

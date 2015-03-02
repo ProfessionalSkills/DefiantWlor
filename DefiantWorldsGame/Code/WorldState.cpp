@@ -264,6 +264,7 @@ void CWorldState::CheckKeyPresses()
 		{
 			if (!mpCurTile->IsTileUsed())
 			{
+				mpCurSelectedAgent->SetPathTarget(mpCurTile);
 				mRMouseClicked = false;
 			}
 		}
@@ -926,6 +927,14 @@ void CWorldState::StateUpdate()
 		mMousePrevGridPos = mMouseGridPos;
 	}
 
+	for (auto it = mpHumanPlayer->GetWorldUnitList()->begin(); it != mpHumanPlayer->GetWorldUnitList()->end(); it++)
+	{
+		if (it->second->GetPathTarget() != nullptr)
+		{
+			it->second->Move();
+			mpEarthGrid->GetTileData(it->second->GetPathTarget()->GetGridPos())->SetTileUsage(true);
+		}
+	}
 
 	// UPDATE PLAYERS
 	//------------------------------

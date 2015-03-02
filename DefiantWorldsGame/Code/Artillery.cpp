@@ -23,6 +23,7 @@ CArtillery::CArtillery()
 	mProductionCost = 0.0f;
 	mCurProductionTimeLeft = mProductionTime;
 	mDamage = 1.0f;
+	mPathTarget = nullptr;
 	//mAttackParticleFX;
 	//mDestroyParticleFX;
 	mState = OBJ_CONSTRUCTING;
@@ -73,6 +74,7 @@ bool CArtillery::Attack(CGameAgent* target, float hitMod, float damageMod)
 
 bool CArtillery::Move()
 {
+	mpObjModel->SetPosition(mPathTarget->GetWorldPos().x, 0, mPathTarget->GetWorldPos().z);
 	return false;
 }
 

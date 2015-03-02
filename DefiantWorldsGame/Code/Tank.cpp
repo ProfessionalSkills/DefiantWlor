@@ -22,6 +22,7 @@ CTank::CTank()
 	mProductionCost = 0.0f;
 	mCurProductionTimeLeft = mProductionTime;
 	mDamage = 1.0f;
+	mPathTarget = nullptr;
 	//mAttackParticleFX;
 	//mDestroyParticleFX;
 	mState = OBJ_CONSTRUCTING;
@@ -71,6 +72,7 @@ bool CTank::Attack(CGameAgent* target, float hitMod, float damageMod)
 
 bool CTank::Move()
 {
+	mpObjModel->SetPosition(mPathTarget->GetWorldPos().x, 0, mPathTarget->GetWorldPos().z);
 	return false;
 }
 
