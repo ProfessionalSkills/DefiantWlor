@@ -39,6 +39,10 @@ public:
 
 	// MUTATORS
 	//---------------------------
+	inline void DecreasePriority()
+	{
+		mPriority += 5;
+	}
 
 
 	// METHODS

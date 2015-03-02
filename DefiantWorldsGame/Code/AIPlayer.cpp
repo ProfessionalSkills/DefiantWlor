@@ -12,7 +12,7 @@
 //-----------------------------------------------------
 // AI PLAYER CLASS CONSTRUCTOR & DESTRUCTOR
 //-----------------------------------------------------
-CRTSAIPlayer::CRTSAIPlayer(EFactions playerFaction) : CRTSPlayer(playerFaction), UPDATE_TIME(0.1f)
+CRTSAIPlayer::CRTSAIPlayer(EFactions playerFaction) : CRTSPlayer(playerFaction), UPDATE_TIME(7.0f)
 {
 	mpRandomiser = new CRandomiser();
 
@@ -23,6 +23,8 @@ CRTSAIPlayer::CRTSAIPlayer(EFactions playerFaction) : CRTSPlayer(playerFaction),
 	mpTaskQ.push(new CBuildRequest(Q_BARRACKS, 7));
 	mpTaskQ.push(new CBuildRequest(Q_BARRACKS, 9));
 	mpTaskQ.push(new CBuildRequest(Q_INFANTRY, 20));
+	mpTaskQ.push(new CBuildRequest(Q_TANK, 18));
+	mpTaskQ.push(new CBuildRequest(Q_ARTILLERY, 19));
 
 	// Set default mUpdateTime
 	mUpdateTime = UPDATE_TIME;
@@ -76,7 +78,7 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 
 	// Building and agent pointer
 	CStructure* pStructure = nullptr;
-	CGameAgent* pGameAgent = nullptr;
+	int agentNum = -1;
 
 	CTile* pSpawnTile = nullptr;
 	
@@ -101,28 +103,294 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 		break;
 
 	case Q_INFANTRY:
-		// Infantry is from barracks - get all instances of barracks
-		auto range = mpStructuresMap.equal_range(STR_BARRACKS);
-		for (auto iter = range.first; iter != range.second; ++iter)
 		{
-			// Find one with the lowest queue
-			qSize = iter->second->GetQueueSize();
-			if (qSize < lowest)
-			{
-				lowest = qSize;
-				pStructure = iter->second;
-			}
-		}
+			// Infantry is from barracks - get all instances of barracks	
+			auto range = mpStructuresMap.equal_range(STR_BARRACKS);
 
-		// Using the lowest queued structure - produce an infantry unit
-		if (pStructure)
-		{
-			pStructure->AddToQueue(0);
+			// Check that some structures exist
+			if (range.first == mpStructuresMap.end())
+			{
+				// Move the item down in priority
+				mpTaskQ.top()->DecreasePriority();
+				// Add request for a barracks as top priority
+				mpTaskQ.push(new CBuildRequest(Q_BARRACKS, 1));
+				return false;
+			}
+
+			for (auto iter = range.first; iter != range.second; ++iter)
+			{
+				// Find one with the lowest queue
+				qSize = iter->second->GetQueueSize();
+				if (qSize < lowest)
+				{
+					lowest = qSize;
+					pStructure = iter->second;
+				}
+			}
+
+			// Index of the agent to be produced
+			agentNum = 0;
 		}
-		
-		return true;
+		break;
+
+	case Q_ARTILLERY:
+		{
+			// Artillery is from barracks - get all instances of barracks
+			auto range = mpStructuresMap.equal_range(STR_BARRACKS);
+
+			// Check that at least one structure exists
+			if (range.first == mpStructuresMap.end())
+			{
+				// Move the item down in priority
+				mpTaskQ.top()->DecreasePriority();
+				// Add request for a barracks as top priority
+				mpTaskQ.push(new CBuildRequest(Q_BARRACKS, 1));
+				return false;
+			}
+
+			for (auto iter = range.first; iter != range.second; ++iter)
+			{
+				// Find one with the lowest queue
+				qSize = iter->second->GetQueueSize();
+				if (qSize < lowest)
+				{
+					lowest = qSize;
+					pStructure = iter->second;
+				}
+			}
+
+			// Index of the agent to be produced
+			agentNum = 1;
+		}
+		break;
+
+	case Q_TANK:
+		{
+			// Tank is from barracks - get all instances of barracks
+			auto range = mpStructuresMap.equal_range(STR_BARRACKS);
+
+			// Check that at least one structure exists
+			if (range.first == mpStructuresMap.end())
+			{
+				// Move the item down in priority
+				mpTaskQ.top()->DecreasePriority();
+				// Add request for a barracks as top priority
+				mpTaskQ.push(new CBuildRequest(Q_BARRACKS, 1));
+				return false;
+			}
+
+			for (auto iter = range.first; iter != range.second; ++iter)
+			{
+				// Find one with the lowest queue
+				qSize = iter->second->GetQueueSize();
+				if (qSize < lowest)
+				{
+					lowest = qSize;
+					pStructure = iter->second;
+				}
+			}
+
+			// Index of the agent to be produced
+			agentNum = 2;
+		}
+		break;
+
+	case Q_MOTHERSHIP:
+		{
+			// Tank is from barracks - get all instances of barracks
+			auto range = mpStructuresMap.equal_range(STR_SPACE_CENTRE);
+
+			// Check that at least one structure exists
+			if (range.first == mpStructuresMap.end())
+			{
+				// Move the item down in priority
+				mpTaskQ.top()->DecreasePriority();
+				// Add request for a barracks as top priority
+				mpTaskQ.push(new CBuildRequest(Q_SPACE_CENTRE, 1));
+				return false;
+			}
+
+			for (auto iter = range.first; iter != range.second; ++iter)
+			{
+				// Find one with the lowest queue
+				qSize = iter->second->GetQueueSize();
+				if (qSize < lowest)
+				{
+					lowest = qSize;
+					pStructure = iter->second;
+				}
+			}
+
+			// Index of the agent to be produced
+			agentNum = 2;
+		}
 
 		break;
+
+	case Q_TRANSPORT:
+		{
+			// Tank is from barracks - get all instances of barracks
+			auto range = mpStructuresMap.equal_range(STR_SPACE_CENTRE);
+
+			// Check that at least one structure exists
+			if (range.first == mpStructuresMap.end())
+			{
+				// Move the item down in priority
+				mpTaskQ.top()->DecreasePriority();
+				// Add request for a barracks as top priority
+				mpTaskQ.push(new CBuildRequest(Q_SPACE_CENTRE, 1));
+				return false;
+			}
+
+			for (auto iter = range.first; iter != range.second; ++iter)
+			{
+				// Find one with the lowest queue
+				qSize = iter->second->GetQueueSize();
+				if (qSize < lowest)
+				{
+					lowest = qSize;
+					pStructure = iter->second;
+				}
+			}
+
+			// Index of the agent to be produced
+			agentNum = 1;
+		}
+
+		break;
+
+	case Q_SPACE_FIGHTER:
+		{
+			// Tank is from barracks - get all instances of barracks
+			auto range = mpStructuresMap.equal_range(STR_SPACE_CENTRE);
+
+			// Check that at least one structure exists
+			if (range.first == mpStructuresMap.end())
+			{
+				// Move the item down in priority
+				mpTaskQ.top()->DecreasePriority();
+				// Add request for a barracks as top priority
+				mpTaskQ.push(new CBuildRequest(Q_SPACE_CENTRE, 1));
+				return false;
+			}
+
+			for (auto iter = range.first; iter != range.second; ++iter)
+			{
+				// Find one with the lowest queue
+				qSize = iter->second->GetQueueSize();
+				if (qSize < lowest)
+				{
+					lowest = qSize;
+					pStructure = iter->second;
+				}
+			}
+
+			// Index of the agent to be produced
+			agentNum = 0;
+		}
+
+		break;
+
+	case Q_WORKER:
+		{
+			// Tank is from barracks - get all instances of barracks
+			auto range = mpStructuresMap.equal_range(STR_COM_CENTRE);
+
+			// Check that at least one structure exists
+			if (range.first == mpStructuresMap.end())
+			{
+				// Move the item down in priority
+				mpTaskQ.top()->DecreasePriority();
+				return false;
+			}
+
+			for (auto iter = range.first; iter != range.second; ++iter)
+			{
+				// Find one with the lowest queue
+				qSize = iter->second->GetQueueSize();
+				if (qSize < lowest)
+				{
+					lowest = qSize;
+					pStructure = iter->second;
+				}
+			}
+
+			// Index of the agent to be produced
+			agentNum = 0;
+		}
+
+		break;
+
+	case Q_FIGHTER:
+		{
+			// Tank is from barracks - get all instances of barracks
+			auto range = mpStructuresMap.equal_range(STR_HELLIPAD);
+
+			// Check that at least one structure exists
+			if (range.first == mpStructuresMap.end())
+			{
+				// Move the item down in priority
+				mpTaskQ.top()->DecreasePriority();
+				// Add request for a barracks as top priority
+				mpTaskQ.push(new CBuildRequest(Q_HELLIPAD, 1));
+				return false;
+			}
+
+			for (auto iter = range.first; iter != range.second; ++iter)
+			{
+				// Find one with the lowest queue
+				qSize = iter->second->GetQueueSize();
+				if (qSize < lowest)
+				{
+					lowest = qSize;
+					pStructure = iter->second;
+				}
+			}
+
+			// Index of the agent to be produced
+			agentNum = 0;
+		}
+
+		break;
+
+	case Q_BOMBER:
+		{
+			// Tank is from barracks - get all instances of barracks
+			auto range = mpStructuresMap.equal_range(STR_HELLIPAD);
+
+			// Check that at least one structure exists
+			if (range.first == mpStructuresMap.end())
+			{
+				// Move the item down in priority
+				mpTaskQ.top()->DecreasePriority();
+				// Add request for a barracks as top priority
+				mpTaskQ.push(new CBuildRequest(Q_HELLIPAD, 1));
+				return false;
+			}
+
+			for (auto iter = range.first; iter != range.second; ++iter)
+			{
+				// Find one with the lowest queue
+				qSize = iter->second->GetQueueSize();
+				if (qSize < lowest)
+				{
+					lowest = qSize;
+					pStructure = iter->second;
+				}
+			}
+
+			// Index of the agent to be produced
+			agentNum = 1;
+		}
+
+		break;
+	}
+
+	// If it was a unit being built, simply build unit & return true (for now)
+	if (pStructure && agentNum != -1)
+	{
+		pStructure->AddToQueue(agentNum);
+		return true;
 	}
 
 	// Get a random grid position in which to spawn the unit & get the respective tile
@@ -137,7 +405,6 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 	{
 		pStructure->UnloadIModel();
 		SafeDelete(pStructure);
-		SafeDelete(pGameAgent);
 		return false;
 	}
 
@@ -149,7 +416,6 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 	{
 		pStructure->UnloadIModel();
 		SafeDelete(pStructure);
-		SafeDelete(pGameAgent);
 		return false;
 	}
 

@@ -32,7 +32,6 @@
 
 typedef std::unordered_multimap<EGameStructureTypes, CStructure*> GS_MultiMap;
 typedef std::unordered_multimap<EGameAgentVariations, CGameAgent*> GA_MultiMap;
-typedef std::unordered_multimap<EGameAgentVariations, CSpaceUnit*> SU_MultiMap;
 
 
 //-----------------------------------------------------
@@ -54,7 +53,6 @@ protected:
 	int mNumMothership;
 	int mNumTransport;
 
-
 	CGrid* mpPlayerGrid;
 
 
@@ -66,11 +64,7 @@ protected:
 	GS_MultiMap::iterator miterStructuresMap;
 	GA_MultiMap::iterator miterUnitsMap;
 
-
-	//std::vector<CGameAgent*> mpWorldUnitsList;
 	std::vector<CGameAgent*> mpSpaceUnitsList;
-
-	//std::vector<CGameAgent*>::iterator mpiterGameAgents;
 	std::vector<CGameAgent*>::iterator mpiterSpaceUnits;
 
 	CFleet* mpFleet;
