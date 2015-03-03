@@ -59,7 +59,7 @@ public:
 	bool AddToQueue(size_t agentIndex);
 	void RemoveFromQueue(size_t agentIndex);
 	std::deque<CGameAgent*>* GetQueue();
-	bool RemoveFromQueue();
+	bool SpawnFront();
 	bool UpdateProduction();
 	CGameAgent* CreateAgent();		// Called when agent at front of production queue is finished
 	void UpdateKeyPresses();

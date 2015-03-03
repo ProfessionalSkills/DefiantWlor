@@ -25,7 +25,7 @@ CMothership::CMothership()
 	mFleetPosition = back;
 
 	//Production Values
-	mProductionTime = 4.0f;
+	mProductionTime = 15.0f;
 	mProductionCost = 0.0f;
 	mCurProductionTimeLeft = mProductionTime;
 

@@ -105,10 +105,10 @@ void CProductionStructure::RemoveFromQueue(size_t agentIndex)
 	// Remove the unit at the given location
 	CGameAgent* tmp = (*miterProdQ);
 	SafeDelete(tmp);
-	mpProductionQueue.pop_front();
+	mpProductionQueue.erase(miterProdQ);
 }
 
-bool CProductionStructure::RemoveFromQueue()
+bool CProductionStructure::SpawnFront()
 {
 	CGameAgent* tmp = mpProductionQueue.front();
 	tmp->Spawn(mpGrid, GetGridSpawnLocation());
@@ -208,8 +208,8 @@ bool CProductionStructure::Update(CRTSPlayer* pPlayer)
 						EGameAgentVariations agentVar = mpProductionQueue.front()->GetAgentData()->mAgentType;
 						pPlayer->GetWorldUnitList()->insert(GA_MultiMap::value_type(agentVar, mpProductionQueue.front()));
 					}
-					// Remove form queue
-					RemoveFromQueue();
+					// Spawn the unit
+					SpawnFront();
 				}
 			}
 			// Object still alive

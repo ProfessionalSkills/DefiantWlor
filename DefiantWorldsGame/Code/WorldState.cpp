@@ -908,30 +908,35 @@ void CWorldState::StateUpdate()
 				if (index != -1)
 				{
 					pButton->Execute(index);
+					break;
 				}
 
 				index = mpHellipadButtons->GetMouseOverIndex();
 				if (index != -1)
 				{
 					pButton->Execute(index);
+					break;
 				}
 
 				index = mpComCentreButtons->GetMouseOverIndex();
 				if (index != -1)
 				{
 					pButton->Execute(index);
+					break;
 				}
 
 				index = mpSpaceCentreButtons->GetMouseOverIndex();
 				if (index != -1)
 				{
 					pButton->Execute(index);
+					break;
 				}
 
 				index = mpQueueButtons->GetMouseOverIndex();
 				if (index != -1)
 				{
 					pButton->Execute(index);
+					break;
 				}
 			}
 		}

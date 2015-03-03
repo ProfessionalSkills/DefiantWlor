@@ -25,7 +25,7 @@ CSpaceFighter::CSpaceFighter()
 	mFleetPosition = front;
 
 	//Production Values
-	mProductionTime = 2.0f;
+	mProductionTime = 15.0f;
 	mProductionCost = 0.0f;
 	mCurProductionTimeLeft = mProductionTime;
 

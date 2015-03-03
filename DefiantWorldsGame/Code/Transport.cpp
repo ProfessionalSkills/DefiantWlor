@@ -24,7 +24,7 @@ CTransport::CTransport()
 	mPopCost = 1;	
 
 	//Production Values
-	mProductionTime = 0.5f;
+	mProductionTime = 15.5f;
 	mProductionCost = 0.0f;
 	mCurProductionTimeLeft = mProductionTime;
 	

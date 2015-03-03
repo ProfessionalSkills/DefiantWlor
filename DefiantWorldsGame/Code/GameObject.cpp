@@ -14,7 +14,7 @@
 //-----------------------------------------------------
 CGameObject::CGameObject()
 {
-
+	mpObjModel = nullptr;
 }
 
 CGameObject::~CGameObject()
