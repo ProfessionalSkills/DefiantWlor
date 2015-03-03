@@ -73,6 +73,7 @@ private:
 	SStructureButtons<CWorldState>* mpHellipadButtons;
 	SStructureButtons<CWorldState>* mpSpaceCentreButtons;
 	SStructureButtons<CWorldState>* mpComCentreButtons;
+	SStructureButtons<CWorldState>* mpQueueButtons;
 
 	CAdvancedButton<CWorldState, void>* mpButtonDelete;
 

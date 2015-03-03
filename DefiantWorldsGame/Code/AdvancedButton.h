@@ -102,17 +102,30 @@ public:
 
 	void LoadButtons(std::string defTexture, std::string selTexture)
 	{
-		mpSprBasic = gpEngine->CreateSprite(defTexture, (float)pos.mPosX, (float)pos.mPosY, 0.0f);
-		mpSprMO = gpEngine->CreateSprite(selTexture, (float)pos.mPosX, (float)pos.mPosY, -1.0f);
+		if (!mpSprBasic)
+		{
+			mpSprBasic = gpEngine->CreateSprite(defTexture, (float)pos.mPosX, (float)pos.mPosY, 0.0f);
+		}
+
+		if (mpSprMO)
+		{
+			mpSprMO = gpEngine->CreateSprite(selTexture, (float)pos.mPosX, (float)pos.mPosY, -1.0f);
+		}
 	}
 
 	void UnloadButtons()
 	{
-		gpEngine->RemoveSprite(mpSprBasic);
-		gpEngine->RemoveSprite(mpSprMO);
+		if (mpSprBasic)
+		{
+			gpEngine->RemoveSprite(mpSprBasic);
+			mpSprBasic = nullptr;
+		}
 
-		mpSprBasic = nullptr;
-		mpSprMO = nullptr;
+		if (mpSprMO)
+		{
+			gpEngine->RemoveSprite(mpSprMO);
+			mpSprMO = nullptr;
+		}
 	}
 
 	// ACCESSORS
@@ -242,6 +255,24 @@ struct SStructureButtons
 		}
 
 		return -1;
+	}
+
+	// Load all sprite buttons
+	void LoadButtons(std::string defTexture, std::string selTexture)
+	{
+		for (int i = 0; i < mNumButtons; i++)
+		{
+			mpButtons[i]->LoadButtons(defTexture, selTexture);
+		}
+	}
+
+	// Unloads all the buttons when no longer required
+	void UnloadSprites()
+	{
+		for (int i = 0; i < mNumButtons; i++)
+		{
+			mpButtons[i]->UnloadButtons();
+		}
 	}
 };
 
