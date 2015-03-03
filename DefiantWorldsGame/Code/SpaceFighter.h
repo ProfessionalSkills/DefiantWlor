@@ -46,6 +46,7 @@ public:
 	//---------------------------
 	void Spawn(CGrid* pGrid, SPointData pCentre);
 	bool Attack(CGameAgent* target, float hitMod, float damageMod);
+	//void Update();
 	//virtual void MoveTo(CTile* dest);
 	bool Move();
 

@@ -31,6 +31,8 @@ CFighter::CFighter()
 	hasTarget = false;
 	mPopCost = 1;
 	mScale = 2.0f;
+
+	mRotarSpeed = 2000.0f;
 }
 
 CFighter::~CFighter()
@@ -86,4 +88,11 @@ bool CFighter::Destroy()
 IModel* CFighter::CreateModel(DX::XMFLOAT3 pos)
 {
 	return mspMshFighter->CreateModel(pos.x, pos.y, pos.z);
+}
+
+void CFighter::Update()
+{
+	CAirUnit::Update();
+
+	mpObjModel->GetNode(4)->RotateY(mRotarSpeed * gFrameTime);
 }

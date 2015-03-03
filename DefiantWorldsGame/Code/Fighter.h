@@ -21,7 +21,7 @@ private:
 	// DATA
 	//---------------------------
 
-
+	float mRotarSpeed;
 public:
 	static IMesh* mspMshFighter;
 
@@ -53,6 +53,7 @@ public:
 	bool Attack(CGameAgent* target, float hitMod, float damageMod);
 	//virtual void MoveTo(CTile* dest);
 	bool Move();
+	void Update();
 
 private:
 	bool Destroy();

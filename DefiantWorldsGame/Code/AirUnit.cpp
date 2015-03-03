@@ -72,7 +72,7 @@ void CAirUnit::Update()
 			{
 				float matrix[16];
 				mpObjModel->GetMatrix(matrix);
-				float movement = 5.0f * gFrameTime;
+				float movement = 10.0f * gFrameTime;
 				mpObjModel->MoveLocalZ(movement);
 				mWorldPos = DX::XMFLOAT3(mpObjModel->GetX(), mpObjModel->GetY(), mpObjModel->GetZ());
 				DX::XMFLOAT3 moveAmount = { matrix[8] * movement, matrix[9] * movement, matrix[10] * movement };
@@ -86,7 +86,8 @@ void CAirUnit::Update()
 
 bool CAirUnit::LookingAt()
 {
-	DX::XMFLOAT3 targetPosition = { mPathTarget };
+
+	DX::XMFLOAT3 targetPosition = { mPathTarget.x, 30.0f, mPathTarget.z };
 	DX::XMFLOAT3 vectorZ = { (targetPosition.x - mpObjModel->GetX()), (targetPosition.y - mpObjModel->GetY()), (targetPosition.z - mpObjModel->GetZ()) };
 	float matrix[16];
 	mpObjModel->GetMatrix(matrix);
@@ -98,13 +99,13 @@ bool CAirUnit::LookingAt()
 
 	if (dotProduct > 0.1f)
 	{
-		mpObjModel->RotateY(50.0f * gFrameTime);
-		return false;
+		mpObjModel->RotateY(200.0f * gFrameTime);
+		return true;
 	}
 	else if (dotProduct < -0.1f)
 	{
-		mpObjModel->RotateY(-50.0f * gFrameTime);
-		return false;
+		mpObjModel->RotateY(-200.0f * gFrameTime);
+		return true;
 	}
 	else
 	{
