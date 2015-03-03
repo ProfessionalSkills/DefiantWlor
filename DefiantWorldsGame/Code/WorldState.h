@@ -151,7 +151,8 @@ public:
 
 	// BUTTON METHODS
 	//---------------------------
-	void QueueUnit(int);
+	void QueueUnit(int index);
+	void UnqueueUnit(int index);
 	void CreateBarracks();
 	void CreateHellipad();
 	void CreateSpaceCentre();
