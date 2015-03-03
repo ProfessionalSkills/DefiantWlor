@@ -12,19 +12,22 @@
 //-----------------------------------------------------
 // AI PLAYER CLASS CONSTRUCTOR & DESTRUCTOR
 //-----------------------------------------------------
-CRTSAIPlayer::CRTSAIPlayer(EFactions playerFaction) : CRTSPlayer(playerFaction), UPDATE_TIME(1.0f)
+CRTSAIPlayer::CRTSAIPlayer(EFactions playerFaction) : CRTSPlayer(playerFaction), UPDATE_TIME(0.1f)
 {
 	mpRandomiser = new CRandomiser();
 
 	// Initialise first 10 tasks of AI player
-	mpTaskQ.push(new CBuildRequest(Q_WORKER, 5));
-	mpTaskQ.push(new CBuildRequest(Q_WORKER, 5));
-	mpTaskQ.push(new CBuildRequest(Q_TANK, 18));
-	mpTaskQ.push(new CBuildRequest(Q_TANK, 18));
-	mpTaskQ.push(new CBuildRequest(Q_TANK, 18));
-	mpTaskQ.push(new CBuildRequest(Q_TANK, 18));
-	mpTaskQ.push(new CBuildRequest(Q_TANK, 18));
-	mpTaskQ.push(new CBuildRequest(Q_TANK, 18));
+	mpTaskQ.push(new CBuildRequest(Q_TANK, 6));
+	mpTaskQ.push(new CBuildRequest(Q_TANK, 6));
+	mpTaskQ.push(new CBuildRequest(Q_TANK, 6));
+	mpTaskQ.push(new CBuildRequest(Q_TANK, 6));
+	mpTaskQ.push(new CBuildRequest(Q_TANK, 6));
+	mpTaskQ.push(new CBuildRequest(Q_TANK, 6));
+	mpTaskQ.push(new CBuildRequest(Q_SPACE_FIGHTER, 7));
+	mpTaskQ.push(new CBuildRequest(Q_MOTHERSHIP, 7));
+	mpTaskQ.push(new CBuildRequest(Q_TRANSPORT, 7));
+	mpTaskQ.push(new CBuildRequest(Q_SPACE_FIGHTER, 7));
+
 
 	// Set default mUpdateTime
 	mUpdateTime = UPDATE_TIME;
@@ -513,12 +516,6 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 		pStructure->UnloadIModel();
 		SafeDelete(pStructure);
 		return false;
-	}
-
-	// Add building to map (if it is a building)
-	if (pStructure)
-	{
-		mpStructuresMap.insert(GS_MultiMap::value_type(pStructure->GetStructureType(), pStructure));
 	}
 
 	// SUCCESS
