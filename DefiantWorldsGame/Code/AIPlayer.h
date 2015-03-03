@@ -54,9 +54,13 @@ private:
 	// the AI player's priority queue of things to do. Returns success of
 	// implementing the item (i.e. enough funds, chose a successful position, etc.)
 	bool ResolveItem(EQueueObjectType qObject);
+
 	// As you cannot adjust values within a priority queue wthout removing, editing, then pushing back on again, this function
 	// deals with that process for the top() element of the priority queue
 	void DecreaseTopItem();
+
+	// Function to determine when to request additional units
+	void AssessSituation();
 
 
 	// CONSTANTS
@@ -73,6 +77,7 @@ private:
 	//---------------------------
 	CRandomiser* mpRandomiser;
 	float mUpdateTime;			// Time between the AI doing tasks - can be determined by difficulty level perhaps?
+	float mWaitTime;
 };
 
 

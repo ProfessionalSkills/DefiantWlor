@@ -12,25 +12,20 @@
 //-----------------------------------------------------
 // AI PLAYER CLASS CONSTRUCTOR & DESTRUCTOR
 //-----------------------------------------------------
-CRTSAIPlayer::CRTSAIPlayer(EFactions playerFaction) : CRTSPlayer(playerFaction), UPDATE_TIME(0.1f)
+CRTSAIPlayer::CRTSAIPlayer(EFactions playerFaction) : CRTSPlayer(playerFaction), UPDATE_TIME(5.0f)
 {
 	mpRandomiser = new CRandomiser();
 
 	// Initialise first 10 tasks of AI player
-	mpTaskQ.push(new CBuildRequest(Q_TANK, 6));
-	mpTaskQ.push(new CBuildRequest(Q_TANK, 6));
-	mpTaskQ.push(new CBuildRequest(Q_TANK, 6));
-	mpTaskQ.push(new CBuildRequest(Q_TANK, 6));
-	mpTaskQ.push(new CBuildRequest(Q_TANK, 6));
-	mpTaskQ.push(new CBuildRequest(Q_TANK, 6));
-	mpTaskQ.push(new CBuildRequest(Q_SPACE_FIGHTER, 7));
-	mpTaskQ.push(new CBuildRequest(Q_MOTHERSHIP, 7));
-	mpTaskQ.push(new CBuildRequest(Q_TRANSPORT, 7));
-	mpTaskQ.push(new CBuildRequest(Q_SPACE_FIGHTER, 7));
+	mpTaskQ.push(new CBuildRequest(Q_WORKER, 50));
+	mpTaskQ.push(new CBuildRequest(Q_WORKER, 50));
+	mpTaskQ.push(new CBuildRequest(Q_WORKER, 50));
+	mpTaskQ.push(new CBuildRequest(Q_WORKER, 50));
 
 
 	// Set default mUpdateTime
 	mUpdateTime = UPDATE_TIME;
+	mWaitTime = mpRandomiser->GetRandomFloat(2.0f, 9.0f);
 }
 
 CRTSAIPlayer::~CRTSAIPlayer()
@@ -50,7 +45,7 @@ void CRTSAIPlayer::Update()
 	// Get the next item on AI's TODO list & send it to the resolution function
 	// for the AI to attempt to resolve the item on the list
 	// Check if it is time for the AI to perform an action
-	if (mUpdateTime <= 0)
+	if (mUpdateTime <= 0.0f)
 	{
 		// Check to see if there is data in the list
 		if (!mpTaskQ.empty())
@@ -72,11 +67,22 @@ void CRTSAIPlayer::Update()
 		// Update the time until the AI is able to do another action
 		mUpdateTime -= gFrameTime;
 	}
+
+	// Assess the situation
+	if (mWaitTime <= 0.0f)
+	{
+		AssessSituation();
+		mWaitTime = mpRandomiser->GetRandomFloat(2.0f, 9.0f);
+	}
+	else
+	{
+		mWaitTime -= gFrameTime;
+	}
 }
 
 bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 {
-	int lowest = 5;
+	int lowest = MAX_QUEUE_SIZE;
 	int qSize = 0;
 
 	// Building and agent pointer
@@ -508,7 +514,6 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 	}
 
 	// Attempt to create the object
-	// Check if unit or building ******
 	// Check for sufficient funds *****
 	// Check success of building purchase
 	if (!PurchaseStructure(pStructure, mpPlayerGrid, pSpawnTile))
@@ -522,8 +527,26 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 	return true;
 }
 
+void CRTSAIPlayer::AssessSituation()
+{
+	// First check if the economy is at a reasonable level
+	if (mNumMinerals < 2000)
+	{
+		// No need to continue enough
+		return;
+	}
+
+	// FUTURE: Calculate relationship between all unit types to determine which to get?
+
+	// Get a random request
+	int object = mpRandomiser->GetRandomInt(0, static_cast<int>(Q_NUM) - 1);
+	int priority = mpRandomiser->GetRandomInt(5, 50);
+	mpTaskQ.push(new CBuildRequest(static_cast<EQueueObjectType>(object), priority));
+}
+
 void CRTSAIPlayer::DecreaseTopItem()
 {
+	// Cannot change data already in a map - have to remove it, change it, then add it back in
 	CBuildRequest* pRequest = mpTaskQ.top();
 	mpTaskQ.pop();
 	pRequest->DecreasePriority();
