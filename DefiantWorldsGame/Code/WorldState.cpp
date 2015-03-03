@@ -119,12 +119,12 @@ void CWorldState::DrawFontData()
 {
 	// Draw Mouse world co-ordinates to screen
 	strStream << "X: " << mMouseWorldPos.x << "  Z: " << mMouseWorldPos.z;
-	mFntDebug->Draw(strStream.str(), 5, 5, kWhite, kLeft, kTop);
+	mFntDebug->Draw(strStream.str(), 5, 640, kWhite, kLeft, kTop);
 	strStream.str("");
 
 	// Draw mouse grid co-ordinates
 	strStream << "X: " << mMouseGridPos.mPosX << "  Y: " << mMouseGridPos.mPosY;
-	mFntDebug->Draw(strStream.str(), 5, 15, kWhite, kLeft, kTop);
+	mFntDebug->Draw(strStream.str(), 5, 650, kWhite, kLeft, kTop);
 	strStream.str("");
 
 
@@ -162,7 +162,7 @@ void CWorldState::DrawFontData()
 	if (mpCurTile)
 	{
 		strStream << "  USED: " << mpCurTile->IsTileUsed();
-		mFntDebug->Draw(strStream.str(), 5, 25, kWhite, kLeft, kTop);
+		mFntDebug->Draw(strStream.str(), 5, 660, kWhite, kLeft, kTop);
 		strStream.str("");
 	}
 }
