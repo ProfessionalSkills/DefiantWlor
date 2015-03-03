@@ -28,6 +28,7 @@ CBomber::CBomber()
 	mState = OBJ_CONSTRUCTING;
 	//mDestGridSq;
 	mIsMoving = false;
+	mPathTarget = nullptr;
 	mPopCost = 1;
 }
 

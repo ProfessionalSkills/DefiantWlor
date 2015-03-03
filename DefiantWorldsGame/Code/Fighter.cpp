@@ -26,6 +26,7 @@ CFighter::CFighter()
 	//mAttackParticleFX;
 	//mDestroyParticleFX;
 	mState = OBJ_CONSTRUCTING;
+	mPathTarget = nullptr;
 	//mDestGridSq;
 	mIsMoving = false;
 	mPopCost = 1;
