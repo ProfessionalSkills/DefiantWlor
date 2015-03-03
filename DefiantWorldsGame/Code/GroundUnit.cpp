@@ -57,7 +57,13 @@ void CGroundUnit::Update( )
 	{
 		if (LookingAt())
 		{
-			mpObjModel->MoveLocalZ(5.0f * gFrameTime);
+			float matrix[16];
+			mpObjModel->GetMatrix(matrix);
+			float movement = 5.0f * gFrameTime;
+			mpObjModel->MoveLocalZ(movement);
+			mWorldPos = DX::XMFLOAT3(mpObjModel->GetX(), mpObjModel->GetY(), mpObjModel->GetZ());
+			DX::XMFLOAT3 moveAmount = { matrix[8] * movement, matrix[9] * movement, matrix[10] * movement };
+			mBoundingSphere.Move(mWorldPos);
 		}
 	}
 	//mpObjModel->SetPosition(mPathTarget->GetWorldPos().x, mPathTarget->GetWorldPos().y , mPathTarget->GetWorldPos().z);

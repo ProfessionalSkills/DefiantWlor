@@ -1033,7 +1033,7 @@ void CWorldState::QueueUnit(int index)
 	mpCurSelectedStructure->AddToQueue(index);
 	mLMouseClicked = false;
 }
-
+/*
 void CWorldState::UnqueueUnit(int index)
 {
 	if (!mpCurSelectedStructure) return;
@@ -1041,7 +1041,7 @@ void CWorldState::UnqueueUnit(int index)
 	//mpCurSelectedStructure->RemoveFromQueue(index);
 	mLMouseClicked = false;
 }
-
+*/
 void CWorldState::CreateBarracks()
 {
 	CStructure* pStructure = new CBarracks();
