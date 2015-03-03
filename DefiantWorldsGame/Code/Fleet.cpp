@@ -219,6 +219,7 @@ string CFleet::GetTacticsName()
 	case Tactics::Targeted:
 		return "Targeted";
 	}
+	return "Null";
 }
 
 //-----------------------------------------------------

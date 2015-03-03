@@ -1026,14 +1026,22 @@ void CWorldState::OnPlacingStructureChange(CStructure* selStructure)
 //-----------------------------------------------------
 // WORLD STATE CLASS BUTTON EVENT FUNCTIONS
 //-----------------------------------------------------
-void CWorldState::QueueUnit(int unit)
+void CWorldState::QueueUnit(int index)
 {
 	if (!mpCurSelectedStructure) return;
 
-	mpCurSelectedStructure->AddToQueue(unit);
+	mpCurSelectedStructure->AddToQueue(index);
 	mLMouseClicked = false;
 }
+/*
+void CWorldState::UnqueueUnit(int index)
+{
+	if (!mpCurSelectedStructure) return;
 
+	mpCurSelectedStructure->RemoveFromQueue(index);
+	mLMouseClicked = false;
+}
+*/
 void CWorldState::CreateBarracks()
 {
 	CStructure* pStructure = new CBarracks();
