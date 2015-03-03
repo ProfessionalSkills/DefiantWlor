@@ -539,7 +539,7 @@ void CRTSAIPlayer::AssessSituation()
 	// FUTURE: Calculate relationship between all unit types to determine which to get?
 
 	// Get a random request
-	int object = mpRandomiser->GetRandomInt(0, static_cast<int>(Q_NUM) - 1);
+	int object = mpRandomiser->GetRandomInt(static_cast<int>(Q_FIGHTER), static_cast<int>(Q_NUM) - 1);
 	int priority = mpRandomiser->GetRandomInt(5, 50);
 	mpTaskQ.push(new CBuildRequest(static_cast<EQueueObjectType>(object), priority));
 }
