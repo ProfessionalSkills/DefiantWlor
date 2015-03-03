@@ -1062,7 +1062,7 @@ void CWorldState::OnStructureSelectChange()
 		std::deque<CGameAgent*>::iterator iterQ;
 
 		// Get the pointer to the queue
-		mpCurSelectedStructure->GetQueue();
+		pQueue = mpCurSelectedStructure->GetQueue();
 
 		// Loop through the queue to create the buttons for each of the units in the queue
 		int i = 0;
