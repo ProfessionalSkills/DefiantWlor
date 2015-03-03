@@ -13,12 +13,12 @@
 //-----------------------------------------------------
 // SPACE STATE CLASS CONSTRUCTORS & DESTRUCTOR
 //-----------------------------------------------------
-CSpaceState::CSpaceState() :mTimeToUpdate(0.1f), mCamRotSpeed(0.7), CGameState() 
+CSpaceState::CSpaceState() :mTimeToUpdate(0.1f), mCamRotSpeed(0.7),mCamZAdjust(-7.0f),mBaseCamZ(-30.0f), CGameState() 
 
 {
 	mDisplacement = 20.0f;
 	mTimeSinceUpdate = 0.0f;
-	
+	mCamZ = 0.0f;
 }
 
 CSpaceState::~CSpaceState()
@@ -37,7 +37,6 @@ void CSpaceState::StateSetup()
 	mpPlayerManager = CStateControl::GetInstance()->GetPlayerManager();
 	mpHumanPlayer = mpPlayerManager->GetHumanPlayer();
 	mpAIPlayer = mpPlayerManager->GetAIPlayer(0);
-
 	
 	// FLEET SETUP
 	//------------------------------
@@ -47,11 +46,19 @@ void CSpaceState::StateSetup()
 	mpPlayerOneFleet->SetEnemy(mpPlayerTwoFleet);
 	mpPlayerTwoFleet->SetEnemy(mpPlayerOneFleet);
 
-	
-
 	// INITIALISE CAMERAS
 	//------------------------------
-	mpCamMain = gpEngine->CreateCamera(kManual, 0.0f, 0.0f, -50.0f);
+	//figures out which fleet has the most ships, then adjusts the camera to fit in all of the ships in that fleet
+	if (mpPlayerOneFleet->GetRows() > mpPlayerTwoFleet->GetRows())
+	{
+		mCamZ = mBaseCamZ + (mpPlayerOneFleet->GetRows()*mCamZAdjust);
+	}
+	else
+	{
+		mCamZ = mBaseCamZ + (mpPlayerTwoFleet->GetRows()*mCamZAdjust);
+	}
+
+	mpCamMain = gpEngine->CreateCamera(kManual, 0.0f, 0.0f, mCamZ);
 
 	// INITIALISE SKYBOX
 	//------------------------------

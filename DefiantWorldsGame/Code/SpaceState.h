@@ -21,7 +21,10 @@ private:
 	// CAMERAS
 	//--------------------------- 
 	ICamera* mpCamMain;
-
+	//used to adjust the camera to accomadate for larger fleet sizes
+	const float mBaseCamZ;
+	const float mCamZAdjust;
+	float mCamZ;
 
 	// MESHES
 	//--------------------------- 
@@ -54,13 +57,11 @@ private:
 	const float mCamRotSpeed;
 	float mTimeSinceUpdate;
 
-
 public:
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
 	CSpaceState();
 	virtual ~CSpaceState();
-
 
 	// OVERRIDE METHODS
 	//---------------------------

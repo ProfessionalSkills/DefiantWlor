@@ -194,6 +194,11 @@ int CFleet::GetSize()
 	return mSize;
 }
 
+int CFleet::GetRows()
+{
+	return (mNumSpaceFighter / mFleetRowSize) + (mNumTransport / mFleetRowSize) + 1;
+}
+
 //-----------------------------------------------------
 // FLEET CLASS MUTATORS
 //-----------------------------------------------------

@@ -59,11 +59,13 @@ public:
 	void UpdateCondition();//gets rid of dead ships and checks to see if the fleet has been defeated
 	void Fight();//attacks another fleet
 	void LoadShipModels(float xPos);
+	
 
 	// ACCESSORS
 	//---------------------------
 	CGameAgent*GetShip(int i);//returns ship at the choosen postion
 	int GetSize();//returns the size of the fleet
+	int GetRows();//returns the number of rows of ships
 
 	// MUTATORS
 	//---------------------------
