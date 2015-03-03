@@ -150,7 +150,7 @@ public:
 	//---------------------------
 	void SetMouseOver(bool mouseOver)
 	{
-		if (!mIsHidden)
+		if (!mIsHidden && mpSprBasic)
 		{
 			mMouseIsOver = mouseOver;
 		}
