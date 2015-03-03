@@ -160,6 +160,12 @@ struct SBoundingSphere
 		return mSphere.Intersects(origin, direction, distance);
 	}
 
+	void Move(DX::XMFLOAT3 pos)
+	{
+		float scale = 1.0f;
+		DX::XMFLOAT3 rotation = { 0.0f, 0.0f, 0.0f };
+		mSphere.Transform(mSphere, scale, DX::XMLoadFloat3(&rotation), DX::XMLoadFloat3(&pos));
+	}
 };
 
 struct SAABoundingBox		// Axis aligned bounding box
