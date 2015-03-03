@@ -12,7 +12,7 @@
 //-----------------------------------------------------
 // AI PLAYER CLASS CONSTRUCTOR & DESTRUCTOR
 //-----------------------------------------------------
-CRTSAIPlayer::CRTSAIPlayer(EFactions playerFaction) : CRTSPlayer(playerFaction), UPDATE_TIME(5.0f)
+CRTSAIPlayer::CRTSAIPlayer(EFactions playerFaction) : CRTSPlayer(playerFaction), UPDATE_TIME(0.1f)
 {
 	mpRandomiser = new CRandomiser();
 
@@ -25,7 +25,7 @@ CRTSAIPlayer::CRTSAIPlayer(EFactions playerFaction) : CRTSPlayer(playerFaction),
 
 	// Set default mUpdateTime
 	mUpdateTime = UPDATE_TIME;
-	mWaitTime = mpRandomiser->GetRandomFloat(2.0f, 9.0f);
+	mWaitTime = mpRandomiser->GetRandomFloat(1.0f, 3.0f);
 }
 
 CRTSAIPlayer::~CRTSAIPlayer()
@@ -72,7 +72,7 @@ void CRTSAIPlayer::Update()
 	if (mWaitTime <= 0.0f)
 	{
 		AssessSituation();
-		mWaitTime = mpRandomiser->GetRandomFloat(2.0f, 9.0f);
+		mWaitTime = mpRandomiser->GetRandomFloat(1.0f, 3.0f);
 	}
 	else
 	{
@@ -147,6 +147,12 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 				mpTaskQ.push(new CBuildRequest(Q_BARRACKS, 1));
 				return false;
 			}
+			else if (lowest >= MAX_QUEUE_SIZE / 2)
+			{
+				// Buildings are strained - construct more
+				// Add request for a barracks, but not at huge priority
+				mpTaskQ.push(new CBuildRequest(Q_BARRACKS, 8));
+			}
 
 			// Index of the agent to be produced
 			agentNum = 0;
@@ -188,6 +194,12 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 				// Add request for a barracks as top priority
 				mpTaskQ.push(new CBuildRequest(Q_BARRACKS, 1));
 				return false;
+			}
+			else if (lowest >= MAX_QUEUE_SIZE / 2)
+			{
+				// Buildings are strained - construct more
+				// Add request for a barracks, but not at huge priority
+				mpTaskQ.push(new CBuildRequest(Q_BARRACKS, 8));
 			}
 
 			// Index of the agent to be produced
@@ -231,6 +243,12 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 				mpTaskQ.push(new CBuildRequest(Q_BARRACKS, 1));
 				return false;
 			}
+			else if (lowest >= MAX_QUEUE_SIZE / 2)
+			{
+				// Buildings are strained - construct more
+				// Add request for a barracks, but not at huge priority
+				mpTaskQ.push(new CBuildRequest(Q_BARRACKS, 8));
+			}
 
 			// Index of the agent to be produced
 			agentNum = 2;
@@ -270,8 +288,14 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 				// Move the item down in priority
 				DecreaseTopItem();
 				// Add request for a barracks as top priority
-				mpTaskQ.push(new CBuildRequest(Q_BARRACKS, 1));
+				mpTaskQ.push(new CBuildRequest(Q_SPACE_CENTRE, 1));
 				return false;
+			}
+			else if (lowest >= MAX_QUEUE_SIZE / 2)
+			{
+				// Buildings are strained - construct more
+				// Add request for a barracks, but not at huge priority
+				mpTaskQ.push(new CBuildRequest(Q_SPACE_CENTRE, 8));
 			}
 
 			// Index of the agent to be produced
@@ -313,8 +337,14 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 				// Move the item down in priority
 				DecreaseTopItem();
 				// Add request for a barracks as top priority
-				mpTaskQ.push(new CBuildRequest(Q_BARRACKS, 1));
+				mpTaskQ.push(new CBuildRequest(Q_SPACE_CENTRE, 1));
 				return false;
+			}
+			else if (lowest >= MAX_QUEUE_SIZE / 2)
+			{
+				// Buildings are strained - construct more
+				// Add request for a barracks, but not at huge priority
+				mpTaskQ.push(new CBuildRequest(Q_SPACE_CENTRE, 8));
 			}
 
 			// Index of the agent to be produced
@@ -356,8 +386,14 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 				// Move the item down in priority
 				DecreaseTopItem();
 				// Add request for a barracks as top priority
-				mpTaskQ.push(new CBuildRequest(Q_BARRACKS, 1));
+				mpTaskQ.push(new CBuildRequest(Q_SPACE_CENTRE, 1));
 				return false;
+			}
+			else if (lowest >= MAX_QUEUE_SIZE / 2)
+			{
+				// Buildings are strained - construct more
+				// Add request for a barracks, but not at huge priority
+				mpTaskQ.push(new CBuildRequest(Q_SPACE_CENTRE, 8));
 			}
 
 			// Index of the agent to be produced
@@ -440,6 +476,12 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 				mpTaskQ.push(new CBuildRequest(Q_HELLIPAD, 1));
 				return false;
 			}
+			else if (lowest >= MAX_QUEUE_SIZE / 2)
+			{
+				// Buildings are strained - construct more
+				// Add request for a barracks, but not at huge priority
+				mpTaskQ.push(new CBuildRequest(Q_HELLIPAD, 8));
+			}
 
 			// Index of the agent to be produced
 			agentNum = 0;
@@ -483,6 +525,12 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 				mpTaskQ.push(new CBuildRequest(Q_HELLIPAD, 1));
 				return false;
 			}
+			else if (lowest >= MAX_QUEUE_SIZE / 2)
+			{
+				// Buildings are strained - construct more
+				// Add request for a barracks, but not at huge priority
+				mpTaskQ.push(new CBuildRequest(Q_HELLIPAD, 8));
+			}
 
 			// Index of the agent to be produced
 			agentNum = 1;
@@ -494,8 +542,15 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 	// If it was a unit being built, simply build unit & return true (for now)
 	if (pStructure && agentNum != -1)
 	{
-		pStructure->AddToQueue(agentNum);
-		return true;
+		// Check if the structure is fully constructed
+		if (pStructure->GetState() != OBJ_CONSTRUCTING)
+		{
+			pStructure->AddToQueue(agentNum);
+			return true;
+		}
+
+		// Building not yet ready - simply return false
+		return false;
 	}
 
 	// Get a random grid position in which to spawn the unit & get the respective tile
