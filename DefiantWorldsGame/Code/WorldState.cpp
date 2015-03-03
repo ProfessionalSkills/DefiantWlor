@@ -649,6 +649,20 @@ void CWorldState::StateSetup()
 	}
 
 
+	// Queue buttons
+	mpQueueButtons = new SStructureButtons<CWorldState>(5);
+	mpQueueButtons->mpButtons[0] = new CAdvancedButton<CWorldState, void, int>(SPointData(1219, 695), SAABoundingBox(772.0f, 1322.0f, 695.0f, 1219.0f), 
+		*this, &CWorldState::QueueUnit);
+	mpQueueButtons->mpButtons[1] = new CAdvancedButton<CWorldState, void, int>(SPointData(1219, 695), SAABoundingBox(772.0f, 1322.0f, 695.0f, 1219.0f),
+		*this, &CWorldState::QueueUnit);
+	mpQueueButtons->mpButtons[2] = new CAdvancedButton<CWorldState, void, int>(SPointData(1219, 695), SAABoundingBox(772.0f, 1322.0f, 695.0f, 1219.0f),
+		*this, &CWorldState::QueueUnit);
+	mpQueueButtons->mpButtons[3] = new CAdvancedButton<CWorldState, void, int>(SPointData(1219, 695), SAABoundingBox(772.0f, 1322.0f, 695.0f, 1219.0f),
+		*this, &CWorldState::QueueUnit);
+	mpQueueButtons->mpButtons[4] = new CAdvancedButton<CWorldState, void, int>(SPointData(1219, 695), SAABoundingBox(772.0f, 1322.0f, 695.0f, 1219.0f),
+		*this, &CWorldState::QueueUnit);
+
+
 	// CONSTRUCT COMMAND CENTRES
 	//-----------------------------
 	// if players have already been initialised, this is not necessary

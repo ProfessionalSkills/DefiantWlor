@@ -63,6 +63,7 @@ private:
 	//---------------------------
 	IFont* mFntDebug;
 	ISprite* mpMainUI;
+
 	std::vector<CAdvancedButton<CWorldState, void>*> mpGenericButtonList;
 	std::vector<CAdvancedButton<CWorldState, void>*>::iterator miterGenericButtons;
 
