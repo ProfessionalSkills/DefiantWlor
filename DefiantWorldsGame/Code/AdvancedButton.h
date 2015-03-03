@@ -92,7 +92,7 @@ public:
 	void Hide()
 	{
 		// If already hidden, just return
-		if (!mIsHidden  && mpSprBasic)
+		if (!mIsHidden && mpSprBasic)
 		{
 			mIsHidden = true;
 			mpSprBasic->SetZ(-1.0f);
@@ -107,7 +107,7 @@ public:
 			mpSprBasic = gpEngine->CreateSprite(defTexture, (float)mPosition.mPosX, (float)mPosition.mPosY, 0.0f);
 		}
 
-		if (mpSprMO)
+		if (!mpSprMO)
 		{
 			mpSprMO = gpEngine->CreateSprite(selTexture, (float)mPosition.mPosX, (float)mPosition.mPosY, -1.0f);
 		}

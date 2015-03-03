@@ -99,7 +99,13 @@ std::deque<CGameAgent*>* CProductionStructure::GetQueue()
 void CProductionStructure::RemoveFromQueue(size_t agentIndex)
 {
 	// Increment the iterator by the amount provided
+	miterProdQ = mpProductionQueue.begin();
 	std::advance(miterProdQ, agentIndex);
+
+	// Remove the unit at the given location
+	CGameAgent* tmp = (*miterProdQ);
+	SafeDelete(tmp);
+	mpProductionQueue.pop_front();
 }
 
 bool CProductionStructure::RemoveFromQueue()

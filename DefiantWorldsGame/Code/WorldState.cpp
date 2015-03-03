@@ -667,6 +667,11 @@ void CWorldState::StateSetup()
 	mpQueueButtons->mpButtons[4] = new CAdvancedButton<CWorldState, void, int>(SPointData(457, 5), SAABoundingBox(82.0f, 560.0f, 5.0f, 457.0f),
 		*this, &CWorldState::UnqueueUnit);
 
+	for (int i = 0; i < mpQueueButtons->mNumButtons; i++)
+	{
+		mpUnitsButtonList.push_back(mpQueueButtons->mpButtons[i]);
+	}
+
 
 	// CONSTRUCT COMMAND CENTRES
 	//-----------------------------
@@ -918,6 +923,12 @@ void CWorldState::StateUpdate()
 				}
 
 				index = mpSpaceCentreButtons->GetMouseOverIndex();
+				if (index != -1)
+				{
+					pButton->Execute(index);
+				}
+
+				index = mpQueueButtons->GetMouseOverIndex();
 				if (index != -1)
 				{
 					pButton->Execute(index);
