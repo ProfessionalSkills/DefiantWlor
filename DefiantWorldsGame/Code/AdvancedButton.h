@@ -65,13 +65,13 @@ public:
 	void Update()
 	{
 		// Check if the button is hovered over
-		if (mMouseIsOver && !mIsHidden)
+		if (mMouseIsOver && !mIsHidden && mpSprBasic)
 		{
 			// Set mouse over sprite to front & basic to back
 			mpSprBasic->SetZ(-1.0f);
 			mpSprMO->SetZ(0.0f);
 		}
-		else if (!mMouseIsOver && !mIsHidden)
+		else if (!mMouseIsOver && !mIsHidden && mpSprBasic)
 		{
 			mpSprBasic->SetZ(0.0f);
 			mpSprMO->SetZ(-1.0f);
@@ -81,7 +81,7 @@ public:
 	void Show()
 	{
 		// If already shown, just return
-		if (mIsHidden)
+		if (mIsHidden  && mpSprBasic)
 		{
 			mIsHidden = false;
 			mpSprBasic->SetZ(0.0f);
@@ -92,7 +92,7 @@ public:
 	void Hide()
 	{
 		// If already hidden, just return
-		if (!mIsHidden)
+		if (!mIsHidden  && mpSprBasic)
 		{
 			mIsHidden = true;
 			mpSprBasic->SetZ(-1.0f);

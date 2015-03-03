@@ -656,15 +656,15 @@ void CWorldState::StateSetup()
 
 	// Queue buttons
 	mpQueueButtons = new SStructureButtons<CWorldState>(5);
-	mpQueueButtons->mpButtons[0] = new CAdvancedButton<CWorldState, void, int>(SPointData(1219, 695), SAABoundingBox(772.0f, 1322.0f, 695.0f, 1219.0f), 
+	mpQueueButtons->mpButtons[0] = new CAdvancedButton<CWorldState, void, int>(SPointData(5, 5), SAABoundingBox(82.0f, 108.0f, 5.0f, 5.0f), 
 		*this, &CWorldState::UnqueueUnit);
-	mpQueueButtons->mpButtons[1] = new CAdvancedButton<CWorldState, void, int>(SPointData(1219, 695), SAABoundingBox(772.0f, 1322.0f, 695.0f, 1219.0f),
+	mpQueueButtons->mpButtons[1] = new CAdvancedButton<CWorldState, void, int>(SPointData(118, 5), SAABoundingBox(82.0f, 221.0f, 5.0f, 118.0f),
 		*this, &CWorldState::UnqueueUnit);
-	mpQueueButtons->mpButtons[2] = new CAdvancedButton<CWorldState, void, int>(SPointData(1219, 695), SAABoundingBox(772.0f, 1322.0f, 695.0f, 1219.0f),
+	mpQueueButtons->mpButtons[2] = new CAdvancedButton<CWorldState, void, int>(SPointData(231, 5), SAABoundingBox(82.0f, 334.0f, 5.0f, 231.0f),
 		*this, &CWorldState::UnqueueUnit);
-	mpQueueButtons->mpButtons[3] = new CAdvancedButton<CWorldState, void, int>(SPointData(1219, 695), SAABoundingBox(772.0f, 1322.0f, 695.0f, 1219.0f),
+	mpQueueButtons->mpButtons[3] = new CAdvancedButton<CWorldState, void, int>(SPointData(344, 5), SAABoundingBox(82.0f, 447.0f, 5.0f, 344.0f),
 		*this, &CWorldState::UnqueueUnit);
-	mpQueueButtons->mpButtons[4] = new CAdvancedButton<CWorldState, void, int>(SPointData(1219, 695), SAABoundingBox(772.0f, 1322.0f, 695.0f, 1219.0f),
+	mpQueueButtons->mpButtons[4] = new CAdvancedButton<CWorldState, void, int>(SPointData(457, 5), SAABoundingBox(82.0f, 560.0f, 5.0f, 457.0f),
 		*this, &CWorldState::UnqueueUnit);
 
 
