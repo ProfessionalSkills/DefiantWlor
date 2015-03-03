@@ -89,9 +89,9 @@ void CStructure::CreateStructure(CGrid* pGrid)
 	}
 
 	// Also set spawning grid tile to used
-	gridPoint.mPosX = mGridPos.mPosX + mGridSpawnLoc.mPosX;
-	gridPoint.mPosY = mGridPos.mPosY + mGridSpawnLoc.mPosY;
-	pNextTile = pGrid->GetTileData(gridPoint);
+	mGridSpawnLoc.mPosX += mGridPos.mPosX;
+	mGridSpawnLoc.mPosY += mGridPos.mPosY;
+	pNextTile = pGrid->GetTileData(mGridSpawnLoc);
 	pNextTile->SetTileUsage(true);
 
 	// Store spawn world location

@@ -31,6 +31,7 @@ CInfantry::CInfantry()
 	//mDestGridSq;
 	mIsMoving = false;
 	mPopCost = 1;
+	mScale = 2.0f;
 }
 
 CInfantry::~CInfantry()

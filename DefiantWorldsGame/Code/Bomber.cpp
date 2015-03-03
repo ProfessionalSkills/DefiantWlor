@@ -30,6 +30,7 @@ CBomber::CBomber()
 	mIsMoving = false;
 	mPathTarget = nullptr;
 	mPopCost = 1;
+	mScale = 2.0f;
 }
 
 CBomber::~CBomber()

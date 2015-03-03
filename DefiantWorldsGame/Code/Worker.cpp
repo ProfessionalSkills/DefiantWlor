@@ -31,6 +31,7 @@ CWorker::CWorker()
 	//mDestGridSq;
 	mIsMoving = false;
 	mPopCost = 1;
+	mScale = 2.0f;
 }
 
 CWorker::~CWorker()

@@ -30,6 +30,7 @@ CFighter::CFighter()
 	//mDestGridSq;
 	mIsMoving = false;
 	mPopCost = 1;
+	mScale = 2.0f;
 }
 
 CFighter::~CFighter()

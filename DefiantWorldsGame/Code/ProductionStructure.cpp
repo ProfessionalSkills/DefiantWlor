@@ -94,7 +94,7 @@ bool CProductionStructure::AddToQueue(size_t agentIndex)
 bool CProductionStructure::RemoveFromQueue()
 {
 	CGameAgent* tmp = mpProductionQueue.front();
-	tmp->Spawn(mpGrid, GetBuildLocation());
+	tmp->Spawn(mpGrid, GetGridSpawnLocation());
 
 	//delete tmp;
 	mpProductionQueue.pop();
