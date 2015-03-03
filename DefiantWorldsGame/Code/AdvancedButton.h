@@ -33,10 +33,25 @@ public:
 		mpSprMO = gpEngine->CreateSprite(selectedTex, (float)pos.mPosX, (float)pos.mPosY, -1.0f);
 	}
 
+	CAdvancedButton(SPointData pos, SAABoundingBox boundingBox, C& targetClass, ButtonMethod targetMethod) :
+		mPosition(pos), mBoundingBox(boundingBox), mTargetClass(targetClass), mTargetMethod(targetMethod),
+		mIsHidden(false), mMouseIsOver(false)
+	{
+		mpSprBasic = nullptr;
+		mpSprMO = nullptr;
+	}
+
 	~CAdvancedButton()
 	{
-		gpEngine->RemoveSprite(mpSprBasic);
-		gpEngine->RemoveSprite(mpSprMO);
+		if (mpSprBasic)
+		{
+			gpEngine->RemoveSprite(mpSprBasic);
+		}
+		
+		if (mpSprMO)
+		{
+			gpEngine->RemoveSprite(mpSprMO);
+		}
 	}
 
 
@@ -85,6 +100,33 @@ public:
 		}
 	}
 
+	void LoadButtons(std::string defTexture, std::string selTexture)
+	{
+		if (!mpSprBasic)
+		{
+			mpSprBasic = gpEngine->CreateSprite(defTexture, (float)pos.mPosX, (float)pos.mPosY, 0.0f);
+		}
+
+		if (mpSprMO)
+		{
+			mpSprMO = gpEngine->CreateSprite(selTexture, (float)pos.mPosX, (float)pos.mPosY, -1.0f);
+		}
+	}
+
+	void UnloadButtons()
+	{
+		if (mpSprBasic)
+		{
+			gpEngine->RemoveSprite(mpSprBasic);
+			mpSprBasic = nullptr;
+		}
+
+		if (mpSprMO)
+		{
+			gpEngine->RemoveSprite(mpSprMO);
+			mpSprMO = nullptr;
+		}
+	}
 
 	// ACCESSORS
 	//---------------------------
@@ -213,6 +255,24 @@ struct SStructureButtons
 		}
 
 		return -1;
+	}
+
+	// Load all sprite buttons
+	void LoadButtons(std::string defTexture, std::string selTexture)
+	{
+		for (int i = 0; i < mNumButtons; i++)
+		{
+			mpButtons[i]->LoadButtons(defTexture, selTexture);
+		}
+	}
+
+	// Unloads all the buttons when no longer required
+	void UnloadSprites()
+	{
+		for (int i = 0; i < mNumButtons; i++)
+		{
+			mpButtons[i]->UnloadButtons();
+		}
 	}
 };
 

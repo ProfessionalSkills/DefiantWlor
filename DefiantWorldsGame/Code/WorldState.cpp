@@ -119,12 +119,12 @@ void CWorldState::DrawFontData()
 {
 	// Draw Mouse world co-ordinates to screen
 	strStream << "X: " << mMouseWorldPos.x << "  Z: " << mMouseWorldPos.z;
-	mFntDebug->Draw(strStream.str(), 5, 5, kWhite, kLeft, kTop);
+	mFntDebug->Draw(strStream.str(), 5, 640, kWhite, kLeft, kTop);
 	strStream.str("");
 
 	// Draw mouse grid co-ordinates
 	strStream << "X: " << mMouseGridPos.mPosX << "  Y: " << mMouseGridPos.mPosY;
-	mFntDebug->Draw(strStream.str(), 5, 15, kWhite, kLeft, kTop);
+	mFntDebug->Draw(strStream.str(), 5, 650, kWhite, kLeft, kTop);
 	strStream.str("");
 
 
@@ -162,7 +162,7 @@ void CWorldState::DrawFontData()
 	if (mpCurTile)
 	{
 		strStream << "  USED: " << mpCurTile->IsTileUsed();
-		mFntDebug->Draw(strStream.str(), 5, 25, kWhite, kLeft, kTop);
+		mFntDebug->Draw(strStream.str(), 5, 660, kWhite, kLeft, kTop);
 		strStream.str("");
 	}
 }
@@ -648,6 +648,20 @@ void CWorldState::StateSetup()
 	{
 		mpUnitsButtonList.push_back(mpComCentreButtons->mpButtons[i]);
 	}
+
+
+	// Queue buttons
+	mpQueueButtons = new SStructureButtons<CWorldState>(5);
+	mpQueueButtons->mpButtons[0] = new CAdvancedButton<CWorldState, void, int>(SPointData(1219, 695), SAABoundingBox(772.0f, 1322.0f, 695.0f, 1219.0f), 
+		*this, &CWorldState::QueueUnit);
+	mpQueueButtons->mpButtons[1] = new CAdvancedButton<CWorldState, void, int>(SPointData(1219, 695), SAABoundingBox(772.0f, 1322.0f, 695.0f, 1219.0f),
+		*this, &CWorldState::QueueUnit);
+	mpQueueButtons->mpButtons[2] = new CAdvancedButton<CWorldState, void, int>(SPointData(1219, 695), SAABoundingBox(772.0f, 1322.0f, 695.0f, 1219.0f),
+		*this, &CWorldState::QueueUnit);
+	mpQueueButtons->mpButtons[3] = new CAdvancedButton<CWorldState, void, int>(SPointData(1219, 695), SAABoundingBox(772.0f, 1322.0f, 695.0f, 1219.0f),
+		*this, &CWorldState::QueueUnit);
+	mpQueueButtons->mpButtons[4] = new CAdvancedButton<CWorldState, void, int>(SPointData(1219, 695), SAABoundingBox(772.0f, 1322.0f, 695.0f, 1219.0f),
+		*this, &CWorldState::QueueUnit);
 
 
 	// CONSTRUCT COMMAND CENTRES
