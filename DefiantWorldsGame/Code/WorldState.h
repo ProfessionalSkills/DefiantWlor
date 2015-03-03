@@ -119,6 +119,7 @@ private:
 	//---------------------------
 	const int EDGE_THRESHOLD = 50; // How far from the edge the mouse must be for edge scrolling
 	std::stringstream strStream;
+	int mQueuePrevSize;
 
 
 	// PLAYERS
@@ -142,6 +143,7 @@ public:
 	void CalculateMouseGridPos();
 	void DrawFontData();
 	void CheckKeyPresses();
+	bool CheckForQueueChange();
 
 	void DisplaySelectedBuildingInfo();
 	void DisplaySelectedAgentInfo();

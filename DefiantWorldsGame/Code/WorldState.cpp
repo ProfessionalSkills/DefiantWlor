@@ -251,12 +251,14 @@ void CWorldState::CheckKeyPresses()
 			case MS_EARTH_GRID:
 				mpHumanPlayer->CheckGameObjectSelection(mpCurSelectedStructure, mpCurSelectedAgent,
 					mMouseOrigin, mMouseDirection);
+				OnStructureSelectChange();
 				
 				break;
 
 			case MS_MARS_GRID:
 				mpAIPlayer->CheckGameObjectSelection(mpCurSelectedStructure, mpCurSelectedAgent,
 					mMouseOrigin, mMouseDirection);
+				OnStructureSelectChange();
 				break;
 			}
 
@@ -517,6 +519,8 @@ void CWorldState::StateSetup()
 	//------------------------------
 	mpCurSelectedAgent = nullptr;
 	mpCurSelectedStructure = nullptr;
+
+	mQueuePrevSize = 0;
 
 	mpMouseScreenPos = new SPointData();
 	mWindowClip = { 0 };
@@ -823,6 +827,12 @@ void CWorldState::StateUpdate()
 		DisplaySelectedAgentInfo();
 	}
 
+	// Update the current queue size ( if a structure is slected 0. Returns true if a change has occured
+	if (CheckForQueueChange())
+	{
+		// Update the buttons for the queue
+		OnStructureSelectChange();
+	}
 
 
 	// BUTTON UPDATES
@@ -1003,6 +1013,24 @@ void CWorldState::StateCleanup()
 	}
 }
 
+bool CWorldState::CheckForQueueChange()
+{
+	if (mpCurSelectedStructure)
+	{
+		int newQueueSize = mpCurSelectedStructure->GetQueueSize();
+		// Check for changes
+		if (newQueueSize != mQueuePrevSize)
+		{
+			// A change has occured - store new variable
+			mQueuePrevSize = newQueueSize;
+			return true;
+		}
+	}
+
+	// Nothing selected or changed so queue size cannot change
+	return false;
+}
+
 
 //-----------------------------------------------------
 // WORLD STATE CLASS EVENT HANDLERS
@@ -1027,6 +1055,9 @@ void CWorldState::OnStructureSelectChange()
 	// Check if something is slelected
 	if (mpCurSelectedStructure)
 	{
+		// Unload the existing queue buttons
+		mpQueueButtons->UnloadSprites();
+		
 		std::deque<CGameAgent*>* pQueue;
 		std::deque<CGameAgent*>::iterator iterQ;
 
@@ -1078,6 +1109,11 @@ void CWorldState::OnStructureSelectChange()
 
 			i++;
 		}
+	}
+	else
+	{
+		// Nothing selected - unload sprites
+		mpQueueButtons->UnloadSprites();
 	}
 }
 

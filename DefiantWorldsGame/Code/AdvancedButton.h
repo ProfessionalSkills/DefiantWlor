@@ -104,12 +104,12 @@ public:
 	{
 		if (!mpSprBasic)
 		{
-			mpSprBasic = gpEngine->CreateSprite(defTexture, (float)pos.mPosX, (float)pos.mPosY, 0.0f);
+			mpSprBasic = gpEngine->CreateSprite(defTexture, (float)mPosition.mPosX, (float)mPosition.mPosY, 0.0f);
 		}
 
 		if (mpSprMO)
 		{
-			mpSprMO = gpEngine->CreateSprite(selTexture, (float)pos.mPosX, (float)pos.mPosY, -1.0f);
+			mpSprMO = gpEngine->CreateSprite(selTexture, (float)mPosition.mPosX, (float)mPosition.mPosY, -1.0f);
 		}
 	}
 
