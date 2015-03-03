@@ -33,10 +33,25 @@ public:
 		mpSprMO = gpEngine->CreateSprite(selectedTex, (float)pos.mPosX, (float)pos.mPosY, -1.0f);
 	}
 
+	CAdvancedButton(SPointData pos, SAABoundingBox boundingBox, C& targetClass, ButtonMethod targetMethod) :
+		mPosition(pos), mBoundingBox(boundingBox), mTargetClass(targetClass), mTargetMethod(targetMethod),
+		mIsHidden(false), mMouseIsOver(false)
+	{
+		mpSprBasic = nullptr;
+		mpSprMO = nullptr;
+	}
+
 	~CAdvancedButton()
 	{
-		gpEngine->RemoveSprite(mpSprBasic);
-		gpEngine->RemoveSprite(mpSprMO);
+		if (mpSprBasic)
+		{
+			gpEngine->RemoveSprite(mpSprBasic);
+		}
+		
+		if (mpSprMO)
+		{
+			gpEngine->RemoveSprite(mpSprMO);
+		}
 	}
 
 
@@ -85,6 +100,20 @@ public:
 		}
 	}
 
+	void LoadButtons(std::string defTexture, std::string selTexture)
+	{
+		mpSprBasic = gpEngine->CreateSprite(defTexture, (float)pos.mPosX, (float)pos.mPosY, 0.0f);
+		mpSprMO = gpEngine->CreateSprite(selTexture, (float)pos.mPosX, (float)pos.mPosY, -1.0f);
+	}
+
+	void UnloadButtons()
+	{
+		gpEngine->RemoveSprite(mpSprBasic);
+		gpEngine->RemoveSprite(mpSprMO);
+
+		mpSprBasic = nullptr;
+		mpSprMO = nullptr;
+	}
 
 	// ACCESSORS
 	//---------------------------
