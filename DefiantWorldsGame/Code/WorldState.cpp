@@ -23,7 +23,6 @@ CWorldState::~CWorldState()
 	
 }
 
-
 //-----------------------------------------------------
 // WORLD STATE CLASS METHODS
 //-----------------------------------------------------
@@ -127,6 +126,16 @@ void CWorldState::DrawFontData()
 	strStream << "X: " << mMouseGridPos.mPosX << "  Y: " << mMouseGridPos.mPosY;
 	mFntDebug->Draw(strStream.str(), 5, 15, kWhite, kLeft, kTop);
 	strStream.str("");
+
+
+
+	//////////////temp
+	//Current Tactics
+	strStream << "Current Tactic: " << mpHumanPlayer->GetFleet()->GetTacticsName();
+	mFntDebug->Draw(strStream.str(), 1225, 15, kWhite, kLeft, kTop);
+	strStream.str("");
+
+
 
 	// Draw mouse state - and get current grid data
 	strStream << "GRID: ";
@@ -347,46 +356,23 @@ void CWorldState::CheckKeyPresses()
 		mpAIPlayer->LaunchAttack();
 		gCurState = GS_SPACE;
 	}
-	/*
-	//test to return fleet
+	
 	if (gpEngine->KeyHit(Key_T))
 	{
-		CFleet* test = mpHumanPlayer->GetFleet();
-
-		mpHumanPlayer->SetSpaceUnitList(test->ReturnFleet(mpHumanPlayer->GetSpaceUnitList()));
+		mpHumanPlayer->GetFleet()->SetTactic(None);
 	}
 
-	//temp functions to test space setup
 	if (gpEngine->KeyHit(Key_Y))
 	{
-		CFleet* mpPlayerOneFleet = mpHumanPlayer->GetFleet();
-		CFleet* mpPlayerTwoFleet = mpAIPlayer->GetFleet();
-
-		mpPlayerOneFleet->SetEnemy(mpPlayerTwoFleet);
-		mpPlayerTwoFleet->SetEnemy(mpPlayerOneFleet);
+		mpHumanPlayer->GetFleet()->SetTactic(Targeted);
 	}
 
-	//temp function to test space fighting
 	if (gpEngine->KeyHit(Key_U))
 	{
-		CFleet* mpPlayerOneFleet = mpHumanPlayer->GetFleet();
-		CFleet* mpPlayerTwoFleet = mpAIPlayer->GetFleet();
-		for (int i = 0; i < 1000; i++)
-		{
-			//fleets attack each other according to tactics
-			mpPlayerOneFleet->Fight();
-			mpPlayerTwoFleet->Fight();
-
-			//finds and removes dead ships
-			mpPlayerOneFleet->UpdateCondition();
-			mpPlayerTwoFleet->UpdateCondition();
-		}
-		//mpPlayerOneFleet = 0; //used to put a break point at the end of the function
+		mpHumanPlayer->GetFleet()->SetTactic(Rapid);
 	}
 
-	*/
-
-	// RETURN TO MENU TEST
+	// RETURN TO MENU
 	//------------------------------
 	if (gpEngine->KeyHit(Key_M))
 	{

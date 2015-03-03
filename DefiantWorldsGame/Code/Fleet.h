@@ -15,7 +15,7 @@
 // FLEET CLASS
 //-----------------------------------------------------
 class CRTSPlayer;
-
+enum Tactics {Targeted, Rapid, None};
 class CFleet
 {
 private:
@@ -36,8 +36,8 @@ private:
 
 	// TACTICS
 	//---------------------------
-	enum tactics {Targeted, Rapid, None};
-	tactics mFleetTactics;
+	
+	Tactics mFleetTactics;
 	int mTargetedFireVariance;
 	CRandomiser* mTarget;
 
@@ -59,17 +59,20 @@ public:
 	void UpdateCondition();//gets rid of dead ships and checks to see if the fleet has been defeated
 	void Fight();//attacks another fleet
 	void LoadShipModels(float xPos);
+	
 
 	// ACCESSORS
 	//---------------------------
 	CGameAgent*GetShip(int i);//returns ship at the choosen postion
 	int GetSize();//returns the size of the fleet
+	int GetRows();//returns the number of rows of ships
+	string GetTacticsName();
 
 	// MUTATORS
 	//---------------------------
 	void SetEnemy(CFleet* myEnemy);//sets the fleet that this one will attack
 	vector <CGameAgent*>* LaunchFleet(vector <CGameAgent*>* possibleShips);//gets ships a player has, then adds a number of them to the fleet to attack
 	void ReturnFleet(CRTSPlayer* Player);
-	void SetTactic(string tactics);
+	void SetTactic(Tactics tactics);
 };
 
