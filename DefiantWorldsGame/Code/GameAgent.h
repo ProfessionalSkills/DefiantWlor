@@ -44,7 +44,7 @@ protected:
 	// DATA
 	//---------------------------
 	SAgentData mAgentInfo;
-	CTile* mPathTarget;
+	DX::XMFLOAT3 mPathTarget;
 	std::stringstream mStrDisplay;
 	SBoundingSphere mBoundingSphere;
 	float mHealth;
@@ -58,6 +58,7 @@ protected:
 	EObjectStates mState;
 	//CTile* mDestGridSq;
 	bool mIsMoving;
+	bool hasTarget;
 	int  mPopCost;
 
 	eFleetPos mFleetPosition;
@@ -115,14 +116,20 @@ public:
 		return &mAgentInfo;
 	}
 
-	inline void SetPathTarget(CTile* pathTile)
+	inline void SetPathTarget(DX::XMFLOAT3 pathTile)
 	{
 		mPathTarget = pathTile;
+		hasTarget = true;
 	}
 
-	inline CTile* GetPathTarget()
+	inline DX::XMFLOAT3 GetPathTarget()
 	{
 		return mPathTarget;
+	}
+
+	inline bool HasTarget()
+	{
+		return hasTarget;
 	}
 
 	eFleetPos GetPosType();
@@ -145,7 +152,7 @@ public:
 	bool RayCollision(DX::XMFLOAT3 origin, DX::XMFLOAT3 direction, float& distance);
 	void DisplayInfo(IFont* font);
 	//virtual void MoveTo(CTile* dest) = 0;
-	virtual bool Move() = 0;
+	virtual void Update() = 0;
 	virtual void UnloadIModel() = 0;
 	virtual void LoadIModel() = 0;
 	virtual void LoadModel(float x, float y, float z) = 0;

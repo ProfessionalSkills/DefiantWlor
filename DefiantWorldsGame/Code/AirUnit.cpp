@@ -52,6 +52,11 @@ bool CAirUnit::Move()
 	return false;
 }
 
+void CAirUnit::Update()
+{
+
+}
+
 bool CAirUnit::Destroy()
 {
 	return false;

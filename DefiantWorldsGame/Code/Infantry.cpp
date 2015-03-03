@@ -23,7 +23,7 @@ CInfantry::CInfantry()
 	mProductionCost = 0.0f;
 	mCurProductionTimeLeft = mProductionTime;
 	mDamage = 1.0f;
-	mPathTarget = nullptr;
+	hasTarget = false;
 
 	//mAttackParticleFX;
 	//mDestroyParticleFX;
@@ -31,7 +31,7 @@ CInfantry::CInfantry()
 	//mDestGridSq;
 	mIsMoving = false;
 	mPopCost = 1;
-	mScale = 2.0f;
+	mScale = 1.5f;
 }
 
 CInfantry::~CInfantry()
@@ -58,6 +58,7 @@ void CInfantry::LoadIModel()
 	{
 		mpObjModel = mspMshInfantry->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
 		mpObjModel->Scale(mScale);
+		mpObjModel->RotateY(180.0f);
 	}
 }
 
@@ -75,7 +76,7 @@ bool CInfantry::Attack(CGameAgent* target, float hitMod, float damageMod)
 
 bool CInfantry::Move()
 {
-	mpObjModel->SetPosition(mPathTarget->GetWorldPos().x, 0, mPathTarget->GetWorldPos().z);
+	//mpObjModel->SetPosition(mPathTarget->GetWorldPos().x, 0, mPathTarget->GetWorldPos().z);
 	return false;
 }
 

@@ -23,14 +23,14 @@ CArtillery::CArtillery()
 	mProductionCost = 0.0f;
 	mCurProductionTimeLeft = mProductionTime;
 	mDamage = 1.0f;
-	mPathTarget = nullptr;
 	//mAttackParticleFX;
 	//mDestroyParticleFX;
 	mState = OBJ_CONSTRUCTING;
 	//mDestGridSq;
 	mIsMoving = false;
+	hasTarget = false;
 	mPopCost = 1;
-	mScale = 2.0f;
+	mScale = 1.5f;
 }
 
 CArtillery::~CArtillery()
@@ -57,6 +57,7 @@ void CArtillery::LoadIModel()
 	{
 		mpObjModel = mspMshArtillery->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
 		mpObjModel->Scale(mScale);
+		mpObjModel->RotateY(180.0f);
 	}
 }
 
@@ -75,7 +76,7 @@ bool CArtillery::Attack(CGameAgent* target, float hitMod, float damageMod)
 
 bool CArtillery::Move()
 {
-	mpObjModel->SetPosition(mPathTarget->GetWorldPos().x, 0, mPathTarget->GetWorldPos().z);
+	//mpObjModel->SetPosition(mPathTarget->GetWorldPos().x, 0, mPathTarget->GetWorldPos().z);
 	return false;
 }
 

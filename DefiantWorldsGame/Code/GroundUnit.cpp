@@ -38,6 +38,7 @@ void CGroundUnit::Spawn(CGrid* pGrid, SPointData pCentre)
 	//Sets the tile usage so vehicles cannot overlap and spawns the vehicle in
 
 	mpObjModel = CreateModel(DX::XMFLOAT3(pGrid->GetTileData(pCentre)->GetWorldPos().x, 1.0f, (pGrid->GetTileData(pCentre)->GetWorldPos().z)));
+	mpObjModel->RotateY(180.0f);
 	mWorldPos.x = pGrid->GetTileData(pCentre)->GetWorldPos().x;
 	mWorldPos.y = 1.0f;
 	mWorldPos.z = pGrid->GetTileData(pCentre)->GetWorldPos().z;
@@ -50,10 +51,44 @@ void CGroundUnit::Spawn(CGrid* pGrid, SPointData pCentre)
 }
 
 
-bool CGroundUnit::Move()
+void CGroundUnit::Update( )
 {
-	mpObjModel->SetPosition(mPathTarget->GetWorldPos().x, mPathTarget->GetWorldPos().y , mPathTarget->GetWorldPos().z);
-	return false;
+	if (HasTarget())
+	{
+		if (LookingAt())
+		{
+			mpObjModel->MoveLocalZ(5.0f * gFrameTime);
+		}
+	}
+	//mpObjModel->SetPosition(mPathTarget->GetWorldPos().x, mPathTarget->GetWorldPos().y , mPathTarget->GetWorldPos().z);
+}
+
+bool CGroundUnit::LookingAt()
+{
+	DX::XMFLOAT3 targetPosition = { mPathTarget };
+	DX::XMFLOAT3 vectorZ = { (targetPosition.x - mpObjModel->GetX()), (targetPosition.y - mpObjModel->GetY()), (targetPosition.z - mpObjModel->GetZ()) };
+	float matrix[16];
+	mpObjModel->GetMatrix(matrix);
+
+	DX::XMFLOAT3 facingVector = { matrix[8], matrix[9], matrix[10] };
+	const DX::XMFLOAT3 kYAxis(0.0f, 1.0f, 0.0f);
+
+	float dotProduct = Dot(vectorZ, Cross(kYAxis, facingVector));
+
+	if (dotProduct > 0.1f)
+	{
+		mpObjModel->RotateY(50.0f * gFrameTime);
+		return false;
+	}
+	else if (dotProduct < -0.1f)
+	{
+		mpObjModel->RotateY(-50.0f * gFrameTime);
+		return false;
+	}
+	else
+	{
+		return true;
+	}
 }
 
 bool CGroundUnit::Destroy()

@@ -23,7 +23,7 @@ CWorker::CWorker()
 	mProductionCost = 0.0f;
 	mCurProductionTimeLeft = mProductionTime;
 	mDamage = 1.0f;
-	mPathTarget = nullptr;
+	hasTarget = false;
 
 	//mAttackParticleFX;
 	//mDestroyParticleFX;
@@ -31,7 +31,7 @@ CWorker::CWorker()
 	//mDestGridSq;
 	mIsMoving = false;
 	mPopCost = 1;
-	mScale = 2.0f;
+	mScale = 1.5f;
 }
 
 CWorker::~CWorker()
@@ -84,7 +84,7 @@ bool CWorker::Attack(CGameAgent* target, float hitMod, float damageMod)
 
 bool CWorker::Move()
 {
-	mpObjModel->SetPosition(mPathTarget->GetWorldPos().x, 0, mPathTarget->GetWorldPos().z);
+	//mpObjModel->SetPosition(mPathTarget->GetWorldPos().x, 0, mPathTarget->GetWorldPos().z);
 	return false;
 }
 
