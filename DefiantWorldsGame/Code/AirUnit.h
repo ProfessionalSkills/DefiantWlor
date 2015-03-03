@@ -48,6 +48,7 @@ public:
 	//virtual void MoveTo(CTile* dest);
 	virtual bool Move();
 	virtual void Update();
+	bool LookingAt();
 	virtual void UnloadIModel() = 0;
 	virtual void LoadIModel() = 0;
 	void LoadModel(float x, float y, float z)
