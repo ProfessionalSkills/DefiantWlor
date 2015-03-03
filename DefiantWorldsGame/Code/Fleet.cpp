@@ -208,6 +208,19 @@ int CFleet::GetRows()
 	return (mNumSpaceFighter / mFleetRowSize) + (mNumTransport / mFleetRowSize) + 1;
 }
 
+string CFleet::GetTacticsName()
+{
+	switch (mFleetTactics)
+	{
+	case Tactics::None:
+		return "None";
+	case Tactics::Rapid:
+		return "Rapid";
+	case Tactics::Targeted:
+		return "Targeted";
+	}
+}
+
 //-----------------------------------------------------
 // FLEET CLASS MUTATORS
 //-----------------------------------------------------

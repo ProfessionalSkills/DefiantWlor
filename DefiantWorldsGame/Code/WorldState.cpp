@@ -127,6 +127,16 @@ void CWorldState::DrawFontData()
 	mFntDebug->Draw(strStream.str(), 5, 15, kWhite, kLeft, kTop);
 	strStream.str("");
 
+
+
+	//////////////temp
+	//Current Tactics
+	strStream << "Current Tactic: " << mpHumanPlayer->GetFleet()->GetTacticsName();
+	mFntDebug->Draw(strStream.str(), 1225, 15, kWhite, kLeft, kTop);
+	strStream.str("");
+
+
+
 	// Draw mouse state - and get current grid data
 	strStream << "GRID: ";
 	switch (mMouseState)

@@ -66,6 +66,7 @@ public:
 	CGameAgent*GetShip(int i);//returns ship at the choosen postion
 	int GetSize();//returns the size of the fleet
 	int GetRows();//returns the number of rows of ships
+	string GetTacticsName();
 
 	// MUTATORS
 	//---------------------------
