@@ -15,7 +15,7 @@
 // FLEET CLASS
 //-----------------------------------------------------
 class CRTSPlayer;
-
+enum Tactics {Targeted, Rapid, None};
 class CFleet
 {
 private:
@@ -36,8 +36,8 @@ private:
 
 	// TACTICS
 	//---------------------------
-	enum tactics {Targeted, Rapid, None};
-	tactics mFleetTactics;
+	
+	Tactics mFleetTactics;
 	int mTargetedFireVariance;
 	CRandomiser* mTarget;
 
@@ -72,6 +72,6 @@ public:
 	void SetEnemy(CFleet* myEnemy);//sets the fleet that this one will attack
 	vector <CGameAgent*>* LaunchFleet(vector <CGameAgent*>* possibleShips);//gets ships a player has, then adds a number of them to the fleet to attack
 	void ReturnFleet(CRTSPlayer* Player);
-	void SetTactic(string tactics);
+	void SetTactic(Tactics tactics);
 };
 

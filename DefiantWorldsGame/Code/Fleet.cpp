@@ -46,38 +46,45 @@ void CFleet::Fight()
 {
 	if (mpEnemyFleet->GetSize() != 0)
 	{
+		int target = 0;
 		switch (mFleetTactics)
 		{
-			case tactics::None:
+			
+			case Tactics::None:
 				//just gets each ship to attack one random enemy ship, no effects on accuracy or damage
 				for (int i = 0; i < mSize; i++)
 				{
-					int target = mTarget->GetRandomInt(0, mpEnemyFleet->GetSize() - 1);
+					target = mTarget->GetRandomInt(0, mpEnemyFleet->GetSize() - 1);
 					mpFleet[i]->Attack(mpEnemyFleet->GetShip(target), mHitMod, mDamegMod);
 				}
 
 				break;
-			case tactics::Rapid:
+			case Tactics::Rapid:
 				//gets each ship to attack the same enemy twice
 				//reduces accuracy of the ship
 				for (int i = 0; i < mSize; i++)
 				{
-					int target = mTarget->GetRandomInt(0, mpEnemyFleet->GetSize() - 1);
+					target = mTarget->GetRandomInt(0, mpEnemyFleet->GetSize() - 1);
 					mpFleet[i]->Attack(mpEnemyFleet->GetShip(target), mHitMod, mDamegMod);
 					mpFleet[i]->Attack(mpEnemyFleet->GetShip(target), mHitMod, mDamegMod);
 				}
 
 				break;
-			case tactics::Targeted:
+			case Tactics::Targeted:
 				//picks a section of the enemy fleet to attack
 				//only attacks ship withn a range of that target
-				int target = mTarget->GetRandomInt(0, mpEnemyFleet->GetSize() - 1);
+				target = mTarget->GetRandomInt(0, mpEnemyFleet->GetSize() - 1);
+				int variance=0;
 				for (int i = 0; i < mSize; i++)
 				{
-					int variance = mTarget->GetRandomInt(target - mTargetedFireVariance, target + mTargetedFireVariance) % mSize;
+					if (mpEnemyFleet->GetSize()>1)
+					{
+						target = mTarget->GetRandomInt(-mTargetedFireVariance, mTargetedFireVariance);
+						target = abs(target) % (mpEnemyFleet->GetSize() - 1);
+					}
+					else target = 0;
 					mpFleet[i]->Attack(mpEnemyFleet->GetShip(variance), mHitMod, mDamegMod);
 				}
-
 				break;
 		}
 	}
@@ -100,6 +107,8 @@ void CFleet::UpdateCondition()
 				break;
 			case back:
 				mNumMothership--;
+				break;
+			default:
 				break;
 			}
 
@@ -226,6 +235,8 @@ vector <CGameAgent*>* CFleet::LaunchFleet(vector <CGameAgent*>* possibleShips)
 			case back:
 				mNumMothership++;
 				break;
+			default:
+				break;
 			}
 			mpFleet.push_back((*possibleShips)[i]);
 			possibleShips->pop_back();
@@ -239,18 +250,9 @@ vector <CGameAgent*>* CFleet::LaunchFleet(vector <CGameAgent*>* possibleShips)
 	//asks the player to choose some tactics
 }
 
-void CFleet::SetTactic(string tactics)
+void CFleet::SetTactic(Tactics tactics)//changes the tactics the fleet will use in battle, e.g rapid, targated
 {
-	if (tactics == "rapid")
-	{
-		mFleetTactics = Rapid;
-	}
-	else if (tactics == "targeted")
-	{
-		mFleetTactics = Targeted;
-	}
-	else mFleetTactics = None;
-	//recives player input to set tactics, does so during launch attack
+	mFleetTactics = tactics;
 }
 
 void CFleet::ReturnFleet(CRTSPlayer* Player)
