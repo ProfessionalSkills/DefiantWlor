@@ -173,6 +173,7 @@ private:
 	// EVENT HANDLERS
 	//---------------------------
 	void OnPlacingStructureChange(CStructure* selStructure);
+	void OnStructureSelectChange();
 };
 
 

@@ -51,44 +51,55 @@ bool CProductionStructure::AddToQueue(size_t agentIndex)
 	switch ((*miterRespectiveAgents)->GetAgentData()->mAgentType)
 	{
 	case GAV_ARTILLERY:
-		mpProductionQueue.push(new CArtillery());
+		mpProductionQueue.push_back(new CArtillery());
 		break;
 
 	case GAV_BOMBER:
-		mpProductionQueue.push(new CBomber());
+		mpProductionQueue.push_back(new CBomber());
 		break;
 
 	case GAV_FIGHTER:
-		mpProductionQueue.push(new CFighter());
+		mpProductionQueue.push_back(new CFighter());
 		break;
 
 	case GAV_INFANTRY:
-		mpProductionQueue.push(new CInfantry());
+		mpProductionQueue.push_back(new CInfantry());
 		break;
 
 	case GAV_MOTHERSHIP:
-		mpProductionQueue.push(new CMothership());
+		mpProductionQueue.push_back(new CMothership());
 		break;
 
 	case GAV_SPACE_FIGHTER:
-		mpProductionQueue.push(new CSpaceFighter());
+		mpProductionQueue.push_back(new CSpaceFighter());
 		break;
 
 	case GAV_TANK:
-		mpProductionQueue.push(new CTank());
+		mpProductionQueue.push_back(new CTank());
 		break;
 
 	case GAV_TRANSPORT:
-		mpProductionQueue.push(new CTransport());
+		mpProductionQueue.push_back(new CTransport());
 		break;
 
 	case GAV_WORKER:
-		mpProductionQueue.push(new CWorker());
+		mpProductionQueue.push_back(new CWorker());
 		break;
 	}
 
 	// Success
 	return true;
+}
+
+std::deque<CGameAgent*>* CProductionStructure::GetQueue()
+{
+	return &mpProductionQueue;
+}
+
+void CProductionStructure::RemoveFromQueue(size_t agentIndex)
+{
+	// Increment the iterator by the amount provided
+	std::advance(miterProdQ, agentIndex);
 }
 
 bool CProductionStructure::RemoveFromQueue()
@@ -97,7 +108,7 @@ bool CProductionStructure::RemoveFromQueue()
 	tmp->Spawn(mpGrid, GetGridSpawnLocation());
 
 	//delete tmp;
-	mpProductionQueue.pop();
+	mpProductionQueue.pop_front();
 	return false;
 }
 

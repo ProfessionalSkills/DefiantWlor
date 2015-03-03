@@ -163,7 +163,12 @@ public:
 	virtual int GetQueueSize() = 0;
 	// Method called each frome - boolean returns is false when the object has been destroyed
 	virtual bool Update(CRTSPlayer* pPlayer) = 0;
+	// Adds a unit to the queue based on the index which has been passed in
 	virtual bool AddToQueue(size_t agentIndex) = 0;
+	// Removes a unit in the queue at the given index
+	virtual void RemoveFromQueue(size_t agentIndex) = 0;
+	// Returns a pointer to the queue of units
+	virtual std::deque<CGameAgent*>* GetQueue() = 0;
 
 	virtual void DisplayInfo(IFont* font) = 0;
 	virtual void SetBuiltModel() = 0;

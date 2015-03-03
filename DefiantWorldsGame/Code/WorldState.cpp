@@ -653,15 +653,15 @@ void CWorldState::StateSetup()
 	// Queue buttons
 	mpQueueButtons = new SStructureButtons<CWorldState>(5);
 	mpQueueButtons->mpButtons[0] = new CAdvancedButton<CWorldState, void, int>(SPointData(1219, 695), SAABoundingBox(772.0f, 1322.0f, 695.0f, 1219.0f), 
-		*this, &CWorldState::QueueUnit);
+		*this, &CWorldState::UnqueueUnit);
 	mpQueueButtons->mpButtons[1] = new CAdvancedButton<CWorldState, void, int>(SPointData(1219, 695), SAABoundingBox(772.0f, 1322.0f, 695.0f, 1219.0f),
-		*this, &CWorldState::QueueUnit);
+		*this, &CWorldState::UnqueueUnit);
 	mpQueueButtons->mpButtons[2] = new CAdvancedButton<CWorldState, void, int>(SPointData(1219, 695), SAABoundingBox(772.0f, 1322.0f, 695.0f, 1219.0f),
-		*this, &CWorldState::QueueUnit);
+		*this, &CWorldState::UnqueueUnit);
 	mpQueueButtons->mpButtons[3] = new CAdvancedButton<CWorldState, void, int>(SPointData(1219, 695), SAABoundingBox(772.0f, 1322.0f, 695.0f, 1219.0f),
-		*this, &CWorldState::QueueUnit);
+		*this, &CWorldState::UnqueueUnit);
 	mpQueueButtons->mpButtons[4] = new CAdvancedButton<CWorldState, void, int>(SPointData(1219, 695), SAABoundingBox(772.0f, 1322.0f, 695.0f, 1219.0f),
-		*this, &CWorldState::QueueUnit);
+		*this, &CWorldState::UnqueueUnit);
 
 
 	// CONSTRUCT COMMAND CENTRES
@@ -1022,6 +1022,65 @@ void CWorldState::OnPlacingStructureChange(CStructure* selStructure)
 	UpdateHeldStructure();
 }
 
+void CWorldState::OnStructureSelectChange()
+{
+	// Check if something is slelected
+	if (mpCurSelectedStructure)
+	{
+		std::deque<CGameAgent*>* pQueue;
+		std::deque<CGameAgent*>::iterator iterQ;
+
+		// Get the pointer to the queue
+		mpCurSelectedStructure->GetQueue();
+
+		// Loop through the queue to create the buttons for each of the units in the queue
+		int i = 0;
+		for (iterQ = pQueue->begin(); iterQ != pQueue->end(); iterQ++)
+		{
+			switch ((*iterQ)->GetAgentData()->mAgentType)
+			{
+			case GAV_ARTILLERY:
+				mpQueueButtons->mpButtons[i]->LoadButtons("DefArtilleryButton.png", "SelArtilleryButton.png");
+				break;
+
+			case GAV_BOMBER:
+				mpQueueButtons->mpButtons[i]->LoadButtons("DefBomberButton.png", "SelBomberButton.png");
+				break;
+
+			case GAV_FIGHTER:
+				mpQueueButtons->mpButtons[i]->LoadButtons("DefFighterButton.png", "SelFighterButton.png");
+				break;
+
+			case GAV_INFANTRY:
+				mpQueueButtons->mpButtons[i]->LoadButtons("DefInfantryButton.png", "SelInfantryButton.png");
+				break;
+
+			case GAV_MOTHERSHIP:
+				mpQueueButtons->mpButtons[i]->LoadButtons("DefMothershipButton.png", "SelmothershipButton.png");
+				break;
+
+			case GAV_SPACE_FIGHTER:
+				mpQueueButtons->mpButtons[i]->LoadButtons("DefSpaceFighterButton.png", "SelSpaceFighterButton.png");
+				break;
+
+			case GAV_TANK:
+				mpQueueButtons->mpButtons[i]->LoadButtons("DefTankButton.png", "SelTankButton.png");
+				break;
+
+			case GAV_TRANSPORT:
+				mpQueueButtons->mpButtons[i]->LoadButtons("DefTransportButton.png", "SelTransportButton.png");
+				break;
+
+			case GAV_WORKER:
+				mpQueueButtons->mpButtons[i]->LoadButtons("DefWorkerButton.png", "SelWorkerButton.png");
+				break;
+			}
+
+			i++;
+		}
+	}
+}
+
 
 //-----------------------------------------------------
 // WORLD STATE CLASS BUTTON EVENT FUNCTIONS
@@ -1033,15 +1092,15 @@ void CWorldState::QueueUnit(int index)
 	mpCurSelectedStructure->AddToQueue(index);
 	mLMouseClicked = false;
 }
-/*
+
 void CWorldState::UnqueueUnit(int index)
 {
 	if (!mpCurSelectedStructure) return;
 
-	//mpCurSelectedStructure->RemoveFromQueue(index);
+	mpCurSelectedStructure->RemoveFromQueue(index);
 	mLMouseClicked = false;
 }
-*/
+
 void CWorldState::CreateBarracks()
 {
 	CStructure* pStructure = new CBarracks();

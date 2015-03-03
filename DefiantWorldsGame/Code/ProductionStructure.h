@@ -28,9 +28,10 @@ protected:
 	// DATA
 	//---------------------------
 	std::list<CGameAgent*> mRespectiveAgentsList;
-	std::queue<CGameAgent*> mpProductionQueue;
+	std::deque<CGameAgent*> mpProductionQueue;
 
 	std::list<CGameAgent*>::iterator miterRespectiveAgents;
+	std::deque<CGameAgent*>::iterator miterProdQ;
 
 
 public:
@@ -56,6 +57,8 @@ public:
 	// METHODS
 	//---------------------------
 	bool AddToQueue(size_t agentIndex);
+	void RemoveFromQueue(size_t agentIndex);
+	std::deque<CGameAgent*>* GetQueue();
 	bool RemoveFromQueue();
 	bool UpdateProduction();
 	CGameAgent* CreateAgent();		// Called when agent at front of production queue is finished
