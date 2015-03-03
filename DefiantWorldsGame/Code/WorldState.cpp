@@ -1058,7 +1058,7 @@ void CWorldState::OnStructureSelectChange()
 		// Unload the existing queue buttons
 		mpQueueButtons->UnloadSprites();
 		
-		std::deque<CGameAgent*>* pQueue;
+		std::deque<CGameAgent*>* pQueue = nullptr;
 		std::deque<CGameAgent*>::iterator iterQ;
 
 		// Get the pointer to the queue
