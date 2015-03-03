@@ -28,9 +28,9 @@ CBomber::CBomber()
 	mState = OBJ_CONSTRUCTING;
 	//mDestGridSq;
 	mIsMoving = false;
-	mPathTarget = nullptr;
+	hasTarget = false;
 	mPopCost = 1;
-	mScale = 2.0f;
+	mScale = 1.5f;
 }
 
 CBomber::~CBomber()
@@ -57,6 +57,7 @@ void CBomber::LoadIModel()
 	{
 		mpObjModel = mspMshBomber->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
 		mpObjModel->Scale(mScale);
+		mpObjModel->RotateY(180.0f);
 	}
 }
 

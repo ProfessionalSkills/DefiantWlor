@@ -67,3 +67,7 @@ void CSpaceUnit::LoadModel(float x, float y, float z)
 {
 
 }
+void CSpaceUnit::Update()
+{
+
+}

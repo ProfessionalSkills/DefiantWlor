@@ -273,12 +273,13 @@ void CWorldState::CheckKeyPresses()
 		{
 			if (!mpCurTile->IsTileUsed())
 			{
-				mpCurSelectedAgent->SetPathTarget(mpCurTile);
+				mpCurSelectedAgent->SetPathTarget(mMouseWorldPos);
 				mRMouseClicked = false;
 			}
 		}
 	}
 	mLMouseClicked = false;
+	mRMouseClicked = false;
 
 	// Check if a building is currently selected
 	if (!mpCurSelectedStructure && !mpCurSelectedAgent)
@@ -929,10 +930,10 @@ void CWorldState::StateUpdate()
 
 	for (auto it = mpHumanPlayer->GetWorldUnitList()->begin(); it != mpHumanPlayer->GetWorldUnitList()->end(); it++)
 	{
-		if (it->second->GetPathTarget() != nullptr)
+		if (it->second->HasTarget())
 		{
-			it->second->Move();
-			mpEarthGrid->GetTileData(it->second->GetPathTarget()->GetGridPos())->SetTileUsage(true);
+			//it->second->Update();
+			//mpEarthGrid->GetTileData(mGr  it->second->GetPathTarget()->GetGridPos())->SetTileUsage(true);
 		}
 	}
 

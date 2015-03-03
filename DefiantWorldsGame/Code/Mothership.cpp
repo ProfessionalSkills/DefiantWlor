@@ -38,6 +38,7 @@ CMothership::CMothership()
 	mState = OBJ_CONSTRUCTING;
 	//mDestGridSq;
 	mIsMoving = false;
+	hasTarget = false;
 }
 
 CMothership::~CMothership()

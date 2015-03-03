@@ -22,14 +22,14 @@ CTank::CTank()
 	mProductionCost = 0.0f;
 	mCurProductionTimeLeft = mProductionTime;
 	mDamage = 1.0f;
-	mPathTarget = nullptr;
+	hasTarget = false;
 	//mAttackParticleFX;
 	//mDestroyParticleFX;
 	mState = OBJ_CONSTRUCTING;
 	//mDestGridSq;
 	mIsMoving = false;
 	mPopCost = 1;
-	mScale = 2.0f;
+	mScale = 1.5f;
 }
 
 CTank::~CTank()
@@ -56,6 +56,7 @@ void CTank::LoadIModel()
 	{
 		mpObjModel = mspMshTank->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
 		mpObjModel->Scale(mScale);
+		mpObjModel->RotateY(180.0f);
 	}
 }
 
@@ -70,12 +71,12 @@ bool CTank::Attack(CGameAgent* target, float hitMod, float damageMod)
 
 //CTank::void MoveTo(CTile* dest)
 
-
-bool CTank::Move()
-{
-	mpObjModel->SetPosition(mPathTarget->GetWorldPos().x, 0, mPathTarget->GetWorldPos().z);
-	return false;
-}
+//
+//bool CTank::Move()
+//{
+//	mpObjModel->SetPosition(mPathTarget->GetWorldPos().x, 0, mPathTarget->GetWorldPos().z);
+//	return false;
+//}
 
 bool CTank::Destroy()
 {

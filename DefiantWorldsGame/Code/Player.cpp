@@ -179,6 +179,7 @@ void CRTSPlayer::Update()
 	// Loop through all units (NOT SPACE) & update them
 	for (miterUnitsMap = mpUnitsMap.begin(); miterUnitsMap != mpUnitsMap.end(); miterUnitsMap++)
 	{
+		miterUnitsMap->second->Update();
 		//// Call update function for this structure
 		//if (!miterUnitsMap->second->Update(this))
 		//{
