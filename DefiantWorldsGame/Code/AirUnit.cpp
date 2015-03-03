@@ -54,7 +54,62 @@ bool CAirUnit::Move()
 
 void CAirUnit::Update()
 {
+	if (HasTarget())
+	{
+		if (LookingAt())
+		{
+			int MaxX = mPathTarget.x + 1.0f;
+			int MinX = mPathTarget.x - 1.0f;
 
+			int MaxZ = mPathTarget.z + 1.0f;
+			int MinZ = mPathTarget.z - 1.0f;
+
+			if (mWorldPos.x > MinX && mWorldPos.x < MaxX && mWorldPos.z > MinZ && mWorldPos.z < MaxZ)
+			{
+
+			}
+			else
+			{
+				float matrix[16];
+				mpObjModel->GetMatrix(matrix);
+				float movement = 5.0f * gFrameTime;
+				mpObjModel->MoveLocalZ(movement);
+				mWorldPos = DX::XMFLOAT3(mpObjModel->GetX(), mpObjModel->GetY(), mpObjModel->GetZ());
+				DX::XMFLOAT3 moveAmount = { matrix[8] * movement, matrix[9] * movement, matrix[10] * movement };
+				mBoundingSphere.Move(mWorldPos);
+			}
+		}
+	}
+	//int nodes = mpObjModel->GetNumNodes();
+	//mpObjModel->GetNode(4)->RotateY(1000.0f * gFrameTime);
+}
+
+bool CAirUnit::LookingAt()
+{
+	DX::XMFLOAT3 targetPosition = { mPathTarget };
+	DX::XMFLOAT3 vectorZ = { (targetPosition.x - mpObjModel->GetX()), (targetPosition.y - mpObjModel->GetY()), (targetPosition.z - mpObjModel->GetZ()) };
+	float matrix[16];
+	mpObjModel->GetMatrix(matrix);
+
+	DX::XMFLOAT3 facingVector = { matrix[8], matrix[9], matrix[10] };
+	const DX::XMFLOAT3 kYAxis(0.0f, 1.0f, 0.0f);
+
+	float dotProduct = Dot(vectorZ, Cross(kYAxis, facingVector));
+
+	if (dotProduct > 0.1f)
+	{
+		mpObjModel->RotateY(50.0f * gFrameTime);
+		return false;
+	}
+	else if (dotProduct < -0.1f)
+	{
+		mpObjModel->RotateY(-50.0f * gFrameTime);
+		return false;
+	}
+	else
+	{
+		return true;
+	}
 }
 
 bool CAirUnit::Destroy()
