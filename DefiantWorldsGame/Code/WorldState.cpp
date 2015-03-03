@@ -1038,7 +1038,7 @@ void CWorldState::UnqueueUnit(int index)
 {
 	if (!mpCurSelectedStructure) return;
 
-	mpCurSelectedStructure->RemoveFromQueue(index);
+	//mpCurSelectedStructure->RemoveFromQueue(index);
 	mLMouseClicked = false;
 }
 */
