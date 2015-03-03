@@ -42,7 +42,7 @@ CMothership::CMothership()
 
 CMothership::~CMothership()
 {
-
+	UnloadIModel();
 }
 
 
@@ -51,6 +51,12 @@ CMothership::~CMothership()
 //-----------------------------------------------------
 bool CMothership::Attack(CGameAgent* target, float hitMod, float damageMod)
 {
+	CRandomiser toHitRoll;
+	if (toHitRoll.GetRandomFloat(1.0, 100.0) < (hitMod*mHitChance) * 100)
+	{
+		target->TakeDamage(mDamage*damageMod);
+		return true;
+	}
 	return false;
 }
 void CMothership::Spawn(CGrid* pGrid, SPointData pCentre)
@@ -61,7 +67,6 @@ void CMothership::Spawn(CGrid* pGrid, SPointData pCentre)
 void CMothership::LoadModel(float x, float y, float z)
 {
 	mpObjModel = mspMshMothership->CreateModel(x, y, z);
-	//mpObjModel->SetSkin("Spaceship02Battlecruiser.jpg");
 	if (x < 0.0f)
 	{
 		mpObjModel->RotateLocalY(90.0f);
@@ -72,6 +77,16 @@ void CMothership::LoadModel(float x, float y, float z)
 	}
 	mpObjModel->Scale(mScale);
 }
+
+void CMothership::UnloadIModel()
+{
+	if (mpObjModel != 0)
+	{
+		mspMshMothership->RemoveModel(mpObjModel);
+		mpObjModel = nullptr;
+	}
+}
+
 
 
 //CMothership::void MoveTo(CTile* dest)
