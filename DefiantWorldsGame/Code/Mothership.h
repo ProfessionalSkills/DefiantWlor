@@ -49,6 +49,7 @@ public:
 	//virtual void MoveTo(CTile* dest);
 	bool Move();
 	void LoadModel(float x, float y, float z);
+	void UnloadIModel();
 
 private:
 	bool Destroy();

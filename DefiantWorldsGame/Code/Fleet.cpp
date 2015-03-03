@@ -36,7 +36,7 @@ CFleet::CFleet() :mFleetRowSize(15), mFleetRowSeperation(7)
 
 CFleet::~CFleet()
 {
-	//returns ships to the player class
+	if (mTarget != 0) delete mTarget;
 }
 
 //-----------------------------------------------------
@@ -234,8 +234,17 @@ vector <CGameAgent*>* CFleet::LaunchFleet(vector <CGameAgent*>* possibleShips)
 	//asks the player to choose some tactics
 }
 
-void CFleet::SetTactic()
+void CFleet::SetTactic(string tactics)
 {
+	if (tactics == "rapid")
+	{
+		mFleetTactics = Rapid;
+	}
+	else if (tactics == "targeted")
+	{
+		mFleetTactics = Targeted;
+	}
+	else mFleetTactics = None;
 	//recives player input to set tactics, does so during launch attack
 }
 
