@@ -76,7 +76,11 @@ private:
 	SStructureButtons<CWorldState>* mpSpaceCentreButtons;
 	SStructureButtons<CWorldState>* mpComCentreButtons;
 	SStructureButtons<CWorldState>* mpQueueButtons;
+
 	CAdvancedButton<CWorldState, void>* mpSpaceAtaackButtons;
+	CAdvancedButton<CWorldState, void>* mpSpaceTacTargetedButton;
+	CAdvancedButton<CWorldState, void>* mpSpaceTacRapidButton;
+	CAdvancedButton<CWorldState, void>* mpSpaceTacNoneButton;
 
 	CAdvancedButton<CWorldState, void>* mpButtonDelete;
 
@@ -165,6 +169,9 @@ public:
 	void CreateHouse();
 	void DeleteStructure();
 	void LaunchAttack();
+	void ChangeTacNone();
+	void ChangeTacRapid();
+	void ChangeTacTargated();
 
 
 	// OVERRIDE METHODS
