@@ -43,6 +43,7 @@ void CAirUnit::Spawn(CGrid* pGrid, SPointData pCentre)
 	float radius = 5.0f;
 
 	mBoundingSphere = SBoundingSphere(centre, radius);
+	mYaw = 0.0f;
 }
 //CAirUnit::void MoveTo(CTile* dest)
 
@@ -97,16 +98,41 @@ bool CAirUnit::LookingAt()
 
 	if (dotProduct > 0.1f)
 	{
-		mpObjModel->RotateY(200.0f * gFrameTime);
+		mpObjModel->RotateY(100.0f * gFrameTime);
+		if (mYaw >= -30.0f)
+		{
+			float mZRotate = -50.0f * gFrameTime;
+			mpObjModel->RotateLocalZ(mZRotate);
+			mYaw += mZRotate;
+		}
 		return true;
 	}
 	else if (dotProduct < -0.1f)
 	{
-		mpObjModel->RotateY(-200.0f * gFrameTime);
+		mpObjModel->RotateY(-100.0f * gFrameTime);
+		if (mYaw <= 30.0f)
+		{
+			float mZRotate = 50.0f * gFrameTime;
+			mpObjModel->RotateLocalZ(mZRotate);
+			mYaw += mZRotate;
+		}
 		return true;
 	}
 	else
 	{
+		if (mYaw >= 5.0f)
+		{
+			float mZRotate = -50.0f * gFrameTime;
+			mpObjModel->RotateLocalZ(mZRotate);
+			mYaw += mZRotate;
+		}
+		else if (mYaw <= -5.0f)
+		{
+
+			float mZRotate = 50.0f * gFrameTime;
+			mpObjModel->RotateLocalZ(mZRotate);
+			mYaw += mZRotate;
+		}
 		return true;
 	}
 }
