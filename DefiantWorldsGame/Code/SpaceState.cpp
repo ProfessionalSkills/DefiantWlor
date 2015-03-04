@@ -76,7 +76,9 @@ void CSpaceState::StateSetup()
 	string mMusicFile = "Space_Music.wav";
 	ALfloat mSourcePos[3] = { mpCamMain->GetX(), mpCamMain->GetY(), mpCamMain->GetZ() };
 	ALfloat mSourceVel[3] = { 0.0f, 0.0f, 0.0f };
-	mMusic = new CSound(mMusicFile, mSourcePos, mSourceVel, true,1.0f);
+	ALfloat listenerPos[3] = { mpCamMain->GetX(), mpCamMain->GetY(), mpCamMain->GetZ() };
+	ALfloat listenerVel[3] = { 0.0f, 0.0f, 0.0f };
+	mMusic = new CSound(mMusicFile, mSourcePos, mSourceVel, true, 1.0f, listenerPos, listenerVel);
 	mMusic->PlaySound();
 } 
 
