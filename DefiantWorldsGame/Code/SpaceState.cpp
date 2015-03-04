@@ -69,23 +69,16 @@ void CSpaceState::StateSetup()
 	//------------------------------
 	mpPlayerOneFleet->LoadShipModels(-mDisplacement);
 	mpPlayerTwoFleet->LoadShipModels(mDisplacement);
+	mpMdlSkybox->AttachToParent(mpCamMain);
 
 	// INITIALISE MUSIC
 	//------------------------------
 	string mMusicFile = "Space_Music.wav";
 	ALfloat mSourcePos[3] = { mpCamMain->GetX(), mpCamMain->GetY(), mpCamMain->GetZ() };
 	ALfloat mSourceVel[3] = { 0.0f, 0.0f, 0.0f };
-	mMusic = new CSound(mMusicFile, mSourcePos, mSourceVel, true);
+	mMusic = new CSound(mMusicFile, mSourcePos, mSourceVel, true,1.0f);
 	mMusic->PlaySound();
-
-	//doesn't play sound yet, maybe has problems with small sound files?
-	mMusicFile = "shoot.wav";
-	ALfloat mSourceVel2[3] = { 0.0f, 0.0f, 0.0f };
-	mFiringSound = new CSound(mMusicFile, mSourcePos, mSourceVel2, false);
-	
-
-	mpMdlSkybox->AttachToParent(mpCamMain);
-}
+} 
 
 void CSpaceState::StateUpdate()
 {
@@ -109,13 +102,11 @@ void CSpaceState::StateUpdate()
 		//fleets attack each other according to tactics
 		mpPlayerOneFleet->Fight();
 		mpPlayerTwoFleet->UpdateCondition();
-		mFiringSound->PlaySound();
-		mpPlayerTwoFleet->Fight();
-
+		
 		//finds and removes dead ships
+		mpPlayerTwoFleet->Fight();
 		mpPlayerOneFleet->UpdateCondition();
 		
-
 		//reset timer
 		mTimeSinceUpdate = 0.0f;
 	}
@@ -135,7 +126,6 @@ void CSpaceState::StateCleanup()
 {
 	//stop sound
 	mMusic->StopSound();
-	mFiringSound->StopSound();
 
 	//unload models
 	mpMshSkybox->RemoveModel(mpMdlSkybox);

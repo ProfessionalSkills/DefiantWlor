@@ -47,6 +47,10 @@ private:
 	int mFleetWidth;//number of ships that can be in a row. specifcally, the number of ships beyond the centre ship in a given direction
 	int YSwitch(int x);
 
+	// SOUND
+	//---------------------------
+	CSound* mGenSound;
+
 public:
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------

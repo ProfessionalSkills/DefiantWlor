@@ -14,7 +14,7 @@ using namespace std;
 // SOUND CLASS CONSTRUCTORS & DESTRUCTOR
 //-----------------------------------------------------
 
-CSound::CSound(string mSoundFile, ALfloat mSourcePos[3], ALfloat mSourceVel[3], bool loop)
+CSound::CSound(string mSoundFile, ALfloat mSourcePos[3], ALfloat mSourceVel[3], bool loop,float gain)
 {
 	//Start up OpenAL
 	alutInit(0, 0);
@@ -29,7 +29,7 @@ CSound::CSound(string mSoundFile, ALfloat mSourcePos[3], ALfloat mSourceVel[3], 
 
 	alSourcei(mSource, AL_BUFFER, mBuffer); //Attach buffer to source
 	alSourcef(mSource, AL_PITCH, 1.0f);  //Set pitch
-	alSourcef(mSource, AL_GAIN, 1.0f);   //
+	alSourcef(mSource, AL_GAIN, gain);   //
 	alSourcefv(mSource, AL_POSITION, mSourcePos); // Position of sound relative to listener 
 	alSourcefv(mSource, AL_VELOCITY, mSourceVel); // Velocity of sound relative to listener
 	alSourcei(mSource, AL_LOOPING, loop);  // Whether to loop the sound or not
@@ -58,7 +58,7 @@ CSound::CSound(string mSoundFile, ALfloat mSourcePos[3], ALfloat mSourceVel[3], 
 	alListenerfv(AL_POSITION, listenerPos); 
 	alListenerfv(AL_VELOCITY, listenerVel); 
 	alListenerfv(AL_ORIENTATION, listenerOri);
-	alListenerf(AL_GAIN, 1.0f); //Master volume/gain
+	alListenerf(AL_GAIN, gain); //Master volume/gain
 
 	bool mIsPlaying = false;
 

@@ -38,6 +38,9 @@ CSpaceFighter::CSpaceFighter()
 	mState = OBJ_CONSTRUCTING;
 	//mDestGridSq;
 	mIsMoving = false;
+
+	// Sound
+
 }
 
 CSpaceFighter::~CSpaceFighter()
@@ -51,7 +54,16 @@ CSpaceFighter::~CSpaceFighter()
 void CSpaceFighter::LoadModel(float x,float y, float z)
 {
 	mpObjModel = mspMshSpaceFighter->CreateModel(x, y, z);
-	//mpObjModel->SetSkin("Spaceship02Battlecruiser.jpg");
+	mWorldPos.x = x;
+	mWorldPos.y = y;
+	mWorldPos.z = z;
+	string mMusicFile = "shoot.wav";
+	ALfloat mSourcePos[3] = { mWorldPos.x, mWorldPos.y, mWorldPos.z };
+
+	ALfloat mSourceVel[3] = { 50.0f, 0.0f, 0.0f };
+	if (mWorldPos.x<0)  mSourceVel[0] = { 100.0f};
+	else  mSourceVel[0] = {-100.0f};
+	mGenSound = new CSound(mMusicFile, mSourcePos, mSourceVel, false, 0.3);
 	if (x < 0.0f)
 	{
 		mpObjModel->RotateLocalY(90.0f); 
@@ -81,6 +93,7 @@ bool CSpaceFighter::Attack(CGameAgent* target, float hitMod, float damageMod)
 	if (toHitRoll.GetRandomFloat(1.0,100.0) < (hitMod*mHitChance) * 100)
 	{
 		target->TakeDamage(mDamage*damageMod);
+		mGenSound->PlaySound();
 		return true;
 	}
 	return false;
