@@ -544,7 +544,7 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 		// Check if the structure is fully constructed
 		if (pStructure->GetState() != OBJ_CONSTRUCTING)
 		{
-			pStructure->AddToQueue(agentNum);
+			pStructure->AddToQueue(agentNum, this);
 			return true;
 		}
 

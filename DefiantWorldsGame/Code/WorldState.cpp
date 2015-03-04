@@ -1230,7 +1230,7 @@ void CWorldState::QueueUnit(int index)
 {
 	if (!mpCurSelectedStructure) return;
 
-	mpCurSelectedStructure->AddToQueue(index);
+	mpCurSelectedStructure->AddToQueue(index, mpHumanPlayer);
 	mLMouseClicked = false;
 }
 

@@ -26,7 +26,7 @@ CStaticStructure::~CStaticStructure()
 //-----------------------------------------------------
 // STATIC STRUCTURE CLASS OVERRIDE METHODS
 //-----------------------------------------------------
-bool CStaticStructure::AddToQueue(size_t agentIndex)
+bool CStaticStructure::AddToQueue(size_t agentIndex, CRTSPlayer* pPlayer)
 {
 	return false;
 }

@@ -56,13 +56,12 @@ public:
 
 	// METHODS
 	//---------------------------
-	bool AddToQueue(size_t agentIndex);
+	bool AddToQueue(size_t agentIndex, CRTSPlayer* pPlayer);
 	void RemoveFromQueue(size_t agentIndex);
 	std::deque<CGameAgent*>* GetQueue();
 	bool SpawnFront();
 	bool UpdateProduction();
 	CGameAgent* CreateAgent();		// Called when agent at front of production queue is finished
-	void UpdateKeyPresses();
 
 	bool Update(CRTSPlayer* pPlayer) override;
 	void DisplayInfo(IFont* font) override;
