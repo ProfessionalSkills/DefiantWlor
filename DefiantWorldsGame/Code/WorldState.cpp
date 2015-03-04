@@ -1073,6 +1073,11 @@ void CWorldState::StateCleanup()
 	gpEngine->RemoveMesh(mpMshSkybox);
 	gpEngine->RemoveCamera(mpCamEarth);
 
+	if (mpSprQProg)
+	{
+		gpEngine->RemoveSprite(mpSprQProg);
+	}
+
 	mMusic->StopSound();
 
 	// Unload buttons
