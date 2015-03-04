@@ -48,7 +48,7 @@ public:
 
 	// OVERRIDE METHODS
 	//---------------------------
-	bool AddToQueue(size_t agentIndex);
+	bool AddToQueue(size_t agentIndex, CRTSPlayer* pPlayer);
 	virtual void UnloadIModel();
 	virtual void LoadIModel();
 	//virtual bool Destroy();
