@@ -20,7 +20,6 @@ CRTSAIPlayer::CRTSAIPlayer(EFactions playerFaction) : CRTSPlayer(playerFaction),
 	mpTaskQ.push(new CBuildRequest(Q_WORKER, 50));
 	mpTaskQ.push(new CBuildRequest(Q_WORKER, 50));
 	mpTaskQ.push(new CBuildRequest(Q_WORKER, 50));
-	mpTaskQ.push(new CBuildRequest(Q_WORKER, 50));
 
 
 	// Set default mUpdateTime

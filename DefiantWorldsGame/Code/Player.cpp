@@ -12,15 +12,17 @@
 //-----------------------------------------------------
 // BASE PLAYER CLASS CONSTRUCTORS & DESTRUCTOR
 //-----------------------------------------------------
-CRTSPlayer::CRTSPlayer(EFactions playerFaction)
+CRTSPlayer::CRTSPlayer(EFactions playerFaction) : MINERAL_UPDATE_TIME(5.0f)
 {
-	mNumMinerals = 2000;
+	mNumMinerals = 2500;
 	mpFleet = new CFleet();
 	mPlayerFaction = playerFaction;
 	mNumMothership = 0;
 	mNumSpaceFighter = 0;
 	mNumTransport = 0;
+	mMineralBaseAddition = 100;
 	
+	mTimeToMineralUpdate = MINERAL_UPDATE_TIME;
 	mpPlayerGrid = nullptr;
 
 	CSpaceFighter* Temp;
@@ -97,8 +99,10 @@ bool CRTSPlayer::PurchaseStructure(CStructure* pStructure, CGrid* pGrid, CTile* 
 		return false;
 	}
 
-	// Check to ensure no vehicles in the nearby area
+	// Check to ensure no vehicles in the nearby area - maybe?
 
+	// Make purchase
+	MineralTransaction(-pStructure->GetBuildCost());
 
 	// Everything fine - build & add to vector
 	pStructure->CreateStructure(pGrid);
@@ -162,6 +166,39 @@ void CRTSPlayer::CheckGameObjectSelection(CStructure*& pStructure, CGameAgent*& 
 
 void CRTSPlayer::Update()
 {
+	// Update mineral amount - check if the timer has been reached
+	if (mTimeToMineralUpdate <= 0.0f)
+	{
+		// Reset timer & begin counter for how many worker units there are
+		mTimeToMineralUpdate = MINERAL_UPDATE_TIME;
+		int numWorkers = 0;
+
+		// Add base amount
+		MineralTransaction(mMineralBaseAddition);
+
+		// Count how many workers the player has
+		// Infantry is from barracks - get all instances of barracks	
+		auto range = mpUnitsMap.equal_range(GAV_WORKER);
+
+		// Check that some structures exist
+		if (range.first != mpUnitsMap.end())
+		{
+			// Loop through each worker unit & increment the counter
+			for (auto iter = range.first; iter != range.second; ++iter)
+			{
+				numWorkers++;
+			}
+		}
+
+		// use the number of workers to determine bonus
+		MineralTransaction(static_cast<float>(numWorkers * mMineralBaseAddition));
+	}
+	else
+	{
+		// Decrease timer
+		mTimeToMineralUpdate -= gFrameTime;
+	}
+	
 	// Loop through all structures & update them
 	for (miterStructuresMap = mpStructuresMap.begin(); miterStructuresMap != mpStructuresMap.end(); miterStructuresMap++)
 	{

@@ -46,6 +46,7 @@ protected:
 	EFactions mPlayerFaction;
 
 	int mNumMinerals;
+	int mMineralBaseAddition;
 	int mCurPopLimit;
 	int mCurPop;
 
@@ -54,6 +55,9 @@ protected:
 	int mNumTransport;
 
 	CGrid* mpPlayerGrid;
+
+	const float MINERAL_UPDATE_TIME;
+	float mTimeToMineralUpdate;
 
 
 	// LISTS

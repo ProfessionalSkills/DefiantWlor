@@ -128,13 +128,16 @@ void CWorldState::DrawFontData()
 	strStream.str("");
 
 
-
 	//////////////temp
 	//Current Tactics
 	strStream << "Current Tactic: " << mpHumanPlayer->GetFleet()->GetTacticsName();
-	mFntDebug->Draw(strStream.str(), 1225, 15, kWhite, kLeft, kTop);
+	mFntDebug->Draw(strStream.str(), 1225, 5, kWhite, kLeft, kTop);
 	strStream.str("");
 
+	// Minerals
+	strStream << "Minerals: " << mpHumanPlayer->GetMineralAmount();
+	mFntDebug->Draw(strStream.str(), 1225, 17, kWhite, kLeft, kTop);
+	strStream.str("");
 
 
 	// Draw mouse state - and get current grid data
@@ -146,6 +149,10 @@ void CWorldState::DrawFontData()
 		strStream << "Earth";
 		break;
 	case MS_MARS_GRID:
+		strStream << "Minerals: " << mpAIPlayer->GetMineralAmount();
+		mFntDebug->Draw(strStream.str(), 1225, 29, kWhite, kLeft, kTop);
+		strStream.str("");
+
 		mpCurTile = mpMarsGrid->GetTileData(mMouseGridPos);
 		strStream << "Mars";
 		break;
