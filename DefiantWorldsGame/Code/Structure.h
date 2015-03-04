@@ -41,7 +41,6 @@ protected:
 	float mRepairSpeed;
 	float mCurBuildTimeLeft;			// Time left until structure is built
 	float mHeight;
-	int   mBuildCost;
 	//CParticleEmitter* mDestroyParticleFX;
 
 	EObjectStates mState;
@@ -90,11 +89,6 @@ public:
 	inline float GetBuildTimeLeft()
 	{
 		return mCurBuildTimeLeft;
-	}
-
-	inline int GetBuildCost()
-	{
-		return mBuildCost;
 	}
 
 	inline EObjectStates GetState()

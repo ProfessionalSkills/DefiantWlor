@@ -32,6 +32,7 @@ CInfantry::CInfantry()
 	mIsMoving = false;
 	mPopCost = 1;
 	mScale = 1.5f;
+	mBuildCost = 100;
 }
 
 CInfantry::~CInfantry()

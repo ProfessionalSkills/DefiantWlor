@@ -31,6 +31,7 @@ CArtillery::CArtillery()
 	hasTarget = false;
 	mPopCost = 1;
 	mScale = 1.5f;
+	mBuildCost = 150;
 }
 
 CArtillery::~CArtillery()

@@ -31,7 +31,7 @@ CFighter::CFighter()
 	hasTarget = false;
 	mPopCost = 1;
 	mScale = 2.0f;
-
+	mBuildCost = 600;
 	mRotarSpeed = 2000.0f;
 }
 

@@ -14,7 +14,7 @@
 //-----------------------------------------------------
 CRTSPlayer::CRTSPlayer(EFactions playerFaction)
 {
-	mNumMinerals = 10000;
+	mNumMinerals = 2000;
 	mpFleet = new CFleet();
 	mPlayerFaction = playerFaction;
 	mNumMothership = 0;

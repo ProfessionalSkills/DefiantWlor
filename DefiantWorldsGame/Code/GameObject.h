@@ -24,6 +24,7 @@ protected:
 	SPointData mGridPos;
 	float mOrientation;
 	float mScale;
+	int   mBuildCost;
 	EFactions mFaction;
 
 	// TLE OBJECT DATA
@@ -81,6 +82,11 @@ public:
 	inline EFactions GetFaction()
 	{
 		return mFaction;
+	}
+
+	inline int GetBuildCost()
+	{
+		return mBuildCost;
 	}
 
 

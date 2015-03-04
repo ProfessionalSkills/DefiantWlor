@@ -31,6 +31,7 @@ CBomber::CBomber()
 	hasTarget = false;
 	mPopCost = 1;
 	mScale = 1.5f;
+	mBuildCost = 900;
 }
 
 CBomber::~CBomber()

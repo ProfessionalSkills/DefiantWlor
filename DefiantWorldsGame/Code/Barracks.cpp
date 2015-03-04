@@ -25,7 +25,7 @@ CBarracks::CBarracks()
 	mBuildTime = 5.0f;
 	mRepairSpeed = 1.0f;
 	mCurBuildTimeLeft = mBuildTime;
-	mBuildCost = 0;
+	mBuildCost = 500;
 
 	mState = OBJ_CONSTRUCTING;
 	mStructureType = STR_BARRACKS;

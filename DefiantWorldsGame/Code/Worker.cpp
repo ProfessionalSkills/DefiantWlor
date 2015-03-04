@@ -32,6 +32,7 @@ CWorker::CWorker()
 	mIsMoving = false;
 	mPopCost = 1;
 	mScale = 1.5f;
+	mBuildCost = 50;
 }
 
 CWorker::~CWorker()

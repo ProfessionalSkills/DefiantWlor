@@ -30,6 +30,7 @@ CTransport::CTransport()
 	
 	//Model Values
 	mScale = 0.1f;
+	mBuildCost = 1400;
 	
 	//Misc
 	//mAttackParticleFX;

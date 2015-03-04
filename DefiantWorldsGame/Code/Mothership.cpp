@@ -31,6 +31,7 @@ CMothership::CMothership()
 
 	//Model Values
 	mScale = 0.2f;
+	mBuildCost = 2000;
 
 	//Misc
 	//mAttackParticleFX;
