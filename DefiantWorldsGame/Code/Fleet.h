@@ -36,7 +36,6 @@ private:
 
 	// TACTICS
 	//---------------------------
-	
 	Tactics mFleetTactics;
 	int mTargetedFireVariance;
 	CRandomiser* mTarget;

@@ -594,6 +594,7 @@ void CWorldState::StateSetup()
 	mpButtonSpaceCentre = pNewButton;
 	mpGenericButtonList.push_back(pNewButton);
 
+
 	pNewButton = new CAdvancedButton<CWorldState, void>("DefDeleteButton.png", "SelDeleteButton.png", SPointData(1465, 782),
 		SAABoundingBox(879.0f, 1542.0f, 782.0f, 1465.0f), *this, &CWorldState::DeleteStructure);
 	pNewButton->Hide();
@@ -672,6 +673,14 @@ void CWorldState::StateSetup()
 		mpUnitsButtonList.push_back(mpQueueButtons->mpButtons[i]);
 	}
 
+
+	// Launch Space Attack
+	mpSpaceAtaackButtons = new CAdvancedButton<CWorldState, void>("AttackButton.png", "AttackButtonMO.png", SPointData(10, 700), SAABoundingBox(777.0f, 113.0f, 700.0f, 10.0f),
+		*this, &CWorldState::LaunchAttack);
+
+
+	mpGenericButtonList.push_back(mpSpaceAtaackButtons);
+	
 
 	// CONSTRUCT COMMAND CENTRES
 	//-----------------------------
@@ -1190,4 +1199,11 @@ void CWorldState::DeleteStructure()
 	// Leave function so next function call is not executed
 	return;
 	mLMouseClicked = false;
+}
+
+void CWorldState::LaunchAttack()
+{
+	mpHumanPlayer->LaunchAttack();
+	mpAIPlayer->LaunchAttack();
+	gCurState = GS_SPACE;
 }

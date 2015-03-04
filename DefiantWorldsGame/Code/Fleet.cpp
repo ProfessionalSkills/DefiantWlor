@@ -267,6 +267,7 @@ vector <CGameAgent*>* CFleet::LaunchFleet(vector <CGameAgent*>* possibleShips)
 void CFleet::SetTactic(Tactics tactics)//changes the tactics the fleet will use in battle, e.g rapid, targated
 {
 	mFleetTactics = tactics;
+
 }
 
 void CFleet::ReturnFleet(CRTSPlayer* Player)

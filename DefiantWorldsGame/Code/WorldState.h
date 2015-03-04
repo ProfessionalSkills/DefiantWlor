@@ -75,11 +75,13 @@ private:
 	SStructureButtons<CWorldState>* mpSpaceCentreButtons;
 	SStructureButtons<CWorldState>* mpComCentreButtons;
 	SStructureButtons<CWorldState>* mpQueueButtons;
+	CAdvancedButton<CWorldState, void>* mpSpaceAtaackButtons;
 
 	CAdvancedButton<CWorldState, void>* mpButtonDelete;
 
 	CAdvancedButton<CWorldState, void>* mpButtonBarracks;
 	CAdvancedButton<CWorldState, void>* mpButtonHellipad;
+
 	CAdvancedButton<CWorldState, void>* mpButtonSpaceCentre;
 
 
@@ -160,6 +162,7 @@ public:
 	void CreateSpaceCentre();
 	void CreateHouse();
 	void DeleteStructure();
+	void LaunchAttack();
 
 
 	// OVERRIDE METHODS
