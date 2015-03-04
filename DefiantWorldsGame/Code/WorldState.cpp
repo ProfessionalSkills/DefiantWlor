@@ -386,6 +386,8 @@ void CWorldState::CheckKeyPresses()
 
 void CWorldState::DisplaySelectedBuildingInfo()
 {
+	int newProgressAmount = 0;
+	
 	// If an object is selected, display its info
 	if (mpCurSelectedStructure)
 	{
@@ -449,6 +451,22 @@ void CWorldState::DisplaySelectedBuildingInfo()
 		}
 		
 		mpCurSelectedStructure->DisplayInfo(mFntDebug);
+		
+		// If there is a queue, calculate the progress
+		if (mpCurSelectedStructure->GetQueueSize() != 0)
+		{
+			// There is a queue - calculate progress of first unit in queue
+			float timeLeft = mpCurSelectedStructure->GetQueue()->front()->GetCurProductionTimeLeft();
+			float totalTime = mpCurSelectedStructure->GetQueue()->front()->GetProductionTime();
+
+			// Calculate new progress using integer devision
+			newProgressAmount = static_cast<int>(((totalTime - timeLeft) / totalTime) * 10.0f);
+		}
+		else
+		{
+			// There is no queue - ensure newProgressAmount is 0
+			newProgressAmount = 0;
+		}
 
 		// Hide building construction buttons
 		mpButtonBarracks->Hide();
@@ -468,6 +486,18 @@ void CWorldState::DisplaySelectedBuildingInfo()
 		mpButtonBarracks->Show();
 		mpButtonHellipad->Show();
 		mpButtonSpaceCentre->Show();
+
+		// Nothing is selected - ensure newProgressAmount is 0
+		newProgressAmount = 0;
+	}
+
+	// Check for a change in progress amount
+	if (newProgressAmount != mQueuePrevProg)
+	{
+		// there has been a change - update the stored variable
+		mQueuePrevProg = newProgressAmount;
+		// Call change event function
+		OnStructureQueueProgressChange();
 	}
 }
 
@@ -671,6 +701,9 @@ void CWorldState::StateSetup()
 	{
 		mpUnitsButtonList.push_back(mpQueueButtons->mpButtons[i]);
 	}
+
+	mpSprQProg = nullptr;
+	mQueuePrevProg = 0;
 
 
 	// CONSTRUCT COMMAND CENTRES
@@ -1131,6 +1164,35 @@ void CWorldState::OnStructureSelectChange()
 		// Nothing selected - unload sprites
 		mpQueueButtons->UnloadSprites();
 	}
+}
+
+void CWorldState::OnStructureQueueProgressChange()
+{
+	// Check if the new progress is back to 0
+	if (mQueuePrevProg == 0)
+	{
+		// Delete current sprite and return
+		if (mpSprQProg)
+		{
+			gpEngine->RemoveSprite(mpSprQProg);
+			mpSprQProg = nullptr;
+			return;
+		}
+	}
+	
+	// Concatenate progress file name with progress amount
+	strStream << "ButtonProg" << mQueuePrevProg << ".png";
+
+	// Remove current sprite (if there is one)
+	if (mpSprQProg)
+	{
+		gpEngine->RemoveSprite(mpSprQProg);
+		mpSprQProg = nullptr;
+	}
+
+	// Create new sprite & clear string stream
+	mpSprQProg = gpEngine->CreateSprite(strStream.str(), 5.0f, 5.0f, 0.6f);
+	strStream.str("");
 }
 
 

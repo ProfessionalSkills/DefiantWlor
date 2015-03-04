@@ -63,6 +63,7 @@ private:
 	//---------------------------
 	IFont* mFntDebug;
 	ISprite* mpMainUI;
+	ISprite* mpSprQProg;
 
 	std::vector<CAdvancedButton<CWorldState, void>*> mpGenericButtonList;
 	std::vector<CAdvancedButton<CWorldState, void>*>::iterator miterGenericButtons;
@@ -120,6 +121,7 @@ private:
 	const int EDGE_THRESHOLD = 50; // How far from the edge the mouse must be for edge scrolling
 	std::stringstream strStream;
 	int mQueuePrevSize;
+	int mQueuePrevProg;				// Stores the previous progress of the object currently being queued
 
 
 	// PLAYERS
@@ -176,6 +178,7 @@ private:
 	//---------------------------
 	void OnPlacingStructureChange(CStructure* selStructure);
 	void OnStructureSelectChange();
+	void OnStructureQueueProgressChange();
 };
 
 
