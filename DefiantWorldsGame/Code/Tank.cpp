@@ -30,6 +30,7 @@ CTank::CTank()
 	mIsMoving = false;
 	mPopCost = 1;
 	mScale = 1.5f;
+	mBuildCost = 300;
 }
 
 CTank::~CTank()

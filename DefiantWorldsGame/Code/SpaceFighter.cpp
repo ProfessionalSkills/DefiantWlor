@@ -31,6 +31,7 @@ CSpaceFighter::CSpaceFighter()
 
 	//Model Values
 	mScale = 0.3f;
+	mBuildCost = 1000;
 
 	//Misc
 	//mAttackParticleFX;

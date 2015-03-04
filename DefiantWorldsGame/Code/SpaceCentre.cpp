@@ -25,7 +25,7 @@ CSpaceCentre::CSpaceCentre()
 	mBuildTime = 5.0f;
 	mRepairSpeed = 1.0f;
 	mCurBuildTimeLeft = mBuildTime;
-	mBuildCost = 0;
+	mBuildCost = 2000;
 
 	mState = OBJ_CONSTRUCTING;
 	mStructureType = STR_SPACE_CENTRE;

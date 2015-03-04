@@ -25,7 +25,7 @@ CHellipad::CHellipad()
 	mBuildTime = 10.0f;
 	mRepairSpeed = 1.0f;
 	mCurBuildTimeLeft = mBuildTime;
-	mBuildCost = 0;
+	mBuildCost = 1000;
 
 	mState = OBJ_CONSTRUCTING;
 	mStructureType = STR_HELLIPAD;
