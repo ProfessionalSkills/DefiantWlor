@@ -75,14 +75,14 @@ void CSpaceState::StateSetup()
 	string mMusicFile = "Space_Music.wav";
 	ALfloat mSourcePos[3] = { mpCamMain->GetX(), mpCamMain->GetY(), mpCamMain->GetZ() };
 	ALfloat mSourceVel[3] = { 0.0f, 0.0f, 0.0f };
-	mMusic = new CSound(mMusicFile, mSourcePos, mSourceVel);
+	mMusic = new CSound(mMusicFile, mSourcePos, mSourceVel, true);
 	mMusic->PlaySound();
 
 	//doesn't play sound yet, maybe has problems with small sound files?
-	mMusicFile = "SpaceLaser.wav";
-	ALfloat mSourceVel2[3] = { 1.0f, 0.0f, 0.0f };
-	mFiringSound = new CSound(mMusicFile, mSourcePos, mSourceVel2);
-	mFiringSound->PlaySound();
+	mMusicFile = "shoot.wav";
+	ALfloat mSourceVel2[3] = { 0.0f, 0.0f, 0.0f };
+	mFiringSound = new CSound(mMusicFile, mSourcePos, mSourceVel2, false);
+	
 
 	mpMdlSkybox->AttachToParent(mpCamMain);
 }
@@ -91,7 +91,6 @@ void CSpaceState::StateUpdate()
 {
 	// Draw the scene
 	gpEngine->DrawScene();
-
 	mpCamMain->RotateLocalZ(mCamRotSpeed*gFrameTime);
 	if (gpEngine->KeyHit(Key_R))
 	{
@@ -110,7 +109,7 @@ void CSpaceState::StateUpdate()
 		//fleets attack each other according to tactics
 		mpPlayerOneFleet->Fight();
 		mpPlayerTwoFleet->UpdateCondition();
-
+		mFiringSound->PlaySound();
 		mpPlayerTwoFleet->Fight();
 
 		//finds and removes dead ships

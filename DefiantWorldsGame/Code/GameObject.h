@@ -30,6 +30,10 @@ protected:
 	//---------------------------
 	IModel* mpObjModel;
 
+	// SOUND
+	//---------------------------
+	CSound* mGenSound;
+
 public:
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------

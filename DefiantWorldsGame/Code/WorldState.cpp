@@ -710,8 +710,6 @@ void CWorldState::StateSetup()
 	// Launch Space Attack
 	mpSpaceAtaackButtons = new CAdvancedButton<CWorldState, void>("AttackButton.png", "AttackButtonMO.png", SPointData(10, 700), SAABoundingBox(777.0f, 113.0f, 700.0f, 10.0f),
 		*this, &CWorldState::LaunchAttack);
-
-
 	mpGenericButtonList.push_back(mpSpaceAtaackButtons);
 	
 
@@ -822,7 +820,7 @@ void CWorldState::StateSetup()
 	string mMusicFile = "Perpetual Tension.wav"; //Sets the music file
 	ALfloat mSourcePos[3] = { mpCamEarth->GetX(), mpCamEarth->GetY(), mpCamEarth->GetZ() }; //Music source to camera position
 	ALfloat mSourceVel[3] = { 0.0f, 0.0f, 0.0f }; //No veloctiy of source
-	mMusic = new CSound(mMusicFile, mSourcePos, mSourceVel); //Initialise music
+	mMusic = new CSound(mMusicFile, mSourcePos, mSourceVel, true); //Initialise music
 	mMusic->PlaySound(); //Play music on loop
 }
 

@@ -12,6 +12,7 @@
 #include <alc.h>     // OpenAL "context" functions (also part of main OpenAL API)
 #include <alut.h>    // OpenAL utility library - helper functions
 #include <string>
+#include <sstream>
 using namespace std;
 
 
@@ -25,22 +26,24 @@ private:
 	//--------------------------- 
 	ALuint mBuffer;
 
-	//Sound source 
+
+	//Sound source
 	//---------------------------
 	ALuint mSource;
 
+
 	//Source Position and Velocity 
 	//---------------------------
-
 	ALfloat sourcesPos[3];
 	ALfloat sourceVel[3];
 
+
 	//Listener Position, Velocity and Orientation
 	//---------------------------
-
 	ALfloat listenerPos[3];
 	ALfloat listenerVel[3];
 	ALfloat listenerOri[6];
+
 
 	//Whether the sound is playing or not
 	//---------------------------
@@ -51,7 +54,7 @@ public:
 
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
-	CSound(string SoundFile, ALfloat mSourcePos[3], ALfloat mSourceVel[3]); 
+	CSound(string SoundFile, ALfloat mSourcePos[3], ALfloat mSourceVel[3], bool loop); 
 	~CSound();
 
 
