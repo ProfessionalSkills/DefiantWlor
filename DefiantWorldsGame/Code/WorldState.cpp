@@ -714,10 +714,23 @@ void CWorldState::StateSetup()
 	mQueuePrevProg = 0;
 
 
-	// Launch Space Attack
-	mpSpaceAtaackButtons = new CAdvancedButton<CWorldState, void>("AttackButton.png", "AttackButtonMO.png", SPointData(10, 700), SAABoundingBox(777.0f, 113.0f, 700.0f, 10.0f),
+	// Space Buttons
+	mpSpaceAtaackButtons = new CAdvancedButton<CWorldState, void>("AttackButton.png", "AttackButtonMO.png", SPointData(10, 695), SAABoundingBox(773.0f, 113.0f, 695.0f, 10.0f),
 		*this, &CWorldState::LaunchAttack);
 	mpGenericButtonList.push_back(mpSpaceAtaackButtons);
+
+	mpSpaceTacNoneButton = new CAdvancedButton<CWorldState, void>("AttackButton.png", "AttackButtonMO.png", SPointData(138, 695), SAABoundingBox(773.0f, 246.0f, 695.0f, 138.0f),
+		*this, &CWorldState::ChangeTacNone);
+	mpGenericButtonList.push_back(mpSpaceTacNoneButton);
+
+	mpSpaceTacTargetedButton = new CAdvancedButton<CWorldState, void>("TargetButton.png", "TargetButtonMO.png", SPointData(265, 695), SAABoundingBox(773.0f, 369.0f, 695.0f, 265.0f),
+		*this, &CWorldState::ChangeTacTargated);
+	mpGenericButtonList.push_back(mpSpaceTacTargetedButton);
+
+	mpSpaceTacRapidButton = new CAdvancedButton<CWorldState, void>("TargetButton.png", "TargetButtonMO.png", SPointData(10, 783), SAABoundingBox(860.0f, 113.0f, 783.0f, 10.0f),
+		*this, &CWorldState::ChangeTacRapid);
+	mpGenericButtonList.push_back(mpSpaceTacRapidButton);
+
 	
 
 	// CONSTRUCT COMMAND CENTRES
@@ -1273,4 +1286,20 @@ void CWorldState::LaunchAttack()
 	mpHumanPlayer->LaunchAttack();
 	mpAIPlayer->LaunchAttack();
 	gCurState = GS_SPACE;
+}
+
+
+void CWorldState::ChangeTacNone()
+{
+	mpHumanPlayer->GetFleet()->SetTactic(None);
+}
+
+void CWorldState::ChangeTacRapid()
+{
+	mpHumanPlayer->GetFleet()->SetTactic(Rapid);
+}
+
+void CWorldState::ChangeTacTargated()
+{
+	mpHumanPlayer->GetFleet()->SetTactic(Targeted);
 }
