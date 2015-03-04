@@ -13,7 +13,7 @@
 //-----------------------------------------------------
 // FLEET CLASS CONSTRUCTORS & DESTRUCTOR
 //-----------------------------------------------------
-CFleet::CFleet() :mFleetRowSize(15), mFleetRowSeperation(7)
+CFleet::CFleet() :mFleetRowSize(25), mFleetRowSeperation(10)
 {
 	//Value Mods
 	mDamegMod = 1.0f;
@@ -42,6 +42,11 @@ CFleet::~CFleet()
 //-----------------------------------------------------
 // FLEET CLASS METHODS
 //-----------------------------------------------------
+void CFleet::MoveFleet()
+{
+
+}
+
 void CFleet::Fight()
 {
 	if (mpEnemyFleet->GetSize() != 0)
@@ -149,16 +154,16 @@ void CFleet::LoadShipModels(float xPos)
 			switch (mpFleet[i]->GetPosType())
 			{
 			case front:
-				mpFleet[i]->LoadModel(xPos - (float)((SpaceFighterLoaded / mFleetRowSize) * mFleetRowSeperation), (float)SpaceFighterY, 0.0f);
+				mpFleet[i]->LoadModel(xPos - (float)((SpaceFighterLoaded / mFleetRowSize) * (mFleetRowSeperation)), (float)SpaceFighterY*mpFleet[i]->GetUnitSpacing(), (float)SpaceFighterY);
 				SpaceFighterLoaded++;
 				SpaceFighterY = YSwitch(SpaceFighterY);
 				break;
 			case centre:
-				mpFleet[i]->LoadModel(xPos - (float)(((TransportLoaded / mFleetRowSize) + TransportRowsBack) * mFleetRowSeperation), (float)(TransportLoaded - (TransportLoaded / mFleetRowSize) * mFleetRowSize), 0.0f);
+				mpFleet[i]->LoadModel(xPos - (float)(((TransportLoaded / mFleetRowSize) + TransportRowsBack) * mFleetRowSeperation), (float)(TransportLoaded - (TransportLoaded / mFleetRowSize) * mFleetRowSize), (float)SpaceFighterY);
 				TransportLoaded++;
 				break;
 			case back:
-				mpFleet[i]->LoadModel(xPos - (float)(((MothershipLoaded / mFleetRowSize) + MotherShipRowsBack) * mFleetRowSeperation), (float)(MothershipLoaded - (MothershipLoaded / mFleetRowSize) * mFleetRowSize), 0.0f);
+				mpFleet[i]->LoadModel(xPos - (float)(((MothershipLoaded / mFleetRowSize) + MotherShipRowsBack) * mFleetRowSeperation), (float)(MothershipLoaded - (MothershipLoaded / mFleetRowSize) * mFleetRowSize), (float)SpaceFighterY);
 				MothershipLoaded++;
 				break;
 			default:
@@ -170,16 +175,16 @@ void CFleet::LoadShipModels(float xPos)
 			switch (mpFleet[i]->GetPosType())
 			{
 			case front:
-				mpFleet[i]->LoadModel(xPos + (float)((SpaceFighterLoaded / mFleetRowSize) * mFleetRowSeperation), (float)SpaceFighterY, 0.0f);
+				mpFleet[i]->LoadModel(xPos + (float)((SpaceFighterLoaded / mFleetRowSize) * mFleetRowSeperation), (float)SpaceFighterY*mpFleet[i]->GetUnitSpacing(), (float)SpaceFighterY);
 				SpaceFighterLoaded++;
 				SpaceFighterY = YSwitch(SpaceFighterY);
 				break;
 			case centre:
-				mpFleet[i]->LoadModel(xPos + (float)(((TransportLoaded / mFleetRowSize) + TransportRowsBack) * mFleetRowSeperation), (float)(TransportLoaded - (TransportLoaded / mFleetRowSize) * mFleetRowSize), 0.0f);
+				mpFleet[i]->LoadModel(xPos + (float)(((TransportLoaded / mFleetRowSize) + TransportRowsBack) * mFleetRowSeperation), ((float)(TransportLoaded - (TransportLoaded / mFleetRowSize) * mFleetRowSize))*mpFleet[i]->GetUnitSpacing(), (float)SpaceFighterY);
 				TransportLoaded++;
 				break;
 			case back:
-				mpFleet[i]->LoadModel(xPos + (float)(((MothershipLoaded / mFleetRowSize) + MotherShipRowsBack) * mFleetRowSeperation), (float)(MothershipLoaded - (MothershipLoaded / mFleetRowSize) * mFleetRowSize), 0.0f);
+				mpFleet[i]->LoadModel(xPos + (float)(((MothershipLoaded / mFleetRowSize) + MotherShipRowsBack) * mFleetRowSeperation), ((float)(MothershipLoaded - (MothershipLoaded / mFleetRowSize) * mFleetRowSize))*mpFleet[i]->GetUnitSpacing(), (float)SpaceFighterY);
 				MothershipLoaded++;
 				break;
 			default:
@@ -258,18 +263,35 @@ vector <CGameAgent*>* CFleet::LaunchFleet(vector <CGameAgent*>* possibleShips)
 		}
 	}
 	return possibleShips;
-	//recives a vector of ships from player
-	//asks player how many it should add to the fleet
-	//pops them of player and onto fleet
-	//asks the player to choose some tactics
 }
 
 void CFleet::SetTactic(Tactics tactics)//changes the tactics the fleet will use in battle, e.g rapid, targated
 {
 	mFleetTactics = tactics;
+	//adds the fleet modifiers
+	switch (mFleetTactics)
+	{
+	case Tactics::None:
+		mDamegMod = 1.0f;
+		mHitMod = 1.0f;
+
+		break;
+	case Tactics::Rapid:
+		mDamegMod = 1.3f;
+		mHitMod = 0.45f;
+
+		break;
+	case Tactics::Targeted:
+		mDamegMod = 0.7f;
+		mHitMod = 1.4f;
+
+		break;
+	}
+	return;
 
 }
 
+//returns the fleet to the player
 void CFleet::ReturnFleet(CRTSPlayer* Player)
 {
 	for (int i = mSize-1; i >= 0; i--)

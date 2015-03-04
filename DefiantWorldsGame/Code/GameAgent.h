@@ -60,6 +60,8 @@ protected:
 	bool mIsMoving;
 	bool hasTarget;
 	int  mPopCost;
+	float mUnitSpacing;
+
 
 	eFleetPos mFleetPosition;
 public:
@@ -133,6 +135,8 @@ public:
 	}
 
 	eFleetPos GetPosType();
+
+	float GetUnitSpacing();
 
 	// MUTATORS
 	//---------------------------

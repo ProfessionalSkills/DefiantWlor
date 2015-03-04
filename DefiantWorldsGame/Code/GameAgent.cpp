@@ -30,6 +30,11 @@ eFleetPos CGameAgent::GetPosType()
 	return mFleetPosition;
 }
 
+float CGameAgent::GetUnitSpacing()
+{
+	return 4.0f;
+}
+
 //-----------------------------------------------------
 // GAME AGENT CLASS MUTATORS
 //-----------------------------------------------------

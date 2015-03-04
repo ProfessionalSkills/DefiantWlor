@@ -32,6 +32,7 @@ CSpaceFighter::CSpaceFighter()
 	//Model Values
 	mScale = 0.3f;
 	mBuildCost = 1000;
+	mUnitSpacing = 4.0f;
 
 	//Misc
 	//mAttackParticleFX;
@@ -66,14 +67,18 @@ void CSpaceFighter::LoadModel(float x,float y, float z)
 	if (mWorldPos.x<0)  mSourceVel[0] = { 100.0f};
 	else  mSourceVel[0] = {-100.0f};
 	mGenSound = new CSound(mMusicFile, mSourcePos, mSourceVel, false, 0.3f, listenerPos, listenerVel);
+
 	if (x < 0.0f)
 	{
-		mpObjModel->RotateLocalY(90.0f); 
+		mpObjModel->RotateY(90.0f); 
+		
 	}
 	else
 	{
-		mpObjModel->RotateLocalY(-90.0f);
+		mpObjModel->RotateY(-90.0f);
 	}
+
+	mpObjModel->RotateX(90.0f);
 	mpObjModel->Scale(mScale);
 }
 

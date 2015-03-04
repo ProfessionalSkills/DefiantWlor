@@ -24,7 +24,7 @@ protected:
 	// DATA
 	//---------------------------
 	float mHitChance;
-
+	float mUnitSpacing;
 
 public:
 	// CONSTRUCTORS & DESTRUCTOR
@@ -34,7 +34,7 @@ public:
 
 	// ACCESSORS
 	//---------------------------
-	
+
 
 	// MUTATORS
 	//---------------------------

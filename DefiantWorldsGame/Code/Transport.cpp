@@ -31,6 +31,7 @@ CTransport::CTransport()
 	//Model Values
 	mScale = 0.1f;
 	mBuildCost = 1400;
+	mUnitSpacing = 1.7f;
 	
 	//Misc
 	//mAttackParticleFX;
@@ -69,15 +70,22 @@ void CTransport::Spawn(CGrid* pGrid, SPointData pCentre)
 void CTransport::LoadModel(float x, float y, float z)
 {
 	mpObjModel = mspMshTransport->CreateModel(x, y, z);
-	//mpObjModel->SetSkin("Spaceship02Battlecruiser.jpg");
+
+	mWorldPos.x = x;
+	mWorldPos.y = y;
+	mWorldPos.z = z;
+
 	if (x < 0.0f)
 	{
-		mpObjModel->RotateLocalY(90.0f);
+		mpObjModel->RotateY(90.0f);
 	}
 	else
 	{
-		mpObjModel->RotateLocalY(-90.0f);
+		mpObjModel->RotateY(-90.0f);
 	}
+
+	mpObjModel->RotateX(90.0f);
+
 	mpObjModel->Scale(mScale);
 }
 

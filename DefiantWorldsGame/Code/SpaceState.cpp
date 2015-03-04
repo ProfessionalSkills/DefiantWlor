@@ -13,10 +13,8 @@
 //-----------------------------------------------------
 // SPACE STATE CLASS CONSTRUCTORS & DESTRUCTOR
 //-----------------------------------------------------
-CSpaceState::CSpaceState() :mTimeToUpdate(0.1f), mCamRotSpeed(0.7),mCamZAdjust(-7.0f),mBaseCamZ(-30.0f), CGameState() 
-
+CSpaceState::CSpaceState() :mTimeToUpdate(0.1f), mCamRotSpeed(0.7),mCamZAdjust(-10.0f),mBaseCamZ(-50.0f), mDisplacement(35),CGameState()
 {
-	mDisplacement = 20.0f;
 	mTimeSinceUpdate = 0.0f;
 	mCamZ = 0.0f;
 }
@@ -86,7 +84,6 @@ void CSpaceState::StateUpdate()
 {
 	// Draw the scene
 	gpEngine->DrawScene();
-	mpCamMain->RotateLocalZ(mCamRotSpeed*gFrameTime);
 	if (gpEngine->KeyHit(Key_R))
 	{
 		gCurState = GS_WORLD;
