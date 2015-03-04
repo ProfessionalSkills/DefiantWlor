@@ -29,7 +29,7 @@ public:
 		mPosition(pos), mBoundingBox(boundingBox), mTargetClass(targetClass), mTargetMethod(targetMethod),
 		mIsHidden(false), mMouseIsOver(false)
 	{
-		mpSprBasic = gpEngine->CreateSprite(defaultTex, (float)pos.mPosX, (float)pos.mPosY, 0.0f);
+		mpSprBasic = gpEngine->CreateSprite(defaultTex, (float)pos.mPosX, (float)pos.mPosY, 0.7f);
 		mpSprMO = gpEngine->CreateSprite(selectedTex, (float)pos.mPosX, (float)pos.mPosY, -1.0f);
 	}
 
@@ -69,11 +69,11 @@ public:
 		{
 			// Set mouse over sprite to front & basic to back
 			mpSprBasic->SetZ(-1.0f);
-			mpSprMO->SetZ(0.0f);
+			mpSprMO->SetZ(0.7f);
 		}
 		else if (!mMouseIsOver && !mIsHidden && mpSprBasic)
 		{
-			mpSprBasic->SetZ(0.0f);
+			mpSprBasic->SetZ(0.7f);
 			mpSprMO->SetZ(-1.0f);
 		}
 	}
@@ -84,7 +84,7 @@ public:
 		if (mIsHidden  && mpSprBasic)
 		{
 			mIsHidden = false;
-			mpSprBasic->SetZ(0.0f);
+			mpSprBasic->SetZ(0.7f);
 			mpSprMO->SetZ(-1.0f);
 		}
 	}
@@ -104,7 +104,7 @@ public:
 	{
 		if (!mpSprBasic)
 		{
-			mpSprBasic = gpEngine->CreateSprite(defTexture, (float)mPosition.mPosX, (float)mPosition.mPosY, 0.0f);
+			mpSprBasic = gpEngine->CreateSprite(defTexture, (float)mPosition.mPosX, (float)mPosition.mPosY, 0.7f);
 		}
 
 		if (!mpSprMO)

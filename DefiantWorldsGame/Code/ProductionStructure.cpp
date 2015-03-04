@@ -310,52 +310,6 @@ void CProductionStructure::DisplayInfo(IFont* font)
 			break;
 		}
 		mStrDisplay.str("");
-
-		size_t drawHeight = 805;
-		int    counter = 1;
-		// Display key presses for possible unit queuing
-		for (miterRespectiveAgents = mRespectiveAgentsList.begin(); miterRespectiveAgents != mRespectiveAgentsList.end(); miterRespectiveAgents++)
-		{
-			mStrDisplay << counter << ": " << (*miterRespectiveAgents)->GetAgentData()->mAgentName;
-			font->Draw(mStrDisplay.str(), 240, drawHeight, kWhite, kLeft, kTop);
-			mStrDisplay.str("");
-
-			drawHeight += 10;
-			counter++;
-		}
-
-		// Display queue data
-		mStrDisplay << "Queue Next: ";
-		if (mpProductionQueue.size() == 0)
-		{
-			mStrDisplay << "None";
-		}
-		else
-		{
-			mStrDisplay << mpProductionQueue.front()->GetAgentData()->mAgentName;
-		}
-		font->Draw(mStrDisplay.str(), 480, 805, kWhite, kLeft, kTop);
-		mStrDisplay.str("");
-
-		mStrDisplay << "Queue Size: " << mpProductionQueue.size();
-		font->Draw(mStrDisplay.str(), 480, 815, kWhite, kLeft, kTop);
-		mStrDisplay.str("");
-
-		// Display how long is left of the unit being constructed
-		if (mpProductionQueue.size() != 0)
-		{
-			// Display the time left until build
-			float timeLeft = mpProductionQueue.front()->GetCurProductionTimeLeft();
-			mStrDisplay << "Build time left: " << static_cast<int>(timeLeft);
-			font->Draw(mStrDisplay.str(), 725, 805, kWhite, kLeft, kTop);
-			mStrDisplay.str("");
-
-			// Show percentage completion
-			float buildTime = mpProductionQueue.front()->GetProductionTime();
-			mStrDisplay << "Percentage Complete: " << static_cast<int>(((buildTime - timeLeft) / buildTime) * 100.0f) << "%";
-			font->Draw(mStrDisplay.str(), 725, 815, kWhite, kLeft, kTop);
-			mStrDisplay.str("");
-		}
 	}
 
 	if (mState != OBJ_CONSTRUCTING)

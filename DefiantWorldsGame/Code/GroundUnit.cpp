@@ -71,7 +71,7 @@ void CGroundUnit::Update( )
 			{
 				float matrix[16];
 				mpObjModel->GetMatrix(matrix);
-				float movement = 5.0f * gFrameTime;
+				float movement = 10.0f * gFrameTime;
 				mpObjModel->MoveLocalZ(movement);
 				mWorldPos = DX::XMFLOAT3(mpObjModel->GetX(), mpObjModel->GetY(), mpObjModel->GetZ());
 				DX::XMFLOAT3 moveAmount = { matrix[8] * movement, matrix[9] * movement, matrix[10] * movement };
@@ -97,12 +97,12 @@ bool CGroundUnit::LookingAt()
 	if (dotProduct > 0.1f)
 	{
 		mpObjModel->RotateY(50.0f * gFrameTime);
-		return false;
+		return true;
 	}
 	else if (dotProduct < -0.1f)
 	{
 		mpObjModel->RotateY(-50.0f * gFrameTime);
-		return false;
+		return true;
 	}
 	else
 	{

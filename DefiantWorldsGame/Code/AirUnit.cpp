@@ -72,7 +72,7 @@ void CAirUnit::Update()
 			{
 				float matrix[16];
 				mpObjModel->GetMatrix(matrix);
-				float movement = 10.0f * gFrameTime;
+				float movement = 20.0f * gFrameTime;
 				mpObjModel->MoveLocalZ(movement);
 				mWorldPos = DX::XMFLOAT3(mpObjModel->GetX(), mpObjModel->GetY(), mpObjModel->GetZ());
 				DX::XMFLOAT3 moveAmount = { matrix[8] * movement, matrix[9] * movement, matrix[10] * movement };
@@ -80,8 +80,6 @@ void CAirUnit::Update()
 			}
 		}
 	}
-	//int nodes = mpObjModel->GetNumNodes();
-	//mpObjModel->GetNode(4)->RotateY(1000.0f * gFrameTime);
 }
 
 bool CAirUnit::LookingAt()
