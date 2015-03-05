@@ -13,7 +13,7 @@
 //-----------------------------------------------------
 // FLEET CLASS CONSTRUCTORS & DESTRUCTOR
 //-----------------------------------------------------
-CFleet::CFleet() :mFleetRowSize(25), mFleetRowSeperation(10)
+CFleet::CFleet() :mFleetRowSize(20), mFleetRowSeperation(7), mFleetZAdjust(8)
 {
 	//Value Mods
 	mDamegMod = 1.0f;
@@ -154,7 +154,7 @@ void CFleet::LoadShipModels(float xPos)
 			switch (mpFleet[i]->GetPosType())
 			{
 			case front:
-				mpFleet[i]->LoadModel(xPos - (float)((SpaceFighterLoaded / mFleetRowSize) * (mFleetRowSeperation)), (float)SpaceFighterY*mpFleet[i]->GetUnitSpacing(), (float)SpaceFighterY);
+				mpFleet[i]->LoadModel(xPos - (float)((SpaceFighterLoaded / mFleetRowSize) * (mFleetRowSeperation)), (float)SpaceFighterY*mpFleet[i]->GetUnitSpacing(), (float)mFleetZAdjust*SpaceFighterY);
 				SpaceFighterLoaded++;
 				SpaceFighterY = YSwitch(SpaceFighterY);
 				break;
@@ -175,7 +175,7 @@ void CFleet::LoadShipModels(float xPos)
 			switch (mpFleet[i]->GetPosType())
 			{
 			case front:
-				mpFleet[i]->LoadModel(xPos + (float)((SpaceFighterLoaded / mFleetRowSize) * mFleetRowSeperation), (float)SpaceFighterY*mpFleet[i]->GetUnitSpacing(), (float)SpaceFighterY);
+				mpFleet[i]->LoadModel(xPos + (float)((SpaceFighterLoaded / mFleetRowSize) * mFleetRowSeperation), (float)SpaceFighterY*mpFleet[i]->GetUnitSpacing(), (float)mFleetZAdjust*SpaceFighterY);
 				SpaceFighterLoaded++;
 				SpaceFighterY = YSwitch(SpaceFighterY);
 				break;

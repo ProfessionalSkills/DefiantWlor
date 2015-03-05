@@ -44,6 +44,7 @@ private:
 	//---------------------------
 	const int mFleetRowSize;//maximum size of a row of ships
 	const int mFleetRowSeperation;//distance between each row of ships
+	const int mFleetZAdjust;
 	int mFleetWidth;//number of ships that can be in a row. specifcally, the number of ships beyond the centre ship in a given direction
 	int YSwitch(int x);
 

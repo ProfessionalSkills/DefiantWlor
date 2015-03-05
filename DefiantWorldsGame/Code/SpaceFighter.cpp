@@ -78,7 +78,7 @@ void CSpaceFighter::LoadModel(float x,float y, float z)
 		mpObjModel->RotateY(-90.0f);
 	}
 
-	mpObjModel->RotateX(90.0f);
+	mpObjModel->RotateX(-30.0f);
 	mpObjModel->Scale(mScale);
 }
 
