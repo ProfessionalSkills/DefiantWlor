@@ -20,6 +20,7 @@ CFleet::CFleet() :mFleetRowSize(20), mFleetRowSeperation(7), mFleetZAdjust(8)
 	mHitMod = 1.0f;
 	mSize = 0;
 	mTargetedFireVariance = 5;
+	mFleetYAdjust = 20.0f;
 
 	//Tactics
 	mFleetTactics = None;
@@ -128,7 +129,7 @@ void CFleet::UpdateCondition()
 
 int CFleet::YSwitch(int x)
 {
-	if (x < -mFleetWidth || x>mFleetWidth) return 0;
+	if (x < -mFleetWidth || x>mFleetWidth)return 0;
 	if (x > 0) return x*-1;
 	else return (x*-1) + 1;
 }
@@ -154,7 +155,7 @@ void CFleet::LoadShipModels(float xPos)
 			switch (mpFleet[i]->GetPosType())
 			{
 			case front:
-				mpFleet[i]->LoadModel(xPos - (float)((SpaceFighterLoaded / mFleetRowSize) * (mFleetRowSeperation)), (float)SpaceFighterY*mpFleet[i]->GetUnitSpacing(), (float)mFleetZAdjust*SpaceFighterY);
+				mpFleet[i]->LoadModel(xPos - (float)((SpaceFighterLoaded / mFleetRowSize) * (mFleetRowSeperation)), ((float)SpaceFighterY*mpFleet[i]->GetUnitSpacing())+mFleetYAdjust, (float)mFleetZAdjust*SpaceFighterY);
 				SpaceFighterLoaded++;
 				SpaceFighterY = YSwitch(SpaceFighterY);
 				break;
@@ -175,7 +176,7 @@ void CFleet::LoadShipModels(float xPos)
 			switch (mpFleet[i]->GetPosType())
 			{
 			case front:
-				mpFleet[i]->LoadModel(xPos + (float)((SpaceFighterLoaded / mFleetRowSize) * mFleetRowSeperation), (float)SpaceFighterY*mpFleet[i]->GetUnitSpacing(), (float)mFleetZAdjust*SpaceFighterY);
+				mpFleet[i]->LoadModel(xPos + (float)((SpaceFighterLoaded / mFleetRowSize) * mFleetRowSeperation), ((float)SpaceFighterY*mpFleet[i]->GetUnitSpacing())+mFleetYAdjust, (float)mFleetZAdjust*SpaceFighterY);
 				SpaceFighterLoaded++;
 				SpaceFighterY = YSwitch(SpaceFighterY);
 				break;
