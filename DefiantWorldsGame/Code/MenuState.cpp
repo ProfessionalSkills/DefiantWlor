@@ -109,11 +109,11 @@ void CMenuState::StateSetup()
 	// INITIALISE MUSIC
 	//------------------------------
 	string mMusicFile = "Intro.wav";
-	ALfloat mSourcePos[3] = { mpCamMain->GetX(), mpCamMain->GetY(), mpCamMain->GetZ() };
-	ALfloat mSourceVel[3] = { 0.0f, 0.0f, 0.0f };
-	ALfloat listenerPos[3] = { mpCamMain->GetX(), mpCamMain->GetY(), mpCamMain->GetZ() };
-	ALfloat listenerVel[3] = { 0.0f, 0.0f, 0.0f };
-	mMusic = new CSound(mMusicFile, mSourcePos, mSourceVel, true, 1.0f, listenerPos, listenerVel);
+	DX::XMFLOAT3 mSourcePos = { mpCamMain->GetX(), mpCamMain->GetY(), mpCamMain->GetZ() };
+	DX::XMFLOAT3 mSourceVel = { 0.0f, 0.0f, 0.0f };
+	DX::XMFLOAT3 listenerPos = { mpCamMain->GetX(), mpCamMain->GetY(), mpCamMain->GetZ() };
+	DX::XMFLOAT3 listenerVel = { 0.0f, 0.0f, 0.0f };
+	mMusic = new CSound(mMusicFile, mSourcePos, mSourceVel, true, 0.6f, listenerPos, listenerVel);
 	mMusic->PlaySound();
 
 

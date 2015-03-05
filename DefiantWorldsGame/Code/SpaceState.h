@@ -43,7 +43,6 @@ private:
 	// SOUND
 	//---------------------------
 	CSound* mMusic;
-	CSound* mFiringSound;
 
 	// PLAYERS
 	//---------------------------

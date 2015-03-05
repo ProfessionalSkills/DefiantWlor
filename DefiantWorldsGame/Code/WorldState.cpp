@@ -834,14 +834,13 @@ void CWorldState::StateSetup()
 
 	mpCamCurrent = mpCamEarth;
 
-
 	// INITIALISE MUSIC
 	//-----------------------------
 	string mMusicFile = "Perpetual Tension.wav"; //Sets the music file
-	ALfloat mSourcePos[3] = { mpCamEarth->GetX(), mpCamEarth->GetY(), mpCamEarth->GetZ() }; //Music source to camera position
-	ALfloat mSourceVel[3] = { 0.0f, 0.0f, 0.0f }; //No veloctiy of source
-	ALfloat listenerPos[3] = { mpCamEarth->GetX(), mpCamEarth->GetY(), mpCamEarth->GetZ() };
-	ALfloat listenerVel[3] = { 0.0f, 0.0f, 0.0f };
+	DX::XMFLOAT3 mSourcePos = { mpCamEarth->GetX(), mpCamEarth->GetY(), mpCamEarth->GetZ()};
+	DX::XMFLOAT3 mSourceVel = { 0.0f, 0.0f, 0.0f };
+	DX::XMFLOAT3 listenerPos = { mpCamEarth->GetX(), mpCamEarth->GetY(), mpCamEarth->GetZ()};
+	DX::XMFLOAT3 listenerVel = { 0.0f, 0.0f, 0.0f };
 	mMusic = new CSound(mMusicFile, mSourcePos, mSourceVel, true, 1.0f, listenerPos, listenerVel); //Initialise music
 	mMusic->PlaySound(); //Play music on loop
 }

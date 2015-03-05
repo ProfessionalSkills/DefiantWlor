@@ -71,11 +71,11 @@ void CSpaceState::StateSetup()
 
 	// INITIALISE MUSIC
 	//------------------------------
-	string mMusicFile = "Space_Music.wav";
-	ALfloat mSourcePos[3] = { mpCamMain->GetX(), mpCamMain->GetY(), mpCamMain->GetZ() };
-	ALfloat mSourceVel[3] = { 0.0f, 0.0f, 0.0f };
-	ALfloat listenerPos[3] = { mpCamMain->GetX(), mpCamMain->GetY(), mpCamMain->GetZ() };
-	ALfloat listenerVel[3] = { 0.0f, 0.0f, 0.0f };
+	string mMusicFile = "Intro.wav";
+	DX::XMFLOAT3 mSourcePos = { mpCamMain->GetX(), mpCamMain->GetY(), mpCamMain->GetZ() };
+	DX::XMFLOAT3 mSourceVel = { 0.0f, 0.0f, 0.0f };
+	DX::XMFLOAT3 listenerPos = { mpCamMain->GetX(), mpCamMain->GetY(), mpCamMain->GetZ() };
+	DX::XMFLOAT3 listenerVel = { 0.0f, 0.0f, 0.0f };
 	mMusic = new CSound(mMusicFile, mSourcePos, mSourceVel, true, 1.0f, listenerPos, listenerVel);
 	mMusic->PlaySound();
 } 
@@ -84,6 +84,7 @@ void CSpaceState::StateUpdate()
 {
 	// Draw the scene
 	gpEngine->DrawScene();
+
 	if (gpEngine->KeyHit(Key_R))
 	{
 		gCurState = GS_WORLD;
@@ -96,6 +97,7 @@ void CSpaceState::StateUpdate()
 
 	//update time, used to slow down the speed of the fight
 	mTimeSinceUpdate += gFrameTime;
+
 	if (mTimeSinceUpdate >= mTimeToUpdate)
 	{
 		//fleets attack each other according to tactics

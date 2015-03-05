@@ -13,6 +13,16 @@
 #include <alut.h>    // OpenAL utility library - helper functions
 #include <string>
 #include <sstream>
+#include <DirectXMath.h>
+#include <vector>
+#include <list>
+#include <queue>
+#include <unordered_map>
+
+#include <string>
+#include <sstream>
+#include <iostream>
+using namespace DirectX;
 using namespace std;
 
 
@@ -54,8 +64,8 @@ public:
 
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
-	CSound(string SoundFile, ALfloat mSourcePos[3], ALfloat mSourceVel[3], bool loop, float gain,
-		ALfloat mListenerPos[3], ALfloat mListenerVel[3]);
+	CSound(string mSoundFile, XMFLOAT3 mSourcePos, XMFLOAT3 mSourceVel, bool loop, float gain,
+		XMFLOAT3 mListenerPos, XMFLOAT3 mListenerVel);
 	~CSound();
 
 

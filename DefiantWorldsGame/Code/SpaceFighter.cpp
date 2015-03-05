@@ -60,12 +60,12 @@ void CSpaceFighter::LoadModel(float x,float y, float z)
 	mWorldPos.y = y;
 	mWorldPos.z = z;
 	string mMusicFile = "shoot.wav";
-	ALfloat mSourcePos[3] = { mWorldPos.x, mWorldPos.y, mWorldPos.z };
-	ALfloat listenerPos[3] = { 0.0f, 0.0f, -50.0f };
-	ALfloat listenerVel[3] = { 0.0f, 0.0f, 0.0f };
-	ALfloat mSourceVel[3] = { 50.0f, 0.0f, 0.0f };
-	if (mWorldPos.x<0)  mSourceVel[0] = { 100.0f};
-	else  mSourceVel[0] = {-100.0f};
+	DX::XMFLOAT3 mSourcePos = { mWorldPos.x, mWorldPos.y, mWorldPos.z };
+	DX::XMFLOAT3 mSourceVel = { 0.0F, 0.0f, 0.0f };
+	DX::XMFLOAT3 listenerPos = { 0.0f, 0.0f, -30.0f };
+	DX::XMFLOAT3 listenerVel = { 0.0f, 0.0f, 0.0f };
+	if (mWorldPos.x<0.0f)  mSourceVel.x = { 100.0f};
+	else  mSourceVel.x = {-100.0f};
 	mGenSound = new CSound(mMusicFile, mSourcePos, mSourceVel, false, 0.3f, listenerPos, listenerVel);
 
 	if (x < 0.0f)
