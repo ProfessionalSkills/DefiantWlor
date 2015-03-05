@@ -66,7 +66,7 @@ void CSpaceFighter::LoadModel(float x,float y, float z)
 	DX::XMFLOAT3 listenerVel = { 0.0f, 0.0f, 0.0f };
 	if (mWorldPos.x<0.0f)  mSourceVel.x = { 100.0f};
 	else  mSourceVel.x = {-100.0f};
-	mGenSound = new CSound(mMusicFile, mSourcePos, mSourceVel, false, 0.3f, listenerPos, listenerVel);
+	mGenSound = new CSound(mMusicFile, mSourcePos, mSourceVel, false, 0.2f, listenerPos, listenerVel);
 
 	if (x < 0.0f)
 	{

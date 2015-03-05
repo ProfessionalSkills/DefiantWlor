@@ -30,6 +30,8 @@ CSpaceState::~CSpaceState()
 //-----------------------------------------------------
 void CSpaceState::StateSetup()
 {
+
+
 	// PLAYERS
 	//-----------------------------
 	mpPlayerManager = CStateControl::GetInstance()->GetPlayerManager();
@@ -63,21 +65,21 @@ void CSpaceState::StateSetup()
 	mpMshSkybox = gpEngine->LoadMesh("SkyboxSpace.x");
 	mpMdlSkybox = mpMshSkybox->CreateModel(0.0f, -1000.0f, 0.0f);
 
+	// INITIALISE MUSIC
+	//------------------------------
+	string mMusicFile = "Space_Music.wav";
+	DX::XMFLOAT3 mSourcePos = { mpCamMain->GetX(), mpCamMain->GetY(), mpCamMain->GetZ() };
+	DX::XMFLOAT3 mSourceVel = { 0.0f, 0.0f, 0.0f };
+	DX::XMFLOAT3 listenerPos = { mpCamMain->GetX(), mpCamMain->GetY(), mpCamMain->GetZ() };
+	DX::XMFLOAT3 listenerVel = { 0.0f, 0.0f, 0.0f };
+	mMusic = new CSound(mMusicFile, mSourcePos, mSourceVel, true, 0.8f, listenerPos, listenerVel);
+	mMusic->PlaySound();
+
 	// LOAD MODELS
 	//------------------------------
 	mpPlayerOneFleet->LoadShipModels(-mDisplacement);
 	mpPlayerTwoFleet->LoadShipModels(mDisplacement);
 	mpMdlSkybox->AttachToParent(mpCamMain);
-
-	// INITIALISE MUSIC
-	//------------------------------
-	string mMusicFile = "Intro.wav";
-	DX::XMFLOAT3 mSourcePos = { mpCamMain->GetX(), mpCamMain->GetY(), mpCamMain->GetZ() };
-	DX::XMFLOAT3 mSourceVel = { 0.0f, 0.0f, 0.0f };
-	DX::XMFLOAT3 listenerPos = { mpCamMain->GetX(), mpCamMain->GetY(), mpCamMain->GetZ() };
-	DX::XMFLOAT3 listenerVel = { 0.0f, 0.0f, 0.0f };
-	mMusic = new CSound(mMusicFile, mSourcePos, mSourceVel, true, 1.0f, listenerPos, listenerVel);
-	mMusic->PlaySound();
 } 
 
 void CSpaceState::StateUpdate()
