@@ -119,24 +119,24 @@ void CWorldState::DrawFontData()
 {
 	// Draw Mouse world co-ordinates to screen
 	strStream << "X: " << mMouseWorldPos.x << "  Z: " << mMouseWorldPos.z;
-	mFntDebug->Draw(strStream.str(), 5, 640, kWhite, kLeft, kTop);
+	mFntDebug->Draw(strStream.str(), 5, 615, kBlack, kLeft, kTop);
 	strStream.str("");
 
 	// Draw mouse grid co-ordinates
 	strStream << "X: " << mMouseGridPos.mPosX << "  Y: " << mMouseGridPos.mPosY;
-	mFntDebug->Draw(strStream.str(), 5, 650, kWhite, kLeft, kTop);
+	mFntDebug->Draw(strStream.str(), 5, 630, kBlack, kLeft, kTop);
 	strStream.str("");
 
 
 	//////////////temp
 	//Current Tactics
 	strStream << "Current Tactic: " << mpHumanPlayer->GetFleet()->GetTacticsName();
-	mFntDebug->Draw(strStream.str(), 1225, 5, kWhite, kLeft, kTop);
+	mFntDebug->Draw(strStream.str(), 1225, 0, kBlack, kLeft, kTop);
 	strStream.str("");
 
 	// Minerals
 	strStream << "Minerals: " << mpHumanPlayer->GetMineralAmount();
-	mFntDebug->Draw(strStream.str(), 1225, 17, kWhite, kLeft, kTop);
+	mFntDebug->Draw(strStream.str(), 1225, 15, kBlack, kLeft, kTop);
 	strStream.str("");
 
 
@@ -150,7 +150,7 @@ void CWorldState::DrawFontData()
 		break;
 	case MS_MARS_GRID:
 		strStream << "Minerals: " << mpAIPlayer->GetMineralAmount();
-		mFntDebug->Draw(strStream.str(), 1225, 29, kWhite, kLeft, kTop);
+		mFntDebug->Draw(strStream.str(), 1225, 30, kBlack, kLeft, kTop);
 		strStream.str("");
 
 		mpCurTile = mpMarsGrid->GetTileData(mMouseGridPos);
@@ -169,7 +169,7 @@ void CWorldState::DrawFontData()
 	if (mpCurTile)
 	{
 		strStream << "  USED: " << mpCurTile->IsTileUsed();
-		mFntDebug->Draw(strStream.str(), 5, 660, kWhite, kLeft, kTop);
+		mFntDebug->Draw(strStream.str(), 5, 645, kBlack, kLeft, kTop);
 		strStream.str("");
 	}
 }
@@ -612,7 +612,7 @@ void CWorldState::StateSetup()
 
 	// INITIALISE USER INTERFACE
 	//-----------------------------
-	mFntDebug = gpEngine->LoadFont("Font2.bmp", 15U);
+	mFntDebug = gpEngine->LoadFont("Calibri", 23U);
 	mpMainUI = gpEngine->CreateSprite("WorldUI.png", 0.0f, 0.0f, 0.9f);
 	CAdvancedButton<CWorldState, void>* pNewButton = nullptr;
 

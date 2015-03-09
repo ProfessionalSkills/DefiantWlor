@@ -197,8 +197,8 @@ void CStructure::Destroy()
 	}
 
 	// Also set spawning grid tile to unused
-	gridPoint.mPosX = mGridPos.mPosX + mGridSpawnLoc.mPosX;
-	gridPoint.mPosY = mGridPos.mPosY + mGridSpawnLoc.mPosY;
+	gridPoint.mPosX = mGridSpawnLoc.mPosX;
+	gridPoint.mPosY = mGridSpawnLoc.mPosY;
 	pNextTile = mpGrid->GetTileData(gridPoint);
 	pNextTile->SetTileUsage(false);
 

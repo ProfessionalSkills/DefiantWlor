@@ -235,8 +235,6 @@ bool CProductionStructure::Update(CRTSPlayer* pPlayer)
 
 void CProductionStructure::DisplayInfo(IFont* font)
 {
-	mStrDisplay << "Structure: ";
-	
 	// Output selected building
 	switch (mStructureType)
 	{
@@ -257,7 +255,7 @@ void CProductionStructure::DisplayInfo(IFont* font)
 		break;
 	}
 
-	font->Draw(mStrDisplay.str(), 5, 805, kWhite, kLeft, kTop);
+	font->Draw(mStrDisplay.str(), 420, 775, kBlack, kLeft, kTop);
 	mStrDisplay.str("");
 
 	// Check to see what state the building is in
@@ -265,36 +263,12 @@ void CProductionStructure::DisplayInfo(IFont* font)
 	{
 		// Display the time left until build
 		mStrDisplay << "Build time left: " << static_cast<int>(mCurBuildTimeLeft);
-		font->Draw(mStrDisplay.str(), 5, 815, kWhite, kLeft, kTop);
+		font->Draw(mStrDisplay.str(), 5, 815, kBlack, kLeft, kTop);
 		mStrDisplay.str("");
 
 		// Show percentage completion
 		mStrDisplay << "Percentage Complete: " << static_cast<int>(((mBuildTime - mCurBuildTimeLeft) / mBuildTime) * 100.0f) << "%";
-		font->Draw(mStrDisplay.str(), 5, 825, kWhite, kLeft, kTop);
-		mStrDisplay.str("");
-	}
-	// Display additional data so long as the building is not dead
-	else if (mState != OBJ_DEAD)
-	{
-		// Display the status of the building
-		mStrDisplay << "Building Status: ";
-		switch (mState)
-		{
-		case OBJ_BUILT:
-			mStrDisplay << "New";
-			font->Draw(mStrDisplay.str(), 5, 815, kGreen, kLeft, kTop);
-			break;
-
-		case OBJ_DAMAGED:
-			mStrDisplay << "Damaged";
-			font->Draw(mStrDisplay.str(), 5, 815, 0xFD20, kLeft, kTop);
-			break;
-
-		case OBJ_WARNING:
-			mStrDisplay << "WARNING!";
-			font->Draw(mStrDisplay.str(), 5, 815, kRed, kLeft, kTop);
-			break;
-		}
+		font->Draw(mStrDisplay.str(), 5, 825, kBlack, kLeft, kTop);
 		mStrDisplay.str("");
 	}
 }
