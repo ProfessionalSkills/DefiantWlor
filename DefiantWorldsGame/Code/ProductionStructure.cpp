@@ -29,6 +29,13 @@ CProductionStructure::~CProductionStructure()
 //-----------------------------------------------------
 bool CProductionStructure::AddToQueue(size_t agentIndex, CRTSPlayer* pPlayer)
 {	
+	// Check state of the production building
+	if (mState == OBJ_CONSTRUCTING)
+	{
+		// Cannot queue units before the structure is ready
+		return false;
+	}
+	
 	// Get the size of the respective agents array and compare with index
 	if (agentIndex >= mRespectiveAgentsList.size())
 	{
