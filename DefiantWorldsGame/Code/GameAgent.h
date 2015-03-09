@@ -47,6 +47,7 @@ protected:
 	DX::XMFLOAT3 mPathTarget;
 	std::stringstream mStrDisplay;
 	SBoundingSphere mBoundingSphere;
+	float mMaxHealth;
 	float mHealth;
 	float mSpeed;
 	float mProductionTime;

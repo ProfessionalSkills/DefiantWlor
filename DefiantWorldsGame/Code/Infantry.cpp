@@ -17,6 +17,7 @@ IMesh* CInfantry::mspMshInfantry = nullptr;
 CInfantry::CInfantry()
 {
 	mAgentInfo = SAgentData(GAV_INFANTRY, "Infantry");
+	mMaxHealth = 100.0f;
 	mHealth = 100.0f;
 	mSpeed = 1.0f;
 	mProductionTime = 10.0f;

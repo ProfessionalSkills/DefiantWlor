@@ -17,6 +17,7 @@ CSpaceFighter::CSpaceFighter()
 	mAgentInfo = SAgentData(GAV_SPACE_FIGHTER, "Space Fighter");
 
 	//Game Values
+	mMaxHealth = 100.0f;
 	mHealth = 100.0f;
 	mSpeed = 1.0f;
 	mDamage = 1.0f;

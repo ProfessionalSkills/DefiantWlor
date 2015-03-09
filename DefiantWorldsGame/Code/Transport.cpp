@@ -16,6 +16,7 @@ IMesh* CTransport::mspMshTransport = nullptr;
 CTransport::CTransport()
 {
 	//Game Values
+	mMaxHealth = 100.0f;
 	mHealth = 100.0f;
 	mSpeed = 1.0f;
 	mDamage = 0.5f;

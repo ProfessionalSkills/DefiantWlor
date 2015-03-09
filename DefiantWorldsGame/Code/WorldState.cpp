@@ -119,24 +119,24 @@ void CWorldState::DrawFontData()
 {
 	// Draw Mouse world co-ordinates to screen
 	strStream << "X: " << mMouseWorldPos.x << "  Z: " << mMouseWorldPos.z;
-	mFntDebug->Draw(strStream.str(), 5, 615, kBlack, kLeft, kTop);
+	mFntDebug->Draw(strStream.str(), 5, 615, kWhite, kLeft, kTop);
 	strStream.str("");
 
 	// Draw mouse grid co-ordinates
 	strStream << "X: " << mMouseGridPos.mPosX << "  Y: " << mMouseGridPos.mPosY;
-	mFntDebug->Draw(strStream.str(), 5, 630, kBlack, kLeft, kTop);
+	mFntDebug->Draw(strStream.str(), 5, 630, kWhite, kLeft, kTop);
 	strStream.str("");
 
 
 	//////////////temp
 	//Current Tactics
 	strStream << "Current Tactic: " << mpHumanPlayer->GetFleet()->GetTacticsName();
-	mFntDebug->Draw(strStream.str(), 1225, 0, kBlack, kLeft, kTop);
+	mFntDebug->Draw(strStream.str(), 1225, 0, kWhite, kLeft, kTop);
 	strStream.str("");
 
 	// Minerals
 	strStream << "Minerals: " << mpHumanPlayer->GetMineralAmount();
-	mFntDebug->Draw(strStream.str(), 1225, 15, kBlack, kLeft, kTop);
+	mFntDebug->Draw(strStream.str(), 1225, 15, kWhite, kLeft, kTop);
 	strStream.str("");
 
 
@@ -150,7 +150,7 @@ void CWorldState::DrawFontData()
 		break;
 	case MS_MARS_GRID:
 		strStream << "Minerals: " << mpAIPlayer->GetMineralAmount();
-		mFntDebug->Draw(strStream.str(), 1225, 30, kBlack, kLeft, kTop);
+		mFntDebug->Draw(strStream.str(), 1225, 30, kWhite, kLeft, kTop);
 		strStream.str("");
 
 		mpCurTile = mpMarsGrid->GetTileData(mMouseGridPos);
@@ -169,7 +169,7 @@ void CWorldState::DrawFontData()
 	if (mpCurTile)
 	{
 		strStream << "  USED: " << mpCurTile->IsTileUsed();
-		mFntDebug->Draw(strStream.str(), 5, 645, kBlack, kLeft, kTop);
+		mFntDebug->Draw(strStream.str(), 5, 645, kWhite, kLeft, kTop);
 		strStream.str("");
 	}
 }
@@ -394,6 +394,7 @@ void CWorldState::CheckKeyPresses()
 void CWorldState::DisplaySelectedBuildingInfo()
 {
 	int newProgressAmount = 0;
+	int newHealthAmount = -5;
 	
 	// If an object is selected, display its info
 	if (mpCurSelectedStructure)
@@ -475,6 +476,38 @@ void CWorldState::DisplaySelectedBuildingInfo()
 			newProgressAmount = 0;
 		}
 
+		// Calculate health/construction progress percentage
+		if (mpCurSelectedStructure->GetState() == OBJ_CONSTRUCTING)
+		{
+			// When constructing, health is based upon construction percentage
+			// Calculate construction percentage
+			float timeLeft = mpCurSelectedStructure->GetBuildTimeLeft();
+			float maxTime = mpCurSelectedStructure->GetBuildTime();
+			float timeTaken = maxTime - timeLeft;
+			int percentage = (int)((timeTaken / maxTime) * 100.0f);
+
+			// Check if the completion percentage is a multiple of 5
+			if (percentage % 5 == 0)
+			{
+				// Percentage is a multiple of 5 - use its value as the new health bar amount
+				newHealthAmount = percentage;
+			}
+			else
+			{
+				// maintain previous value
+				newHealthAmount = mPrevHealth;
+			}
+
+			// Draw amount to screen
+			strStream << percentage << "%";
+			mFntDebug->Draw(strStream.str(), 1130, 800, kWhite, kRight, kTop);
+			strStream.str("");
+		}
+		else
+		{
+			newHealthAmount = 100;
+		}
+
 		// Hide building construction buttons
 		mpButtonBarracks->Hide();
 		mpButtonHellipad->Hide();
@@ -496,6 +529,17 @@ void CWorldState::DisplaySelectedBuildingInfo()
 
 		// Nothing is selected - ensure newProgressAmount is 0
 		newProgressAmount = 0;
+
+		// If there is also no unit or resource selected, set new health amount to default
+		if (mpCurSelectedAgent)
+		{
+			// If there is a selection, maintain current value
+			newHealthAmount = mPrevHealth;
+		}
+		else
+		{
+			newHealthAmount = -5;
+		}
 	}
 
 	// Check for a change in progress amount
@@ -506,10 +550,19 @@ void CWorldState::DisplaySelectedBuildingInfo()
 		// Call change event function
 		OnStructureQueueProgressChange();
 	}
+
+	// Check new health amount
+	if (newHealthAmount != mPrevHealth)
+	{
+		mPrevHealth = newHealthAmount;
+		OnItemHealthChange();
+	}
 }
 
 void CWorldState::DisplaySelectedAgentInfo()
 {
+	int newHealthAmount = -5;
+	
 	// If an object is selected, display its info
 	if (mpCurSelectedAgent)
 	{
@@ -538,11 +591,29 @@ void CWorldState::DisplaySelectedAgentInfo()
 		mpButtonBarracks->Hide();
 		mpButtonHellipad->Hide();
 		mpButtonSpaceCentre->Hide();
-	}
 
+		// Calculate new health - temporarily set to 100
+		newHealthAmount = 100;
+	}
 	else
 	{
+		// If there is also no building or resource selected, set new health amount to default
+		if (mpCurSelectedStructure)
+		{
+			// If there is a selection, maintain current value
+			newHealthAmount = mPrevHealth;
+		}
+		else
+		{
+			newHealthAmount = -5;
+		}
+	}
 
+	// Check new health amount
+	if (newHealthAmount != mPrevHealth)
+	{
+		mPrevHealth = newHealthAmount;
+		OnItemHealthChange();
 	}
 }
 
@@ -612,7 +683,7 @@ void CWorldState::StateSetup()
 
 	// INITIALISE USER INTERFACE
 	//-----------------------------
-	mFntDebug = gpEngine->LoadFont("Calibri", 23U);
+	mFntDebug = gpEngine->LoadFont("Calibri", 20U);
 	mpMainUI = gpEngine->CreateSprite("WorldUI.png", 0.0f, 0.0f, 0.9f);
 	CAdvancedButton<CWorldState, void>* pNewButton = nullptr;
 
@@ -732,6 +803,10 @@ void CWorldState::StateSetup()
 	mpGenericButtonList.push_back(mpSpaceTacRapidButton);
 
 	
+	// Health bar variables
+	mpSprHealth = nullptr;
+	mPrevHealth = 0;
+
 
 	// CONSTRUCT COMMAND CENTRES
 	//-----------------------------
@@ -1077,6 +1152,11 @@ void CWorldState::StateCleanup()
 		gpEngine->RemoveSprite(mpSprQProg);
 	}
 
+	if (mpSprHealth)
+	{
+		gpEngine->RemoveSprite(mpSprHealth);
+	}
+
 	mMusic->StopSound();
 
 	// Unload buttons
@@ -1225,6 +1305,35 @@ void CWorldState::OnStructureQueueProgressChange()
 
 	// Create new sprite & clear string stream
 	mpSprQProg = gpEngine->CreateSprite(strStream.str(), 5.0f, 5.0f, 0.6f);
+	strStream.str("");
+}
+
+void CWorldState::OnItemHealthChange()
+{
+	// Check if the new progress is back to 0
+	if (mPrevHealth == -5)
+	{
+		// Delete current sprite and return
+		if (mpSprHealth)
+		{
+			gpEngine->RemoveSprite(mpSprHealth);
+			mpSprHealth = nullptr;
+			return;
+		}
+	}
+
+	// Concatenate progress file name with progress amount
+	strStream << "HealthBar" << mPrevHealth << ".png";
+
+	// Remove current sprite (if there is one)
+	if (mpSprHealth)
+	{
+		gpEngine->RemoveSprite(mpSprHealth);
+		mpSprHealth = nullptr;
+	}
+
+	// Create new sprite & clear string stream
+	mpSprHealth = gpEngine->CreateSprite(strStream.str(), 450.0f, 780.0f, 0.5f);
 	strStream.str("");
 }
 

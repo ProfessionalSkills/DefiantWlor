@@ -255,20 +255,6 @@ void CProductionStructure::DisplayInfo(IFont* font)
 		break;
 	}
 
-	font->Draw(mStrDisplay.str(), 420, 775, kBlack, kLeft, kTop);
+	font->Draw(mStrDisplay.str(), 470, 800, kWhite, kLeft, kTop);
 	mStrDisplay.str("");
-
-	// Check to see what state the building is in
-	if (mState == OBJ_CONSTRUCTING)
-	{
-		// Display the time left until build
-		mStrDisplay << "Build time left: " << static_cast<int>(mCurBuildTimeLeft);
-		font->Draw(mStrDisplay.str(), 5, 815, kBlack, kLeft, kTop);
-		mStrDisplay.str("");
-
-		// Show percentage completion
-		mStrDisplay << "Percentage Complete: " << static_cast<int>(((mBuildTime - mCurBuildTimeLeft) / mBuildTime) * 100.0f) << "%";
-		font->Draw(mStrDisplay.str(), 5, 825, kBlack, kLeft, kTop);
-		mStrDisplay.str("");
-	}
 }

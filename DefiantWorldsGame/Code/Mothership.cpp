@@ -17,6 +17,7 @@ CMothership::CMothership()
 	mAgentInfo = SAgentData(GAV_MOTHERSHIP, "Mothership");
 
 	//Game Values
+	mMaxHealth = 100.0f;
 	mHealth = 100.0f;
 	mSpeed = 1.0f;
 	mDamage = 4.0f;

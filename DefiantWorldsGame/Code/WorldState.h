@@ -64,6 +64,7 @@ private:
 	IFont* mFntDebug;
 	ISprite* mpMainUI;
 	ISprite* mpSprQProg;
+	ISprite* mpSprHealth;
 
 	std::vector<CAdvancedButton<CWorldState, void>*> mpGenericButtonList;
 	std::vector<CAdvancedButton<CWorldState, void>*>::iterator miterGenericButtons;
@@ -128,6 +129,7 @@ private:
 	std::stringstream strStream;
 	int mQueuePrevSize;
 	int mQueuePrevProg;				// Stores the previous progress of the object currently being queued
+	int mPrevHealth;
 
 
 	// PLAYERS
@@ -189,6 +191,7 @@ private:
 	void OnPlacingStructureChange(CStructure* selStructure);
 	void OnStructureSelectChange();
 	void OnStructureQueueProgressChange();
+	void OnItemHealthChange();
 };
 
 

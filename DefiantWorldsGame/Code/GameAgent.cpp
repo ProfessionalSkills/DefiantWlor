@@ -59,9 +59,7 @@ bool CGameAgent::RayCollision(DX::XMFLOAT3 origin, DX::XMFLOAT3 direction, float
 
 void CGameAgent::DisplayInfo(IFont* font)
 {
-	mStrDisplay << "Structure: ";
-
-	// Output selected building
+	// Output selected agent
 	switch (mAgentInfo.mAgentType)
 	{
 	case GAV_ARTILLERY:
@@ -101,44 +99,13 @@ void CGameAgent::DisplayInfo(IFont* font)
 		break;
 	}
 
-	font->Draw(mStrDisplay.str(), 5, 805, kWhite, kLeft, kTop);
+	font->Draw(mStrDisplay.str(), 470, 800, kWhite, kLeft, kTop);
 	mStrDisplay.str("");
 
-	// Display additional data so long as the building is not dead
-	if (mState != OBJ_DEAD)
-	{
-		// Display the status of the building
-		mStrDisplay << "Building Status: ";
-		switch (mState)
-		{
-		case OBJ_BUILT:
-			mStrDisplay << "New";
-			font->Draw(mStrDisplay.str(), 5, 815, kGreen, kLeft, kTop);
-			break;
-
-		case OBJ_DAMAGED:
-			mStrDisplay << "Damaged";
-			font->Draw(mStrDisplay.str(), 5, 815, 0xFD20, kLeft, kTop);
-			break;
-
-		case OBJ_WARNING:
-			mStrDisplay << "WARNING!";
-			font->Draw(mStrDisplay.str(), 5, 815, kRed, kLeft, kTop);
-			break;
-		}
-		mStrDisplay.str("");
-
-		size_t drawHeight = 805;
-		int    counter = 1;
-		
-		font->Draw(mStrDisplay.str(), 480, 805, kWhite, kLeft, kTop);
-		mStrDisplay.str("");
-
-		mStrDisplay << "Health Remaining: " << mHealth;
-		font->Draw(mStrDisplay.str(), 480, 815, kWhite, kLeft, kTop);
-		mStrDisplay.str("");
-	}
-
+	// Display health
+	mStrDisplay << (int)mHealth << " \\ " << (int)mMaxHealth;
+	font->Draw(mStrDisplay.str(), 1130, 800, kWhite, kRight, kTop);
+	mStrDisplay.str("");
 }
 
 //-----------------------------------------------------

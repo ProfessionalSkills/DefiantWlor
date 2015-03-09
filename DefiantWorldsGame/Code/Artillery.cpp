@@ -17,6 +17,7 @@ IMesh* CArtillery::mspMshArtillery = nullptr;
 CArtillery::CArtillery()
 {
 	mAgentInfo = SAgentData(GAV_ARTILLERY, "Artillery");
+	mMaxHealth = 100.0f;
 	mHealth = 100.0f;
 	mSpeed = 1.0f;
 	mProductionTime = 15.0f;

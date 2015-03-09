@@ -17,6 +17,7 @@ IMesh* CBomber::mspMshBomber = nullptr;
 CBomber::CBomber()
 {
 	mAgentInfo = SAgentData(GAV_BOMBER, "Bomber");
+	mMaxHealth = 100.0f;
 	mHealth = 100.0f;
 	mSpeed = 1.0f;
 	mProductionTime = 10.0f;
