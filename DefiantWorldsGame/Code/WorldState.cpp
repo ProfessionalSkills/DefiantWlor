@@ -662,6 +662,9 @@ void CWorldState::StateSetup()
 	//ClipCursor(&mWindowClip);
 	mLMouseClicked = false;
 	mRMouseClicked = false;
+	mLMouseHeld = false;
+	mHoldCount = 0.0f;
+	mClickCoolDown = 0.1f;
 
 
 	// CREATE Y = 0 PLANE
@@ -995,15 +998,45 @@ void CWorldState::StateUpdate()
 
 	// BUTTON UPDATES
 	//---------------------------
-	if (gpEngine->KeyHit(Mouse_LButton))
+	// Decrement left click cool down
+	mClickCoolDown -= gFrameTime;
+
+	if (gpEngine->KeyHeld(Mouse_LButton))
 	{
-		// Raise click flag
-		mLMouseClicked = true;
+		if (!mLMouseClicked && mHoldCount > 0.15f)
+		{
+			// If it was clicked last frame & held threshold is reached, it's being held
+			mLMouseHeld = true;
+		}
+
+		if (!mLMouseHeld && mClickCoolDown < 0.0f)
+		{
+			mLMouseClicked = true;
+			mClickCoolDown = 0.15f;
+		}
+
+		// Increment held counter
+		mHoldCount += gFrameTime;
+	}
+	else
+	{
+		// Check if the held button was previously active
+		if (mLMouseHeld)
+		{
+			// user has let go of holding mouse
+			int i = 5;
+		}
+		
+		// No button clicking
+		mLMouseClicked = false;
+		mLMouseHeld = false;
+		mHoldCount = 0.0f;
 	}
 
 	if (gpEngine->KeyHit(Mouse_RButton))
 	{
 		mRMouseClicked = true;
+
 	}
 
 	// Loop through generic buttons

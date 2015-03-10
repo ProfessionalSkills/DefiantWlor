@@ -106,6 +106,9 @@ private:
 	RECT         mWindowClip;	    // Limit the mouse to stay within the window
 	bool mLMouseClicked;
 	bool mRMouseClicked;
+	float mHoldCount;
+	float mClickCoolDown;
+	bool mLMouseHeld;
 
 	EMouseStates mMouseState;		// Stores whether mouse is within a grid or not - and which grid it is in
 
