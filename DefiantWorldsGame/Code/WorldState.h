@@ -98,6 +98,7 @@ private:
 	SPointData	 mMousePrevGridPos;
 
 	SBoundingCube* mpDragBox;
+	IModel* mpMdlDragBox;
 
 	DX::XMFLOAT3 mMouseDirection;	// Direction of ray for mouse
 	DX::XMFLOAT3 mMouseOrigin;
@@ -152,6 +153,11 @@ private:
 
 
 public:
+	// DRAG SELECTION MESH
+	//---------------------------
+	static IMesh* mspMshDrag;
+
+
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
 	CWorldState();

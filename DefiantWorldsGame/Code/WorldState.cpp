@@ -10,6 +10,8 @@
 #include "GameStateControl.h"
 
 
+IMesh* CWorldState::mspMshDrag = nullptr;
+
 //-----------------------------------------------------
 // WORLD STATE CLASS CONSTRUCTORS & DESTRUCTOR
 //-----------------------------------------------------
@@ -676,6 +678,7 @@ void CWorldState::StateSetup()
 	mClickCoolDown = 0.1f;
 
 	mpDragBox = nullptr;
+	mpMdlDragBox = nullptr;
 
 
 	// CREATE Y = 0 PLANE
@@ -1051,6 +1054,13 @@ void CWorldState::StateUpdate()
 
 			// use bounding box to check for unit selections against player's units
 			mpHumanPlayer->CheckDragSelection(mpDragBox->mBox, mpUnitSelectionList);
+
+			// Delete the dragging box
+			if (mpDragBox)
+			{
+				mspMshDrag->RemoveModel(mpMdlDragBox);
+				mpMdlDragBox = nullptr;
+			}
 		}
 		
 		// No button clicking
@@ -1059,7 +1069,25 @@ void CWorldState::StateUpdate()
 		mHoldCount = 0.0f;
 
 		// Delete the box - no longer needed
+		SafeDelete(mpDragBox);
+	}
+
+	// Check if held is still true
+	if (mLMouseHeld)
+	{
+		if (mpMdlDragBox)
+		{
+			mspMshDrag->RemoveModel(mpMdlDragBox);
+		}
 		
+		// Scale the model to the mouse's position
+		float scaleX = mMouseWorldPos.x - mDragStartPos.x;
+		float scaleZ = mMouseWorldPos.z - mDragStartPos.z;
+		
+		// Create new dragging box model
+		mpMdlDragBox = mspMshDrag->CreateModel(mDragStartPos.x, 0.5f, mDragStartPos.z);
+		mpMdlDragBox->ScaleX(scaleX);
+		mpMdlDragBox->ScaleZ(scaleZ);
 	}
 
 	if (gpEngine->KeyHit(Mouse_RButton))
@@ -1233,6 +1261,14 @@ void CWorldState::StateCleanup()
 	if (mpSprHealth)
 	{
 		gpEngine->RemoveSprite(mpSprHealth);
+	}
+
+	SafeDelete(mpDragBox);
+
+	if (mpMdlDragBox)
+	{
+		mspMshDrag->RemoveModel(mpMdlDragBox);
+		mpMdlDragBox = nullptr;
 	}
 
 	mMusic->StopSound();
