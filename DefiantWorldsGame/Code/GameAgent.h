@@ -60,7 +60,6 @@ protected:
 	//CTile* mDestGridSq;
 	bool mIsMoving;
 	bool hasTarget;
-	int  mPopCost;
 	float mUnitSpacing;
 
 
@@ -79,10 +78,7 @@ public:
 		return mHealth;
 	}
 
-	inline int GetPopValue()
-	{
-		return mPopCost;
-	}
+
 
 	inline float GetSpeed()
 	{

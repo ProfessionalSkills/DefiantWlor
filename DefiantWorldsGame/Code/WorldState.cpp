@@ -1368,7 +1368,9 @@ void CWorldState::UnqueueUnit(int index)
 
 void CWorldState::CreateBarracks()
 {
+	
 	CStructure* pStructure = new CBarracks();
+	if (!PopLimitReached(mpHumanPlayer, pStructure->GetPopValue()));
 	OnPlacingStructureChange(pStructure);
 	mLMouseClicked = false;
 }
