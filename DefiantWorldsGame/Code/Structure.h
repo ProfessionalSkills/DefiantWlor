@@ -136,6 +136,16 @@ public:
 		return mGenSound;
 	}
 
+	inline void SetSelectSound(CSound* newSound)
+	{
+		mSelectSound = newSound;
+	}
+
+	inline CSound* GetSelectSound()
+	{
+		return mSelectSound;
+	}
+
 
 	// MUTATORS
 	//---------------------------

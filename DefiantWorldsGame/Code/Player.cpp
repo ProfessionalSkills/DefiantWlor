@@ -163,6 +163,40 @@ void CRTSPlayer::CheckGameObjectSelection(CStructure*& pStructure, CGameAgent*& 
 		if (miterStructuresMap->second->RayCollision(origin, direction, newDist) && newDist < curDist)
 		{
 			pStructure = miterStructuresMap->second;
+
+			string mMusicFile = "";
+			DX::XMFLOAT3 mSourcePos;
+			DX::XMFLOAT3 mSourceVel;
+			DX::XMFLOAT3 listenerPos;
+			DX::XMFLOAT3 listenerVel;
+			if (pStructure->GetSelectSound() == nullptr)
+			{
+				mSourcePos = { pStructure->GetWorldPos().x, pStructure->GetWorldPos().y, pStructure->GetWorldPos().z };
+				mSourceVel = { 0.0f, 0.0f, 0.0f };
+				listenerPos = { pStructure->GetWorldPos().x, 50.0f, pStructure->GetWorldPos().z };
+				listenerVel = { 0.0f, 0.0f, 0.0f };
+
+				switch (pStructure->GetStructureType())
+				{
+				case STR_BARRACKS:
+					mMusicFile = "Barracks.Select.wav"; //Sets the music file
+					break;
+				case STR_COM_CENTRE:
+					mMusicFile = "Barracks.Select.wav";
+					break;
+
+				case STR_HELLIPAD:
+					mMusicFile = "Helipad.Select.wav";
+					break;
+
+				case STR_SPACE_CENTRE:
+					mMusicFile = "SpaceCentre.Select.wav";
+					break;
+				}
+
+				pStructure->SetSelectSound(new CSound(mMusicFile, mSourcePos, mSourceVel, false, 0.51f, listenerPos, listenerVel));
+			}
+			pStructure->GetSelectSound()->PlaySound();
 			curDist = newDist;
 		}
 	}

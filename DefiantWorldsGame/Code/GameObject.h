@@ -36,6 +36,7 @@ protected:
 	// SOUND
 	//---------------------------
 	CSound* mGenSound;
+	CSound* mSelectSound;
 
 public:
 	// CONSTRUCTORS & DESTRUCTOR

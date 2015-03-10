@@ -15,6 +15,7 @@
 CStructure::CStructure()
 {
 	mpGrid = nullptr;
+	mSelectSound = nullptr;
 }
 
 CStructure::~CStructure()
