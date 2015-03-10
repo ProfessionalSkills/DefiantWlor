@@ -30,9 +30,9 @@ CArtillery::CArtillery()
 	//mDestGridSq;
 	mIsMoving = false;
 	hasTarget = false;
-	mPopCost = 1;
 	mScale = 1.5f;
 	mBuildCost = 150;
+	mPopCost = 4;
 }
 
 CArtillery::~CArtillery()

@@ -30,9 +30,9 @@ CBomber::CBomber()
 	//mDestGridSq;
 	mIsMoving = false;
 	hasTarget = false;
-	mPopCost = 1;
 	mScale = 1.5f;
 	mBuildCost = 900;
+	mPopCost = 3;
 }
 
 CBomber::~CBomber()

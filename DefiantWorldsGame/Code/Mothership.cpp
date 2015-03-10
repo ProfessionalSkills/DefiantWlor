@@ -21,7 +21,6 @@ CMothership::CMothership()
 	mHealth = 100.0f;
 	mSpeed = 1.0f;
 	mDamage = 4.0f;
-	mPopCost = 1;
 	mHitChance = 0.5f;
 	mFleetPosition = back;
 
@@ -29,6 +28,7 @@ CMothership::CMothership()
 	mProductionTime = 15.0f;
 	mProductionCost = 0.0f;
 	mCurProductionTimeLeft = mProductionTime;
+	mPopCost = 10;
 
 	//Model Values
 	mScale = 0.2f;

@@ -14,7 +14,7 @@
 //-----------------------------------------------------
 CGameAgent::CGameAgent()
 {
-
+	mPopCost = 0;
 }
 
 CGameAgent::~CGameAgent()

@@ -31,9 +31,9 @@ CInfantry::CInfantry()
 	mState = OBJ_CONSTRUCTING;
 	//mDestGridSq;
 	mIsMoving = false;
-	mPopCost = 1;
 	mScale = 1.5f;
 	mBuildCost = 100;
+	mPopCost = 2;
 }
 
 CInfantry::~CInfantry()

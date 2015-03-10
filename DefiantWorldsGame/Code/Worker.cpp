@@ -31,9 +31,9 @@ CWorker::CWorker()
 	mState = OBJ_CONSTRUCTING;
 	//mDestGridSq;
 	mIsMoving = false;
-	mPopCost = 1;
 	mScale = 1.5f;
 	mBuildCost = 50;
+	mPopCost = 5;
 }
 
 CWorker::~CWorker()

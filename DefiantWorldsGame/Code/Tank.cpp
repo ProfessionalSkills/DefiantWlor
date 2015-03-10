@@ -29,9 +29,9 @@ CTank::CTank()
 	mState = OBJ_CONSTRUCTING;
 	//mDestGridSq;
 	mIsMoving = false;
-	mPopCost = 1;
 	mScale = 1.5f;
 	mBuildCost = 300;
+	mPopCost = 3;
 }
 
 CTank::~CTank()

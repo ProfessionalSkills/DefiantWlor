@@ -25,6 +25,8 @@ protected:
 	float mOrientation;
 	float mScale;
 	int   mBuildCost;
+	int  mPopCost;
+
 	EFactions mFaction;
 
 	// TLE OBJECT DATA
@@ -44,6 +46,11 @@ public:
 
 	// ACCESSORS
 	//---------------------------
+	inline int GetPopValue()
+	{
+		return mPopCost;
+	}
+
 	inline DX::XMFLOAT3 GetWorldPos()
 	{
 		return mWorldPos;

@@ -15,6 +15,7 @@
 CGameObject::CGameObject()
 {
 	mpObjModel = nullptr;
+	mPopCost = 1;
 }
 
 CGameObject::~CGameObject()

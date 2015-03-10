@@ -47,7 +47,7 @@ protected:
 
 	int mNumMinerals;
 	int mMineralBaseAddition;
-	int mCurPopLimit;
+	int mPopLimit;
 	int mCurPop;
 
 	int mNumSpaceFighter;
@@ -100,7 +100,7 @@ public:
 
 	inline int GetCurrentPopLimit()
 	{
-		return mCurPopLimit;
+		return mPopLimit;
 	}
 
 	inline CFleet* GetFleet()
