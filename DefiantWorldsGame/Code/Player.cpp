@@ -174,6 +174,27 @@ void CRTSPlayer::CheckGameObjectSelection(CStructure*& pStructure, CGameAgent*& 
 	}
 }
 
+bool CRTSPlayer::CheckDragSelection(DX::BoundingBox& box, std::vector<CGameAgent*>& selectedAgents)
+{
+	bool unitSelected = false;	// Becomes true if at least one unit has been selected
+
+	// Loop through all Units
+	for (miterUnitsMap = mpUnitsMap.begin(); miterUnitsMap != mpUnitsMap.end(); miterUnitsMap++)
+	{
+		// If there is a collision, return the pointer to that object
+		if (miterUnitsMap->second->DragBoxCollision(box))
+		{
+			// Raise selection flag
+			unitSelected = true;
+
+			// Add pointer to this agent to the list of selected agents
+			selectedAgents.push_back(miterUnitsMap->second);
+		}
+	}
+
+	return unitSelected;
+}
+
 void CRTSPlayer::Update()
 {
 	// Update mineral amount - check if the timer has been reached

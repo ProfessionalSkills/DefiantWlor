@@ -10,6 +10,8 @@
 #include "GameStateControl.h"
 
 
+IMesh* CWorldState::mspMshDrag = nullptr;
+
 //-----------------------------------------------------
 // WORLD STATE CLASS CONSTRUCTORS & DESTRUCTOR
 //-----------------------------------------------------
@@ -302,6 +304,15 @@ void CWorldState::CheckKeyPresses()
 				mpCurSelectedAgent->SetPathTarget(mMouseWorldPos);
 				mRMouseClicked = false;
 			}
+		}
+		else if (mpUnitSelectionList.size() > 0)
+		{
+			// Update all the units in the list to the current path position
+			for (miterUnitSelectionList = mpUnitSelectionList.begin(); miterUnitSelectionList != mpUnitSelectionList.end(); miterUnitSelectionList++)
+			{
+				(*miterUnitSelectionList)->SetPathTarget(mMouseWorldPos);
+			}
+			mRMouseClicked = false;
 		}
 	}
 	mLMouseClicked = false;
@@ -671,6 +682,12 @@ void CWorldState::StateSetup()
 	//ClipCursor(&mWindowClip);
 	mLMouseClicked = false;
 	mRMouseClicked = false;
+	mLMouseHeld = false;
+	mHoldCount = 0.0f;
+	mClickCoolDown = 0.1f;
+
+	mpDragBox = nullptr;
+	mpMdlDragBox = nullptr;
 
 
 	// CREATE Y = 0 PLANE
@@ -1004,10 +1021,82 @@ void CWorldState::StateUpdate()
 
 	// BUTTON UPDATES
 	//---------------------------
-	if (gpEngine->KeyHit(Mouse_LButton))
+	// Decrement left click cool down
+	mClickCoolDown -= gFrameTime;
+
+	if (gpEngine->KeyHeld(Mouse_LButton))
+	{	
+		if (!mLMouseHeld && mHoldCount > 0.1f)
+		{
+			// If it was clicked last frame & held threshold is reached, it's being held
+			mLMouseHeld = true;
+			mDragStartPos = mMouseWorldPos;
+			mDragStartPos.y = -200.0f;
+
+			// Clear unit selection
+			mpUnitSelectionList.clear();
+		}
+
+		if (!mLMouseHeld && mClickCoolDown < 0.0f)
+		{
+			mLMouseClicked = true;
+			mClickCoolDown = 0.15f;
+
+			// Clear unit selection
+			mpUnitSelectionList.clear();
+		}
+
+		// Increment held counter
+		mHoldCount += gFrameTime;
+	}
+	else
 	{
-		// Raise click flag
-		mLMouseClicked = true;
+		// Check if the held button was previously active
+		if (mLMouseHeld)
+		{
+			// Let go of mouse whilst holding - get end position
+			mDragEndPos = mMouseWorldPos;
+			mDragEndPos.y = 200.0f;
+
+			// Create the drag box
+			mpDragBox = new SBoundingCube(mDragStartPos, mDragEndPos);
+
+			// use bounding box to check for unit selections against player's units
+			mpHumanPlayer->CheckDragSelection(mpDragBox->mBox, mpUnitSelectionList);
+
+			// Delete the dragging box
+			if (mpDragBox)
+			{
+				mspMshDrag->RemoveModel(mpMdlDragBox);
+				mpMdlDragBox = nullptr;
+			}
+		}
+		
+		// No button clicking
+		mLMouseClicked = false;
+		mLMouseHeld = false;
+		mHoldCount = 0.0f;
+
+		// Delete the box - no longer needed
+		SafeDelete(mpDragBox);
+	}
+
+	// Check if held is still true
+	if (mLMouseHeld)
+	{
+		if (mpMdlDragBox)
+		{
+			mspMshDrag->RemoveModel(mpMdlDragBox);
+		}
+		
+		// Scale the model to the mouse's position
+		float scaleX = mMouseWorldPos.x - mDragStartPos.x;
+		float scaleZ = mMouseWorldPos.z - mDragStartPos.z;
+		
+		// Create new dragging box model
+		mpMdlDragBox = mspMshDrag->CreateModel(mDragStartPos.x, 0.5f, mDragStartPos.z);
+		mpMdlDragBox->ScaleX(scaleX);
+		mpMdlDragBox->ScaleZ(scaleZ);
 	}
 
 	if (gpEngine->KeyHit(Mouse_RButton))
@@ -1181,6 +1270,14 @@ void CWorldState::StateCleanup()
 	if (mpSprHealth)
 	{
 		gpEngine->RemoveSprite(mpSprHealth);
+	}
+
+	SafeDelete(mpDragBox);
+
+	if (mpMdlDragBox)
+	{
+		mspMshDrag->RemoveModel(mpMdlDragBox);
+		mpMdlDragBox = nullptr;
 	}
 
 	mMusic->StopSound();
