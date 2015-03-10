@@ -61,6 +61,16 @@ void CWorldState::UpdateHeldStructure()
 			{
 				mpPlacingStructure->SetGoodTexture();
 			}
+
+			// If there are not enough materials, show the bad texture
+			if (mpPlacingStructure->GetBuildCost() > mpHumanPlayer->GetMineralAmount())
+			{
+				mpPlacingStructure->SetBadTexture();
+			}
+			else
+			{
+				mpPlacingStructure->SetGoodTexture();
+			}
 			break;
 
 		case MS_MARS_GRID:
