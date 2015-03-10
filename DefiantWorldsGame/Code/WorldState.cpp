@@ -1022,8 +1022,6 @@ void CWorldState::StateUpdate()
 		{
 			// If it was clicked last frame & held threshold is reached, it's being held
 			mLMouseHeld = true;
-			mDragStartPos = mMouseWorldPos;
-			mDragStartPos.y = -200.0f;
 
 			// Clear unit selection
 			mpUnitSelectionList.clear();
@@ -1033,6 +1031,9 @@ void CWorldState::StateUpdate()
 		{
 			mLMouseClicked = true;
 			mClickCoolDown = 0.15f;
+
+			mDragStartPos = mMouseWorldPos;
+			mDragStartPos.y = -200.0f;
 
 			// Clear unit selection
 			mpUnitSelectionList.clear();
