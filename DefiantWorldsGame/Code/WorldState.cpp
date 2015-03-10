@@ -41,6 +41,15 @@ void CWorldState::UpdateMatrices()
 	DX::XMStoreFloat4x4(&mCamInvViewProj, invViewProj);
 }
 
+bool CWorldState::PopLimitReached(CRTSPlayer* player, int popValue)
+{
+	if ((player->GetCurrentPop() + popValue) > player->GetCurrentPopLimit())
+	{
+		return true;
+	}
+	return false;
+}
+
 void CWorldState::UpdateHeldStructure()
 {
 	// Check if a structure is being held
@@ -1344,7 +1353,7 @@ void CWorldState::OnItemHealthChange()
 void CWorldState::QueueUnit(int index)
 {
 	if (!mpCurSelectedStructure) return;
-
+	
 	mpCurSelectedStructure->AddToQueue(index, mpHumanPlayer);
 	mLMouseClicked = false;
 }

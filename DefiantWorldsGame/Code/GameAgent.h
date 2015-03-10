@@ -79,6 +79,11 @@ public:
 		return mHealth;
 	}
 
+	inline int GetPopValue()
+	{
+		return mPopCost;
+	}
+
 	inline float GetSpeed()
 	{
 		return mSpeed;

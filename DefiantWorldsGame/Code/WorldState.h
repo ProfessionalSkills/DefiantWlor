@@ -158,6 +158,8 @@ public:
 	void DisplaySelectedBuildingInfo();
 	void DisplaySelectedAgentInfo();
 
+	bool PopLimitReached(CRTSPlayer* player, int popValue);
+
 	EMouseStates UpdateMouseState();
 
 
