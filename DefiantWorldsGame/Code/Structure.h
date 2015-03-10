@@ -160,7 +160,7 @@ public:
 	// Adds a unit to the queue based on the index which has been passed in
 	virtual bool AddToQueue(size_t agentIndex, CRTSPlayer* pPlayer) = 0;
 	// Removes a unit in the queue at the given index
-	virtual void RemoveFromQueue(size_t agentIndex) = 0;
+	virtual void RemoveFromQueue(size_t agentIndex, CRTSPlayer* pPlayer) = 0;
 	// Returns a pointer to the queue of units
 	virtual std::deque<CGameAgent*>* GetQueue() = 0;
 

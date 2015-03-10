@@ -57,7 +57,7 @@ public:
 	// METHODS
 	//---------------------------
 	bool AddToQueue(size_t agentIndex, CRTSPlayer* pPlayer);
-	void RemoveFromQueue(size_t agentIndex);
+	void RemoveFromQueue(size_t agentIndex, CRTSPlayer* pPlayer);
 	std::deque<CGameAgent*>* GetQueue();
 	bool SpawnFront();
 	bool UpdateProduction();

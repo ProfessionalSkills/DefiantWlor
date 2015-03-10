@@ -107,7 +107,7 @@ bool CProductionStructure::AddToQueue(size_t agentIndex, CRTSPlayer* pPlayer)
 	if (pPlayer->GetMineralAmount() - mpProductionQueue.front()->GetBuildCost() < 0)
 	{
 		// Not enough funds - remove the object at the front of the queue
-		RemoveFromQueue(0);
+		RemoveFromQueue(0,pPlayer);
 		return false;
 	}
 
@@ -123,12 +123,12 @@ std::deque<CGameAgent*>* CProductionStructure::GetQueue()
 	return &mpProductionQueue;
 }
 
-void CProductionStructure::RemoveFromQueue(size_t agentIndex)
+void CProductionStructure::RemoveFromQueue(size_t agentIndex,CRTSPlayer* pPlayer)
 {
 	// Increment the iterator by the amount provided
 	miterProdQ = mpProductionQueue.begin();
 	std::advance(miterProdQ, agentIndex);
-
+	pPlayer->IncreasePopValue(-(*miterRespectiveAgents)->GetPopValue());
 	// Remove the unit at the given location
 	CGameAgent* tmp = (*miterProdQ);
 	SafeDelete(tmp);

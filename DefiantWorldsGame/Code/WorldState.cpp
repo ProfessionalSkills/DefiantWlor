@@ -815,7 +815,7 @@ void CWorldState::StateSetup()
 		*this, &CWorldState::ChangeTacTargated);
 	mpGenericButtonList.push_back(mpSpaceTacTargetedButton);
 
-	mpSpaceTacRapidButton = new CAdvancedButton<CWorldState, void>("TargetButton.png", "TargetButtonMO.png", SPointData(10, 783), SAABoundingBox(860.0f, 113.0f, 783.0f, 10.0f),
+	mpSpaceTacRapidButton = new CAdvancedButton<CWorldState, void>("DefRapidFireButton.png", "SelRapidFireButton.png", SPointData(10, 783), SAABoundingBox(860.0f, 113.0f, 783.0f, 10.0f),
 		*this, &CWorldState::ChangeTacRapid);
 	mpGenericButtonList.push_back(mpSpaceTacRapidButton);
 
@@ -1370,7 +1370,7 @@ void CWorldState::UnqueueUnit(int index)
 {
 	if (!mpCurSelectedStructure) return;
 
-	mpCurSelectedStructure->RemoveFromQueue(index);
+	mpCurSelectedStructure->RemoveFromQueue(index, mpHumanPlayer);
 	mLMouseClicked = false;
 }
 

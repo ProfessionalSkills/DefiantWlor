@@ -20,8 +20,9 @@ class CTransport : public CSpaceUnit
 private:
 	// DATA
 	//---------------------------
-
-
+	std::vector<CGameAgent*> mpSpaceUnitsList;
+	int mUnitCapacity;
+	int mNumUnitsHeld;
 public:
 	static IMesh* mspMshTransport;
 	// CONSTRUCTORS & DESTRUCTOR
@@ -41,7 +42,29 @@ public:
 
 	// METHODS
 	//---------------------------
+	inline std::vector < CGameAgent* > GetUnitList()
+	{
+		return mpSpaceUnitsList;
+	}
 
+	inline bool AddUnit(CGameAgent* newUnit)
+	{
+		if (mNumUnitsHeld < mUnitCapacity)
+		{
+			mNumUnitsHeld++;
+			mpSpaceUnitsList.push_back(newUnit);
+		}
+	}
+
+	inline std::vector < CGameAgent* > ReturnUnitList()
+	{
+		vector < CGameAgent* > temp = mpSpaceUnitsList;
+		for (int i = 0; i < mNumUnitsHeld; i++)
+		{
+			mpSpaceUnitsList.pop_back();
+		}
+		return temp;
+	}
 
 	// OVERRIDE METHODS
 	//---------------------------

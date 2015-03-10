@@ -42,6 +42,8 @@ CTransport::CTransport()
 	mIsMoving = false;
 	hasTarget = false;
 	mAgentInfo = SAgentData(GAV_TRANSPORT, "Transport");
+
+
 }
 
 CTransport::~CTransport()
