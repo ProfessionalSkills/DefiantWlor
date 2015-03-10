@@ -181,7 +181,17 @@ bool CProductionStructure::Update(CRTSPlayer* pPlayer)
 			{
 				// Set the building to the correct model type
 				SetBuiltModel();
-
+				if (mStructureType != STR_COM_CENTRE && pPlayer->GetPlayerFaction() == FAC_EARTH_DEFENSE_FORCE) //If the structure is not the player's command centre and belongs to the human player
+				{
+					string mMusicFile = "drill.wav"; //Sets the music file
+					DX::XMFLOAT3 mSourcePos = { mpObjModel->GetX(), mpObjModel->GetY(), mpObjModel->GetZ() };
+					DX::XMFLOAT3 mSourceVel = { 0.0f, 0.0f, 0.0f };
+					DX::XMFLOAT3 listenerPos = { mpObjModel->GetX(), 50.0f, mpObjModel->GetZ() };
+					DX::XMFLOAT3 listenerVel = { 0.0f, 0.0f, 0.0f };
+					mGenSound = new CSound(mMusicFile, mSourcePos, mSourceVel, false, 0.51f, listenerPos, listenerVel); //Initialise music
+					mGenSound->PlaySound(); //construction sound
+				}
+			
 				// Change status of the building to 'built'
 				mState = OBJ_BUILT;
 			}

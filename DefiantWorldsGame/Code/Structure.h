@@ -126,6 +126,16 @@ public:
 		return mStructureType;
 	}
 
+	inline void SetSound(CSound* newSound)
+	{
+		mGenSound = newSound;
+	}
+
+	inline CSound* GetSound()
+	{
+		return mGenSound;
+	}
+
 
 	// MUTATORS
 	//---------------------------

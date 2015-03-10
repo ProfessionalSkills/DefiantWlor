@@ -418,10 +418,15 @@ void CWorldState::DisplaySelectedBuildingInfo()
 	{
 		// Show building & unit related buttons
 		mpButtonDelete->Show();
-		
+		string mMusicFile = "";
+		DX::XMFLOAT3 mSourcePos = { mpCurSelectedStructure->GetWorldPos().x, mpCurSelectedStructure->GetWorldPos().y, mpCurSelectedStructure->GetWorldPos().z };
+		DX::XMFLOAT3 mSourceVel = { 0.0f, 0.0f, 0.0f };
+		DX::XMFLOAT3 listenerPos = { mpCurSelectedStructure->GetWorldPos().x,50.0f, mpCurSelectedStructure->GetWorldPos().z };
+		DX::XMFLOAT3 listenerVel = { 0.0f, 0.0f, 0.0f };
 		switch (mpCurSelectedStructure->GetStructureType())
 		{
 		case STR_BARRACKS:
+			mMusicFile = "Barracks.Select.wav"; //Sets the music file
 			// Hide other buildings' buttons
 			mpHellipadButtons->Hide();
 			mpSpaceCentreButtons->Hide();
@@ -432,6 +437,7 @@ void CWorldState::DisplaySelectedBuildingInfo()
 			break;
 
 		case STR_COM_CENTRE:
+			mMusicFile = "Barracks.Select.wav"; //Sets the music file
 			// Hide other buildings' buttons
 			mpBarracksButtons->Hide();
 			mpHellipadButtons->Hide();
@@ -442,6 +448,7 @@ void CWorldState::DisplaySelectedBuildingInfo()
 			break;
 
 		case STR_HELLIPAD:
+			mMusicFile = "Helipad.Select.wav"; //Sets the music file
 			// Hide other buildings' buttons
 			mpBarracksButtons->Hide();
 			mpSpaceCentreButtons->Hide();
@@ -452,6 +459,7 @@ void CWorldState::DisplaySelectedBuildingInfo()
 			break;
 
 		case STR_SPACE_CENTRE:
+			mMusicFile = "SpaceCentre.Select.wav"; //Sets the music file
 			// Hide other buildings' buttons
 			mpBarracksButtons->Hide();
 			mpHellipadButtons->Hide();
@@ -461,7 +469,8 @@ void CWorldState::DisplaySelectedBuildingInfo()
 			mpSpaceCentreButtons->Show();
 			break;
 		}
-
+		mpCurSelectedStructure->SetSound(new CSound(mMusicFile, mSourcePos, mSourceVel, false, 0.5f, listenerPos, listenerVel)); //Initialise music
+		mpCurSelectedStructure->GetSound()->PlaySound();
 
 		// BUILDING DESTRUCTION
 		//------------------------------
