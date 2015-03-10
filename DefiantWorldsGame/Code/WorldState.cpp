@@ -41,14 +41,7 @@ void CWorldState::UpdateMatrices()
 	DX::XMStoreFloat4x4(&mCamInvViewProj, invViewProj);
 }
 
-bool CWorldState::PopLimitReached(CRTSPlayer* player, int popValue)
-{
-	if ((player->GetCurrentPop() + popValue) > player->GetCurrentPopLimit())
-	{
-		return true;
-	}
-	return false;
-}
+
 
 void CWorldState::UpdateHeldStructure()
 {
@@ -134,6 +127,11 @@ void CWorldState::DrawFontData()
 	// Draw mouse grid co-ordinates
 	strStream << "X: " << mMouseGridPos.mPosX << "  Y: " << mMouseGridPos.mPosY;
 	mFntDebug->Draw(strStream.str(), 5, 630, kWhite, kLeft, kTop);
+	strStream.str("");
+
+	// Draw mouse grid co-ordinates
+	strStream << "Cuurent pop " << mpHumanPlayer->GetCurrentPop() << "/" << mpHumanPlayer->GetCurrentPopLimit();
+	mFntDebug->Draw(strStream.str(), 500, 630, kWhite, kLeft, kTop);
 	strStream.str("");
 
 
@@ -1370,7 +1368,6 @@ void CWorldState::CreateBarracks()
 {
 	
 	CStructure* pStructure = new CBarracks();
-	if (!PopLimitReached(mpHumanPlayer, pStructure->GetPopValue()));
 	OnPlacingStructureChange(pStructure);
 	mLMouseClicked = false;
 }

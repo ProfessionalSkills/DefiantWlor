@@ -22,7 +22,7 @@ CRTSPlayer::CRTSPlayer(EFactions playerFaction) : MINERAL_UPDATE_TIME(5.0f)
 	mNumTransport = 0;
 	mMineralBaseAddition = 100;
 	mPopLimit = 50;
-	
+	mCurPop = 0;
 	mTimeToMineralUpdate = MINERAL_UPDATE_TIME;
 	mpPlayerGrid = nullptr;
 
@@ -111,6 +111,15 @@ bool CRTSPlayer::PurchaseStructure(CStructure* pStructure, CGrid* pGrid, CTile* 
 	pStructure->SetFaction(mPlayerFaction);
 	mpStructuresMap.insert(GS_MultiMap::value_type(pStructure->GetStructureType(), pStructure));
 	return true;
+}
+
+bool CRTSPlayer::PopLimitReached(int popValue)
+{
+	if ((mCurPop + popValue) > mPopLimit)
+	{
+		return true;
+	}
+	return false;
 }
 
 bool CRTSPlayer::QueueUnit(CStructure* structure, CGameAgent* unit)

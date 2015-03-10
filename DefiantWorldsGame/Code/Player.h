@@ -169,6 +169,11 @@ public:
 		mpPlayerGrid = pGrid;
 	}
 
+	inline void IncreasePopValue(int value)
+	{
+		mCurPop += value;
+	}
+
 	bool MineralTransaction(int amount);
 
 	void SetNumSpaceFighter(int NumShips);
@@ -188,6 +193,7 @@ public:
 	void UnloadStructureModels();
 	void LoadUnitModels();
 	void UnloadUnitModels();
+	bool PopLimitReached(int popValue);
 };
 
 

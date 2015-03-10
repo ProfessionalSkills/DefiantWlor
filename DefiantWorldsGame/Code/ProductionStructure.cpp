@@ -36,6 +36,8 @@ bool CProductionStructure::AddToQueue(size_t agentIndex, CRTSPlayer* pPlayer)
 		return false;
 	}
 	
+
+
 	// Get the size of the respective agents array and compare with index
 	if (agentIndex >= mRespectiveAgentsList.size())
 	{
@@ -50,10 +52,17 @@ bool CProductionStructure::AddToQueue(size_t agentIndex, CRTSPlayer* pPlayer)
 		return false;
 	}
 
-	// Increment iterator to index
 	miterRespectiveAgents = mRespectiveAgentsList.begin();
 	std::advance(miterRespectiveAgents, agentIndex);
-	
+
+	if (pPlayer->PopLimitReached((*miterRespectiveAgents)->GetPopValue()))
+	{
+		return false;
+	}
+	else
+	{
+		pPlayer->IncreasePopValue((*miterRespectiveAgents)->GetPopValue());
+	}
 	// Create instance based on created type
 	switch ((*miterRespectiveAgents)->GetAgentData()->mAgentType)
 	{
