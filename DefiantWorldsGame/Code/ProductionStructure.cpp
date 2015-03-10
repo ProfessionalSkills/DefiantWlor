@@ -35,8 +35,6 @@ bool CProductionStructure::AddToQueue(size_t agentIndex, CRTSPlayer* pPlayer)
 		// Cannot queue units before the structure is ready
 		return false;
 	}
-	
-
 
 	// Get the size of the respective agents array and compare with index
 	if (agentIndex >= mRespectiveAgentsList.size())
@@ -107,7 +105,7 @@ bool CProductionStructure::AddToQueue(size_t agentIndex, CRTSPlayer* pPlayer)
 	if (pPlayer->GetMineralAmount() - mpProductionQueue.front()->GetBuildCost() < 0)
 	{
 		// Not enough funds - remove the object at the front of the queue
-		RemoveFromQueue(0,pPlayer);
+		RemoveFromQueue(mpProductionQueue.size() - 1, pPlayer);
 		return false;
 	}
 
