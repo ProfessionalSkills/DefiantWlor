@@ -56,6 +56,11 @@ bool CGameAgent::RayCollision(DX::XMFLOAT3 origin, DX::XMFLOAT3 direction, float
 		DX::XMLoadFloat3(&direction), distance);
 }
 
+bool CGameAgent::DragBoxCollision(DX::BoundingBox& box)
+{
+	return mBoundingSphere.CollidingWithBox(box);
+}
+
 
 void CGameAgent::DisplayInfo(IFont* font)
 {

@@ -303,6 +303,15 @@ void CWorldState::CheckKeyPresses()
 				mRMouseClicked = false;
 			}
 		}
+		else if (mpUnitSelectionList.size() > 0)
+		{
+			// Update all the units in the list to the current path position
+			for (miterUnitSelectionList = mpUnitSelectionList.begin(); miterUnitSelectionList != mpUnitSelectionList.end(); miterUnitSelectionList++)
+			{
+				(*miterUnitSelectionList)->SetPathTarget(mMouseWorldPos);
+			}
+			mRMouseClicked = false;
+		}
 	}
 	mLMouseClicked = false;
 	mRMouseClicked = false;
@@ -666,6 +675,8 @@ void CWorldState::StateSetup()
 	mHoldCount = 0.0f;
 	mClickCoolDown = 0.1f;
 
+	mpDragBox = nullptr;
+
 
 	// CREATE Y = 0 PLANE
 	//-----------------------------
@@ -1002,17 +1013,25 @@ void CWorldState::StateUpdate()
 	mClickCoolDown -= gFrameTime;
 
 	if (gpEngine->KeyHeld(Mouse_LButton))
-	{
-		if (!mLMouseClicked && mHoldCount > 0.15f)
+	{	
+		if (!mLMouseHeld && mHoldCount > 0.1f)
 		{
 			// If it was clicked last frame & held threshold is reached, it's being held
 			mLMouseHeld = true;
+			mDragStartPos = mMouseWorldPos;
+			mDragStartPos.y = -200.0f;
+
+			// Clear unit selection
+			mpUnitSelectionList.clear();
 		}
 
 		if (!mLMouseHeld && mClickCoolDown < 0.0f)
 		{
 			mLMouseClicked = true;
 			mClickCoolDown = 0.15f;
+
+			// Clear unit selection
+			mpUnitSelectionList.clear();
 		}
 
 		// Increment held counter
@@ -1023,20 +1042,29 @@ void CWorldState::StateUpdate()
 		// Check if the held button was previously active
 		if (mLMouseHeld)
 		{
-			// user has let go of holding mouse
-			int i = 5;
+			// Let go of mouse whilst holding - get end position
+			mDragEndPos = mMouseWorldPos;
+			mDragEndPos.y = 200.0f;
+
+			// Create the drag box
+			mpDragBox = new SBoundingCube(mDragStartPos, mDragEndPos);
+
+			// use bounding box to check for unit selections against player's units
+			mpHumanPlayer->CheckDragSelection(mpDragBox->mBox, mpUnitSelectionList);
 		}
 		
 		// No button clicking
 		mLMouseClicked = false;
 		mLMouseHeld = false;
 		mHoldCount = 0.0f;
+
+		// Delete the box - no longer needed
+		
 	}
 
 	if (gpEngine->KeyHit(Mouse_RButton))
 	{
 		mRMouseClicked = true;
-
 	}
 
 	// Loop through generic buttons

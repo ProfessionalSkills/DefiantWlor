@@ -186,6 +186,7 @@ public:
 	bool PurchaseStructure(CStructure* pStructure, CGrid* pGrid, CTile* pTile);
 	void CheckGameObjectSelection(CStructure*& pStructure, CGameAgent*& pGameAgent,
 		DX::XMFLOAT3 origin, DX::XMFLOAT3 direction);
+	bool CheckDragSelection(DX::BoundingBox& box, std::vector<CGameAgent*>& selectedAgents);
 	bool QueueUnit(CStructure* structure, CGameAgent* unit);
 	void LaunchAttack();
 	virtual void Update();

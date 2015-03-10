@@ -97,11 +97,17 @@ private:
 	SPointData   mMouseGridPos;
 	SPointData	 mMousePrevGridPos;
 
+	SBoundingCube* mpDragBox;
+
 	DX::XMFLOAT3 mMouseDirection;	// Direction of ray for mouse
 	DX::XMFLOAT3 mMouseOrigin;
 
 	DX::XMFLOAT3 mMouseWorldPos;	// Position of mouse in 3D space at y = 0
 	DX::XMFLOAT3 mCurGridPos;		// The start position of the grid currently being interacted with
+
+	DX::XMFLOAT3 mDragStartPos;
+	DX::XMFLOAT3 mDragEndPos;
+
 	RECT         mBaseClip;		    // The rectangle of the window (for undoing mouse clip)
 	RECT         mWindowClip;	    // Limit the mouse to stay within the window
 	bool mLMouseClicked;
@@ -124,6 +130,9 @@ private:
 	CStructure* mpCurSelectedStructure;
 	CGameAgent* mpCurSelectedAgent;
 	//CResource* mpCurSelectedResource;
+
+	std::vector<CGameAgent*> mpUnitSelectionList;
+	std::vector<CGameAgent*>::iterator miterUnitSelectionList;
 
 
 	// ADDITIONAL VARIABLES

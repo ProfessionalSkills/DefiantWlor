@@ -160,6 +160,11 @@ struct SBoundingSphere
 		return mSphere.Intersects(origin, direction, distance);
 	}
 
+	bool CollidingWithBox(DX::BoundingBox& box)
+	{
+		return mSphere.Intersects(box);
+	}
+
 	void Move(DX::XMFLOAT3 pos)
 	{
 		float scale = 1.0f;
