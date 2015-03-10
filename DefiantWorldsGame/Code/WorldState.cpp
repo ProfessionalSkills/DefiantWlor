@@ -807,7 +807,7 @@ void CWorldState::StateSetup()
 		*this, &CWorldState::LaunchAttack);
 	mpGenericButtonList.push_back(mpSpaceAtaackButtons);
 
-	mpSpaceTacNoneButton = new CAdvancedButton<CWorldState, void>("AttackButton.png", "AttackButtonMO.png", SPointData(138, 695), SAABoundingBox(773.0f, 246.0f, 695.0f, 138.0f),
+	mpSpaceTacNoneButton = new CAdvancedButton<CWorldState, void>("NoTactics.png", "NoTacticsMO.png", SPointData(138, 695), SAABoundingBox(773.0f, 246.0f, 695.0f, 138.0f),
 		*this, &CWorldState::ChangeTacNone);
 	mpGenericButtonList.push_back(mpSpaceTacNoneButton);
 
