@@ -32,6 +32,8 @@ CRTSPlayer::CRTSPlayer(EFactions playerFaction) : MINERAL_UPDATE_TIME(5.0f)
 		Temp = new CSpaceFighter();
 		mpSpaceUnitsList.push_back(Temp);
 	}
+
+	mpSpaceUnitsList.push_back(new CTransport());
 }
 
 CRTSPlayer::~CRTSPlayer()

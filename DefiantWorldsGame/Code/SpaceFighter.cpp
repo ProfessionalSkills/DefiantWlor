@@ -131,12 +131,10 @@ void CSpaceFighter::HitFlash()
 		if (mWorldPos.x < 0.0f)
 		{
 			mpTempShield->RotateY(90.0f);
-
 		}
 		else
 		{
 			mpTempShield->RotateY(-90.0f);
-			mSpeed = -mSpeed;
 		}
 
 		mpTempShield->RotateX(-35.0f);

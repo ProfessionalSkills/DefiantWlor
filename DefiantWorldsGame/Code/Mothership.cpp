@@ -50,12 +50,32 @@ CMothership::~CMothership()
 
 void CMothership::HitFlash()
 {
+	if (!mpTempShield)
+	{
+		mpTempShield = mspMshSheild->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
+		mpTempShield->Scale(mScale + 0.02f);
 
+		if (mWorldPos.x < 0.0f)
+		{
+			mpTempShield->RotateY(90.0f);
+		}
+		else
+		{
+			mpTempShield->RotateY(-90.0f);
+		}
+
+		mpTempShield->RotateX(-35.0f);
+	}
 }
 
 void CMothership::UnloadFlash()
 {
-
+	// If there is a shield, remove it
+	if (mpTempShield)
+	{
+		mspMshSheild->RemoveModel(mpTempShield);
+		mpTempShield = nullptr;
+	}
 }
 
 
@@ -83,16 +103,19 @@ void CMothership::LoadModel(float x, float y, float z)
 	mWorldPos.x = x;
 	mWorldPos.y = y;
 	mWorldPos.z = z;
+
 	if (x < 0.0f)
 	{
 		mpObjModel->RotateY(90.0f);
+
 	}
 	else
 	{
 		mpObjModel->RotateY(-90.0f);
+		mSpeed = -mSpeed;
 	}
-	mpObjModel->RotateX(90.0f);
 
+	mpObjModel->RotateX(-35.0f);
 	mpObjModel->Scale(mScale);
 }
 
@@ -102,6 +125,11 @@ void CMothership::UnloadIModel()
 	{
 		mspMshMothership->RemoveModel(mpObjModel);
 		mpObjModel = nullptr;
+	}
+	if (mpTempShield != 0)
+	{
+		mspMshSheild->RemoveModel(mpTempShield);
+		mpTempShield = nullptr;
 	}
 }
 

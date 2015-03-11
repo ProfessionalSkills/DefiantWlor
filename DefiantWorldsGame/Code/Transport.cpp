@@ -71,12 +71,33 @@ void CTransport::Spawn(CGrid* pGrid, SPointData pCentre)
 
 void CTransport::HitFlash()
 {
+	if (!mpTempShield)
+	{
+		mpTempShield = mspMshSheild->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
+		mpTempShield->Scale(mScale + 0.01f);
 
+		if (mWorldPos.x < 0.0f)
+		{
+			mpTempShield->RotateY(90.0f);
+
+		}
+		else
+		{
+			mpTempShield->RotateY(-90.0f);
+		}
+
+		mpTempShield->RotateX(-35.0f);
+	}
 }
 
 void CTransport::UnloadFlash()
 {
-
+	// If there is a shield, remove it
+	if (mpTempShield)
+	{
+		mspMshSheild->RemoveModel(mpTempShield);
+		mpTempShield = nullptr;
+	}
 }
 
 void CTransport::LoadModel(float x, float y, float z)
@@ -109,9 +130,12 @@ void CTransport::UnloadIModel()
 		mspMshTransport->RemoveModel(mpObjModel);
 		mpObjModel = nullptr;
 	}
+	if (mpTempShield != 0)
+	{
+		mspMshSheild->RemoveModel(mpTempShield);
+		mpTempShield = nullptr;
+	}
 }
-
-
 
 bool CTransport::Move()
 {
