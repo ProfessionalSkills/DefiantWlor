@@ -165,20 +165,20 @@ void CFleet::LoadShipModels(float xPos)
 		switch (mpFleet[i]->GetPosType())
 		{
 		case front:
-			mpFleet[i]->LoadModel(xPos - (float)((SpaceFighterLoaded / mFleetRowSize) * (mFleetRowSeperation)*posMod),
-				((float)SpaceFighterY*mpFleet[i]->GetUnitSpacing())+mFleetYAdjust, (float)mFleetZAdjust*SpaceFighterY);
+			mpFleet[i]->LoadModel(xPos + (float)((SpaceFighterLoaded / mFleetRowSize) * (mFleetRowSeperation)*posMod),
+				((float)SpaceFighterY*mFleetRowSeperation) + mFleetYAdjust, (float)mFleetZAdjust*SpaceFighterY);
 			SpaceFighterLoaded++;
 			SpaceFighterY = YSwitch(SpaceFighterY);
 			break;
 		case centre:
-			mpFleet[i]->LoadModel(xPos - (float)(((TransportLoaded / mFleetRowSize) + TransportRowsBack) * mFleetRowSeperation*posMod),
-				((float)TransportY*mpFleet[i]->GetUnitSpacing()) + mFleetYAdjust, (float)mFleetZAdjust*TransportY);
+			mpFleet[i]->LoadModel(xPos + (float)(((TransportLoaded / mFleetRowSize) + TransportRowsBack + mpFleet[i]->GetUnitSpacing()) * mFleetRowSeperation*posMod),
+				((float)TransportY*mFleetRowSeperation) + mFleetYAdjust, (float)mFleetZAdjust*TransportY);
 			TransportLoaded++;
 			TransportY = YSwitch(TransportY);
 			break;
 		case back:
-			mpFleet[i]->LoadModel(xPos - (float)(((MothershipLoaded / mFleetRowSize) + MotherShipRowsBack) * mFleetRowSeperation*posMod),
-				((float)MothershipY*mpFleet[i]->GetUnitSpacing()) + mFleetYAdjust, (float)mFleetZAdjust*MothershipY);
+			mpFleet[i]->LoadModel(xPos + (float)(((MothershipLoaded / mFleetRowSize) + MotherShipRowsBack + mpFleet[i]->GetUnitSpacing()) * mFleetRowSeperation*posMod),
+				((float)MothershipY*mFleetRowSeperation) + mFleetYAdjust, (float)mFleetZAdjust*MothershipY);
 			MothershipLoaded++;
 			MothershipY = YSwitch(MothershipY);
 			break;
@@ -186,32 +186,6 @@ void CFleet::LoadShipModels(float xPos)
 			break;
 		}
 	}
-	/*
-		else
-		{
-			switch (mpFleet[i]->GetPosType())
-			{
-			case front:
-				mpFleet[i]->LoadModel(xPos + (float)((SpaceFighterLoaded / mFleetRowSize) * mFleetRowSeperation),
-					((float)SpaceFighterY*mpFleet[i]->GetUnitSpacing())+mFleetYAdjust, (float)mFleetZAdjust*SpaceFighterY);
-				SpaceFighterLoaded++;
-				SpaceFighterY = YSwitch(SpaceFighterY);
-				break;
-			case centre:
-				mpFleet[i]->LoadModel(xPos + (float)(((TransportLoaded / mFleetRowSize) + TransportRowsBack) * mFleetRowSeperation),
-					((float)(TransportLoaded - (TransportLoaded / mFleetRowSize) * mFleetRowSize))*mpFleet[i]->GetUnitSpacing(), (float)SpaceFighterY);
-				TransportLoaded++;
-				break;
-			case back:
-				mpFleet[i]->LoadModel(xPos + (float)(((MothershipLoaded / mFleetRowSize) + MotherShipRowsBack) * mFleetRowSeperation), 
-					((float)(MothershipLoaded - (MothershipLoaded / mFleetRowSize) * mFleetRowSize))*mpFleet[i]->GetUnitSpacing(), (float)SpaceFighterY);
-				MothershipLoaded++;
-				break;
-			default:
-				break;
-			}
-		}
-	}*/
 }
 
 void CFleet::UnloadShieldModels()

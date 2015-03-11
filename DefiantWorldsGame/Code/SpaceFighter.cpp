@@ -20,7 +20,6 @@ CSpaceFighter::CSpaceFighter()
 	//Game Values
 	mMaxHealth = 100.0f;
 	mHealth = 100.0f;
-	mSpeed = 250.0f;
 	mDamage = 1.0f;
 	mPopCost = 1;
 	mHitChance = 0.7f;
@@ -114,6 +113,11 @@ bool CSpaceFighter::Attack(CGameAgent* target, float hitMod, float damageMod)
 		return true;
 	}
 	return false;
+}
+
+float CSpaceFighter::GetUnitSpacing()
+{
+	return mUnitSpacing;
 }
 
 void CSpaceFighter::Spawn(CGrid* pGrid, SPointData pCentre)

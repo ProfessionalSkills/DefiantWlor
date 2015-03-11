@@ -32,7 +32,7 @@ eFleetPos CGameAgent::GetPosType()
 
 float CGameAgent::GetUnitSpacing()
 {
-	return 4.0f;
+	return mUnitSpacing;
 }
 
 //-----------------------------------------------------

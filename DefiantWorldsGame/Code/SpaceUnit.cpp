@@ -14,7 +14,7 @@
 //-----------------------------------------------------
 CSpaceUnit::CSpaceUnit()
 {
-	mSpeed = 250.0f;
+	mSpeed = 50.0f;
 	mpTempShield = nullptr;
 }
 

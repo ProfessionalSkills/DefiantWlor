@@ -29,9 +29,9 @@ CTransport::CTransport()
 	mCurProductionTimeLeft = mProductionTime;
 	
 	//Model Values
-	mScale = 0.1f;
+	mScale = 0.2f;
 	mBuildCost = 1400;
-	mUnitSpacing = 1.7f;
+	mUnitSpacing = 0.1f*(10*mScale);
 	
 	//Misc
 	//mAttackParticleFX;
@@ -69,12 +69,17 @@ void CTransport::Spawn(CGrid* pGrid, SPointData pCentre)
 
 }
 
+float CTransport::GetUnitSpacing()
+{
+	return mUnitSpacing;
+}
+
 void CTransport::HitFlash()
 {
 	if (!mpTempShield)
 	{
 		mpTempShield = mspMshSheild->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
-		mpTempShield->Scale(mScale + 0.01f);
+		mpTempShield->Scale(mScale + 0.03f);
 
 		if (mWorldPos.x < 0.0f)
 		{
@@ -110,14 +115,14 @@ void CTransport::LoadModel(float x, float y, float z)
 
 	if (x < 0.0f)
 	{
-		mpObjModel->RotateY(90.0f);
+		mpObjModel->RotateY(90.0f);	
 	}
 	else
 	{
 		mpObjModel->RotateY(-90.0f);
+		mSpeed = -mSpeed;
 	}
-
-	mpObjModel->RotateX(90.0f);
+	mpObjModel->RotateX(-35.0f);
 
 	mpObjModel->Scale(mScale);
 }

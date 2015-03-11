@@ -53,6 +53,7 @@ public:
 	void UnloadIModel();
 	void HitFlash();
 	void UnloadFlash();
+	float GetUnitSpacing();
 
 private:
 	bool Destroy();

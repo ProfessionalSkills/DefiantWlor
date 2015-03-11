@@ -30,9 +30,9 @@ CMothership::CMothership()
 	mPopCost = 10;
 
 	//Model Values
-	mScale = 0.2f;
+	mScale = 2.0f;
 	mBuildCost = 2000;
-	mUnitSpacing = 2.5f;
+	mUnitSpacing = 0.5f*(mScale*10);
 
 	//Misc
 	//mAttackParticleFX;
@@ -53,7 +53,7 @@ void CMothership::HitFlash()
 	if (!mpTempShield)
 	{
 		mpTempShield = mspMshSheild->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
-		mpTempShield->Scale(mScale + 0.02f);
+		mpTempShield->Scale(mScale + 0.1f);
 
 		if (mWorldPos.x < 0.0f)
 		{
@@ -97,6 +97,11 @@ void CMothership::Spawn(CGrid* pGrid, SPointData pCentre)
 
 }
 
+float CMothership::GetUnitSpacing()
+{
+	return mUnitSpacing;
+}
+
 void CMothership::LoadModel(float x, float y, float z)
 {
 	mpObjModel = mspMshMothership->CreateModel(x, y, z);
@@ -107,7 +112,6 @@ void CMothership::LoadModel(float x, float y, float z)
 	if (x < 0.0f)
 	{
 		mpObjModel->RotateY(90.0f);
-
 	}
 	else
 	{

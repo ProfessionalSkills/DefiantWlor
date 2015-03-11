@@ -13,7 +13,7 @@
 //-----------------------------------------------------
 // SPACE STATE CLASS CONSTRUCTORS & DESTRUCTOR
 //-----------------------------------------------------
-CSpaceState::CSpaceState() :mTimeToUpdate(0.1f), mCamRotSpeed(0.7),mCamZAdjust(-10.4f),mBaseCamZ(-88.0f), mDisplacement(30),CGameState()
+CSpaceState::CSpaceState() :mTimeToUpdate(0.1f), mCamRotSpeed(0.7),mCamZAdjust(-10.4f),mBaseCamZ(-188.0f), mDisplacement(30),CGameState()
 {
 	mTimeSinceUpdate = 0.0f;
 	mCamZ = 0.0f;

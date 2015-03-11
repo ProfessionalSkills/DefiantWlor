@@ -138,7 +138,7 @@ public:
 
 	eFleetPos GetPosType();
 
-	float GetUnitSpacing();
+	virtual float GetUnitSpacing();
 
 	// MUTATORS
 	//---------------------------
