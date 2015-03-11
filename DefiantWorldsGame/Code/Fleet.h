@@ -15,7 +15,7 @@
 // FLEET CLASS
 //-----------------------------------------------------
 class CRTSPlayer;
-enum Tactics {Targeted, Rapid, None};
+enum Tactics {None, Targeted, Rapid};
 class CFleet
 {
 private:

@@ -538,18 +538,19 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 		break;
 
 	case Q_CHANGE_TACTIC:
+	{
 		// Generate a random number from 1 - 3 to determine which tactic to use
-		int tactic = mpRandomiser->GetRandomInt((int)Tactics::None, (int)Tactics::Targeted);
+		int tactic = mpRandomiser->GetRandomInt((int)Tactics::None, (int)Tactics::Rapid);
 
 		// Determine chosen tactic & set it
 		Tactics selTactic = (Tactics)tactic;
 		mpFleet->SetTactic(selTactic);
 
-		return;
+		return true;
 		break;
-
+	}
 	case Q_MOVE_UNIT:
-		return;
+		return true;
 		break;
 	}
 
