@@ -18,13 +18,8 @@
 #include <sstream>
 #include "SoundObject.h"
 #include "Particles.h"
+#include "NewsTicker.h"
 #include <iostream>
-
-
-//-----------------------------------------------------
-// FORWARD DECLARATIONS
-//-----------------------------------------------------
-extern class CNewsTicker;
 
 
 //-----------------------------------------------------

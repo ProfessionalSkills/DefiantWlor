@@ -177,6 +177,32 @@ bool CStructure::RayCollision(DX::XMFLOAT3 origin, DX::XMFLOAT3 direction, float
 
 void CStructure::Destroy()
 {
+	// Alert news ticker if structure belongs to the player
+	if (mFaction == FAC_EARTH_DEFENSE_FORCE)
+	{
+		switch (GetStructureType())
+		{
+		case STR_BARRACKS:
+			mStrDisplay << "A Barracks";
+			break;
+
+		case STR_COM_CENTRE:
+			mStrDisplay << "The Command Centre";
+			break;
+
+		case STR_HELLIPAD:
+			mStrDisplay << "A Hellipad";
+			break;
+
+		case STR_SPACE_CENTRE:
+			mStrDisplay << "A Space Centre";
+			break;
+		}
+		mStrDisplay << " has been destroyed!";
+		gpNewsTicker->AddNewElement(mStrDisplay.str(), true);
+		mStrDisplay.str("");
+	}
+	
 	// Mark the building's grid area as in use
 	CTile* pNextTile;
 	SPointData gridPoint;

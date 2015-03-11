@@ -1576,28 +1576,6 @@ void CWorldState::DeleteStructure()
 	
 	// Set object to be deleted
 	mpCurSelectedStructure->SetState(OBJ_DEAD);
-	// Alert news ticker
-	switch (mpCurSelectedStructure->GetStructureType())
-	{
-	case STR_BARRACKS:
-		strStream << "A Barracks";
-		break;
-
-	case STR_COM_CENTRE:
-		strStream << "The Command Centre";
-		break;
-
-	case STR_HELLIPAD:
-		strStream << "A Hellipad";
-		break;
-
-	case STR_SPACE_CENTRE:
-		strStream << "A Space Centre";
-		break;
-	}
-	strStream << " has been destroyed!";
-	gpNewsTicker->AddNewElement(strStream.str(), true);
-	strStream.str("");
 	// pointer set to null
 	mpCurSelectedStructure = nullptr;
 	// Leave function so next function call is not executed
