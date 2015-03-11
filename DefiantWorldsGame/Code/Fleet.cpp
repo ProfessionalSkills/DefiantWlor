@@ -158,17 +158,22 @@ void CFleet::LoadShipModels(float xPos)
 			switch (mpFleet[i]->GetPosType())
 			{
 			case front:
-				mpFleet[i]->LoadModel(xPos - (float)((SpaceFighterLoaded / mFleetRowSize) * (mFleetRowSeperation)), ((float)SpaceFighterY*mpFleet[i]->GetUnitSpacing())+mFleetYAdjust, (float)mFleetZAdjust*SpaceFighterY);
+				mpFleet[i]->LoadModel(xPos - (float)((SpaceFighterLoaded / mFleetRowSize) * (mFleetRowSeperation)),
+					((float)SpaceFighterY*mpFleet[i]->GetUnitSpacing())+mFleetYAdjust, (float)mFleetZAdjust*SpaceFighterY);
 				SpaceFighterLoaded++;
 				SpaceFighterY = YSwitch(SpaceFighterY);
 				break;
 			case centre:
-				mpFleet[i]->LoadModel(xPos - (float)(((TransportLoaded / mFleetRowSize) + TransportRowsBack) * mFleetRowSeperation), (float)(TransportLoaded - (TransportLoaded / mFleetRowSize) * mFleetRowSize), (float)SpaceFighterY);
+				mpFleet[i]->LoadModel(xPos - (float)(((TransportLoaded / mFleetRowSize) + TransportRowsBack) * mFleetRowSeperation), 
+					((float)TransportY*mpFleet[i]->GetUnitSpacing()) + mFleetYAdjust, (float)mFleetZAdjust*TransportY);
 				TransportLoaded++;
+				TransportY = YSwitch(TransportY);
 				break;
 			case back:
-				mpFleet[i]->LoadModel(xPos - (float)(((MothershipLoaded / mFleetRowSize) + MotherShipRowsBack) * mFleetRowSeperation), (float)(MothershipLoaded - (MothershipLoaded / mFleetRowSize) * mFleetRowSize), (float)SpaceFighterY);
+				mpFleet[i]->LoadModel(xPos - (float)(((MothershipLoaded / mFleetRowSize) + MotherShipRowsBack) * mFleetRowSeperation), 
+					((float)MothershipY*mpFleet[i]->GetUnitSpacing()) + mFleetYAdjust, (float)mFleetZAdjust*MothershipY);
 				MothershipLoaded++;
+				MothershipY = YSwitch(MothershipY);
 				break;
 			default:
 				break;
