@@ -949,6 +949,24 @@ void CWorldState::StateSetup()
 
 	mpCamCurrent = mpCamEarth;
 
+	// Camera limitations
+	mMinEarthPos = mpEarthGrid->GetGridStartPos();
+	mMinEarthPos.x -= 100.0f;
+	mMinEarthPos.z -= 100.0f;
+	mMaxEarthPos = mpEarthGrid->GetGridEndPos();
+	mMaxEarthPos.x += 100.0f;
+	mMaxEarthPos.z += 100.0f;
+
+	mMinMarsPos = mpMarsGrid->GetGridStartPos();
+	mMinMarsPos.x -= 100.0f;
+	mMinMarsPos.z -= 100.0f;
+	mMaxMarsPos = mpMarsGrid->GetGridEndPos();
+	mMaxMarsPos.x += 100.0f;
+	mMaxMarsPos.z += 100.0f;
+
+	mCurCamPrevPos = DX::XMFLOAT3(0.0f, mpCamEarth->GetY(), 0.0f);
+
+
 	// INITIALISE MUSIC
 	//-----------------------------
 	string mMusicFile = "Perpetual Tension.wav"; //Sets the music file
@@ -993,6 +1011,43 @@ void CWorldState::StateUpdate()
 	{
 		// Mouse on bottom side of screen
 		mpCamCurrent->MoveZ(-CAM_MOVE_SPEED * gFrameTime);
+	}
+
+	// Get camera's position
+	DX::XMFLOAT3 camPos; 
+	camPos.x = mpCamCurrent->GetX();
+	camPos.z = mpCamCurrent->GetZ();
+
+	// Check camera is within boundaries
+	if (mpCamCurrent == mpCamEarth)
+	{
+		if (camPos.x >= mMinEarthPos.x && camPos.x <= mMaxEarthPos.x &&
+			camPos.z >= mMinEarthPos.z && camPos.z <= mMaxEarthPos.z)
+		{
+			// Remember current position as previous
+			mCurCamPrevPos = camPos;
+		}
+		else
+		{
+			// Otherwise set the previous position as it is out of area
+			mpCamCurrent->SetX(mCurCamPrevPos.x);
+			mpCamCurrent->SetZ(mCurCamPrevPos.z);
+		}
+	}
+	else
+	{
+		if (camPos.x >= mMinMarsPos.x && camPos.x <= mMaxMarsPos.x &&
+			camPos.z >= mMinMarsPos.z && camPos.z <= mMaxMarsPos.z)
+		{
+			// Remember current position as previous
+			mCurCamPrevPos = camPos;
+		}
+		else
+		{
+			// Otherwise set the previous position as it is out of area
+			mpCamCurrent->SetX(mCurCamPrevPos.x);
+			mpCamCurrent->SetZ(mCurCamPrevPos.z);
+		}
 	}
 
 
@@ -1203,14 +1258,6 @@ void CWorldState::StateUpdate()
 		mMousePrevGridPos = mMouseGridPos;
 	}
 
-	for (auto it = mpHumanPlayer->GetWorldUnitList()->begin(); it != mpHumanPlayer->GetWorldUnitList()->end(); it++)
-	{
-		if (it->second->HasTarget())
-		{
-			//it->second->Update();
-			//mpEarthGrid->GetTileData(mGr  it->second->GetPathTarget()->GetGridPos())->SetTileUsage(true);
-		}
-	}
 
 	// UPDATE PLAYERS
 	//------------------------------

@@ -26,6 +26,14 @@ private:
 	ICamera* mpCamMars;
 	ICamera* mpCamCurrent;
 
+	DX::XMFLOAT3 mMinEarthPos;
+	DX::XMFLOAT3 mMaxEarthPos;
+
+	DX::XMFLOAT3 mMinMarsPos;
+	DX::XMFLOAT3 mMaxMarsPos;
+
+	DX::XMFLOAT3 mCurCamPrevPos;
+
 	DX::XMFLOAT4X4 mCamWorldMatrix;
 	DX::XMFLOAT4X4 mCamInvViewProj;
 
