@@ -550,8 +550,34 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 		break;
 	}
 	case Q_MOVE_UNIT:
+	{
+		// If there are enough units
+		int size = mpUnitsMap.size();
+		if (size == 0)
+		{
+			return false;
+		}
+
+		// Pick a random unit and move it to an arbitrary location
+		int unitNum = mpRandomiser->GetRandomInt(0, size - 1);
+
+		miterUnitsMap = mpUnitsMap.begin();
+		std::advance(miterUnitsMap, unitNum);
+
+		// Pick a random location to move the unit to
+		DX::XMFLOAT3 newPos;
+
+		DX::XMFLOAT3 start = mpPlayerGrid->GetGridStartPos();
+		DX::XMFLOAT3 end = mpPlayerGrid->GetGridEndPos();
+
+		newPos.x = mpRandomiser->GetRandomFloat(start.x, end.x);
+		newPos.z = mpRandomiser->GetRandomFloat(start.z, end.z);
+
+		miterUnitsMap->second->SetPathTarget(newPos);
+
 		return true;
 		break;
+	}
 	}
 
 	// If it was a unit being built, simply build unit & return true (for now)
