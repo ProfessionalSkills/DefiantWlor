@@ -76,6 +76,7 @@ void CMothership::UnloadFlash()
 		mspMshSheild->RemoveModel(mpTempShield);
 		mpTempShield = nullptr;
 	}
+	UnloadLazer();
 }
 
 
@@ -88,6 +89,9 @@ bool CMothership::Attack(CGameAgent* target, float hitMod, float damageMod)
 	if (toHitRoll.GetRandomFloat(1.0, 100.0) < (hitMod*mHitChance) * 100)
 	{
 		target->TakeDamage(mDamage*damageMod);
+		FireLazer(target);
+		CSpaceUnit* mpTemp = (CSpaceUnit*)(target);
+		mpTemp->HitFlash();
 		return true;
 	}
 	return false;
@@ -135,6 +139,7 @@ void CMothership::UnloadIModel()
 		mspMshSheild->RemoveModel(mpTempShield);
 		mpTempShield = nullptr;
 	}
+	UnloadLazer();
 }
 
 

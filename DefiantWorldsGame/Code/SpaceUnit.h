@@ -26,13 +26,14 @@ protected:
 	float mHitChance;
 	float mUnitSpacing;
 	IModel* mpTempShield;
+	IModel* mpTempLazer;
 
 public:
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
 	CSpaceUnit();
 	virtual ~CSpaceUnit();
-
+	static IMesh* mspMshLazer;
 	// ACCESSORS
 	//---------------------------
 
@@ -56,6 +57,8 @@ public:
 	virtual bool Destroy();
 	virtual void HitFlash()=0;
 	virtual void UnloadFlash() = 0;
+	void FireLazer(CGameAgent* target);
+	void UnloadLazer();
 };
 
 #endif /* _SPACE_UNIT_H_ */

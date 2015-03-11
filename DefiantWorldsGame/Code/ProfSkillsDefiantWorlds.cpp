@@ -201,6 +201,9 @@ void SetupEngine()
 	CTransport::mspMshTransport = gpEngine->LoadMesh("Spaceship01Battlecruiser.x");
 	CTransport::mspMshSheild = gpEngine->LoadMesh("Spaceship01BattlecruiserShield.x");
 
+	//lazer
+	CSpaceUnit::mspMshLazer = gpEngine->LoadMesh("Lazer.x");
+
 	//Ground Unit Meshes
 	//Bomber
 	CBomber::mspMshBomber = gpEngine->LoadMesh("HeliScout.x");

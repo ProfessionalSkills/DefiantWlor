@@ -55,7 +55,6 @@ public:
 	void UnloadFlash();
 	bool Move();
 	float GetUnitSpacing();
-
 private:
 	bool Destroy();
 };

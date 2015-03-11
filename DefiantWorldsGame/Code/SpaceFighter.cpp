@@ -96,6 +96,7 @@ void CSpaceFighter::UnloadIModel()
 		mspMshSheild->RemoveModel(mpTempShield);
 		mpTempShield = nullptr;
 	}
+	UnloadLazer();
 }
 
 //-----------------------------------------------------
@@ -110,6 +111,7 @@ bool CSpaceFighter::Attack(CGameAgent* target, float hitMod, float damageMod)
 		mGenSound->PlaySound();
 		CSpaceUnit* mpTemp = (CSpaceUnit*)(target);
 		mpTemp->HitFlash();
+		FireLazer(target);
 		return true;
 	}
 	return false;
@@ -153,6 +155,7 @@ void CSpaceFighter::UnloadFlash()
 		mspMshSheild->RemoveModel(mpTempShield);
 		mpTempShield = nullptr;
 	}
+	UnloadLazer();
 }
 
 //CSpaceFighter::void MoveTo(CTile* dest)

@@ -59,6 +59,9 @@ bool CTransport::Attack(CGameAgent* target, float hitMod, float damageMod)
 	if (toHitRoll.GetRandomFloat(1.0, 100.0) < (hitMod*mHitChance) * 100)
 	{
 		target->TakeDamage(mDamage*damageMod);
+		FireLazer(target);
+		CSpaceUnit* mpTemp = (CSpaceUnit*)(target);
+		mpTemp->HitFlash();
 		return true;
 	}
 	return false;
@@ -103,6 +106,7 @@ void CTransport::UnloadFlash()
 		mspMshSheild->RemoveModel(mpTempShield);
 		mpTempShield = nullptr;
 	}
+	UnloadLazer();
 }
 
 void CTransport::LoadModel(float x, float y, float z)
@@ -140,6 +144,7 @@ void CTransport::UnloadIModel()
 		mspMshSheild->RemoveModel(mpTempShield);
 		mpTempShield = nullptr;
 	}
+	UnloadLazer();
 }
 
 bool CTransport::Move()

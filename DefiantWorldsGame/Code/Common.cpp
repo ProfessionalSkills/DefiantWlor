@@ -20,7 +20,6 @@ EGameStates  gCurState = GS_MAIN_MENU;
 float        gFrameTime = 0.0f;
 float        gMouseWheelDelta = 0.0f;
 
-
 //-----------------------------------------------------
 // FUNCTION DEFINITIONS
 //-----------------------------------------------------

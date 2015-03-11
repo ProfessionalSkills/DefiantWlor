@@ -27,7 +27,7 @@ CRTSPlayer::CRTSPlayer(EFactions playerFaction) : MINERAL_UPDATE_TIME(5.0f)
 	mpPlayerGrid = nullptr;
 
 	CSpaceFighter* Temp;
-	for (int i = 0; i <250; i++)
+	for (int i = 0; i <75; i++)
 	{
 		Temp = new CSpaceFighter();
 		mpSpaceUnitsList.push_back(Temp);
@@ -38,6 +38,7 @@ CRTSPlayer::CRTSPlayer(EFactions playerFaction) : MINERAL_UPDATE_TIME(5.0f)
 		temp = new CTransport();
 		mpSpaceUnitsList.push_back(temp);
 	}
+
 	mpSpaceUnitsList.push_back(new CMothership());
 }
 
