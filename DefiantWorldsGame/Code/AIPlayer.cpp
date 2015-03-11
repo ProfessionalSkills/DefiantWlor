@@ -564,7 +564,7 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 		miterUnitsMap = mpUnitsMap.begin();
 		std::advance(miterUnitsMap, unitNum);
 
-		// Pick a random location to move the unit to
+		// Pick a random location to move the unit to blarg
 		DX::XMFLOAT3 newPos;
 
 		DX::XMFLOAT3 start = mpPlayerGrid->GetGridStartPos();
