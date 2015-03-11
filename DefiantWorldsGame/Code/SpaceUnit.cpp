@@ -15,6 +15,7 @@
 CSpaceUnit::CSpaceUnit()
 {
 	mSpeed = 250.0f;
+	mpTempShield = nullptr;
 }
 
 CSpaceUnit::~CSpaceUnit()
@@ -74,5 +75,5 @@ void CSpaceUnit::Update()
 
 void HitFlash()
 {
-
+	IModel*TempShield;
 }

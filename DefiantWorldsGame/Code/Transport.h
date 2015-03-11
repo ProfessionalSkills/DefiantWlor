@@ -25,6 +25,8 @@ private:
 	int mNumUnitsHeld;
 public:
 	static IMesh* mspMshTransport;
+	static IMesh* mspMshSheild;
+
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
 	CTransport();
@@ -74,7 +76,8 @@ public:
 	bool Move();
 	void LoadModel(float x, float y, float z);
 	void UnloadIModel();
-
+	void HitFlash();
+	void UnloadFlash(); 
 
 private:
 	bool Destroy();

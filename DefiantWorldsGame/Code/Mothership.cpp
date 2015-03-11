@@ -48,6 +48,16 @@ CMothership::~CMothership()
 	UnloadIModel();
 }
 
+void CMothership::HitFlash()
+{
+
+}
+
+void CMothership::UnloadFlash()
+{
+
+}
+
 
 //-----------------------------------------------------
 // MOTHERSHIP CLASS OVERRIDE METHODS

@@ -25,6 +25,7 @@ protected:
 	//---------------------------
 	float mHitChance;
 	float mUnitSpacing;
+	IModel* mpTempShield;
 
 public:
 	// CONSTRUCTORS & DESTRUCTOR
@@ -53,8 +54,8 @@ public:
 	virtual void LoadIModel();
 	virtual void LoadModel(float x, float y, float z);
 	virtual bool Destroy();
-	void HitFlash();
-	
+	virtual void HitFlash()=0;
+	virtual void UnloadFlash() = 0;
 };
 
 #endif /* _SPACE_UNIT_H_ */

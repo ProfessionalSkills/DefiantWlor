@@ -198,6 +198,16 @@ void CFleet::LoadShipModels(float xPos)
 	}
 }
 
+void CFleet::UnloadShieldModels()
+{
+	for (int i = 0; i < mSize; i++)
+	{
+		// Unload the shield for this space unit
+		CSpaceUnit* mpTemp = (CSpaceUnit*)(mpFleet[i]);
+		mpTemp->UnloadFlash();
+	}
+}
+
 //-----------------------------------------------------
 // FLEET CLASS ACCESSORS
 //-----------------------------------------------------

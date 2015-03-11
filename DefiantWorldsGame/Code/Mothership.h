@@ -51,6 +51,8 @@ public:
 	bool Move();
 	void LoadModel(float x, float y, float z);
 	void UnloadIModel();
+	void HitFlash();
+	void UnloadFlash();
 
 private:
 	bool Destroy();

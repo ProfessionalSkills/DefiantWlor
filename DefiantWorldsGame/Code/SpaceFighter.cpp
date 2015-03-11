@@ -8,6 +8,7 @@
 //-----------------------------------------------------
 #include "SpaceFighter.h"
 IMesh* CSpaceFighter::mspMshSpaceFighter = nullptr;
+IMesh* CSpaceFighter::mspMshSheild = nullptr;
 
 //-----------------------------------------------------
 // SPACE FIGHTER CLASS CONSTRUCTORS & DESTRUCTOR
@@ -91,6 +92,11 @@ void CSpaceFighter::UnloadIModel()
 		mspMshSpaceFighter->RemoveModel(mpObjModel);
 		mpObjModel = nullptr;
 	}
+	if (mpTempShield != 0)
+	{
+		mspMshSheild->RemoveModel(mpTempShield);
+		mpTempShield = nullptr;
+	}
 }
 
 //-----------------------------------------------------
@@ -103,6 +109,8 @@ bool CSpaceFighter::Attack(CGameAgent* target, float hitMod, float damageMod)
 	{
 		target->TakeDamage(mDamage*damageMod);
 		mGenSound->PlaySound();
+		CSpaceUnit* mpTemp = (CSpaceUnit*)(target);
+		mpTemp->HitFlash();
 		return true;
 	}
 	return false;
@@ -113,6 +121,37 @@ void CSpaceFighter::Spawn(CGrid* pGrid, SPointData pCentre)
 
 }
 
+void CSpaceFighter::HitFlash()
+{
+	if (!mpTempShield)
+	{
+		mpTempShield = mspMshSheild->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
+		mpTempShield->Scale(mScale + 0.1f);
+
+		if (mWorldPos.x < 0.0f)
+		{
+			mpTempShield->RotateY(90.0f);
+
+		}
+		else
+		{
+			mpTempShield->RotateY(-90.0f);
+			mSpeed = -mSpeed;
+		}
+
+		mpTempShield->RotateX(-35.0f);
+	}
+}
+
+void CSpaceFighter::UnloadFlash()
+{
+	// If there is a shield, remove it
+	if (mpTempShield)
+	{
+		mspMshSheild->RemoveModel(mpTempShield);
+		mpTempShield = nullptr;
+	}
+}
 
 //CSpaceFighter::void MoveTo(CTile* dest)
 

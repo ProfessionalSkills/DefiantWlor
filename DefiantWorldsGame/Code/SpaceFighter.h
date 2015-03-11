@@ -24,6 +24,8 @@ private:
 
 public:
 	static IMesh* mspMshSpaceFighter;
+	static IMesh* mspMshSheild;
+
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
 	CSpaceFighter();
@@ -42,12 +44,15 @@ public:
 	//---------------------------
 	void LoadModel(float x, float y, float z);
 	void UnloadIModel();
+
 	// OVERRIDE METHODS
 	//---------------------------
 	void Spawn(CGrid* pGrid, SPointData pCentre);
 	bool Attack(CGameAgent* target, float hitMod, float damageMod);
 	//void Update();
 	//virtual void MoveTo(CTile* dest);
+	void HitFlash();
+	void UnloadFlash();
 	bool Move();
 
 private:

@@ -193,6 +193,7 @@ void SetupEngine()
 	//Spaceship Meshes
 	//Space Fighter
 	CSpaceFighter::mspMshSpaceFighter = gpEngine->LoadMesh("SciFiBattleship01.x");
+	CSpaceFighter::mspMshSheild = gpEngine->LoadMesh("SciFiBattleship01Shield.x");
 	//Mothership
 	CMothership::mspMshMothership = gpEngine->LoadMesh("Spaceship02Battlecruiser.x");
 	//Transport

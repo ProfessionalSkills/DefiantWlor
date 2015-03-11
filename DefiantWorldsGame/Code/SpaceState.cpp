@@ -103,6 +103,9 @@ void CSpaceState::StateUpdate()
 	if (mTimeSinceUpdate >= mTimeToUpdate)
 	{
 		//fleets attack each other according to tactics
+		mpPlayerOneFleet->UnloadShieldModels();
+		mpPlayerTwoFleet->UnloadShieldModels();
+
 		mpPlayerOneFleet->Fight();
 		mpPlayerTwoFleet->UpdateCondition();
 		

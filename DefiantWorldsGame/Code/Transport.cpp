@@ -8,7 +8,7 @@
 //-----------------------------------------------------
 #include "Transport.h"
 IMesh* CTransport::mspMshTransport = nullptr;
-
+IMesh* CTransport::mspMshSheild = nullptr;
 
 //-----------------------------------------------------
 // TRANSPORT CLASS CONSTRUCTORS & DESTRUCTOR
@@ -65,6 +65,16 @@ bool CTransport::Attack(CGameAgent* target, float hitMod, float damageMod)
 }
 
 void CTransport::Spawn(CGrid* pGrid, SPointData pCentre)
+{
+
+}
+
+void CTransport::HitFlash()
+{
+
+}
+
+void CTransport::UnloadFlash()
 {
 
 }
