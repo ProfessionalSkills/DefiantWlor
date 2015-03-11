@@ -106,12 +106,26 @@ void CSpaceState::StateUpdate()
 		mpPlayerOneFleet->UnloadShieldModels();
 		mpPlayerTwoFleet->UnloadShieldModels();
 
-		mpPlayerOneFleet->Fight();
-		mpPlayerTwoFleet->UpdateCondition();
-		
-		//finds and removes dead ships
-		mpPlayerTwoFleet->Fight();
-		mpPlayerOneFleet->UpdateCondition();
+		//randomizes the order of fleet attack->update
+		if (mNewRandom.GetRandomInt(1, 2) == 1)
+		{
+			mpPlayerOneFleet->Fight();
+			mpPlayerTwoFleet->UpdateCondition();
+
+			//finds and removes dead ships
+			mpPlayerTwoFleet->Fight();
+			mpPlayerOneFleet->UpdateCondition();
+		}
+		else 
+		{
+			//finds and removes dead ships
+			mpPlayerTwoFleet->Fight();
+			mpPlayerOneFleet->UpdateCondition();
+
+			mpPlayerOneFleet->Fight();
+			mpPlayerTwoFleet->UpdateCondition();	
+		}
+
 		
 		//reset timer
 		mTimeSinceUpdate = 0.0f;

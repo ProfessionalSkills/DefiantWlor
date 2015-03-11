@@ -55,6 +55,7 @@ private:
 	const float mTimeToUpdate;
 	const float mCamRotSpeed;
 	float mTimeSinceUpdate;
+	CRandomiser mNewRandom;
 
 public:
 	// CONSTRUCTORS & DESTRUCTOR
