@@ -138,6 +138,15 @@ bool CProductionStructure::SpawnFront()
 	CGameAgent* tmp = mpProductionQueue.front();
 	tmp->Spawn(mpGrid, GetGridSpawnLocation());
 
+	// Display data on news ticker if this concerns the player
+	if (mFaction == FAC_EARTH_DEFENSE_FORCE)
+	{
+		mStrDisplay << "A new " << mpProductionQueue.front()->GetAgentData()->mAgentName
+			<< " unit is ready for your orders.";
+		gpNewsTicker->AddNewElement(mStrDisplay.str(), false);
+		mStrDisplay.str("");
+	}
+
 	//delete tmp;
 	mpProductionQueue.pop_front();
 	return false;
@@ -190,6 +199,25 @@ bool CProductionStructure::Update(CRTSPlayer* pPlayer)
 					DX::XMFLOAT3 listenerVel = { 0.0f, 0.0f, 0.0f };
 					mGenSound = new CSound(mMusicFile, mSourcePos, mSourceVel, false, 0.51f, listenerPos, listenerVel); //Initialise music
 					mGenSound->PlaySound(); //construction sound
+
+					// Display on ticker
+					switch (GetStructureType())
+					{
+					case STR_BARRACKS:
+						mStrDisplay << "The new Barracks";
+						break;
+
+					case STR_HELLIPAD:
+						mStrDisplay << "The new Hellipad";
+						break;
+
+					case STR_SPACE_CENTRE:
+						mStrDisplay << "The new Space Centre";
+						break;
+					}
+					mStrDisplay << " has been constructed.";
+					gpNewsTicker->AddNewElement(mStrDisplay.str(), false);
+					mStrDisplay.str("");
 				}
 			
 				// Change status of the building to 'built'

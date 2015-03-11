@@ -142,7 +142,7 @@ void CWorldState::DrawFontData()
 	strStream.str("");
 
 	// Draw mouse grid co-ordinates
-	strStream << "Cuurent pop " << mpHumanPlayer->GetCurrentPop() << "/" << mpHumanPlayer->GetCurrentPopLimit();
+	strStream << "Current pop " << mpHumanPlayer->GetCurrentPop() << "/" << mpHumanPlayer->GetCurrentPopLimit();
 	mFntDebug->Draw(strStream.str(), 1580, 600, kWhite, kRight, kTop);
 	strStream.str("");
 
