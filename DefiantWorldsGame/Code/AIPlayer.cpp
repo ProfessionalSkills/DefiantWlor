@@ -25,7 +25,6 @@ CRTSAIPlayer::CRTSAIPlayer(EFactions playerFaction) : CRTSPlayer(playerFaction),
 	// Set default mUpdateTime
 	mUpdateTime = UPDATE_TIME;
 	mWaitTime = mpRandomiser->GetRandomFloat(1.0f, 3.0f);
-	mpFleet->SetTactic(Targeted);
 }
 
 CRTSAIPlayer::~CRTSAIPlayer()
@@ -584,19 +583,25 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 
 void CRTSAIPlayer::AssessSituation()
 {
+	int task = 0;
+	int priority = 0;
+	
 	// First check if the economy is at a reasonable level
 	if (mNumMinerals < 2000)
 	{
-		// No need to continue enough
+		// not enough minerals - choose an option that does not reqiure funds
+		task = mpRandomiser->GetRandomInt(static_cast<int>(Q_MOVE_UNIT), static_cast<int>(Q_CHANGE_TACTIC));
+		priority = mpRandomiser->GetRandomInt(5, 50);
+		mpTaskQ.push(new CBuildRequest(static_cast<EQueueObjectType>(task), priority));
 		return;
 	}
 
 	// FUTURE: Calculate relationship between all unit types to determine which to get?
 
 	// Get a random request
-	int object = mpRandomiser->GetRandomInt(static_cast<int>(Q_FIGHTER), static_cast<int>(Q_NUM) - 1);
-	int priority = mpRandomiser->GetRandomInt(5, 50);
-	mpTaskQ.push(new CBuildRequest(static_cast<EQueueObjectType>(object), priority));
+	task = mpRandomiser->GetRandomInt(static_cast<int>(Q_FIGHTER), static_cast<int>(Q_ARTILLERY));
+	priority = mpRandomiser->GetRandomInt(5, 50);
+	mpTaskQ.push(new CBuildRequest(static_cast<EQueueObjectType>(task), priority));
 }
 
 void CRTSAIPlayer::DecreaseTopItem()
