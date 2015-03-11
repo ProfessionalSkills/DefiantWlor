@@ -584,9 +584,8 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 	if (pStructure && agentNum != -1)
 	{
 		// Check if the structure is fully constructed
-		if (pStructure->GetState() != OBJ_CONSTRUCTING)
+		if (pStructure->AddToQueue(agentNum, this) == ERR_NONE)
 		{
-			pStructure->AddToQueue(agentNum, this);
 			return true;
 		}
 
@@ -612,7 +611,7 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 	// Attempt to create the object
 	// Check for sufficient funds *****
 	// Check success of building purchase
-	if (!PurchaseStructure(pStructure, mpPlayerGrid, pSpawnTile))
+	if (PurchaseStructure(pStructure, mpPlayerGrid, pSpawnTile) != ERR_NONE)
 	{
 		pStructure->UnloadIModel();
 		SafeDelete(pStructure);

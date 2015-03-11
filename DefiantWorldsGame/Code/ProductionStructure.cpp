@@ -27,27 +27,26 @@ CProductionStructure::~CProductionStructure()
 //-----------------------------------------------------
 // PRODUCTION STRUCTURE CLASS METHODS
 //-----------------------------------------------------
-bool CProductionStructure::AddToQueue(size_t agentIndex, CRTSPlayer* pPlayer)
+EErrorTypes CProductionStructure::AddToQueue(size_t agentIndex, CRTSPlayer* pPlayer)
 {	
 	// Check state of the production building
 	if (mState == OBJ_CONSTRUCTING)
 	{
 		// Cannot queue units before the structure is ready
-		return false;
+		return ERR_NOT_READY;
 	}
 
 	// Get the size of the respective agents array and compare with index
 	if (agentIndex >= mRespectiveAgentsList.size())
 	{
-		// *** TO DO *** return error code rather than boolean
-		return false;
+		return ERR_INCORRECT_INDEX;
 	}
 
 	// Check if queue is at maximum
 	if (mpProductionQueue.size() >= MAX_QUEUE_SIZE)
 	{
 		// *** TO DO *** return error code rather than boolean
-		return false;
+		return ERR_MAX_QUEUE_SIZE;
 	}
 
 	miterRespectiveAgents = mRespectiveAgentsList.begin();
@@ -55,7 +54,7 @@ bool CProductionStructure::AddToQueue(size_t agentIndex, CRTSPlayer* pPlayer)
 
 	if (pPlayer->PopLimitReached((*miterRespectiveAgents)->GetPopValue()))
 	{
-		return false;
+		return ERR_POP_LIMIT;
 	}
 	else
 	{
@@ -106,14 +105,14 @@ bool CProductionStructure::AddToQueue(size_t agentIndex, CRTSPlayer* pPlayer)
 	{
 		// Not enough funds - remove the object at the front of the queue
 		RemoveFromQueue(mpProductionQueue.size() - 1, pPlayer);
-		return false;
+		return ERR_NO_MINERALS;
 	}
 
 	// Enough funds - subtract them
 	pPlayer->MineralTransaction(-mpProductionQueue.front()->GetBuildCost());
 
 	// Success
-	return true;
+	return ERR_NONE;
 }
 
 std::deque<CGameAgent*>* CProductionStructure::GetQueue()

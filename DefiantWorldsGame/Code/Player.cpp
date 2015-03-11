@@ -92,20 +92,20 @@ void CRTSPlayer::SetNumMothership(int numShips)
 //-----------------------------------------------------
 // PLAYER CLASS METHODS
 //-----------------------------------------------------
-bool CRTSPlayer::PurchaseStructure(CStructure* pStructure, CGrid* pGrid, CTile* pTile)
+EErrorTypes CRTSPlayer::PurchaseStructure(CStructure* pStructure, CGrid* pGrid, CTile* pTile)
 {
 	// Check whether new building can be afforded
 	if (mNumMinerals - pStructure->GetBuildCost() < 0)
 	{
 		// Not enough minerals - return relevant error (* TO DOOOOOOO *)
-		return false;
+		return ERR_NO_MINERALS;
 	}
 
 	// Check if building area is free
 	if (!pStructure->TestStructureArea(pGrid, pTile))
 	{
 		// Something blocking construction - return relevant error (* TO DOOOOOOO *)
-		return false;
+		return ERR_NO_SPACE;
 	}
 
 	// Check to ensure no vehicles in the nearby area - maybe?
@@ -118,7 +118,7 @@ bool CRTSPlayer::PurchaseStructure(CStructure* pStructure, CGrid* pGrid, CTile* 
 	pStructure->SetBuildLocation(pTile->GetGridPos());
 	pStructure->SetFaction(mPlayerFaction);
 	mpStructuresMap.insert(GS_MultiMap::value_type(pStructure->GetStructureType(), pStructure));
-	return true;
+	return ERR_NONE;
 }
 
 bool CRTSPlayer::PopLimitReached(int popValue)

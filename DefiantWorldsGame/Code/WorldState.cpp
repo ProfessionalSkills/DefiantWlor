@@ -57,17 +57,8 @@ void CWorldState::UpdateHeldStructure()
 		{
 		case MS_EARTH_GRID:
 			// When placing structure, check if any used tiles
-			if (mpEarthGrid->TurnOnTiles(mpCurTile, mpPlacingStructure->GetBLPosition(), mpPlacingStructure->GetTRPosition(), mpPlacingStructure->GetGridSpawnLocation()))
-			{
-				mpPlacingStructure->SetBadTexture();
-			}
-			else
-			{
-				mpPlacingStructure->SetGoodTexture();
-			}
-
-			// If there are not enough materials, show the bad texture
-			if (mpPlacingStructure->GetBuildCost() > mpHumanPlayer->GetMineralAmount())
+			if (mpEarthGrid->TurnOnTiles(mpCurTile, mpPlacingStructure->GetBLPosition(), mpPlacingStructure->GetTRPosition(), mpPlacingStructure->GetGridSpawnLocation())
+				|| mpPlacingStructure->GetBuildCost() > mpHumanPlayer->GetMineralAmount())
 			{
 				mpPlacingStructure->SetBadTexture();
 			}
@@ -78,15 +69,8 @@ void CWorldState::UpdateHeldStructure()
 			break;
 
 		case MS_MARS_GRID:
-			// When placing structure, check if any used tiles
-			if (mpMarsGrid->TurnOnTiles(mpCurTile, mpPlacingStructure->GetBLPosition(), mpPlacingStructure->GetTRPosition(), mpPlacingStructure->GetGridSpawnLocation()))
-			{
-				mpPlacingStructure->SetBadTexture();
-			}
-			else
-			{
-				mpPlacingStructure->SetGoodTexture();
-			}
+			// Cannot build on Mars
+			mpPlacingStructure->SetBadTexture();
 			break;
 		}
 	}
@@ -235,6 +219,11 @@ void CWorldState::CheckKeyPresses()
 
 	// CLICKING
 	//------------------------------
+	if (gpEngine->KeyHit(Mouse_RButton))
+	{
+		mRMouseClicked = true;
+	}
+
 	// Left Click = place currently selected building
 	if (mLMouseClicked)
 	{
@@ -247,25 +236,34 @@ void CWorldState::CheckKeyPresses()
 			switch (mMouseState)
 			{
 				case MS_EARTH_GRID:
+				{
 					// Place the structure - check if successful
-					if (mpHumanPlayer->PurchaseStructure(mpPlacingStructure, mpEarthGrid, mpCurTile))
+					EErrorTypes error = mpHumanPlayer->PurchaseStructure(mpPlacingStructure, mpEarthGrid, mpCurTile);
+					if (error == ERR_NONE)
 					{
 						// Safe to point at nothing due to structure pointer passed on to Player's data
 						mpPlacingStructure = nullptr;
 						mpEarthGrid->ResetTilesModels();
 						mLMouseClicked = false;
 					}
-					break;
-
-				case MS_MARS_GRID:
-					// Place the structure - check if successful
-					if (mpAIPlayer->PurchaseStructure(mpPlacingStructure, mpMarsGrid, mpCurTile))
+					else
 					{
-						// Safe to point at nothing due to structure pointer passed on to Player's data
-						mpPlacingStructure = nullptr;
-						mpMarsGrid->ResetTilesModels();
-						mLMouseClicked = false;
+						// Alert player of error
+						switch (error)
+						{
+						case ERR_NO_MINERALS:
+							gpNewsTicker->AddNewElement("Insufficient minerals for this structure!", true);
+							break;
+						case ERR_NO_SPACE:
+							gpNewsTicker->AddNewElement("You cannot build here! Something might be in the way.", true);
+							break;
+						}
 					}
+					break;
+				}
+				case MS_MARS_GRID:
+					// Cannot build on mars - return error
+					gpNewsTicker->AddNewElement("You can only build on your own planet!", true);
 					break;
 			}
 		}
@@ -321,7 +319,6 @@ void CWorldState::CheckKeyPresses()
 		}
 	}
 	mLMouseClicked = false;
-	mRMouseClicked = false;
 
 	// Check if a building is currently selected
 	if (!mpCurSelectedStructure && !mpCurSelectedAgent)
@@ -331,10 +328,11 @@ void CWorldState::CheckKeyPresses()
 		CStructure* pStructure;
 
 		// C = no building is selected
-		if (gpEngine->KeyHit(Mouse_RButton))
+		if (mRMouseClicked)
 		{
 			pStructure = nullptr;
 			OnPlacingStructureChange(pStructure);
+			mRMouseClicked = false;
 		}
 
 		// 1 = Barracks
@@ -363,7 +361,7 @@ void CWorldState::CheckKeyPresses()
 	// UNIT CONSTRUCTION
 	//------------------------------
 	// C = deselect current building
-	if (gpEngine->KeyHit(Mouse_RButton))
+	if (gpEngine->KeyHit(Key_C))
 	{
 		OnPlacingStructureChange(nullptr);
 	}
@@ -386,6 +384,7 @@ void CWorldState::CheckKeyPresses()
 		OnPlacingStructureChange(nullptr);
 		mpCurSelectedAgent = nullptr;
 		mpCurSelectedStructure = nullptr;
+		mpUnitSelectionList.clear();
 	}
 
 
@@ -422,6 +421,8 @@ void CWorldState::CheckKeyPresses()
 		mMusic->StopSound();
 		gCurState = GS_MAIN_MENU;
 	}
+
+	mRMouseClicked = false;
 }
 
 void CWorldState::DisplaySelectedBuildingInfo()
@@ -1078,17 +1079,6 @@ void CWorldState::StateUpdate()
 	gpNewsTicker->UpdateTimers();
 
 
-	// Test news ticker
-	if (gpEngine->KeyHit(Key_T))
-	{
-		gpNewsTicker->AddNewElement("This is not an error.", false);
-	}
-	if (gpEngine->KeyHit(Key_Y))
-	{
-		gpNewsTicker->AddNewElement("This is an error.", true);
-	}
-
-
 	// BUTTON UPDATES
 	//---------------------------
 	// Decrement left click cool down
@@ -1168,11 +1158,6 @@ void CWorldState::StateUpdate()
 		mpMdlDragBox = mspMshDrag->CreateModel(mDragStartPos.x, 0.5f, mDragStartPos.z);
 		mpMdlDragBox->ScaleX(scaleX);
 		mpMdlDragBox->ScaleZ(scaleZ);
-	}
-
-	if (gpEngine->KeyHit(Mouse_RButton))
-	{
-		mRMouseClicked = true;
 	}
 
 	// Loop through generic buttons
@@ -1531,7 +1516,25 @@ void CWorldState::QueueUnit(int index)
 {
 	if (!mpCurSelectedStructure) return;
 	
-	mpCurSelectedStructure->AddToQueue(index, mpHumanPlayer);
+	// If there was an error, send it to ticker
+	switch (mpCurSelectedStructure->AddToQueue(index, mpHumanPlayer))
+	{
+	case ERR_INCORRECT_INDEX:
+		gpNewsTicker->AddNewElement("This structure does not have the typed unit.", true);
+		break;
+	case ERR_MAX_QUEUE_SIZE:
+		gpNewsTicker->AddNewElement("Structure at maximum queue size!", true);
+		break;
+	case ERR_NOT_READY:
+		gpNewsTicker->AddNewElement("Structure still constructing!", true);
+		break;
+	case ERR_NO_MINERALS:
+		gpNewsTicker->AddNewElement("Insufficient minerals for this unit.", true);
+		break;
+	case ERR_POP_LIMIT:
+		gpNewsTicker->AddNewElement("You have reached the population limit. Build more houses!", true);
+		break;
+	}
 	mLMouseClicked = false;
 }
 

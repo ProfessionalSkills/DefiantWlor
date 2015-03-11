@@ -56,7 +56,7 @@ public:
 
 	// METHODS
 	//---------------------------
-	bool AddToQueue(size_t agentIndex, CRTSPlayer* pPlayer);
+	EErrorTypes AddToQueue(size_t agentIndex, CRTSPlayer* pPlayer);
 	void RemoveFromQueue(size_t agentIndex, CRTSPlayer* pPlayer);
 	std::deque<CGameAgent*>* GetQueue();
 	bool SpawnFront();

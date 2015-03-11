@@ -64,6 +64,12 @@ enum EFactions
 	FAC_EARTH_DEFENSE_FORCE, FAC_THE_CRIMSON_LEGION
 };
 
+enum EErrorTypes
+{
+	ERR_NONE, ERR_NO_SPACE, ERR_NO_MINERALS, ERR_MAX_QUEUE_SIZE, ERR_NOT_READY,
+	ERR_INCORRECT_INDEX, ERR_POP_LIMIT,
+};
+
 
 //-----------------------------------------------------
 // GLOBAL VARIABLES
