@@ -286,6 +286,11 @@ void CWorldState::CheckKeyPresses()
 					mMouseOrigin, mMouseDirection);
 				OnStructureSelectChange();
 				break;
+
+			case MS_UI:
+			case MS_OUT_OF_GRID:
+				OnStructureSelectChange();
+				break;
 			}
 
 			if (mpCurSelectedStructure || mpCurSelectedAgent)
