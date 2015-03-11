@@ -25,6 +25,7 @@ CRTSAIPlayer::CRTSAIPlayer(EFactions playerFaction) : CRTSPlayer(playerFaction),
 	// Set default mUpdateTime
 	mUpdateTime = UPDATE_TIME;
 	mWaitTime = mpRandomiser->GetRandomFloat(1.0f, 3.0f);
+	mpFleet->SetTactic(Targeted);
 }
 
 CRTSAIPlayer::~CRTSAIPlayer()
