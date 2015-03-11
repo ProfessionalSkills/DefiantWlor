@@ -126,7 +126,7 @@ void CSpaceFighter::HitFlash()
 	if (!mpTempShield)
 	{
 		mpTempShield = mspMshSheild->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
-		mpTempShield->Scale(mScale + 0.1f);
+		mpTempShield->Scale(mScale + 0.05f);
 
 		if (mWorldPos.x < 0.0f)
 		{
