@@ -18,7 +18,6 @@ CTransport::CTransport()
 	//Game Values
 	mMaxHealth = 100.0f;
 	mHealth = 100.0f;
-	mSpeed = 1.0f;
 	mDamage = 0.5f;
 	mHitChance = 0.4f;
 	mFleetPosition = centre;
@@ -106,6 +105,8 @@ void CTransport::UnloadIModel()
 
 bool CTransport::Move()
 {
+	mpObjModel->MoveX(mSpeed*gFrameTime);
+	mWorldPos.x += mSpeed*gFrameTime;
 	return false;
 }
 

@@ -24,6 +24,7 @@ private:
 
 public:
 	static IMesh* mspMshMothership;
+	static IMesh* mspMshSheild;
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
 	CMothership();

@@ -14,7 +14,7 @@
 //-----------------------------------------------------
 CSpaceUnit::CSpaceUnit()
 {
-
+	mSpeed = 250.0f;
 }
 
 CSpaceUnit::~CSpaceUnit()
@@ -68,6 +68,11 @@ void CSpaceUnit::LoadModel(float x, float y, float z)
 
 }
 void CSpaceUnit::Update()
+{
+
+}
+
+void HitFlash()
 {
 
 }

@@ -8,7 +8,7 @@
 //-----------------------------------------------------
 #include "Mothership.h"
 IMesh* CMothership::mspMshMothership = nullptr;
-
+IMesh* CMothership::mspMshSheild = nullptr;
 //-----------------------------------------------------
 // MOTHERSHIP CLASS CONSTRUCTORS & DESTRUCTOR
 //-----------------------------------------------------
@@ -19,7 +19,6 @@ CMothership::CMothership()
 	//Game Values
 	mMaxHealth = 100.0f;
 	mHealth = 100.0f;
-	mSpeed = 1.0f;
 	mDamage = 4.0f;
 	mHitChance = 0.5f;
 	mFleetPosition = back;
@@ -103,6 +102,8 @@ void CMothership::UnloadIModel()
 
 bool CMothership::Move()
 {
+	mpObjModel->MoveX(mSpeed*gFrameTime);
+	mWorldPos.x += mSpeed*gFrameTime;
 	return false;
 }
 

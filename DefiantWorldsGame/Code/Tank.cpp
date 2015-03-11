@@ -74,11 +74,10 @@ bool CTank::Attack(CGameAgent* target, float hitMod, float damageMod)
 //CTank::void MoveTo(CTile* dest)
 
 //
-//bool CTank::Move()
-//{
-//	mpObjModel->SetPosition(mPathTarget->GetWorldPos().x, 0, mPathTarget->GetWorldPos().z);
-//	return false;
-//}
+bool CTank::Move()
+{
+	return false;
+}
 
 bool CTank::Destroy()
 {

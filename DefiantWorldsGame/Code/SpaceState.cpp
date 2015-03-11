@@ -113,6 +113,15 @@ void CSpaceState::StateUpdate()
 		//reset timer
 		mTimeSinceUpdate = 0.0f;
 	}
+
+	if (mpPlayerOneFleet->GetSize() == 0)
+	{
+		mpPlayerTwoFleet->MoveFleet();
+	}
+	else if (mpPlayerTwoFleet->GetSize() == 0)
+	{
+		mpPlayerOneFleet->MoveFleet();
+	}
 }
 
 void CSpaceState::StateLoad()

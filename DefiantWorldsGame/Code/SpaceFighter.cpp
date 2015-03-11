@@ -19,7 +19,7 @@ CSpaceFighter::CSpaceFighter()
 	//Game Values
 	mMaxHealth = 100.0f;
 	mHealth = 100.0f;
-	mSpeed = 1.0f;
+	mSpeed = 250.0f;
 	mDamage = 1.0f;
 	mPopCost = 1;
 	mHitChance = 0.7f;
@@ -77,6 +77,7 @@ void CSpaceFighter::LoadModel(float x,float y, float z)
 	else
 	{
 		mpObjModel->RotateY(-90.0f);
+		mSpeed = -mSpeed;
 	}
 
 	mpObjModel->RotateX(-35.0f);
@@ -118,6 +119,8 @@ void CSpaceFighter::Spawn(CGrid* pGrid, SPointData pCentre)
 
 bool CSpaceFighter::Move()
 {
+	mpObjModel->MoveX(mSpeed*gFrameTime);
+	mWorldPos.x += mSpeed*gFrameTime;
 	return false;
 }
 

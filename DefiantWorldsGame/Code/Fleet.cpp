@@ -45,7 +45,10 @@ CFleet::~CFleet()
 //-----------------------------------------------------
 void CFleet::MoveFleet()
 {
-
+	for (int i = 0; i < mSize; i++)
+	{
+		mpFleet[i]->Move();
+	}
 }
 
 void CFleet::Fight()

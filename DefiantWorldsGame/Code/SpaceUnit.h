@@ -53,6 +53,7 @@ public:
 	virtual void LoadIModel();
 	virtual void LoadModel(float x, float y, float z);
 	virtual bool Destroy();
+	void HitFlash();
 	
 };
 

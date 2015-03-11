@@ -56,6 +56,7 @@ public:
 	}
 	void Spawn(CGrid* pGrid, SPointData pCentre);
 	bool LookingAt();
+	virtual bool Move() = 0;
 
 private:
 	virtual bool Destroy();
