@@ -950,19 +950,20 @@ void CWorldState::StateSetup()
 	mpCamCurrent = mpCamEarth;
 
 	// Camera limitations
+	float threshold = 100.0f;
 	mMinEarthPos = mpEarthGrid->GetGridStartPos();
-	mMinEarthPos.x -= 100.0f;
-	mMinEarthPos.z -= 100.0f;
+	mMinEarthPos.x -= threshold;
+	mMinEarthPos.z -= threshold;
 	mMaxEarthPos = mpEarthGrid->GetGridEndPos();
-	mMaxEarthPos.x += 100.0f;
-	mMaxEarthPos.z += 100.0f;
+	mMaxEarthPos.x += threshold;
+	mMaxEarthPos.z += threshold;
 
 	mMinMarsPos = mpMarsGrid->GetGridStartPos();
-	mMinMarsPos.x -= 100.0f;
-	mMinMarsPos.z -= 100.0f;
+	mMinMarsPos.x -= threshold;
+	mMinMarsPos.z -= threshold;
 	mMaxMarsPos = mpMarsGrid->GetGridEndPos();
-	mMaxMarsPos.x += 100.0f;
-	mMaxMarsPos.z += 100.0f;
+	mMaxMarsPos.x += threshold;
+	mMaxMarsPos.z += threshold;
 
 	mCurCamPrevPos = DX::XMFLOAT3(0.0f, mpCamEarth->GetY(), 0.0f);
 
