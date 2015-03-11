@@ -723,9 +723,6 @@ void CWorldState::StateSetup()
 
 	// INITIALISE USER INTERFACE
 	//-----------------------------
-	// news ticker
-	mpNewsTicker = new CNewsTicker();
-
 	mFntDebug = gpEngine->LoadFont("Calibri", 20U);
 	mpMainUI = gpEngine->CreateSprite("WorldUI.png", 0.0f, 0.0f, 0.9f);
 	CAdvancedButton<CWorldState, void>* pNewButton = nullptr;
@@ -858,6 +855,9 @@ void CWorldState::StateSetup()
 	{
 		// INITIALISE WORLDS
 		//-----------------------------
+		// Initialise news ticker
+		gpNewsTicker = new CNewsTicker();
+
 		// EARTH
 		mpEarthGrid = new CGrid(DX::XMFLOAT3(0.0f, 0.3f, 0.0f));
 		
@@ -1075,17 +1075,17 @@ void CWorldState::StateUpdate()
 	}
 
 	// Update news ticker
-	mpNewsTicker->UpdateTimers();
+	gpNewsTicker->UpdateTimers();
 
 
 	// Test news ticker
 	if (gpEngine->KeyHit(Key_T))
 	{
-		mpNewsTicker->AddNewElement("This is not an error.", false);
+		gpNewsTicker->AddNewElement("This is not an error.", false);
 	}
 	if (gpEngine->KeyHit(Key_Y))
 	{
-		mpNewsTicker->AddNewElement("This is an error.", true);
+		gpNewsTicker->AddNewElement("This is an error.", true);
 	}
 
 
@@ -1576,6 +1576,28 @@ void CWorldState::DeleteStructure()
 	
 	// Set object to be deleted
 	mpCurSelectedStructure->SetState(OBJ_DEAD);
+	// Alert news ticker
+	switch (mpCurSelectedStructure->GetStructureType())
+	{
+	case STR_BARRACKS:
+		strStream << "A Barracks";
+		break;
+
+	case STR_COM_CENTRE:
+		strStream << "The Command Centre";
+		break;
+
+	case STR_HELLIPAD:
+		strStream << "A Hellipad";
+		break;
+
+	case STR_SPACE_CENTRE:
+		strStream << "A Space Centre";
+		break;
+	}
+	strStream << " has been destroyed!";
+	gpNewsTicker->AddNewElement(strStream.str(), true);
+	strStream.str("");
 	// pointer set to null
 	mpCurSelectedStructure = nullptr;
 	// Leave function so next function call is not executed
@@ -1594,14 +1616,17 @@ void CWorldState::LaunchAttack()
 void CWorldState::ChangeTacNone()
 {
 	mpHumanPlayer->GetFleet()->SetTactic(None);
+	gpNewsTicker->AddNewElement("No space tactic selected.", false);
 }
 
 void CWorldState::ChangeTacRapid()
 {
 	mpHumanPlayer->GetFleet()->SetTactic(Rapid);
+	gpNewsTicker->AddNewElement("Rapid space tactic selected.", false);
 }
 
 void CWorldState::ChangeTacTargated()
 {
 	mpHumanPlayer->GetFleet()->SetTactic(Targeted);
+	gpNewsTicker->AddNewElement("Targeted space tactic selected.", false);
 }

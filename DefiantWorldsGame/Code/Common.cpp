@@ -7,6 +7,7 @@
 // INCLUDES
 //-----------------------------------------------------
 #include "Common.h"
+#include "NewsTicker.h"
 
 
 //-----------------------------------------------------
@@ -16,6 +17,7 @@
 // extern = will be defined elsewhere, but I want anything that includes this to be aware it
 // will exist at some point.
 CRandomiser* gpRandomiser = new CRandomiser();
+CNewsTicker* gpNewsTicker = nullptr;
 EGameStates  gCurState = GS_MAIN_MENU;
 float        gFrameTime = 0.0f;
 float        gMouseWheelDelta = 0.0f;

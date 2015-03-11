@@ -22,6 +22,12 @@
 
 
 //-----------------------------------------------------
+// FORWARD DECLARATIONS
+//-----------------------------------------------------
+extern class CNewsTicker;
+
+
+//-----------------------------------------------------
 // ENUMERATIONS
 //-----------------------------------------------------
 enum EGameStates
@@ -96,6 +102,7 @@ extern EGameStates gCurState;
 
 // Global pointer to the engine. Can be used by anything including this file
 extern CRandomiser* gpRandomiser;
+extern CNewsTicker* gpNewsTicker;
 
 // Global frametime & mouse wheel delta
 extern float gFrameTime;

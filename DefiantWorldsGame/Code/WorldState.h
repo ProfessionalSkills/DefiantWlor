@@ -153,8 +153,6 @@ private:
 	int mQueuePrevProg;				// Stores the previous progress of the object currently being queued
 	int mPrevHealth;
 
-	CNewsTicker* mpNewsTicker;		// Displays updates for the player
-
 
 	// PLAYERS
 	//---------------------------
