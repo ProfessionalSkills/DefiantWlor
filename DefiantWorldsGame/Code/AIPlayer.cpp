@@ -538,6 +538,13 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 		break;
 
 	case Q_CHANGE_TACTIC:
+		// Generate a random number from 1 - 3 to determine which tactic to use
+		int tactic = mpRandomiser->GetRandomInt((int)Tactics::None, (int)Tactics::Targeted);
+
+		// Determine chosen tactic & set it
+		Tactics selTactic = (Tactics)tactic;
+		mpFleet->SetTactic(selTactic);
+
 		return;
 		break;
 
@@ -607,7 +614,7 @@ void CRTSAIPlayer::AssessSituation()
 	// FUTURE: Calculate relationship between all unit types to determine which to get?
 
 	// Get a random request
-	task = mpRandomiser->GetRandomInt(static_cast<int>(Q_FIGHTER), static_cast<int>(Q_ARTILLERY));
+	task = mpRandomiser->GetRandomInt(static_cast<int>(Q_FIGHTER), static_cast<int>(Q_CHANGE_TACTIC));
 	priority = mpRandomiser->GetRandomInt(5, 50);
 	mpTaskQ.push(new CBuildRequest(static_cast<EQueueObjectType>(task), priority));
 }
