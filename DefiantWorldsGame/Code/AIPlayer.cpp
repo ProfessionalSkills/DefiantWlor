@@ -536,6 +536,14 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 		}
 
 		break;
+
+	case Q_CHANGE_TACTIC:
+		return;
+		break;
+
+	case Q_MOVE_UNIT:
+		return;
+		break;
 	}
 
 	// If it was a unit being built, simply build unit & return true (for now)
