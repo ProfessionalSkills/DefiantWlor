@@ -12,6 +12,7 @@
 #include "BaseGameState.h"
 #include "Grid.h"
 #include "AdvancedButton.h"
+#include "NewsTicker.h"
 
 
 //-----------------------------------------------------
@@ -151,6 +152,8 @@ private:
 	int mQueuePrevSize;
 	int mQueuePrevProg;				// Stores the previous progress of the object currently being queued
 	int mPrevHealth;
+
+	CNewsTicker* mpNewsTicker;		// Displays updates for the player
 
 
 	// PLAYERS

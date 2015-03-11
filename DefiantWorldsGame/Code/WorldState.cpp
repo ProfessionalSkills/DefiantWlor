@@ -133,17 +133,17 @@ void CWorldState::DrawFontData()
 {
 	// Draw Mouse world co-ordinates to screen
 	strStream << "X: " << mMouseWorldPos.x << "  Z: " << mMouseWorldPos.z;
-	mFntDebug->Draw(strStream.str(), 5, 615, kWhite, kLeft, kTop);
+	mFntDebug->Draw(strStream.str(), 1580, 615, kWhite, kRight, kTop);
 	strStream.str("");
 
 	// Draw mouse grid co-ordinates
 	strStream << "X: " << mMouseGridPos.mPosX << "  Y: " << mMouseGridPos.mPosY;
-	mFntDebug->Draw(strStream.str(), 5, 630, kWhite, kLeft, kTop);
+	mFntDebug->Draw(strStream.str(), 1580, 630, kWhite, kRight, kTop);
 	strStream.str("");
 
 	// Draw mouse grid co-ordinates
 	strStream << "Cuurent pop " << mpHumanPlayer->GetCurrentPop() << "/" << mpHumanPlayer->GetCurrentPopLimit();
-	mFntDebug->Draw(strStream.str(), 5, 600, kWhite, kLeft, kTop);
+	mFntDebug->Draw(strStream.str(), 1580, 600, kWhite, kRight, kTop);
 	strStream.str("");
 
 
@@ -188,7 +188,7 @@ void CWorldState::DrawFontData()
 	if (mpCurTile)
 	{
 		strStream << "  USED: " << mpCurTile->IsTileUsed();
-		mFntDebug->Draw(strStream.str(), 5, 645, kWhite, kLeft, kTop);
+		mFntDebug->Draw(strStream.str(), 1580, 645, kWhite, kRight, kTop);
 		strStream.str("");
 	}
 }
@@ -723,6 +723,9 @@ void CWorldState::StateSetup()
 
 	// INITIALISE USER INTERFACE
 	//-----------------------------
+	// news ticker
+	mpNewsTicker = new CNewsTicker();
+
 	mFntDebug = gpEngine->LoadFont("Calibri", 20U);
 	mpMainUI = gpEngine->CreateSprite("WorldUI.png", 0.0f, 0.0f, 0.9f);
 	CAdvancedButton<CWorldState, void>* pNewButton = nullptr;
@@ -1069,6 +1072,20 @@ void CWorldState::StateUpdate()
 	{
 		// Update the buttons for the queue
 		OnStructureSelectChange();
+	}
+
+	// Update news ticker
+	mpNewsTicker->UpdateTimers();
+
+
+	// Test news ticker
+	if (gpEngine->KeyHit(Key_T))
+	{
+		mpNewsTicker->AddNewElement("This is not an error.", false);
+	}
+	if (gpEngine->KeyHit(Key_Y))
+	{
+		mpNewsTicker->AddNewElement("This is an error.", true);
 	}
 
 

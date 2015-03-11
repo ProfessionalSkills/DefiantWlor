@@ -15,18 +15,33 @@
 
 
 //-----------------------------------------------------
-// RANDOMISER CLASS
+// NEWS ITEM STRUCT
+//-----------------------------------------------------
+struct SNewsItem
+{
+	std::string mNewsText;
+	float mLifetime;
+	bool mError;
+};
+
+
+//-----------------------------------------------------
+// NEWS TICKER CLASS CLASS
 //-----------------------------------------------------
 class CNewsTicker
 {
 private:
 	// TEXTUAL ARRAYS
 	//---------------------------
-	std::vector<std::string> mNews;
+	std::vector<SNewsItem*> mNews;
+	std::vector<SNewsItem*>::iterator miterNews;
+	std::vector<SNewsItem*>::reverse_iterator mriterNews;
 
 
-	// FONT DATA
+	// NEWS ITEM DATA
 	//---------------------------
+	float mStartLifetime;
+	int mMaxNumEls;
 	IFont* mpFont;
 
 
@@ -37,7 +52,11 @@ public:
 	~CNewsTicker();
 
 
-
+	// METHODS
+	//---------------------------
+	void Display();
+	void UpdateTimers();
+	void AddNewElement(std::string elementText, bool error);
 };
 
 
