@@ -270,6 +270,9 @@
     <ClCompile Include="BestFirst.cpp">
       <Filter>Pathfinding</Filter>
     </ClCompile>
+    <ClCompile Include="NewsTicker.cpp">
+      <Filter>Utilities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common.h">
@@ -403,6 +406,9 @@
     </ClInclude>
     <ClInclude Include="BestFirst.h">
       <Filter>Pathfinding</Filter>
+    </ClInclude>
+    <ClInclude Include="NewsTicker.h">
+      <Filter>Utilities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
