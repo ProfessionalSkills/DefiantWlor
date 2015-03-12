@@ -169,47 +169,47 @@ void CSpaceState::DrawFontData()
 
 	//fleet size output
 	strStream << "player one fleet size: " << mpPlayerOneFleet->GetSize();
-	mFntDebug->Draw(strStream.str(), playerOneTextX, 615, kWhite, kLeft, kTop);
+	mFntDebug->Draw(strStream.str(), playerOneTextX, 715, kWhite, kLeft, kTop);
 	strStream.str("");
 
 	strStream << "  player two fleet size: " << mpPlayerTwoFleet->GetSize();
-	mFntDebug->Draw(strStream.str(), playerTwoTextX, 615, kWhite, kRight, kTop);
+	mFntDebug->Draw(strStream.str(), playerTwoTextX, 715, kWhite, kRight, kTop);
 	strStream.str("");
 
 	//fleet total health output
 	strStream << "player one fleet total health: " << mpPlayerOneFleet->GetFleetTotalHealth();
-	mFntDebug->Draw(strStream.str(), playerOneTextX, 630, kWhite, kLeft, kTop);
+	mFntDebug->Draw(strStream.str(), playerOneTextX, 730, kWhite, kLeft, kTop);
 	strStream.str("");
 
 	strStream << "  player two fleet total health: " << mpPlayerTwoFleet->GetFleetTotalHealth();
-	mFntDebug->Draw(strStream.str(), playerTwoTextX, 630, kWhite, kRight, kTop);
+	mFntDebug->Draw(strStream.str(), playerTwoTextX, 730, kWhite, kRight, kTop);
 	strStream.str("");
 
 	//fleet total health output
 	strStream << "player one fleet avarage health: " << mpPlayerOneFleet->GetFleetAvargeHealth();
-	mFntDebug->Draw(strStream.str(), playerOneTextX, 645, kWhite, kLeft, kTop);
+	mFntDebug->Draw(strStream.str(), playerOneTextX, 745, kWhite, kLeft, kTop);
 	strStream.str("");
 
 	strStream << "  player two fleet avarage health: " << mpPlayerTwoFleet->GetFleetAvargeHealth();
-	mFntDebug->Draw(strStream.str(), playerTwoTextX, 645, kWhite, kRight, kTop);
+	mFntDebug->Draw(strStream.str(), playerTwoTextX, 745, kWhite, kRight, kTop);
 	strStream.str("");
 
 	//fleet total accuracy
 	strStream << "player one fleet shots hit: " << mpPlayerOneFleet->GetHits() << "//" << mpPlayerOneFleet->GetShotsFired();
-	mFntDebug->Draw(strStream.str(), playerOneTextX, 660, kWhite, kLeft, kTop);
+	mFntDebug->Draw(strStream.str(), playerOneTextX, 760, kWhite, kLeft, kTop);
 	strStream.str("");
 
 	strStream << "  player two fleet shots hit: " << mpPlayerTwoFleet->GetHits() << "//" << mpPlayerTwoFleet->GetShotsFired();
-	mFntDebug->Draw(strStream.str(), playerTwoTextX, 660, kWhite, kRight, kTop);
+	mFntDebug->Draw(strStream.str(), playerTwoTextX, 760, kWhite, kRight, kTop);
 	strStream.str("");
 
 	//fleet total accuracy percentage output
 	strStream << "player one fleet avarage accuracy: " << mpPlayerOneFleet->GetHitPercentage()<<"%";
-	mFntDebug->Draw(strStream.str(), playerOneTextX, 675, kWhite, kLeft, kTop);
+	mFntDebug->Draw(strStream.str(), playerOneTextX, 775, kWhite, kLeft, kTop);
 	strStream.str("");
 
 	strStream << "  player two fleet avarage accuracy: " << mpPlayerTwoFleet->GetHitPercentage() << "%";
-	mFntDebug->Draw(strStream.str(), playerTwoTextX, 675, kWhite, kRight, kTop);
+	mFntDebug->Draw(strStream.str(), playerTwoTextX, 775, kWhite, kRight, kTop);
 	strStream.str("");
 }
 
