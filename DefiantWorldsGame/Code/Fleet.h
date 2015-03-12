@@ -39,12 +39,15 @@ private:
 	Tactics mFleetTactics;
 	int mTargetedFireVariance;
 	CRandomiser* mTarget;
-
+	//used for track fleet accuracy, only used for output in spcae state
+	int mHits;
+	int mShotsFired;
 	// POSITIONING
 	//---------------------------
 	const int mFleetRowSize;//maximum size of a row of ships
 	const int mFleetRowSeperation;//distance between each row of ships
 	const int mFleetZAdjust;//used to adjust the z depth of the fleet ships, gives depth to the fleet
+	const float mFleetYCyleHeight;
 	float mFleetYAdjust;//used to bring the fleet up and centralize them
 	float mFleetYHeighCycle;//used bu the fleet idle function to change the y height
 	int mFleetWidth;//number of ships that can be in a row. specifcally, the number of ships beyond the centre ship in a given direction
@@ -69,12 +72,30 @@ public:
 	void MoveFleet();
 	void IdleFleet();//makes the shapes move slightly, to make the sceene more animated
 
+
+
 	// ACCESSORS
 	//---------------------------
 	CGameAgent*GetShip(int i);//returns ship at the choosen postion
 	int GetSize();//returns the size of the fleet
 	int GetRows();//returns the number of rows of ships
 	string GetTacticsName();
+
+	float GetFleetTotalHealth();
+	float GetFleetAvargeHealth();
+
+	inline int GetShotsFired()
+	{
+		return mShotsFired;
+	}
+	inline int GetHits()
+	{
+		return mHits;
+	}
+	inline float GetHitPercentage()
+	{
+		return ((float)mHits / (float)mShotsFired)*100.0f;
+	}
 
 	// MUTATORS
 	//---------------------------

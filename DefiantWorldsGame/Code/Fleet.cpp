@@ -13,7 +13,7 @@
 //-----------------------------------------------------
 // FLEET CLASS CONSTRUCTORS & DESTRUCTOR
 //-----------------------------------------------------
-CFleet::CFleet() :mFleetRowSize(20), mFleetRowSeperation(7), mFleetZAdjust(8)
+CFleet::CFleet() :mFleetRowSize(20), mFleetRowSeperation(7), mFleetZAdjust(8), mFleetYCyleHeight(0.01f)
 {
 	//Value Mods
 	mDamegMod = 1.0f;
@@ -24,10 +24,11 @@ CFleet::CFleet() :mFleetRowSize(20), mFleetRowSeperation(7), mFleetZAdjust(8)
 
 	//Tactics
 	mFleetTactics = None;
-
+	mShotsFired = 0;
+	mHits = 0;
 	//Misc
 	mTarget = new CRandomiser();
-	mFleetYHeighCycle = 0;
+	mFleetYHeighCycle = mTarget->GetRandomFloat(0.0, 6.0);//starts the fleet adjust cycle on a random point, so both fleets dont just float at the same hight all the time
 	mNumMothership = 0;
 	mNumSpaceFighter = 0;
 	mNumTransport = 0;
@@ -54,7 +55,7 @@ void CFleet::MoveFleet()
 void CFleet::IdleFleet()
 {
 	mFleetYHeighCycle += gFrameTime;
-	float yChange=0.01f*sinf(mFleetYHeighCycle);
+	float yChange=mFleetYCyleHeight*sinf(mFleetYHeighCycle);
 	CSpaceUnit* mpTemp = nullptr;
 	for (int i = 0; i < mSize; i++)
 	{
@@ -68,15 +69,17 @@ void CFleet::Fight()
 	if (mpEnemyFleet->GetSize() != 0)
 	{
 		int target = 0;
+		
 		switch (mFleetTactics)
 		{
-			
+		
 			case Tactics::None:
 				//just gets each ship to attack one random enemy ship, no effects on accuracy or damage
 				for (int i = 0; i < mSize; i++)
 				{
 					target = mTarget->GetRandomInt(0, mpEnemyFleet->GetSize() - 1);
-					mpFleet[i]->Attack(mpEnemyFleet->GetShip(target), mHitMod, mDamegMod);
+					if (mpFleet[i]->Attack(mpEnemyFleet->GetShip(target), mHitMod, mDamegMod)) mHits++;
+					mShotsFired++;
 				}
 
 				break;
@@ -86,8 +89,10 @@ void CFleet::Fight()
 				for (int i = 0; i < mSize; i++)
 				{
 					target = mTarget->GetRandomInt(0, mpEnemyFleet->GetSize() - 1);
-					mpFleet[i]->Attack(mpEnemyFleet->GetShip(target), mHitMod, mDamegMod);
-					mpFleet[i]->Attack(mpEnemyFleet->GetShip(target), mHitMod, mDamegMod);
+					if (mpFleet[i]->Attack(mpEnemyFleet->GetShip(target), mHitMod, mDamegMod)) mHits++;
+					if (mpFleet[i]->Attack(mpEnemyFleet->GetShip(target), mHitMod, mDamegMod)) mHits++;
+					mShotsFired++;
+					mShotsFired++;
 				}
 
 				break;
@@ -98,13 +103,14 @@ void CFleet::Fight()
 				int variance=0;
 				for (int i = 0; i < mSize; i++)
 				{
+					mShotsFired++;
 					if (mpEnemyFleet->GetSize()>1)
 					{
 						target = mTarget->GetRandomInt(-mTargetedFireVariance, mTargetedFireVariance);
 						target = abs(target) % (mpEnemyFleet->GetSize() - 1);
 					}
 					else target = 0;
-					mpFleet[i]->Attack(mpEnemyFleet->GetShip(variance), mHitMod, mDamegMod);
+					if (mpFleet[i]->Attack(mpEnemyFleet->GetShip(variance), mHitMod, mDamegMod)) mHits++;
 				}
 				break;
 		}
@@ -243,6 +249,21 @@ string CFleet::GetTacticsName()
 	return "Null";
 }
 
+float CFleet::GetFleetTotalHealth()
+{
+	float totalHp = 0;
+	for (int i = 0; i < mSize; i++)
+	{
+		totalHp += mpFleet[i]->GetHealth();
+	}
+	return totalHp;
+}
+
+float CFleet::GetFleetAvargeHealth()
+{
+	return GetFleetTotalHealth() / (float)mSize;
+}
+
 //-----------------------------------------------------
 // FLEET CLASS MUTATORS
 //-----------------------------------------------------
@@ -325,5 +346,7 @@ void CFleet::ReturnFleet(CRTSPlayer* Player)
 	mNumMothership = 0;
 	mNumSpaceFighter = 0;
 	mNumTransport = 0;
+	mShotsFired = 0;
+	mHits = 0;
 }
 

@@ -50,6 +50,13 @@ private:
 	CRTSPlayer* mpHumanPlayer;
 	CRTSPlayer* mpAIPlayer;
 
+	// USER INTERFACE
+	//---------------------------
+	IFont* mFntDebug;
+	std::stringstream strStream;
+
+	void DrawFontData();
+
 	// MISC
 	//---------------------------
 	const float mTimeToUpdate;
