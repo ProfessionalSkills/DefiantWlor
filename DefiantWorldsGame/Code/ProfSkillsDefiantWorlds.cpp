@@ -175,6 +175,7 @@ void SetupEngine()
 	// Load static meshes
 	CTile::mspMshTile = gpEngine->LoadMesh("Tile.x");
 	CWorldState::mspMshDrag = gpEngine->LoadMesh("DragSelection.x");
+	CMinerals::mspMshMineral = gpEngine->LoadMesh("Mineral.x");
 
 	//Structure Meshes
 	//Command Centre

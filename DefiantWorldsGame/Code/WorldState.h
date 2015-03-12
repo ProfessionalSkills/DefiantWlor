@@ -139,10 +139,14 @@ private:
 	CStructure* mpPlacingStructure;
 	CStructure* mpCurSelectedStructure;
 	CGameAgent* mpCurSelectedAgent;
-	//CResource* mpCurSelectedResource;
+	CMinerals* mpCurSelectedResource;
 
 	std::vector<CGameAgent*> mpUnitSelectionList;
 	std::vector<CGameAgent*>::iterator miterUnitSelectionList;
+
+	std::vector<CMinerals*> mpEarthMineralsList;
+	std::vector<CMinerals*> mpMarsMineralsList;
+	std::vector<CMinerals*>::iterator miterMineralsList;
 
 
 	// ADDITIONAL VARIABLES

@@ -24,6 +24,9 @@ private:
 
 
 public:
+	static IMesh* mspMshMineral;
+
+
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
 	CMinerals();
@@ -44,6 +47,7 @@ public:
 
 	// METHODS
 	//---------------------------
+	void CreateResource(DX::XMFLOAT3 pos);
 
 
 	// VIRTUAL METHODS
