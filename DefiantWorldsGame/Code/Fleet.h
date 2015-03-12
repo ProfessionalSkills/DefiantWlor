@@ -46,6 +46,7 @@ private:
 	const int mFleetRowSeperation;//distance between each row of ships
 	const int mFleetZAdjust;//used to adjust the z depth of the fleet ships, gives depth to the fleet
 	float mFleetYAdjust;//used to bring the fleet up and centralize them
+	float mFleetYHeighCycle;//used bu the fleet idle function to change the y height
 	int mFleetWidth;//number of ships that can be in a row. specifcally, the number of ships beyond the centre ship in a given direction
 	int YSwitch(int x);
 
@@ -66,7 +67,7 @@ public:
 	void LoadShipModels(float xPos);
 	void UnloadShieldModels();
 	void MoveFleet();
-	
+	void IdleFleet();//makes the shapes move slightly, to make the sceene more animated
 
 	// ACCESSORS
 	//---------------------------

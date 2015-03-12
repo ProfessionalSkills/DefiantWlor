@@ -57,6 +57,7 @@ public:
 	virtual bool Destroy();
 	virtual void HitFlash()=0;
 	virtual void UnloadFlash() = 0;
+	virtual void MoveY(float yChange)=0;
 	void FireLazer(CGameAgent* target);
 	void UnloadLazer();
 };

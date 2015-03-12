@@ -99,6 +99,12 @@ void CSpaceFighter::UnloadIModel()
 	UnloadLazer();
 }
 
+void CSpaceFighter::MoveY(float yChange)
+{
+	mWorldPos.y += yChange;
+	mpObjModel->SetY(mWorldPos.y);
+}
+
 //-----------------------------------------------------
 // SPACE FIGHTER CLASS OVERRIDE METHODS
 //-----------------------------------------------------

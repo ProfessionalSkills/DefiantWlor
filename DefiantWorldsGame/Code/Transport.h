@@ -79,6 +79,7 @@ public:
 	void HitFlash();
 	void UnloadFlash();
 	float GetUnitSpacing();
+	void MoveY(float yChange);
 
 private:
 	bool Destroy();

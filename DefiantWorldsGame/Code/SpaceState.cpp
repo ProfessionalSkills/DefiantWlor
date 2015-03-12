@@ -139,6 +139,11 @@ void CSpaceState::StateUpdate()
 	{
 		mpPlayerOneFleet->MoveFleet();
 	}
+	else 
+	{
+		mpPlayerOneFleet->IdleFleet();
+		mpPlayerTwoFleet->IdleFleet();
+	}
 }
 
 void CSpaceState::StateLoad()

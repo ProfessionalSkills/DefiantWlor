@@ -27,7 +27,7 @@ CFleet::CFleet() :mFleetRowSize(20), mFleetRowSeperation(7), mFleetZAdjust(8)
 
 	//Misc
 	mTarget = new CRandomiser();
-
+	mFleetYHeighCycle = 0;
 	mNumMothership = 0;
 	mNumSpaceFighter = 0;
 	mNumTransport = 0;
@@ -48,6 +48,18 @@ void CFleet::MoveFleet()
 	for (int i = 0; i < mSize; i++)
 	{
 		mpFleet[i]->Move();
+	}
+}
+
+void CFleet::IdleFleet()
+{
+	mFleetYHeighCycle += gFrameTime;
+	float yChange=0.01f*sinf(mFleetYHeighCycle);
+	CSpaceUnit* mpTemp = nullptr;
+	for (int i = 0; i < mSize; i++)
+	{
+		mpTemp = (CSpaceUnit*)(mpFleet[i]);
+		mpTemp->MoveY(yChange);
 	}
 }
 

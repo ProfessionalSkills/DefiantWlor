@@ -67,6 +67,12 @@ bool CTransport::Attack(CGameAgent* target, float hitMod, float damageMod)
 	return false;
 }
 
+void CTransport::MoveY(float yChange)
+{
+	mWorldPos.y += yChange;
+	mpObjModel->SetY(mWorldPos.y);
+}
+
 void CTransport::Spawn(CGrid* pGrid, SPointData pCentre)
 {
 

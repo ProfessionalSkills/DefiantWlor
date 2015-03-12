@@ -159,3 +159,9 @@ bool CMothership::Destroy()
 	return false;
 }
 
+void CMothership::MoveY(float yChange)
+{
+	mWorldPos.y += yChange;
+	mpObjModel->SetY(mWorldPos.y);
+}
+
