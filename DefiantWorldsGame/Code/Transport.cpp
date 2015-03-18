@@ -18,7 +18,7 @@ CTransport::CTransport()
 	//Game Values
 	mMaxHealth = 100.0f;
 	mHealth = 100.0f;
-	mDamage = 0.5f;
+	mDamage = 10.0f;
 	mHitChance = 0.4f;
 	mFleetPosition = centre;
 	mPopCost = 1;	
@@ -55,8 +55,7 @@ CTransport::~CTransport()
 //-----------------------------------------------------
 bool CTransport::Attack(CGameAgent* target, float hitMod, float damageMod)
 {
-	CRandomiser toHitRoll;
-	if (toHitRoll.GetRandomFloat(1.0, 100.0) < (hitMod*mHitChance) * 100)
+	if (mpToHitRoll->GetRandomFloat(1.0, 100.0) < (hitMod*mHitChance) * 100)
 	{
 		target->TakeDamage(mDamage*damageMod);
 		FireLazer(target);

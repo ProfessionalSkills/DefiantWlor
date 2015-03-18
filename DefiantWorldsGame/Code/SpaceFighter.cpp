@@ -20,7 +20,7 @@ CSpaceFighter::CSpaceFighter()
 	//Game Values
 	mMaxHealth = 100.0f;
 	mHealth = 100.0f;
-	mDamage = 1.0f;
+	mDamage = 20.0f;
 	mPopCost = 1;
 	mHitChance = 0.7f;
 	mFleetPosition = front;
@@ -110,8 +110,7 @@ void CSpaceFighter::MoveY(float yChange)
 //-----------------------------------------------------
 bool CSpaceFighter::Attack(CGameAgent* target, float hitMod, float damageMod)
 {
-	CRandomiser toHitRoll;
-	if (toHitRoll.GetRandomFloat(1.0,100.0) < (hitMod*mHitChance) * 100)
+	if (mpToHitRoll->GetRandomFloat(1.0, 100.0) < (hitMod*mHitChance) * 100)
 	{
 		target->TakeDamage(mDamage*damageMod);
 		mGenSound->PlaySound();

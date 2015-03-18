@@ -60,8 +60,10 @@ private:
 	// MISC
 	//---------------------------
 	const float mTimeToUpdate;
+	const float mTimeToUpdateEffects;
 	const float mCamRotSpeed;
 	float mTimeSinceUpdate;
+	float mTimeSinceEffectsUpdate = 0.0f;
 	CRandomiser mNewRandom;
 
 public:

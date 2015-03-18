@@ -19,7 +19,7 @@ CMothership::CMothership()
 	//Game Values
 	mMaxHealth = 100.0f;
 	mHealth = 100.0f;
-	mDamage = 4.0f;
+	mDamage = 80.0f;
 	mHitChance = 0.5f;
 	mFleetPosition = back;
 
@@ -85,8 +85,7 @@ void CMothership::UnloadFlash()
 //-----------------------------------------------------
 bool CMothership::Attack(CGameAgent* target, float hitMod, float damageMod)
 {
-	CRandomiser toHitRoll;
-	if (toHitRoll.GetRandomFloat(1.0, 100.0) < (hitMod*mHitChance) * 100)
+	if (mpToHitRoll->GetRandomFloat(1.0, 100.0) < (hitMod*mHitChance) * 100)
 	{
 		target->TakeDamage(mDamage*damageMod);
 		FireLazer(target);

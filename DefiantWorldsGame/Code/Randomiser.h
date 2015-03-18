@@ -34,6 +34,7 @@ public:
 
 	// METHODS
 	//--------------------------- 
+	void SetSeed(float seed1, float seed2);
 	int GetRandomInt(int inMin, int inMax);
 	float GetRandomFloat(double inMin, double inMax);
 };

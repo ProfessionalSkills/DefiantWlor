@@ -17,11 +17,13 @@ CSpaceUnit::CSpaceUnit()
 	mSpeed = 50.0f;
 	mpTempShield = nullptr;
 	mpTempLazer = nullptr;
+
+	mpToHitRoll = new CRandomiser();
 }
 
 CSpaceUnit::~CSpaceUnit()
 {
-
+	SafeDelete(mpToHitRoll);
 }
 
 //-----------------------------------------------------

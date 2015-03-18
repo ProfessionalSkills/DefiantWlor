@@ -28,12 +28,16 @@ protected:
 	IModel* mpTempShield;
 	IModel* mpTempLazer;
 
+	CRandomiser* mpToHitRoll;
+
 public:
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
 	CSpaceUnit();
 	virtual ~CSpaceUnit();
 	static IMesh* mspMshLazer;
+
+
 	// ACCESSORS
 	//---------------------------
 

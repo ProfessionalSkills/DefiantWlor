@@ -103,6 +103,7 @@ void CFleet::Fight()
 				int variance=0;
 				for (int i = 0; i < mSize; i++)
 				{
+					mTarget->SetSeed((float)mHits, (float)mpEnemyFleet->GetShip(0)->GetHealth());
 					mShotsFired++;
 					if (mpEnemyFleet->GetSize()>1)
 					{
@@ -110,7 +111,7 @@ void CFleet::Fight()
 						target = abs(target) % (mpEnemyFleet->GetSize() - 1);
 					}
 					else target = 0;
-					if (mpFleet[i]->Attack(mpEnemyFleet->GetShip(variance), mHitMod, mDamegMod)) mHits++;
+					if (mpFleet[i]->Attack(mpEnemyFleet->GetShip(target), mHitMod, mDamegMod)) mHits++;
 				}
 				break;
 		}

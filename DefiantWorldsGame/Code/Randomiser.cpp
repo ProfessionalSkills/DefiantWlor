@@ -28,6 +28,11 @@ CRandomiser::~CRandomiser()
 //-----------------------------------------------------
 // RANDOMISER CLASS METHODS
 //-----------------------------------------------------
+void CRandomiser::SetSeed(float seed1, float seed2)
+{
+	mGenerator.seed(seed1 * seed2);
+}
+
 int CRandomiser::GetRandomInt(int inMin, int inMax)
 {
 	// Create distribution

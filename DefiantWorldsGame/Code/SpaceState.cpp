@@ -13,7 +13,7 @@
 //-----------------------------------------------------
 // SPACE STATE CLASS CONSTRUCTORS & DESTRUCTOR
 //-----------------------------------------------------
-CSpaceState::CSpaceState() :mTimeToUpdate(0.1f), mCamRotSpeed(0.7),mCamZAdjust(-10.4f),mBaseCamZ(-188.0f), mDisplacement(30),CGameState()
+CSpaceState::CSpaceState() :mTimeToUpdate(1.0f), mTimeToUpdateEffects(0.1f), mCamRotSpeed(0.7), mCamZAdjust(-10.4f), mBaseCamZ(-188.0f), mDisplacement(30), CGameState()
 {
 	mTimeSinceUpdate = 0.0f;
 	mCamZ = 0.0f;
@@ -106,33 +106,40 @@ void CSpaceState::StateUpdate()
 
 	if (mTimeSinceUpdate >= mTimeToUpdate)
 	{
-		//fleets attack each other according to tactics
-		mpPlayerOneFleet->UnloadShieldModels();
-		mpPlayerTwoFleet->UnloadShieldModels();
-
 		//randomizes the order of fleet attack->update
 		if (mNewRandom.GetRandomInt(1, 2) == 1)
 		{
 			mpPlayerOneFleet->Fight();
-			mpPlayerTwoFleet->UpdateCondition();
-
-			//finds and removes dead ships
 			mpPlayerTwoFleet->Fight();
-			mpPlayerOneFleet->UpdateCondition();
 		}
 		else 
 		{
 			//finds and removes dead ships
 			mpPlayerTwoFleet->Fight();
-			mpPlayerOneFleet->UpdateCondition();
-
 			mpPlayerOneFleet->Fight();
-			mpPlayerTwoFleet->UpdateCondition();	
 		}
 
 		
 		//reset timer
 		mTimeSinceUpdate = 0.0f;
+		mTimeSinceEffectsUpdate = mTimeToUpdateEffects;
+	}
+
+	//update effects time
+	mTimeSinceEffectsUpdate -= gFrameTime;
+
+	if (mTimeSinceEffectsUpdate <= 0.0f)
+	{
+		//fleets attack each other according to tactics
+		mpPlayerOneFleet->UnloadShieldModels();
+		mpPlayerTwoFleet->UnloadShieldModels();
+
+		//update fleet status
+		mpPlayerOneFleet->UpdateCondition();
+		mpPlayerTwoFleet->UpdateCondition();
+
+		//reset timer
+		mTimeSinceEffectsUpdate = 0.0f;
 	}
 
 	if (mpPlayerOneFleet->GetSize() == 0)
