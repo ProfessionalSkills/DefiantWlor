@@ -41,7 +41,7 @@ void CMenuState::NewGame()
 void CMenuState::LoadGame()
 {
 	gCurState = GS_WORLD;
-
+	
 	// Don't remove or loapd new players
 }
 
