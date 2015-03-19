@@ -106,12 +106,12 @@ void CSettingsScreenState::StateSetup()
 
 	mpSprBackground = gpEngine->CreateSprite("MenuBG.png", 400.0f, 50.0f, 0.9f);
 
-	CAdvancedButton<CSettingsScreenState, void>* pNewButton = new CAdvancedButton<CSettingsScreenState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 350),
-		SAABoundingBox(400.0f, 1215.0f, 350.0f, 815.0f), *this, &CSettingsScreenState::SaveSettings);
+	CAdvancedButton<CSettingsScreenState, void>* pNewButton = new CAdvancedButton<CSettingsScreenState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 620),
+		SAABoundingBox(670.0f, 1215.0f, 620.0f, 815.0f), *this, &CSettingsScreenState::SaveSettings);
 	mpButtonList.push_back(pNewButton);
 
-	pNewButton = new CAdvancedButton<CSettingsScreenState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 420),
-		SAABoundingBox(470.0f, 1215.0f, 420.0f, 815.0f), *this, &CSettingsScreenState::Cancel);
+	pNewButton = new CAdvancedButton<CSettingsScreenState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 690),
+		SAABoundingBox(740.0f, 1215.0f, 690.0f, 815.0f), *this, &CSettingsScreenState::Cancel);
 	mpButtonList.push_back(pNewButton);
 }
 
@@ -149,10 +149,8 @@ void CSettingsScreenState::StateUpdate()
 
 	// UPDATE BUTTONS
 	//------------------------------
-	mpButtonFont->Draw("SAVE SETTINGS", 1015, 365, kWhite, kCentre, kTop);
-	mpButtonFont->Draw("CANCEL", 1015, 435, kWhite, kCentre, kTop);
-	//mpButtonFont->Draw("CHANGE SETTINGS", 1015, 505, kWhite, kCentre, kTop);
-	//mpButtonFont->Draw("QUIT GAME", 1015, 575, kWhite, kCentre, kTop);
+	mpButtonFont->Draw("SAVE SETTINGS", 1015, 635, kWhite, kCentre, kTop);
+	mpButtonFont->Draw("CANCEL", 1015, 705, kWhite, kCentre, kTop);
 
 	mMousePos.x = (float)gpEngine->GetMouseX();
 	mMousePos.y = (float)gpEngine->GetMouseY();
