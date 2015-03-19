@@ -12,6 +12,7 @@
 #include "MenuState.h"
 #include "SpaceState.h"
 #include "WorldState.h"
+#include "SettingsScreenState.h"
 #include "PlayerManager.h"
 
 
@@ -37,6 +38,7 @@ private:
 	CMenuState*  mpMenuState;			// Data for the main menu state
 	CSpaceState* mpSpaceState;			// Data for the space state
 	CWorldState* mpWorldState;			// Data for the building on world state (includes both Earth and Mars loaded)
+	CSettingsScreenState* mpSettingsState;
 
 	EGameStates mCurState;				// A match to the current global state in Common Header. Used to identify changes in states, and what state to change to.
 

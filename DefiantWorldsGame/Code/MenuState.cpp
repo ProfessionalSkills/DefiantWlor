@@ -47,7 +47,7 @@ void CMenuState::LoadGame()
 
 void CMenuState::ChangeSettings()
 {
-
+	gCurState = GS_SETTINGS;
 }
 
 void CMenuState::Quit()
