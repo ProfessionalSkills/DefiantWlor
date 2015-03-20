@@ -110,6 +110,7 @@ EErrorTypes CProductionStructure::AddToQueue(size_t agentIndex, CRTSPlayer* pPla
 
 	// Enough funds - subtract them
 	pPlayer->MineralTransaction(-mpProductionQueue.front()->GetBuildCost());
+	mpProductionQueue.front()->SetFaction(pPlayer->GetPlayerFaction());
 
 	// Success
 	return ERR_NONE;

@@ -69,6 +69,14 @@ void CWorker::LoadIModel()
 	{
 		mpObjModel = mspMshWorker->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
 		mpObjModel->Scale(mScale);
+		if (mFaction == FAC_EARTH_DEFENSE_FORCE)
+		{
+			mpObjModel->SetSkin("ttruckGerman.jpg");
+		}
+		else
+		{
+			mpObjModel->SetSkin("ttruckGermanMars.jpg");
+		}
 	}
 }
 
