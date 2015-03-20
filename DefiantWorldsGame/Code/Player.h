@@ -42,6 +42,7 @@ class CRTSPlayer
 protected:
 	// DATA
 	//---------------------------
+	CRandomiser* mpRandomiser;
 	std::string mName;
 	EFactions mPlayerFaction;
 
@@ -70,6 +71,9 @@ protected:
 
 	std::vector<CGameAgent*> mpSpaceUnitsList;
 	std::vector<CGameAgent*>::iterator mpiterSpaceUnits;
+
+	std::vector<CMinerals*> mpMineralsList;
+	std::vector<CMinerals*>::iterator miterMineralsList;
 
 	CFleet* mpFleet;
 
@@ -190,10 +194,9 @@ public:
 	bool QueueUnit(CStructure* structure, CGameAgent* unit);
 	void LaunchAttack();
 	virtual void Update();
-	void LoadStructureModels();
-	void UnloadStructureModels();
-	void LoadUnitModels();
-	void UnloadUnitModels();
+	void CreateResourcePiles();
+	void LoadPlayerGridModels();
+	void UnloadPlayerGridModels();
 	bool PopLimitReached(int popValue);
 };
 

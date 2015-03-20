@@ -118,8 +118,8 @@ private:
 	DX::XMFLOAT3 mDragStartPos;
 	DX::XMFLOAT3 mDragEndPos;
 
-	RECT         mBaseClip;		    // The rectangle of the window (for undoing mouse clip)
-	RECT         mWindowClip;	    // Limit the mouse to stay within the window
+	RECT mBaseClip;			    // The rectangle of the window (for undoing mouse clip)
+	RECT mWindowClip;		    // Limit the mouse to stay within the window
 	bool mLMouseClicked;
 	bool mRMouseClicked;
 	float mHoldCount;
@@ -143,10 +143,6 @@ private:
 
 	std::vector<CGameAgent*> mpUnitSelectionList;
 	std::vector<CGameAgent*>::iterator miterUnitSelectionList;
-
-	std::vector<CMinerals*> mpEarthMineralsList;
-	std::vector<CMinerals*> mpMarsMineralsList;
-	std::vector<CMinerals*>::iterator miterMineralsList;
 
 
 	// ADDITIONAL VARIABLES

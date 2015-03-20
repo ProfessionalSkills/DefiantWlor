@@ -922,16 +922,17 @@ void CWorldState::StateSetup()
 		// Set grids for each player for easy referal
 		mpHumanPlayer->StorePlayerGridState(mpEarthGrid);
 		mpAIPlayer->StorePlayerGridState(mpMarsGrid);
+
+		// Create the resource piles for each player
+		mpHumanPlayer->CreateResourcePiles();
+		mpAIPlayer->CreateResourcePiles();
 	}
 	else
 	{
 		// RE-CONSTRUCT BUILDINGS
 		//-----------------------------
-		mpHumanPlayer->LoadStructureModels();
-		mpAIPlayer->LoadStructureModels();
-
-		mpHumanPlayer->LoadUnitModels();
-		mpAIPlayer->LoadUnitModels();
+		mpHumanPlayer->LoadPlayerGridModels();
+		mpAIPlayer->LoadPlayerGridModels();
 
 		// Re-assign previous grid data
 		mpEarthGrid = mpHumanPlayer->GetPlayerGrid();
@@ -1300,11 +1301,8 @@ void CWorldState::StateCleanup()
 	mpMshSkybox->RemoveModel(mpMdlSkybox);
 
 	//used to unload the structure models
-	mpHumanPlayer->UnloadStructureModels();
-	mpAIPlayer->UnloadStructureModels();
-
-	mpHumanPlayer->UnloadUnitModels();
-	mpAIPlayer->UnloadUnitModels();
+	mpHumanPlayer->UnloadPlayerGridModels();
+	mpAIPlayer->UnloadPlayerGridModels();
 
 	gpEngine->RemoveSprite(mpMainUI);
 	gpEngine->RemoveMesh(mpMshSkybox);

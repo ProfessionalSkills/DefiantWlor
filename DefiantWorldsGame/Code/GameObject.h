@@ -24,19 +24,22 @@ protected:
 	SPointData mGridPos;
 	float mOrientation;
 	float mScale;
-	int   mBuildCost;
-	int  mPopCost;
+	int mBuildCost;
+	int mPopCost;
 
 	EFactions mFaction;
+
 
 	// TLE OBJECT DATA
 	//---------------------------
 	IModel* mpObjModel;
 
+
 	// SOUND
 	//---------------------------
 	CSound* mGenSound;
 	CSound* mSelectSound;
+
 
 public:
 	// CONSTRUCTORS & DESTRUCTOR
@@ -112,11 +115,6 @@ public:
 
 
 	// METHODS
-	//---------------------------
-	void InitBaseVariables();
-
-
-	// VIRTUAL METHODS
 	//---------------------------
 };
 

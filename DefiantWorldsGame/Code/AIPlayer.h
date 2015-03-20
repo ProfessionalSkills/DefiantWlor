@@ -75,7 +75,6 @@ private:
 
 	// MISC
 	//---------------------------
-	CRandomiser* mpRandomiser;
 	float mUpdateTime;			// Time between the AI doing tasks - can be determined by difficulty level perhaps?
 	float mWaitTime;
 };

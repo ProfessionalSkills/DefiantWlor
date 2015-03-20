@@ -25,6 +25,7 @@ CRTSPlayer::CRTSPlayer(EFactions playerFaction) : MINERAL_UPDATE_TIME(5.0f)
 	mCurPop = 0;
 	mTimeToMineralUpdate = MINERAL_UPDATE_TIME;
 	mpPlayerGrid = nullptr;
+	mpRandomiser = new CRandomiser();
 
 	CSpaceFighter* Temp;
 	for (int i = 0; i <75; i++)
@@ -302,36 +303,76 @@ void CRTSPlayer::Update()
 	}
 }
 
-void CRTSPlayer::LoadStructureModels()
+void CRTSPlayer::CreateResourcePiles()
 {
+	SPointData spawnTile;
+	bool tileUsed = true;
+	CTile* pTile = nullptr;
+	CMinerals* pNewMineral = nullptr;
+	
+	// Create 3 resource piles around the grid area for the player
+	for (int i = 0; i < 3; i++)
+	{
+		// Until a free tile is found
+		while (tileUsed)
+		{
+			// Choose a random spawn tile
+			spawnTile = { mpRandomiser->GetRandomInt(0, GRID_SIZE_X), mpRandomiser->GetRandomInt(0, GRID_SIZE_Y) };
+			
+			// Check if the spawn tile is used or attempts to spawn off of the grid
+			pTile = mpPlayerGrid->GetTileData(spawnTile);
+			if (pTile == nullptr)
+			{
+				tileUsed = true;
+			}
+			else
+			{
+				tileUsed = pTile->IsTileUsed();
+			}
+		}
+
+		// Found a tile not in use - spawn the tile here
+		pNewMineral = new CMinerals();
+		pNewMineral->CreateResource(pTile->GetWorldPos());
+		mpMineralsList.push_back(pNewMineral);
+
+		// Ensure tile is labelled as used
+		pTile->SetTileUsage(true);
+		tileUsed = true;
+	}
+}
+
+void CRTSPlayer::LoadPlayerGridModels()
+{
+	// Structures
 	for (miterStructuresMap = mpStructuresMap.begin(); miterStructuresMap != mpStructuresMap.end(); miterStructuresMap++)
 	{
 		miterStructuresMap->second->LoadIModel();
 	}
-}
 
-void CRTSPlayer::UnloadStructureModels()
-{
-	// Loop through all structures & unload their models
-	for (miterStructuresMap = mpStructuresMap.begin(); miterStructuresMap != mpStructuresMap.end(); miterStructuresMap++)
-	{
-		miterStructuresMap->second->UnloadIModel();
-	}
-}
-
-void CRTSPlayer::LoadUnitModels()
-{
-	//loads units back into their original postion
+	// Units
 	for (miterUnitsMap = mpUnitsMap.begin(); miterUnitsMap != mpUnitsMap.end(); miterUnitsMap++)
 	{
 		miterUnitsMap->second->LoadIModel();
 	}
+
+	// Resources
 }
 
-void CRTSPlayer::UnloadUnitModels()
+void CRTSPlayer::UnloadPlayerGridModels()
 {
+	// Structures
+	for (miterStructuresMap = mpStructuresMap.begin(); miterStructuresMap != mpStructuresMap.end(); miterStructuresMap++)
+	{
+		miterStructuresMap->second->UnloadIModel();
+	}
+
+	// Units
 	for (miterUnitsMap = mpUnitsMap.begin(); miterUnitsMap != mpUnitsMap.end(); miterUnitsMap++)
 	{
 		miterUnitsMap->second->UnloadIModel();
 	}
+
+	// Resources
+
 }

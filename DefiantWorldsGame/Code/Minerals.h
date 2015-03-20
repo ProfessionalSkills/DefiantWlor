@@ -48,10 +48,6 @@ public:
 	// METHODS
 	//---------------------------
 	void CreateResource(DX::XMFLOAT3 pos);
-
-
-	// VIRTUAL METHODS
-	//---------------------------
 };
 
 #endif /* _MINERALS_H_ */

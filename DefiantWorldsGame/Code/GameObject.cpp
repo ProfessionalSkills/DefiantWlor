@@ -46,12 +46,3 @@ void CGameObject::ChangeRelativeOrientation(float amount)
 {
 
 }
-
-
-//-----------------------------------------------------
-// GAME OBJECT CLASS METHODS
-//-----------------------------------------------------
-void CGameObject::InitBaseVariables()
-{
-
-}

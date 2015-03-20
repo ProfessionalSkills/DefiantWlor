@@ -14,8 +14,6 @@
 //-----------------------------------------------------
 CRTSAIPlayer::CRTSAIPlayer(EFactions playerFaction) : CRTSPlayer(playerFaction), UPDATE_TIME(0.1f)
 {
-	mpRandomiser = new CRandomiser();
-
 	// Initialise first 10 tasks of AI player
 	mpTaskQ.push(new CBuildRequest(Q_WORKER, 50));
 	mpTaskQ.push(new CBuildRequest(Q_WORKER, 50));
