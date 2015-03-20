@@ -922,6 +922,8 @@ void CWorldState::StateSetup()
 		// Set grids for each player for easy referal
 		mpHumanPlayer->StorePlayerGridState(mpEarthGrid);
 		mpAIPlayer->StorePlayerGridState(mpMarsGrid);
+		mpEarthGrid->ResetTilesModels();
+		mpMarsGrid->ResetTilesModels();
 
 		// Create the resource piles for each player
 		mpHumanPlayer->CreateResourcePiles();

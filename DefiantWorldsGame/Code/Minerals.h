@@ -48,6 +48,8 @@ public:
 	// METHODS
 	//---------------------------
 	void CreateResource(DX::XMFLOAT3 pos);
+	void LoadIModel();
+	void UnloadIModel();
 };
 
 #endif /* _MINERALS_H_ */

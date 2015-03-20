@@ -357,6 +357,10 @@ void CRTSPlayer::LoadPlayerGridModels()
 	}
 
 	// Resources
+	for (miterMineralsList = mpMineralsList.begin(); miterMineralsList != mpMineralsList.end(); miterMineralsList++)
+	{
+		(*miterMineralsList)->LoadIModel();
+	}
 }
 
 void CRTSPlayer::UnloadPlayerGridModels()
@@ -374,5 +378,8 @@ void CRTSPlayer::UnloadPlayerGridModels()
 	}
 
 	// Resources
-
+	for (miterMineralsList = mpMineralsList.begin(); miterMineralsList != mpMineralsList.end(); miterMineralsList++)
+	{
+		(*miterMineralsList)->UnloadIModel();
+	}
 }
