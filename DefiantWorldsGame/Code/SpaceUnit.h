@@ -52,7 +52,7 @@ public:
 	//---------------------------
 	virtual bool Attack(CGameAgent* target,float hitMod, float damageMod);
 	virtual void Spawn(CGrid* pGrid, SPointData pCentre);
-	virtual void Update();
+	virtual bool Update();
 	//virtual void MoveTo(CTile* dest);
 	virtual bool Move();
 	virtual void UnloadIModel();

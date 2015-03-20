@@ -140,11 +140,12 @@ public:
 
 	virtual float GetUnitSpacing();
 
+
 	// MUTATORS
 	//---------------------------
 	bool TakeDamage(float amount);
 	bool Heal(float amount);
-
+	void SetState(EObjectStates newState);
 
 	// METHODS
 	//---------------------------
@@ -159,7 +160,7 @@ public:
 	bool DragBoxCollision(DX::BoundingBox& box);
 	void DisplayInfo(IFont* font);
 	//virtual void MoveTo(CTile* dest) = 0;
-	virtual void Update() = 0;
+	virtual bool Update() = 0;
 	virtual void UnloadIModel() = 0;
 	virtual void LoadIModel() = 0;
 	virtual void LoadModel(float x, float y, float z) = 0;

@@ -82,6 +82,8 @@ bool CBomber::Move()
 
 bool CBomber::Destroy()
 {
+	// For now just call the UnloadIModel function
+	UnloadIModel();
 	return false;
 }
 

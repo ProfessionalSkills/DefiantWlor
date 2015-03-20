@@ -81,6 +81,7 @@ bool CTank::Move()
 
 bool CTank::Destroy()
 {
+	UnloadIModel();
 	return false;
 }
 

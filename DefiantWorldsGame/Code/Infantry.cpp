@@ -84,6 +84,7 @@ bool CInfantry::Move()
 
 bool CInfantry::Destroy()
 {
+	UnloadIModel();
 	return false;
 }
 

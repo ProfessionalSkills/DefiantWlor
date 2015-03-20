@@ -1575,15 +1575,22 @@ void CWorldState::CreateHouse()
 
 void CWorldState::DeleteStructure()
 {
-	if (!mpCurSelectedStructure) return;
-	
-	// Set object to be deleted
-	mpCurSelectedStructure->SetState(OBJ_DEAD);
-	// pointer set to null
-	mpCurSelectedStructure = nullptr;
-	// Leave function so next function call is not executed
-	return;
-	mLMouseClicked = false;
+	if (mpCurSelectedStructure)
+	{
+		// Set object to be deleted
+		mpCurSelectedStructure->SetState(OBJ_DEAD);
+		// pointer set to null
+		mpCurSelectedStructure = nullptr;
+		mLMouseClicked = false;
+	}
+	if (mpCurSelectedAgent)
+	{
+		// Set object to be deleted
+		mpCurSelectedAgent->SetState(OBJ_DEAD);
+		// pointer set to null
+		mpCurSelectedAgent = nullptr;
+		mLMouseClicked = false;
+	}
 }
 
 void CWorldState::LaunchAttack()

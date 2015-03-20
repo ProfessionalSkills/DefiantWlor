@@ -116,6 +116,11 @@ void CGameAgent::DisplayInfo(IFont* font)
 //-----------------------------------------------------
 // GAME AGENT CLASS METHODS
 //-----------------------------------------------------
+void CGameAgent::SetState(EObjectStates newState)
+{
+	mState = newState;
+}
+
 bool CGameAgent::Construct()
 {
 	// Reduce construction time left

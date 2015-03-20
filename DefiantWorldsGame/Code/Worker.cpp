@@ -92,6 +92,7 @@ bool CWorker::Move()
 
 bool CWorker::Destroy()
 {
+	UnloadIModel();
 	return false;
 }
 

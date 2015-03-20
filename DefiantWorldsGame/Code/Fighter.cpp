@@ -83,6 +83,7 @@ bool CFighter::Move()
 
 bool CFighter::Destroy()
 {
+	UnloadIModel();
 	return false;
 }
 
@@ -91,9 +92,9 @@ IModel* CFighter::CreateModel(DX::XMFLOAT3 pos)
 	return mspMshFighter->CreateModel(pos.x, pos.y, pos.z);
 }
 
-void CFighter::Update()
+bool CFighter::Update()
 {
-	CAirUnit::Update();
-
 	mpObjModel->GetNode(4)->RotateY(mRotarSpeed * gFrameTime);
+
+	return CAirUnit::Update();
 }

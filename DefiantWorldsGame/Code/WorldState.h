@@ -185,7 +185,6 @@ public:
 	void DisplaySelectedBuildingInfo();
 	void DisplaySelectedAgentInfo();
 
-
 	EMouseStates UpdateMouseState();
 
 

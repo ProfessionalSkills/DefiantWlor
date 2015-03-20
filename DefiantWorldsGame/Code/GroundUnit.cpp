@@ -51,7 +51,7 @@ void CGroundUnit::Spawn(CGrid* pGrid, SPointData pCentre)
 }
 
 
-void CGroundUnit::Update( )
+bool CGroundUnit::Update()
 {
 	if (HasTarget())
 	{
@@ -80,6 +80,17 @@ void CGroundUnit::Update( )
 		}
 	}
 	//mpObjModel->SetPosition(mPathTarget->GetWorldPos().x, mPathTarget->GetWorldPos().y , mPathTarget->GetWorldPos().z);
+
+	// Check if the model is still alive
+	if (mState == OBJ_DEAD)
+	{
+		Destroy();
+		return false;
+	}
+	else
+	{
+		return true;
+	}
 }
 
 bool CGroundUnit::LookingAt()

@@ -71,9 +71,10 @@ void CSpaceUnit::LoadModel(float x, float y, float z)
 {
 
 }
-void CSpaceUnit::Update()
-{
 
+bool CSpaceUnit::Update()
+{
+	return true;
 }
 
 void HitFlash()

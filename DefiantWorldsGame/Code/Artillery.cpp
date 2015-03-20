@@ -84,6 +84,7 @@ bool CArtillery::Move()
 
 bool CArtillery::Destroy()
 {
+	UnloadIModel();
 	return false;
 }
 

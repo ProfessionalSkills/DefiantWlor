@@ -53,7 +53,7 @@ bool CAirUnit::Move()
 	return false;
 }
 
-void CAirUnit::Update()
+bool CAirUnit::Update()
 {
 	if (HasTarget())
 	{
@@ -80,6 +80,17 @@ void CAirUnit::Update()
 				mBoundingSphere.Move(mWorldPos);
 			}
 		}
+	}
+
+	// Check if the model is still alive
+	if (mState == OBJ_DEAD)
+	{
+		Destroy();
+		return false;
+	}
+	else
+	{
+		return true;
 	}
 }
 
@@ -139,6 +150,7 @@ bool CAirUnit::LookingAt()
 
 bool CAirUnit::Destroy()
 {
+	// Currently just unload the IModel
 	return false;
 }
 
