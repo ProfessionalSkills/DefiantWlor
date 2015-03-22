@@ -276,6 +276,9 @@
     <ClCompile Include="SettingsScreenState.cpp">
       <Filter>Game States\Child State Classes</Filter>
     </ClCompile>
+    <ClCompile Include="SliderTool.cpp">
+      <Filter>Utilities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common.h">
@@ -415,6 +418,9 @@
     </ClInclude>
     <ClInclude Include="SettingsScreenState.h">
       <Filter>Game States\Child State Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="SliderTool.h">
+      <Filter>Utilities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

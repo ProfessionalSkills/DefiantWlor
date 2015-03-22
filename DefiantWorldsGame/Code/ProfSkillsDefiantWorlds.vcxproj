@@ -157,6 +157,7 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
     <ClCompile Include="Randomiser.cpp" />
     <ClCompile Include="GameAgent.cpp" />
     <ClCompile Include="SettingsScreenState.cpp" />
+    <ClCompile Include="SliderTool.cpp" />
     <ClCompile Include="Smoke.cpp" />
     <ClCompile Include="SoundObject.cpp" />
     <ClCompile Include="SpaceCentre.cpp" />
@@ -205,6 +206,7 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
     <ClInclude Include="ProductionStructure.h" />
     <ClInclude Include="Randomiser.h" />
     <ClInclude Include="SettingsScreenState.h" />
+    <ClInclude Include="SliderTool.h" />
     <ClInclude Include="Smoke.h" />
     <ClInclude Include="SoundObject.h" />
     <ClInclude Include="SpaceCentre.h" />
