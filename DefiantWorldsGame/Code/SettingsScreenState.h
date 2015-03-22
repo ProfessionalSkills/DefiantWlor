@@ -11,6 +11,7 @@
 //-----------------------------------------------------
 #include "BaseGameState.h"
 #include "AdvancedButton.h"
+#include "SliderTool.h"
 
 
 //-----------------------------------------------------
@@ -51,6 +52,12 @@ private:
 	IFont* mpButtonFont;
 
 
+	// OTHER UI ITEMS
+	//--------------------------- 
+	CSliderTool* mpMusicSlider = nullptr;
+	CSliderTool* mpEffectsSlider = nullptr;
+
+
 	// ADDITIONAL VARIABLES
 	//--------------------------- 
 	DX::XMFLOAT2 mMousePos;			// Position of mouse on screen
@@ -78,6 +85,10 @@ public:
 	//---------------------------
 	void SaveSettings();
 	void Cancel();
+	void IncrementMusic();
+	void DecrementMusic();
+	void IncrementEffects();
+	void DecrementEffects();
 
 
 	// OVERRIDE METHODS

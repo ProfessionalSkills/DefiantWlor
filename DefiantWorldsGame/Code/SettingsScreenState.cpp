@@ -37,6 +37,26 @@ void CSettingsScreenState::Cancel()
 	gCurState = GS_MAIN_MENU;
 }
 
+void CSettingsScreenState::IncrementMusic()
+{
+	mpMusicSlider->IncrementSlider();
+}
+
+void CSettingsScreenState::DecrementMusic()
+{
+	mpMusicSlider->DecrementSlider();
+}
+
+void CSettingsScreenState::IncrementEffects()
+{
+
+}
+
+void CSettingsScreenState::DecrementEffects()
+{
+
+}
+
 
 //-----------------------------------------------------
 // MENU STATE CLASS OVERRIDE METHODS
@@ -113,6 +133,20 @@ void CSettingsScreenState::StateSetup()
 	pNewButton = new CAdvancedButton<CSettingsScreenState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 690),
 		SAABoundingBox(740.0f, 1215.0f, 690.0f, 815.0f), *this, &CSettingsScreenState::Cancel);
 	mpButtonList.push_back(pNewButton);
+
+	// Settings buttons
+	pNewButton = new CAdvancedButton<CSettingsScreenState, void>("DefSmallButton.png", "SelSmallButton.png", SPointData(615, 200),
+		SAABoundingBox(250.0f, 715.0f, 200.0f, 615.0f), *this, &CSettingsScreenState::DecrementMusic);
+	mpButtonList.push_back(pNewButton);
+
+	pNewButton = new CAdvancedButton<CSettingsScreenState, void>("DefSmallButton.png", "SelSmallButton.png", SPointData(1225, 200),
+		SAABoundingBox(250.0f, 1325.0f, 200.0f, 1225.0f), *this, &CSettingsScreenState::IncrementMusic);
+	mpButtonList.push_back(pNewButton);
+
+
+	// ADDITIONAL USER INTERFACE ELEMENTS
+	//------------------------------
+	mpMusicSlider = new CSliderTool(SPointData{720, 213}, 10, 0);
 }
 
 void CSettingsScreenState::StateUpdate()
@@ -221,4 +255,7 @@ void CSettingsScreenState::StateCleanup()
 
 		mpButtonList.pop_back();
 	}
+
+	SafeDelete(mpEffectsSlider);
+	SafeDelete(mpMusicSlider);
 }
