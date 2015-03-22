@@ -128,6 +128,19 @@ public:
 		}
 	}
 
+	void SetNewButtonSkin(std::string fileName)
+	{
+		// Delete old basic button & create new one with new skin
+		if (mpSprBasic)
+		{
+			gpEngine->RemoveSprite(mpSprBasic);
+			mpSprBasic = nullptr;
+		}
+
+		mpSprBasic = gpEngine->CreateSprite(fileName, (float)mPosition.mPosX, (float)mPosition.mPosY, 0.7f);
+	}
+
+
 	// ACCESSORS
 	//---------------------------
 	inline SAABoundingBox GetBoundingBox()

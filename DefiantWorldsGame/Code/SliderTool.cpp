@@ -16,8 +16,20 @@ CSliderTool::CSliderTool(SPointData position, int numSettings, int curSetting)
 	mCurSetting = curSetting;
 
 	// Load the sprites
-	mpSprSlider = gpEngine->CreateSprite("SliderBack.png", (float)position.mPosX, (float)position.mPosY, 0.9f);
-	mpSprPull = gpEngine->CreateSprite("DefSliderPull.png", (float)position.mPosX - 5.0f, (float)position.mPosY - 5.0f, 0.8f);
+	DX::XMFLOAT2 pullStartPos{ (float)position.mPosX, (float)position.mPosY - 5.0f };
+	mpSprSlider = gpEngine->CreateSprite("SliderBack.png", (float)position.mPosX, (float)position.mPosY, 0.8f);
+	mpSprPull = gpEngine->CreateSprite("DefSliderPull.png", pullStartPos.x, pullStartPos.y, 0.7f);
+
+	// Determine each stop position
+	float step = mBarDimensions.x / (float)numSettings;
+	for (int i = 0; i < numSettings; i++)
+	{
+		mSettingPositions.push_back(pullStartPos);
+		pullStartPos.x += step;
+	}
+
+	// Set the pull sprite to the position of its index
+	mpSprPull->SetX(mSettingPositions[mCurSetting].x - 18.5f);
 }
 
 CSliderTool::~CSliderTool()
@@ -44,9 +56,9 @@ void CSliderTool::SetSliderSetting(int setting)
 	{
 		mCurSetting = 0;
 	}
-	else if (setting > mNumSettings)
+	else if (setting > mNumSettings - 1)
 	{
-		mCurSetting = mNumSettings;
+		mCurSetting = mNumSettings - 1;
 	}
 	else
 	{
@@ -58,9 +70,9 @@ void CSliderTool::IncrementSlider()
 {
 	// Increment the current setting, but not beyond the number of settings
 	mCurSetting++;
-	if (mCurSetting > mNumSettings)
+	if (mCurSetting > mNumSettings - 1)
 	{
-		mCurSetting = mNumSettings;
+		mCurSetting = mNumSettings - 1;
 	}
 }
 
@@ -80,5 +92,6 @@ void CSliderTool::DecrementSlider()
 //-----------------------------------------------------
 void CSliderTool::Update()
 {
-
+	// Set the pull sprite to the position of its index
+	mpSprPull->SetX(mSettingPositions[mCurSetting].x);
 }

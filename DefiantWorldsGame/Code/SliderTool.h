@@ -60,7 +60,10 @@ private:
 	int mCurSetting = 0;
 	int mNumSettings = 1;
 
-	DX::XMFLOAT2 mBarDimensions{200.0f, 20.0f};		// Dimensions of the slider bar: x = width, y = height
+	DX::XMFLOAT2 mBarDimensions{500.0f, 20.0f};		// Dimensions of the slider bar: x = width, y = height
+
+	std::vector<DX::XMFLOAT2> mSettingPositions;	// A setting position for each stop which spans length of bar
+													// Using mCurSetting as an index, the stop position can be accessed
 };
 
 #endif /* _SLIDER_TOOL_H_ */

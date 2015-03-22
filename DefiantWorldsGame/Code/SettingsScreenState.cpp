@@ -49,12 +49,22 @@ void CSettingsScreenState::DecrementMusic()
 
 void CSettingsScreenState::IncrementEffects()
 {
-
+	mpEffectsSlider->IncrementSlider();
 }
 
 void CSettingsScreenState::DecrementEffects()
 {
+	mpEffectsSlider->DecrementSlider();
+}
 
+void CSettingsScreenState::SetAIDifficulty(int difficulty)
+{
+	// Take the current AI difficulty button and reset its texture
+	mpAIDButtonList[mCurAIDifficulty]->SetNewButtonSkin("DefSmallButton.png");
+
+	// Store new difficulty and update that button's texture
+	mCurAIDifficulty = difficulty;
+	mpAIDButtonList[mCurAIDifficulty]->SetNewButtonSkin("ChoSmallButton.png");
 }
 
 
@@ -123,6 +133,8 @@ void CSettingsScreenState::StateSetup()
 	// CREATE SPRITES, BUTTONS & FONTS
 	//------------------------------
 	mpButtonFont = gpEngine->LoadFont("font2.bmp", 15U);
+	mpIncDecFont = gpEngine->LoadFont("font2.bmp", 25U);
+	mpTitleFont = gpEngine->LoadFont("font2.bmp", 35U);
 
 	mpSprBackground = gpEngine->CreateSprite("MenuBG.png", 400.0f, 50.0f, 0.9f);
 
@@ -134,19 +146,50 @@ void CSettingsScreenState::StateSetup()
 		SAABoundingBox(740.0f, 1215.0f, 690.0f, 815.0f), *this, &CSettingsScreenState::Cancel);
 	mpButtonList.push_back(pNewButton);
 
+
 	// Settings buttons
-	pNewButton = new CAdvancedButton<CSettingsScreenState, void>("DefSmallButton.png", "SelSmallButton.png", SPointData(615, 200),
-		SAABoundingBox(250.0f, 715.0f, 200.0f, 615.0f), *this, &CSettingsScreenState::DecrementMusic);
+	pNewButton = new CAdvancedButton<CSettingsScreenState, void>("DefSmallButton.png", "SelSmallButton.png", SPointData(655, 200),
+		SAABoundingBox(250.0f, 755.0f, 200.0f, 655.0f), *this, &CSettingsScreenState::DecrementMusic);
 	mpButtonList.push_back(pNewButton);
 
-	pNewButton = new CAdvancedButton<CSettingsScreenState, void>("DefSmallButton.png", "SelSmallButton.png", SPointData(1225, 200),
-		SAABoundingBox(250.0f, 1325.0f, 200.0f, 1225.0f), *this, &CSettingsScreenState::IncrementMusic);
+	pNewButton = new CAdvancedButton<CSettingsScreenState, void>("DefSmallButton.png", "SelSmallButton.png", SPointData(1265, 200),
+		SAABoundingBox(250.0f, 1365.0f, 200.0f, 1265.0f), *this, &CSettingsScreenState::IncrementMusic);
 	mpButtonList.push_back(pNewButton);
+
+	pNewButton = new CAdvancedButton<CSettingsScreenState, void>("DefSmallButton.png", "SelSmallButton.png", SPointData(655, 310),
+		SAABoundingBox(360.0f, 755.0f, 310.0f, 655.0f), *this, &CSettingsScreenState::DecrementEffects);
+	mpButtonList.push_back(pNewButton);
+
+	pNewButton = new CAdvancedButton<CSettingsScreenState, void>("DefSmallButton.png", "SelSmallButton.png", SPointData(1265, 310),
+		SAABoundingBox(360.0f, 1365.0f, 310.0f, 1265.0f), *this, &CSettingsScreenState::IncrementEffects);
+	mpButtonList.push_back(pNewButton);
+
+
+	// AI Difficulty buttons
+	CAdvancedButton<CSettingsScreenState, void, int>* pNewAIButton = new CAdvancedButton<CSettingsScreenState, void, int>("DefSmallButton.png", "SelSmallButton.png", SPointData(755, 445),
+		SAABoundingBox(495.0f, 855.0f, 445.0f, 755.0f), *this, &CSettingsScreenState::SetAIDifficulty);
+	mpAIDButtonList.push_back(pNewAIButton);
+
+	pNewAIButton = new CAdvancedButton<CSettingsScreenState, void, int>("DefSmallButton.png", "SelSmallButton.png", SPointData(895, 445),
+		SAABoundingBox(495.0f, 995.0f, 445.0f, 895.0f), *this, &CSettingsScreenState::SetAIDifficulty);
+	mpAIDButtonList.push_back(pNewAIButton);
+
+	pNewAIButton = new CAdvancedButton<CSettingsScreenState, void, int>("DefSmallButton.png", "SelSmallButton.png", SPointData(1035, 445),
+		SAABoundingBox(495.0f, 1135.0f, 445.0f, 1035.0f), *this, &CSettingsScreenState::SetAIDifficulty);
+	mpAIDButtonList.push_back(pNewAIButton);
+
+	pNewAIButton = new CAdvancedButton<CSettingsScreenState, void, int>("DefSmallButton.png", "SelSmallButton.png", SPointData(1175, 445),
+		SAABoundingBox(495.0f, 1275.0f, 445.0f, 1175.0f), *this, &CSettingsScreenState::SetAIDifficulty);
+	mpAIDButtonList.push_back(pNewAIButton);
+
+	// Highlight already selected AI
+	mpAIDButtonList[mCurAIDifficulty]->SetNewButtonSkin("ChoSmallButton.png");
 
 
 	// ADDITIONAL USER INTERFACE ELEMENTS
 	//------------------------------
-	mpMusicSlider = new CSliderTool(SPointData{720, 213}, 10, 0);
+	mpMusicSlider = new CSliderTool(SPointData{ 760, 213 }, 10, 0);
+	mpEffectsSlider = new CSliderTool(SPointData{ 760, 323 }, 10, 0);
 }
 
 void CSettingsScreenState::StateUpdate()
@@ -183,11 +226,35 @@ void CSettingsScreenState::StateUpdate()
 
 	// UPDATE BUTTONS
 	//------------------------------
+	mpTitleFont->Draw("GAME SETTINGS", 1015, 90, kCyan, kCentre, kTop);
+
 	mpButtonFont->Draw("SAVE SETTINGS", 1015, 635, kWhite, kCentre, kTop);
 	mpButtonFont->Draw("CANCEL", 1015, 705, kWhite, kCentre, kTop);
 
+	mpIncDecFont->Draw("MUSIC VOLUME", 1015, 180, kWhite, kCentre, kTop);
+	mpIncDecFont->Draw("EFFECTS VOLUME", 1015, 290, kWhite, kCentre, kTop);
+	mpIncDecFont->Draw("AI DIFFICULTY", 1015, 400, kWhite, kCentre, kTop);
+
+	mpIncDecFont->Draw("--", 705, 210, kWhite, kCentre, kTop);
+	mpIncDecFont->Draw("++", 1315, 210, kWhite, kCentre, kTop);
+	mpIncDecFont->Draw("--", 705, 320, kWhite, kCentre, kTop);
+	mpIncDecFont->Draw("++", 1315, 320, kWhite, kCentre, kTop);
+
+	mpButtonFont->Draw("EASY", 805, 460, kWhite, kCentre, kTop);
+	mpButtonFont->Draw("MEDIUM", 945, 460, kWhite, kCentre, kTop);
+	mpButtonFont->Draw("HARD", 1085, 460, kWhite, kCentre, kTop);
+	mpButtonFont->Draw("INSANE", 1225, 460, kWhite, kCentre, kTop);
+
 	mMousePos.x = (float)gpEngine->GetMouseX();
 	mMousePos.y = (float)gpEngine->GetMouseY();
+
+	// Check for mouse click
+	bool leftClicked = false;
+	if (gpEngine->KeyHit(Mouse_LButton))
+	{
+		leftClicked = true;
+	}
+
 	for (miterButtons = mpButtonList.begin(); miterButtons != mpButtonList.end(); miterButtons++)
 	{
 		CAdvancedButton<CSettingsScreenState, void>* pButton = (*miterButtons);
@@ -205,7 +272,7 @@ void CSettingsScreenState::StateUpdate()
 		if (pButton->GetMouseOver())
 		{
 			// Check if the mouse is over the button
-			if (gpEngine->KeyHit(Mouse_LButton))
+			if (leftClicked)
 			{
 				// Raise click flag
 				pButton->Execute();
@@ -215,6 +282,43 @@ void CSettingsScreenState::StateUpdate()
 		// Update the button
 		pButton->Update();
 	}
+
+	int counter = 0;
+	for (miterAIDButtons = mpAIDButtonList.begin(); miterAIDButtons != mpAIDButtonList.end(); miterAIDButtons++)
+	{
+		CAdvancedButton<CSettingsScreenState, void, int>* pButton = (*miterAIDButtons);
+		// Check if the mouse is colliding with the object
+		if (pButton->GetBoundingBox().IsColliding(DX::XMFLOAT3(mMousePos.x, 0.0f, mMousePos.y)))
+		{
+			pButton->SetMouseOver(true);
+		}
+		else
+		{
+			pButton->SetMouseOver(false);
+		}
+
+		// Check for click 
+		if (pButton->GetMouseOver())
+		{
+			// Check if the mouse is over the button
+			if (leftClicked)
+			{
+				// Raise click flag
+				pButton->Execute(counter);
+			}
+		}
+
+		// Update the button
+		pButton->Update();
+		counter++;
+	}
+
+	// UPDATE SLIDERS
+	//------------------------------
+	mpMusicSlider->Update();
+	mpEffectsSlider->Update();
+
+	leftClicked = false;
 }
 
 void CSettingsScreenState::StateLoad()
@@ -242,6 +346,10 @@ void CSettingsScreenState::StateCleanup()
 	gpEngine->RemoveMesh(mpMshSkybox);
 	gpEngine->RemoveSprite(mpSprBackground);
 
+	gpEngine->RemoveFont(mpButtonFont);
+	gpEngine->RemoveFont(mpIncDecFont);
+	gpEngine->RemoveFont(mpTitleFont); 
+
 	// Remove buttons
 	while (!mpButtonList.empty())
 	{
@@ -254,6 +362,19 @@ void CSettingsScreenState::StateCleanup()
 		}
 
 		mpButtonList.pop_back();
+	}
+
+	while (!mpAIDButtonList.empty())
+	{
+		CAdvancedButton<CSettingsScreenState, void, int>* tmp;
+		tmp = mpAIDButtonList.back();
+		if (tmp)
+		{
+			delete tmp;
+			tmp = nullptr;
+		}
+
+		mpAIDButtonList.pop_back();
 	}
 
 	SafeDelete(mpEffectsSlider);
