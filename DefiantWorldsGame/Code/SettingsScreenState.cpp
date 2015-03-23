@@ -266,6 +266,38 @@ void CSettingsScreenState::StateUpdate()
 		leftClicked = true;
 	}
 
+
+	// CHECK FOR SLIDER MOUSE OVER AND CLICKS
+	if (mpMusicSlider->GetBoundingBox().IsColliding(DX::XMFLOAT3(mMousePos.x, 0.0f, mMousePos.y)))
+	{
+		mpMusicSlider->SetMouseOver(true);
+		if (leftClicked)
+		{
+			mpMusicSlider->OnClick(mMousePos.x);
+			leftClicked = false;
+		}
+	}
+	else
+	{
+		mpMusicSlider->SetMouseOver(false);
+	}
+
+	if (mpEffectsSlider->GetBoundingBox().IsColliding(DX::XMFLOAT3(mMousePos.x, 0.0f, mMousePos.y)))
+	{
+		mpEffectsSlider->SetMouseOver(true);
+		if (leftClicked)
+		{
+			mpEffectsSlider->OnClick(mMousePos.x);
+			leftClicked = false;
+		}
+	}
+	else
+	{
+		mpEffectsSlider->SetMouseOver(false);
+	}
+
+
+	// CHECK FOR BUTTON MOUSE OVER AND CLICKS
 	for (miterButtons = mpButtonList.begin(); miterButtons != mpButtonList.end(); miterButtons++)
 	{
 		CAdvancedButton<CSettingsScreenState, void>* pButton = (*miterButtons);

@@ -30,6 +30,16 @@ public:
 		return mCurSetting + 1;
 	}
 
+	inline SAABoundingBox GetBoundingBox()
+	{
+		return mBoundingBox;
+	}
+
+	inline bool IsMouseOver()
+	{
+		return mMouseOver;
+	}
+
 
 	// MUTATORS
 	//---------------------------
@@ -39,6 +49,13 @@ public:
 	void IncrementSlider();
 	// Decrement the slider by 1 point
 	void DecrementSlider();
+	// Run this function when the slider is clicked on
+	void OnClick(int mousePosX);
+
+	inline void SetMouseOver(bool mouseOver)
+	{
+		mMouseOver = mouseOver;
+	}
 
 
 	// METHODS
@@ -50,7 +67,8 @@ private:
 	// SPRITES
 	//---------------------------
 	ISprite* mpSprSlider = nullptr;
-	ISprite* mpSprPull = nullptr;
+	ISprite* mpSprPullBasic = nullptr;
+	ISprite* mpSprPullMO = nullptr;
 
 
 	// SLIDER BAR PROPERTIES
@@ -64,6 +82,13 @@ private:
 
 	std::vector<DX::XMFLOAT2> mSettingPositions;	// A setting position for each stop which spans length of bar
 													// Using mCurSetting as an index, the stop position can be accessed
+
+	SAABoundingBox mBoundingBox;
+
+
+	// SLIDER BAR STATES
+	//---------------------------
+	bool mMouseOver = false;
 };
 
 #endif /* _SLIDER_TOOL_H_ */
