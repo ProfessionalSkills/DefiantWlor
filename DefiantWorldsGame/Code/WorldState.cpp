@@ -12,6 +12,7 @@
 
 IMesh* CWorldState::mspMshDrag = nullptr;
 
+
 //-----------------------------------------------------
 // WORLD STATE CLASS CONSTRUCTORS & DESTRUCTOR
 //-----------------------------------------------------
@@ -982,7 +983,8 @@ void CWorldState::StateSetup()
 	DX::XMFLOAT3 mSourceVel = { 0.0f, 0.0f, 0.0f };
 	DX::XMFLOAT3 listenerPos = { mpCamEarth->GetX(), mpCamEarth->GetY(), mpCamEarth->GetZ()};
 	DX::XMFLOAT3 listenerVel = { 0.0f, 0.0f, 0.0f };
-	mMusic = new CSound(mMusicFile, mSourcePos, mSourceVel, true, 1.0f, listenerPos, listenerVel); //Initialise music
+	float volume = CStateControl::GetInstance()->GetSettingsManager()->GetMusicVolume();
+	mMusic = new CSound(mMusicFile, mSourcePos, mSourceVel, true, volume, listenerPos, listenerVel); //Initialise music
 	mMusic->PlaySound(); //Play music on loop
 }
 

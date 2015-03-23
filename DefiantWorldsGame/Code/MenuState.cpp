@@ -55,6 +55,24 @@ void CMenuState::Quit()
 	gpEngine->Stop();
 }
 
+void CMenuState::InitialiseMusic()
+{
+	if (mMusicInitialised) return;
+
+	// INITIALISE MUSIC
+	//------------------------------
+	string mMusicFile = "Intro.wav";
+	DX::XMFLOAT3 mSourcePos = { mpCamMain->GetX(), mpCamMain->GetY(), mpCamMain->GetZ() };
+	DX::XMFLOAT3 mSourceVel = { 0.0f, 0.0f, 0.0f };
+	DX::XMFLOAT3 listenerPos = { mpCamMain->GetX(), mpCamMain->GetY(), mpCamMain->GetZ() };
+	DX::XMFLOAT3 listenerVel = { 0.0f, 0.0f, 0.0f };
+	float volume = CStateControl::GetInstance()->GetSettingsManager()->GetMusicVolume();
+	mMusic = new CSound(mMusicFile, mSourcePos, mSourceVel, true, volume, listenerPos, listenerVel);
+	mMusic->PlaySound();
+
+	mMusicInitialised = true;
+}
+
 
 //-----------------------------------------------------
 // MENU STATE CLASS OVERRIDE METHODS
@@ -70,6 +88,8 @@ void CMenuState::StateSetup()
 
 	mMinAngle = ToRadians(33.0f);
 	mMaxAngle = ToRadians(145.0f);
+
+	mMusicInitialised = false;
 
 
 	// INITIALISE CAMERAS
@@ -106,17 +126,6 @@ void CMenuState::StateSetup()
 	mpMdlAtmosphere->Scale(1.02f);
 
 
-	// INITIALISE MUSIC
-	//------------------------------
-	string mMusicFile = "Intro.wav";
-	DX::XMFLOAT3 mSourcePos = { mpCamMain->GetX(), mpCamMain->GetY(), mpCamMain->GetZ() };
-	DX::XMFLOAT3 mSourceVel = { 0.0f, 0.0f, 0.0f };
-	DX::XMFLOAT3 listenerPos = { mpCamMain->GetX(), mpCamMain->GetY(), mpCamMain->GetZ() };
-	DX::XMFLOAT3 listenerVel = { 0.0f, 0.0f, 0.0f };
-	mMusic = new CSound(mMusicFile, mSourcePos, mSourceVel, true, 0.6f, listenerPos, listenerVel);
-	mMusic->PlaySound();
-
-
 	// CREATE SPRITES, BUTTONS & FONTS
 	//------------------------------
 	mpButtonFont = gpEngine->LoadFont("font2.bmp", 15U);
@@ -146,6 +155,12 @@ void CMenuState::StateUpdate()
 	// SCENE DRAW
 	//------------------------------
 	gpEngine->DrawScene();
+
+
+	// MUSIC
+	//------------------------------
+	InitialiseMusic();
+
 
 	// ANIMATE ATMOSPHERE
 	//------------------------------

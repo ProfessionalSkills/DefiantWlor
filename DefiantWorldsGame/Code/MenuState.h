@@ -67,6 +67,9 @@ private:
 
 	CSound* mMusic;
 
+	bool mMusicInitialised = false;	// Stops an error occuring when music is initialised in StateSetup
+
+
 public:
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
@@ -80,6 +83,7 @@ public:
 	void LoadGame();
 	void ChangeSettings();
 	void Quit();
+	void InitialiseMusic();
 
 
 	// OVERRIDE METHODS

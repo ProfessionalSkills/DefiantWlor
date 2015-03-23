@@ -134,7 +134,8 @@ void CSettingsScreenState::StateSetup()
 	DX::XMFLOAT3 mSourceVel = { 0.0f, 0.0f, 0.0f };
 	DX::XMFLOAT3 listenerPos = { mpCamMain->GetX(), mpCamMain->GetY(), mpCamMain->GetZ() };
 	DX::XMFLOAT3 listenerVel = { 0.0f, 0.0f, 0.0f };
-	mMusic = new CSound(mMusicFile, mSourcePos, mSourceVel, true, 0.6f, listenerPos, listenerVel);
+	float volume = CStateControl::GetInstance()->GetSettingsManager()->GetMusicVolume();
+	mMusic = new CSound(mMusicFile, mSourcePos, mSourceVel, true, volume, listenerPos, listenerVel);
 	mMusic->PlaySound();
 
 
@@ -246,9 +247,9 @@ void CSettingsScreenState::StateUpdate()
 	mpIncDecFont->Draw("AI DIFFICULTY", 1015, 400, kWhite, kCentre, kTop);
 
 	mpIncDecFont->Draw("--", 705, 210, kWhite, kCentre, kTop);
-	mpIncDecFont->Draw("++", 1315, 210, kWhite, kCentre, kTop);
+	mpIncDecFont->Draw("++", 1315, 212, kWhite, kCentre, kTop);
 	mpIncDecFont->Draw("--", 705, 320, kWhite, kCentre, kTop);
-	mpIncDecFont->Draw("++", 1315, 320, kWhite, kCentre, kTop);
+	mpIncDecFont->Draw("++", 1315, 322, kWhite, kCentre, kTop);
 
 	mpButtonFont->Draw("EASY", 805, 460, kWhite, kCentre, kTop);
 	mpButtonFont->Draw("MEDIUM", 945, 460, kWhite, kCentre, kTop);

@@ -72,7 +72,8 @@ void CSpaceState::StateSetup()
 	DX::XMFLOAT3 mSourceVel = { 0.0f, 0.0f, 0.0f };
 	DX::XMFLOAT3 listenerPos = { mpCamMain->GetX(), mpCamMain->GetY(), mpCamMain->GetZ() };
 	DX::XMFLOAT3 listenerVel = { 0.0f, 0.0f, 0.0f };
-	mMusic = new CSound(mMusicFile, mSourcePos, mSourceVel, true, 0.8f, listenerPos, listenerVel);
+	float volume = CStateControl::GetInstance()->GetSettingsManager()->GetMusicVolume();
+	mMusic = new CSound(mMusicFile, mSourcePos, mSourceVel, true, volume, listenerPos, listenerVel);
 	mMusic->PlaySound();
 
 	// LOAD MODELS
