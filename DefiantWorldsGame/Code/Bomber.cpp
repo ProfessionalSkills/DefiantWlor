@@ -60,6 +60,14 @@ void CBomber::LoadIModel()
 		mpObjModel = mspMshBomber->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
 		mpObjModel->Scale(mScale);
 		mpObjModel->RotateY(180.0f);
+		if (mFaction == FAC_EARTH_DEFENSE_FORCE)
+		{
+			mpObjModel->SetSkin("heli.jpg");
+		}
+		else
+		{
+			mpObjModel->SetSkin("heliMars.jpg");
+		}
 	}
 }
 
@@ -89,5 +97,16 @@ bool CBomber::Destroy()
 
 IModel* CBomber::CreateModel(DX::XMFLOAT3 pos)
 {
-	return mspMshBomber->CreateModel(pos.x, pos.y, pos.z);
+	// Load model and set required skin
+	IModel* pModel = mspMshBomber->CreateModel(pos.x, pos.y, pos.z);
+	if (mFaction == FAC_EARTH_DEFENSE_FORCE)
+	{
+		pModel->SetSkin("heli.jpg");
+	}
+	else
+	{
+		pModel->SetSkin("heliMars.jpg");
+	}
+
+	return pModel;
 }
