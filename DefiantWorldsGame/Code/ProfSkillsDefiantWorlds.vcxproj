@@ -61,7 +61,8 @@
     <ClCompile>
       <AdditionalIncludeDirectories>C:\Program Files (x86)\OpenAL 1.1 SDK\include;C:\ProgramData\TL-Engine\include;C:\Program Files %28x86%29\OpenAL 1.1 SDK\freealut-1.1.0-bin\include\AL\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MinimalRebuild>true</MinimalRebuild>
+      <MinimalRebuild>
+      </MinimalRebuild>
       <PrecompiledHeader>
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
@@ -69,7 +70,8 @@
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <FloatingPointModel>Fast</FloatingPointModel>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <FunctionLevelLinking>
+      </FunctionLevelLinking>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
@@ -156,7 +158,9 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
     <ClCompile Include="ProfSkillsDefiantWorlds.cpp" />
     <ClCompile Include="Randomiser.cpp" />
     <ClCompile Include="GameAgent.cpp" />
+    <ClCompile Include="SettingsManager.cpp" />
     <ClCompile Include="SettingsScreenState.cpp" />
+    <ClCompile Include="SliderTool.cpp" />
     <ClCompile Include="Smoke.cpp" />
     <ClCompile Include="SoundObject.cpp" />
     <ClCompile Include="SpaceCentre.cpp" />
@@ -204,7 +208,9 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
     <ClInclude Include="PlayerManager.h" />
     <ClInclude Include="ProductionStructure.h" />
     <ClInclude Include="Randomiser.h" />
+    <ClInclude Include="SettingsManager.h" />
     <ClInclude Include="SettingsScreenState.h" />
+    <ClInclude Include="SliderTool.h" />
     <ClInclude Include="Smoke.h" />
     <ClInclude Include="SoundObject.h" />
     <ClInclude Include="SpaceCentre.h" />

@@ -7,6 +7,7 @@
 // INCLUDES
 //-----------------------------------------------------
 #include "Player.h"
+#include "GameStateControl.h"
 
 
 //-----------------------------------------------------
@@ -203,7 +204,9 @@ void CRTSPlayer::CheckGameObjectSelection(CStructure*& pStructure, CGameAgent*& 
 					break;
 				}
 
-				pStructure->SetSelectSound(new CSound(mMusicFile, mSourcePos, mSourceVel, false, 0.51f, listenerPos, listenerVel));
+				float volume = CStateControl::GetInstance()->GetSettingsManager()->GetEffectsVolume();		// MAKE SURE TO INCLUDE GameStateControl in the
+																											// .cpp file ONLY otherwise you'll get cyclic redundancy
+				pStructure->SetSelectSound(new CSound(mMusicFile, mSourcePos, mSourceVel, false, volume, listenerPos, listenerVel));
 			}
 			pStructure->GetSelectSound()->PlaySound();
 			curDist = newDist;

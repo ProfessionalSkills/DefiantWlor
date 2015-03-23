@@ -7,8 +7,12 @@
 // INCLUDES
 //-----------------------------------------------------
 #include "SpaceFighter.h"
+#include "GameStateControl.h"
+
+
 IMesh* CSpaceFighter::mspMshSpaceFighter = nullptr;
 IMesh* CSpaceFighter::mspMshSheild = nullptr;
+
 
 //-----------------------------------------------------
 // SPACE FIGHTER CLASS CONSTRUCTORS & DESTRUCTOR
@@ -65,9 +69,11 @@ void CSpaceFighter::LoadModel(float x,float y, float z)
 	DX::XMFLOAT3 mSourceVel = { 0.0F, 0.0f, 0.0f };
 	DX::XMFLOAT3 listenerPos = { 0.0f, 0.0f, -30.0f };
 	DX::XMFLOAT3 listenerVel = { 0.0f, 0.0f, 0.0f };
-	if (mWorldPos.x<0.0f)  mSourceVel.x = { 100.0f};
+	if (mWorldPos.x<0.0f)  mSourceVel.x = { 100.0f };
 	else  mSourceVel.x = {-100.0f};
-	mGenSound = new CSound(mMusicFile, mSourcePos, mSourceVel, false, 0.2f, listenerPos, listenerVel);
+	float volume = CStateControl::GetInstance()->GetSettingsManager()->GetEffectsVolume();		// MAKE SURE TO INCLUDE GameStateControl in the
+																								// .cpp file ONLY otherwise you'll get cyclic redundancy
+	mGenSound = new CSound(mMusicFile, mSourcePos, mSourceVel, false, volume, listenerPos, listenerVel);
 
 	if (x < 0.0f)
 	{

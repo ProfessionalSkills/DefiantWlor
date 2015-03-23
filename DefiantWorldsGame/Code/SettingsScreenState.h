@@ -11,6 +11,7 @@
 //-----------------------------------------------------
 #include "BaseGameState.h"
 #include "AdvancedButton.h"
+#include "SliderTool.h"
 
 
 //-----------------------------------------------------
@@ -45,10 +46,27 @@ private:
 	std::vector<CAdvancedButton<CSettingsScreenState, void>*> mpButtonList;
 	std::vector<CAdvancedButton<CSettingsScreenState, void>*>::iterator miterButtons;
 
+	std::vector<CAdvancedButton<CSettingsScreenState, void, int>*> mpAIDButtonList;					// List of buttons for AI difficulty
+	std::vector<CAdvancedButton<CSettingsScreenState, void, int>*>::iterator miterAIDButtons;
+
 
 	// FONTS
 	//--------------------------- 
-	IFont* mpButtonFont;
+	IFont* mpButtonFont = nullptr;
+	IFont* mpIncDecFont = nullptr;
+	IFont* mpTitleFont = nullptr;
+
+
+	// OTHER UI ITEMS
+	//--------------------------- 
+	CSliderTool* mpMusicSlider = nullptr;
+	CSliderTool* mpEffectsSlider = nullptr;
+
+
+	// TEMPORARY SETTINGS VARIABLES
+	//--------------------------- 
+	int mCurAIDifficulty = 0;			// Current index for AI difficulty
+	std::stringstream mStrStream;
 
 
 	// ADDITIONAL VARIABLES
@@ -78,6 +96,11 @@ public:
 	//---------------------------
 	void SaveSettings();
 	void Cancel();
+	void IncrementMusic();
+	void DecrementMusic();
+	void IncrementEffects();
+	void DecrementEffects();
+	void SetAIDifficulty(int difficulty);
 
 
 	// OVERRIDE METHODS

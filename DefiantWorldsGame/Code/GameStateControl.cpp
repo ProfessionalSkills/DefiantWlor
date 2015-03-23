@@ -26,6 +26,9 @@ CStateControl::CStateControl(EGameStates inStartState)
 	// Initialise player manager
 	mpPlayerManager = new CPlayerManager();
 
+	// Initialise settings manager
+	mpSettingsManager = new CSettingsManager();
+
 	// Set global state
 	gCurState = inStartState;
 	mCurState = inStartState;

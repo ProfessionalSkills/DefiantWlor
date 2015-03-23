@@ -50,7 +50,7 @@ void CNewsTicker::Display()
 		// If it's an error, draw it red. Otherwise draw it blue
 		if ((*mriterNews)->mError)
 		{
-			mpFont->Draw((*mriterNews)->mNewsText, leftPos, drawHeight, kRed, kLeft, kTop);
+			mpFont->Draw((*mriterNews)->mNewsText, leftPos, drawHeight, 0xCCCC0000, kLeft, kTop);
 		}
 		else
 		{

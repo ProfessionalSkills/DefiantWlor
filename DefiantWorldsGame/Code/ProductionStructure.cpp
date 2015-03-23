@@ -8,6 +8,7 @@
 //-----------------------------------------------------
 #include "ProductionStructure.h"
 #include "Player.h"
+#include "GameStateControl.h"
 
 
 //-----------------------------------------------------
@@ -197,7 +198,9 @@ bool CProductionStructure::Update(CRTSPlayer* pPlayer)
 					DX::XMFLOAT3 mSourceVel = { 0.0f, 0.0f, 0.0f };
 					DX::XMFLOAT3 listenerPos = { mpObjModel->GetX(), 50.0f, mpObjModel->GetZ() };
 					DX::XMFLOAT3 listenerVel = { 0.0f, 0.0f, 0.0f };
-					mGenSound = new CSound(mMusicFile, mSourcePos, mSourceVel, false, 0.51f, listenerPos, listenerVel); //Initialise music
+					float volume = CStateControl::GetInstance()->GetSettingsManager()->GetEffectsVolume();		// MAKE SURE TO INCLUDE GameStateControl in the
+																												// .cpp file ONLY otherwise you'll get cyclic redundancy
+					mGenSound = new CSound(mMusicFile, mSourcePos, mSourceVel, false, volume, listenerPos, listenerVel);
 					mGenSound->PlaySound(); //construction sound
 
 					// Display on ticker
