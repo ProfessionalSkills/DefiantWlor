@@ -60,6 +60,14 @@ void CArtillery::LoadIModel()
 		mpObjModel = mspMshArtillery->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
 		mpObjModel->Scale(mScale);
 		mpObjModel->RotateY(180.0f);
+		if (mFaction == FAC_EARTH_DEFENSE_FORCE)
+		{
+			mpObjModel->SetSkin("marsAA.jpg");
+		}
+		else
+		{
+			mpObjModel->SetSkin("marsAAMars.jpg");
+		}
 	}
 }
 
@@ -90,5 +98,16 @@ bool CArtillery::Destroy()
 
 IModel* CArtillery::CreateModel(DX::XMFLOAT3 pos)
 {
-	return mspMshArtillery->CreateModel(pos.x, pos.y, pos.z);
+	// Load model and set required skin
+	IModel* pModel = mspMshArtillery->CreateModel(pos.x, pos.y, pos.z);
+	if (mFaction == FAC_EARTH_DEFENSE_FORCE)
+	{
+		pModel->SetSkin("marsAA.jpg");
+	}
+	else
+	{
+		pModel->SetSkin("marsAAMars.jpg");
+	}
+
+	return pModel;
 }

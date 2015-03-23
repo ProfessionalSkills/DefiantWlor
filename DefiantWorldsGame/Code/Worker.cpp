@@ -89,12 +89,8 @@ bool CWorker::Attack(CGameAgent* target, float hitMod, float damageMod)
 	return false;
 }
 
-//CWorker::void MoveTo(CTile* dest)
-
-
 bool CWorker::Move()
 {
-	//mpObjModel->SetPosition(mPathTarget->GetWorldPos().x, 0, mPathTarget->GetWorldPos().z);
 	return false;
 }
 
@@ -106,5 +102,16 @@ bool CWorker::Destroy()
 
 IModel* CWorker::CreateModel(DX::XMFLOAT3 pos)
 {
-	return mspMshWorker->CreateModel(pos.x, pos.y, pos.z);
+	// Load model and set required skin
+	IModel* pModel = mspMshWorker->CreateModel(pos.x, pos.y, pos.z);
+	if (mFaction == FAC_EARTH_DEFENSE_FORCE)
+	{
+		pModel->SetSkin("ttruckGerman.jpg");
+	}
+	else
+	{
+		pModel->SetSkin("ttruckGermanMars.jpg");
+	}
+
+	return pModel;
 }

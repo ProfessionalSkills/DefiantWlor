@@ -59,6 +59,14 @@ void CTank::LoadIModel()
 		mpObjModel = mspMshTank->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
 		mpObjModel->Scale(mScale);
 		mpObjModel->RotateY(180.0f);
+		if (mFaction == FAC_EARTH_DEFENSE_FORCE)
+		{
+			mpObjModel->SetSkin("Hovertank01.jpg");
+		}
+		else
+		{
+			mpObjModel->SetSkin("Hovertank01Mars.jpg");
+		}
 	}
 }
 
@@ -87,5 +95,16 @@ bool CTank::Destroy()
 
 IModel* CTank::CreateModel(DX::XMFLOAT3 pos)
 {
-	return mspMshTank->CreateModel(pos.x, pos.y, pos.z);
+	// Load model and set required skin
+	IModel* pModel = mspMshTank->CreateModel(pos.x, pos.y, pos.z);
+	if (mFaction == FAC_EARTH_DEFENSE_FORCE)
+	{
+		pModel->SetSkin("Hovertank01.jpg");
+	}
+	else
+	{
+		pModel->SetSkin("Hovertank01Mars.jpg");
+	}
+
+	return pModel;
 }
