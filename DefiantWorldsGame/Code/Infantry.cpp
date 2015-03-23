@@ -61,6 +61,14 @@ void CInfantry::LoadIModel()
 		mpObjModel = mspMshInfantry->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
 		mpObjModel->Scale(mScale);
 		mpObjModel->RotateY(180.0f);
+		if (mFaction == FAC_EARTH_DEFENSE_FORCE)
+		{
+			mpObjModel->SetSkin("tiger.jpg");
+		}
+		else
+		{
+			mpObjModel->SetSkin("tigerMars.jpg");
+		}
 	}
 }
 
@@ -90,5 +98,16 @@ bool CInfantry::Destroy()
 
 IModel* CInfantry::CreateModel(DX::XMFLOAT3 pos)
 {
-	return mspMshInfantry->CreateModel(pos.x, pos.y, pos.z);
+	// Load model and set required skin
+	IModel* pModel = mspMshInfantry->CreateModel(pos.x, pos.y, pos.z);
+	if (mFaction == FAC_EARTH_DEFENSE_FORCE)
+	{
+		pModel->SetSkin("tiger.jpg");
+	}
+	else
+	{
+		pModel->SetSkin("tigerMars.jpg");
+	}
+
+	return pModel;
 }
