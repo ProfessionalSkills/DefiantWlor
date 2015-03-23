@@ -66,6 +66,7 @@ private:
 	// TEMPORARY SETTINGS VARIABLES
 	//--------------------------- 
 	int mCurAIDifficulty = 0;			// Current index for AI difficulty
+	std::stringstream mStrStream;
 
 
 	// ADDITIONAL VARIABLES

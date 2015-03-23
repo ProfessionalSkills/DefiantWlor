@@ -14,6 +14,7 @@
 #include "WorldState.h"
 #include "SettingsScreenState.h"
 #include "PlayerManager.h"
+#include "SettingsManager.h"
 
 
 //-----------------------------------------------------
@@ -48,6 +49,11 @@ private:
 	CPlayerManager* mpPlayerManager;
 
 
+	// SETTINGS MANAGER
+	//---------------------------
+	CSettingsManager* mpSettingsManager;
+
+
 public:
 	// DESTRUCTOR
 	//---------------------------
@@ -76,9 +82,14 @@ public:
 		return mpCurGameState;
 	}
 
-	CPlayerManager* GetPlayerManager()
+	inline CPlayerManager* GetPlayerManager()
 	{
 		return mpPlayerManager;
+	}
+
+	inline CSettingsManager* GetSettingsManager()
+	{
+		return mpSettingsManager;
 	}
 
 

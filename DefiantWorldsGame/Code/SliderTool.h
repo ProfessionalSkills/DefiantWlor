@@ -27,7 +27,7 @@ public:
 	//---------------------------
 	inline int GetSliderSetting()
 	{
-		return mCurSetting;
+		return mCurSetting + 1;
 	}
 
 

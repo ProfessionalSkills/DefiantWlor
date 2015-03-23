@@ -29,11 +29,19 @@ CSettingsScreenState::~CSettingsScreenState()
 //-----------------------------------------------------
 void CSettingsScreenState::SaveSettings()
 {
+	// Save the settings to the settings manager
+	CSettingsManager* pSettings = CStateControl::GetInstance()->GetSettingsManager();
+	pSettings->SetAIDifficulty(mCurAIDifficulty);
+	pSettings->SetMusicVolume((float)(mpMusicSlider->GetSliderSetting() / 50.0f));
+	pSettings->SetEffectsVolume((float)(mpEffectsSlider->GetSliderSetting() / 50.0f));
+
+	// Set new state
 	gCurState = GS_MAIN_MENU;
 }
 
 void CSettingsScreenState::Cancel()
 {
+	// Set new state
 	gCurState = GS_MAIN_MENU;
 }
 
@@ -183,13 +191,15 @@ void CSettingsScreenState::StateSetup()
 	mpAIDButtonList.push_back(pNewAIButton);
 
 	// Highlight already selected AI
+	CSettingsManager* pSettings = CStateControl::GetInstance()->GetSettingsManager();
+	mCurAIDifficulty = pSettings->GetAIDifficulty();
 	mpAIDButtonList[mCurAIDifficulty]->SetNewButtonSkin("ChoSmallButton.png");
 
 
 	// ADDITIONAL USER INTERFACE ELEMENTS
 	//------------------------------
-	mpMusicSlider = new CSliderTool(SPointData{ 760, 213 }, 10, 0);
-	mpEffectsSlider = new CSliderTool(SPointData{ 760, 323 }, 10, 0);
+	mpMusicSlider = new CSliderTool(SPointData{ 760, 213 }, 100, (int)(pSettings->GetMusicVolume() * 50));
+	mpEffectsSlider = new CSliderTool(SPointData{ 760, 323 }, 100, (int)(pSettings->GetEffectsVolume() * 50));
 }
 
 void CSettingsScreenState::StateUpdate()
