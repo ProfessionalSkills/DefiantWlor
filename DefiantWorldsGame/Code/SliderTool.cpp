@@ -13,10 +13,10 @@ CSliderTool::CSliderTool(SPointData position, int numSettings, int curSetting)
 	// Set the slider's properties
 	mPosition = position;
 	mNumSettings = numSettings;
-	mCurSetting = curSetting;
+	SetSliderSetting(curSetting);
 
 	// Load the sprites
-	DX::XMFLOAT2 pullStartPos{ (float)position.mPosX, (float)position.mPosY - 5.0f };
+	DX::XMFLOAT2 pullStartPos{ (float)position.mPosX - 15.0f, (float)position.mPosY - 5.0f };
 	mpSprSlider = gpEngine->CreateSprite("SliderBack.png", (float)position.mPosX, (float)position.mPosY, 0.8f);
 	mpSprPull = gpEngine->CreateSprite("DefSliderPull.png", pullStartPos.x, pullStartPos.y, 0.7f);
 
@@ -29,7 +29,7 @@ CSliderTool::CSliderTool(SPointData position, int numSettings, int curSetting)
 	}
 
 	// Set the pull sprite to the position of its index
-	mpSprPull->SetX(mSettingPositions[mCurSetting].x - 18.5f);
+	mpSprPull->SetX(mSettingPositions[mCurSetting].x);
 }
 
 CSliderTool::~CSliderTool()

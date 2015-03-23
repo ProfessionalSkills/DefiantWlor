@@ -157,20 +157,20 @@ void CSettingsScreenState::StateSetup()
 
 
 	// Settings buttons
-	pNewButton = new CAdvancedButton<CSettingsScreenState, void>("DefSmallButton.png", "SelSmallButton.png", SPointData(655, 200),
-		SAABoundingBox(250.0f, 755.0f, 200.0f, 655.0f), *this, &CSettingsScreenState::DecrementMusic);
+	pNewButton = new CAdvancedButton<CSettingsScreenState, void>("DefSmallButton.png", "SelSmallButton.png", SPointData(650, 200),
+		SAABoundingBox(250.0f, 750.0f, 200.0f, 650.0f), *this, &CSettingsScreenState::DecrementMusic);
 	mpButtonList.push_back(pNewButton);
 
-	pNewButton = new CAdvancedButton<CSettingsScreenState, void>("DefSmallButton.png", "SelSmallButton.png", SPointData(1265, 200),
-		SAABoundingBox(250.0f, 1365.0f, 200.0f, 1265.0f), *this, &CSettingsScreenState::IncrementMusic);
+	pNewButton = new CAdvancedButton<CSettingsScreenState, void>("DefSmallButton.png", "SelSmallButton.png", SPointData(1270, 200),
+		SAABoundingBox(250.0f, 1370.0f, 200.0f, 1270.0f), *this, &CSettingsScreenState::IncrementMusic);
 	mpButtonList.push_back(pNewButton);
 
-	pNewButton = new CAdvancedButton<CSettingsScreenState, void>("DefSmallButton.png", "SelSmallButton.png", SPointData(655, 310),
-		SAABoundingBox(360.0f, 755.0f, 310.0f, 655.0f), *this, &CSettingsScreenState::DecrementEffects);
+	pNewButton = new CAdvancedButton<CSettingsScreenState, void>("DefSmallButton.png", "SelSmallButton.png", SPointData(650, 310),
+		SAABoundingBox(360.0f, 750.0f, 310.0f, 650.0f), *this, &CSettingsScreenState::DecrementEffects);
 	mpButtonList.push_back(pNewButton);
 
-	pNewButton = new CAdvancedButton<CSettingsScreenState, void>("DefSmallButton.png", "SelSmallButton.png", SPointData(1265, 310),
-		SAABoundingBox(360.0f, 1365.0f, 310.0f, 1265.0f), *this, &CSettingsScreenState::IncrementEffects);
+	pNewButton = new CAdvancedButton<CSettingsScreenState, void>("DefSmallButton.png", "SelSmallButton.png", SPointData(1270, 310),
+		SAABoundingBox(360.0f, 1370.0f, 310.0f, 1270.0f), *this, &CSettingsScreenState::IncrementEffects);
 	mpButtonList.push_back(pNewButton);
 
 
@@ -246,10 +246,10 @@ void CSettingsScreenState::StateUpdate()
 	mpIncDecFont->Draw("EFFECTS VOLUME", 1015, 290, kWhite, kCentre, kTop);
 	mpIncDecFont->Draw("AI DIFFICULTY", 1015, 400, kWhite, kCentre, kTop);
 
-	mpIncDecFont->Draw("--", 705, 210, kWhite, kCentre, kTop);
-	mpIncDecFont->Draw("++", 1315, 212, kWhite, kCentre, kTop);
-	mpIncDecFont->Draw("--", 705, 320, kWhite, kCentre, kTop);
-	mpIncDecFont->Draw("++", 1315, 322, kWhite, kCentre, kTop);
+	mpIncDecFont->Draw("--", 700, 210, kWhite, kCentre, kTop);
+	mpIncDecFont->Draw("++", 1320, 212, kWhite, kCentre, kTop);
+	mpIncDecFont->Draw("--", 700, 320, kWhite, kCentre, kTop);
+	mpIncDecFont->Draw("++", 1320, 322, kWhite, kCentre, kTop);
 
 	mpButtonFont->Draw("EASY", 805, 460, kWhite, kCentre, kTop);
 	mpButtonFont->Draw("MEDIUM", 945, 460, kWhite, kCentre, kTop);

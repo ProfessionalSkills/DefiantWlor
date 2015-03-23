@@ -54,7 +54,7 @@ public:
 private:
 	// SETTINGS DATA
 	//---------------------------
-	float mMusicVolume = 0.5f;
+	float mMusicVolume = 0.8f;
 	float mEffectsVolume = 0.6f;
 
 	int mAIDifficulty = 0;
