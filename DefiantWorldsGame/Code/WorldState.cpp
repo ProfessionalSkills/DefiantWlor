@@ -1021,6 +1021,12 @@ void CWorldState::StateSetup()
 		mpMdlRockList.back()->RotateY(rotation);
 	}
 
+	IMesh* mshWall = gpEngine->LoadMesh("wall_A4_01.x");
+	IModel* mdlwall = mshWall->CreateModel(0.0f, 0.0f, gridTopRight.z / 2.0f);
+	mdlwall->SetSkin("bld-mt.jpg");
+	mdlwall->RotateX(90.0f);
+	mdlwall->Scale(10.0f);
+
 
 	// INITIALISE CAMERAS
 	//-----------------------------
