@@ -26,7 +26,7 @@ CAirUnit::~CAirUnit()
 //-----------------------------------------------------
 // AIR UNIT CLASS OVERRIDE METHODS
 //-----------------------------------------------------
-bool CAirUnit::Attack(CGameAgent* target, float hitMod, float damageMod)
+bool CAirUnit::Attack(CGameObject* target, float hitMod, float damageMod)
 {
 	return false;
 }
@@ -45,13 +45,6 @@ void CAirUnit::Spawn(CGrid* pGrid, SPointData pCentre)
 	mBoundingSphere = SBoundingSphere(centre, radius);
 	mYaw = 0.0f;
 }
-//CAirUnit::void MoveTo(CTile* dest)
-
-
-bool CAirUnit::Move()
-{
-	return false;
-}
 
 bool CAirUnit::Update()
 {
@@ -59,26 +52,7 @@ bool CAirUnit::Update()
 	{
 		if (LookingAt())
 		{
-			int MaxX = mPathTarget.x + 1.0f;
-			int MinX = mPathTarget.x - 1.0f;
-
-			int MaxZ = mPathTarget.z + 1.0f;
-			int MinZ = mPathTarget.z - 1.0f;
-
-			if (mWorldPos.x > MinX && mWorldPos.x < MaxX && mWorldPos.z > MinZ && mWorldPos.z < MaxZ)
-			{
-
-			}
-			else
-			{
-				float matrix[16];
-				mpObjModel->GetMatrix(matrix);
-				float movement = 20.0f * gFrameTime;
-				mpObjModel->MoveLocalZ(movement);
-				mWorldPos = DX::XMFLOAT3(mpObjModel->GetX(), mpObjModel->GetY(), mpObjModel->GetZ());
-				DX::XMFLOAT3 moveAmount = { matrix[8] * movement, matrix[9] * movement, matrix[10] * movement };
-				mBoundingSphere.Move(mWorldPos);
-			}
+			Move();
 		}
 	}
 
@@ -154,4 +128,27 @@ bool CAirUnit::Destroy()
 	return false;
 }
 
+void CAirUnit::Move()
+{
+	int MaxX = mPathTarget.x + 1.0f;
+	int MinX = mPathTarget.x - 1.0f;
+
+	int MaxZ = mPathTarget.z + 1.0f;
+	int MinZ = mPathTarget.z - 1.0f;
+
+	if (mWorldPos.x > MinX && mWorldPos.x < MaxX && mWorldPos.z > MinZ && mWorldPos.z < MaxZ)
+	{
+
+	}
+	else
+	{
+		float matrix[16];
+		mpObjModel->GetMatrix(matrix);
+		float movement = 20.0f * gFrameTime;
+		mpObjModel->MoveLocalZ(movement);
+		mWorldPos = DX::XMFLOAT3(mpObjModel->GetX(), mpObjModel->GetY(), mpObjModel->GetZ());
+		DX::XMFLOAT3 moveAmount = { matrix[8] * movement, matrix[9] * movement, matrix[10] * movement };
+		mBoundingSphere.Move(mWorldPos);
+	}
+}
 

@@ -75,18 +75,8 @@ void CArtillery::LoadIModel()
 //-----------------------------------------------------
 // ARTILLERY CLASS OVERRIDE METHODS
 //-----------------------------------------------------
-bool CArtillery::Attack(CGameAgent* target, float hitMod, float damageMod)
+bool CArtillery::Attack(CGameObject* target, float hitMod, float damageMod)
 {
-	return false;
-}
-
-
-//CArtillery::void MoveTo(CTile* dest)
-
-
-bool CArtillery::Move()
-{
-	//mpObjModel->SetPosition(mPathTarget->GetWorldPos().x, 0, mPathTarget->GetWorldPos().z);
 	return false;
 }
 

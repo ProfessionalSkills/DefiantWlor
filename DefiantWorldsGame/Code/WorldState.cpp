@@ -306,6 +306,22 @@ void CWorldState::CheckKeyPresses()
 				mpCurSelectedAgent->SetPathTarget(mMouseWorldPos);
 				mRMouseClicked = false;
 			}
+			else
+			{
+				CStructure* pTargetStructure = nullptr;
+				CGameAgent* pTargetGameAgent = nullptr;
+				mpHumanPlayer->CheckGameObjectSelection(pTargetStructure, pTargetGameAgent, mMouseOrigin, mMouseDirection);
+				if (pTargetStructure != nullptr)
+				{
+					mpCurSelectedAgent->SetAttackTarget(pTargetStructure);
+				}
+				else
+				{
+
+				}
+				
+				mRMouseClicked = false;
+			}
 		}
 		else if (mpUnitSelectionList.size() > 0)
 		{

@@ -75,16 +75,7 @@ void CFighter::LoadIModel()
 //-----------------------------------------------------
 // FIGHTER CLASS OVERRIDE METHODS
 //-----------------------------------------------------
-bool CFighter::Attack(CGameAgent* target, float hitMod, float damageMod)
-{
-	return false;
-}
-
-
-//CFighter::void MoveTo(CTile* dest)
-
-
-bool CFighter::Move()
+bool CFighter::Attack(CGameObject* target, float hitMod, float damageMod)
 {
 	return false;
 }

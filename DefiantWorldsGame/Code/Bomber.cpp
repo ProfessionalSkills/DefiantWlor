@@ -75,15 +75,7 @@ void CBomber::LoadIModel()
 //-----------------------------------------------------
 // BOMBER CLASS OVERRIDE METHODS
 //-----------------------------------------------------
-bool CBomber::Attack(CGameAgent* target, float hitMod, float damageMod)
-{
-	return false;
-}
-
-//CBomber::void MoveTo(CTile* dest)
-
-
-bool CBomber::Move()
+bool CBomber::Attack(CGameObject* target, float hitMod, float damageMod)
 {
 	return false;
 }

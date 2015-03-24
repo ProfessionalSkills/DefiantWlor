@@ -48,8 +48,7 @@ protected:
 	DX::XMFLOAT3 mPathTarget;
 	std::stringstream mStrDisplay;
 	SBoundingSphere mBoundingSphere;
-	float mMaxHealth;
-	float mHealth;
+	CGameObject* mAttackTarget;
 	float mSpeed;
 	float mProductionTime;
 	float mProductionCost;
@@ -127,6 +126,16 @@ public:
 		hasTarget = true;
 	}
 
+	inline void SetAttackTarget(CGameObject* target)
+	{
+		mAttackTarget = target;
+	}
+
+	inline CGameObject* GetAttackTarget()
+	{
+		return mAttackTarget;
+	}
+
 	inline DX::XMFLOAT3 GetPathTarget()
 	{
 		return mPathTarget;
@@ -144,7 +153,6 @@ public:
 
 	// MUTATORS
 	//---------------------------
-	bool TakeDamage(float amount);
 	bool Heal(float amount);
 	void SetState(EObjectStates newState);
 
@@ -155,7 +163,7 @@ public:
 
 	// VIRTUAL METHODS
 	//---------------------------
-	virtual bool Attack(CGameAgent* target, float hitMod, float damageMod) = 0;
+	virtual bool Attack(CGameObject* target, float hitMod, float damageMod) = 0;
 	virtual void Spawn(CGrid* pGrid, SPointData pCentre) = 0; //Spawns the Unit into the game 
 	bool RayCollision(DX::XMFLOAT3 origin, DX::XMFLOAT3 direction, float& distance);
 	bool DragBoxCollision(DX::BoundingBox& box);
@@ -165,7 +173,7 @@ public:
 	virtual void UnloadIModel() = 0;
 	virtual void LoadIModel() = 0;
 	virtual void LoadModel(float x, float y, float z) = 0;
-	virtual bool Move()=0;
+	virtual void Move()=0;
 
 private:
 	virtual bool Destroy() = 0;

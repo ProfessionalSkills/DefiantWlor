@@ -50,11 +50,11 @@ public:
 
 	// OVERRIDE METHODS
 	//---------------------------
-	virtual bool Attack(CGameAgent* target,float hitMod, float damageMod);
+	virtual bool Attack(CGameObject* target,float hitMod, float damageMod);
 	virtual void Spawn(CGrid* pGrid, SPointData pCentre);
 	virtual bool Update();
 	//virtual void MoveTo(CTile* dest);
-	virtual bool Move();
+	virtual void Move();
 	virtual void UnloadIModel();
 	virtual void LoadIModel();
 	virtual void LoadModel(float x, float y, float z);
@@ -62,7 +62,7 @@ public:
 	virtual void HitFlash()=0;
 	virtual void UnloadFlash() = 0;
 	virtual void MoveY(float yChange)=0;
-	void FireLazer(CGameAgent* target);
+	void FireLazer(CGameObject* target);
 	void UnloadLazer();
 };
 

@@ -114,7 +114,7 @@ void CSpaceFighter::MoveY(float yChange)
 //-----------------------------------------------------
 // SPACE FIGHTER CLASS OVERRIDE METHODS
 //-----------------------------------------------------
-bool CSpaceFighter::Attack(CGameAgent* target, float hitMod, float damageMod)
+bool CSpaceFighter::Attack(CGameObject* target, float hitMod, float damageMod)
 {
 	if (mpToHitRoll->GetRandomFloat(1.0, 100.0) < (hitMod*mHitChance) * 100)
 	{
@@ -167,16 +167,6 @@ void CSpaceFighter::UnloadFlash()
 		mpTempShield = nullptr;
 	}
 	UnloadLazer();
-}
-
-//CSpaceFighter::void MoveTo(CTile* dest)
-
-
-bool CSpaceFighter::Move()
-{
-	mpObjModel->MoveX(mSpeed*gFrameTime);
-	mWorldPos.x += mSpeed*gFrameTime;
-	return false;
 }
 
 bool CSpaceFighter::Destroy()

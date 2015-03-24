@@ -53,7 +53,7 @@ CTransport::~CTransport()
 //-----------------------------------------------------
 // TRANSPORT CLASS OVERRIDE METHODS
 //-----------------------------------------------------
-bool CTransport::Attack(CGameAgent* target, float hitMod, float damageMod)
+bool CTransport::Attack(CGameObject* target, float hitMod, float damageMod)
 {
 	if (mpToHitRoll->GetRandomFloat(1.0, 100.0) < (hitMod*mHitChance) * 100)
 	{
@@ -150,13 +150,6 @@ void CTransport::UnloadIModel()
 		mpTempShield = nullptr;
 	}
 	UnloadLazer();
-}
-
-bool CTransport::Move()
-{
-	mpObjModel->MoveX(mSpeed*gFrameTime);
-	mWorldPos.x += mSpeed*gFrameTime;
-	return false;
 }
 
 bool CTransport::Destroy()

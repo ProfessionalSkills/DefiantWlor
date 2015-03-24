@@ -14,7 +14,6 @@
 CGroundUnit::CGroundUnit()
 {
 	mScale = 2.0f;
-
 }
 
 CGroundUnit::~CGroundUnit()
@@ -26,7 +25,7 @@ CGroundUnit::~CGroundUnit()
 //-----------------------------------------------------
 // GROUND UNIT CLASS OVERRIDE METHODS
 //-----------------------------------------------------
-bool CGroundUnit::Attack(CGameAgent* target, float hitMod, float damageMod)
+bool CGroundUnit::Attack(CGameObject* target, float hitMod, float damageMod)
 {
 	return false;
 }
@@ -57,30 +56,9 @@ bool CGroundUnit::Update()
 	{
 		if (LookingAt())
 		{
-			int MaxX = mPathTarget.x + 1.0f;
-			int MinX = mPathTarget.x - 1.0f;
-
-			int MaxZ = mPathTarget.z + 1.0f;
-			int MinZ = mPathTarget.z - 1.0f;
-
-			if (mWorldPos.x > MinX && mWorldPos.x < MaxX && mWorldPos.z > MinZ && mWorldPos.z < MaxZ)
-			{
-			
-			}
-			else
-			{
-				float matrix[16];
-				mpObjModel->GetMatrix(matrix);
-				float movement = 10.0f * gFrameTime;
-				mpObjModel->MoveLocalZ(movement);
-				mWorldPos = DX::XMFLOAT3(mpObjModel->GetX(), mpObjModel->GetY(), mpObjModel->GetZ());
-				DX::XMFLOAT3 moveAmount = { matrix[8] * movement, matrix[9] * movement, matrix[10] * movement };
-				mBoundingSphere.Move(mWorldPos);
-			}
+			Move();
 		}
 	}
-	//mpObjModel->SetPosition(mPathTarget->GetWorldPos().x, mPathTarget->GetWorldPos().y , mPathTarget->GetWorldPos().z);
-
 	// Check if the model is still alive
 	if (mState == OBJ_DEAD)
 	{
@@ -124,4 +102,28 @@ bool CGroundUnit::LookingAt()
 bool CGroundUnit::Destroy()
 {
 	return false;
+}
+
+void CGroundUnit::Move()
+{
+	int MaxX = mPathTarget.x + 1.0f;
+	int MinX = mPathTarget.x - 1.0f;
+
+	int MaxZ = mPathTarget.z + 1.0f;
+	int MinZ = mPathTarget.z - 1.0f;
+
+	if (mWorldPos.x > MinX && mWorldPos.x < MaxX && mWorldPos.z > MinZ && mWorldPos.z < MaxZ)
+	{
+
+	}
+	else
+	{
+		float matrix[16];
+		mpObjModel->GetMatrix(matrix);
+		float movement = 10.0f * gFrameTime;
+		mpObjModel->MoveLocalZ(movement);
+		mWorldPos = DX::XMFLOAT3(mpObjModel->GetX(), mpObjModel->GetY(), mpObjModel->GetZ());
+		DX::XMFLOAT3 moveAmount = { matrix[8] * movement, matrix[9] * movement, matrix[10] * movement };
+		mBoundingSphere.Move(mWorldPos);
+	}
 }

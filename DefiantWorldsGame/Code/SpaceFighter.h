@@ -48,12 +48,9 @@ public:
 	// OVERRIDE METHODS
 	//---------------------------
 	void Spawn(CGrid* pGrid, SPointData pCentre);
-	bool Attack(CGameAgent* target, float hitMod, float damageMod);
-	//void Update();
-	//virtual void MoveTo(CTile* dest);
+	bool Attack(CGameObject* target, float hitMod, float damageMod);
 	void HitFlash();
 	void UnloadFlash();
-	bool Move();
 	float GetUnitSpacing();
 	void MoveY(float yChange);
 private:

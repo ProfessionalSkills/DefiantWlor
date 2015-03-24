@@ -26,6 +26,8 @@ protected:
 	float mScale;
 	int mBuildCost;
 	int mPopCost;
+	float mMaxHealth;
+	float mHealth;
 
 	EFactions mFaction;
 
@@ -100,6 +102,10 @@ public:
 		return mBuildCost;
 	}
 
+	void TakeDamage(int amount)
+	{
+		mHealth -= amount;
+	}
 
 	// MUTATORS
 	//---------------------------

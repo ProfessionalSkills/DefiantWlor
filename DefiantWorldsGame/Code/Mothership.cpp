@@ -86,7 +86,7 @@ void CMothership::UnloadFlash()
 //-----------------------------------------------------
 // MOTHERSHIP CLASS OVERRIDE METHODS
 //-----------------------------------------------------
-bool CMothership::Attack(CGameAgent* target, float hitMod, float damageMod)
+bool CMothership::Attack(CGameObject* target, float hitMod, float damageMod)
 {
 	if (mpToHitRoll->GetRandomFloat(1.0, 100.0) < (hitMod*mHitChance) * 100)
 	{
@@ -142,18 +142,6 @@ void CMothership::UnloadIModel()
 		mpTempShield = nullptr;
 	}
 	UnloadLazer();
-}
-
-
-
-//CMothership::void MoveTo(CTile* dest)
-
-
-bool CMothership::Move()
-{
-	mpObjModel->MoveX(mSpeed*gFrameTime);
-	mWorldPos.x += mSpeed*gFrameTime;
-	return false;
 }
 
 bool CMothership::Destroy()

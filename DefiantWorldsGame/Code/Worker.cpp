@@ -84,16 +84,10 @@ void CWorker::LoadIModel()
 //-----------------------------------------------------
 // WORKER CLASS OVERRIDE METHODS
 //-----------------------------------------------------
-bool CWorker::Attack(CGameAgent* target, float hitMod, float damageMod)
+bool CWorker::Attack(CGameObject* target, float hitMod, float damageMod)
 {
 	return false;
 }
-
-bool CWorker::Move()
-{
-	return false;
-}
-
 bool CWorker::Destroy()
 {
 	UnloadIModel();

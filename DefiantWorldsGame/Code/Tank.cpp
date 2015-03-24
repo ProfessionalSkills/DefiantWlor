@@ -74,15 +74,7 @@ void CTank::LoadIModel()
 //-----------------------------------------------------
 // TANK CLASS OVERRIDE METHODS
 //-----------------------------------------------------
-bool CTank::Attack(CGameAgent* target, float hitMod, float damageMod)
-{
-	return false;
-}
-
-//CTank::void MoveTo(CTile* dest)
-
-//
-bool CTank::Move()
+bool CTank::Attack(CGameObject* target, float hitMod, float damageMod)
 {
 	return false;
 }

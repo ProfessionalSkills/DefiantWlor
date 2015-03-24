@@ -76,17 +76,8 @@ void CInfantry::LoadIModel()
 //-----------------------------------------------------
 // INFANTRY CLASS OVERRIDE METHODS
 //-----------------------------------------------------
-bool CInfantry::Attack(CGameAgent* target, float hitMod, float damageMod)
+bool CInfantry::Attack(CGameObject* target, float hitMod, float damageMod)
 {
-	return false;
-}
-
-//CInfantry::void MoveTo(CTile* dest)
-
-
-bool CInfantry::Move()
-{
-	//mpObjModel->SetPosition(mPathTarget->GetWorldPos().x, 0, mPathTarget->GetWorldPos().z);
 	return false;
 }
 

@@ -44,7 +44,7 @@ CSpaceUnit::~CSpaceUnit()
 //-----------------------------------------------------
 // SPACE UNIT CLASS OVERRIDE METHODS
 //-----------------------------------------------------
-bool CSpaceUnit::Attack(CGameAgent* target, float hitMod, float damageMod)
+bool CSpaceUnit::Attack(CGameObject* target, float hitMod, float damageMod)
 {
 	return false;
 }
@@ -57,9 +57,10 @@ void CSpaceUnit::Spawn(CGrid* pGrid, SPointData pCentre)
 //CSpaceUnit::void MoveTo(CTile* dest)
 
 
-bool CSpaceUnit::Move()
+void CSpaceUnit::Move()
 {
-	return false;
+	mpObjModel->MoveX(mSpeed*gFrameTime);
+	mWorldPos.x += mSpeed*gFrameTime;
 }
 
 bool CSpaceUnit::Destroy()
@@ -92,7 +93,7 @@ float Sq(float x)
 	return x*x;
 }
 
-void CSpaceUnit::FireLazer(CGameAgent* target)
+void CSpaceUnit::FireLazer(CGameObject* target)
 {
 	DirectX::XMFLOAT4X4 ModelMatrix;
 	DirectX::XMFLOAT3 ModelZNormal;
