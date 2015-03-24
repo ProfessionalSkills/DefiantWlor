@@ -61,6 +61,31 @@ void CStructure::SetPlacedTexture()
 	mpObjModel->SetSkin("bld-mt-placed_tlxadd.jpg");
 }
 
+void CStructure::SetSelectedTexture()
+{
+	mpObjModel->SetSkin("bld-mt-good_tlxadd.jpg");
+}
+
+void CStructure::SetDeselectedTexture()
+{
+	// Check if the structure is still building
+	if (mState == OBJ_CONSTRUCTING)
+	{
+		mpObjModel->SetSkin("bld-mt-placed_tlxadd.jpg");
+		return;
+	}
+
+	// Skin the model based on what faction it belongs to
+	if (mFaction == FAC_EARTH_DEFENSE_FORCE)
+	{
+		mpObjModel->SetSkin("bld-mt.jpg");
+	}
+	else
+	{
+		mpObjModel->SetSkin("bld-mt-mars.jpg");
+	}
+}
+
 
 //-----------------------------------------------------
 // STRUCTURE CLASS METHODS

@@ -228,9 +228,6 @@ void CWorldState::CheckKeyPresses()
 	// Left Click = place currently selected building
 	if (mLMouseClicked)
 	{
-		// Assume nothing is clicked on - reset all pointers (except PlacingStructure)
-		mpCurSelectedStructure = nullptr;
-
 		// Check if placing a structure
 		if (mpPlacingStructure)
 		{
@@ -271,24 +268,25 @@ void CWorldState::CheckKeyPresses()
 		else
 		{
 			// Not placing a structure - find out where they are clicking
+			CStructure* pNewSelectedStructure = nullptr;
 			switch (mMouseState)
 			{
 			case MS_EARTH_GRID:
-				mpHumanPlayer->CheckGameObjectSelection(mpCurSelectedStructure, mpCurSelectedAgent,
+				mpHumanPlayer->CheckGameObjectSelection(pNewSelectedStructure, mpCurSelectedAgent,
 					mMouseOrigin, mMouseDirection);
-				OnStructureSelectChange();
+				OnStructureSelectChange(pNewSelectedStructure);
 				
 				break;
 
 			case MS_MARS_GRID:
-				mpAIPlayer->CheckGameObjectSelection(mpCurSelectedStructure, mpCurSelectedAgent,
+				mpAIPlayer->CheckGameObjectSelection(pNewSelectedStructure, mpCurSelectedAgent,
 					mMouseOrigin, mMouseDirection);
-				OnStructureSelectChange();
+				OnStructureSelectChange(pNewSelectedStructure);
 				break;
 
 			case MS_UI:
 			case MS_OUT_OF_GRID:
-				OnStructureSelectChange();
+				OnStructureSelectChange(pNewSelectedStructure);
 				break;
 			}
 
@@ -384,7 +382,7 @@ void CWorldState::CheckKeyPresses()
 		// Ensure no buildings can be brought over
 		OnPlacingStructureChange(nullptr);
 		mpCurSelectedAgent = nullptr;
-		mpCurSelectedStructure = nullptr;
+		OnStructureSelectChange(nullptr);
 		mpUnitSelectionList.clear();
 	}
 
@@ -1077,7 +1075,7 @@ void CWorldState::StateUpdate()
 	if (CheckForQueueChange())
 	{
 		// Update the buttons for the queue
-		OnStructureSelectChange();
+		OnStructureSelectChange(mpCurSelectedStructure);
 	}
 
 	// Update news ticker
@@ -1385,11 +1383,33 @@ void CWorldState::OnPlacingStructureChange(CStructure* selStructure)
 	UpdateHeldStructure();
 }
 
-void CWorldState::OnStructureSelectChange()
+void CWorldState::OnStructureSelectChange(CStructure* pSelStructure)
 {
+	// Check if no structure is selected
+	if (pSelStructure == nullptr)
+	{
+		// Check if there is something already selected and set it back to default skin before deselecting
+		if (mpCurSelectedStructure)
+		{
+			mpCurSelectedStructure->SetDeselectedTexture();
+		}
+	}
+
+	// If there is a different building selected, do the same as above
+	if (pSelStructure != mpCurSelectedStructure && mpCurSelectedStructure)
+	{
+		mpCurSelectedStructure->SetDeselectedTexture();
+	}
+	
+	// Set the currently selected structure to the parameter passed in
+	mpCurSelectedStructure = pSelStructure;
+	
 	// Check if something is slelected
 	if (mpCurSelectedStructure)
 	{
+		// Set its texture to be selected
+		mpCurSelectedStructure->SetSelectedTexture();
+		
 		// Unload the existing queue buttons
 		mpQueueButtons->UnloadSprites();
 		

@@ -216,7 +216,7 @@ private:
 	// EVENT HANDLERS
 	//---------------------------
 	void OnPlacingStructureChange(CStructure* selStructure);
-	void OnStructureSelectChange();
+	void OnStructureSelectChange(CStructure* pSelStructure);
 	void OnStructureQueueProgressChange();
 	void OnItemHealthChange();
 };

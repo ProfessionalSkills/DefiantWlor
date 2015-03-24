@@ -51,7 +51,7 @@ protected:
 	SPointData mBuildLoc;			// Grid position of the placement of building
 	SPointData mStructureBL;		// Amount of grid squares relative to the centre to find the bottom left grid square
 	SPointData mStructureTR;		// Same as above, but for top right grid square
-	SBoundingCube mBoundingBox;			// Axis aligned bounding box for this structure
+	SBoundingCube mBoundingBox;		// Axis aligned bounding box for this structure
 
 	std::stringstream mStrDisplay;	// used to output data about the building to the screen
 
@@ -154,13 +154,19 @@ public:
 		mBuildLoc = gridPos;
 	}
 
+	// Change the state of the building to a new state
 	void SetState(EObjectStates newState);
-
+	// Let the building take a set amount of damage
 	bool TakeDamage(float amount);
+	// Repair the building by a given amount
 	bool Repair(float amount);
+	// When placing the building: set the relevant textures
 	void SetBadTexture();
 	void SetGoodTexture();
 	void SetPlacedTexture();
+	// Set the selected or deselected texture
+	void SetSelectedTexture();
+	void SetDeselectedTexture();
 
 
 	// METHODS
