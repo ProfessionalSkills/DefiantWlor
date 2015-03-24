@@ -893,32 +893,6 @@ void CWorldState::StateSetup()
 		mpMdlEarthGrassArea->ScaleX(GRID_SIZE_X * GRID_TILE_SIZE * 2.0f);
 		mpMdlEarthGrassArea->ScaleZ(GRID_SIZE_Y * GRID_TILE_SIZE * 2.0f);
 
-		// Load trees around earth
-		// Generate a random number of trees
-		CRandomiser* pRandomiser = new CRandomiser();
-		int numTrees = pRandomiser->GetRandomInt(150, 200);
-
-		for (int i = 0; i < numTrees; i++)
-		{
-			float x = 0.0f;
-			float z = 0.0f;
-			float rotation = pRandomiser->GetRandomFloat(0.0f, 180.0f);
-			float scale = pRandomiser->GetRandomFloat(3.0f, 5.0f);
-
-			// Get random x and z position
-			do
-			{
-				x = pRandomiser->GetRandomFloat(-400.0, 1000.0);
-				z = pRandomiser->GetRandomFloat(-50.0, 1000.0);
-			} while (x > gridBottomLeft.x && x < gridTopRight.x && z > gridBottomLeft.z && z < gridTopRight.z);
-
-			// Create a random tree or bush
-			int itemNum = pRandomiser->GetRandomInt(0, 1);
-			mpMdlDecorList.push_back(mpTreeMeshes[itemNum]->CreateModel(x, 0.0f, z));
-			mpMdlDecorList.back()->Scale(scale);
-			mpMdlDecorList.back()->RotateY(rotation);
-		}
-
 
 		// MARS
 		float marsXStart = (float)(GRID_SIZE_X * GRID_TILE_SIZE) + 1500.0f;
@@ -936,29 +910,6 @@ void CWorldState::StateSetup()
 		mpMdlMarsGrassArea->ScaleX(GRID_SIZE_X * GRID_TILE_SIZE * 2.0f);
 		mpMdlMarsGrassArea->ScaleZ(GRID_SIZE_Y * GRID_TILE_SIZE * 2.0f);
 		mpMdlMarsGrassArea->SetSkin("sand.jpg");
-
-		int numRocks = pRandomiser->GetRandomInt(150, 200);
-
-		for (int i = 0; i < numTrees; i++)
-		{
-			float x = 0.0f;
-			float z = 0.0f;
-			float rotation = pRandomiser->GetRandomFloat(0.0f, 180.0f);
-			float scale = pRandomiser->GetRandomFloat(1.0f, 3.0f);
-
-			// Get random x and z position
-			do
-			{
-				x = pRandomiser->GetRandomFloat(1500.0, 3000.0);
-				z = pRandomiser->GetRandomFloat(-50.0, 1000.0);
-			} while (x > (gridBottomLeft.x - 30.0f) && x < (gridTopRight.x + 30.0f) && z > (gridBottomLeft.z - 30.0f) && z < (gridTopRight.z + 30.0f));
-
-			// Create a random tree or bush
-			int itemNum = pRandomiser->GetRandomInt(0, 10);
-			mpMdlDecorList.push_back(mpRockMeshes[itemNum]->CreateModel(x, 0.0f, z));
-			mpMdlDecorList.back()->Scale(scale);
-			mpMdlDecorList.back()->RotateY(rotation);
-		}
 		
 		
 		// EARTH
@@ -1009,6 +960,65 @@ void CWorldState::StateSetup()
 		// Re-assign previous grid data
 		mpEarthGrid = mpHumanPlayer->GetPlayerGrid();
 		mpMarsGrid = mpAIPlayer->GetPlayerGrid();
+	}
+
+
+	// Load trees around earth
+	// Generate a random number of trees
+	DX::XMFLOAT3 gridCentre = mpEarthGrid->GetGridCentrePos();
+	DX::XMFLOAT3 gridBottomLeft = mpEarthGrid->GetGridStartPos();
+	DX::XMFLOAT3 gridTopRight = mpEarthGrid->GetGridEndPos();
+
+	CRandomiser* pRandomiser = new CRandomiser();
+	int numTrees = pRandomiser->GetRandomInt(150, 200);
+
+	for (int i = 0; i < numTrees; i++)
+	{
+		float x = 0.0f;
+		float z = 0.0f;
+		float rotation = pRandomiser->GetRandomFloat(0.0f, 180.0f);
+		float scale = pRandomiser->GetRandomFloat(3.0f, 5.0f);
+
+		// Get random x and z position
+		do
+		{
+			x = pRandomiser->GetRandomFloat(-400.0, 1000.0);
+			z = pRandomiser->GetRandomFloat(-50.0, 1000.0);
+		} while (x > gridBottomLeft.x && x < gridTopRight.x && z > gridBottomLeft.z && z < gridTopRight.z);
+
+		// Create a random tree or bush
+		int itemNum = pRandomiser->GetRandomInt(0, 1);
+		mpMdlTreeList.push_back(mpTreeMeshes[itemNum]->CreateModel(x, 0.0f, z));
+		mpMdlTreeList.back()->Scale(scale);
+		mpMdlTreeList.back()->RotateY(rotation);
+	}
+
+	// Load rocks around mars
+	gridCentre = mpMarsGrid->GetGridCentrePos();
+	gridBottomLeft = mpMarsGrid->GetGridStartPos();
+	gridTopRight = mpMarsGrid->GetGridEndPos();
+
+	int numRocks = pRandomiser->GetRandomInt(150, 200);
+
+	for (int i = 0; i < numTrees; i++)
+	{
+		float x = 0.0f;
+		float z = 0.0f;
+		float rotation = pRandomiser->GetRandomFloat(0.0f, 180.0f);
+		float scale = pRandomiser->GetRandomFloat(2.5f, 4.5f);
+
+		// Get random x and z position
+		do
+		{
+			x = pRandomiser->GetRandomFloat(1500.0, 3000.0);
+			z = pRandomiser->GetRandomFloat(-50.0, 1000.0);
+		} while (x > (gridBottomLeft.x - 30.0f) && x < (gridTopRight.x + 30.0f) && z >(gridBottomLeft.z - 30.0f) && z < (gridTopRight.z + 30.0f));
+
+		// Create a random tree or bush
+		int itemNum = pRandomiser->GetRandomInt(0, 10);
+		mpMdlRockList.push_back(mpRockMeshes[itemNum]->CreateModel(x, 0.0f, z));
+		mpMdlRockList.back()->Scale(scale);
+		mpMdlRockList.back()->RotateY(rotation);
 	}
 
 
@@ -1414,6 +1424,22 @@ void CWorldState::StateCleanup()
 		CAdvancedButton<CWorldState, void, int>* pButton = mpUnitsButtonList.back();
 		SafeDelete(pButton);
 		mpUnitsButtonList.pop_back();
+	}
+
+	// Unload trees
+	while (!mpMdlTreeList.empty())
+	{
+		IMesh* pMshTemp = mpMdlTreeList.back()->GetMesh();
+		pMshTemp->RemoveModel(mpMdlTreeList.back());
+		mpMdlTreeList.pop_back();
+	}
+
+	// Unload rocks
+	while (!mpMdlRockList.empty())
+	{
+		IMesh* pMshTemp = mpMdlRockList.back()->GetMesh();
+		pMshTemp->RemoveModel(mpMdlRockList.back());
+		mpMdlRockList.pop_back();
 	}
 }
 

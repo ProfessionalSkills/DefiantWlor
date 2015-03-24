@@ -60,7 +60,8 @@ private:
 	IModel* mpMdlEarthGrassArea;
 	IModel* mpMdlMarsGridArea;
 	IModel* mpMdlMarsGrassArea;
-	std::vector<IModel*> mpMdlDecorList;
+	std::vector<IModel*> mpMdlTreeList;
+	std::vector<IModel*> mpMdlRockList;
 
 
 	// GRIDS
