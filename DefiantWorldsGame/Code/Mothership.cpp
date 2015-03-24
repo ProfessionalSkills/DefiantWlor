@@ -66,6 +66,10 @@ void CMothership::HitFlash()
 
 		mpTempShield->RotateX(-35.0f);
 	}
+	else
+	{
+		mpTempShield->SetPosition(mWorldPos.x, mWorldPos.y, mWorldPos.z);
+	}
 }
 
 void CMothership::UnloadFlash()
@@ -73,8 +77,7 @@ void CMothership::UnloadFlash()
 	// If there is a shield, remove it
 	if (mpTempShield)
 	{
-		mspMshSheild->RemoveModel(mpTempShield);
-		mpTempShield = nullptr;
+		mpTempShield->SetY(-5000);
 	}
 	UnloadLazer();
 }
