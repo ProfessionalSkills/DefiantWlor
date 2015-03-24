@@ -1021,17 +1021,32 @@ void CWorldState::StateSetup()
 		mpMdlRockList.back()->RotateY(rotation);
 	}
 
+	//////********WAAAAALLLL*******///////
+	////wall WALL wall
+
 	IMesh* mshWall = gpEngine->LoadMesh("wall_A4_01.x");
 	IModel* mdlwall = mshWall->CreateModel(0.0f, 0.0f, gridTopRight.z / 4.0f);
 	mdlwall->SetSkin("bld-mt.jpg");
 	mdlwall->RotateX(90.0f);
-	mdlwall->Scale(8.7f);
+	mdlwall->Scale(8.9f);
 
 	IModel* mdlwall2 = mshWall->CreateModel(0.0f, 0.0f, gridTopRight.z*3.0 / 4.0f);
 	mdlwall2->SetSkin("bld-mt.jpg");
 	mdlwall2->RotateX(90.0f);
 	mdlwall2->RotateY(180.0f);
-	mdlwall2->Scale(8.7f);
+	mdlwall2->Scale(8.9f);
+
+	IModel* mdlwall3 = mshWall->CreateModel(gridTopRight.z/ 4.0f, 0.0f,0.0F );
+	mdlwall3->SetSkin("bld-mt.jpg");
+	mdlwall3->RotateX(90.0f);
+	mdlwall3->RotateY(90.0f);
+	mdlwall3->Scale(8.9f);
+
+	IModel* mdlwall4 = mshWall->CreateModel(gridTopRight.z*3.0 / 4.0f, 0.0f, 0.0F);
+	mdlwall4->SetSkin("bld-mt.jpg");
+	mdlwall4->RotateX(90.0f);
+	mdlwall4->RotateY(270.0f);
+	mdlwall4->Scale(8.9f);
 
 
 	// INITIALISE CAMERAS
