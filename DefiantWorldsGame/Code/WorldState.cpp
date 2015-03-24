@@ -984,7 +984,7 @@ void CWorldState::StateSetup()
 		{
 			x = pRandomiser->GetRandomFloat(-400.0, 1000.0);
 			z = pRandomiser->GetRandomFloat(-50.0, 1000.0);
-		} while (x > gridBottomLeft.x && x < gridTopRight.x && z > gridBottomLeft.z && z < gridTopRight.z);
+		} while (x > (gridBottomLeft.x - 30.0f) && x < (gridTopRight.x + 30.0f) && z >(gridBottomLeft.z - 30.0f) && z < (gridTopRight.z + 30.0f));
 
 		// Create a random tree or bush
 		int itemNum = pRandomiser->GetRandomInt(0, 1);
@@ -1022,10 +1022,16 @@ void CWorldState::StateSetup()
 	}
 
 	IMesh* mshWall = gpEngine->LoadMesh("wall_A4_01.x");
-	IModel* mdlwall = mshWall->CreateModel(0.0f, 0.0f, gridTopRight.z / 2.0f);
+	IModel* mdlwall = mshWall->CreateModel(0.0f, 0.0f, gridTopRight.z / 4.0f);
 	mdlwall->SetSkin("bld-mt.jpg");
 	mdlwall->RotateX(90.0f);
-	mdlwall->Scale(10.0f);
+	mdlwall->Scale(8.7f);
+
+	IModel* mdlwall2 = mshWall->CreateModel(0.0f, 0.0f, gridTopRight.z*3.0 / 4.0f);
+	mdlwall2->SetSkin("bld-mt.jpg");
+	mdlwall2->RotateX(90.0f);
+	mdlwall2->RotateY(180.0f);
+	mdlwall2->Scale(8.7f);
 
 
 	// INITIALISE CAMERAS
