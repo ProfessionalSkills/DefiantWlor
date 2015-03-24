@@ -687,6 +687,23 @@ void CWorldState::StateSetup()
 	mpMdlDragBox = nullptr;
 
 
+	// Load scenery meshes
+	mpTreeMeshes[0] = gpEngine->LoadMesh("Tree1.x");
+	mpTreeMeshes[1] = gpEngine->LoadMesh("Tree2.x");
+
+	mpRockMeshes[0] = gpEngine->LoadMesh("rock_001_LOD1.x");
+	mpRockMeshes[1] = gpEngine->LoadMesh("rock_002_LOD1.x");
+	mpRockMeshes[2] = gpEngine->LoadMesh("rock_003_LOD1.x");
+	mpRockMeshes[3] = gpEngine->LoadMesh("rock_004_LOD1.x");
+	mpRockMeshes[4] = gpEngine->LoadMesh("rock_005_LOD1.x");
+	mpRockMeshes[5] = gpEngine->LoadMesh("rock_006_LOD1.x");
+	mpRockMeshes[6] = gpEngine->LoadMesh("rock_007_LOD1.x");
+	mpRockMeshes[7] = gpEngine->LoadMesh("rock_008_LOD1.x");
+	mpRockMeshes[8] = gpEngine->LoadMesh("rock_009_LOD1.x");
+	mpRockMeshes[9] = gpEngine->LoadMesh("rock_010_LOD1.x");
+	mpRockMeshes[10] = gpEngine->LoadMesh("rock_011_LOD1.x");
+
+
 	// CREATE Y = 0 PLANE
 	//-----------------------------
 	DX::XMFLOAT3 point(-10.0f, 0.0f, 50.0f);
@@ -862,6 +879,8 @@ void CWorldState::StateSetup()
 		mpEarthGrid = new CGrid(DX::XMFLOAT3(0.0f, 0.3f, 0.0f));
 		
 		DX::XMFLOAT3 gridCentre = mpEarthGrid->GetGridCentrePos();
+		DX::XMFLOAT3 gridBottomLeft = mpEarthGrid->GetGridStartPos();
+		DX::XMFLOAT3 gridTopRight = mpEarthGrid->GetGridEndPos();
 		mpMdlSkybox->SetPosition(gridCentre.x, -1.0f, gridCentre.z);
 
 		mpMshGridArea = gpEngine->LoadMesh("Grid.x");
@@ -874,11 +893,40 @@ void CWorldState::StateSetup()
 		mpMdlEarthGrassArea->ScaleX(GRID_SIZE_X * GRID_TILE_SIZE * 2.0f);
 		mpMdlEarthGrassArea->ScaleZ(GRID_SIZE_Y * GRID_TILE_SIZE * 2.0f);
 
+		// Load trees around earth
+		// Generate a random number of trees
+		CRandomiser* pRandomiser = new CRandomiser();
+		int numTrees = pRandomiser->GetRandomInt(150, 200);
+
+		for (int i = 0; i < numTrees; i++)
+		{
+			float x = 0.0f;
+			float z = 0.0f;
+			float rotation = pRandomiser->GetRandomFloat(0.0f, 180.0f);
+			float scale = pRandomiser->GetRandomFloat(3.0f, 5.0f);
+
+			// Get random x and z position
+			do
+			{
+				x = pRandomiser->GetRandomFloat(-400.0, 1000.0);
+				z = pRandomiser->GetRandomFloat(-50.0, 1000.0);
+			} while (x > gridBottomLeft.x && x < gridTopRight.x && z > gridBottomLeft.z && z < gridTopRight.z);
+
+			// Create a random tree or bush
+			int itemNum = pRandomiser->GetRandomInt(0, 1);
+			mpMdlDecorList.push_back(mpTreeMeshes[itemNum]->CreateModel(x, 0.0f, z));
+			mpMdlDecorList.back()->Scale(scale);
+			mpMdlDecorList.back()->RotateY(rotation);
+		}
+
+
 		// MARS
 		float marsXStart = (float)(GRID_SIZE_X * GRID_TILE_SIZE) + 1500.0f;
 		mpMarsGrid = new CGrid(DX::XMFLOAT3(marsXStart, 0.3f, 0.0f));
 
 		gridCentre = mpMarsGrid->GetGridCentrePos();
+		gridBottomLeft = mpMarsGrid->GetGridStartPos();
+		gridTopRight = mpMarsGrid->GetGridEndPos();
 
 		mpMdlMarsGridArea = mpMshGridArea->CreateModel(gridCentre.x, 0.2f, gridCentre.z);
 		mpMdlMarsGridArea->ScaleX((GRID_SIZE_X * GRID_TILE_SIZE) / 2.0f);
@@ -888,6 +936,29 @@ void CWorldState::StateSetup()
 		mpMdlMarsGrassArea->ScaleX(GRID_SIZE_X * GRID_TILE_SIZE * 2.0f);
 		mpMdlMarsGrassArea->ScaleZ(GRID_SIZE_Y * GRID_TILE_SIZE * 2.0f);
 		mpMdlMarsGrassArea->SetSkin("sand.jpg");
+
+		int numRocks = pRandomiser->GetRandomInt(150, 200);
+
+		for (int i = 0; i < numTrees; i++)
+		{
+			float x = 0.0f;
+			float z = 0.0f;
+			float rotation = pRandomiser->GetRandomFloat(0.0f, 180.0f);
+			float scale = pRandomiser->GetRandomFloat(1.0f, 3.0f);
+
+			// Get random x and z position
+			do
+			{
+				x = pRandomiser->GetRandomFloat(1500.0, 3000.0);
+				z = pRandomiser->GetRandomFloat(-50.0, 1000.0);
+			} while (x > (gridBottomLeft.x - 30.0f) && x < (gridTopRight.x + 30.0f) && z > (gridBottomLeft.z - 30.0f) && z < (gridTopRight.z + 30.0f));
+
+			// Create a random tree or bush
+			int itemNum = pRandomiser->GetRandomInt(0, 10);
+			mpMdlDecorList.push_back(mpRockMeshes[itemNum]->CreateModel(x, 0.0f, z));
+			mpMdlDecorList.back()->Scale(scale);
+			mpMdlDecorList.back()->RotateY(rotation);
+		}
 		
 		
 		// EARTH

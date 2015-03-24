@@ -63,7 +63,7 @@ void CStructure::SetPlacedTexture()
 
 void CStructure::SetSelectedTexture()
 {
-	mpObjModel->SetSkin("bld-mt-good_tlxadd.jpg");
+	mpObjModel->SetSkin("bld-mt-selected.jpg");
 }
 
 void CStructure::SetDeselectedTexture()

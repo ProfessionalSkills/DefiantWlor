@@ -49,6 +49,8 @@ private:
 	IMesh* mpMshSkybox;
 	IMesh* mpMshGridArea;
 	IMesh* mpMshGrassArea;
+	IMesh* mpTreeMeshes[2];
+	IMesh* mpRockMeshes[11];
 
 
 	// MODELS
@@ -58,6 +60,7 @@ private:
 	IModel* mpMdlEarthGrassArea;
 	IModel* mpMdlMarsGridArea;
 	IModel* mpMdlMarsGrassArea;
+	std::vector<IModel*> mpMdlDecorList;
 
 
 	// GRIDS
@@ -162,8 +165,9 @@ private:
 
 
 public:
-	// DRAG SELECTION MESH
+	// STATIC MESHES
 	//---------------------------
+	// Drag box
 	static IMesh* mspMshDrag;
 
 

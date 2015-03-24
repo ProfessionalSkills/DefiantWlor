@@ -5,7 +5,7 @@
 // World matrix and combined view / projection matrix
 float4x3 WorldMatrix    : WORLD;
 float4x4 ViewProjMatrix : VIEWPROJECTION;
-float3 CameraPosition   : CAMERAPOSITION;
+//float3 CameraPosition   : CAMERAPOSITION;
 
 
 
