@@ -31,6 +31,7 @@ protected:
 	const float mChargeTimeMin;//minnimum time a lazer should charge for
 	float mChargeTime;//time laser is currently charging for
 	CRandomiser* mpToHitRoll;
+	bool mChargingLazers;
 
 public:
 	// CONSTRUCTORS & DESTRUCTOR
@@ -65,6 +66,7 @@ public:
 	virtual void UnloadFlash() = 0;
 	virtual void MoveY(float yChange)=0;
 	void FireLazer(CGameObject* target);
+	bool ChargeLazer();
 	void UnloadLazer();
 };
 
