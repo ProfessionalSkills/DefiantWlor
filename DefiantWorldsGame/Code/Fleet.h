@@ -71,6 +71,7 @@ public:
 	void Fight();//attacks another fleet
 	void LoadShipModels(float xPos);
 	void UnloadShieldModels();
+	void UnloadLazers(); 
 	void MoveFleet();
 	void IdleFleet();//makes the shapes move slightly, to make the sceene more animated
 	void ChargeFleetLazers();

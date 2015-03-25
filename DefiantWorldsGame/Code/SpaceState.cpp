@@ -131,11 +131,17 @@ void CSpaceState::StateUpdate()
 	//update effects time
 	mTimeSinceEffectsUpdate -= gFrameTime;
 
+
+
 	if (mTimeSinceEffectsUpdate <= 0.0f)
 	{
-		//fleets attack each other according to tactics
+		//unload the shield models
 		mpPlayerOneFleet->UnloadShieldModels();
 		mpPlayerTwoFleet->UnloadShieldModels();
+
+		//unload the lazer models
+		mpPlayerOneFleet->UnloadLazers();
+		mpPlayerTwoFleet->UnloadLazers();
 
 		//update fleet status
 		mpPlayerOneFleet->UpdateCondition();

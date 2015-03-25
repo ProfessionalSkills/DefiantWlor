@@ -97,6 +97,29 @@ float Sq(float x)
 
 void CSpaceUnit::FireLazer(CGameObject* target)
 {
+	//set models position
+	DirectX::XMFLOAT4X4 ModelMatrix;
+	DirectX::XMFLOAT3 ModelZNormal;
+
+	mpObjModel->GetMatrix(&ModelMatrix.m[0][0]);
+
+	ModelZNormal.x = ModelMatrix.m[2][0] * 6;
+	ModelZNormal.y = ModelMatrix.m[2][1] * 6;
+	ModelZNormal.z = ModelMatrix.m[2][2] * 6;
+
+	if (!mpTempLazer)
+	{
+		mpTempLazer = mspMshLazer->CreateModel(mWorldPos.x + ModelZNormal.x, mWorldPos.y + ModelZNormal.y, mWorldPos.z + ModelZNormal.z);
+		if (mWorldPos.x > 0)
+		{
+			mpTempLazer->SetSkin("tlxadd_lazer - red.tga");
+		}
+	}
+	else
+	{
+		mpTempLazer->SetPosition(mWorldPos.x + ModelZNormal.x, mWorldPos.y + ModelZNormal.y, mWorldPos.z + ModelZNormal.z);
+	}
+
 	mpTempLazer->LookAt(target->GetWorldPos().x, target->GetWorldPos().y, target->GetWorldPos().z);
 	float length = sqrtf(Sq(target->GetWorldPos().x - mWorldPos.x) + Sq(target->GetWorldPos().y - mWorldPos.y) + Sq(target->GetWorldPos().z - mWorldPos.z));
 
@@ -131,7 +154,6 @@ void CSpaceUnit::ChargeLazer()
 		else
 		{
 			mpTempLazer->SetPosition(mWorldPos.x + ModelZNormal.x, mWorldPos.y + ModelZNormal.y, mWorldPos.z + ModelZNormal.z);
-			//mpTempLazer->ResetScale();
 		}
 
 		mChargeTime -= gFrameTime;
@@ -147,7 +169,10 @@ void CSpaceUnit::UnloadLazer()
 {
 	if (mpTempLazer&&!mChargingLazers)
 	{
+		DX::XMFLOAT4X4 tmp;
 		mpTempLazer->ResetScale();
+		mpTempLazer->GetMatrix(&tmp.m[0][0]);
 		mpTempLazer->SetY(-5000);
 	}
+	else mpTempLazer->ResetScale();
 }
