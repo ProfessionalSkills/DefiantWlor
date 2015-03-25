@@ -61,8 +61,8 @@ void CSpaceUnit::Spawn(CGrid* pGrid, SPointData pCentre)
 
 void CSpaceUnit::Move()
 {
-	mpObjModel->MoveX(mSpeed*gFrameTime);
-	mWorldPos.x += mSpeed*gFrameTime;
+	mpObjModel->MoveZ(mSpeed*gFrameTime);
+	mWorldPos.z += mSpeed*gFrameTime;
 }
 
 bool CSpaceUnit::Destroy()
@@ -174,5 +174,9 @@ void CSpaceUnit::UnloadLazer()
 		mpTempLazer->GetMatrix(&tmp.m[0][0]);
 		mpTempLazer->SetY(-5000);
 	}
-	else mpTempLazer->ResetScale();
+	else if (mpTempLazer)
+	{
+		mpTempLazer->ResetScale();
+		mpTempLazer->Scale(1 / (mChargeTime + 1.0f));
+	}
 }

@@ -13,10 +13,13 @@
 //-----------------------------------------------------
 // SPACE STATE CLASS CONSTRUCTORS & DESTRUCTOR
 //-----------------------------------------------------
-CSpaceState::CSpaceState() :mTimeToUpdate(1.0f), mTimeToUpdateEffects(0.1f), mCamRotSpeed(0.7), mCamZAdjust(-10.4f), mBaseCamZ(-188.0f), mDisplacement(30), CGameState()
+CSpaceState::CSpaceState() :mTimeToUpdate(1.0f), mTimeToUpdateEffects(0.1f), mCamRotSpeed(0.7), mCamZAdjust(-10.4f), mBaseCamZ(-188.0f),
+mDisplacement(30), mNumCamStates(3),CGameState()
 {
 	mTimeSinceUpdate = 0.0f;
 	mCamZ = 0.0f;
+	mCamState = 0;
+	mCamZMovement = 0.0f;
 }
 
 CSpaceState::~CSpaceState()
@@ -30,8 +33,6 @@ CSpaceState::~CSpaceState()
 //-----------------------------------------------------
 void CSpaceState::StateSetup()
 {
-
-
 	// PLAYERS
 	//-----------------------------
 	mpPlayerManager = CStateControl::GetInstance()->GetPlayerManager();
@@ -59,6 +60,7 @@ void CSpaceState::StateSetup()
 	}
 
 	mpCamMain = gpEngine->CreateCamera(kManual, 0.0f, 0.0f, mCamZ);
+	mpCamMain->LookAt(0.0f, 0.0f, 0.0f);
 
 	// INITIALISE SKYBOX
 	//------------------------------
@@ -102,6 +104,12 @@ void CSpaceState::StateUpdate()
 		gCurState = GS_MAIN_MENU;
 	}
 
+	if (gpEngine->KeyHit(Key_C))
+	{
+		mCamState = (mCamState + 1) % mNumCamStates;
+	}
+
+	ChangeCameraPosition();
 	//update time, used to slow down the speed of the fight
 	mTimeSinceUpdate += gFrameTime;
 	mpPlayerOneFleet->ChargeFleetLazers();
@@ -152,19 +160,14 @@ void CSpaceState::StateUpdate()
 	}
 
 	//moves fleet that has won 
-	if (mpPlayerOneFleet->GetSize() == 0)
-	{
-		mpPlayerTwoFleet->MoveFleet();
-	}
-	else if (mpPlayerTwoFleet->GetSize() == 0)
-	{
-		mpPlayerOneFleet->MoveFleet();
-	}
-	else 
-	{
-		mpPlayerOneFleet->IdleFleet();
-		mpPlayerTwoFleet->IdleFleet();
-	}
+
+	mpPlayerTwoFleet->MoveFleet();
+	mpPlayerOneFleet->MoveFleet();
+
+	mpPlayerOneFleet->IdleFleet();
+	mpPlayerTwoFleet->IdleFleet();
+
+	mCamZMovement += 50.0f*gFrameTime;
 
 	DrawFontData();
 }
@@ -244,4 +247,32 @@ void CSpaceState::StateCleanup()
 	//set pointers to null
 	mpPlayerOneFleet = nullptr;
 	mpPlayerTwoFleet = nullptr;
+}
+
+void CSpaceState::ChangeCameraPosition()
+{
+	switch (mCamState)
+	{
+	case 0:
+		mpCamMain->SetPosition(0.0f, 10.0f, mCamZ + mCamZMovement);
+		mpCamMain->LookAt(0.0f, 0.0f, 0.0f);
+		mpCamMain->ResetOrientation();
+		break;
+	case 1:
+		mpCamMain->ResetOrientation();
+		mpCamMain->SetPosition(mCamZ, -mCamZ / 2.0f, mCamZMovement);
+		mpCamMain->LookAt(0.0f, 0.0f, mCamZMovement);
+		mpCamMain->RotateX(-40.0f);
+		break;
+	case 2:
+		mpCamMain->ResetOrientation();
+		mpCamMain->SetPosition(-mCamZ , -mCamZ / 2.0f, mCamZMovement);
+		mpCamMain->LookAt(0.0f, 0.0f, mCamZMovement);
+		mpCamMain->RotateX(-40.0f);
+		break;
+	case 3:
+		break;
+	default:
+		break;
+	}
 }

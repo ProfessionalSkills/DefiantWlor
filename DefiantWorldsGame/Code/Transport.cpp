@@ -89,7 +89,7 @@ void CTransport::HitFlash()
 		mpTempShield = mspMshSheild->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
 		mpTempShield->Scale(mScale + 0.03f);
 
-		if (mWorldPos.x < 0.0f)
+		/*if (mWorldPos.x < 0.0f)
 		{
 			mpTempShield->RotateY(90.0f);
 
@@ -97,7 +97,7 @@ void CTransport::HitFlash()
 		else
 		{
 			mpTempShield->RotateY(-90.0f);
-		}
+		}*/
 
 		mpTempShield->RotateX(-35.0f);
 	}
@@ -122,7 +122,7 @@ void CTransport::LoadModel(float x, float y, float z)
 	mWorldPos.y = y;
 	mWorldPos.z = z;
 
-	if (x < 0.0f)
+	/*if (x < 0.0f)
 	{
 		mpObjModel->RotateY(90.0f);	
 	}
@@ -130,7 +130,7 @@ void CTransport::LoadModel(float x, float y, float z)
 	{
 		mpObjModel->RotateY(-90.0f);
 		mSpeed = -mSpeed;
-	}
+	}*/
 	mpObjModel->RotateX(-35.0f);
 
 	mpObjModel->Scale(mScale);

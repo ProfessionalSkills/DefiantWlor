@@ -75,7 +75,7 @@ void CSpaceFighter::LoadModel(float x,float y, float z)
 																								// .cpp file ONLY otherwise you'll get cyclic redundancy
 	mGenSound = new CSound(mMusicFile, mSourcePos, mSourceVel, false, volume, listenerPos, listenerVel);
 
-	if (x < 0.0f)
+	/*if (x < 0.0f)
 	{
 		mpObjModel->RotateY(90.0f); 
 		
@@ -84,7 +84,7 @@ void CSpaceFighter::LoadModel(float x,float y, float z)
 	{
 		mpObjModel->RotateY(-90.0f);
 		mSpeed = -mSpeed;
-	}
+	}*/
 
 	mpObjModel->RotateX(-35.0f);
 	mpObjModel->Scale(mScale);
@@ -146,14 +146,14 @@ void CSpaceFighter::HitFlash()
 		mpTempShield = mspMshSheild->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
 		mpTempShield->Scale(mScale + 0.05f);
 
-		if (mWorldPos.x < 0.0f)
+		/*if (mWorldPos.x < 0.0f)
 		{
 			mpTempShield->RotateY(90.0f);
 		}
 		else
 		{
 			mpTempShield->RotateY(-90.0f);
-		}
+		}*/
 
 		mpTempShield->RotateX(-35.0f);
 	}

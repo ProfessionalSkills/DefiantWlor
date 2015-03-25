@@ -55,14 +55,14 @@ void CMothership::HitFlash()
 		mpTempShield = mspMshSheild->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
 		mpTempShield->Scale(mScale + 0.1f);
 
-		if (mWorldPos.x < 0.0f)
+		/*if (mWorldPos.x < 0.0f)
 		{
 			mpTempShield->RotateY(90.0f);
 		}
 		else
 		{
 			mpTempShield->RotateY(-90.0f);
-		}
+		}*/
 
 		mpTempShield->RotateX(-35.0f);
 	}
@@ -114,7 +114,7 @@ void CMothership::LoadModel(float x, float y, float z)
 	mWorldPos.x = x;
 	mWorldPos.y = y;
 	mWorldPos.z = z;
-
+	/*
 	if (x < 0.0f)
 	{
 		mpObjModel->RotateY(90.0f);
@@ -122,8 +122,7 @@ void CMothership::LoadModel(float x, float y, float z)
 	else
 	{
 		mpObjModel->RotateY(-90.0f);
-		mSpeed = -mSpeed;
-	}
+	}*/
 
 	mpObjModel->RotateX(-35.0f);
 	mpObjModel->Scale(mScale);

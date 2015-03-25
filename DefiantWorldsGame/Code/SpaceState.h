@@ -25,6 +25,10 @@ private:
 	const float mBaseCamZ;
 	const float mCamZAdjust;
 	float mCamZ;
+	void ChangeCameraPosition();
+	int mCamState;
+	float mCamZMovement;
+	const int mNumCamStates;
 
 	// MESHES
 	//--------------------------- 
