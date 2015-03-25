@@ -27,12 +27,12 @@ CWall::CWall(bool horizontal)
 	mBuildTime = 5.0f;
 	mRepairSpeed = 1.0f;
 	mCurBuildTimeLeft = mBuildTime;
-	mBuildCost = 500;
+	mBuildCost = 0;
 
 	mState = OBJ_BUILT;
 	mStructureType = STR_WALL;
 
-	mHeight = 30.0f;
+	mHeight = 50.0f;
 
 	// Set the orientation
 	if (horizontal)

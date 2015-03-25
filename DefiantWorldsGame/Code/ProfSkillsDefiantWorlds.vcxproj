@@ -167,6 +167,7 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
     <ClCompile Include="SpaceFighter.cpp" />
     <ClCompile Include="SpaceState.cpp" />
     <ClCompile Include="SpaceUnit.cpp" />
+    <ClCompile Include="SphericalCamera.cpp" />
     <ClCompile Include="StaticStructure.cpp" />
     <ClCompile Include="Structure.cpp" />
     <ClCompile Include="Tank.cpp" />
@@ -218,6 +219,7 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
     <ClInclude Include="SpaceFighter.h" />
     <ClInclude Include="SpaceState.h" />
     <ClInclude Include="SpaceUnit.h" />
+    <ClInclude Include="SphericalCamera.h" />
     <ClInclude Include="StaticStructure.h" />
     <ClInclude Include="Structure.h" />
     <ClInclude Include="Tank.h" />

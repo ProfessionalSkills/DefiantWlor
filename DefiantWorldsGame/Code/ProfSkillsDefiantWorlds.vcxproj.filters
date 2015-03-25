@@ -285,6 +285,9 @@
     <ClCompile Include="Wall.cpp">
       <Filter>Entities\Game Objects\Child\Structure\Child\Static\Child</Filter>
     </ClCompile>
+    <ClCompile Include="SphericalCamera.cpp">
+      <Filter>Utilities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common.h">
@@ -433,6 +436,9 @@
     </ClInclude>
     <ClInclude Include="Wall.h">
       <Filter>Entities\Game Objects\Child\Structure\Child\Static\Child</Filter>
+    </ClInclude>
+    <ClInclude Include="SphericalCamera.h">
+      <Filter>Utilities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

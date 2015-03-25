@@ -881,6 +881,43 @@ void CWorldState::StateSetup()
 	mPrevHealth = 0;
 
 
+	// EARTH
+	mpEarthGrid = new CGrid(DX::XMFLOAT3(0.0f, 0.3f, 0.0f));
+
+	DX::XMFLOAT3 gridCentre = mpEarthGrid->GetGridCentrePos();
+	DX::XMFLOAT3 gridBottomLeft = mpEarthGrid->GetGridStartPos();
+	DX::XMFLOAT3 gridTopRight = mpEarthGrid->GetGridEndPos();
+	mpMdlSkybox->SetPosition(gridCentre.x, -1.0f, gridCentre.z);
+
+	mpMshGridArea = gpEngine->LoadMesh("Grid.x");
+	mpMdlEarthGridArea = mpMshGridArea->CreateModel(gridCentre.x, 0.2f, gridCentre.z);
+	mpMdlEarthGridArea->ScaleX((GRID_SIZE_X * GRID_TILE_SIZE) / 2.0f);
+	mpMdlEarthGridArea->ScaleZ((GRID_SIZE_Y * GRID_TILE_SIZE) / 2.0f);
+
+	mpMshGrassArea = gpEngine->LoadMesh("Grass.x");
+	mpMdlEarthGrassArea = mpMshGrassArea->CreateModel(gridCentre.x, 0.1f, gridCentre.z);
+	mpMdlEarthGrassArea->ScaleX(GRID_SIZE_X * GRID_TILE_SIZE * 2.0f);
+	mpMdlEarthGrassArea->ScaleZ(GRID_SIZE_Y * GRID_TILE_SIZE * 2.0f);
+
+
+	// MARS
+	float marsXStart = (float)(GRID_SIZE_X * GRID_TILE_SIZE) + 1500.0f;
+	mpMarsGrid = new CGrid(DX::XMFLOAT3(marsXStart, 0.3f, 0.0f));
+
+	gridCentre = mpMarsGrid->GetGridCentrePos();
+	gridBottomLeft = mpMarsGrid->GetGridStartPos();
+	gridTopRight = mpMarsGrid->GetGridEndPos();
+
+	mpMdlMarsGridArea = mpMshGridArea->CreateModel(gridCentre.x, 0.2f, gridCentre.z);
+	mpMdlMarsGridArea->ScaleX((GRID_SIZE_X * GRID_TILE_SIZE) / 2.0f);
+	mpMdlMarsGridArea->ScaleZ((GRID_SIZE_Y * GRID_TILE_SIZE) / 2.0f);
+
+	mpMdlMarsGrassArea = mpMshGrassArea->CreateModel(gridCentre.x, 0.1f, gridCentre.z);
+	mpMdlMarsGrassArea->ScaleX(GRID_SIZE_X * GRID_TILE_SIZE * 2.0f);
+	mpMdlMarsGrassArea->ScaleZ(GRID_SIZE_Y * GRID_TILE_SIZE * 2.0f);
+	mpMdlMarsGrassArea->SetSkin("sand.jpg");
+
+
 	// CONSTRUCT COMMAND CENTRES
 	//-----------------------------
 	// if players have already been initialised, this is not necessary
@@ -889,44 +926,7 @@ void CWorldState::StateSetup()
 		// INITIALISE WORLDS
 		//-----------------------------
 		// Initialise news ticker
-		gpNewsTicker = new CNewsTicker();
-
-		// EARTH
-		mpEarthGrid = new CGrid(DX::XMFLOAT3(0.0f, 0.3f, 0.0f));
-		
-		DX::XMFLOAT3 gridCentre = mpEarthGrid->GetGridCentrePos();
-		DX::XMFLOAT3 gridBottomLeft = mpEarthGrid->GetGridStartPos();
-		DX::XMFLOAT3 gridTopRight = mpEarthGrid->GetGridEndPos();
-		mpMdlSkybox->SetPosition(gridCentre.x, -1.0f, gridCentre.z);
-
-		mpMshGridArea = gpEngine->LoadMesh("Grid.x");
-		mpMdlEarthGridArea = mpMshGridArea->CreateModel(gridCentre.x, 0.2f, gridCentre.z);
-		mpMdlEarthGridArea->ScaleX((GRID_SIZE_X * GRID_TILE_SIZE) / 2.0f);
-		mpMdlEarthGridArea->ScaleZ((GRID_SIZE_Y * GRID_TILE_SIZE) / 2.0f);
-
-		mpMshGrassArea = gpEngine->LoadMesh("Grass.x");
-		mpMdlEarthGrassArea = mpMshGrassArea->CreateModel(gridCentre.x, 0.1f, gridCentre.z);
-		mpMdlEarthGrassArea->ScaleX(GRID_SIZE_X * GRID_TILE_SIZE * 2.0f);
-		mpMdlEarthGrassArea->ScaleZ(GRID_SIZE_Y * GRID_TILE_SIZE * 2.0f);
-
-
-		// MARS
-		float marsXStart = (float)(GRID_SIZE_X * GRID_TILE_SIZE) + 1500.0f;
-		mpMarsGrid = new CGrid(DX::XMFLOAT3(marsXStart, 0.3f, 0.0f));
-
-		gridCentre = mpMarsGrid->GetGridCentrePos();
-		gridBottomLeft = mpMarsGrid->GetGridStartPos();
-		gridTopRight = mpMarsGrid->GetGridEndPos();
-
-		mpMdlMarsGridArea = mpMshGridArea->CreateModel(gridCentre.x, 0.2f, gridCentre.z);
-		mpMdlMarsGridArea->ScaleX((GRID_SIZE_X * GRID_TILE_SIZE) / 2.0f);
-		mpMdlMarsGridArea->ScaleZ((GRID_SIZE_Y * GRID_TILE_SIZE) / 2.0f);
-
-		mpMdlMarsGrassArea = mpMshGrassArea->CreateModel(gridCentre.x, 0.1f, gridCentre.z);
-		mpMdlMarsGrassArea->ScaleX(GRID_SIZE_X * GRID_TILE_SIZE * 2.0f);
-		mpMdlMarsGrassArea->ScaleZ(GRID_SIZE_Y * GRID_TILE_SIZE * 2.0f);
-		mpMdlMarsGrassArea->SetSkin("sand.jpg");
-		
+		gpNewsTicker = new CNewsTicker();		
 		
 		// EARTH
 		mpPlacingStructure = nullptr;
@@ -978,12 +978,11 @@ void CWorldState::StateSetup()
 		mpMarsGrid = mpAIPlayer->GetPlayerGrid();
 	}
 
-
 	// Load trees around earth
 	// Generate a random number of trees
-	DX::XMFLOAT3 gridCentre = mpEarthGrid->GetGridCentrePos();
-	DX::XMFLOAT3 gridBottomLeft = mpEarthGrid->GetGridStartPos();
-	DX::XMFLOAT3 gridTopRight = mpEarthGrid->GetGridEndPos();
+	gridCentre = mpEarthGrid->GetGridCentrePos();
+    gridBottomLeft = mpEarthGrid->GetGridStartPos();
+	gridTopRight = mpEarthGrid->GetGridEndPos();
 
 	CRandomiser* pRandomiser = new CRandomiser();
 	int numTrees = pRandomiser->GetRandomInt(150, 200);
@@ -1485,6 +1484,13 @@ void CWorldState::StateCleanup()
 		pMshTemp->RemoveModel(mpMdlRockList.back());
 		mpMdlRockList.pop_back();
 	}
+
+	// Unload grids
+	mpMshGrassArea->RemoveModel(mpMdlEarthGrassArea);
+	mpMshGrassArea->RemoveModel(mpMdlMarsGrassArea);
+
+	mpMshGridArea->RemoveModel(mpMdlEarthGridArea);
+	mpMshGridArea->RemoveModel(mpMdlMarsGridArea);
 }
 
 bool CWorldState::CheckForQueueChange()
