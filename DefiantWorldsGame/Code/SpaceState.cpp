@@ -82,7 +82,6 @@ void CSpaceState::StateSetup()
 	//------------------------------
 	mpPlayerOneFleet->LoadShipModels(-mDisplacement);
 	mpPlayerTwoFleet->LoadShipModels(mDisplacement);
-	mpMdlSkybox->AttachToParent(mpCamMain);
 
 	// INITIALISE USER INTERFACE
 	//-----------------------------
@@ -167,7 +166,7 @@ void CSpaceState::StateUpdate()
 	mpPlayerOneFleet->IdleFleet();
 	mpPlayerTwoFleet->IdleFleet();
 
-	mCamZMovement += 50.0f*gFrameTime;
+	mCamZMovement += 5.0f*gFrameTime;
 
 	DrawFontData();
 }

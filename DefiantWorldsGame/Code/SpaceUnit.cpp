@@ -14,7 +14,7 @@ IMesh* CSpaceUnit::mspMshLazer = nullptr;
 //-----------------------------------------------------
 CSpaceUnit::CSpaceUnit() :mChargeTimeMax(3.0f), mChargeTimeMin(1.0f)
 {
-	mSpeed = 50.0f;
+	mSpeed = 5.0f;
 	mpTempShield = nullptr;
 	mpTempLazer = nullptr;
 

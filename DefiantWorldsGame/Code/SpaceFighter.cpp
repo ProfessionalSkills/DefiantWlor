@@ -75,16 +75,6 @@ void CSpaceFighter::LoadModel(float x,float y, float z)
 																								// .cpp file ONLY otherwise you'll get cyclic redundancy
 	mGenSound = new CSound(mMusicFile, mSourcePos, mSourceVel, false, volume, listenerPos, listenerVel);
 
-	/*if (x < 0.0f)
-	{
-		mpObjModel->RotateY(90.0f); 
-		
-	}
-	else
-	{
-		mpObjModel->RotateY(-90.0f);
-		mSpeed = -mSpeed;
-	}*/
 
 	mpObjModel->RotateX(-35.0f);
 	mpObjModel->Scale(mScale);
