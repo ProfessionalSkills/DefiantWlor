@@ -13,6 +13,7 @@
 #include "Grid.h"
 #include "AdvancedButton.h"
 #include "NewsTicker.h"
+#include "SphericalCamera.h"
 
 
 //-----------------------------------------------------
@@ -23,9 +24,12 @@ class CWorldState : public CGameState
 private:
 	// CAMERA DATA
 	//--------------------------- 
-	ICamera* mpCamEarth;
-	ICamera* mpCamMars;
-	ICamera* mpCamCurrent;
+	CSphericalCamera* mpCamEarth;
+	CSphericalCamera* mpCamMars;
+	CSphericalCamera* mpCamCurrent;
+	//ICamera* mpCamEarth;
+	//ICamera* mpCamMars;
+	//ICamera* mpCamCurrent;
 
 	DX::XMFLOAT3 mMinEarthPos;
 	DX::XMFLOAT3 mMaxEarthPos;

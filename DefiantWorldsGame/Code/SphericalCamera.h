@@ -19,8 +19,51 @@ class CSphericalCamera
 public:
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
-	CSphericalCamera(DX::XMFLOAT3 pivotPoint, float radius, float phi, float theta);
+	CSphericalCamera(DX::XMFLOAT3 pivotPoint, float rho, float phi, float theta);
 	~CSphericalCamera();
+
+
+	// MUTATORS
+	//---------------------------
+	inline void SetPivotPoint(DX::XMFLOAT3 point)
+	{
+		mPivotPoint = point;
+	}
+
+	inline void AdjustPivotPoint(DX::XMFLOAT3 amount)
+	{
+		mPivotPoint.x += amount.x;
+		mPivotPoint.y += amount.y;
+		mPivotPoint.z += amount.z;
+	}
+
+	inline void SetRho(float ρ)
+	{
+		mρ = ρ;
+	}
+
+	inline void SetPhi(float φ)
+	{
+		mφ = φ;
+	}
+
+	inline void SetTheta(float θ)
+	{
+		mθ = θ;
+	}
+
+	inline void AdjustRho(float amount)
+	{
+		mρ = Clampf(50.0f, 400.0f, mρ + amount);
+	}
+
+
+	// ACCESSORS
+	//---------------------------
+	inline ICamera* GetCamera()
+	{
+		return mpCamera;
+	}
 
 
 	// METHODS

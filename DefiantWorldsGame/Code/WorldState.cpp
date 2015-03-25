@@ -32,7 +32,7 @@ CWorldState::~CWorldState()
 void CWorldState::UpdateMatrices()
 {
 	// Store the current camera's model matrix
-	mpCamCurrent->GetMatrix(&mCamWorldMatrix.m[0][0]);
+	mpCamCurrent->GetCamera()->GetMatrix(&mCamWorldMatrix.m[0][0]);
 
 	// XMMATRIX variables calculations
 	DX::XMMATRIX world = DX::XMLoadFloat4x4(&mCamWorldMatrix);
@@ -213,7 +213,7 @@ void CWorldState::CheckKeyPresses()
 	if (gMouseWheelDelta != 0)
 	{
 		float moveAmount = gFrameTime * CAM_SCROLL_SPEED * gMouseWheelDelta;
-		mpCamCurrent->SetY(Clampf(CAM_MIN_HEIGHT, CAM_MAX_HEIGHT, mpCamCurrent->GetY() + moveAmount));
+		mpCamCurrent->AdjustRho(moveAmount);
 		gMouseWheelDelta = 0;
 	}
 	
@@ -1040,42 +1040,11 @@ void CWorldState::StateSetup()
 	mpHumanPlayer->ConstructWalls();
 	mpAIPlayer->ConstructWalls();
 
-	/*IMesh* mshWall = gpEngine->LoadMesh("wall_A4_01.x");
-	IModel* mdlwall = mshWall->CreateModel(0.0f, 0.0f, gridTopRight.z / 4.0f);
-	mdlwall->SetSkin("bld-mt.jpg");
-	mdlwall->RotateX(90.0f);
-	mdlwall->Scale(8.9f);
-
-	IModel* mdlwall2 = mshWall->CreateModel(0.0f, 0.0f, gridTopRight.z*3.0 / 4.0f);
-	mdlwall2->SetSkin("bld-mt.jpg");
-	mdlwall2->RotateX(90.0f);
-	mdlwall2->RotateY(180.0f);
-	mdlwall2->Scale(8.9f);
-
-	IModel* mdlwall3 = mshWall->CreateModel(gridTopRight.z/ 4.0f, 0.0f,0.0F );
-	mdlwall3->SetSkin("bld-mt.jpg");
-	mdlwall3->RotateX(90.0f);
-	mdlwall3->RotateY(90.0f);
-	mdlwall3->Scale(8.9f);
-
-	IModel* mdlwall4 = mshWall->CreateModel(gridTopRight.z*3.0 / 4.0f, 0.0f, 0.0F);
-	mdlwall4->SetSkin("bld-mt.jpg");
-	mdlwall4->RotateX(90.0f);
-	mdlwall4->RotateY(270.0f);
-	mdlwall4->Scale(8.9f);*/
-
 
 	// INITIALISE CAMERAS
 	//-----------------------------
-	mpCamEarth = gpEngine->CreateCamera(kManual, mpEarthGrid->GetGridCentrePos().x, 230.0f, (float)GRID_SIZE_Y);
-	mpCamEarth->RotateX(50.0f);
-	mpCamEarth->SetNearClip(NEAR_CLIP);
-	mpCamEarth->SetFarClip(FAR_CLIP);
-
-	mpCamMars = gpEngine->CreateCamera(kManual, mpMarsGrid->GetGridCentrePos().x, 230.0f, (float)GRID_SIZE_Y);
-	mpCamMars->RotateX(50.0f);
-	mpCamMars->SetNearClip(NEAR_CLIP);
-	mpCamMars->SetFarClip(FAR_CLIP);
+	mpCamEarth = new CSphericalCamera(mpEarthGrid->GetGridCentrePos(), 350.0f, DX::XMConvertToRadians(-90.0f), DX::XMConvertToRadians(50.0f));
+	mpCamMars = new CSphericalCamera(mpMarsGrid->GetGridCentrePos(), 350.0f, DX::XMConvertToRadians(-90.0f), DX::XMConvertToRadians(50.0f));
 
 	mpCamCurrent = mpCamEarth;
 
@@ -1095,15 +1064,15 @@ void CWorldState::StateSetup()
 	mMaxMarsPos.x += threshold;
 	mMaxMarsPos.z += threshold;
 
-	mCurCamPrevPos = DX::XMFLOAT3(0.0f, mpCamEarth->GetY(), 0.0f);
+	mCurCamPrevPos = DX::XMFLOAT3(0.0f, mpCamEarth->GetCamera()->GetY(), 0.0f);
 
 
 	// INITIALISE MUSIC
 	//-----------------------------
 	string mMusicFile = "Perpetual Tension.wav"; //Sets the music file
-	DX::XMFLOAT3 mSourcePos = { mpCamEarth->GetX(), mpCamEarth->GetY(), mpCamEarth->GetZ()};
+	DX::XMFLOAT3 mSourcePos = { mpCamEarth->GetCamera()->GetX(), mpCamEarth->GetCamera()->GetY(), mpCamEarth->GetCamera()->GetZ() };
 	DX::XMFLOAT3 mSourceVel = { 0.0f, 0.0f, 0.0f };
-	DX::XMFLOAT3 listenerPos = { mpCamEarth->GetX(), mpCamEarth->GetY(), mpCamEarth->GetZ()};
+	DX::XMFLOAT3 listenerPos = { mpCamEarth->GetCamera()->GetX(), mpCamEarth->GetCamera()->GetY(), mpCamEarth->GetCamera()->GetZ() };
 	DX::XMFLOAT3 listenerVel = { 0.0f, 0.0f, 0.0f };
 	float volume = CStateControl::GetInstance()->GetSettingsManager()->GetMusicVolume();
 	mMusic = new CSound(mMusicFile, mSourcePos, mSourceVel, true, volume, listenerPos, listenerVel); //Initialise music
@@ -1114,7 +1083,7 @@ void CWorldState::StateUpdate()
 {
 	// SCENE DRAW
 	//------------------------------
-	gpEngine->DrawScene(mpCamCurrent);
+	gpEngine->DrawScene(mpCamCurrent->GetCamera());
 	
 
 	// MOUSE TRACKING
@@ -1123,32 +1092,45 @@ void CWorldState::StateUpdate()
 	mpMouseScreenPos->mPosX = gpEngine->GetMouseX();
 	mpMouseScreenPos->mPosY = gpEngine->GetMouseY();
 
+	// Matrix for identifying direction to scroll
+	DX::XMFLOAT4X4 camMatrix;
+	mpCamCurrent->GetCamera()->GetMatrix(&camMatrix.m[0][0]);
+
 	// Check for side scrolling
 	if (mpMouseScreenPos->mPosX < EDGE_THRESHOLD)
 	{
 		// Mouse on left side of screen
-		mpCamCurrent->MoveX(-CAM_MOVE_SPEED * gFrameTime);
+		// Move in the negative local x direction but do not move on the Y axis
+		mpCamCurrent->AdjustPivotPoint(DX::XMFLOAT3(camMatrix.m[0][0] * -CAM_MOVE_SPEED * gFrameTime, 0.0f, camMatrix.m[0][2] * -CAM_MOVE_SPEED * gFrameTime));
 	}
+
 	if (mpMouseScreenPos->mPosX > WINDOW_WIDTH - EDGE_THRESHOLD)
 	{
 		// Mouse on right side of screen
-		mpCamCurrent->MoveX(CAM_MOVE_SPEED * gFrameTime);
+		// Move in the local x direction but do not move on the Y axis
+		mpCamCurrent->AdjustPivotPoint(DX::XMFLOAT3(camMatrix.m[0][0] * CAM_MOVE_SPEED * gFrameTime, 0.0f, camMatrix.m[0][2] * CAM_MOVE_SPEED * gFrameTime));
 	}
+
 	if (mpMouseScreenPos->mPosY < EDGE_THRESHOLD)
 	{
 		// Mouse on top side of screen
-		mpCamCurrent->MoveZ(CAM_MOVE_SPEED * gFrameTime);
+		// Move in the local z direction but do not move on the Y axis
+		mpCamCurrent->AdjustPivotPoint(DX::XMFLOAT3(camMatrix.m[2][0] * CAM_MOVE_SPEED * gFrameTime, 0.0f, camMatrix.m[2][2] * CAM_MOVE_SPEED * gFrameTime));
 	}
+
 	if (mpMouseScreenPos->mPosY > WINDOW_HEIGHT - EDGE_THRESHOLD)
 	{
 		// Mouse on bottom side of screen
-		mpCamCurrent->MoveZ(-CAM_MOVE_SPEED * gFrameTime);
+		// Move in the negative local z direction but do not move on the Y axis
+		mpCamCurrent->AdjustPivotPoint(DX::XMFLOAT3(camMatrix.m[2][0] * -CAM_MOVE_SPEED * gFrameTime, 0.0f, camMatrix.m[2][2] * -CAM_MOVE_SPEED * gFrameTime));
 	}
+
+	// Camera rotation keys
 
 	// Get camera's position
 	DX::XMFLOAT3 camPos; 
-	camPos.x = mpCamCurrent->GetX();
-	camPos.z = mpCamCurrent->GetZ();
+	camPos.x = mpCamCurrent->GetCamera()->GetX();
+	camPos.z = mpCamCurrent->GetCamera()->GetZ();
 
 	// Check camera is within boundaries
 	if (mpCamCurrent == mpCamEarth)
@@ -1162,8 +1144,8 @@ void CWorldState::StateUpdate()
 		else
 		{
 			// Otherwise set the previous position as it is out of area
-			mpCamCurrent->SetX(mCurCamPrevPos.x);
-			mpCamCurrent->SetZ(mCurCamPrevPos.z);
+			mpCamCurrent->GetCamera()->SetX(mCurCamPrevPos.x);
+			mpCamCurrent->GetCamera()->SetZ(mCurCamPrevPos.z);
 		}
 	}
 	else
@@ -1177,10 +1159,13 @@ void CWorldState::StateUpdate()
 		else
 		{
 			// Otherwise set the previous position as it is out of area
-			mpCamCurrent->SetX(mCurCamPrevPos.x);
-			mpCamCurrent->SetZ(mCurCamPrevPos.z);
+			mpCamCurrent->GetCamera()->SetX(mCurCamPrevPos.x);
+			mpCamCurrent->GetCamera()->SetZ(mCurCamPrevPos.z);
 		}
 	}
+
+	// Update cameras
+	mpCamCurrent->Update();
 
 
 	// METHODS
@@ -1432,7 +1417,9 @@ void CWorldState::StateCleanup()
 
 	gpEngine->RemoveSprite(mpMainUI);
 	gpEngine->RemoveMesh(mpMshSkybox);
-	gpEngine->RemoveCamera(mpCamEarth);
+	
+	SafeDelete(mpCamEarth);
+	SafeDelete(mpCamMars);
 
 	if (mpSprQProg)
 	{
