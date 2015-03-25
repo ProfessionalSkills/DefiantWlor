@@ -29,6 +29,7 @@ private:
 	int mCamState;
 	float mCamZMovement;
 	const int mNumCamStates;
+	const float mCameraMoveSpeed;
 
 	// MESHES
 	//--------------------------- 

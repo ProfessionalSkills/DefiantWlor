@@ -13,8 +13,8 @@
 //-----------------------------------------------------
 // SPACE STATE CLASS CONSTRUCTORS & DESTRUCTOR
 //-----------------------------------------------------
-CSpaceState::CSpaceState() :mTimeToUpdate(1.0f), mTimeToUpdateEffects(0.1f), mCamRotSpeed(0.7), mCamZAdjust(-10.4f), mBaseCamZ(-188.0f),
-mDisplacement(30), mNumCamStates(3),CGameState()
+CSpaceState::CSpaceState() :mTimeToUpdate(1.0f), mTimeToUpdateEffects(0.1f), mCamRotSpeed(0.7), mCamZAdjust(-10.4f), mBaseCamZ(-188.0f), mCameraMoveSpeed(5.0f),
+mDisplacement(30), mNumCamStates(4),CGameState()
 {
 	mTimeSinceUpdate = 0.0f;
 	mCamZ = 0.0f;
@@ -166,7 +166,7 @@ void CSpaceState::StateUpdate()
 	mpPlayerOneFleet->IdleFleet();
 	mpPlayerTwoFleet->IdleFleet();
 
-	mCamZMovement += 5.0f*gFrameTime;
+	mCamZMovement += mCameraMoveSpeed*gFrameTime;
 
 	DrawFontData();
 }
@@ -256,9 +256,10 @@ void CSpaceState::ChangeCameraPosition()
 	switch (mCamState)
 	{
 	case 0:
-		mpCamMain->SetPosition(0.0f, 10.0f, mCamZ + mCamZMovement);
-		mpCamMain->LookAt(0.0f, 0.0f, 0.0f);
 		mpCamMain->ResetOrientation();
+		mpCamMain->SetPosition(0.0f, 10.0f, mCamZ + mCamZMovement);
+		mpCamMain->LookAt(0.0f, 0.0f, mCamZMovement);
+		
 		break;
 	case 1:
 		mpCamMain->ResetOrientation();
@@ -273,6 +274,10 @@ void CSpaceState::ChangeCameraPosition()
 		mpCamMain->RotateX(-40.0f);
 		break;
 	case 3:
+		mpCamMain->ResetOrientation();
+		mpCamMain->SetPosition(0.0f, 160.0f, -mCamZ + mCamZMovement);
+		mpCamMain->LookAt(0.0f, 0.0f, mCamZMovement);
+		
 		break;
 	default:
 		break;
