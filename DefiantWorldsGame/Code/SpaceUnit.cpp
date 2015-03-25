@@ -19,7 +19,7 @@ CSpaceUnit::CSpaceUnit() :mChargeTimeMax(3.0f), mChargeTimeMin(1.0f)
 	mpTempLazer = nullptr;
 
 	mpToHitRoll = new CRandomiser();
-	mChargingLazers = false;
+	mChargingLazers = true;
 	mChargeTime = mChargeTimeMax;
 }
 
@@ -97,28 +97,6 @@ float Sq(float x)
 
 void CSpaceUnit::FireLazer(CGameObject* target)
 {
-	/*DirectX::XMFLOAT4X4 ModelMatrix;
-	DirectX::XMFLOAT3 ModelZNormal;
-
-	mpObjModel->GetMatrix(&ModelMatrix.m[0][0]);
-
-	ModelZNormal.x = ModelMatrix.m[2][0]*6;
-	ModelZNormal.y = ModelMatrix.m[2][1]*6;
-	ModelZNormal.z = ModelMatrix.m[2][2]*6;
-
-	if (!mpTempLazer)
-	{
-		mpTempLazer = mspMshLazer->CreateModel(mWorldPos.x + ModelZNormal.x, mWorldPos.y + ModelZNormal.y, mWorldPos.z + ModelZNormal.z);
-		if (mWorldPos.x > 0)
-		{
-			mpTempLazer->SetSkin("tlxadd_lazer - red.tga");
-		}
-	}
-	else
-	{
-		mpTempLazer->SetPosition(mWorldPos.x + ModelZNormal.x, mWorldPos.y + ModelZNormal.y, mWorldPos.z + ModelZNormal.z);
-	}*/
-
 	mpTempLazer->LookAt(target->GetWorldPos().x, target->GetWorldPos().y, target->GetWorldPos().z);
 	float length = sqrtf(Sq(target->GetWorldPos().x - mWorldPos.x) + Sq(target->GetWorldPos().y - mWorldPos.y) + Sq(target->GetWorldPos().z - mWorldPos.z));
 
@@ -126,7 +104,6 @@ void CSpaceUnit::FireLazer(CGameObject* target)
 	mpTempLazer->ScaleX(0.2f);
 	mpTempLazer->ScaleY(0.2f);
 	mChargingLazers = true;
-	
 }
 
 void CSpaceUnit::ChargeLazer()
@@ -156,6 +133,7 @@ void CSpaceUnit::ChargeLazer()
 			mpTempLazer->SetPosition(mWorldPos.x + ModelZNormal.x, mWorldPos.y + ModelZNormal.y, mWorldPos.z + ModelZNormal.z);
 			//mpTempLazer->ResetScale();
 		}
+
 		mChargeTime -= gFrameTime;
 		if (mChargeTime <= 0)
 		{
@@ -163,7 +141,6 @@ void CSpaceUnit::ChargeLazer()
 			mChargingLazers = false;
 		}
 	}
-	else mChargingLazers = true;
 }
 
 void CSpaceUnit::UnloadLazer()
