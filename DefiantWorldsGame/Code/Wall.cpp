@@ -22,6 +22,7 @@ CWall::CWall(bool horizontal)
 	CRandomiser* pRandom = new CRandomiser();
 	mScale = pRandom->GetRandomFloat(9.0f, 9.1f);
 
+	mIsHorizontal = horizontal;
 	mHealth = 1000.0f;
 	mBuildTime = 5.0f;
 	mRepairSpeed = 1.0f;
@@ -30,10 +31,6 @@ CWall::CWall(bool horizontal)
 
 	mState = OBJ_BUILT;
 	mStructureType = STR_WALL;
-
-	mStructureBL = SPointData(-1, -1);
-	mStructureTR = SPointData(1, 1);
-	mGridSpawnLoc = SPointData(0, -2);
 
 	mHeight = 30.0f;
 
@@ -59,6 +56,33 @@ CWall::~CWall()
 //-----------------------------------------------------
 // WALL CLASS METHODS
 //-----------------------------------------------------
+void CWall::CalculateBoundingBox()
+{
+	// Determine if it is a horizontal wall or not
+	if (mIsHorizontal)
+	{
+		mStructureBL = SPointData(-1, -1);
+		mStructureTR = SPointData(1, 1);
+		
+		float top = mWorldPos.z + ((float)mStructureTR.mPosY * GRID_TILE_SIZE) + (GRID_TILE_SIZE / 2.0f);
+		float bottom = mWorldPos.z + ((float)mStructureBL.mPosY * GRID_TILE_SIZE) - (GRID_TILE_SIZE / 2.0f);
+		float right = mWorldPos.x + ((float)mStructureTR.mPosX * GRID_TILE_SIZE) + (GRID_TILE_SIZE / 2.0f);
+		float left = mWorldPos.x + ((float)mStructureBL.mPosX * GRID_TILE_SIZE) - (GRID_TILE_SIZE / 2.0f);
+		mBoundingBox = SBoundingCube(DX::XMFLOAT3(left, 0.0f, bottom), DX::XMFLOAT3(right, mHeight, top));
+	}
+	else
+	{
+		mStructureBL = SPointData(-1, -1);
+		mStructureTR = SPointData(1, 1);
+
+		float top = mWorldPos.z + ((float)mStructureTR.mPosY * GRID_TILE_SIZE) + (GRID_TILE_SIZE / 2.0f);
+		float bottom = mWorldPos.z + ((float)mStructureBL.mPosY * GRID_TILE_SIZE) - (GRID_TILE_SIZE / 2.0f);
+		float right = mWorldPos.x + ((float)mStructureTR.mPosX * GRID_TILE_SIZE) + (GRID_TILE_SIZE / 2.0f);
+		float left = mWorldPos.x + ((float)mStructureBL.mPosX * GRID_TILE_SIZE) - (GRID_TILE_SIZE / 2.0f);
+		mBoundingBox = SBoundingCube(DX::XMFLOAT3(left, 0.0f, bottom), DX::XMFLOAT3(right, mHeight, top));
+	}
+}
+
 void CWall::UnloadIModel()
 {
 	if (mpObjModel != nullptr)

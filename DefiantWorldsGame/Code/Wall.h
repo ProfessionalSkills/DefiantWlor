@@ -29,12 +29,13 @@ public:
 
 	// METHODS
 	//---------------------------
+	void CalculateBoundingBox();
 	void UnloadIModel() override;
 	void LoadIModel() override;
 
 
 private:
-
+	bool mIsHorizontal = false;
 
 };
 
