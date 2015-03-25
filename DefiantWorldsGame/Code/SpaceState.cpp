@@ -104,6 +104,8 @@ void CSpaceState::StateUpdate()
 
 	//update time, used to slow down the speed of the fight
 	mTimeSinceUpdate += gFrameTime;
+	mpPlayerOneFleet->ChargeFleetLazers();
+	mpPlayerTwoFleet->ChargeFleetLazers();
 
 	if (mTimeSinceUpdate >= mTimeToUpdate)
 	{

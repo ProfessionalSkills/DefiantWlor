@@ -65,6 +65,16 @@ void CFleet::IdleFleet()
 	}
 }
 
+void CFleet::ChargeFleetLazers()
+{
+	for (int i = 0; i < mSize; i++)
+	{
+		CSpaceUnit* mpTemp = (CSpaceUnit*)(mpFleet[i]);
+		mpTemp->ChargeLazer();
+	}
+}
+
+
 void CFleet::Fight()
 {
 	if (mpEnemyFleet->GetSize() != 0)
@@ -73,14 +83,17 @@ void CFleet::Fight()
 		
 		switch (mFleetTactics)
 		{
-		
 			case Tactics::None:
 				//just gets each ship to attack one random enemy ship, no effects on accuracy or damage
 				for (int i = mFleetSectionFiring*mSize / mNumFleetSections; i < (mFleetSectionFiring + 1)*mSize / mNumFleetSections; i++)
 				{
-					target = mTarget->GetRandomInt(0, mpEnemyFleet->GetSize() - 1);
-					if (mpFleet[i]->Attack(mpEnemyFleet->GetShip(target), mHitMod, mDamegMod)) mHits++;
-					mShotsFired++;
+					CSpaceUnit* mpTemp = (CSpaceUnit*)(mpFleet[i]);
+					if (mpTemp->GetChargiingLazer())
+					{
+						target = mTarget->GetRandomInt(0, mpEnemyFleet->GetSize() - 1);
+						if (mpFleet[i]->Attack(mpEnemyFleet->GetShip(target), mHitMod, mDamegMod)) mHits++;
+						mShotsFired++;
+					}
 				}
 
 				break;
