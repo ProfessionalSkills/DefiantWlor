@@ -1138,12 +1138,12 @@ void CWorldState::StateUpdate()
 
 	if (gpEngine->KeyHeld(Key_Up))
 	{
-		mpCamCurrent->AdjustTheta(DX::XMConvertToRadians(CAM_MOVE_SPEED * gFrameTime));
+		mpCamCurrent->AdjustTheta(DX::XMConvertToRadians(-CAM_MOVE_SPEED * gFrameTime));
 	}
 
 	if (gpEngine->KeyHeld(Key_Down))
 	{
-		mpCamCurrent->AdjustTheta(DX::XMConvertToRadians(-CAM_MOVE_SPEED * gFrameTime));
+		mpCamCurrent->AdjustTheta(DX::XMConvertToRadians(CAM_MOVE_SPEED * gFrameTime));
 	}
 
 	// Get camera's position

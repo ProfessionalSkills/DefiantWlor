@@ -90,7 +90,7 @@ const float GRID_TILE_SIZE = 10.0f;
 const float NEAR_CLIP = 1.0f;
 const float FAR_CLIP = 10000.0f;
 
-const float CAM_MOVE_SPEED = 100.0f;
+const float CAM_MOVE_SPEED = 200.0f;
 const float CAM_SCROLL_SPEED = 5000.0f;
 const float CAM_MAX_HEIGHT = 250.0f;
 const float CAM_MIN_HEIGHT = 30.0f;

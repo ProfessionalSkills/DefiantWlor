@@ -54,7 +54,7 @@ public:
 
 	inline void AdjustPhi(float amount)
 	{
-		mφ += amount;
+		mφ += amount / 2.0f;
 	}
 
 	inline void SetTheta(float θ)
@@ -64,7 +64,7 @@ public:
 
 	inline void AdjustTheta(float amount)
 	{
-		mθ = Clampf(10.0f, 80.0f, mθ + amount);
+		mθ = Clampf(DX::XMConvertToRadians(10.0f), DX::XMConvertToRadians(40.0f), mθ + amount / 2.0f);
 	}
 
 
