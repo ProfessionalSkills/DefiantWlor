@@ -29,7 +29,6 @@ public:
 
 	// METHODS
 	//---------------------------
-	CWall* CreateWall(DX::XMFLOAT3 mPosition, bool horizontal, CRTSPlayer* pPlayer) override;
 	void UnloadIModel() override;
 	void LoadIModel() override;
 

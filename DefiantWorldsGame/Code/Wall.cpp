@@ -59,16 +59,6 @@ CWall::~CWall()
 //-----------------------------------------------------
 // WALL CLASS METHODS
 //-----------------------------------------------------
-CWall* CWall::CreateWall(DX::XMFLOAT3 position, bool horizontal, CRTSPlayer* pPlayer)
-{
-	// Create a new CWall model
-	CWall* pWall = new CWall(horizontal);
-	pWall->SetWorldPos(position);
-	pWall->SetFaction(pPlayer->GetPlayerFaction());
-	pWall->LoadIModel();
-	return pWall; 
-}
-
 void CWall::UnloadIModel()
 {
 	if (mpObjModel != nullptr)

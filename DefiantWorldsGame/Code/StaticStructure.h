@@ -67,12 +67,6 @@ public:
 
 	}
 
-	// Creates a wall at a given location (does nothing for production structures)
-	virtual CWall* CreateWall(DX::XMFLOAT3 mPosition, bool horizontal, CRTSPlayer* pPlayer)
-	{
-		return nullptr;
-	}
-
 	// Method called each frome - boolean returns is false when the object has been destroyed
 	virtual bool Update(CRTSPlayer* pPlayer);
 	virtual void DisplayInfo(IFont* font);
