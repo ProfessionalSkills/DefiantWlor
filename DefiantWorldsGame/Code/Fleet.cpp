@@ -13,7 +13,7 @@
 //-----------------------------------------------------
 // FLEET CLASS CONSTRUCTORS & DESTRUCTOR
 //-----------------------------------------------------
-CFleet::CFleet() :mFleetRowSize(20), mFleetRowSeperation(7), mFleetZAdjust(8), mFleetYCyleHeight(0.01f)
+CFleet::CFleet() :mFleetRowSize(20), mFleetRowSeperation(7), mFleetZAdjust(8), mFleetYCyleHeight(0.01f), mNumFleetSections(5)
 {
 	//Value Mods
 	mDamegMod = 1.0f;
@@ -26,6 +26,7 @@ CFleet::CFleet() :mFleetRowSize(20), mFleetRowSeperation(7), mFleetZAdjust(8), m
 	mFleetTactics = None;
 	mShotsFired = 0;
 	mHits = 0;
+	mFleetSectionFiring = 0;
 	//Misc
 	mTarget = new CRandomiser();
 	mFleetYHeighCycle = mTarget->GetRandomFloat(0.0, 6.0);//starts the fleet adjust cycle on a random point, so both fleets dont just float at the same hight all the time
@@ -75,7 +76,7 @@ void CFleet::Fight()
 		
 			case Tactics::None:
 				//just gets each ship to attack one random enemy ship, no effects on accuracy or damage
-				for (int i = 0; i < mSize; i++)
+				for (int i = mFleetSectionFiring*mSize / mNumFleetSections; i < (mFleetSectionFiring + 1)*mSize / mNumFleetSections; i++)
 				{
 					target = mTarget->GetRandomInt(0, mpEnemyFleet->GetSize() - 1);
 					if (mpFleet[i]->Attack(mpEnemyFleet->GetShip(target), mHitMod, mDamegMod)) mHits++;
@@ -86,7 +87,7 @@ void CFleet::Fight()
 			case Tactics::Rapid:
 				//gets each ship to attack the same enemy twice
 				//reduces accuracy of the ship
-				for (int i = 0; i < mSize; i++)
+				for (int i = mFleetSectionFiring*mSize / mNumFleetSections; i < (mFleetSectionFiring + 1)*mSize / mNumFleetSections; i++)
 				{
 					target = mTarget->GetRandomInt(0, mpEnemyFleet->GetSize() - 1);
 					if (mpFleet[i]->Attack(mpEnemyFleet->GetShip(target), mHitMod, mDamegMod)) mHits++;
@@ -101,7 +102,7 @@ void CFleet::Fight()
 				//only attacks ship withn a range of that target
 				target = mTarget->GetRandomInt(0, mpEnemyFleet->GetSize() - 1);
 				int variance=0;
-				for (int i = 0; i < mSize; i++)
+				for (int i = mFleetSectionFiring*mSize / mNumFleetSections; i < (mFleetSectionFiring + 1)*mSize / mNumFleetSections; i++)
 				{
 					mTarget->SetSeed((float)mHits, (float)mpEnemyFleet->GetShip(0)->GetHealth());
 					mShotsFired++;
@@ -115,6 +116,7 @@ void CFleet::Fight()
 				}
 				break;
 		}
+		mFleetSectionFiring = (mFleetSectionFiring + 1) % mNumFleetSections;
 	}
 }
 
