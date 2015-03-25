@@ -271,6 +271,7 @@ void CWorldState::CheckKeyPresses()
 			CStructure* pNewSelectedStructure = nullptr;
 			switch (mMouseState)
 			{
+			case MS_OUT_OF_GRID:
 			case MS_EARTH_GRID:
 				mpHumanPlayer->CheckGameObjectSelection(pNewSelectedStructure, mpCurSelectedAgent,
 					mMouseOrigin, mMouseDirection);
@@ -285,7 +286,6 @@ void CWorldState::CheckKeyPresses()
 				break;
 
 			case MS_UI:
-			case MS_OUT_OF_GRID:
 				OnStructureSelectChange(pNewSelectedStructure);
 				break;
 			}
@@ -1561,49 +1561,52 @@ void CWorldState::OnStructureSelectChange(CStructure* pSelStructure)
 		pQueue = mpCurSelectedStructure->GetQueue();
 
 		// Loop through the queue to create the buttons for each of the units in the queue
-		int i = 0;
-		for (iterQ = pQueue->begin(); iterQ != pQueue->end(); iterQ++)
+		if (pQueue != nullptr)
 		{
-			switch ((*iterQ)->GetAgentData()->mAgentType)
+			int i = 0;
+			for (iterQ = pQueue->begin(); iterQ != pQueue->end(); iterQ++)
 			{
-			case GAV_ARTILLERY:
-				mpQueueButtons->mpButtons[i]->LoadButtons("DefArtilleryButton.png", "SelArtilleryButton.png");
-				break;
+				switch ((*iterQ)->GetAgentData()->mAgentType)
+				{
+				case GAV_ARTILLERY:
+					mpQueueButtons->mpButtons[i]->LoadButtons("DefArtilleryButton.png", "SelArtilleryButton.png");
+					break;
 
-			case GAV_BOMBER:
-				mpQueueButtons->mpButtons[i]->LoadButtons("DefBomberButton.png", "SelBomberButton.png");
-				break;
+				case GAV_BOMBER:
+					mpQueueButtons->mpButtons[i]->LoadButtons("DefBomberButton.png", "SelBomberButton.png");
+					break;
 
-			case GAV_FIGHTER:
-				mpQueueButtons->mpButtons[i]->LoadButtons("DefFighterButton.png", "SelFighterButton.png");
-				break;
+				case GAV_FIGHTER:
+					mpQueueButtons->mpButtons[i]->LoadButtons("DefFighterButton.png", "SelFighterButton.png");
+					break;
 
-			case GAV_INFANTRY:
-				mpQueueButtons->mpButtons[i]->LoadButtons("DefInfantryButton.png", "SelInfantryButton.png");
-				break;
+				case GAV_INFANTRY:
+					mpQueueButtons->mpButtons[i]->LoadButtons("DefInfantryButton.png", "SelInfantryButton.png");
+					break;
 
-			case GAV_MOTHERSHIP:
-				mpQueueButtons->mpButtons[i]->LoadButtons("DefMothershipButton.png", "SelmothershipButton.png");
-				break;
+				case GAV_MOTHERSHIP:
+					mpQueueButtons->mpButtons[i]->LoadButtons("DefMothershipButton.png", "SelmothershipButton.png");
+					break;
 
-			case GAV_SPACE_FIGHTER:
-				mpQueueButtons->mpButtons[i]->LoadButtons("DefSpaceFighterButton.png", "SelSpaceFighterButton.png");
-				break;
+				case GAV_SPACE_FIGHTER:
+					mpQueueButtons->mpButtons[i]->LoadButtons("DefSpaceFighterButton.png", "SelSpaceFighterButton.png");
+					break;
 
-			case GAV_TANK:
-				mpQueueButtons->mpButtons[i]->LoadButtons("DefTankButton.png", "SelTankButton.png");
-				break;
+				case GAV_TANK:
+					mpQueueButtons->mpButtons[i]->LoadButtons("DefTankButton.png", "SelTankButton.png");
+					break;
 
-			case GAV_TRANSPORT:
-				mpQueueButtons->mpButtons[i]->LoadButtons("DefTransportButton.png", "SelTransportButton.png");
-				break;
+				case GAV_TRANSPORT:
+					mpQueueButtons->mpButtons[i]->LoadButtons("DefTransportButton.png", "SelTransportButton.png");
+					break;
 
-			case GAV_WORKER:
-				mpQueueButtons->mpButtons[i]->LoadButtons("DefWorkerButton.png", "SelWorkerButton.png");
-				break;
+				case GAV_WORKER:
+					mpQueueButtons->mpButtons[i]->LoadButtons("DefWorkerButton.png", "SelWorkerButton.png");
+					break;
+				}
+
+				i++;
 			}
-
-			i++;
 		}
 	}
 	else

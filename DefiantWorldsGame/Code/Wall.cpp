@@ -61,8 +61,8 @@ void CWall::CalculateBoundingBox()
 	// Determine if it is a horizontal wall or not
 	if (mIsHorizontal)
 	{
-		mStructureBL = SPointData(-1, -1);
-		mStructureTR = SPointData(1, 1);
+		mStructureBL = SPointData(-15, -1);
+		mStructureTR = SPointData(15, 3);
 		
 		float top = mWorldPos.z + ((float)mStructureTR.mPosY * GRID_TILE_SIZE) + (GRID_TILE_SIZE / 2.0f);
 		float bottom = mWorldPos.z + ((float)mStructureBL.mPosY * GRID_TILE_SIZE) - (GRID_TILE_SIZE / 2.0f);
@@ -72,8 +72,8 @@ void CWall::CalculateBoundingBox()
 	}
 	else
 	{
-		mStructureBL = SPointData(-1, -1);
-		mStructureTR = SPointData(1, 1);
+		mStructureBL = SPointData(-3, -15);
+		mStructureTR = SPointData(1, 15);
 
 		float top = mWorldPos.z + ((float)mStructureTR.mPosY * GRID_TILE_SIZE) + (GRID_TILE_SIZE / 2.0f);
 		float bottom = mWorldPos.z + ((float)mStructureBL.mPosY * GRID_TILE_SIZE) - (GRID_TILE_SIZE / 2.0f);
@@ -107,5 +107,7 @@ void CWall::LoadIModel()
 		{
 			mpObjModel->SetSkin("bld-mt-mars.jpg");
 		}
+
+		CalculateBoundingBox();
 	}
 }

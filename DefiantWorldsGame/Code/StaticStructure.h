@@ -33,7 +33,7 @@ public:
 	//---------------------------
 	int GetQueueSize()
 	{
-		return -1;
+		return 0;
 	}
 
 
