@@ -1037,10 +1037,11 @@ void CWorldState::StateSetup()
 		mpMdlRockList.back()->RotateY(rotation);
 	}
 
-	//////********WAAAAALLLL*******///////
-	////wall WALL wall
+	// Create the walls for the players
+	mpHumanPlayer->ConstructWalls();
+	mpAIPlayer->ConstructWalls();
 
-	IMesh* mshWall = gpEngine->LoadMesh("wall_A4_01.x");
+	/*IMesh* mshWall = gpEngine->LoadMesh("wall_A4_01.x");
 	IModel* mdlwall = mshWall->CreateModel(0.0f, 0.0f, gridTopRight.z / 4.0f);
 	mdlwall->SetSkin("bld-mt.jpg");
 	mdlwall->RotateX(90.0f);
@@ -1062,7 +1063,7 @@ void CWorldState::StateSetup()
 	mdlwall4->SetSkin("bld-mt.jpg");
 	mdlwall4->RotateX(90.0f);
 	mdlwall4->RotateY(270.0f);
-	mdlwall4->Scale(8.9f);
+	mdlwall4->Scale(8.9f);*/
 
 
 	// INITIALISE CAMERAS

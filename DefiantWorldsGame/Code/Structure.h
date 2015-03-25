@@ -30,6 +30,7 @@
 // STRUCTURE CLASS - CHILD OF GAME OBJECT
 //-----------------------------------------------------
 class CRTSPlayer;
+class CWall;
 
 class CStructure : public CGameObject
 {
@@ -179,6 +180,8 @@ public:
 
 	// VIRTUAL METHODS
 	//---------------------------
+	// Creates a wall at a given location
+	virtual CWall* CreateWall(DX::XMFLOAT3 mPosition, bool horizontal, CRTSPlayer* pPlayer) = 0;
 	// Returns the size of the production queue. Returns -1 for non-production structures
 	virtual int GetQueueSize() = 0;
 	// Method called each frome - boolean returns is false when the object has been destroyed

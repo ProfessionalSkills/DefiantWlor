@@ -15,8 +15,8 @@ IMesh* CMinerals::mspMshMineral = nullptr;
 //-----------------------------------------------------
 CMinerals::CMinerals()
 {
-	mScale = 0.8f;
-	mOrientation = 90.0f;
+	mScale = 1.5f;
+	mOrientation = 0.0f;
 	mBuildCost = 0.0f;
 	mPopCost = 0.0f;
 	mpObjModel = nullptr;
@@ -37,6 +37,7 @@ void CMinerals::CreateResource(DX::XMFLOAT3 pos)
 	mWorldPos = pos;
 	mpObjModel->RotateX(mOrientation);
 	mpObjModel->Scale(mScale);
+	mpObjModel->ScaleY(3.0f);
 }
 
 void CMinerals::LoadIModel()
@@ -46,6 +47,7 @@ void CMinerals::LoadIModel()
 		// Create the model
 		mpObjModel = mspMshMineral->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
 		mpObjModel->Scale(mScale);
+		mpObjModel->ScaleY(3.0f);
 		mpObjModel->RotateX(mOrientation);
 	}
 }

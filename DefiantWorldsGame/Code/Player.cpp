@@ -94,19 +94,83 @@ void CRTSPlayer::SetNumMothership(int numShips)
 //-----------------------------------------------------
 // PLAYER CLASS METHODS
 //-----------------------------------------------------
+void CRTSPlayer::ConstructWalls()
+{
+	DX::XMFLOAT3 gridCentre = mpPlayerGrid->GetGridCentrePos();
+	DX::XMFLOAT3 gridBottomLeft = mpPlayerGrid->GetGridStartPos();
+	DX::XMFLOAT3 gridTopRight = mpPlayerGrid->GetGridEndPos();
+
+	// Create the first wall
+	CWall* pWall = new CWall(false);
+	pWall->SetWorldPos(DX::XMFLOAT3(gridBottomLeft.x - 7.0f, 0.0f, gridTopRight.z / 4.0f));
+	pWall->SetFaction(mPlayerFaction);
+	pWall->LoadIModel();
+	mpStructuresMap.insert(GS_MultiMap::value_type(pWall->GetStructureType(), pWall));
+
+	// Create second wall
+	pWall = new CWall(false);
+	pWall->SetWorldPos(DX::XMFLOAT3(gridBottomLeft.x - 7.0f, 0.0f, gridTopRight.z * 3.0 / 4.0f));
+	pWall->SetFaction(mPlayerFaction);
+	pWall->LoadIModel();
+	mpStructuresMap.insert(GS_MultiMap::value_type(pWall->GetStructureType(), pWall));
+
+	// Create third wall
+	pWall = new CWall(true);
+	pWall->SetWorldPos(DX::XMFLOAT3((gridCentre.x - ((gridTopRight.x - gridCentre.x) / 2.0f)), 0.0f, gridTopRight.z + 7.0f));
+	pWall->SetFaction(mPlayerFaction);
+	pWall->LoadIModel();
+	mpStructuresMap.insert(GS_MultiMap::value_type(pWall->GetStructureType(), pWall));
+
+	// Create fourth wall
+	pWall = new CWall(true);
+	pWall->SetWorldPos(DX::XMFLOAT3((gridCentre.x + ((gridTopRight.x - gridCentre.x) / 2.0f)), 0.0f, gridTopRight.z + 7.0f));
+	pWall->SetFaction(mPlayerFaction);
+	pWall->LoadIModel();
+	mpStructuresMap.insert(GS_MultiMap::value_type(pWall->GetStructureType(), pWall));
+
+	// Create fifth wall
+	pWall = new CWall(false);
+	pWall->SetWorldPos(DX::XMFLOAT3(gridTopRight.x + 7.0f, 0.0f, gridTopRight.z / 4.0f));
+	pWall->SetFaction(mPlayerFaction);
+	pWall->LoadIModel();
+	mpStructuresMap.insert(GS_MultiMap::value_type(pWall->GetStructureType(), pWall));
+
+	// Create sixth wall
+	pWall = new CWall(false);
+	pWall->SetWorldPos(DX::XMFLOAT3(gridTopRight.x + 7.0f, 0.0f, gridTopRight.z * 3.0f / 4.0f));
+	pWall->SetFaction(mPlayerFaction);
+	pWall->LoadIModel();
+	mpStructuresMap.insert(GS_MultiMap::value_type(pWall->GetStructureType(), pWall));
+
+	// create Bottom wall
+	// Create third wall
+	pWall = new CWall(true);
+	pWall->SetWorldPos(DX::XMFLOAT3((gridCentre.x - ((gridTopRight.x - gridCentre.x) / 2.0f)), 0.0f, gridBottomLeft.z - 7.0f));
+	pWall->SetFaction(mPlayerFaction);
+	pWall->LoadIModel();
+	mpStructuresMap.insert(GS_MultiMap::value_type(pWall->GetStructureType(), pWall));
+
+	// Create fourth wall
+	pWall = new CWall(true);
+	pWall->SetWorldPos(DX::XMFLOAT3((gridCentre.x + ((gridTopRight.x - gridCentre.x) / 2.0f)), 0.0f, gridBottomLeft.z - 7.0f));
+	pWall->SetFaction(mPlayerFaction);
+	pWall->LoadIModel();
+	mpStructuresMap.insert(GS_MultiMap::value_type(pWall->GetStructureType(), pWall));
+}
+
 EErrorTypes CRTSPlayer::PurchaseStructure(CStructure* pStructure, CGrid* pGrid, CTile* pTile)
 {
 	// Check whether new building can be afforded
 	if (mNumMinerals - pStructure->GetBuildCost() < 0)
 	{
-		// Not enough minerals - return relevant error (* TO DOOOOOOO *)
+		// Not enough minerals - return relevant error
 		return ERR_NO_MINERALS;
 	}
 
 	// Check if building area is free
 	if (!pStructure->TestStructureArea(pGrid, pTile))
 	{
-		// Something blocking construction - return relevant error (* TO DOOOOOOO *)
+		// Something blocking construction - return relevant error
 		return ERR_NO_SPACE;
 	}
 

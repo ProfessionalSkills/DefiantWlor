@@ -34,7 +34,11 @@ void CGameObject::SetGridPos(SPointData pos)
 
 void CGameObject::SetWorldPos(DX::XMFLOAT3 pos)
 {
-	mpObjModel->SetPosition(pos.x, pos.y, pos.z);
+	if (mpObjModel)
+	{
+		mpObjModel->SetPosition(pos.x, pos.y, pos.z);
+	}
+	mWorldPos = pos;
 }
 
 void CGameObject::SetOrientation(float orientation)

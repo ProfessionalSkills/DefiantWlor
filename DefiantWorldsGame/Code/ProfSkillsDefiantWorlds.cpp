@@ -175,7 +175,7 @@ void SetupEngine()
 	// Load static meshes
 	CTile::mspMshTile = gpEngine->LoadMesh("Tile.x");
 	CWorldState::mspMshDrag = gpEngine->LoadMesh("DragSelection.x");
-	CMinerals::mspMshMineral = gpEngine->LoadMesh("Mineral.x");
+	CMinerals::mspMshMineral = gpEngine->LoadMesh("Mineral2.x");
 
 	//Structure Meshes
 	//Command Centre
@@ -190,6 +190,9 @@ void SetupEngine()
 	//Space Centre
 	CSpaceCentre::mspMshStructureBuilt = gpEngine->LoadMesh("SpaceCentreBuilt.x");
 	CSpaceCentre::mspMshStructurePlacing = gpEngine->LoadMesh("SpaceCentrePlacing.x");
+	// Wall
+	CWall::mspMshStructure = gpEngine->LoadMesh("wall_A1_01.x");
+
 	
 	//Spaceship Meshes
 	//Space Fighter

@@ -24,6 +24,8 @@
 #include "Minerals.h"			// Resource
 
 #include "House.h"				// Static structure
+#include "Wall.h"				// Static structure
+
 #include "Barracks.h"			// Production structure
 #include "ComCentre.h"			// Production structure
 #include "Hellipad.h"			// Production structure
@@ -198,6 +200,9 @@ public:
 	void LoadPlayerGridModels();
 	void UnloadPlayerGridModels();
 	bool PopLimitReached(int popValue);
+
+	// Function to create the walls surrounding the player's building area
+	void ConstructWalls();
 };
 
 

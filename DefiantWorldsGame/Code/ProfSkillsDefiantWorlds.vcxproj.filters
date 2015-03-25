@@ -282,6 +282,9 @@
     <ClCompile Include="SettingsManager.cpp">
       <Filter>Utilities</Filter>
     </ClCompile>
+    <ClCompile Include="Wall.cpp">
+      <Filter>Entities\Game Objects\Child\Structure\Child\Static\Child</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common.h">
@@ -427,6 +430,9 @@
     </ClInclude>
     <ClInclude Include="SettingsManager.h">
       <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Wall.h">
+      <Filter>Entities\Game Objects\Child\Structure\Child\Static\Child</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

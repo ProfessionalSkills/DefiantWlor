@@ -1,9 +1,9 @@
 //-----------------------------------------------------
-// FILE: House.h
+// FILE: Wall.h
 //-----------------------------------------------------
 
-#ifndef _HOUSE_H_
-#define _HOUSE_H_
+#ifndef _WALL_H_
+#define _WALL_H_
 
 
 //-----------------------------------------------------
@@ -13,19 +13,30 @@
 
 
 //-----------------------------------------------------
-// HOUSE CLASS - CHILD OF STATIC STRUCTURE
+// WALL CLASS - CHILD OF STATIC STRUCTURE
 //-----------------------------------------------------
-class CHouse : public CStaticStructure
+class CWall : public CStaticStructure
 {
 public:
+	static IMesh* mspMshStructure;
+
+
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
-	CHouse();
-	virtual ~CHouse();
+	CWall(bool horizontal);
+	virtual ~CWall();
+
+
+	// METHODS
+	//---------------------------
+	CWall* CreateWall(DX::XMFLOAT3 mPosition, bool horizontal, CRTSPlayer* pPlayer) override;
+	void UnloadIModel() override;
+	void LoadIModel() override;
 
 
 private:
 
+
 };
 
-#endif /* _HOUSE_H_ */
+#endif /* _WALL_H_ */

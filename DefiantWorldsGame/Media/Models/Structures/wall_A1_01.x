@@ -332,7 +332,7 @@ Frame Model__wall_A1_01 {
     0.000000;0.000000;0.000000;;
 
     TextureFilename {
-     "grass.jpg";
+     "bld-mt.jpg";
     }
    }
   }

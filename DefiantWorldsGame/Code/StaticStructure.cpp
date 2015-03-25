@@ -26,6 +26,16 @@ CStaticStructure::~CStaticStructure()
 //-----------------------------------------------------
 // STATIC STRUCTURE CLASS OVERRIDE METHODS
 //-----------------------------------------------------
+bool CStaticStructure::Update(CRTSPlayer* pPlayer)
+{
+	return true;
+}
+
+void CStaticStructure::DisplayInfo(IFont* font)
+{
+
+}
+
 EErrorTypes CStaticStructure::AddToQueue(size_t agentIndex, CRTSPlayer* pPlayer)
 {
 	return ERR_NONE;

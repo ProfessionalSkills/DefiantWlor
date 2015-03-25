@@ -48,10 +48,36 @@ public:
 
 	// OVERRIDE METHODS
 	//---------------------------
-	EErrorTypes AddToQueue(size_t agentIndex, CRTSPlayer* pPlayer);
+	// Adds a unit to the queue based on the index which has been passed in
+	virtual EErrorTypes AddToQueue(size_t agentIndex, CRTSPlayer* pPlayer);
+	// Removes a unit in the queue at the given index
+	virtual void RemoveFromQueue(size_t agentIndex, CRTSPlayer* pPlayer)
+	{
+
+	}
+
+	// Returns a pointer to the queue of units
+	virtual std::deque<CGameAgent*>* GetQueue()
+	{
+		return nullptr;
+	}
+
+	virtual void SetBuiltModel()
+	{
+
+	}
+
+	// Creates a wall at a given location (does nothing for production structures)
+	virtual CWall* CreateWall(DX::XMFLOAT3 mPosition, bool horizontal, CRTSPlayer* pPlayer)
+	{
+		return nullptr;
+	}
+
+	// Method called each frome - boolean returns is false when the object has been destroyed
+	virtual bool Update(CRTSPlayer* pPlayer);
+	virtual void DisplayInfo(IFont* font);
 	virtual void UnloadIModel();
 	virtual void LoadIModel();
-	//virtual bool Destroy();
 };
 
 #endif /* _STATIC_STRUCTURE_H_ */
