@@ -19,7 +19,8 @@ CSpaceUnit::CSpaceUnit() :mChargeTimeMax(3.0f), mChargeTimeMin(1.0f)
 	mpTempLazer = nullptr;
 
 	mpToHitRoll = new CRandomiser();
-	mChargingLazers = true;
+	mChargingLazers = false;
+	mChargeTime = mChargeTimeMax;
 }
 
 CSpaceUnit::~CSpaceUnit()
@@ -96,7 +97,7 @@ float Sq(float x)
 
 void CSpaceUnit::FireLazer(CGameObject* target)
 {
-	DirectX::XMFLOAT4X4 ModelMatrix;
+	/*DirectX::XMFLOAT4X4 ModelMatrix;
 	DirectX::XMFLOAT3 ModelZNormal;
 
 	mpObjModel->GetMatrix(&ModelMatrix.m[0][0]);
@@ -116,31 +117,23 @@ void CSpaceUnit::FireLazer(CGameObject* target)
 	else
 	{
 		mpTempLazer->SetPosition(mWorldPos.x + ModelZNormal.x, mWorldPos.y + ModelZNormal.y, mWorldPos.z + ModelZNormal.z);
-	}
+	}*/
+
 	mpTempLazer->LookAt(target->GetWorldPos().x, target->GetWorldPos().y, target->GetWorldPos().z);
 	float length = sqrtf(Sq(target->GetWorldPos().x - mWorldPos.x) + Sq(target->GetWorldPos().y - mWorldPos.y) + Sq(target->GetWorldPos().z - mWorldPos.z));
-	if (ChargeLazer())
-	{
-		mpTempLazer->ScaleZ(length);
-		mpTempLazer->ScaleX(0.2f);
-		mpTempLazer->ScaleY(0.2f);
-	}
+
+	mpTempLazer->ScaleZ(length);
+	mpTempLazer->ScaleX(0.2f);
+	mpTempLazer->ScaleY(0.2f);
+	mChargingLazers = true;
+	
 }
 
-bool CSpaceUnit::ChargeLazer()
+void CSpaceUnit::ChargeLazer()
 {
 	if (mChargingLazers)
 	{
-		mChargeTime -= gFrameTime;
-		if (mChargeTime <= 0)
-		{
-			mChargeTime = mChargeTimeMax;
-			return true;
-		}
-		else return false;
-	}
-	else
-	{
+		//set models position
 		DirectX::XMFLOAT4X4 ModelMatrix;
 		DirectX::XMFLOAT3 ModelZNormal;
 
@@ -161,14 +154,21 @@ bool CSpaceUnit::ChargeLazer()
 		else
 		{
 			mpTempLazer->SetPosition(mWorldPos.x + ModelZNormal.x, mWorldPos.y + ModelZNormal.y, mWorldPos.z + ModelZNormal.z);
+			//mpTempLazer->ResetScale();
 		}
-		return true;
+		mChargeTime -= gFrameTime;
+		if (mChargeTime <= 0)
+		{
+			mChargeTime = mChargeTimeMax;
+			mChargingLazers = false;
+		}
 	}
+	else mChargingLazers = true;
 }
 
 void CSpaceUnit::UnloadLazer()
 {
-	if (mpTempLazer)
+	if (mpTempLazer&&!mChargingLazers)
 	{
 		mpTempLazer->ResetScale();
 		mpTempLazer->SetY(-5000);

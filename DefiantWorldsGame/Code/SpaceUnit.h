@@ -66,7 +66,11 @@ public:
 	virtual void UnloadFlash() = 0;
 	virtual void MoveY(float yChange)=0;
 	void FireLazer(CGameObject* target);
-	bool ChargeLazer();
+	void ChargeLazer();
+	inline bool GetChargiingLazer()
+	{
+		return mChargingLazers;
+	}
 	void UnloadLazer();
 };
 
