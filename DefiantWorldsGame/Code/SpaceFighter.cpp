@@ -116,6 +116,7 @@ void CSpaceFighter::MoveY(float yChange)
 //-----------------------------------------------------
 bool CSpaceFighter::Attack(CGameObject* target, float hitMod, float damageMod)
 {
+	if (mChargingLazers) return false;
 	if (mpToHitRoll->GetRandomFloat(1.0, 100.0) < (hitMod*mHitChance) * 100)
 	{
 		target->TakeDamage(mDamage*damageMod);
@@ -166,7 +167,6 @@ void CSpaceFighter::UnloadFlash()
 		mspMshSheild->RemoveModel(mpTempShield);
 		mpTempShield = nullptr;
 	}
-	UnloadLazer();
 }
 
 bool CSpaceFighter::Destroy()

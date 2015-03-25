@@ -87,13 +87,9 @@ void CFleet::Fight()
 				//just gets each ship to attack one random enemy ship, no effects on accuracy or damage
 				for (int i = mFleetSectionFiring*mSize / mNumFleetSections; i < (mFleetSectionFiring + 1)*mSize / mNumFleetSections; i++)
 				{
-					CSpaceUnit* mpTemp = (CSpaceUnit*)(mpFleet[i]);
-					if (mpTemp->GetChargiingLazer())
-					{
-						target = mTarget->GetRandomInt(0, mpEnemyFleet->GetSize() - 1);
-						if (mpFleet[i]->Attack(mpEnemyFleet->GetShip(target), mHitMod, mDamegMod)) mHits++;
-						mShotsFired++;
-					}
+					target = mTarget->GetRandomInt(0, mpEnemyFleet->GetSize() - 1);
+					if (mpFleet[i]->Attack(mpEnemyFleet->GetShip(target), mHitMod, mDamegMod)) mHits++;
+					mShotsFired++;
 				}
 
 				break;
@@ -232,6 +228,15 @@ void CFleet::UnloadShieldModels()
 	}
 }
 
+void CFleet::UnloadLazers()
+{
+	for (int i = 0; i < mSize; i++)
+	{
+		// Unload the shield for this space unit
+		CSpaceUnit* mpTemp = (CSpaceUnit*)(mpFleet[i]);
+		mpTemp->UnloadLazer();
+	}
+}
 //-----------------------------------------------------
 // FLEET CLASS ACCESSORS
 //-----------------------------------------------------
