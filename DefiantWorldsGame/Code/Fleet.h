@@ -42,6 +42,8 @@ private:
 	//used for track fleet accuracy, only used for output in spcae state
 	int mHits;
 	int mShotsFired;
+	int mFleetSectionFiring;
+	const int mNumFleetSections;
 	// POSITIONING
 	//---------------------------
 	const int mFleetRowSize;//maximum size of a row of ships

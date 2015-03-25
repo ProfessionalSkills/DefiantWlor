@@ -143,6 +143,7 @@ void CSpaceState::StateUpdate()
 		mTimeSinceEffectsUpdate = 0.0f;
 	}
 
+	//moves fleet that has won 
 	if (mpPlayerOneFleet->GetSize() == 0)
 	{
 		mpPlayerTwoFleet->MoveFleet();

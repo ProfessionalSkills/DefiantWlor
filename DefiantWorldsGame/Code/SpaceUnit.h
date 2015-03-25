@@ -27,7 +27,9 @@ protected:
 	float mUnitSpacing;
 	IModel* mpTempShield;
 	IModel* mpTempLazer;
-
+	const float mChargeTimeMax;//max time a laser should charge for
+	const float mChargeTimeMin;//minnimum time a lazer should charge for
+	float mChargeTime;//time laser is currently charging for
 	CRandomiser* mpToHitRoll;
 
 public:
