@@ -66,11 +66,6 @@ public:
 	bool Update(CRTSPlayer* pPlayer) override;
 	void DisplayInfo(IFont* font) override;
 
-	// Creates a wall at a given location (does nothing for production structures)
-	virtual CWall* CreateWall(DX::XMFLOAT3 mPosition, bool horizontal, CRTSPlayer* pPlayer)
-	{
-		return nullptr;
-	}
 
 	// OVERRIDE METHODS
 	//---------------------------
