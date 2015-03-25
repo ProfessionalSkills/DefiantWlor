@@ -42,9 +42,19 @@ public:
 		mρ = ρ;
 	}
 
+	inline void AdjustRho(float amount)
+	{
+		mρ = Clampf(50.0f, 400.0f, mρ + amount);
+	}
+
 	inline void SetPhi(float φ)
 	{
 		mφ = φ;
+	}
+
+	inline void AdjustPhi(float amount)
+	{
+		mφ += amount;
 	}
 
 	inline void SetTheta(float θ)
@@ -52,9 +62,9 @@ public:
 		mθ = θ;
 	}
 
-	inline void AdjustRho(float amount)
+	inline void AdjustTheta(float amount)
 	{
-		mρ = Clampf(50.0f, 400.0f, mρ + amount);
+		mθ = Clampf(10.0f, 80.0f, mθ + amount);
 	}
 
 

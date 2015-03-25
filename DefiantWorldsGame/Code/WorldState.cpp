@@ -1097,28 +1097,28 @@ void CWorldState::StateUpdate()
 	mpCamCurrent->GetCamera()->GetMatrix(&camMatrix.m[0][0]);
 
 	// Check for side scrolling
-	if (mpMouseScreenPos->mPosX < EDGE_THRESHOLD)
+	if (mpMouseScreenPos->mPosX < EDGE_THRESHOLD || gpEngine->KeyHeld(Key_A))
 	{
 		// Mouse on left side of screen
 		// Move in the negative local x direction but do not move on the Y axis
 		mpCamCurrent->AdjustPivotPoint(DX::XMFLOAT3(camMatrix.m[0][0] * -CAM_MOVE_SPEED * gFrameTime, 0.0f, camMatrix.m[0][2] * -CAM_MOVE_SPEED * gFrameTime));
 	}
 
-	if (mpMouseScreenPos->mPosX > WINDOW_WIDTH - EDGE_THRESHOLD)
+	if (mpMouseScreenPos->mPosX > WINDOW_WIDTH - EDGE_THRESHOLD || gpEngine->KeyHeld(Key_D))
 	{
 		// Mouse on right side of screen
 		// Move in the local x direction but do not move on the Y axis
 		mpCamCurrent->AdjustPivotPoint(DX::XMFLOAT3(camMatrix.m[0][0] * CAM_MOVE_SPEED * gFrameTime, 0.0f, camMatrix.m[0][2] * CAM_MOVE_SPEED * gFrameTime));
 	}
 
-	if (mpMouseScreenPos->mPosY < EDGE_THRESHOLD)
+	if (mpMouseScreenPos->mPosY < EDGE_THRESHOLD || gpEngine->KeyHeld(Key_W))
 	{
 		// Mouse on top side of screen
 		// Move in the local z direction but do not move on the Y axis
 		mpCamCurrent->AdjustPivotPoint(DX::XMFLOAT3(camMatrix.m[2][0] * CAM_MOVE_SPEED * gFrameTime, 0.0f, camMatrix.m[2][2] * CAM_MOVE_SPEED * gFrameTime));
 	}
 
-	if (mpMouseScreenPos->mPosY > WINDOW_HEIGHT - EDGE_THRESHOLD)
+	if (mpMouseScreenPos->mPosY > WINDOW_HEIGHT - EDGE_THRESHOLD || gpEngine->KeyHeld(Key_S))
 	{
 		// Mouse on bottom side of screen
 		// Move in the negative local z direction but do not move on the Y axis
@@ -1126,6 +1126,25 @@ void CWorldState::StateUpdate()
 	}
 
 	// Camera rotation keys
+	if (gpEngine->KeyHeld(Key_Right))
+	{
+		mpCamCurrent->AdjustPhi(DX::XMConvertToRadians(CAM_MOVE_SPEED * gFrameTime));
+	}
+
+	if (gpEngine->KeyHeld(Key_Left))
+	{
+		mpCamCurrent->AdjustPhi(DX::XMConvertToRadians(-CAM_MOVE_SPEED * gFrameTime));
+	}
+
+	if (gpEngine->KeyHeld(Key_Up))
+	{
+		mpCamCurrent->AdjustTheta(DX::XMConvertToRadians(CAM_MOVE_SPEED * gFrameTime));
+	}
+
+	if (gpEngine->KeyHeld(Key_Down))
+	{
+		mpCamCurrent->AdjustTheta(DX::XMConvertToRadians(-CAM_MOVE_SPEED * gFrameTime));
+	}
 
 	// Get camera's position
 	DX::XMFLOAT3 camPos; 
