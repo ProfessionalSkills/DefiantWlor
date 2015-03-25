@@ -244,6 +244,9 @@ void CSpaceState::StateCleanup()
 	mpPlayerOneFleet->ReturnFleet(mpHumanPlayer);
 	mpPlayerTwoFleet->ReturnFleet(mpAIPlayer);
 
+	//reset camera
+	mCamZMovement = 0.0f;
+
 	//set pointers to null
 	mpPlayerOneFleet = nullptr;
 	mpPlayerTwoFleet = nullptr;
