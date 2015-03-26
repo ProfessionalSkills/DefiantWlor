@@ -73,8 +73,7 @@ CSound::CSound(string mSoundFile, XMFLOAT3 mSourcePos, XMFLOAT3 mSourceVel, bool
 	alListenerfv(AL_ORIENTATION, listenerOri);
 	alListenerf(AL_GAIN, gain); //Master volume/gain
 
-	bool mIsPlaying = false;
-
+	mIsPlaying = false;
 }
 
 CSound::~CSound()
@@ -87,10 +86,17 @@ CSound::~CSound()
 
 void CSound::PlaySound()
 {
+	if (mIsPlaying) return;
+
 	alSourcePlay(mSource);
+	mIsPlaying = true;
 }
 
 void CSound::StopSound()
 {
-	alSourceStop(mSource);
+	if (mIsPlaying)
+	{
+		alSourceStop(mSource);
+		mIsPlaying = false;
+	}
 }

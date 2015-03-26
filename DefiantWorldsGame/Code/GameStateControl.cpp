@@ -34,11 +34,22 @@ CStateControl::CStateControl(EGameStates inStartState)
 	gCurState = inStartState;
 	mCurState = inStartState;
 
+	// Initialise music
+	string mMusicFile = "Intro.wav";
+	DX::XMFLOAT3 mSourcePos = { 0.0f, 0.0f, 0.0f };
+	DX::XMFLOAT3 mSourceVel = { 0.0f, 0.0f, 0.0f };
+	DX::XMFLOAT3 listenerPos = { 0.0f, 0.0f, 0.0f };
+	DX::XMFLOAT3 listenerVel = { 0.0f, 0.0f, 0.0f };
+	float volume = 1.0f;
+	mMusic = new CSound(mMusicFile, mSourcePos, mSourceVel, true, volume, listenerPos, listenerVel);
+
+
 	// Set current state
 	switch (inStartState)
 	{
 		case GS_MAIN_MENU:
 			mpCurGameState = mpMenuState;
+			mMusic->PlaySound();
 			break;
 		case GS_SPACE:
 			mpCurGameState = mpSpaceState;
@@ -48,9 +59,11 @@ CStateControl::CStateControl(EGameStates inStartState)
 			break;
 		case GS_NEW_GAME:
 			mpCurGameState = mpNewGameState;
+			mMusic->PlaySound();
 			break;
 		case GS_SETTINGS:
 			mpCurGameState = mpSettingsState;
+			mMusic->PlaySound();
 			break;
 	}
 
@@ -82,23 +95,23 @@ void CStateControl::SetCurrentState(EGameStates inNewState)
 	{
 	case GS_MAIN_MENU:
 		mpCurGameState = mpMenuState;
-
+		mMusic->PlaySound();
 		break;
 	case GS_SPACE:
 		mpCurGameState = mpSpaceState;
-
+		mMusic->StopSound();
 		break;
 	case GS_WORLD:
 		mpCurGameState = mpWorldState;
-
+		mMusic->StopSound();
 		break;
 	case GS_NEW_GAME:
 		mpCurGameState = mpNewGameState;
-
+		mMusic->PlaySound();
 		break;
 	case GS_SETTINGS:
 		mpCurGameState = mpSettingsState;
-
+		mMusic->PlaySound();
 		break;
 	}
 

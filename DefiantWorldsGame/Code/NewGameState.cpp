@@ -111,18 +111,6 @@ void CNewGameState::StateSetup()
 	mpMdlAtmosphere->Scale(1.02f);
 
 
-	// INITIALISE MUSIC
-	//------------------------------
-	string mMusicFile = "Intro.wav";
-	DX::XMFLOAT3 mSourcePos = { mpCamMain->GetX(), mpCamMain->GetY(), mpCamMain->GetZ() };
-	DX::XMFLOAT3 mSourceVel = { 0.0f, 0.0f, 0.0f };
-	DX::XMFLOAT3 listenerPos = { mpCamMain->GetX(), mpCamMain->GetY(), mpCamMain->GetZ() };
-	DX::XMFLOAT3 listenerVel = { 0.0f, 0.0f, 0.0f };
-	float volume = CStateControl::GetInstance()->GetSettingsManager()->GetMusicVolume();
-	mMusic = new CSound(mMusicFile, mSourcePos, mSourceVel, true, volume, listenerPos, listenerVel);
-	mMusic->PlaySound();
-
-
 	// CREATE SPRITES, BUTTONS & FONTS
 	//------------------------------
 	mpButtonFont = gpEngine->LoadFont("font2.bmp", 15U);
@@ -300,8 +288,6 @@ void CNewGameState::StateSave()
 
 void CNewGameState::StateCleanup()
 {
-	mMusic->StopSound();
-
 	mpMshAtmosphere->RemoveModel(mpMdlAtmosphere);
 	mpMshPlanet->RemoveModel(mpMdlMars);
 	mpMshPlanet->RemoveModel(mpMdlEarth);

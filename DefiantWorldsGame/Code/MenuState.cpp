@@ -47,24 +47,6 @@ void CMenuState::Quit()
 	gpEngine->Stop();
 }
 
-void CMenuState::InitialiseMusic()
-{
-	if (mMusicInitialised) return;
-
-	// INITIALISE MUSIC
-	//------------------------------
-	string mMusicFile = "Intro.wav";
-	DX::XMFLOAT3 mSourcePos = { mpCamMain->GetX(), mpCamMain->GetY(), mpCamMain->GetZ() };
-	DX::XMFLOAT3 mSourceVel = { 0.0f, 0.0f, 0.0f };
-	DX::XMFLOAT3 listenerPos = { mpCamMain->GetX(), mpCamMain->GetY(), mpCamMain->GetZ() };
-	DX::XMFLOAT3 listenerVel = { 0.0f, 0.0f, 0.0f };
-	float volume = CStateControl::GetInstance()->GetSettingsManager()->GetMusicVolume();
-	mMusic = new CSound(mMusicFile, mSourcePos, mSourceVel, true, volume, listenerPos, listenerVel);
-	mMusic->PlaySound();
-
-	mMusicInitialised = true;
-}
-
 
 //-----------------------------------------------------
 // MENU STATE CLASS OVERRIDE METHODS
@@ -80,8 +62,6 @@ void CMenuState::StateSetup()
 
 	mMinAngle = ToRadians(33.0f);
 	mMaxAngle = ToRadians(145.0f);
-
-	mMusicInitialised = false;
 
 
 	// INITIALISE CAMERAS
@@ -148,11 +128,6 @@ void CMenuState::StateUpdate()
 	// SCENE DRAW
 	//------------------------------
 	gpEngine->DrawScene();
-
-
-	// MUSIC
-	//------------------------------
-	InitialiseMusic();
 
 
 	// ANIMATE ATMOSPHERE
@@ -236,8 +211,6 @@ void CMenuState::StateSave()
 
 void CMenuState::StateCleanup()
 {
-	mMusic->StopSound();
-	
 	mpMshAtmosphere->RemoveModel(mpMdlAtmosphere);
 	mpMshPlanet->RemoveModel(mpMdlMars);
 	mpMshPlanet->RemoveModel(mpMdlEarth);

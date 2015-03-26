@@ -66,10 +66,6 @@ private:
 	float mMaxAngle;				// Maximum angle a planet can have before wrapping
 	float mMinAngle;				// Angle at which planet wraps to
 
-	CSound* mMusic;
-
-	bool mMusicInitialised = false;	// Stops an error occuring when music is initialised in StateSetup
-
 
 public:
 	// CONSTRUCTORS & DESTRUCTOR
@@ -84,7 +80,6 @@ public:
 	void LoadGame();
 	void ChangeSettings();
 	void Quit();
-	void InitialiseMusic();
 
 
 	// OVERRIDE METHODS

@@ -76,8 +76,6 @@ private:
 	float mMaxAngle;				// Maximum angle a planet can have before wrapping
 	float mMinAngle;				// Angle at which planet wraps to
 
-	CSound* mMusic;
-
 
 public:
 	// CONSTRUCTORS & DESTRUCTOR

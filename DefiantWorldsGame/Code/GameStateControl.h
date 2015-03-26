@@ -56,6 +56,9 @@ private:
 	CSettingsManager* mpSettingsManager;
 
 
+	CSound* mMusic;
+
+
 public:
 	// DESTRUCTOR
 	//---------------------------
