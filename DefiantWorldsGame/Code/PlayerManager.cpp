@@ -22,6 +22,8 @@ CPlayerManager::CPlayerManager()
 	{
 		mpAI[i] = nullptr;
 	}
+
+	mPlayerDataInitialised = false;
 }
 
 CPlayerManager::~CPlayerManager()
@@ -43,12 +45,16 @@ void CPlayerManager::CreatePlayers(EFactions humanFaction, int numAI)
 
 	// Create new AI players for each other faction
 	mpAI[0] = new CRTSAIPlayer(FAC_THE_CRIMSON_LEGION);
+
+	mPlayerDataInitialised = true;
 }
 
 void CPlayerManager::RemovePlayers()
 {
 	SafeDelete(mpHuman);
 	SafeDelete(mpAI[0]);
+
+	mPlayerDataInitialised = false;
 }
 
 void CPlayerManager::UpdatePlayers()

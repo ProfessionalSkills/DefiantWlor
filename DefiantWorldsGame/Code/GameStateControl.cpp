@@ -40,7 +40,7 @@ CStateControl::CStateControl(EGameStates inStartState)
 	DX::XMFLOAT3 mSourceVel = { 0.0f, 0.0f, 0.0f };
 	DX::XMFLOAT3 listenerPos = { 0.0f, 0.0f, 0.0f };
 	DX::XMFLOAT3 listenerVel = { 0.0f, 0.0f, 0.0f };
-	float volume = 1.0f;
+	float volume = 0.6f;
 	mMusic = new CSound(mMusicFile, mSourcePos, mSourceVel, true, volume, listenerPos, listenerVel);
 
 

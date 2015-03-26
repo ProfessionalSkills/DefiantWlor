@@ -34,7 +34,12 @@ void CMenuState::NewGame()
 
 void CMenuState::LoadGame()
 {
-	gCurState = GS_WORLD;
+	// Check to see if a game is already in play
+	CPlayerManager* pPlayerManager = CStateControl::GetInstance()->GetPlayerManager();
+	if (pPlayerManager->ArePlayersInitialised())
+	{
+		gCurState = GS_WORLD;
+	}
 }
 
 void CMenuState::ChangeSettings()
