@@ -92,7 +92,11 @@ void CSpaceFighter::UnloadIModel()
 		mspMshSheild->RemoveModel(mpTempShield);
 		mpTempShield = nullptr;
 	}
-	UnloadLazer();
+	if (mpTempLazer != 0)
+	{
+		mspMshLazer->RemoveModel(mpTempLazer);
+		mpTempLazer = nullptr;
+	}
 }
 
 void CSpaceFighter::MoveY(float yChange)

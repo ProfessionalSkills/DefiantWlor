@@ -69,6 +69,7 @@ public:
 	virtual void MoveY(float yChange)=0;
 	void FireLazer(CGameObject* target);
 	void ChargeLazer();
+
 	inline bool GetChargiingLazer()
 	{
 		return mCharged;
