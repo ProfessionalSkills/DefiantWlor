@@ -12,18 +12,69 @@
 //-----------------------------------------------------
 // AI PLAYER CLASS CONSTRUCTOR & DESTRUCTOR
 //-----------------------------------------------------
-CRTSAIPlayer::CRTSAIPlayer(EFactions playerFaction) : CRTSPlayer(playerFaction), UPDATE_TIME(0.1f)
+CRTSAIPlayer::CRTSAIPlayer(EFactions playerFaction, int difficulty) : CRTSPlayer(playerFaction)
 {
 	// Initialise first 10 tasks of AI player
 	mpTaskQ.push(new CBuildRequest(Q_WORKER, 50));
 	mpTaskQ.push(new CBuildRequest(Q_WORKER, 50));
 	mpTaskQ.push(new CBuildRequest(Q_WORKER, 50));
-	mpTaskQ.push(new CBuildRequest(Q_FIGHTER, 55));
 
+	// Set difficulty values
+	switch (difficulty)
+	{
+	case 0:				// Easy
+		// Initialise update time
+		UPDATE_TIME = 1.0f;
+
+		// Initialise wait time values
+		MIN_WAIT = 2.0f;
+		MAX_WAIT = 5.0f;
+
+		// After waiting, determine how many new items are queued
+		MIN_NEW_ITEMS = 0;
+		MAX_NEW_ITEMS = 3;
+		break;
+	case 1:				// Medium
+		// Initialise update time
+		UPDATE_TIME = 0.6f;
+
+		// Initialise wait time values
+		MIN_WAIT = 1.0f;
+		MAX_WAIT = 3.0f;
+
+		// After waiting, determine how many new items are queued
+		MIN_NEW_ITEMS = 1;
+		MAX_NEW_ITEMS = 4;
+		break;
+	case 2:				// Difficult
+		// Initialise update time
+		UPDATE_TIME = 0.3f;
+
+		// Initialise wait time values
+		MIN_WAIT = 0.5f;
+		MAX_WAIT = 2.0f;
+
+		// After waiting, determine how many new items are queued
+		MIN_NEW_ITEMS = 2;
+		MAX_NEW_ITEMS = 5;
+		break;
+	case 3:				// Insane
+		// Initialise update time
+		UPDATE_TIME = 0.1f;
+
+		// Initialise wait time values
+		MIN_WAIT = 0.1f;
+		MAX_WAIT = 1.0f;
+
+		// After waiting, determine how many new items are queued
+		MIN_NEW_ITEMS = 3;
+		MAX_NEW_ITEMS = 6;
+		break;
+	}
 
 	// Set default mUpdateTime
 	mUpdateTime = UPDATE_TIME;
-	mWaitTime = mpRandomiser->GetRandomFloat(1.0f, 3.0f);
+	mWaitTime = mpRandomiser->GetRandomFloat(MIN_WAIT, MAX_WAIT);
 }
 
 CRTSAIPlayer::~CRTSAIPlayer()
@@ -70,7 +121,7 @@ void CRTSAIPlayer::Update()
 	if (mWaitTime <= 0.0f)
 	{
 		AssessSituation();
-		mWaitTime = mpRandomiser->GetRandomFloat(1.0f, 3.0f);
+		mWaitTime = mpRandomiser->GetRandomFloat(MIN_WAIT, MAX_WAIT);
 	}
 	else
 	{
@@ -625,23 +676,28 @@ void CRTSAIPlayer::AssessSituation()
 {
 	int task = 0;
 	int priority = 0;
+	int numRepeat = mpRandomiser->GetRandomInt(MIN_NEW_ITEMS, MAX_NEW_ITEMS);
 	
-	// First check if the economy is at a reasonable level
-	if (mNumMinerals < 2000)
+	// Repeat this function a random number of times (influenced by difficulty level)
+	for (int i = 0; i < numRepeat; i++)
 	{
-		// not enough minerals - choose an option that does not reqiure funds
-		task = mpRandomiser->GetRandomInt(static_cast<int>(Q_MOVE_UNIT), static_cast<int>(Q_CHANGE_TACTIC));
-		priority = mpRandomiser->GetRandomInt(5, 50);
+		// First check if the economy is at a reasonable level
+		if (mNumMinerals < 2000 || mPopLimit <= mCurPop)
+		{
+			// not enough minerals - choose an option that does not reqiure funds
+			task = mpRandomiser->GetRandomInt(static_cast<int>(Q_MOVE_UNIT), static_cast<int>(Q_CHANGE_TACTIC));
+			priority = mpRandomiser->GetRandomInt(5, 30);
+			mpTaskQ.push(new CBuildRequest(static_cast<EQueueObjectType>(task), priority));
+			return;
+		}
+
+		// FUTURE: Calculate relationship between all unit types to determine which to get?
+
+		// Get a random request
+		task = mpRandomiser->GetRandomInt(static_cast<int>(Q_FIGHTER), static_cast<int>(Q_CHANGE_TACTIC));
+		priority = mpRandomiser->GetRandomInt(5, 30);
 		mpTaskQ.push(new CBuildRequest(static_cast<EQueueObjectType>(task), priority));
-		return;
 	}
-
-	// FUTURE: Calculate relationship between all unit types to determine which to get?
-
-	// Get a random request
-	task = mpRandomiser->GetRandomInt(static_cast<int>(Q_FIGHTER), static_cast<int>(Q_CHANGE_TACTIC));
-	priority = mpRandomiser->GetRandomInt(5, 50);
-	mpTaskQ.push(new CBuildRequest(static_cast<EQueueObjectType>(task), priority));
 }
 
 void CRTSAIPlayer::DecreaseTopItem()

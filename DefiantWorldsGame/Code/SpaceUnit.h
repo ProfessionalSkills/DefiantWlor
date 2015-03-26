@@ -32,6 +32,8 @@ protected:
 	float mChargeTime;//time laser is currently charging for
 	CRandomiser* mpToHitRoll;
 	bool mChargingLazers;
+	bool mCharged;
+	bool mFiredLazer;
 
 public:
 	// CONSTRUCTORS & DESTRUCTOR
@@ -66,9 +68,10 @@ public:
 	virtual void MoveY(float yChange)=0;
 	void FireLazer(CGameObject* target);
 	void ChargeLazer();
+
 	inline bool GetChargiingLazer()
 	{
-		return mChargingLazers;
+		return mCharged;
 	}
 	void UnloadLazer();
 };

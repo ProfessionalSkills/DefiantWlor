@@ -29,20 +29,17 @@ CMenuState::~CMenuState()
 //-----------------------------------------------------
 void CMenuState::NewGame()
 {
-	gCurState = GS_WORLD;
-
-	// Unload any previous players & create new players
-	CPlayerManager* pPlayerManager = CStateControl::GetInstance()->GetPlayerManager();
-	pPlayerManager->RemovePlayers();
-	pPlayerManager->PlayersUnloaded();
-	pPlayerManager->CreatePlayers(FAC_EARTH_DEFENSE_FORCE, 1);
+	gCurState = GS_NEW_GAME;
 }
 
 void CMenuState::LoadGame()
 {
-	gCurState = GS_WORLD;
-	
-	// Don't remove or loapd new players
+	// Check to see if a game is already in play
+	CPlayerManager* pPlayerManager = CStateControl::GetInstance()->GetPlayerManager();
+	if (pPlayerManager->ArePlayersInitialised())
+	{
+		gCurState = GS_WORLD;
+	}
 }
 
 void CMenuState::ChangeSettings()
@@ -53,24 +50,6 @@ void CMenuState::ChangeSettings()
 void CMenuState::Quit()
 {
 	gpEngine->Stop();
-}
-
-void CMenuState::InitialiseMusic()
-{
-	if (mMusicInitialised) return;
-
-	// INITIALISE MUSIC
-	//------------------------------
-	string mMusicFile = "Intro.wav";
-	DX::XMFLOAT3 mSourcePos = { mpCamMain->GetX(), mpCamMain->GetY(), mpCamMain->GetZ() };
-	DX::XMFLOAT3 mSourceVel = { 0.0f, 0.0f, 0.0f };
-	DX::XMFLOAT3 listenerPos = { mpCamMain->GetX(), mpCamMain->GetY(), mpCamMain->GetZ() };
-	DX::XMFLOAT3 listenerVel = { 0.0f, 0.0f, 0.0f };
-	float volume = CStateControl::GetInstance()->GetSettingsManager()->GetMusicVolume();
-	mMusic = new CSound(mMusicFile, mSourcePos, mSourceVel, true, volume, listenerPos, listenerVel);
-	mMusic->PlaySound();
-
-	mMusicInitialised = true;
 }
 
 
@@ -88,8 +67,6 @@ void CMenuState::StateSetup()
 
 	mMinAngle = ToRadians(33.0f);
 	mMaxAngle = ToRadians(145.0f);
-
-	mMusicInitialised = false;
 
 
 	// INITIALISE CAMERAS
@@ -156,11 +133,6 @@ void CMenuState::StateUpdate()
 	// SCENE DRAW
 	//------------------------------
 	gpEngine->DrawScene();
-
-
-	// MUSIC
-	//------------------------------
-	InitialiseMusic();
 
 
 	// ANIMATE ATMOSPHERE
@@ -244,8 +216,6 @@ void CMenuState::StateSave()
 
 void CMenuState::StateCleanup()
 {
-	mMusic->StopSound();
-	
 	mpMshAtmosphere->RemoveModel(mpMdlAtmosphere);
 	mpMshPlanet->RemoveModel(mpMdlMars);
 	mpMshPlanet->RemoveModel(mpMdlEarth);

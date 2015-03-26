@@ -92,7 +92,11 @@ void CSpaceFighter::UnloadIModel()
 		mspMshSheild->RemoveModel(mpTempShield);
 		mpTempShield = nullptr;
 	}
-	UnloadLazer();
+	if (mpTempLazer != 0)
+	{
+		mspMshLazer->RemoveModel(mpTempLazer);
+		mpTempLazer = nullptr;
+	}
 }
 
 void CSpaceFighter::MoveY(float yChange)
@@ -106,7 +110,7 @@ void CSpaceFighter::MoveY(float yChange)
 //-----------------------------------------------------
 bool CSpaceFighter::Attack(CGameObject* target, float hitMod, float damageMod)
 {
-	if (mChargingLazers) return false;
+	if (!mCharged) return false;
 	if (mpToHitRoll->GetRandomFloat(1.0, 100.0) < (hitMod*mHitChance) * 100)
 	{
 		target->TakeDamage(mDamage*damageMod);
@@ -116,6 +120,8 @@ bool CSpaceFighter::Attack(CGameObject* target, float hitMod, float damageMod)
 		FireLazer(target);
 		return true;
 	}
+	mChargingLazers = true;
+	mCharged = false;
 	return false;
 }
 
@@ -135,16 +141,6 @@ void CSpaceFighter::HitFlash()
 	{
 		mpTempShield = mspMshSheild->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
 		mpTempShield->Scale(mScale + 0.05f);
-
-		/*if (mWorldPos.x < 0.0f)
-		{
-			mpTempShield->RotateY(90.0f);
-		}
-		else
-		{
-			mpTempShield->RotateY(-90.0f);
-		}*/
-
 		mpTempShield->RotateX(-35.0f);
 	}
 }

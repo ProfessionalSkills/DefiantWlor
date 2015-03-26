@@ -1,5 +1,5 @@
 //-----------------------------------------------------
-// FILE: MenuState.cpp
+// FILE: SettingsScreenState.cpp
 //-----------------------------------------------------
 
 
@@ -31,7 +31,6 @@ void CSettingsScreenState::SaveSettings()
 {
 	// Save the settings to the settings manager
 	CSettingsManager* pSettings = CStateControl::GetInstance()->GetSettingsManager();
-	pSettings->SetAIDifficulty(mCurAIDifficulty);
 	pSettings->SetMusicVolume((float)(mpMusicSlider->GetSliderSetting() / 50.0f));
 	pSettings->SetEffectsVolume((float)(mpEffectsSlider->GetSliderSetting() / 50.0f));
 
@@ -63,16 +62,6 @@ void CSettingsScreenState::IncrementEffects()
 void CSettingsScreenState::DecrementEffects()
 {
 	mpEffectsSlider->DecrementSlider();
-}
-
-void CSettingsScreenState::SetAIDifficulty(int difficulty)
-{
-	// Take the current AI difficulty button and reset its texture
-	mpAIDButtonList[mCurAIDifficulty]->SetNewButtonSkin("DefSmallButton.png");
-
-	// Store new difficulty and update that button's texture
-	mCurAIDifficulty = difficulty;
-	mpAIDButtonList[mCurAIDifficulty]->SetNewButtonSkin("ChoSmallButton.png");
 }
 
 
@@ -127,18 +116,6 @@ void CSettingsScreenState::StateSetup()
 	mpMdlAtmosphere->Scale(1.02f);
 
 
-	// INITIALISE MUSIC
-	//------------------------------
-	string mMusicFile = "Intro.wav";
-	DX::XMFLOAT3 mSourcePos = { mpCamMain->GetX(), mpCamMain->GetY(), mpCamMain->GetZ() };
-	DX::XMFLOAT3 mSourceVel = { 0.0f, 0.0f, 0.0f };
-	DX::XMFLOAT3 listenerPos = { mpCamMain->GetX(), mpCamMain->GetY(), mpCamMain->GetZ() };
-	DX::XMFLOAT3 listenerVel = { 0.0f, 0.0f, 0.0f };
-	float volume = CStateControl::GetInstance()->GetSettingsManager()->GetMusicVolume();
-	mMusic = new CSound(mMusicFile, mSourcePos, mSourceVel, true, volume, listenerPos, listenerVel);
-	mMusic->PlaySound();
-
-
 	// CREATE SPRITES, BUTTONS & FONTS
 	//------------------------------
 	mpButtonFont = gpEngine->LoadFont("font2.bmp", 15U);
@@ -175,31 +152,9 @@ void CSettingsScreenState::StateSetup()
 	mpButtonList.push_back(pNewButton);
 
 
-	// AI Difficulty buttons
-	CAdvancedButton<CSettingsScreenState, void, int>* pNewAIButton = new CAdvancedButton<CSettingsScreenState, void, int>("DefSmallButton.png", "SelSmallButton.png", SPointData(755, 445),
-		SAABoundingBox(495.0f, 855.0f, 445.0f, 755.0f), *this, &CSettingsScreenState::SetAIDifficulty);
-	mpAIDButtonList.push_back(pNewAIButton);
-
-	pNewAIButton = new CAdvancedButton<CSettingsScreenState, void, int>("DefSmallButton.png", "SelSmallButton.png", SPointData(895, 445),
-		SAABoundingBox(495.0f, 995.0f, 445.0f, 895.0f), *this, &CSettingsScreenState::SetAIDifficulty);
-	mpAIDButtonList.push_back(pNewAIButton);
-
-	pNewAIButton = new CAdvancedButton<CSettingsScreenState, void, int>("DefSmallButton.png", "SelSmallButton.png", SPointData(1035, 445),
-		SAABoundingBox(495.0f, 1135.0f, 445.0f, 1035.0f), *this, &CSettingsScreenState::SetAIDifficulty);
-	mpAIDButtonList.push_back(pNewAIButton);
-
-	pNewAIButton = new CAdvancedButton<CSettingsScreenState, void, int>("DefSmallButton.png", "SelSmallButton.png", SPointData(1175, 445),
-		SAABoundingBox(495.0f, 1275.0f, 445.0f, 1175.0f), *this, &CSettingsScreenState::SetAIDifficulty);
-	mpAIDButtonList.push_back(pNewAIButton);
-
-	// Highlight already selected AI
-	CSettingsManager* pSettings = CStateControl::GetInstance()->GetSettingsManager();
-	mCurAIDifficulty = pSettings->GetAIDifficulty();
-	mpAIDButtonList[mCurAIDifficulty]->SetNewButtonSkin("ChoSmallButton.png");
-
-
 	// ADDITIONAL USER INTERFACE ELEMENTS
 	//------------------------------
+	CSettingsManager* pSettings = CStateControl::GetInstance()->GetSettingsManager();
 	mpMusicSlider = new CSliderTool(SPointData{ 760, 213 }, 100, (int)(pSettings->GetMusicVolume() * 50));
 	mpEffectsSlider = new CSliderTool(SPointData{ 760, 323 }, 100, (int)(pSettings->GetEffectsVolume() * 50));
 }
@@ -245,17 +200,11 @@ void CSettingsScreenState::StateUpdate()
 
 	mpIncDecFont->Draw("MUSIC VOLUME", 1015, 180, kWhite, kCentre, kTop);
 	mpIncDecFont->Draw("EFFECTS VOLUME", 1015, 290, kWhite, kCentre, kTop);
-	mpIncDecFont->Draw("AI DIFFICULTY", 1015, 400, kWhite, kCentre, kTop);
 
 	mpIncDecFont->Draw("--", 700, 210, kWhite, kCentre, kTop);
 	mpIncDecFont->Draw("++", 1320, 212, kWhite, kCentre, kTop);
 	mpIncDecFont->Draw("--", 700, 320, kWhite, kCentre, kTop);
 	mpIncDecFont->Draw("++", 1320, 322, kWhite, kCentre, kTop);
-
-	mpButtonFont->Draw("EASY", 805, 460, kWhite, kCentre, kTop);
-	mpButtonFont->Draw("MEDIUM", 945, 460, kWhite, kCentre, kTop);
-	mpButtonFont->Draw("HARD", 1085, 460, kWhite, kCentre, kTop);
-	mpButtonFont->Draw("INSANE", 1225, 460, kWhite, kCentre, kTop);
 
 	mMousePos.x = (float)gpEngine->GetMouseX();
 	mMousePos.y = (float)gpEngine->GetMouseY();
@@ -327,36 +276,6 @@ void CSettingsScreenState::StateUpdate()
 		pButton->Update();
 	}
 
-	int counter = 0;
-	for (miterAIDButtons = mpAIDButtonList.begin(); miterAIDButtons != mpAIDButtonList.end(); miterAIDButtons++)
-	{
-		CAdvancedButton<CSettingsScreenState, void, int>* pButton = (*miterAIDButtons);
-		// Check if the mouse is colliding with the object
-		if (pButton->GetBoundingBox().IsColliding(DX::XMFLOAT3(mMousePos.x, 0.0f, mMousePos.y)))
-		{
-			pButton->SetMouseOver(true);
-		}
-		else
-		{
-			pButton->SetMouseOver(false);
-		}
-
-		// Check for click 
-		if (pButton->GetMouseOver())
-		{
-			// Check if the mouse is over the button
-			if (leftClicked)
-			{
-				// Raise click flag
-				pButton->Execute(counter);
-			}
-		}
-
-		// Update the button
-		pButton->Update();
-		counter++;
-	}
-
 
 	// UPDATE SLIDERS
 	//------------------------------
@@ -383,8 +302,6 @@ void CSettingsScreenState::StateSave()
 
 void CSettingsScreenState::StateCleanup()
 {
-	mMusic->StopSound();
-
 	mpMshAtmosphere->RemoveModel(mpMdlAtmosphere);
 	mpMshPlanet->RemoveModel(mpMdlMars);
 	mpMshPlanet->RemoveModel(mpMdlEarth);
@@ -414,19 +331,6 @@ void CSettingsScreenState::StateCleanup()
 		}
 
 		mpButtonList.pop_back();
-	}
-
-	while (!mpAIDButtonList.empty())
-	{
-		CAdvancedButton<CSettingsScreenState, void, int>* tmp;
-		tmp = mpAIDButtonList.back();
-		if (tmp)
-		{
-			delete tmp;
-			tmp = nullptr;
-		}
-
-		mpAIDButtonList.pop_back();
 	}
 
 	SafeDelete(mpEffectsSlider);

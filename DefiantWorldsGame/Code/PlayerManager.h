@@ -26,7 +26,7 @@ public:
 
 	// METHODS
 	//---------------------------
-	void CreatePlayers(EFactions humanFaction, int numAI);
+	void CreatePlayers(EFactions humanFaction, int numAI, int difficulty);
 	void RemovePlayers();
 	void UpdatePlayers();
 
@@ -46,19 +46,6 @@ public:
 	inline bool ArePlayersInitialised()
 	{
 		return mPlayerDataInitialised;
-	}
-
-
-	// MUTATORS
-	//---------------------------
-	inline void PlayersInitialised()
-	{
-		mPlayerDataInitialised = true;
-	}
-
-	inline void PlayersUnloaded()
-	{
-		mPlayerDataInitialised = false;
 	}
 
 

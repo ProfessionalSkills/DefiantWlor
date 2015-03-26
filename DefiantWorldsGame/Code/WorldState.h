@@ -27,9 +27,6 @@ private:
 	CSphericalCamera* mpCamEarth;
 	CSphericalCamera* mpCamMars;
 	CSphericalCamera* mpCamCurrent;
-	//ICamera* mpCamEarth;
-	//ICamera* mpCamMars;
-	//ICamera* mpCamCurrent;
 
 	DX::XMFLOAT3 mMinEarthPos;
 	DX::XMFLOAT3 mMaxEarthPos;

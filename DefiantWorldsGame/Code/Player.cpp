@@ -22,20 +22,20 @@ CRTSPlayer::CRTSPlayer(EFactions playerFaction) : MINERAL_UPDATE_TIME(5.0f)
 	mNumSpaceFighter = 0;
 	mNumTransport = 0;
 	mMineralBaseAddition = 100;
-	mPopLimit = 150;
+	mPopLimit = 250;
 	mCurPop = 0;
 	mTimeToMineralUpdate = MINERAL_UPDATE_TIME;
 	mpPlayerGrid = nullptr;
 	mpRandomiser = new CRandomiser();
 
 	CSpaceFighter* Temp;
-	for (int i = 0; i <75; i++)
+	for (int i = 0; i <25; i++)
 	{
 		Temp = new CSpaceFighter();
 		mpSpaceUnitsList.push_back(Temp);
 	}
 	CTransport* temp;
-	for (int i = 0; i < 15; i++)
+	for (int i = 0; i < 5; i++)
 	{
 		temp = new CTransport();
 		mpSpaceUnitsList.push_back(temp);

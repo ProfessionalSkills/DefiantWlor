@@ -20,6 +20,7 @@ CSpaceUnit::CSpaceUnit() :mChargeTimeMax(3.0f), mChargeTimeMin(1.0f)
 
 	mpToHitRoll = new CRandomiser();
 	mChargingLazers = true;
+	mCharged = false;
 	mChargeTime = mChargeTimeMax;
 }
 
@@ -122,54 +123,59 @@ void CSpaceUnit::FireLazer(CGameObject* target)
 	mpTempLazer->ScaleX(0.2f);
 	mpTempLazer->ScaleY(0.2f);
 	mChargingLazers = true;
+	mFiredLazer = true;
+	mCharged = false;
 }
 
 void CSpaceUnit::ChargeLazer()
 {
-	if (mChargingLazers)
+	//set models position
+	DirectX::XMFLOAT4X4 ModelMatrix;
+	DirectX::XMFLOAT3 ModelZNormal;
+
+	mpObjModel->GetMatrix(&ModelMatrix.m[0][0]);
+
+	ModelZNormal.x = ModelMatrix.m[2][0] * 6;
+	ModelZNormal.y = ModelMatrix.m[2][1] * 6;
+	ModelZNormal.z = ModelMatrix.m[2][2] * 6;
+
+	if (!mpTempLazer)
 	{
-		//set models position
-		DirectX::XMFLOAT4X4 ModelMatrix;
-		DirectX::XMFLOAT3 ModelZNormal;
-
-		mpObjModel->GetMatrix(&ModelMatrix.m[0][0]);
-
-		ModelZNormal.x = ModelMatrix.m[2][0] * 6;
-		ModelZNormal.y = ModelMatrix.m[2][1] * 6;
-		ModelZNormal.z = ModelMatrix.m[2][2] * 6;
-
-		if (!mpTempLazer)
+		mpTempLazer = mspMshLazer->CreateModel(mWorldPos.x + ModelZNormal.x, mWorldPos.y + ModelZNormal.y, mWorldPos.z + ModelZNormal.z);
+		if (mWorldPos.x > 0)
 		{
-			mpTempLazer = mspMshLazer->CreateModel(mWorldPos.x + ModelZNormal.x, mWorldPos.y + ModelZNormal.y, mWorldPos.z + ModelZNormal.z);
-			if (mWorldPos.x > 0)
-			{
-				mpTempLazer->SetSkin("tlxadd_lazer - red.tga");
-			}
-		}
-		else
-		{
-			mpTempLazer->SetPosition(mWorldPos.x + ModelZNormal.x, mWorldPos.y + ModelZNormal.y, mWorldPos.z + ModelZNormal.z);
-		}
-
-		mChargeTime -= gFrameTime;
-		if (mChargeTime <= 0)
-		{
-			mChargeTime = mChargeTimeMax;
-			mChargingLazers = false;
+			mpTempLazer->SetSkin("tlxadd_lazer - red.tga");
 		}
 	}
+	else
+	{
+		mpTempLazer->SetPosition(mWorldPos.x + ModelZNormal.x, mWorldPos.y + ModelZNormal.y, mWorldPos.z + ModelZNormal.z);
+	}
+
+	if (mChargeTime <= 0&&!mCharged)
+	{
+		mChargeTime = mChargeTimeMax;
+		mChargingLazers = false;
+		mCharged = true;
+	}
+	else if (!mCharged)
+	{
+		mChargeTime -= gFrameTime;
+	}
+	
 }
 
 void CSpaceUnit::UnloadLazer()
 {
-	if (mpTempLazer&&!mChargingLazers)
+	if (mpTempLazer&&mFiredLazer)
 	{
 		DX::XMFLOAT4X4 tmp;
 		mpTempLazer->ResetScale();
 		mpTempLazer->GetMatrix(&tmp.m[0][0]);
 		mpTempLazer->SetY(-5000);
+		mFiredLazer = false;
 	}
-	else if (mpTempLazer)
+	else if (mpTempLazer&&!mCharged)
 	{
 		mpTempLazer->ResetScale();
 		mpTempLazer->Scale(1 / (mChargeTime + 1.0f));

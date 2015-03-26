@@ -1,9 +1,9 @@
 //-----------------------------------------------------
-// FILE: SettingsScreenState.h
+// FILE: NewGameState.h
 //-----------------------------------------------------
 
-#ifndef _SETTINGS_SCREEN_STATE_H_
-#define _SETTINGS_SCREEN_STATE_H_
+#ifndef _NEW_GAME_STATE_H_
+#define _NEW_GAME_STATE_H_
 
 
 //-----------------------------------------------------
@@ -11,13 +11,12 @@
 //-----------------------------------------------------
 #include "BaseGameState.h"
 #include "AdvancedButton.h"
-#include "SliderTool.h"
 
 
 //-----------------------------------------------------
 // MENU STATE CLASS
 //-----------------------------------------------------
-class CSettingsScreenState : public CGameState
+class CNewGameState : public CGameState
 {
 private:
 	// CAMERAS
@@ -44,8 +43,11 @@ private:
 	//--------------------------- 
 	ISprite* mpSprBackground;
 	ISprite* mpSprCursor;
-	std::vector<CAdvancedButton<CSettingsScreenState, void>*> mpButtonList;
-	std::vector<CAdvancedButton<CSettingsScreenState, void>*>::iterator miterButtons;
+	std::vector<CAdvancedButton<CNewGameState, void>*> mpButtonList;
+	std::vector<CAdvancedButton<CNewGameState, void>*>::iterator miterButtons;
+
+	std::vector<CAdvancedButton<CNewGameState, void, int>*> mpAIDButtonList;					// List of buttons for AI difficulty
+	std::vector<CAdvancedButton<CNewGameState, void, int>*>::iterator miterAIDButtons;
 
 
 	// FONTS
@@ -55,10 +57,10 @@ private:
 	IFont* mpTitleFont = nullptr;
 
 
-	// OTHER UI ITEMS
+	// TEMPORARY SETTINGS VARIABLES
 	//--------------------------- 
-	CSliderTool* mpMusicSlider = nullptr;
-	CSliderTool* mpEffectsSlider = nullptr;
+	int mCurAIDifficulty = 0;			// Current index for AI difficulty
+	std::stringstream mStrStream;
 
 
 	// ADDITIONAL VARIABLES
@@ -78,18 +80,15 @@ private:
 public:
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
-	CSettingsScreenState();
-	virtual ~CSettingsScreenState();
+	CNewGameState();
+	virtual ~CNewGameState();
 
 
 	// METHODS
 	//---------------------------
-	void SaveSettings();
+	void StartNewGame();
 	void Cancel();
-	void IncrementMusic();
-	void DecrementMusic();
-	void IncrementEffects();
-	void DecrementEffects();
+	void SetAIDifficulty(int difficulty);
 
 
 	// OVERRIDE METHODS
@@ -102,4 +101,4 @@ public:
 };
 
 
-#endif /* _SETTINGS_SCREEN_STATE_H_ */
+#endif /* _NEW_GAME_STATE_H_ */
