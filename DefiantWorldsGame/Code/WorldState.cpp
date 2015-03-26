@@ -1088,6 +1088,9 @@ void CWorldState::StateUpdate()
 
 	// MOUSE TRACKING
 	//------------------------------
+	// Remember previous mouse position
+	mpMousePrevScreenPos.mPosX = mpMouseScreenPos->mPosX;
+
 	// Update mouse position
 	mpMouseScreenPos->mPosX = gpEngine->GetMouseX();
 	mpMouseScreenPos->mPosY = gpEngine->GetMouseY();
@@ -1098,7 +1101,7 @@ void CWorldState::StateUpdate()
 	mpCamCurrent->GetCamera()->GetMatrix(&camMatrix.m[0][0]);
 
 	// Check for side scrolling
-	if (mpMouseScreenPos->mPosX < EDGE_THRESHOLD || gpEngine->KeyHeld(Key_A))
+	if (mpMouseScreenPos->mPosX < 10 || gpEngine->KeyHeld(Key_A))
 	{
 		// Mouse on left side of screen
 		// Move in the negative local x direction but do not move on the Y axis
@@ -1111,7 +1114,7 @@ void CWorldState::StateUpdate()
 		mpCamCurrent->AdjustPivotPoint(camNormalDirection);
 	}
 
-	if (mpMouseScreenPos->mPosX > WINDOW_WIDTH - EDGE_THRESHOLD || gpEngine->KeyHeld(Key_D))
+	if (mpMouseScreenPos->mPosX > WINDOW_WIDTH - 30 || gpEngine->KeyHeld(Key_D))
 	{
 		// Mouse on right side of screen
 		// Move in the local x direction but do not move on the Y axis
@@ -1124,7 +1127,7 @@ void CWorldState::StateUpdate()
 		mpCamCurrent->AdjustPivotPoint(camNormalDirection);
 	}
 
-	if (mpMouseScreenPos->mPosY < EDGE_THRESHOLD || gpEngine->KeyHeld(Key_W))
+	if (mpMouseScreenPos->mPosY < 10 || gpEngine->KeyHeld(Key_W))
 	{
 		// Mouse on top side of screen
 		// Move in the local z direction but do not move on the Y axis
@@ -1137,7 +1140,7 @@ void CWorldState::StateUpdate()
 		mpCamCurrent->AdjustPivotPoint(camNormalDirection);
 	}
 
-	if (mpMouseScreenPos->mPosY > WINDOW_HEIGHT - EDGE_THRESHOLD || gpEngine->KeyHeld(Key_S))
+	if (mpMouseScreenPos->mPosY > WINDOW_HEIGHT - 50 || gpEngine->KeyHeld(Key_S))
 	{
 		// Mouse on bottom side of screen
 		// Move in the negative local z direction but do not move on the Y axis
@@ -1204,6 +1207,30 @@ void CWorldState::StateUpdate()
 			mpCamCurrent->SetPivotPoint(mCurCamPrevPos);
 		}
 	}
+
+	
+
+
+	// CHECK FOR MOUSE ROTATION
+	//------------------------------
+	if (gpEngine->KeyHeld(Mouse_MButton))
+	{
+		// Check if there has been a change in mouse's x position
+		if (mpMousePrevScreenPos.mPosX != mpMouseScreenPos->mPosX)
+		{
+			// Determine if it is negative or positive
+			float change = mpMouseScreenPos->mPosX - mpMousePrevScreenPos.mPosX;
+			if (change < 0.0f)
+			{
+				mpCamCurrent->AdjustPhi(DX::XMConvertToRadians(-CAM_MOVE_SPEED * gFrameTime) * 8.0f);
+			}
+			else
+			{
+				mpCamCurrent->AdjustPhi(DX::XMConvertToRadians(CAM_MOVE_SPEED * gFrameTime) * 8.0f);
+			}
+		}
+	}
+
 
 	// Update cameras
 	mpCamCurrent->Update();
@@ -1418,7 +1445,6 @@ void CWorldState::StateUpdate()
 	// UPDATE PLAYERS
 	//------------------------------
 	mpPlayerManager->UpdatePlayers();
-	
 
 
 	// STATE CHANGE TEST

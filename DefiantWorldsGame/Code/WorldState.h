@@ -110,9 +110,10 @@ private:
 
 	// MOUSE DATA
 	//---------------------------
-	SPointData*  mpMouseScreenPos;
-	SPointData   mMouseGridPos;
-	SPointData	 mMousePrevGridPos;
+	SPointData mpMousePrevScreenPos;
+	SPointData* mpMouseScreenPos;
+	SPointData mMouseGridPos;
+	SPointData mMousePrevGridPos;
 
 	SBoundingCube* mpDragBox;
 	IModel* mpMdlDragBox;
@@ -120,8 +121,8 @@ private:
 	DX::XMFLOAT3 mMouseDirection;	// Direction of ray for mouse
 	DX::XMFLOAT3 mMouseOrigin;
 
-	DX::XMFLOAT3 mMouseWorldPos;	// Position of mouse in 3D space at y = 0
-	DX::XMFLOAT3 mCurGridPos;		// The start position of the grid currently being interacted with
+	DX::XMFLOAT3 mMouseWorldPos;		// Position of mouse in 3D space at y = 0
+	DX::XMFLOAT3 mCurGridPos;			// The start position of the grid currently being interacted with
 
 	DX::XMFLOAT3 mDragStartPos;
 	DX::XMFLOAT3 mDragEndPos;
@@ -155,7 +156,6 @@ private:
 
 	// ADDITIONAL VARIABLES
 	//---------------------------
-	const int EDGE_THRESHOLD = 50; // How far from the edge the mouse must be for edge scrolling
 	std::stringstream strStream;
 	int mQueuePrevSize;
 	int mQueuePrevProg;				// Stores the previous progress of the object currently being queued
