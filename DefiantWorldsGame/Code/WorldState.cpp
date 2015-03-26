@@ -719,6 +719,8 @@ void CWorldState::StateSetup()
 	mpRockMeshes[9] = gpEngine->LoadMesh("rock_010_LOD1.x");
 	mpRockMeshes[10] = gpEngine->LoadMesh("rock_011_LOD1.x");
 
+	mpPlayerManager = CStateControl::GetInstance()->GetPlayerManager();
+
 
 	// CREATE Y = 0 PLANE
 	//-----------------------------
@@ -739,13 +741,6 @@ void CWorldState::StateSetup()
 	mpMshSkybox = gpEngine->LoadMesh("SkyboxWorld.x");
 	mpMdlSkybox = mpMshSkybox->CreateModel(0.0f, -1.0f, 0.0f);
 	mpMdlSkybox->Scale(4.0f);
-
-
-	// PLAYERS
-	//-----------------------------
-	mpPlayerManager = CStateControl::GetInstance()->GetPlayerManager();
-	mpHumanPlayer = mpPlayerManager->GetHumanPlayer();
-	mpAIPlayer = mpPlayerManager->GetAIPlayer(0);
 
 
 	// INITIALISE NULL TILE
@@ -924,6 +919,13 @@ void CWorldState::StateSetup()
 	// if players have already been initialised, this is not necessary
 	if (!mpPlayerManager->ArePlayersInitialised())
 	{
+		// INITIALISE PLAYERS
+		//-----------------------------
+		mpPlayerManager->CreatePlayers(FAC_EARTH_DEFENSE_FORCE, 1);
+		mpHumanPlayer = mpPlayerManager->GetHumanPlayer();
+		mpAIPlayer = mpPlayerManager->GetAIPlayer(0);
+		
+
 		// INITIALISE WORLDS
 		//-----------------------------
 		// Initialise news ticker
@@ -953,9 +955,6 @@ void CWorldState::StateSetup()
 			mpEarthGrid->ResetTilesModels();
 		}
 		mpPlacingStructure = nullptr;
-
-		// Set players to initialised
-		mpPlayerManager->PlayersInitialised();
 
 		// Set grids for each player for easy referal
 		mpHumanPlayer->StorePlayerGridState(mpEarthGrid);

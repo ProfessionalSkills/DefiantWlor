@@ -49,19 +49,6 @@ public:
 	}
 
 
-	// MUTATORS
-	//---------------------------
-	inline void PlayersInitialised()
-	{
-		mPlayerDataInitialised = true;
-	}
-
-	inline void PlayersUnloaded()
-	{
-		mPlayerDataInitialised = false;
-	}
-
-
 private:
 	// PLAYERS
 	//---------------------------
