@@ -83,7 +83,7 @@ protected:
 public:
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
-	CRTSPlayer(EFactions playerFaction);
+	CRTSPlayer(EFactions playerFaction, int startingResources);
 	virtual ~CRTSPlayer();
 
 

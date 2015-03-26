@@ -13,9 +13,9 @@
 //-----------------------------------------------------
 // BASE PLAYER CLASS CONSTRUCTORS & DESTRUCTOR
 //-----------------------------------------------------
-CRTSPlayer::CRTSPlayer(EFactions playerFaction) : MINERAL_UPDATE_TIME(5.0f)
+CRTSPlayer::CRTSPlayer(EFactions playerFaction, int startingResources) : MINERAL_UPDATE_TIME(5.0f)
 {
-	mNumMinerals = 2500;
+	mNumMinerals = startingResources;
 	mpFleet = new CFleet();
 	mPlayerFaction = playerFaction;
 	mNumMothership = 0;

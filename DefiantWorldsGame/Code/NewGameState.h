@@ -47,7 +47,8 @@ private:
 	std::vector<CAdvancedButton<CNewGameState, void>*>::iterator miterButtons;
 
 	std::vector<CAdvancedButton<CNewGameState, void, int>*> mpAIDButtonList;					// List of buttons for AI difficulty
-	std::vector<CAdvancedButton<CNewGameState, void, int>*>::iterator miterAIDButtons;
+	std::vector<CAdvancedButton<CNewGameState, void, int>*> mpStartingResButtonList;			// List of buttons for Starting Resources
+	std::vector<CAdvancedButton<CNewGameState, void, int>*>::iterator miterIntButtons;
 
 
 	// FONTS
@@ -60,6 +61,7 @@ private:
 	// TEMPORARY SETTINGS VARIABLES
 	//--------------------------- 
 	int mCurAIDifficulty = 0;			// Current index for AI difficulty
+	int mCurStartingResources = 0;		// Current index for Starting Resources
 	std::stringstream mStrStream;
 
 
@@ -89,6 +91,7 @@ public:
 	void StartNewGame();
 	void Cancel();
 	void SetAIDifficulty(int difficulty);
+	void SetStartingResources(int amount);
 
 
 	// OVERRIDE METHODS

@@ -32,6 +32,7 @@ void CNewGameState::StartNewGame()
 	// Save the settings to the settings manager
 	CSettingsManager* pSettings = CStateControl::GetInstance()->GetSettingsManager();
 	pSettings->SetAIDifficulty(mCurAIDifficulty);
+	pSettings->SetStartingResources(mCurStartingResources);
 
 	// Unload any previous players & create new players
 	CPlayerManager* pPlayerManager = CStateControl::GetInstance()->GetPlayerManager();
@@ -55,6 +56,16 @@ void CNewGameState::SetAIDifficulty(int difficulty)
 	// Store new difficulty and update that button's texture
 	mCurAIDifficulty = difficulty;
 	mpAIDButtonList[mCurAIDifficulty]->SetNewButtonSkin("ChoSmallButton.png");
+}
+
+void CNewGameState::SetStartingResources(int amount)
+{
+	// Take the current AI difficulty button and reset its texture
+	mpStartingResButtonList[mCurStartingResources]->SetNewButtonSkin("DefSmallButton.png");
+
+	// Store new difficulty and update that button's texture
+	mCurStartingResources = amount;
+	mpStartingResButtonList[mCurStartingResources]->SetNewButtonSkin("ChoSmallButton.png");
 }
 
 
@@ -128,26 +139,43 @@ void CNewGameState::StateSetup()
 
 
 	// AI Difficulty buttons
-	CAdvancedButton<CNewGameState, void, int>* pNewAIButton = new CAdvancedButton<CNewGameState, void, int>("DefSmallButton.png", "SelSmallButton.png", SPointData(755, 230),
-		SAABoundingBox(280.0f, 855.0f, 230.0f, 755.0f), *this, &CNewGameState::SetAIDifficulty);
-	mpAIDButtonList.push_back(pNewAIButton);
+	CAdvancedButton<CNewGameState, void, int>* pNewIntButton = new CAdvancedButton<CNewGameState, void, int>("DefSmallButton.png", "SelSmallButton.png", SPointData(755, 220),
+		SAABoundingBox(270.0f, 855.0f, 220.0f, 755.0f), *this, &CNewGameState::SetAIDifficulty);
+	mpAIDButtonList.push_back(pNewIntButton);
 
-	pNewAIButton = new CAdvancedButton<CNewGameState, void, int>("DefSmallButton.png", "SelSmallButton.png", SPointData(895, 230),
-		SAABoundingBox(280.0f, 995.0f, 230.0f, 895.0f), *this, &CNewGameState::SetAIDifficulty);
-	mpAIDButtonList.push_back(pNewAIButton);
+	pNewIntButton = new CAdvancedButton<CNewGameState, void, int>("DefSmallButton.png", "SelSmallButton.png", SPointData(895, 220),
+		SAABoundingBox(270.0f, 995.0f, 220.0f, 895.0f), *this, &CNewGameState::SetAIDifficulty);
+	mpAIDButtonList.push_back(pNewIntButton);
 
-	pNewAIButton = new CAdvancedButton<CNewGameState, void, int>("DefSmallButton.png", "SelSmallButton.png", SPointData(1035, 230),
-		SAABoundingBox(280.0f, 1135.0f, 230.0f, 1035.0f), *this, &CNewGameState::SetAIDifficulty);
-	mpAIDButtonList.push_back(pNewAIButton);
+	pNewIntButton = new CAdvancedButton<CNewGameState, void, int>("DefSmallButton.png", "SelSmallButton.png", SPointData(1035, 220),
+		SAABoundingBox(270.0f, 1135.0f, 220.0f, 1035.0f), *this, &CNewGameState::SetAIDifficulty);
+	mpAIDButtonList.push_back(pNewIntButton);
 
-	pNewAIButton = new CAdvancedButton<CNewGameState, void, int>("DefSmallButton.png", "SelSmallButton.png", SPointData(1175, 230),
-		SAABoundingBox(280.0f, 1275.0f, 230.0f, 1175.0f), *this, &CNewGameState::SetAIDifficulty);
-	mpAIDButtonList.push_back(pNewAIButton);
+	pNewIntButton = new CAdvancedButton<CNewGameState, void, int>("DefSmallButton.png", "SelSmallButton.png", SPointData(1175, 220),
+		SAABoundingBox(270.0f, 1275.0f, 220.0f, 1175.0f), *this, &CNewGameState::SetAIDifficulty);
+	mpAIDButtonList.push_back(pNewIntButton);
+
+	// Starting resources buttons
+	pNewIntButton = new CAdvancedButton<CNewGameState, void, int>("DefSmallButton.png", "SelSmallButton.png", SPointData(825, 340),
+		SAABoundingBox(390.0f, 925.0f, 340.0f, 825.0f), *this, &CNewGameState::SetStartingResources);
+	mpStartingResButtonList.push_back(pNewIntButton);
+
+	pNewIntButton = new CAdvancedButton<CNewGameState, void, int>("DefSmallButton.png", "SelSmallButton.png", SPointData(965, 340),
+		SAABoundingBox(390.0f, 1065.0f, 340.0f, 965.0f), *this, &CNewGameState::SetStartingResources);
+	mpStartingResButtonList.push_back(pNewIntButton);
+
+	pNewIntButton = new CAdvancedButton<CNewGameState, void, int>("DefSmallButton.png", "SelSmallButton.png", SPointData(1105, 340),
+		SAABoundingBox(390.0f, 1205.0f, 340.0f, 1105.0f), *this, &CNewGameState::SetStartingResources);
+	mpStartingResButtonList.push_back(pNewIntButton);
 
 	// Highlight already selected AI
 	CSettingsManager* pSettings = CStateControl::GetInstance()->GetSettingsManager();
 	mCurAIDifficulty = pSettings->GetAIDifficulty();
 	mpAIDButtonList[mCurAIDifficulty]->SetNewButtonSkin("ChoSmallButton.png");
+
+	// Highlight already selected starting resources
+	mCurStartingResources = pSettings->GetStartingResourcesIndex();
+	mpStartingResButtonList[mCurStartingResources]->SetNewButtonSkin("ChoSmallButton.png");
 }
 
 void CNewGameState::StateUpdate()
@@ -155,6 +183,7 @@ void CNewGameState::StateUpdate()
 	// SCENE DRAW
 	//------------------------------
 	gpEngine->DrawScene();
+
 
 	// ANIMATE ATMOSPHERE
 	//------------------------------
@@ -190,11 +219,16 @@ void CNewGameState::StateUpdate()
 	mpButtonFont->Draw("CANCEL", 1015, 705, kWhite, kCentre, kTop);
 
 	mpIncDecFont->Draw("AI DIFFICULTY", 1015, 180, kWhite, kCentre, kTop);
+	mpIncDecFont->Draw("STARTING RESOURCES", 1015, 300, kWhite, kCentre, kTop);
 
-	mpButtonFont->Draw("EASY", 805, 245, kWhite, kCentre, kTop);
-	mpButtonFont->Draw("MEDIUM", 945, 245, kWhite, kCentre, kTop);
-	mpButtonFont->Draw("HARD", 1085, 245, kWhite, kCentre, kTop);
-	mpButtonFont->Draw("INSANE", 1225, 245, kWhite, kCentre, kTop);
+	mpButtonFont->Draw("EASY", 805, 235, kWhite, kCentre, kTop);
+	mpButtonFont->Draw("MEDIUM", 945, 235, kWhite, kCentre, kTop);
+	mpButtonFont->Draw("HARD", 1085, 235, kWhite, kCentre, kTop);
+	mpButtonFont->Draw("INSANE", 1225, 235, kWhite, kCentre, kTop);
+
+	mpButtonFont->Draw("MINIMAL", 875, 355, kWhite, kCentre, kTop);
+	mpButtonFont->Draw("ENOUGH", 1015, 355, kWhite, kCentre, kTop);
+	mpButtonFont->Draw("PLENTIFUL", 1155, 355, kWhite, kCentre, kTop);
 
 	mMousePos.x = (float)gpEngine->GetMouseX();
 	mMousePos.y = (float)gpEngine->GetMouseY();
@@ -237,9 +271,39 @@ void CNewGameState::StateUpdate()
 	}
 
 	int counter = 0;
-	for (miterAIDButtons = mpAIDButtonList.begin(); miterAIDButtons != mpAIDButtonList.end(); miterAIDButtons++)
+	for (miterIntButtons = mpAIDButtonList.begin(); miterIntButtons != mpAIDButtonList.end(); miterIntButtons++)
 	{
-		CAdvancedButton<CNewGameState, void, int>* pButton = (*miterAIDButtons);
+		CAdvancedButton<CNewGameState, void, int>* pButton = (*miterIntButtons);
+		// Check if the mouse is colliding with the object
+		if (pButton->GetBoundingBox().IsColliding(DX::XMFLOAT3(mMousePos.x, 0.0f, mMousePos.y)))
+		{
+			pButton->SetMouseOver(true);
+		}
+		else
+		{
+			pButton->SetMouseOver(false);
+		}
+
+		// Check for click 
+		if (pButton->GetMouseOver())
+		{
+			// Check if the mouse is over the button
+			if (leftClicked)
+			{
+				// Raise click flag
+				pButton->Execute(counter);
+			}
+		}
+
+		// Update the button
+		pButton->Update();
+		counter++;
+	}
+
+	counter = 0;
+	for (miterIntButtons = mpStartingResButtonList.begin(); miterIntButtons != mpStartingResButtonList.end(); miterIntButtons++)
+	{
+		CAdvancedButton<CNewGameState, void, int>* pButton = (*miterIntButtons);
 		// Check if the mouse is colliding with the object
 		if (pButton->GetBoundingBox().IsColliding(DX::XMFLOAT3(mMousePos.x, 0.0f, mMousePos.y)))
 		{
@@ -328,5 +392,18 @@ void CNewGameState::StateCleanup()
 		}
 
 		mpAIDButtonList.pop_back();
+	}
+
+	while (!mpStartingResButtonList.empty())
+	{
+		CAdvancedButton<CNewGameState, void, int>* tmp;
+		tmp = mpStartingResButtonList.back();
+		if (tmp)
+		{
+			delete tmp;
+			tmp = nullptr;
+		}
+
+		mpStartingResButtonList.pop_back();
 	}
 }

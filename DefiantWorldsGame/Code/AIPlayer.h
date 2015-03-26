@@ -29,7 +29,7 @@ class CRTSAIPlayer : public CRTSPlayer
 public:
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
-	CRTSAIPlayer(EFactions playerFaction, int difficulty);
+	CRTSAIPlayer(EFactions playerFaction, int startingResources, int difficulty);
 	~CRTSAIPlayer();
 
 

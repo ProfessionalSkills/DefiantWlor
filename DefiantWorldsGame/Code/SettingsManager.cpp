@@ -17,3 +17,24 @@ CSettingsManager::~CSettingsManager()
 {
 
 }
+
+
+//-----------------------------------------------------
+// SETTINGS MANAGER CLASS METHODS
+//-----------------------------------------------------
+int CSettingsManager::GetStartingResourcesAmount()
+{
+	// Convert the starting resources index into a starting valu
+	switch (mStartingResources)
+	{
+	case 0:
+		return 2000;
+		break;
+	case 1:
+		return 4000;
+		break;
+	case 2:
+		return 8000;
+		break;
+	}
+}

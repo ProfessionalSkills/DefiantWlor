@@ -12,7 +12,7 @@
 //-----------------------------------------------------
 // AI PLAYER CLASS CONSTRUCTOR & DESTRUCTOR
 //-----------------------------------------------------
-CRTSAIPlayer::CRTSAIPlayer(EFactions playerFaction, int difficulty) : CRTSPlayer(playerFaction)
+CRTSAIPlayer::CRTSAIPlayer(EFactions playerFaction, int startingResources, int difficulty) : CRTSPlayer(playerFaction, startingResources)
 {
 	// Initialise first 10 tasks of AI player
 	mpTaskQ.push(new CBuildRequest(Q_WORKER, 50));

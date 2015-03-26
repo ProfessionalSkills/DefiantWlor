@@ -26,7 +26,7 @@ public:
 
 	// METHODS
 	//---------------------------
-	void CreatePlayers(EFactions humanFaction, int numAI, int difficulty);
+	void CreatePlayers(EFactions humanFaction, int numAI, int startingResources, int difficulty);
 	void RemovePlayers();
 	void UpdatePlayers();
 

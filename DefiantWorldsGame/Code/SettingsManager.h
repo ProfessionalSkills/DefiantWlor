@@ -32,6 +32,13 @@ public:
 		return mAIDifficulty;
 	}
 
+	inline int GetStartingResourcesIndex()
+	{
+		return mStartingResources;
+	}
+
+	int GetStartingResourcesAmount();
+
 
 	// MUTATORS
 	//---------------------------
@@ -50,6 +57,11 @@ public:
 		mAIDifficulty = difficulty;
 	}
 
+	void SetStartingResources(int amount)
+	{
+		mStartingResources = amount;
+	}
+
 
 private:
 	// SETTINGS DATA
@@ -58,6 +70,7 @@ private:
 	float mEffectsVolume = 0.6f;
 
 	int mAIDifficulty = 0;
+	int mStartingResources = 1;
 };
 
 

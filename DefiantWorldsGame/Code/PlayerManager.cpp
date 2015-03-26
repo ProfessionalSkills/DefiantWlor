@@ -35,16 +35,16 @@ CPlayerManager::~CPlayerManager()
 //-----------------------------------------------------
 // PLAYER MANAGER CLASS METHODS
 //-----------------------------------------------------
-void CPlayerManager::CreatePlayers(EFactions humanFaction, int numAI, int difficulty)
+void CPlayerManager::CreatePlayers(EFactions humanFaction, int numAI, int startingResources, int difficulty)
 {
 	// Create the human player
-	mpHuman = new CRTSPlayer(humanFaction);
+	mpHuman = new CRTSPlayer(humanFaction, startingResources);
 
 	// Store number of active AI Players
 	mNumAI = numAI;
 
 	// Create new AI players for each other faction
-	mpAI[0] = new CRTSAIPlayer(FAC_THE_CRIMSON_LEGION, difficulty);
+	mpAI[0] = new CRTSAIPlayer(FAC_THE_CRIMSON_LEGION, startingResources, difficulty);
 
 	mPlayerDataInitialised = true;
 }
