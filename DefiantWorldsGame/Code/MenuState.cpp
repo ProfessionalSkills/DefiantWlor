@@ -132,6 +132,7 @@ void CMenuState::StateSetup()
 
 	mpSprBackground = gpEngine->CreateSprite("MenuBG.png", 400.0f, 50.0f, 0.9f);
 	mpSprLogo = gpEngine->CreateSprite("Logo.png", 800.0f, 100.0f, 0.8f);
+	mpSprCursor = gpEngine->CreateSprite("BaseCursor.png", 5.0f, 50.0f, 0.0f);
 
 	CAdvancedButton<CMenuState, void>* pNewButton = new CAdvancedButton<CMenuState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 350),
 		SAABoundingBox(400.0f, 1215.0f, 350.0f, 815.0f), *this, &CMenuState::NewGame);
@@ -224,6 +225,11 @@ void CMenuState::StateUpdate()
 		// Update the button
 		pButton->Update();
 	}
+
+
+	// UPDATE CURSOR
+	//------------------------------
+	mpSprCursor->SetPosition(mMousePos.x, mMousePos.y);
 }
 
 void CMenuState::StateLoad()
@@ -251,6 +257,7 @@ void CMenuState::StateCleanup()
 	gpEngine->RemoveMesh(mpMshSkybox);
 	gpEngine->RemoveSprite(mpSprBackground);
 	gpEngine->RemoveSprite(mpSprLogo);
+	gpEngine->RemoveSprite(mpSprCursor);
 
 	// Remove buttons
 	while (!mpButtonList.empty())

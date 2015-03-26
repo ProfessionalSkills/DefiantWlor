@@ -692,7 +692,7 @@ void CWorldState::StateSetup()
 	mWindowClip.bottom -= 8;
 
 	// Set the cursor's limits
-	//ClipCursor(&mWindowClip);
+	ClipCursor(&mWindowClip);
 	mLMouseClicked = false;
 	mRMouseClicked = false;
 	mLMouseHeld = false;
@@ -758,6 +758,7 @@ void CWorldState::StateSetup()
 	//-----------------------------
 	mFntDebug = gpEngine->LoadFont("Calibri", 20U);
 	mpMainUI = gpEngine->CreateSprite("WorldUI.png", 0.0f, 0.0f, 0.9f);
+	mpSprCursor = gpEngine->CreateSprite("BaseCursor.png", 5.0f, 50.0f, 0.0f);
 	CAdvancedButton<CWorldState, void>* pNewButton = nullptr;
 
 	pNewButton = new CAdvancedButton<CWorldState, void>("DefBarracksButton.png", "SelBarracksButton.png", SPointData(1219, 695),
@@ -1095,6 +1096,8 @@ void CWorldState::StateUpdate()
 	mpMouseScreenPos->mPosX = gpEngine->GetMouseX();
 	mpMouseScreenPos->mPosY = gpEngine->GetMouseY();
 
+	mpSprCursor->SetPosition(mpMouseScreenPos->mPosX, mpMouseScreenPos->mPosY);
+
 	// Matrix for identifying direction to scroll
 	DX::XMFLOAT4X4 camMatrix;
 	DX::XMFLOAT3 camNormalDirection;
@@ -1208,8 +1211,6 @@ void CWorldState::StateUpdate()
 		}
 	}
 
-	
-
 
 	// CHECK FOR MOUSE ROTATION
 	//------------------------------
@@ -1230,7 +1231,6 @@ void CWorldState::StateUpdate()
 			}
 		}
 	}
-
 
 	// Update cameras
 	mpCamCurrent->Update();
@@ -1497,6 +1497,8 @@ void CWorldState::StateCleanup()
 	{
 		gpEngine->RemoveSprite(mpSprHealth);
 	}
+
+	gpEngine->RemoveSprite(mpSprCursor);
 
 	SafeDelete(mpDragBox);
 

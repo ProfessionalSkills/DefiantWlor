@@ -82,6 +82,7 @@ private:
 	ISprite* mpMainUI;
 	ISprite* mpSprQProg;
 	ISprite* mpSprHealth;
+	ISprite* mpSprCursor;
 
 	std::vector<CAdvancedButton<CWorldState, void>*> mpGenericButtonList;
 	std::vector<CAdvancedButton<CWorldState, void>*>::iterator miterGenericButtons;

@@ -146,6 +146,7 @@ void CSettingsScreenState::StateSetup()
 	mpTitleFont = gpEngine->LoadFont("font2.bmp", 35U);
 
 	mpSprBackground = gpEngine->CreateSprite("MenuBG.png", 400.0f, 50.0f, 0.9f);
+	mpSprCursor = gpEngine->CreateSprite("BaseCursor.png", 5.0f, 50.0f, 0.0f);
 
 	CAdvancedButton<CSettingsScreenState, void>* pNewButton = new CAdvancedButton<CSettingsScreenState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 620),
 		SAABoundingBox(670.0f, 1215.0f, 620.0f, 815.0f), *this, &CSettingsScreenState::SaveSettings);
@@ -356,12 +357,18 @@ void CSettingsScreenState::StateUpdate()
 		counter++;
 	}
 
+
 	// UPDATE SLIDERS
 	//------------------------------
 	mpMusicSlider->Update();
 	mpEffectsSlider->Update();
 
 	leftClicked = false;
+
+
+	// UPDATE CURSOR
+	//------------------------------
+	mpSprCursor->SetPosition(mMousePos.x, mMousePos.y);
 }
 
 void CSettingsScreenState::StateLoad()
@@ -387,7 +394,9 @@ void CSettingsScreenState::StateCleanup()
 	gpEngine->RemoveMesh(mpMshAtmosphere);
 	gpEngine->RemoveMesh(mpMshPlanet);
 	gpEngine->RemoveMesh(mpMshSkybox);
+
 	gpEngine->RemoveSprite(mpSprBackground);
+	gpEngine->RemoveSprite(mpSprCursor);
 
 	gpEngine->RemoveFont(mpButtonFont);
 	gpEngine->RemoveFont(mpIncDecFont);

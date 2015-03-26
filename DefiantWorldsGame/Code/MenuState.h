@@ -43,6 +43,7 @@ private:
 	//--------------------------- 
 	ISprite* mpSprBackground;
 	ISprite* mpSprLogo;
+	ISprite* mpSprCursor;
 	std::vector<CAdvancedButton<CMenuState, void>*> mpButtonList;
 	std::vector<CAdvancedButton<CMenuState, void>*>::iterator miterButtons;
 
