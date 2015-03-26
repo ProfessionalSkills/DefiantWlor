@@ -34,10 +34,14 @@ private:
 	// MESHES
 	//--------------------------- 
 	IMesh* mpMshSkybox;
+	IMesh* mpMshPlanet;
+
 
 	// MODELS
 	//--------------------------- 
 	IModel* mpMdlSkybox;
+	IModel* mpMdlEarth;
+	IModel* mpMdlMars;
 
 	// FLEET
 	//---------------------------
@@ -61,6 +65,12 @@ private:
 	std::stringstream strStream;
 
 	void DrawFontData();
+
+	// PLANET 
+	//---------------------------
+	float mEarthDistance;			// Distance of Earth from centre point
+	float mMarsDistance;			// Distance of Mars from centre point
+	void LoadPlanets();
 
 	// MISC
 	//---------------------------

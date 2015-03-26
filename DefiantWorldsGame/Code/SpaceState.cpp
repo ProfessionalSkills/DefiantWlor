@@ -20,6 +20,8 @@ mDisplacement(30), mNumCamStates(4),CGameState()
 	mCamZ = 0.0f;
 	mCamState = 0;
 	mCamZMovement = 0.0f;
+	mEarthDistance = -1000.0F;
+	mMarsDistance = 500.0f;
 }
 
 CSpaceState::~CSpaceState()
@@ -60,7 +62,7 @@ void CSpaceState::StateSetup()
 	}
 
 	mpCamMain = gpEngine->CreateCamera(kManual, 0.0f, 0.0f, mCamZ);
-	mpCamMain->LookAt(0.0f, 0.0f, 0.0f);
+	ChangeCameraPosition();
 
 	// INITIALISE SKYBOX
 	//------------------------------
@@ -82,6 +84,7 @@ void CSpaceState::StateSetup()
 	//------------------------------
 	mpPlayerOneFleet->LoadShipModels(-mDisplacement);
 	mpPlayerTwoFleet->LoadShipModels(mDisplacement);
+	LoadPlanets();
 
 	// INITIALISE USER INTERFACE
 	//-----------------------------
@@ -242,6 +245,8 @@ void CSpaceState::StateCleanup()
 
 	mpPlayerOneFleet->ReturnFleet(mpHumanPlayer);
 	mpPlayerTwoFleet->ReturnFleet(mpAIPlayer);
+	mpMshPlanet->RemoveModel(mpMdlMars);
+	mpMshPlanet->RemoveModel(mpMdlEarth);
 
 	//reset camera
 	mCamZMovement = 0.0f;
@@ -282,4 +287,19 @@ void CSpaceState::ChangeCameraPosition()
 	default:
 		break;
 	}
+}
+
+void CSpaceState::LoadPlanets()
+{
+	// INITIALISE PLANETS
+	//------------------------------
+	// Earth
+	mpMshPlanet = gpEngine->LoadMesh("Planet.x");
+	mpMdlEarth = mpMshPlanet->CreateModel(mEarthDistance, 0.0f, 0.0f);
+	mpMdlEarth->Scale(100.0f);
+
+	// Mars
+	mpMdlMars = mpMshPlanet->CreateModel(mMarsDistance, 0.0f, 0.0f);
+	mpMdlMars->SetSkin("Mars.jpg");
+	mpMdlMars->Scale(26.0f);
 }
