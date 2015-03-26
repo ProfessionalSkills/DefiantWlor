@@ -136,6 +136,9 @@
     <Filter Include="Pathfinding">
       <UniqueIdentifier>{a81d0aa8-8853-4b39-93db-5616bbedfd4b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Utilities\User Interface">
+      <UniqueIdentifier>{d8eb80a5-572f-466d-9c32-b9d45628d179}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ProfSkillsDefiantWorlds.cpp">
@@ -270,14 +273,8 @@
     <ClCompile Include="BestFirst.cpp">
       <Filter>Pathfinding</Filter>
     </ClCompile>
-    <ClCompile Include="NewsTicker.cpp">
-      <Filter>Utilities</Filter>
-    </ClCompile>
     <ClCompile Include="SettingsScreenState.cpp">
       <Filter>Game States\Child State Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="SliderTool.cpp">
-      <Filter>Utilities</Filter>
     </ClCompile>
     <ClCompile Include="SettingsManager.cpp">
       <Filter>Utilities</Filter>
@@ -287,6 +284,12 @@
     </ClCompile>
     <ClCompile Include="SphericalCamera.cpp">
       <Filter>Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="NewsTicker.cpp">
+      <Filter>Utilities\User Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="SliderTool.cpp">
+      <Filter>Utilities\User Interface</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -410,9 +413,6 @@
     <ClInclude Include="PlayerManager.h">
       <Filter>Players\Player Manager</Filter>
     </ClInclude>
-    <ClInclude Include="AdvancedButton.h">
-      <Filter>Utilities</Filter>
-    </ClInclude>
     <ClInclude Include="AIPlayer.h">
       <Filter>Players\Player</Filter>
     </ClInclude>
@@ -422,14 +422,8 @@
     <ClInclude Include="BestFirst.h">
       <Filter>Pathfinding</Filter>
     </ClInclude>
-    <ClInclude Include="NewsTicker.h">
-      <Filter>Utilities</Filter>
-    </ClInclude>
     <ClInclude Include="SettingsScreenState.h">
       <Filter>Game States\Child State Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="SliderTool.h">
-      <Filter>Utilities</Filter>
     </ClInclude>
     <ClInclude Include="SettingsManager.h">
       <Filter>Utilities</Filter>
@@ -439,6 +433,15 @@
     </ClInclude>
     <ClInclude Include="SphericalCamera.h">
       <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="AdvancedButton.h">
+      <Filter>Utilities\User Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="NewsTicker.h">
+      <Filter>Utilities\User Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="SliderTool.h">
+      <Filter>Utilities\User Interface</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

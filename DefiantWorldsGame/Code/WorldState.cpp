@@ -1046,6 +1046,8 @@ void CWorldState::StateSetup()
 	//-----------------------------
 	mpCamEarth = new CSphericalCamera(mpEarthGrid->GetGridCentrePos(), 350.0f, DX::XMConvertToRadians(-90.0f), DX::XMConvertToRadians(50.0f));
 	mpCamMars = new CSphericalCamera(mpMarsGrid->GetGridCentrePos(), 350.0f, DX::XMConvertToRadians(-90.0f), DX::XMConvertToRadians(50.0f));
+	mpCamEarth->Update();
+	mpCamMars->Update();
 
 	mpCamCurrent = mpCamEarth;
 
@@ -1223,11 +1225,11 @@ void CWorldState::StateUpdate()
 			float change = mpMouseScreenPos->mPosX - mpMousePrevScreenPos.mPosX;
 			if (change < 0.0f)
 			{
-				mpCamCurrent->AdjustPhi(DX::XMConvertToRadians(-CAM_MOVE_SPEED * gFrameTime) * 8.0f);
+				mpCamCurrent->AdjustPhi(DX::XMConvertToRadians(-CAM_MOVE_SPEED * 6.0f * gFrameTime));
 			}
 			else
 			{
-				mpCamCurrent->AdjustPhi(DX::XMConvertToRadians(CAM_MOVE_SPEED * gFrameTime) * 8.0f);
+				mpCamCurrent->AdjustPhi(DX::XMConvertToRadians(CAM_MOVE_SPEED * 6.0f * gFrameTime));
 			}
 		}
 	}
