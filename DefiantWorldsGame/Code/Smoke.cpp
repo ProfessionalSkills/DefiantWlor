@@ -1,13 +1,11 @@
 #include "Smoke.h"
 
-CSmoke::CSmoke(IModel* emitter, IMesh* particleMesh)
+CSmoke::CSmoke(IModel* emitter)
 {
-	rand = new CRandomiser();
 	mEmitter = emitter;
 	SetEmitPosition();
-	mEmitterPeriod = 0.04f;
-	mEmitterCountdown = mEmitterPeriod;
-	EmitParticle(particleMesh);
+	mEmitterCountdown = kEmitTime;
+	EmitParticle();
 }
 
 CSmoke::~CSmoke()
@@ -17,64 +15,61 @@ CSmoke::~CSmoke()
 
 void CSmoke::SetEmitPosition()
 {
-	mEmitPosition = { mEmitter->GetX(), mEmitter->GetY(), mEmitter->GetZ() };
+	mParticleOrigen = { mEmitter->GetX(), mEmitter->GetY(), mEmitter->GetZ() };
 }
 
-DirectX::XMFLOAT3 CSmoke::GetEmitPosition()
-{
-	return mEmitPosition;
-}
-
-void CSmoke::EmitParticle(IMesh* particleMesh)
+void CSmoke::EmitParticle()
 {
 	CParticle* mNewParticle = new CParticle();
-	mNewParticle->mMesh = particleMesh;
 
-	float mPosX = rand->GetRandomFloat(mEmitPosition.x - 3.0f, mEmitPosition.x + 3.0f);
-	float mPosZ = rand->GetRandomFloat(mEmitPosition.z - 3.0f, mEmitPosition.z + 3.0f);
+	float mPosX = gpRandomiser->GetRandomFloat(mParticleOrigen.x - 3.0f, mParticleOrigen.x + 3.0f);
+	float mPosZ = gpRandomiser->GetRandomFloat(mParticleOrigen.z - 3.0f, mParticleOrigen.z + 3.0f);
 
-	mNewParticle->mModel = mNewParticle->mMesh->CreateModel(mPosX, mEmitPosition.y, mPosZ);
-	mNewParticle->mModel->Scale(0.3f);
+	mNewParticle->mModel = mNewParticle->mspMshParticle->CreateModel(mPosX, mParticleOrigen.y, mPosZ);
+	mNewParticle->SetScale(0.7f);
 
+	mNewParticle->SetVector(gpRandomiser->GetRandomFloat(-kVelocity.x, kVelocity.x), kVelocity.y, gpRandomiser->GetRandomFloat(-kVelocity.z, kVelocity.z));
 
-	mNewParticle->mMoveVector.x = rand->GetRandomFloat(-2.0f, 2.0f);
-	mNewParticle->mMoveVector.y = 5.0f;
-	mNewParticle->mMoveVector.z = rand->GetRandomFloat(-2.0f, 2.0f);
-
-	mNewParticle->mPosition = mEmitPosition;
-	mNewParticle->mLifeTime = 3.5f;
-	Particles.push_back(mNewParticle);
+	mNewParticle->SetPosition(mParticleOrigen);
+	mNewParticle->SetLifeTime(kSmokeLifeTime);
+	mParticles.push_back(mNewParticle);
 }
 
-void CSmoke::UpdateSystem(float mFrameTime, IModel* emitter, IMesh* particleMesh, ICamera* myCamera)
+bool CSmoke::UpdateSystem()
 {
-
+	if (mParticles.size() == 0)
+	{
+		return false;
+	}
 	if (mEmitterCountdown <= 0.0f)
 	{
-		EmitParticle(particleMesh);
-		mEmitterCountdown = mEmitterPeriod;
+		if (mParticles.size() <= mParticleNumber)
+		{
+			EmitParticle();
+			mEmitterCountdown = kEmitTime;
+		}
 	}
 
-	vector<CParticle*>::iterator itParticle = Particles.begin();
+	vector<CParticle*>::iterator itParticle = mParticles.begin();
 
-	while (itParticle != Particles.end())
+	while (itParticle != mParticles.end())
 	{
-		(*itParticle)->mModel->MoveX((*itParticle)->mMoveVector.x * mFrameTime);
-		(*itParticle)->mModel->MoveY((*itParticle)->mMoveVector.y * mFrameTime);
-		(*itParticle)->mModel->MoveZ((*itParticle)->mMoveVector.z * mFrameTime);
+		(*itParticle)->mModel->MoveX((*itParticle)->GetMoveVector().x * gFrameTime);
+		(*itParticle)->mModel->MoveY((*itParticle)->GetMoveVector().y * gFrameTime);
+		(*itParticle)->mModel->MoveZ((*itParticle)->GetMoveVector().z * gFrameTime);
 
-		(*itParticle)->mLifeTime -= mFrameTime;
+		(*itParticle)->SetLifeTime((*itParticle)->GetLifeTime() - gFrameTime);
 
-		if ((*itParticle)->mLifeTime <= 0.0f)
+		if ((*itParticle)->GetLifeTime() <= 0.0f)
 		{
-			delete(*itParticle);
-			itParticle = Particles.erase(itParticle);
+			(*itParticle)->SetPosition(mParticleOrigen);
+
 		}
 		else
 		{
 			itParticle++;
 		}
 	}
-
-	mEmitterCountdown -= mFrameTime;
+	mEmitterCountdown -= gFrameTime;
+	return true;
 }

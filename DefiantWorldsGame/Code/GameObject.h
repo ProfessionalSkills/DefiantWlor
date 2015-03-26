@@ -10,7 +10,8 @@
 // INCLUDES
 //-----------------------------------------------------
 #include "Common.h"
-
+#include "Explosion.h"
+#include "Smoke.h"
 
 //-----------------------------------------------------
 // GAME OBJECT CLASS
@@ -31,12 +32,11 @@ protected:
 
 	EFactions mFaction;
 
-
 	// TLE OBJECT DATA
 	//---------------------------
 	IModel* mpObjModel;
 
-
+	CExplosion* mDestructionExplosion;
 	// SOUND
 	//---------------------------
 	CSound* mGenSound;

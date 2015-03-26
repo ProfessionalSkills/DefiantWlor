@@ -80,13 +80,6 @@ bool CBomber::Attack(CGameObject* target, float hitMod, float damageMod)
 	return false;
 }
 
-bool CBomber::Destroy()
-{
-	// For now just call the UnloadIModel function
-	UnloadIModel();
-	return false;
-}
-
 IModel* CBomber::CreateModel(DX::XMFLOAT3 pos)
 {
 	// Load model and set required skin

@@ -59,7 +59,6 @@ public:
 	virtual void Move();
 
 private:
-	virtual bool Destroy();
 	virtual IModel* CreateModel(DX::XMFLOAT3 pos) = 0;
 };
 

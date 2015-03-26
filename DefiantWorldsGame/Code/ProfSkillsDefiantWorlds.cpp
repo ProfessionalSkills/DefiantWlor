@@ -221,6 +221,9 @@ void SetupEngine()
 	CInfantry::mspMshInfantry = gpEngine->LoadMesh("tigerAusfH.x");
 	//Artillery
 	CArtillery::mspMshArtillery = gpEngine->LoadMesh("marsAA.x");
+
+	//Particle Mesh
+	CParticle::mspMshParticle = gpEngine->LoadMesh("particle.x");
 }
 
 void CleanupEngine()

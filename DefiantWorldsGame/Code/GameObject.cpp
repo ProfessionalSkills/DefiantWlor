@@ -15,6 +15,7 @@
 CGameObject::CGameObject()
 {
 	mpObjModel = nullptr;
+	mDestructionExplosion = nullptr;
 	mPopCost = 1;
 }
 

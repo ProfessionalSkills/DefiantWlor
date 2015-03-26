@@ -159,7 +159,7 @@ public:
 	// METHODS
 	//---------------------------
 	bool Construct();
-
+	void Destroy();
 
 	// VIRTUAL METHODS
 	//---------------------------
@@ -176,7 +176,7 @@ public:
 	virtual void Move()=0;
 
 private:
-	virtual bool Destroy() = 0;
+
 };
 
 #endif /* _GAME_AGENT_H_ */

@@ -128,3 +128,55 @@ bool CGameAgent::Construct()
 	
 	return true;
 }
+void CGameAgent::Destroy()
+{
+	// Alert news ticker if structure belongs to the player
+	if (mFaction == FAC_EARTH_DEFENSE_FORCE)
+	{
+		switch (GetAgentData()->mAgentType)
+		{
+		case GAV_ARTILLERY:
+			mStrDisplay << "An Artillery";
+			break;
+
+		case GAV_BOMBER:
+			mStrDisplay << "A Bomber";
+			break;
+
+		case GAV_FIGHTER:
+			mStrDisplay << "A Fighter";
+			break;
+
+		case GAV_INFANTRY:
+			mStrDisplay << "Infantry";
+			break;
+
+		case GAV_MOTHERSHIP:
+			mStrDisplay << "A Mothership";
+			break;
+
+		case GAV_SPACE_FIGHTER:
+			mStrDisplay << "A Space Fighter";
+			break;
+
+		case GAV_TANK:
+			mStrDisplay << "A Tank";
+			break;
+
+		case GAV_TRANSPORT:
+			mStrDisplay << "A Transport Ship";
+			break;
+
+		case GAV_WORKER:
+			mStrDisplay << "A Worker";
+			break;
+		}
+		mStrDisplay << " has been destroyed!";
+		gpNewsTicker->AddNewElement(mStrDisplay.str(), true);
+		mStrDisplay.str("");
+	}
+
+	// Remove the model
+	mDestructionExplosion = new CExplosion(mpObjModel);
+	UnloadIModel();
+}

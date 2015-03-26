@@ -122,12 +122,6 @@ bool CAirUnit::LookingAt()
 	}
 }
 
-bool CAirUnit::Destroy()
-{
-	// Currently just unload the IModel
-	return false;
-}
-
 void CAirUnit::Move()
 {
 	int MaxX = mPathTarget.x + 1.0f;

@@ -55,7 +55,6 @@ public:
 
 
 private:
-	bool Destroy() override;
 	IModel* CreateModel(DX::XMFLOAT3 pos) override;
 };
 

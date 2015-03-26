@@ -29,26 +29,64 @@ extern I3DEngine* gpEngine;
 class CParticle
 {
 protected:
-
+	
+	DirectX::XMFLOAT3 mMoveVector; //3D Particle Movement
+	DirectX::XMFLOAT3 mPosition; //Particle Position
+	string mSkin; //Particle texture
+	float mLifeTime; //Life time of Particle
 public:
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
 	CParticle();
 	~CParticle();
 
+	IModel* mModel; //Particle Model
 
 	// PARTICLE STATIC MESH
 	//---------------------------
-	static IMesh* mMesh;
+	static IMesh* mspMshParticle;
 
+	inline void SetPosition(DX::XMFLOAT3 position)
+	{
+		mPosition = position;
+	}
 
+	inline DX::XMFLOAT3 GetPosition()
+	{
+		return mPosition;
+	}
+
+	inline void SetVector(float x, float y, float z)
+	{
+		mMoveVector = { x, y, z };
+	}
+
+	inline void SetSkin(string skin)
+	{
+		mModel->SetSkin(skin);
+	}
+
+	inline void SetScale(float scale)
+	{
+		mModel->Scale(scale);
+	}
+
+	inline void SetLifeTime(float lifetime)
+	{
+		mLifeTime = lifetime;
+	}
+
+	inline float GetLifeTime()
+	{
+		return mLifeTime;
+	}
+
+	inline DX::XMFLOAT3 GetMoveVector()
+	{
+		return mMoveVector;
+	}
 	// PARTICLE DATA (ACCESSED BY PARTICLE SYSTEMS)
 	//---------------------------
-	IModel* mModel; //Particle Model
-	DirectX::XMFLOAT3 mMoveVector; //3D Particle Movement
-	DirectX::XMFLOAT3 mPosition; //Particle Position
-	string mSkin; //Particle texture
-	float mLifeTime; //Life time of Particle
 };
 
 //IMesh* CParticle::mMesh = gpEngine->LoadMesh("particle.x");

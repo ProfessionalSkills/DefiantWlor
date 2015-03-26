@@ -27,7 +27,17 @@ CParticleEmitter::~CParticleEmitter()
 //-----------------------------------------------------
 // PARTICLE EMITTER CLASS METHODS
 //-----------------------------------------------------
-void CParticleEmitter::UpdateSystem()
+bool CParticleEmitter::UpdateSystem()
+{
+	return false;
+}
+
+void CParticleEmitter::EmitParticle()
+{
+
+}
+
+void CParticleEmitter::SetEmitPosition()
 {
 
 }

@@ -9,7 +9,7 @@
 #include "Particles.h"
 
 I3DEngine*   gpEngine = New3DEngine(kTLX);
-IMesh* CParticle::mMesh = nullptr;
+IMesh* CParticle::mspMshParticle = nullptr;
 
 
 //-----------------------------------------------------
@@ -23,5 +23,5 @@ CParticle::CParticle()
 
 CParticle::~CParticle()
 {
-	//mMesh->RemoveModel(mModel);
+	mspMshParticle->RemoveModel(mModel);
 }

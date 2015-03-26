@@ -52,9 +52,6 @@
     <Filter Include="Entities\Game Objects\Child\Resource">
       <UniqueIdentifier>{d5271a17-40d2-41dc-a7af-916d633b88d5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Entities\Game Objects\Child\Structure">
-      <UniqueIdentifier>{77e926b3-2d1e-41ab-9bb2-215519c76de2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Entities\Game Objects\Child\Agent\Base">
       <UniqueIdentifier>{aecc5f8e-a375-422d-8188-7dc2364765eb}</UniqueIdentifier>
     </Filter>
@@ -94,30 +91,6 @@
     <Filter Include="Entities\Game Objects\Child\Agent\Child\Air Units\Child">
       <UniqueIdentifier>{38d4b859-20d6-421f-b3e2-654180ac4c5d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Entities\Game Objects\Child\Structure\Base">
-      <UniqueIdentifier>{26a35360-28e7-4af4-b6de-fb468669fbcd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Entities\Game Objects\Child\Structure\Child">
-      <UniqueIdentifier>{28175e33-182d-4c32-ba1e-349f63b59912}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Entities\Game Objects\Child\Structure\Child\Static">
-      <UniqueIdentifier>{c2980e79-3c28-4bd8-a233-804a953e4881}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Entities\Game Objects\Child\Structure\Child\Production">
-      <UniqueIdentifier>{1cbd3ad1-4b5e-4720-8075-165d0fbadab6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Entities\Game Objects\Child\Structure\Child\Production\Base">
-      <UniqueIdentifier>{988f354f-9591-4663-ba0f-3b9d59e78460}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Entities\Game Objects\Child\Structure\Child\Production\Child">
-      <UniqueIdentifier>{d2099c92-b630-4d8f-ac08-6b126b1db062}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Entities\Game Objects\Child\Structure\Child\Static\Base">
-      <UniqueIdentifier>{8a2d9b0e-b623-4228-ab92-4990c3732485}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Entities\Game Objects\Child\Structure\Child\Static\Child">
-      <UniqueIdentifier>{5e5b40ae-1cf4-44ed-8f9b-4050755ad5d4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="World Representation\Grid">
       <UniqueIdentifier>{e4a6ddda-9bf7-4e3f-a561-46cac21eaea0}</UniqueIdentifier>
     </Filter>
@@ -135,6 +108,33 @@
     </Filter>
     <Filter Include="Pathfinding">
       <UniqueIdentifier>{a81d0aa8-8853-4b39-93db-5616bbedfd4b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Game Objects\Child\Structure">
+      <UniqueIdentifier>{77e926b3-2d1e-41ab-9bb2-215519c76de2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Game Objects\Child\Structure\Base">
+      <UniqueIdentifier>{26a35360-28e7-4af4-b6de-fb468669fbcd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Game Objects\Child\Structure\Child">
+      <UniqueIdentifier>{28175e33-182d-4c32-ba1e-349f63b59912}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Game Objects\Child\Structure\Child\Static">
+      <UniqueIdentifier>{c2980e79-3c28-4bd8-a233-804a953e4881}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Game Objects\Child\Structure\Child\Static\Base">
+      <UniqueIdentifier>{8a2d9b0e-b623-4228-ab92-4990c3732485}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Game Objects\Child\Structure\Child\Static\Child">
+      <UniqueIdentifier>{5e5b40ae-1cf4-44ed-8f9b-4050755ad5d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Game Objects\Child\Structure\Child\Production">
+      <UniqueIdentifier>{1cbd3ad1-4b5e-4720-8075-165d0fbadab6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Game Objects\Child\Structure\Child\Production\Base">
+      <UniqueIdentifier>{988f354f-9591-4663-ba0f-3b9d59e78460}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Game Objects\Child\Structure\Child\Production\Child">
+      <UniqueIdentifier>{d2099c92-b630-4d8f-ac08-6b126b1db062}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

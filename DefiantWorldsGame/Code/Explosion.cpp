@@ -1,14 +1,12 @@
 #include "Explosion.h"
-
-CExplosion::CExplosion(IModel* emitter, IMesh* particleMesh)
+CExplosion::CExplosion(IModel* emitter)
 {
-	rand = new CRandomiser();
 	mEmitter = emitter;
 	SetEmitPosition();
 
 	for (int i = 0; i < mParticleNumber; i++)
 	{
-		EmitParticle(particleMesh);
+		EmitParticle();
 	}
 }
 
@@ -19,50 +17,55 @@ CExplosion::~CExplosion()
 
 void CExplosion::SetEmitPosition()
 {
-	mEmitPosition = { mEmitter->GetX(), mEmitter->GetY(), mEmitter->GetZ() };
+	mParticleOrigen = { mEmitter->GetX(), mEmitter->GetY(), mEmitter->GetZ() };
 }
 
-DirectX::XMFLOAT3 CExplosion::GetEmitPosition()
-{
-	return mEmitPosition;
-}
 
-void CExplosion::EmitParticle(IMesh* particleMesh)
+void CExplosion::EmitParticle()
 {
 	CParticle* mNewParticle = new CParticle();
-	mNewParticle->mMesh = particleMesh;
-	mNewParticle->mModel = mNewParticle->mMesh->CreateModel(mEmitPosition.x, mEmitPosition.y, mEmitPosition.z);
-	mNewParticle->mModel->Scale(0.1f);
-	mNewParticle->mModel->SetSkin("OrangeStar.tga");
-	mNewParticle->mMoveVector.x = rand->GetRandomFloat(-8.0f, 8.0f);
-	mNewParticle->mMoveVector.y = rand->GetRandomFloat(-8.0f, 8.0f);
-	mNewParticle->mMoveVector.z = rand->GetRandomFloat(-8.0f, 8.0f);
 
-	mNewParticle->mPosition = mEmitPosition;
-	mNewParticle->mLifeTime = 3.5f;
-	Particles.push_back(mNewParticle);
+	mNewParticle->mModel = mNewParticle->mspMshParticle->CreateModel(mParticleOrigen.x, mParticleOrigen.y, mParticleOrigen.z);
+	mNewParticle->mModel->Scale(0.1f);
+	//mNewParticle->mModel->SetSkin("Smoke1_tlxmul.jpg");
+	mNewParticle->SetVector(gpRandomiser->GetRandomFloat(-kExplosionVelocity, kExplosionVelocity),
+		gpRandomiser->GetRandomFloat(-kExplosionVelocity, kExplosionVelocity), gpRandomiser->GetRandomFloat(-kExplosionVelocity, kExplosionVelocity));
+
+	mNewParticle->SetPosition(mParticleOrigen);
+	mNewParticle->SetLifeTime(kExplosionLifeTime);
+	mParticles.push_back(mNewParticle);
 }
 
-void CExplosion::UpdateSystem(float mFrameTime, IModel* emitter, IMesh* particleMesh, ICamera* myCamera)
+bool CExplosion::UpdateSystem()
 {
-	vector<CParticle*>::iterator itParticle = Particles.begin();
-
-	while (itParticle != Particles.end())
+	if (mParticles.size() <= 0)
 	{
-		(*itParticle)->mModel->MoveX((*itParticle)->mMoveVector.x * mFrameTime);
-		(*itParticle)->mModel->MoveY((*itParticle)->mMoveVector.y * mFrameTime);
-		(*itParticle)->mModel->MoveZ((*itParticle)->mMoveVector.z * mFrameTime);
-
-		(*itParticle)->mLifeTime -= mFrameTime;
-
-		if ((*itParticle)->mLifeTime <= 0.0f)
+		return false;
+	}
+	vector<CParticle*>::iterator itParticle = mParticles.begin();
+	while (itParticle != mParticles.end())
+	{
+		if ((*itParticle)->GetPosition().y <= 5.0f)
 		{
-			(*itParticle)->~CParticle();
-			itParticle = Particles.erase(itParticle);
+			(*itParticle)->SetVector((*itParticle)->GetMoveVector().x, ((*itParticle)->GetMoveVector().y * -0.9f), (*itParticle)->GetMoveVector().z);
+		}
+		(*itParticle)->SetVector((*itParticle)->GetMoveVector().x, ((*itParticle)->GetMoveVector().y - (10.0f * gFrameTime)), (*itParticle)->GetMoveVector().z);
+
+		(*itParticle)->mModel->MoveX((*itParticle)->GetMoveVector().x * gFrameTime);
+		(*itParticle)->mModel->MoveY((*itParticle)->GetMoveVector().y * gFrameTime);
+		(*itParticle)->mModel->MoveZ((*itParticle)->GetMoveVector().z * gFrameTime);
+		(*itParticle)->SetLifeTime((*itParticle)->GetLifeTime() - gFrameTime);
+
+		if ((*itParticle)->GetLifeTime() <= 0.0f)
+		{
+			//(*itParticle)->~CParticle();
+			SafeDelete((*itParticle));
+			itParticle = mParticles.erase(itParticle);
 		}
 		else
 		{
 			itParticle++;
 		}
 	}
+	return true;
 }

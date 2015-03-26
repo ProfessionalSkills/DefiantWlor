@@ -65,11 +65,6 @@ void CSpaceUnit::Move()
 	mWorldPos.z += mSpeed*gFrameTime;
 }
 
-bool CSpaceUnit::Destroy()
-{
-	return false;
-}
-
 void CSpaceUnit::UnloadIModel()
 {
 

@@ -1,30 +1,24 @@
 #ifndef _SMOKE_H
 #define _SMOKE_H
 
-#include "Particles.h"
+#include "ParticleEmitter.h"
 
-using namespace tle;
 //using namespace std;
-
-class CSmoke
+const DX::XMFLOAT3 kVelocity{ 1.0f, 1.5f, 1.0f };
+const float kEmitTime = 0.04f;
+const float kScaleIncrement = 0.0f;
+const float kSmokeLifeTime = 3.5f;
+class CSmoke : public CParticleEmitter
 {
 protected:
-	IModel* mEmitter;
-	DirectX::XMFLOAT3 mEmitPosition;
-	vector<CParticle*> Particles;
-	CRandomiser* rand;
 	float mEmitterCountdown;
-	float mEmitterPeriod;
-
 public:
-
-	CSmoke(IModel* emitter, IMesh* particleMesh);
+	CSmoke(IModel* emitter);
 	~CSmoke();
 
-	void EmitParticle(IMesh* particleMesh);
+	void EmitParticle();
 	void SetEmitPosition();
-	DirectX::XMFLOAT3 GetEmitPosition();
-	void UpdateSystem(float mFrameTime, IModel* emitter, IMesh* particleMesh, ICamera* myCamera);
+	bool UpdateSystem();
 };
 
 #endif

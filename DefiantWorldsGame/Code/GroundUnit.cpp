@@ -52,23 +52,33 @@ void CGroundUnit::Spawn(CGrid* pGrid, SPointData pCentre)
 
 bool CGroundUnit::Update()
 {
-	if (HasTarget())
+	if (mState != OBJ_DEAD)
 	{
-		if (LookingAt())
+		if (HasTarget())
 		{
-			Move();
+			if (LookingAt())
+			{
+				Move();
+			}
 		}
 	}
 	// Check if the model is still alive
-	if (mState == OBJ_DEAD)
-	{
-		Destroy();
-		return false;
-	}
 	else
 	{
-		return true;
+		if (!mDestructionExplosion)
+		{
+			return false;
+		}
+		else
+		{
+			if (!mDestructionExplosion->UpdateSystem())
+			{
+				SafeDelete(mDestructionExplosion);
+			}
+			
+		}
 	}
+	return true;
 }
 
 bool CGroundUnit::LookingAt()
@@ -97,11 +107,6 @@ bool CGroundUnit::LookingAt()
 	{
 		return true;
 	}
-}
-
-bool CGroundUnit::Destroy()
-{
-	return false;
 }
 
 void CGroundUnit::Move()

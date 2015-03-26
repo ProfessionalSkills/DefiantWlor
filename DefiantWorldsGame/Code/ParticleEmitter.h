@@ -8,14 +8,13 @@
 //-----------------------------------------------------
 // INCLUDES
 //-----------------------------------------------------
-#include "Particles.h"
+#include "Common.h"
 
 
 //-----------------------------------------------------
 // CONSTANTS
 //-----------------------------------------------------
-const int MAX_PARTICLE_NUMBER = 1000;
-
+const int mParticleNumber = 100;
 //-----------------------------------------------------
 // PARTICLE EMITTER CLASS
 //-----------------------------------------------------
@@ -24,22 +23,22 @@ class CParticleEmitter
 protected:
 	// EMITTER DATA
 	//---------------------------
-	int mParticleNumber;
-	float mParticleSpeed;
-	vector<CParticle> mParticles;
-
+	vector<CParticle*> mParticles;
+	DX::XMFLOAT3 mParticleVelocity;
+	DX::XMFLOAT3 mParticleOrigen;
 	//EMITTER MODEL SOURCE
-	IModel* parent;
-	
+	IModel* mEmitter;
+public:
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
 	CParticleEmitter();
 	~CParticleEmitter();
 
-
 	// VIRTUAL METHODS
 	//---------------------------
-	virtual void UpdateSystem();
+	virtual bool UpdateSystem();
+	virtual void EmitParticle();
+	virtual void SetEmitPosition();
 };
 
 

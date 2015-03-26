@@ -47,7 +47,6 @@ public:
 	void Spawn(CGrid* pGrid, SPointData pCentre);
 
 private:
-	virtual bool Destroy();
 	virtual IModel* CreateModel(DX::XMFLOAT3 pos) = 0;
 };
 
