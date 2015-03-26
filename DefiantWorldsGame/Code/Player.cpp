@@ -29,13 +29,13 @@ CRTSPlayer::CRTSPlayer(EFactions playerFaction) : MINERAL_UPDATE_TIME(5.0f)
 	mpRandomiser = new CRandomiser();
 
 	CSpaceFighter* Temp;
-	for (int i = 0; i <75; i++)
+	for (int i = 0; i <25; i++)
 	{
 		Temp = new CSpaceFighter();
 		mpSpaceUnitsList.push_back(Temp);
 	}
 	CTransport* temp;
-	for (int i = 0; i < 15; i++)
+	for (int i = 0; i < 5; i++)
 	{
 		temp = new CTransport();
 		mpSpaceUnitsList.push_back(temp);
