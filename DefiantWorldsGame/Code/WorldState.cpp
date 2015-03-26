@@ -921,7 +921,7 @@ void CWorldState::StateSetup()
 	{
 		// INITIALISE PLAYERS
 		//-----------------------------
-		mpPlayerManager->CreatePlayers(FAC_EARTH_DEFENSE_FORCE, 1);
+		mpPlayerManager->CreatePlayers(FAC_EARTH_DEFENSE_FORCE, 1, CStateControl::GetInstance()->GetSettingsManager()->GetAIDifficulty());
 		mpHumanPlayer = mpPlayerManager->GetHumanPlayer();
 		mpAIPlayer = mpPlayerManager->GetAIPlayer(0);
 		

@@ -29,7 +29,7 @@ class CRTSAIPlayer : public CRTSPlayer
 public:
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
-	CRTSAIPlayer(EFactions playerFaction);
+	CRTSAIPlayer(EFactions playerFaction, int difficulty);
 	~CRTSAIPlayer();
 
 
@@ -65,7 +65,11 @@ private:
 
 	// CONSTANTS
 	//---------------------------
-	const float UPDATE_TIME;
+	float UPDATE_TIME;
+	float MIN_WAIT;
+	float MAX_WAIT;
+	int MIN_NEW_ITEMS;
+	int MAX_NEW_ITEMS;
 
 
 	// CONTAINERS

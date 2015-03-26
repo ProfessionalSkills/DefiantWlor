@@ -22,7 +22,7 @@ CRTSPlayer::CRTSPlayer(EFactions playerFaction) : MINERAL_UPDATE_TIME(5.0f)
 	mNumSpaceFighter = 0;
 	mNumTransport = 0;
 	mMineralBaseAddition = 100;
-	mPopLimit = 150;
+	mPopLimit = 250;
 	mCurPop = 0;
 	mTimeToMineralUpdate = MINERAL_UPDATE_TIME;
 	mpPlayerGrid = nullptr;
