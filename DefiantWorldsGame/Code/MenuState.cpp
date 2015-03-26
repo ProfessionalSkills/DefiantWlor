@@ -29,20 +29,12 @@ CMenuState::~CMenuState()
 //-----------------------------------------------------
 void CMenuState::NewGame()
 {
-	gCurState = GS_WORLD;
-
-	// Unload any previous players & create new players
-	CPlayerManager* pPlayerManager = CStateControl::GetInstance()->GetPlayerManager();
-	pPlayerManager->RemovePlayers();
-	pPlayerManager->PlayersUnloaded();
-	pPlayerManager->CreatePlayers(FAC_EARTH_DEFENSE_FORCE, 1);
+	gCurState = GS_NEW_GAME;
 }
 
 void CMenuState::LoadGame()
 {
 	gCurState = GS_WORLD;
-	
-	// Don't remove or loapd new players
 }
 
 void CMenuState::ChangeSettings()

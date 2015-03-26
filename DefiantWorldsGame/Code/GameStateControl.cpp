@@ -21,6 +21,7 @@ CStateControl::CStateControl(EGameStates inStartState)
 	mpMenuState = new CMenuState();
 	mpSpaceState = new CSpaceState();
 	mpWorldState = new CWorldState();
+	mpNewGameState = new CNewGameState();
 	mpSettingsState = new CSettingsScreenState();
 
 	// Initialise player manager
@@ -44,6 +45,9 @@ CStateControl::CStateControl(EGameStates inStartState)
 			break;
 		case GS_WORLD:
 			mpCurGameState = mpWorldState;
+			break;
+		case GS_NEW_GAME:
+			mpCurGameState = mpNewGameState;
 			break;
 		case GS_SETTINGS:
 			mpCurGameState = mpSettingsState;
@@ -86,6 +90,10 @@ void CStateControl::SetCurrentState(EGameStates inNewState)
 		break;
 	case GS_WORLD:
 		mpCurGameState = mpWorldState;
+
+		break;
+	case GS_NEW_GAME:
+		mpCurGameState = mpNewGameState;
 
 		break;
 	case GS_SETTINGS:
