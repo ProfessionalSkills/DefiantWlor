@@ -882,7 +882,7 @@ void CWorldState::StateSetup()
 
 
 	// EARTH
-	mpEarthGrid = new CGrid(DX::XMFLOAT3(0.0f, 0.3f, 0.0f));
+	mpEarthGrid = new CGrid(DX::XMFLOAT3(-2000.0f, 0.4f, 0.0f));
 
 	DX::XMFLOAT3 gridCentre = mpEarthGrid->GetGridCentrePos();
 	DX::XMFLOAT3 gridBottomLeft = mpEarthGrid->GetGridStartPos();
@@ -890,31 +890,31 @@ void CWorldState::StateSetup()
 	mpMdlSkybox->SetPosition(gridCentre.x, -1.0f, gridCentre.z);
 
 	mpMshGridArea = gpEngine->LoadMesh("Grid.x");
-	mpMdlEarthGridArea = mpMshGridArea->CreateModel(gridCentre.x, 0.2f, gridCentre.z);
+	mpMdlEarthGridArea = mpMshGridArea->CreateModel(gridCentre.x, 0.3f, gridCentre.z);
 	mpMdlEarthGridArea->ScaleX((GRID_SIZE_X * GRID_TILE_SIZE) / 2.0f);
 	mpMdlEarthGridArea->ScaleZ((GRID_SIZE_Y * GRID_TILE_SIZE) / 2.0f);
 
 	mpMshGrassArea = gpEngine->LoadMesh("Grass.x");
 	mpMdlEarthGrassArea = mpMshGrassArea->CreateModel(gridCentre.x, 0.1f, gridCentre.z);
-	mpMdlEarthGrassArea->ScaleX(GRID_SIZE_X * GRID_TILE_SIZE * 2.0f);
-	mpMdlEarthGrassArea->ScaleZ(GRID_SIZE_Y * GRID_TILE_SIZE * 2.0f);
+	mpMdlEarthGrassArea->ScaleX(GRID_SIZE_X * GRID_TILE_SIZE * 4.0f);
+	mpMdlEarthGrassArea->ScaleZ(GRID_SIZE_Y * GRID_TILE_SIZE * 4.0f);
 
 
 	// MARS
-	float marsXStart = (float)(GRID_SIZE_X * GRID_TILE_SIZE) + 1500.0f;
-	mpMarsGrid = new CGrid(DX::XMFLOAT3(marsXStart, 0.3f, 0.0f));
+	float marsXStart = (float)(GRID_SIZE_X * GRID_TILE_SIZE) + 4000.0f;
+	mpMarsGrid = new CGrid(DX::XMFLOAT3(marsXStart, 0.4f, 0.0f));
 
 	gridCentre = mpMarsGrid->GetGridCentrePos();
 	gridBottomLeft = mpMarsGrid->GetGridStartPos();
 	gridTopRight = mpMarsGrid->GetGridEndPos();
 
-	mpMdlMarsGridArea = mpMshGridArea->CreateModel(gridCentre.x, 0.2f, gridCentre.z);
+	mpMdlMarsGridArea = mpMshGridArea->CreateModel(gridCentre.x, 0.3f, gridCentre.z);
 	mpMdlMarsGridArea->ScaleX((GRID_SIZE_X * GRID_TILE_SIZE) / 2.0f);
 	mpMdlMarsGridArea->ScaleZ((GRID_SIZE_Y * GRID_TILE_SIZE) / 2.0f);
 
 	mpMdlMarsGrassArea = mpMshGrassArea->CreateModel(gridCentre.x, 0.1f, gridCentre.z);
-	mpMdlMarsGrassArea->ScaleX(GRID_SIZE_X * GRID_TILE_SIZE * 2.0f);
-	mpMdlMarsGrassArea->ScaleZ(GRID_SIZE_Y * GRID_TILE_SIZE * 2.0f);
+	mpMdlMarsGrassArea->ScaleX(GRID_SIZE_X * GRID_TILE_SIZE * 4.0f);
+	mpMdlMarsGrassArea->ScaleZ(GRID_SIZE_Y * GRID_TILE_SIZE * 4.0f);
 	mpMdlMarsGrassArea->SetSkin("sand.jpg");
 
 
@@ -985,7 +985,7 @@ void CWorldState::StateSetup()
 	gridTopRight = mpEarthGrid->GetGridEndPos();
 
 	CRandomiser* pRandomiser = new CRandomiser();
-	int numTrees = pRandomiser->GetRandomInt(150, 200);
+	int numTrees = pRandomiser->GetRandomInt(180, 220);
 
 	for (int i = 0; i < numTrees; i++)
 	{
@@ -997,8 +997,8 @@ void CWorldState::StateSetup()
 		// Get random x and z position
 		do
 		{
-			x = pRandomiser->GetRandomFloat(-400.0, 1000.0);
-			z = pRandomiser->GetRandomFloat(-50.0, 1000.0);
+			x = pRandomiser->GetRandomFloat(-2400.0, -1000.0);
+			z = pRandomiser->GetRandomFloat(-1000.0, 1000.0);
 		} while (x > (gridBottomLeft.x - 30.0f) && x < (gridTopRight.x + 30.0f) && z >(gridBottomLeft.z - 30.0f) && z < (gridTopRight.z + 30.0f));
 
 		// Create a random tree or bush
@@ -1013,7 +1013,7 @@ void CWorldState::StateSetup()
 	gridBottomLeft = mpMarsGrid->GetGridStartPos();
 	gridTopRight = mpMarsGrid->GetGridEndPos();
 
-	int numRocks = pRandomiser->GetRandomInt(150, 200);
+	int numRocks = pRandomiser->GetRandomInt(180, 220);
 
 	for (int i = 0; i < numTrees; i++)
 	{
@@ -1025,8 +1025,8 @@ void CWorldState::StateSetup()
 		// Get random x and z position
 		do
 		{
-			x = pRandomiser->GetRandomFloat(1500.0, 3000.0);
-			z = pRandomiser->GetRandomFloat(-50.0, 1000.0);
+			x = pRandomiser->GetRandomFloat(3200.0, 5800.0);
+			z = pRandomiser->GetRandomFloat(-1000.0, 1000.0);
 		} while (x > (gridBottomLeft.x - 30.0f) && x < (gridTopRight.x + 30.0f) && z >(gridBottomLeft.z - 30.0f) && z < (gridTopRight.z + 30.0f));
 
 		// Create a random tree or bush
