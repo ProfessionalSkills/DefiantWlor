@@ -1049,7 +1049,7 @@ void CWorldState::StateSetup()
 	mpCamCurrent = mpCamEarth;
 
 	// Camera limitations
-	float threshold = 100.0f;
+	float threshold = 50.0f;
 	mMinEarthPos = mpEarthGrid->GetGridStartPos();
 	mMinEarthPos.x -= threshold;
 	mMinEarthPos.z -= threshold;
@@ -1094,6 +1094,7 @@ void CWorldState::StateUpdate()
 
 	// Matrix for identifying direction to scroll
 	DX::XMFLOAT4X4 camMatrix;
+	DX::XMFLOAT3 camNormalDirection;
 	mpCamCurrent->GetCamera()->GetMatrix(&camMatrix.m[0][0]);
 
 	// Check for side scrolling
@@ -1101,28 +1102,52 @@ void CWorldState::StateUpdate()
 	{
 		// Mouse on left side of screen
 		// Move in the negative local x direction but do not move on the Y axis
-		mpCamCurrent->AdjustPivotPoint(DX::XMFLOAT3(camMatrix.m[0][0] * -CAM_MOVE_SPEED * gFrameTime, 0.0f, camMatrix.m[0][2] * -CAM_MOVE_SPEED * gFrameTime));
+		camNormalDirection = { camMatrix.m[0][0], 0.0f, camMatrix.m[0][2] };
+		DX::XMVECTOR vec = DX::XMLoadFloat3(&camNormalDirection);
+		vec = DX::XMVector4Normalize(vec);
+		DX::XMStoreFloat3(&camNormalDirection, vec);
+		camNormalDirection.x *= -CAM_MOVE_SPEED * gFrameTime;
+		camNormalDirection.z *= -CAM_MOVE_SPEED * gFrameTime;
+		mpCamCurrent->AdjustPivotPoint(camNormalDirection);
 	}
 
 	if (mpMouseScreenPos->mPosX > WINDOW_WIDTH - EDGE_THRESHOLD || gpEngine->KeyHeld(Key_D))
 	{
 		// Mouse on right side of screen
 		// Move in the local x direction but do not move on the Y axis
-		mpCamCurrent->AdjustPivotPoint(DX::XMFLOAT3(camMatrix.m[0][0] * CAM_MOVE_SPEED * gFrameTime, 0.0f, camMatrix.m[0][2] * CAM_MOVE_SPEED * gFrameTime));
+		camNormalDirection = { camMatrix.m[0][0], 0.0f, camMatrix.m[0][2] };
+		DX::XMVECTOR vec = DX::XMLoadFloat3(&camNormalDirection);
+		vec = DX::XMVector4Normalize(vec);
+		DX::XMStoreFloat3(&camNormalDirection, vec);
+		camNormalDirection.x *= CAM_MOVE_SPEED * gFrameTime;
+		camNormalDirection.z *= CAM_MOVE_SPEED * gFrameTime;
+		mpCamCurrent->AdjustPivotPoint(camNormalDirection);
 	}
 
 	if (mpMouseScreenPos->mPosY < EDGE_THRESHOLD || gpEngine->KeyHeld(Key_W))
 	{
 		// Mouse on top side of screen
 		// Move in the local z direction but do not move on the Y axis
-		mpCamCurrent->AdjustPivotPoint(DX::XMFLOAT3(camMatrix.m[2][0] * CAM_MOVE_SPEED * gFrameTime, 0.0f, camMatrix.m[2][2] * CAM_MOVE_SPEED * gFrameTime));
+		camNormalDirection = { camMatrix.m[2][0], 0.0f, camMatrix.m[2][2] };
+		DX::XMVECTOR vec = DX::XMLoadFloat3(&camNormalDirection);
+		vec = DX::XMVector4Normalize(vec);
+		DX::XMStoreFloat3(&camNormalDirection, vec);
+		camNormalDirection.x *= CAM_MOVE_SPEED * gFrameTime;
+		camNormalDirection.z *= CAM_MOVE_SPEED * gFrameTime;
+		mpCamCurrent->AdjustPivotPoint(camNormalDirection);
 	}
 
 	if (mpMouseScreenPos->mPosY > WINDOW_HEIGHT - EDGE_THRESHOLD || gpEngine->KeyHeld(Key_S))
 	{
 		// Mouse on bottom side of screen
 		// Move in the negative local z direction but do not move on the Y axis
-		mpCamCurrent->AdjustPivotPoint(DX::XMFLOAT3(camMatrix.m[2][0] * -CAM_MOVE_SPEED * gFrameTime, 0.0f, camMatrix.m[2][2] * -CAM_MOVE_SPEED * gFrameTime));
+		camNormalDirection = { camMatrix.m[2][0], 0.0f, camMatrix.m[2][2] };
+		DX::XMVECTOR vec = DX::XMLoadFloat3(&camNormalDirection);
+		vec = DX::XMVector4Normalize(vec);
+		DX::XMStoreFloat3(&camNormalDirection, vec);
+		camNormalDirection.x *= -CAM_MOVE_SPEED * gFrameTime;
+		camNormalDirection.z *= -CAM_MOVE_SPEED * gFrameTime;
+		mpCamCurrent->AdjustPivotPoint(camNormalDirection);
 	}
 
 	// Camera rotation keys
@@ -1146,40 +1171,37 @@ void CWorldState::StateUpdate()
 		mpCamCurrent->AdjustTheta(DX::XMConvertToRadians(CAM_MOVE_SPEED * gFrameTime));
 	}
 
-	// Get camera's position
-	DX::XMFLOAT3 camPos; 
-	camPos.x = mpCamCurrent->GetCamera()->GetX();
-	camPos.z = mpCamCurrent->GetCamera()->GetZ();
+	// Get camera's looking at position
+	DX::XMFLOAT3 pivotPos;
+	mpCamCurrent->GetPivotPoint(pivotPos);
 
 	// Check camera is within boundaries
 	if (mpCamCurrent == mpCamEarth)
 	{
-		if (camPos.x >= mMinEarthPos.x && camPos.x <= mMaxEarthPos.x &&
-			camPos.z >= mMinEarthPos.z && camPos.z <= mMaxEarthPos.z)
+		if (pivotPos.x >= mMinEarthPos.x && pivotPos.x <= mMaxEarthPos.x &&
+			pivotPos.z >= mMinEarthPos.z && pivotPos.z <= mMaxEarthPos.z)
 		{
 			// Remember current position as previous
-			mCurCamPrevPos = camPos;
+			mCurCamPrevPos = pivotPos;
 		}
 		else
 		{
 			// Otherwise set the previous position as it is out of area
-			mpCamCurrent->GetCamera()->SetX(mCurCamPrevPos.x);
-			mpCamCurrent->GetCamera()->SetZ(mCurCamPrevPos.z);
+			mpCamCurrent->SetPivotPoint(mCurCamPrevPos);
 		}
 	}
 	else
 	{
-		if (camPos.x >= mMinMarsPos.x && camPos.x <= mMaxMarsPos.x &&
-			camPos.z >= mMinMarsPos.z && camPos.z <= mMaxMarsPos.z)
+		if (pivotPos.x >= mMinMarsPos.x && pivotPos.x <= mMaxMarsPos.x &&
+			pivotPos.z >= mMinMarsPos.z && pivotPos.z <= mMaxMarsPos.z)
 		{
 			// Remember current position as previous
-			mCurCamPrevPos = camPos;
+			mCurCamPrevPos = pivotPos;
 		}
 		else
 		{
 			// Otherwise set the previous position as it is out of area
-			mpCamCurrent->GetCamera()->SetX(mCurCamPrevPos.x);
-			mpCamCurrent->GetCamera()->SetZ(mCurCamPrevPos.z);
+			mpCamCurrent->SetPivotPoint(mCurCamPrevPos);
 		}
 	}
 

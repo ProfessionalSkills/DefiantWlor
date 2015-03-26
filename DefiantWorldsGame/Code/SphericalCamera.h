@@ -25,12 +25,12 @@ public:
 
 	// MUTATORS
 	//---------------------------
-	inline void SetPivotPoint(DX::XMFLOAT3 point)
+	inline void SetPivotPoint(DX::XMFLOAT3& point)
 	{
 		mPivotPoint = point;
 	}
 
-	inline void AdjustPivotPoint(DX::XMFLOAT3 amount)
+	inline void AdjustPivotPoint(DX::XMFLOAT3& amount)
 	{
 		mPivotPoint.x += amount.x;
 		mPivotPoint.y += amount.y;
@@ -64,7 +64,7 @@ public:
 
 	inline void AdjustTheta(float amount)
 	{
-		mθ = Clampf(DX::XMConvertToRadians(10.0f), DX::XMConvertToRadians(40.0f), mθ + amount / 2.0f);
+		mθ = Clampf(DX::XMConvertToRadians(10.0f), DX::XMConvertToRadians(50.0f), mθ + amount / 2.0f);
 	}
 
 
@@ -73,6 +73,11 @@ public:
 	inline ICamera* GetCamera()
 	{
 		return mpCamera;
+	}
+
+	inline void GetPivotPoint(DX::XMFLOAT3& point)
+	{
+		point = mPivotPoint;
 	}
 
 
