@@ -751,19 +751,19 @@ void CRTSAIPlayer::AssessSituation()
 		// First check if the economy is at a reasonable level
 		if (mNumMinerals < 2000 || mPopLimit <= mCurPop)
 		{
+			// FUTURE: Calculate relationship between all unit types to determine which to get?
 			// not enough minerals - choose an option that does not reqiure funds
 			task = mpRandomiser->GetRandomInt(static_cast<int>(Q_MOVE_UNIT), static_cast<int>(Q_CHANGE_TACTIC));
 			priority = mpRandomiser->GetRandomInt(5, 100);
 			mpTaskQ.push(new CBuildRequest(static_cast<EQueueObjectType>(task), priority));
-			return;
 		}
-
-		// FUTURE: Calculate relationship between all unit types to determine which to get?
-
-		// Get a random request
-		task = mpRandomiser->GetRandomInt(static_cast<int>(Q_FIGHTER), static_cast<int>(Q_CHANGE_TACTIC));
-		priority = mpRandomiser->GetRandomInt(5, 40);
-		mpTaskQ.push(new CBuildRequest(static_cast<EQueueObjectType>(task), priority));
+		else
+		{
+			// Get a random request
+			task = mpRandomiser->GetRandomInt(static_cast<int>(Q_FIGHTER), static_cast<int>(Q_CHANGE_TACTIC));
+			priority = mpRandomiser->GetRandomInt(5, 40);
+			mpTaskQ.push(new CBuildRequest(static_cast<EQueueObjectType>(task), priority));
+		}
 	}
 }
 
