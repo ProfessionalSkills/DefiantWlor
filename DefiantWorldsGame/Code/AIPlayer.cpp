@@ -14,11 +14,6 @@
 //-----------------------------------------------------
 CRTSAIPlayer::CRTSAIPlayer(EFactions playerFaction, int startingResources, int difficulty) : CRTSPlayer(playerFaction, startingResources)
 {
-	// Initialise first 10 tasks of AI player
-	mpTaskQ.push(new CBuildRequest(Q_WORKER, 1));
-	mpTaskQ.push(new CBuildRequest(Q_WORKER, 1));
-	mpTaskQ.push(new CBuildRequest(Q_WORKER, 1));
-
 	// Set difficulty values
 	switch (difficulty)
 	{
@@ -33,6 +28,11 @@ CRTSAIPlayer::CRTSAIPlayer(EFactions playerFaction, int startingResources, int d
 		// After waiting, determine how many new items are queued
 		MIN_NEW_ITEMS = 0;
 		MAX_NEW_ITEMS = 3;
+
+		// Initialise first 3 tasks of AI player
+		mpTaskQ.push(new CBuildRequest(Q_WORKER, 1));
+		mpTaskQ.push(new CBuildRequest(Q_WORKER, 20));
+		mpTaskQ.push(new CBuildRequest(Q_WORKER, 40));
 		break;
 	case 1:				// Medium
 		// Initialise update time
@@ -45,6 +45,11 @@ CRTSAIPlayer::CRTSAIPlayer(EFactions playerFaction, int startingResources, int d
 		// After waiting, determine how many new items are queued
 		MIN_NEW_ITEMS = 1;
 		MAX_NEW_ITEMS = 4;
+
+		// Initialise first 3 tasks of AI player
+		mpTaskQ.push(new CBuildRequest(Q_WORKER, 1));
+		mpTaskQ.push(new CBuildRequest(Q_WORKER, 10));
+		mpTaskQ.push(new CBuildRequest(Q_WORKER, 15));
 		break;
 	case 2:				// Difficult
 		// Initialise update time
@@ -57,6 +62,13 @@ CRTSAIPlayer::CRTSAIPlayer(EFactions playerFaction, int startingResources, int d
 		// After waiting, determine how many new items are queued
 		MIN_NEW_ITEMS = 2;
 		MAX_NEW_ITEMS = 5;
+
+		// Initialise first 5 tasks of AI player
+		mpTaskQ.push(new CBuildRequest(Q_WORKER, 1));
+		mpTaskQ.push(new CBuildRequest(Q_WORKER, 1));
+		mpTaskQ.push(new CBuildRequest(Q_WORKER, 1));
+		mpTaskQ.push(new CBuildRequest(Q_CHANGE_TACTIC, 10));
+		mpTaskQ.push(new CBuildRequest(Q_INFANTRY, 15));
 		break;
 	case 3:				// Insane
 		// Initialise update time
@@ -69,6 +81,16 @@ CRTSAIPlayer::CRTSAIPlayer(EFactions playerFaction, int startingResources, int d
 		// After waiting, determine how many new items are queued
 		MIN_NEW_ITEMS = 3;
 		MAX_NEW_ITEMS = 6;
+
+		// Initialise first 10 tasks of AI player
+		mpTaskQ.push(new CBuildRequest(Q_WORKER, 1));
+		mpTaskQ.push(new CBuildRequest(Q_WORKER, 1));
+		mpTaskQ.push(new CBuildRequest(Q_WORKER, 1));
+		mpTaskQ.push(new CBuildRequest(Q_CHANGE_TACTIC, 2));
+		mpTaskQ.push(new CBuildRequest(Q_INFANTRY, 2));
+		mpTaskQ.push(new CBuildRequest(Q_FIGHTER, 4));
+		mpTaskQ.push(new CBuildRequest(Q_SPACE_FIGHTER, 60));
+		mpTaskQ.push(new CBuildRequest(Q_MOTHERSHIP, 80));
 		break;
 	}
 
@@ -686,7 +708,7 @@ void CRTSAIPlayer::AssessSituation()
 		{
 			// not enough minerals - choose an option that does not reqiure funds
 			task = mpRandomiser->GetRandomInt(static_cast<int>(Q_MOVE_UNIT), static_cast<int>(Q_CHANGE_TACTIC));
-			priority = mpRandomiser->GetRandomInt(5, 30);
+			priority = mpRandomiser->GetRandomInt(5, 100);
 			mpTaskQ.push(new CBuildRequest(static_cast<EQueueObjectType>(task), priority));
 			return;
 		}
@@ -695,7 +717,7 @@ void CRTSAIPlayer::AssessSituation()
 
 		// Get a random request
 		task = mpRandomiser->GetRandomInt(static_cast<int>(Q_FIGHTER), static_cast<int>(Q_CHANGE_TACTIC));
-		priority = mpRandomiser->GetRandomInt(5, 30);
+		priority = mpRandomiser->GetRandomInt(5, 40);
 		mpTaskQ.push(new CBuildRequest(static_cast<EQueueObjectType>(task), priority));
 	}
 }
