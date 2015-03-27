@@ -610,46 +610,91 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 		break;
 
 	case Q_CHANGE_TACTIC:
-	{
-		// Generate a random number from 1 - 3 to determine which tactic to use
-		int tactic = mpRandomiser->GetRandomInt((int)Tactics::None, (int)Tactics::Rapid);
-
-		// Determine chosen tactic & set it
-		Tactics selTactic = (Tactics)tactic;
-		mpFleet->SetTactic(selTactic);
-
-		return true;
-		break;
-	}
-	case Q_MOVE_UNIT:
-	{
-		// If there are enough units
-		int size = mpUnitsMap.size();
-		if (size == 0)
 		{
-			return false;
+			// Generate a random number from 1 - 3 to determine which tactic to use
+			int tactic = mpRandomiser->GetRandomInt((int)Tactics::None, (int)Tactics::Rapid);
+
+			// Determine chosen tactic & set it
+			Tactics selTactic = (Tactics)tactic;
+			mpFleet->SetTactic(selTactic);
+
+			return true;
+			break;
 		}
+	case Q_MOVE_UNIT:
+		{
+			// If there are enough units
+			int size = mpUnitsMap.size();
+			if (size == 0)
+			{
+				return false;
+			}
 
-		// Pick a random unit and move it to an arbitrary location
-		int unitNum = mpRandomiser->GetRandomInt(0, size - 1);
+			// Pick a random unit and move it to an arbitrary location
+			int unitNum = mpRandomiser->GetRandomInt(0, size - 1);
 
-		miterUnitsMap = mpUnitsMap.begin();
-		std::advance(miterUnitsMap, unitNum);
+			miterUnitsMap = mpUnitsMap.begin();
+			std::advance(miterUnitsMap, unitNum);
 
-		// Pick a random location to move the unit to
-		DX::XMFLOAT3 newPos;
+			// Pick a random location to move the unit to
+			DX::XMFLOAT3 newPos;
 
-		DX::XMFLOAT3 start = mpPlayerGrid->GetGridStartPos();
-		DX::XMFLOAT3 end = mpPlayerGrid->GetGridEndPos();
+			DX::XMFLOAT3 start = mpPlayerGrid->GetGridStartPos();
+			DX::XMFLOAT3 end = mpPlayerGrid->GetGridEndPos();
 
-		newPos.x = mpRandomiser->GetRandomFloat(start.x, end.x);
-		newPos.z = mpRandomiser->GetRandomFloat(start.z, end.z);
+			newPos.x = mpRandomiser->GetRandomFloat(start.x, end.x);
+			newPos.z = mpRandomiser->GetRandomFloat(start.z, end.z);
 
-		miterUnitsMap->second->SetPathTarget(newPos);
+			miterUnitsMap->second->SetPathTarget(newPos);
 
-		return true;
-		break;
-	}
+			return true;
+			break;
+		}
+	case Q_MOVE_UNIT_GROUP:
+		{
+			// If there are enough units
+			int size = mpUnitsMap.size();
+			if (size < 4)
+			{
+				return false;
+			}
+
+			// Pick a random number of units to select - minimum of 3
+			int num = mpRandomiser->GetRandomInt(2, size - 1);
+			int unit = 0;
+
+			// Loop through 'num' amount of times to select that many units
+			for (int i = 0; i < num; i++)
+			{
+				// Selected a random unit and add it to the selected list of units
+				unit = mpRandomiser->GetRandomInt(0, size - 1);
+				miterUnitsMap = mpUnitsMap.begin();
+				std::advance(miterUnitsMap, unit);
+
+				mpSelectedAgents.push_back(miterUnitsMap->second);
+			}
+
+			// Pick a random location to move the unit to
+			DX::XMFLOAT3 newPos;
+
+			DX::XMFLOAT3 start = mpPlayerGrid->GetGridStartPos();
+			DX::XMFLOAT3 end = mpPlayerGrid->GetGridEndPos();
+
+			newPos.x = mpRandomiser->GetRandomFloat(start.x, end.x);
+			newPos.z = mpRandomiser->GetRandomFloat(start.z, end.z);
+
+			// Loop through the selected agents and set their new position
+			for (miterSelectedAgents = mpSelectedAgents.begin(); miterSelectedAgents != mpSelectedAgents.end(); miterSelectedAgents++)
+			{
+				(*miterSelectedAgents)->SetPathTarget(newPos);
+			}
+
+			// Clear the selected agents list
+			mpSelectedAgents.clear();
+
+			return true;
+			break;
+		}
 	}
 
 	// If it was a unit being built, simply build unit & return true (for now)

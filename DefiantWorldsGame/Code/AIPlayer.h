@@ -75,6 +75,8 @@ private:
 	// CONTAINERS
 	//---------------------------
 	std::priority_queue<CBuildRequest*, std::deque<CBuildRequest*>, SSortByPriority> mpTaskQ;
+	std::vector<CGameAgent*> mpSelectedAgents;
+	std::vector<CGameAgent*>::iterator miterSelectedAgents;
 
 
 	// MISC
