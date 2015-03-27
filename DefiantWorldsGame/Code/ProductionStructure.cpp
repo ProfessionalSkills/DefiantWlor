@@ -102,7 +102,7 @@ EErrorTypes CProductionStructure::AddToQueue(size_t agentIndex, CRTSPlayer* pPla
 	}
 
 	// Check if the player has enough funds
-	if (pPlayer->GetMineralAmount() - mpProductionQueue.front()->GetBuildCost() < 0)
+	if (pPlayer->GetMineralAmount() - mpProductionQueue.back()->GetBuildCost() < 0)
 	{
 		// Not enough funds - remove the object at the front of the queue
 		RemoveFromQueue(mpProductionQueue.size() - 1, pPlayer);
@@ -110,7 +110,7 @@ EErrorTypes CProductionStructure::AddToQueue(size_t agentIndex, CRTSPlayer* pPla
 	}
 
 	// Enough funds - subtract them
-	pPlayer->MineralTransaction(-mpProductionQueue.front()->GetBuildCost());
+	pPlayer->MineralTransaction(-mpProductionQueue.back()->GetBuildCost());
 	mpProductionQueue.back()->SetFaction(pPlayer->GetPlayerFaction());
 
 	// Success
