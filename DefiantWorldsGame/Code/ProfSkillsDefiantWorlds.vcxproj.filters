@@ -291,6 +291,9 @@
     <ClCompile Include="GameStateControl.cpp">
       <Filter>Managers</Filter>
     </ClCompile>
+    <ClCompile Include="GameSaverLoader.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common.h">
@@ -444,6 +447,9 @@
       <Filter>Managers</Filter>
     </ClInclude>
     <ClInclude Include="GameStateControl.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSaverLoader.h">
       <Filter>Managers</Filter>
     </ClInclude>
   </ItemGroup>
