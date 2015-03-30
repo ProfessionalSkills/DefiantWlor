@@ -267,9 +267,6 @@
     <ClCompile Include="SettingsScreenState.cpp">
       <Filter>Game States\Child State Classes</Filter>
     </ClCompile>
-    <ClCompile Include="SettingsManager.cpp">
-      <Filter>Utilities</Filter>
-    </ClCompile>
     <ClCompile Include="Wall.cpp">
       <Filter>Entities\Game Objects\Child\Structure\Child\Static\Child</Filter>
     </ClCompile>
@@ -292,6 +289,9 @@
       <Filter>Managers</Filter>
     </ClCompile>
     <ClCompile Include="GameSaverLoader.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="SettingsManager.cpp">
       <Filter>Managers</Filter>
     </ClCompile>
   </ItemGroup>
@@ -422,9 +422,6 @@
     <ClInclude Include="SettingsScreenState.h">
       <Filter>Game States\Child State Classes</Filter>
     </ClInclude>
-    <ClInclude Include="SettingsManager.h">
-      <Filter>Utilities</Filter>
-    </ClInclude>
     <ClInclude Include="Wall.h">
       <Filter>Entities\Game Objects\Child\Structure\Child\Static\Child</Filter>
     </ClInclude>
@@ -450,6 +447,9 @@
       <Filter>Managers</Filter>
     </ClInclude>
     <ClInclude Include="GameSaverLoader.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="SettingsManager.h">
       <Filter>Managers</Filter>
     </ClInclude>
   </ItemGroup>

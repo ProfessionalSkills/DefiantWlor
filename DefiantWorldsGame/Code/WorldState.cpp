@@ -8,6 +8,7 @@
 //-----------------------------------------------------
 #include "WorldState.h"
 #include "GameStateControl.h"
+#include "GameSaverLoader.h"
 
 
 IMesh* CWorldState::mspMshDrag = nullptr;
@@ -1956,7 +1957,9 @@ void CWorldState::Continue()
 
 void CWorldState::SaveGame()
 {
-
+	std::string fileTest = "TestFile";
+	CGameSaverLoader* pSaver = new CGameSaverLoader();
+	pSaver->SaveGame(fileTest);
 }
 
 void CWorldState::QuitGame()

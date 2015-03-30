@@ -448,3 +448,10 @@ void CRTSPlayer::UnloadPlayerGridModels()
 		(*miterMineralsList)->UnloadIModel();
 	}
 }
+
+void CRTSPlayer::SavePlayerData(std::ofstream& outFile)
+{
+	// Save all of the player information to the file given
+	outFile << "Human Player\n"
+		<< mNumMinerals << " " << mNumSpaceFighter << " " << mNumTransport << " " << mNumMothership << std::endl;
+}

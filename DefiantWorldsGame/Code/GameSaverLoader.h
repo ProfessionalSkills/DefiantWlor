@@ -13,6 +13,8 @@
 #include <fstream>
 #include <sstream>
 
+#include "GameStateControl.h"
+
 
 //-----------------------------------------------------
 // GAME SAVER & LOADER CLASS
@@ -20,10 +22,20 @@
 class CGameSaverLoader
 {
 public:
+	// CONSTRUCTORS & DESTRUCTOR
+	//---------------------------
+	CGameSaverLoader();
+	~CGameSaverLoader();
 
+
+	// METHODS
+	//---------------------------
+	void LoadGame(std::string& fileName);
+	void SaveGame(std::string& fileName);
 
 
 private:
+
 
 };
 
