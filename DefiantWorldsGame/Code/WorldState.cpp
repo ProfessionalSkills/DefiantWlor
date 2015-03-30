@@ -1822,11 +1822,11 @@ void CWorldState::OnUnPause()
 	mMusic->PlaySound();
 
 	// Unload pause menu visuals
-	gpEngine->RemoveFont(mpTitleFont);
+	if (mpTitleFont) gpEngine->RemoveFont(mpTitleFont);
 	mpTitleFont = nullptr;
-	gpEngine->RemoveFont(mpButtonFont);
+	if (mpButtonFont) gpEngine->RemoveFont(mpButtonFont);
 	mpButtonFont = nullptr;
-	gpEngine->RemoveSprite(mpSprBackground);
+	if (mpSprBackground) gpEngine->RemoveSprite(mpSprBackground);
 	mpSprBackground = nullptr;
 
 	while (!mpPauseButtonList.empty())
