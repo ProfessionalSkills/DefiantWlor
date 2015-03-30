@@ -24,7 +24,7 @@ CInfantry::CInfantry()
 	mProductionCost = 0.0f;
 	mCurProductionTimeLeft = mProductionTime;
 	mDamage = 1.0f;
-	hasTarget = false;
+	mHasPathTarget = false;
 
 	//mAttackParticleFX;
 	//mDestroyParticleFX;

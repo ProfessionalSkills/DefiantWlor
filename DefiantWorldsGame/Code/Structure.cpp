@@ -255,6 +255,6 @@ void CStructure::Destroy()
 	pNextTile->SetTileUsage(false);
 
 	// Remove the model
-	mDestructionExplosion = new CExplosion(mpObjModel);
+	mDestructionExplosion = new CExplosion(mpObjModel, 100);
 	UnloadIModel();
 }

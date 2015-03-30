@@ -211,6 +211,7 @@ void SetupEngine()
 	//Ground Unit Meshes
 	//Bomber
 	CBomber::mspMshBomber = gpEngine->LoadMesh("HeliScout.x");
+	CBomber::mspMshBomb = gpEngine->LoadMesh("particle.x");
 	//Fighter
 	CFighter::mspMshFighter = gpEngine->LoadMesh("Helicopter.x");
 	//Worker

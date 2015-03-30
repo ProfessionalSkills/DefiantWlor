@@ -31,11 +31,11 @@ public:
 
 	// OVERRIDE METHODS
 	//---------------------------
-	virtual bool Attack(CGameObject* target, float hitMod, float damageMod);
+	virtual bool Attack(CGameObject* target, float hitMod, float damageMod) = 0;
 	//virtual void MoveTo(CTile* dest);
 	virtual void Move();
 	virtual bool Update();
-	bool LookingAt();
+	bool LookingAt(DX::XMFLOAT3 targetPosition);
 	virtual void UnloadIModel() = 0;
 	virtual void LoadIModel() = 0;
 

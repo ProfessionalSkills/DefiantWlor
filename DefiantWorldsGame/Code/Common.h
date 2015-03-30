@@ -219,6 +219,11 @@ struct SAABoundingBox		// Axis aligned bounding box
 	}
 };
 
+struct SProjectile
+{
+	IModel* mModel;
+	float mSpeed;
+};
 
 //-----------------------------------------------------
 // TEMPLATE FUNCTIONS
@@ -247,6 +252,6 @@ float ToDegrees(float inRadians);
 
 float Dot(const DX::XMFLOAT3 v1, const DX::XMFLOAT3 v2);
 DX::XMFLOAT3 Cross(const  DX::XMFLOAT3 v1, const  DX::XMFLOAT3 v2);
-
+bool BoxCollision(const DX::XMFLOAT3 v1, const DX::XMFLOAT3 v2, float radius);
 
 #endif /* _COMMON_H_ */

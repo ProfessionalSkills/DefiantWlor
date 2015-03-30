@@ -29,7 +29,7 @@ CFighter::CFighter()
 	mState = OBJ_CONSTRUCTING;
 	//mDestGridSq;
 	mIsMoving = false;
-	hasTarget = false;
+	mHasPathTarget = false;
 	mScale = 2.0f;
 	mBuildCost = 600;
 	mRotarSpeed = 2000.0f;

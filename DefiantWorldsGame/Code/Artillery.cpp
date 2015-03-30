@@ -29,7 +29,7 @@ CArtillery::CArtillery()
 	mState = OBJ_CONSTRUCTING;
 	//mDestGridSq;
 	mIsMoving = false;
-	hasTarget = false;
+	mHasPathTarget = false;
 	mScale = 1.5f;
 	mBuildCost = 150;
 	mPopCost = 4;

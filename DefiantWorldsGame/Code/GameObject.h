@@ -107,6 +107,11 @@ public:
 		mHealth -= amount;
 	}
 
+	inline IModel* GetModel()
+	{
+		return mpObjModel;
+	}
+
 	// MUTATORS
 	//---------------------------
 	inline void SetFaction(EFactions faction)

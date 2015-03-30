@@ -48,7 +48,13 @@ protected:
 	DX::XMFLOAT3 mPathTarget;
 	std::stringstream mStrDisplay;
 	SBoundingSphere mBoundingSphere;
+
 	CGameObject* mAttackTarget;
+	float mRange;
+	float mFireRate;
+	float mAttackTimer;
+	vector<SProjectile*>mpProjectiles;
+	vector<CExplosion*>mpAttackExplosions;
 	float mSpeed;
 	float mProductionTime;
 	float mProductionCost;
@@ -59,7 +65,7 @@ protected:
 	EObjectStates mState;
 	//CTile* mDestGridSq;
 	bool mIsMoving;
-	bool hasTarget;
+	bool mHasPathTarget;
 	float mUnitSpacing;
 
 
@@ -123,12 +129,14 @@ public:
 	inline void SetPathTarget(DX::XMFLOAT3 pathTile)
 	{
 		mPathTarget = pathTile;
-		hasTarget = true;
+		mAttackTarget = nullptr;
+		mHasPathTarget = true;
 	}
 
 	inline void SetAttackTarget(CGameObject* target)
 	{
 		mAttackTarget = target;
+		mHasPathTarget = false;
 	}
 
 	inline CGameObject* GetAttackTarget()
@@ -143,7 +151,7 @@ public:
 
 	inline bool HasTarget()
 	{
-		return hasTarget;
+		return mHasPathTarget;
 	}
 
 	eFleetPos GetPosType();

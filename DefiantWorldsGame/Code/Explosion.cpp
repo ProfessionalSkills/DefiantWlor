@@ -1,7 +1,8 @@
 #include "Explosion.h"
-CExplosion::CExplosion(IModel* emitter)
+CExplosion::CExplosion(IModel* emitter, float particleNumber)
 {
 	mEmitter = emitter;
+	mParticleNumber = particleNumber;
 	SetEmitPosition();
 
 	for (int i = 0; i < mParticleNumber; i++)

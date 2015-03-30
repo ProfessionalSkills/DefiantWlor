@@ -313,11 +313,17 @@ void CWorldState::CheckKeyPresses()
 				mpHumanPlayer->CheckGameObjectSelection(pTargetStructure, pTargetGameAgent, mMouseOrigin, mMouseDirection);
 				if (pTargetStructure != nullptr)
 				{
-					mpCurSelectedAgent->SetAttackTarget(pTargetStructure);
+					if (pTargetStructure->GetFaction() == FAC_EARTH_DEFENSE_FORCE)
+					{
+						mpCurSelectedAgent->SetAttackTarget(pTargetStructure);
+					}
 				}
-				else
+				else if (pTargetGameAgent != nullptr)
 				{
-
+					if (pTargetGameAgent->GetFaction() == FAC_EARTH_DEFENSE_FORCE)
+					{
+						mpCurSelectedAgent->SetAttackTarget(pTargetGameAgent);
+					}
 				}
 				
 				mRMouseClicked = false;

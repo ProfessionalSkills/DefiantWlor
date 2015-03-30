@@ -177,6 +177,6 @@ void CGameAgent::Destroy()
 	}
 
 	// Remove the model
-	mDestructionExplosion = new CExplosion(mpObjModel);
+	mDestructionExplosion = new CExplosion(mpObjModel, 100);
 	UnloadIModel();
 }

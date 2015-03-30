@@ -14,7 +14,6 @@
 //-----------------------------------------------------
 // CONSTANTS
 //-----------------------------------------------------
-const int mParticleNumber = 100;
 //-----------------------------------------------------
 // PARTICLE EMITTER CLASS
 //-----------------------------------------------------
@@ -26,6 +25,7 @@ protected:
 	vector<CParticle*> mParticles;
 	DX::XMFLOAT3 mParticleVelocity;
 	DX::XMFLOAT3 mParticleOrigen;
+	float mParticleNumber;
 	//EMITTER MODEL SOURCE
 	IModel* mEmitter;
 public:

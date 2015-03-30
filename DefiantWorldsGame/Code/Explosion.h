@@ -13,7 +13,7 @@ protected:
 public:
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
-	CExplosion(IModel* emitter);
+	CExplosion(IModel* emitter,float particleNumber);
 	~CExplosion();
 
 	//METHODS

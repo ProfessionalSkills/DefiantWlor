@@ -39,7 +39,7 @@ CTransport::CTransport()
 	mState = OBJ_CONSTRUCTING;
 	//mDestGridSq;
 	mIsMoving = false;
-	hasTarget = false;
+	mHasPathTarget = false;
 	mAgentInfo = SAgentData(GAV_TRANSPORT, "Transport");
 
 
