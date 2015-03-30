@@ -50,7 +50,7 @@ void CGameSaverLoader::SaveGame(std::string& fileName)
 	// Space Units
 	//     - Type, Faction, State, Health, /* cargo (transport ships only) */ <- CHALLENGE
 	// Resources
-	//     - Position
+	//     - Grid Position
 	// Settings
 	//     - Music vol, Effects vol, AI Difficulty, Starting Resources
 

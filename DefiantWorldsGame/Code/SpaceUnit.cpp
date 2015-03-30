@@ -184,8 +184,6 @@ void CSpaceUnit::UnloadLazer()
 
 void CSpaceUnit::SaveAgent(std::ofstream& outFile)
 {
-	outFile << std::endl;
-
 	// Save the data for this unit
-	outFile << mAgentInfo.mAgentType << " " << mFaction << " " << mState << " " << mHealth;
+	outFile << mAgentInfo.mAgentType << " " << mFaction << " " << mState << " " << mHealth << std::endl;
 }

@@ -183,9 +183,7 @@ void CGameAgent::Destroy()
 
 void CGameAgent::SaveAgent(std::ofstream& outFile)
 {
-	outFile << std::endl;
-
 	// Save the data for this unit
 	outFile << mAgentInfo.mAgentType << " " << mFaction << " " << mState << " " << mWorldPos.x << " "
-		<< mWorldPos.y << " " << mWorldPos.z << " " << mHealth;
+		<< mWorldPos.y << " " << mWorldPos.z << " " << mHealth << std::endl;
 }

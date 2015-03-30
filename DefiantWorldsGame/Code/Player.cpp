@@ -477,4 +477,11 @@ void CRTSPlayer::SavePlayerData(std::ofstream& outFile)
 	{
 		(*mpiterSpaceUnits)->SaveAgent(outFile);
 	}
+
+	// Loop through all resources and save them
+	for (miterMineralsList = mpMineralsList.begin(); miterMineralsList != mpMineralsList.end(); miterMineralsList++)
+	{
+		SPointData mineralPos = (*miterMineralsList)->GetGridPos();
+		outFile << mineralPos.mPosX << " " << mineralPos.mPosY << std::endl;
+	}
 }
