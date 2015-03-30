@@ -452,6 +452,9 @@ void CRTSPlayer::UnloadPlayerGridModels()
 void CRTSPlayer::SavePlayerData(std::ofstream& outFile)
 {
 	// Save all of the player information to the file given
-	outFile << "Human Player\n"
+	outFile << "Player\n"
 		<< mNumMinerals << " " << mNumSpaceFighter << " " << mNumTransport << " " << mNumMothership << std::endl;
+
+	// Save the grid information for this player
+	mpPlayerGrid->SaveTiles(outFile);
 }
