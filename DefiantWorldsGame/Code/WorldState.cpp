@@ -1164,6 +1164,10 @@ void CWorldState::StateUpdate()
 			pButton->Update();
 		}
 
+		// Update the type box
+		mpTypeBox->Update();
+		mpTypeBox->SetSelected(true);
+
 		// Exit this function so everything underneath does not get executed
 		mLMouseClicked = false;
 		return;
@@ -1819,6 +1823,8 @@ void CWorldState::OnPause()
 	pNewButton = new CAdvancedButton<CWorldState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 490),
 		SAABoundingBox(540.0f, 1215.0f, 490.0f, 815.0f), *this, &CWorldState::QuitGame);
 	mpPauseButtonList.push_back(pNewButton);
+
+	mpTypeBox = new CTypeBox(SPointData{ 815, 200 });
 }
 
 void CWorldState::OnUnPause()
@@ -1841,6 +1847,8 @@ void CWorldState::OnUnPause()
 		SafeDelete(pTmp);
 		mpPauseButtonList.pop_back();
 	}
+
+	if (mpTypeBox) SafeDelete(mpTypeBox);
 }
 
 

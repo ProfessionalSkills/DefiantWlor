@@ -14,6 +14,7 @@
 #include "AdvancedButton.h"
 #include "NewsTicker.h"
 #include "SphericalCamera.h"
+#include "TypeBox.h"
 
 
 //-----------------------------------------------------
@@ -104,6 +105,8 @@ private:
 	CAdvancedButton<CWorldState, void>* mpButtonHellipad;
 
 	CAdvancedButton<CWorldState, void>* mpButtonSpaceCentre;
+
+	CTypeBox* mpTypeBox = nullptr;
 
 
 	// MOUSE DATA

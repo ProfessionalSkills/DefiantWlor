@@ -294,6 +294,9 @@
     <ClCompile Include="SettingsManager.cpp">
       <Filter>Managers</Filter>
     </ClCompile>
+    <ClCompile Include="TypeBox.cpp">
+      <Filter>Utilities\User Interface</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common.h">
@@ -451,6 +454,9 @@
     </ClInclude>
     <ClInclude Include="SettingsManager.h">
       <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="TypeBox.h">
+      <Filter>Utilities\User Interface</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
