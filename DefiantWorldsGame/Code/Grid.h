@@ -9,6 +9,9 @@
 //-----------------------------------------------------
 // INCLUDES
 //-----------------------------------------------------
+#include <string>
+#include <fstream>
+
 #include "Tile.h"
 
 
@@ -60,6 +63,7 @@ public:
 	//---------------------------
 	void ResetTilesModels();
 	bool TurnOnTiles(CTile* gridPos, SPointData pointBL, SPointData pointTR, SPointData pointSpawn);
+	void SaveTiles(std::ofstream& outFile);
 };
 
 #endif /* _GRID_H_ */

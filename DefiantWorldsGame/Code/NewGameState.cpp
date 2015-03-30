@@ -338,16 +338,6 @@ void CNewGameState::StateUpdate()
 	mpSprCursor->SetPosition(mMousePos.x, mMousePos.y);
 }
 
-void CNewGameState::StateLoad()
-{
-
-}
-
-void CNewGameState::StateSave()
-{
-
-}
-
 void CNewGameState::StateCleanup()
 {
 	mpMshAtmosphere->RemoveModel(mpMdlAtmosphere);

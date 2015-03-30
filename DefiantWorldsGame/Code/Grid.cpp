@@ -229,3 +229,16 @@ bool CGrid::TurnOnTiles(CTile* gridPos, SPointData pointBL, SPointData pointTR, 
 	// Return if there are any red tiles
 	return badTiles;
 }
+
+void CGrid::SaveTiles(std::ofstream& outFile)
+{
+	// Loop through all tiles to save their information
+	for (int x = 0; x < GRID_SIZE_X; x++)
+	{
+		for (int y = 0; y < GRID_SIZE_Y; y++)
+		{
+			outFile << mpGridArea[x][y]->IsTileUsed() << " ";
+		}
+	}
+	outFile << std::endl;
+}

@@ -19,9 +19,6 @@
     <Filter Include="Game States\Base State Class">
       <UniqueIdentifier>{15c60e69-0063-4a03-a0c7-48b4429d2596}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game States\State Control Class">
-      <UniqueIdentifier>{3807e616-d5a7-4f6a-89b2-975776c646e1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Utilities">
       <UniqueIdentifier>{a86d0a96-6469-48fe-b8af-e72291515034}</UniqueIdentifier>
     </Filter>
@@ -127,9 +124,6 @@
     <Filter Include="Entities\Game Objects\Child\Agent\Child\Space Units\Child">
       <UniqueIdentifier>{3547574b-3f36-4f7e-bb83-a44824ded56a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Players\Player Manager">
-      <UniqueIdentifier>{96267506-67be-41b8-a5fe-1bbaca7bd42d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Players\Player">
       <UniqueIdentifier>{e613033a-4474-4f15-a0c9-a18ad58d9c1e}</UniqueIdentifier>
     </Filter>
@@ -138,6 +132,9 @@
     </Filter>
     <Filter Include="Utilities\User Interface">
       <UniqueIdentifier>{d8eb80a5-572f-466d-9c32-b9d45628d179}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Managers">
+      <UniqueIdentifier>{1a0b2568-9e20-4e9d-b8af-919b97c555b1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -158,9 +155,6 @@
     </ClCompile>
     <ClCompile Include="BaseGameState.cpp">
       <Filter>Game States\Base State Class</Filter>
-    </ClCompile>
-    <ClCompile Include="GameStateControl.cpp">
-      <Filter>Game States\State Control Class</Filter>
     </ClCompile>
     <ClCompile Include="Randomiser.cpp">
       <Filter>Utilities</Filter>
@@ -261,9 +255,6 @@
     <ClCompile Include="Player.cpp">
       <Filter>Players\Player</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerManager.cpp">
-      <Filter>Players\Player Manager</Filter>
-    </ClCompile>
     <ClCompile Include="AIPlayer.cpp">
       <Filter>Players\Player</Filter>
     </ClCompile>
@@ -275,9 +266,6 @@
     </ClCompile>
     <ClCompile Include="SettingsScreenState.cpp">
       <Filter>Game States\Child State Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="SettingsManager.cpp">
-      <Filter>Utilities</Filter>
     </ClCompile>
     <ClCompile Include="Wall.cpp">
       <Filter>Entities\Game Objects\Child\Structure\Child\Static\Child</Filter>
@@ -293,6 +281,18 @@
     </ClCompile>
     <ClCompile Include="NewGameState.cpp">
       <Filter>Game States\Child State Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerManager.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="GameStateControl.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSaverLoader.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="SettingsManager.cpp">
+      <Filter>Managers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -310,9 +310,6 @@
     </ClInclude>
     <ClInclude Include="BaseGameState.h">
       <Filter>Game States\Base State Class</Filter>
-    </ClInclude>
-    <ClInclude Include="GameStateControl.h">
-      <Filter>Game States\State Control Class</Filter>
     </ClInclude>
     <ClInclude Include="Randomiser.h">
       <Filter>Utilities</Filter>
@@ -413,9 +410,6 @@
     <ClInclude Include="Player.h">
       <Filter>Players\Player</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerManager.h">
-      <Filter>Players\Player Manager</Filter>
-    </ClInclude>
     <ClInclude Include="AIPlayer.h">
       <Filter>Players\Player</Filter>
     </ClInclude>
@@ -427,9 +421,6 @@
     </ClInclude>
     <ClInclude Include="SettingsScreenState.h">
       <Filter>Game States\Child State Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="SettingsManager.h">
-      <Filter>Utilities</Filter>
     </ClInclude>
     <ClInclude Include="Wall.h">
       <Filter>Entities\Game Objects\Child\Structure\Child\Static\Child</Filter>
@@ -448,6 +439,18 @@
     </ClInclude>
     <ClInclude Include="NewGameState.h">
       <Filter>Game States\Child State Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerManager.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="GameStateControl.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSaverLoader.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="SettingsManager.h">
+      <Filter>Managers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

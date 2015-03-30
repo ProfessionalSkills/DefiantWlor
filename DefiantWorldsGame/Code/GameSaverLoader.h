@@ -1,45 +1,43 @@
 //-----------------------------------------------------
-// FILE: Wall.h
+// FILE: GameSaverLoader.h
 //-----------------------------------------------------
 
-#ifndef _WALL_H_
-#define _WALL_H_
+#ifndef _GAME_SAVER_LOADER_H_
+#define _GAME_SAVER_LOADER_H_
 
 
 //-----------------------------------------------------
 // INCLUDES
 //-----------------------------------------------------
-#include "StaticStructure.h"
+#include <string>
+#include <fstream>
+#include <sstream>
+
+#include "GameStateControl.h"
 
 
 //-----------------------------------------------------
-// WALL CLASS - CHILD OF STATIC STRUCTURE
+// GAME SAVER & LOADER CLASS
 //-----------------------------------------------------
-class CWall : public CStaticStructure
+class CGameSaverLoader
 {
 public:
-	static IMesh* mspMshStructure;
-
-
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
-	CWall(bool horizontal);
-	virtual ~CWall();
+	CGameSaverLoader();
+	~CGameSaverLoader();
 
 
 	// METHODS
 	//---------------------------
-	void CalculateBoundingBox();
-	void UnloadIModel() override;
-	void LoadIModel() override;
-
-	// Save the structure's details
-	void SaveStructure(std::ofstream& outFile) override;
+	void LoadGame(std::string& fileName);
+	void SaveGame(std::string& fileName);
 
 
 private:
-	bool mIsHorizontal = false;
+
 
 };
 
-#endif /* _WALL_H_ */
+
+#endif /* _GAME_SAVER_LOADER_H_ */

@@ -1,5 +1,5 @@
 //-----------------------------------------------------
-// FILE: Button.h
+// FILE: AdvancedButton.h
 //-----------------------------------------------------
 #ifndef _ADVANCED_BUTTON_H_
 #define _ADVANCED_BUTTON_H_
@@ -15,8 +15,8 @@
 // ADVANCED BUTTON CLASS
 //-----------------------------------------------------
 template <class C, class CRt, class... CArgs>	// C = class type for button
-												// Rt = return type
-												// Args = parameters for pointer function
+												// CRt = return type
+												// CArgs = parameters for pointer function
 class CAdvancedButton
 {
 public:
@@ -84,7 +84,7 @@ public:
 		if (mIsHidden  && mpSprBasic)
 		{
 			mIsHidden = false;
-			mpSprBasic->SetZ(0.7f);
+			mpSprBasic->SetZ(0.75f);
 			mpSprMO->SetZ(-1.0f);
 		}
 	}

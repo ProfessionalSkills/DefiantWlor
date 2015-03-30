@@ -9,6 +9,10 @@
 //-----------------------------------------------------
 // INCLUDES
 //-----------------------------------------------------
+#include <string>
+#include <sstream>
+#include <fstream>
+
 #include "SpaceFighter.h"		// Space unit
 #include "Mothership.h"			// Space unit
 #include "Transport.h"			// Space unit
@@ -203,6 +207,9 @@ public:
 
 	// Function to create the walls surrounding the player's building area
 	void ConstructWalls();
+
+	// Save all player data
+	void SavePlayerData(std::ofstream& outFile);
 };
 
 

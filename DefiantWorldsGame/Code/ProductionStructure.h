@@ -29,9 +29,9 @@ protected:
 	//---------------------------
 	std::list<CGameAgent*> mRespectiveAgentsList;
 	std::deque<CGameAgent*> mpProductionQueue;
+	std::deque<CGameAgent*>::iterator miterProdQ;
 
 	std::list<CGameAgent*>::iterator miterRespectiveAgents;
-	std::deque<CGameAgent*>::iterator miterProdQ;
 
 
 public:
@@ -65,6 +65,9 @@ public:
 
 	bool Update(CRTSPlayer* pPlayer) override;
 	void DisplayInfo(IFont* font) override;
+
+	// Save the structure's details
+	virtual void SaveStructure(std::ofstream& outFile) override;
 
 
 	// OVERRIDE METHODS

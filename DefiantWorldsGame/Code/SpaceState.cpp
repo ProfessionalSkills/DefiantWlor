@@ -174,16 +174,6 @@ void CSpaceState::StateUpdate()
 	DrawFontData();
 }
 
-void CSpaceState::StateLoad()
-{
-
-}
-
-void CSpaceState::StateSave()
-{
-
-}
-
 void CSpaceState::DrawFontData()
 {
 	int playerOneTextX = 5;
