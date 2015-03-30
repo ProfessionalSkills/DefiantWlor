@@ -38,3 +38,9 @@ int CSettingsManager::GetStartingResourcesAmount()
 		break;
 	}
 }
+
+void CSettingsManager::SaveSettings(std::ofstream& outFile)
+{
+	// Save the settings
+	outFile << mMusicVolume << " " << mEffectsVolume << " " << mAIDifficulty << " " << mStartingResources << std::endl;
+}

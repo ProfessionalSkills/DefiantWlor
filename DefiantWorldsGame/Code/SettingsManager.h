@@ -5,6 +5,8 @@
 #ifndef _SETTINGS_MANAGER_H_
 #define _SETTINGS_MANAGER_H_
 
+#include <fstream>
+
 
 class CSettingsManager
 {
@@ -61,6 +63,11 @@ public:
 	{
 		mStartingResources = amount;
 	}
+
+
+	// METHODS
+	//---------------------------
+	void SaveSettings(std::ofstream& outFile);
 
 
 private:

@@ -68,3 +68,15 @@ void CPlayerManager::UpdatePlayers()
 		mpAI[i]->Update();
 	}
 }
+
+void CPlayerManager::SavePlayers(std::ofstream& outFile)
+{
+	// Save human
+	mpHuman->SavePlayerData(outFile);
+
+	// Loop through and save each AI
+	for (int i = 0; i < mNumAI; i++)
+	{
+		mpAI[i]->SavePlayerData(outFile);
+	}
+}

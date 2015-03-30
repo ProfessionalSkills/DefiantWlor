@@ -29,6 +29,7 @@ public:
 	void CreatePlayers(EFactions humanFaction, int numAI, int startingResources, int difficulty);
 	void RemovePlayers();
 	void UpdatePlayers();
+	void SavePlayers(std::ofstream& outFile);
 
 
 	// ACCESSORS

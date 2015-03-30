@@ -57,6 +57,8 @@ void CGameSaverLoader::SaveGame(std::string& fileName)
 
 	// FIRST PLAYER
 	// Save player data
-	CRTSPlayer* pPlayer = CStateControl::GetInstance()->GetPlayerManager()->GetHumanPlayer();
-	pPlayer->SavePlayerData(saveStream);
+	CStateControl::GetInstance()->GetPlayerManager()->SavePlayers(saveStream);
+
+	// Save settings data through the settings manager
+	CStateControl::GetInstance()->GetSettingsManager()->SaveSettings(saveStream);
 }
