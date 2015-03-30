@@ -1457,16 +1457,6 @@ void CWorldState::StateUpdate()
 	}
 }
 
-void CWorldState::StateLoad()
-{
-
-}
-
-void CWorldState::StateSave()
-{
-
-}
-
 void CWorldState::StateCleanup()
 {
 	// Store grid state

@@ -35,8 +35,6 @@ public:
 	virtual void StateSetup() = 0;
 	virtual void StateUpdate() = 0;
 	virtual void StateCleanup() = 0;
-	virtual void StateSave() = 0;
-	virtual void StateLoad() = 0;
 
 
 	// ACCESORS

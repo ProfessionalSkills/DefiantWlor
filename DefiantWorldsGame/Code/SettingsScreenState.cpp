@@ -290,16 +290,6 @@ void CSettingsScreenState::StateUpdate()
 	mpSprCursor->SetPosition(mMousePos.x, mMousePos.y);
 }
 
-void CSettingsScreenState::StateLoad()
-{
-
-}
-
-void CSettingsScreenState::StateSave()
-{
-
-}
-
 void CSettingsScreenState::StateCleanup()
 {
 	mpMshAtmosphere->RemoveModel(mpMdlAtmosphere);

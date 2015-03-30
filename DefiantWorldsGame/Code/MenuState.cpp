@@ -204,16 +204,6 @@ void CMenuState::StateUpdate()
 	mpSprCursor->SetPosition(mMousePos.x, mMousePos.y);
 }
 
-void CMenuState::StateLoad()
-{
-
-}
-
-void CMenuState::StateSave()
-{
-
-}
-
 void CMenuState::StateCleanup()
 {
 	mpMshAtmosphere->RemoveModel(mpMdlAtmosphere);

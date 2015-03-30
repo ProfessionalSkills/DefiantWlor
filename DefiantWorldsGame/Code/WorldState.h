@@ -215,8 +215,6 @@ public:
 	void StateSetup() override;
 	void StateUpdate() override;
 	void StateCleanup() override;
-	void StateSave() override;
-	void StateLoad() override;
 
 
 private:
