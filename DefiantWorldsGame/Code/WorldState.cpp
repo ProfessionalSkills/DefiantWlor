@@ -1970,7 +1970,12 @@ void CWorldState::Continue()
 
 void CWorldState::SaveGame()
 {
+	// Use what the user has typed in as the name of the file
 	std::string fileName = mpTypeBox->GetText();
+
+	// Remove leading & trailling spaces
+	fileName.erase(fileName.begin(), std::find_if(fileName.begin(), fileName.end(), std::bind1st(std::not_equal_to<char>(), ' ')));
+	fileName.erase(std::find_if(fileName.rbegin(), fileName.rend(), std::bind1st(std::not_equal_to<char>(), ' ')).base(), fileName.end());
 
 	// If file name is black
 	if (fileName == "")
