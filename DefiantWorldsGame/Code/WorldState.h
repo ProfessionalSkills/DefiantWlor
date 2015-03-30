@@ -133,6 +133,8 @@ private:
 	float mClickCoolDown;
 	bool mLMouseHeld;
 
+	bool mPaused = false;
+
 	EMouseStates mMouseState;		// Stores whether mouse is within a grid or not - and which grid it is in
 
 
@@ -150,6 +152,15 @@ private:
 
 	std::vector<CGameAgent*> mpUnitSelectionList;
 	std::vector<CGameAgent*>::iterator miterUnitSelectionList;
+
+
+	// PAUSED SCREEN
+	//---------------------------
+	IFont* mpTitleFont = nullptr;
+	IFont* mpButtonFont = nullptr;
+	ISprite* mpSprBackground = nullptr;
+	std::vector<CAdvancedButton<CWorldState, void>*> mpPauseButtonList;
+	std::vector<CAdvancedButton<CWorldState, void>*>::iterator miterPauseButtons;
 
 
 	// ADDITIONAL VARIABLES
@@ -209,6 +220,11 @@ public:
 	void ChangeTacRapid();
 	void ChangeTacTargated();
 
+	// Paused menu buttons methods
+	void Continue();
+	void SaveGame();
+	void QuitGame();
+
 
 	// OVERRIDE METHODS
 	//---------------------------
@@ -224,6 +240,8 @@ private:
 	void OnStructureSelectChange(CStructure* pSelStructure);
 	void OnStructureQueueProgressChange();
 	void OnItemHealthChange();
+	void OnPause();
+	void OnUnPause();
 };
 
 

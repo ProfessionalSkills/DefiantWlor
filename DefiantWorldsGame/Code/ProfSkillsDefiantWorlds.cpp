@@ -130,14 +130,6 @@ void main()
 		{
 			titleChangeCounter += gFrameTime;
 		}
-
-
-		// GLOBAL KEY PRESSES
-		//------------------------------
-		if (gpEngine->KeyHit(Key_Escape))
-		{
-			gpEngine->Stop();
-		}
 	}
 
 	Cleanup();

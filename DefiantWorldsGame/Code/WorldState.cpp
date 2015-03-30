@@ -429,14 +429,6 @@ void CWorldState::CheckKeyPresses()
 		mpHumanPlayer->GetFleet()->SetTactic(Rapid);
 	}
 
-	// RETURN TO MENU
-	//------------------------------
-	if (gpEngine->KeyHit(Key_M))
-	{
-		mMusic->StopSound();
-		gCurState = GS_MAIN_MENU;
-	}
-
 	mRMouseClicked = false;
 }
 
@@ -1100,6 +1092,79 @@ void CWorldState::StateUpdate()
 
 	mpSprCursor->SetPosition(mpMouseScreenPos->mPosX, mpMouseScreenPos->mPosY);
 
+
+	// CHECK FOR PAUSE
+	//------------------------------
+	if (gpEngine->KeyHit(Key_Escape) || gpEngine->KeyHit(Key_P))
+	{
+		if (!mPaused)
+		{
+			OnPause();
+		}
+		else
+		{
+			OnUnPause();
+		}
+	}
+
+
+	// IF PAUSED
+	//------------------------------
+	if (mPaused)
+	{
+		// Pause menu updates
+		// Check for click
+		if (gpEngine->KeyHit(Mouse_LButton))
+		{
+			mLMouseClicked = true;
+		}
+
+		// Update pause menu visuals
+		mpTitleFont->Draw("GAME PAUSED", 1015, 90, kCyan, kCentre, kTop);
+
+		mpButtonFont->Draw("CONTINUE GAME", 1015, 365, kWhite, kCentre, kTop);
+		mpButtonFont->Draw("SAVE GAME", 1015, 435, kWhite, kCentre, kTop);
+		mpButtonFont->Draw("QUIT TO MAIN MENU", 1015, 505, kWhite, kCentre, kTop);
+
+		// Update buttons
+		for (miterPauseButtons = mpPauseButtonList.begin(); miterPauseButtons != mpPauseButtonList.end(); miterPauseButtons++)
+		{
+			CAdvancedButton<CWorldState, void>* pButton = (*miterPauseButtons);
+			// Check if the mouse is colliding with the object
+			if (pButton->GetBoundingBox().IsColliding(DX::XMFLOAT3(mpMouseScreenPos->mPosX, 0.0f, mpMouseScreenPos->mPosY)))
+			{
+				pButton->SetMouseOver(true);
+			}
+			else
+			{
+				pButton->SetMouseOver(false);
+			}
+
+			// Check for click 
+			if (pButton->GetMouseOver())
+			{
+				// Check if the mouse is over the button
+				if (mLMouseClicked)
+				{
+					// Execute the command attached to the button which has been clicked
+					pButton->Execute();
+					mLMouseClicked = false;
+					return;
+				}
+			}
+
+			// Update the button
+			pButton->Update();
+		}
+
+		// Exit this function so everything underneath does not get executed
+		mLMouseClicked = false;
+		return;
+	}
+
+
+	// EDGE SCROLLING
+	//------------------------------
 	// Matrix for identifying direction to scroll
 	DX::XMFLOAT4X4 camMatrix;
 	DX::XMFLOAT3 camNormalDirection;
@@ -1447,18 +1512,13 @@ void CWorldState::StateUpdate()
 	// UPDATE PLAYERS
 	//------------------------------
 	mpPlayerManager->UpdatePlayers();
-
-
-	// STATE CHANGE TEST
-	//------------------------------
-	if (gpEngine->KeyHit(Key_Back))
-	{
-		gCurState = GS_MAIN_MENU;
-	}
 }
 
 void CWorldState::StateCleanup()
 {
+	// Unload pause menu
+	OnUnPause();
+	
 	// Store grid state
 	mpHumanPlayer->StorePlayerGridState(mpEarthGrid);
 	mpAIPlayer->StorePlayerGridState(mpMarsGrid);
@@ -1729,6 +1789,54 @@ void CWorldState::OnItemHealthChange()
 }
 
 
+void CWorldState::OnPause()
+{
+	// Raise the paused flag & stop music
+	mPaused = true;
+	mMusic->StopSound();
+
+	// Create the visuals for the pause menu
+	mpButtonFont = gpEngine->LoadFont("font2.bmp", 15U);
+	mpTitleFont = gpEngine->LoadFont("font2.bmp", 35U);
+	mpSprBackground = gpEngine->CreateSprite("MenuBG.png", 400.0f, 50.0f, 0.75f);
+
+	// Load buttons
+	CAdvancedButton<CWorldState, void>* pNewButton = new CAdvancedButton<CWorldState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 350),
+		SAABoundingBox(400.0f, 1215.0f, 350.0f, 815.0f), *this, &CWorldState::Continue);
+	mpPauseButtonList.push_back(pNewButton);
+
+	pNewButton = new CAdvancedButton<CWorldState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 420),
+		SAABoundingBox(470.0f, 1215.0f, 420.0f, 815.0f), *this, &CWorldState::SaveGame);
+	mpPauseButtonList.push_back(pNewButton);
+
+	pNewButton = new CAdvancedButton<CWorldState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 490),
+		SAABoundingBox(540.0f, 1215.0f, 490.0f, 815.0f), *this, &CWorldState::QuitGame);
+	mpPauseButtonList.push_back(pNewButton);
+}
+
+void CWorldState::OnUnPause()
+{
+	// Lower the paused flag & start music
+	mPaused = false;
+	mMusic->PlaySound();
+
+	// Unload pause menu visuals
+	gpEngine->RemoveFont(mpTitleFont);
+	mpTitleFont = nullptr;
+	gpEngine->RemoveFont(mpButtonFont);
+	mpButtonFont = nullptr;
+	gpEngine->RemoveSprite(mpSprBackground);
+	mpSprBackground = nullptr;
+
+	while (!mpPauseButtonList.empty())
+	{
+		CAdvancedButton<CWorldState, void>* pTmp = mpPauseButtonList.back();
+		SafeDelete(pTmp);
+		mpPauseButtonList.pop_back();
+	}
+}
+
+
 //-----------------------------------------------------
 // WORLD STATE CLASS BUTTON EVENT FUNCTIONS
 //-----------------------------------------------------
@@ -1839,4 +1947,19 @@ void CWorldState::ChangeTacTargated()
 {
 	mpHumanPlayer->GetFleet()->SetTactic(Targeted);
 	gpNewsTicker->AddNewElement("Targeted space tactic selected.", false);
+}
+
+void CWorldState::Continue()
+{
+	OnUnPause();
+}
+
+void CWorldState::SaveGame()
+{
+
+}
+
+void CWorldState::QuitGame()
+{
+	gCurState = GS_MAIN_MENU;
 }
