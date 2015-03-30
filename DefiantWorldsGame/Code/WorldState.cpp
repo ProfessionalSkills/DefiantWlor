@@ -1798,7 +1798,7 @@ void CWorldState::OnPause()
 	// Create the visuals for the pause menu
 	mpButtonFont = gpEngine->LoadFont("font2.bmp", 15U);
 	mpTitleFont = gpEngine->LoadFont("font2.bmp", 35U);
-	mpSprBackground = gpEngine->CreateSprite("MenuBG.png", 400.0f, 50.0f, 0.75f);
+	mpSprBackground = gpEngine->CreateSprite("PauseMenuBG.png", 400.0f, 50.0f, 0.75f);
 
 	// Load buttons
 	CAdvancedButton<CWorldState, void>* pNewButton = new CAdvancedButton<CWorldState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 350),
