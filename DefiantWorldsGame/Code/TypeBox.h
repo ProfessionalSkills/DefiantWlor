@@ -49,11 +49,6 @@ public:
 		mMouseOver = mouseOver;
 	}
 
-	inline void SetSelected(bool selected)
-	{
-		mSelected = selected;
-	}
-
 
 	// METHODS
 	//---------------------------
@@ -78,7 +73,6 @@ private:
 	// MISC
 	//---------------------------
 	bool mMouseOver = false;
-	bool mSelected = false;
 	int mCurLength = 0;			// Tracks the length of the entered string
 };
 

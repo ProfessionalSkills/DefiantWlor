@@ -1102,7 +1102,7 @@ void CWorldState::StateUpdate()
 
 	// CHECK FOR PAUSE
 	//------------------------------
-	if (gpEngine->KeyHit(Key_Escape) || gpEngine->KeyHit(Key_P))
+	if (gpEngine->KeyHit(Key_Escape))
 	{
 		if (!mPaused)
 		{
@@ -1166,7 +1166,6 @@ void CWorldState::StateUpdate()
 
 		// Update the type box
 		mpTypeBox->Update();
-		mpTypeBox->SetSelected(true);
 
 		// Exit this function so everything underneath does not get executed
 		mLMouseClicked = false;
