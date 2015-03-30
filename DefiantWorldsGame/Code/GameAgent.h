@@ -129,7 +129,7 @@ public:
 	inline void SetPathTarget(DX::XMFLOAT3 pathTile)
 	{
 		mPathTarget = pathTile;
-		mAttackTarget = nullptr;
+		//mAttackTarget = nullptr;
 		mHasPathTarget = true;
 	}
 

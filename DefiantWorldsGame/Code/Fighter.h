@@ -24,7 +24,7 @@ private:
 	float mRotarSpeed;
 public:
 	static IMesh* mspMshFighter;
-
+	static IMesh* mspMshFighterBullet;
 
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------

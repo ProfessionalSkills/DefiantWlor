@@ -206,6 +206,7 @@ void SetupEngine()
 	CBomber::mspMshBomb = gpEngine->LoadMesh("particle.x");
 	//Fighter
 	CFighter::mspMshFighter = gpEngine->LoadMesh("Helicopter.x");
+	CFighter::mspMshFighterBullet = gpEngine->LoadMesh("particle.x");
 	//Worker
 	CWorker::mspMshWorker = gpEngine->LoadMesh("transportTruck_german.x");
 	//Tank

@@ -9,7 +9,7 @@
 #include "Fighter.h"
 
 IMesh* CFighter::mspMshFighter = nullptr;
-
+IMesh* CFighter::mspMshFighterBullet = nullptr;
 
 //-----------------------------------------------------
 // FIGHTER CLASS CONSTRUCTORS & DESTRUCTOR
@@ -24,12 +24,15 @@ CFighter::CFighter()
 	mProductionCost = 0.0f;
 	mCurProductionTimeLeft = mProductionTime;
 	mDamage = 1.0f;
+	mFireRate = 4.0f;
+	mAttackTimer = 1.0f / mFireRate;
 	//mAttackParticleFX;
 	//mDestroyParticleFX;
 	mState = OBJ_CONSTRUCTING;
 	//mDestGridSq;
 	mIsMoving = false;
 	mHasPathTarget = false;
+	mAttackTarget = nullptr;
 	mScale = 2.0f;
 	mBuildCost = 600;
 	mRotarSpeed = 2000.0f;
@@ -77,6 +80,20 @@ void CFighter::LoadIModel()
 //-----------------------------------------------------
 bool CFighter::Attack(CGameObject* target, float hitMod, float damageMod)
 {
+	if (mAttackTimer >= (1.0f / mFireRate))
+	{
+		mAttackTimer = 0.0f;
+		SProjectile* newProjectile = new SProjectile();
+		newProjectile->mModel = mspMshFighterBullet->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
+		newProjectile->mModel->LookAt(mAttackTarget->GetModel());
+		newProjectile->mSpeed = 50.0f;
+
+		mpProjectiles.push_back(newProjectile);
+	}
+	else
+	{
+		mAttackTimer += gFrameTime;
+	}
 	return false;
 }
 

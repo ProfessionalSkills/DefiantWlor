@@ -121,7 +121,6 @@ bool CAirUnit::LookingAt(DX::XMFLOAT3 targetLocation)
 			mpObjModel->RotateLocalZ(mZRotate);
 			mYaw += mZRotate;
 		}
-		return true;
 	}
 	else if (dotProduct < -0.1f)
 	{
@@ -132,7 +131,6 @@ bool CAirUnit::LookingAt(DX::XMFLOAT3 targetLocation)
 			mpObjModel->RotateLocalZ(mZRotate);
 			mYaw += mZRotate;
 		}
-		return true;
 	}
 	else
 	{
@@ -144,13 +142,12 @@ bool CAirUnit::LookingAt(DX::XMFLOAT3 targetLocation)
 		}
 		else if (mYaw <= -5.0f)
 		{
-
 			float mZRotate = 50.0f * gFrameTime;
 			mpObjModel->RotateLocalZ(mZRotate);
 			mYaw += mZRotate;
 		}
-		return true;
 	}
+	return true;
 }
 
 void CAirUnit::Move()
