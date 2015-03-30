@@ -180,3 +180,12 @@ void CGameAgent::Destroy()
 	mDestructionExplosion = new CExplosion(mpObjModel, 100);
 	UnloadIModel();
 }
+
+void CGameAgent::SaveAgent(std::ofstream& outFile)
+{
+	outFile << std::endl;
+
+	// Save the data for this unit
+	outFile << mAgentInfo.mAgentType << " " << mFaction << " " << mState << " " << mWorldPos.x << " "
+		<< mWorldPos.y << " " << mWorldPos.z << " " << mHealth;
+}

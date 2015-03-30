@@ -156,3 +156,17 @@ bool CTransport::Destroy()
 {
 	return false;
 }
+
+void CTransport::SaveAgent(std::ofstream& outFile)
+{
+	outFile << std::endl;
+
+	// Save the data for this unit
+	outFile << mAgentInfo.mAgentType << " " << mFaction << " " << mState << " " << mHealth << " " << mNumUnitsHeld;
+
+	// Loop through the held units
+	for (int i = 0; i < mNumUnitsHeld; i++)
+	{
+		//outFile << " " << mpSpaceUnitsList[i]
+	}
+}

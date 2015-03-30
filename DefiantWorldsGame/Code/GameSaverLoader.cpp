@@ -46,9 +46,9 @@ void CGameSaverLoader::SaveGame(std::string& fileName)
 	// Structures
 	//     - Type, Grid Position, Faction, State, World Position, Health, Queue items (Type, Progress), Rotation (currently just for wall data)
 	// Ground/Air units
-	//     - Type, Faction, State, Position, Health, Target location
+	//     - Type, Faction, State, Position, Health
 	// Space Units
-	//     - Type, Faction, State, Health, cargo (transport ships only)
+	//     - Type, Faction, State, Health, /* cargo (transport ships only) */ <- CHALLENGE
 	// Resources
 	//     - Position
 	// Settings

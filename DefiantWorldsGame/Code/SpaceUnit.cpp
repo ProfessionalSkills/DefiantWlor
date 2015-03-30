@@ -181,3 +181,11 @@ void CSpaceUnit::UnloadLazer()
 		mpTempLazer->Scale(1 / (mChargeTime + 1.0f));
 	}
 }
+
+void CSpaceUnit::SaveAgent(std::ofstream& outFile)
+{
+	outFile << std::endl;
+
+	// Save the data for this unit
+	outFile << mAgentInfo.mAgentType << " " << mFaction << " " << mState << " " << mHealth;
+}

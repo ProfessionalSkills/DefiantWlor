@@ -22,7 +22,7 @@ private:
 	//---------------------------
 	std::vector<CGameAgent*> mpSpaceUnitsList;
 	int mUnitCapacity;
-	int mNumUnitsHeld;
+	int mNumUnitsHeld = 0;
 public:
 	static IMesh* mspMshTransport;
 	static IMesh* mspMshSheild;
@@ -79,6 +79,9 @@ public:
 	void UnloadFlash();
 	float GetUnitSpacing();
 	void MoveY(float yChange);
+
+	// Save the data for this unit
+	void SaveAgent(std::ofstream& outFile) override;
 
 private:
 	bool Destroy();

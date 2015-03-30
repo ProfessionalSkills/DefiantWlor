@@ -183,6 +183,10 @@ public:
 	virtual void LoadModel(float x, float y, float z) = 0;
 	virtual void Move()=0;
 
+	// Save the data for this unit
+	virtual void SaveAgent(std::ofstream& outFile);
+
+
 private:
 
 };

@@ -32,16 +32,19 @@ CRTSPlayer::CRTSPlayer(EFactions playerFaction, int startingResources) : MINERAL
 	for (int i = 0; i <25; i++)
 	{
 		Temp = new CSpaceFighter();
+		Temp->SetFaction(mPlayerFaction);
 		mpSpaceUnitsList.push_back(Temp);
 	}
 	CTransport* temp;
 	for (int i = 0; i < 5; i++)
 	{
 		temp = new CTransport();
+		temp->SetFaction(mPlayerFaction);
 		mpSpaceUnitsList.push_back(temp);
 	}
 
 	mpSpaceUnitsList.push_back(new CMothership());
+	mpSpaceUnitsList.back()->SetFaction(mPlayerFaction);
 }
 
 CRTSPlayer::~CRTSPlayer()
@@ -452,8 +455,7 @@ void CRTSPlayer::UnloadPlayerGridModels()
 void CRTSPlayer::SavePlayerData(std::ofstream& outFile)
 {
 	// Save all of the player information to the file given
-	outFile << "Player\n"
-		<< mNumMinerals << " " << mPlayerFaction << " " << mNumSpaceFighter << " " << mNumTransport << " " << mNumMothership << std::endl;
+	outFile << mNumMinerals << " " << mPlayerFaction << " " << mNumSpaceFighter << " " << mNumTransport << " " << mNumMothership << std::endl;
 
 	// Save the grid information for this player
 	mpPlayerGrid->SaveTiles(outFile);
@@ -462,5 +464,17 @@ void CRTSPlayer::SavePlayerData(std::ofstream& outFile)
 	for (miterStructuresMap = mpStructuresMap.begin(); miterStructuresMap != mpStructuresMap.end(); miterStructuresMap++)
 	{
 		miterStructuresMap->second->SaveStructure(outFile);
+	}
+
+	// For each world unit, save its data
+	for (miterUnitsMap = mpUnitsMap.begin(); miterUnitsMap != mpUnitsMap.end(); miterUnitsMap++)
+	{
+		miterUnitsMap->second->SaveAgent(outFile);
+	}
+
+	// For each space unit, save its data
+	for (mpiterSpaceUnits = mpSpaceUnitsList.begin(); mpiterSpaceUnits != mpSpaceUnitsList.end(); mpiterSpaceUnits++)
+	{
+		(*mpiterSpaceUnits)->SaveAgent(outFile);
 	}
 }
