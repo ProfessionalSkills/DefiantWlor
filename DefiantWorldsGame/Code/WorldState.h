@@ -9,6 +9,8 @@
 //-----------------------------------------------------
 // INCLUDES
 //-----------------------------------------------------
+#include <time.h>
+
 #include "BaseGameState.h"
 #include "Grid.h"
 #include "AdvancedButton.h"

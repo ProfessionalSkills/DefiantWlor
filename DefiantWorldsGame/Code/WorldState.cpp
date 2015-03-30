@@ -1970,9 +1970,33 @@ void CWorldState::Continue()
 
 void CWorldState::SaveGame()
 {
-	std::string fileTest = "TestFile";
+	std::string fileName = mpTypeBox->GetText();
+
+	// If file name is black
+	if (fileName == "")
+	{
+		// Set the filename to be equal to the date and time
+		time_t curRawTime;
+		struct tm* pTimeInfo;
+
+		time(&curRawTime);
+		pTimeInfo = localtime(&curRawTime);
+		fileName = asctime(pTimeInfo);
+
+		// Remove the \n at the end of the name
+		fileName.erase(fileName.end() - 1);
+		
+		// Remove all : in the fileName
+		for (int i = 0; i < 2; i++)
+		{
+			fileName.replace(fileName.find(":"), 1, "-");
+		}
+	}
+
 	CGameSaverLoader* pSaver = new CGameSaverLoader();
-	pSaver->SaveGame(fileTest);
+	pSaver->SaveGame(fileName);
+	OnUnPause();
+	gpNewsTicker->AddNewElement("The game has been saved!", false);
 }
 
 void CWorldState::QuitGame()

@@ -74,6 +74,11 @@ void CTypeBox::Update()
 		}
 	}
 
+
+	// Check to see if too many characters have been entered
+	if (mCurLength > 40) return;
+
+
 	// LETTERS
 	if (gpEngine->KeyHit(Key_A))
 	{
