@@ -111,3 +111,12 @@ void CWall::LoadIModel()
 		CalculateBoundingBox();
 	}
 }
+
+void CWall::SaveStructure(std::ofstream& outFile)
+{
+	// Save to the output file all the required data
+	outFile << mStructureType << " " << mGridPos.mPosX << " " << mGridPos.mPosY << " " << mFaction << " " << mState
+		<< " " << mWorldPos.x << " " << mWorldPos.y << " " << mWorldPos.z << " " << mHealth << " " << 0 << " ";
+
+	outFile << mOrientation << std::endl;
+}

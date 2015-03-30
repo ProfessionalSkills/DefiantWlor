@@ -453,8 +453,14 @@ void CRTSPlayer::SavePlayerData(std::ofstream& outFile)
 {
 	// Save all of the player information to the file given
 	outFile << "Player\n"
-		<< mNumMinerals << " " << mNumSpaceFighter << " " << mNumTransport << " " << mNumMothership << std::endl;
+		<< mNumMinerals << " " << mPlayerFaction << " " << mNumSpaceFighter << " " << mNumTransport << " " << mNumMothership << std::endl;
 
 	// Save the grid information for this player
 	mpPlayerGrid->SaveTiles(outFile);
+
+	// For each structure, save its data
+	for (miterStructuresMap = mpStructuresMap.begin(); miterStructuresMap != mpStructuresMap.end(); miterStructuresMap++)
+	{
+		miterStructuresMap->second->SaveStructure(outFile);
+	}
 }

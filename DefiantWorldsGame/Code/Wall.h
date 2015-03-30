@@ -33,6 +33,9 @@ public:
 	void UnloadIModel() override;
 	void LoadIModel() override;
 
+	// Save the structure's details
+	void SaveStructure(std::ofstream& outFile) override;
+
 
 private:
 	bool mIsHorizontal = false;

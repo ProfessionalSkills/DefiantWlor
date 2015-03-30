@@ -72,6 +72,9 @@ public:
 	virtual void DisplayInfo(IFont* font);
 	virtual void UnloadIModel();
 	virtual void LoadIModel();
+
+	// Save the structure's details
+	virtual void SaveStructure(std::ofstream& outFile) override;
 };
 
 #endif /* _STATIC_STRUCTURE_H_ */

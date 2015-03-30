@@ -40,11 +40,11 @@ void CGameSaverLoader::SaveGame(std::string& fileName)
 
 	// SAVE FILE STRUCTURE:
 	// <Player>
-	//     - Minerals, num spacefighters, num transport ships, num motherships
+	//     - Minerals, Faction, num spacefighters, num transport ships, num motherships
 	// Grid
-	//     - Line by line get state of grid (used or not)
+	//     - Line by line get state of grid (used or not)  -- ASSESS WHETHER REQUIRED
 	// Structures
-	//     - Type, Faction, State, Position, Health, Queue items (if applicable), Rotation (currently just for wall data)
+	//     - Type, Grid Position, Faction, State, World Position, Health, Queue items (Type, Progress), Rotation (currently just for wall data)
 	// Ground/Air units
 	//     - Type, Faction, State, Position, Health, Target location
 	// Space Units

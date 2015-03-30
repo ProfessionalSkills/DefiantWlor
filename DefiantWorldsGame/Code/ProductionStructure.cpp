@@ -313,3 +313,18 @@ void CProductionStructure::DisplayInfo(IFont* font)
 	font->Draw(mStrDisplay.str(), 470, 800, kWhite, kLeft, kTop);
 	mStrDisplay.str("");
 }
+
+void CProductionStructure::SaveStructure(std::ofstream& outFile)
+{
+	// Save to the output file all the required data
+	outFile << mStructureType << " " << mGridPos.mPosX << " " << mGridPos.mPosY << " " << mFaction << " " << mState
+		<< " " << mWorldPos.x << " " << mWorldPos.y << " " << mWorldPos.z << " " << mHealth << " " << GetQueueSize() << " ";
+
+	// Loop through each queue item and save its type
+	for (miterProdQ = mpProductionQueue.begin(); miterProdQ != mpProductionQueue.end(); miterProdQ++)
+	{
+		outFile << (*miterProdQ)->GetAgentData()->mAgentType << " " << (*miterProdQ)->GetCurProductionTimeLeft() << " ";
+	}
+
+	outFile << mOrientation << std::endl;
+}
