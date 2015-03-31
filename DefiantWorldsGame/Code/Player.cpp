@@ -28,23 +28,23 @@ CRTSPlayer::CRTSPlayer(EFactions playerFaction, int startingResources) : MINERAL
 	mpPlayerGrid = nullptr;
 	mpRandomiser = new CRandomiser();
 
-	CSpaceFighter* Temp;
-	for (int i = 0; i <25; i++)
-	{
-		Temp = new CSpaceFighter();
-		Temp->SetFaction(mPlayerFaction);
-		mpSpaceUnitsList.push_back(Temp);
-	}
-	CTransport* temp;
-	for (int i = 0; i < 5; i++)
-	{
-		temp = new CTransport();
-		temp->SetFaction(mPlayerFaction);
-		mpSpaceUnitsList.push_back(temp);
-	}
+	//CSpaceFighter* Temp;
+	//for (int i = 0; i <25; i++)
+	//{
+	//	Temp = new CSpaceFighter();
+	//	Temp->SetFaction(mPlayerFaction);
+	//	mpSpaceUnitsList.push_back(Temp);
+	//}
+	//CTransport* temp;
+	//for (int i = 0; i < 5; i++)
+	//{
+	//	temp = new CTransport();
+	//	temp->SetFaction(mPlayerFaction);
+	//	mpSpaceUnitsList.push_back(temp);
+	//}
 
-	mpSpaceUnitsList.push_back(new CMothership());
-	mpSpaceUnitsList.back()->SetFaction(mPlayerFaction);
+	//mpSpaceUnitsList.push_back(new CMothership());
+	//mpSpaceUnitsList.back()->SetFaction(mPlayerFaction);
 }
 
 CRTSPlayer::~CRTSPlayer()
@@ -588,5 +588,36 @@ void CRTSPlayer::LoadPlayerData(std::ifstream& inFile)
 
 		// Add to structures map
 		mpUnitsMap.insert(GA_MultiMap::value_type(wuType, pLoadedUnit));
+	}
+
+	// Load in space units
+	int numSpaceUnits;
+	inFile >> numSpaceUnits;
+	int spaceUnitType;
+	EGameAgentVariations suType;
+	for (int i = 0; i < numSpaceUnits; i++)
+	{
+		// Determine type
+		inFile >> spaceUnitType;
+		suType = static_cast<EGameAgentVariations>(spaceUnitType);
+		CGameAgent* pLoadedUnit = nullptr;
+		switch (suType)
+		{
+		case GAV_MOTHERSHIP:
+			pLoadedUnit = new CMothership();
+			break;
+		case GAV_SPACE_FIGHTER:
+			pLoadedUnit = new CSpaceFighter();
+			break;
+		case GAV_TRANSPORT:
+			pLoadedUnit = new CTransport();
+			break;
+		}
+
+		// Load saved information for the structure
+		pLoadedUnit->LoadAgent(inFile);
+
+		// Add to structures map
+		mpSpaceUnitsList.push_back(pLoadedUnit);
 	}
 }

@@ -187,3 +187,14 @@ void CSpaceUnit::SaveAgent(std::ofstream& outFile)
 	// Save the data for this unit
 	outFile << mAgentInfo.mAgentType << " " << mFaction << " " << mState << " " << mHealth << std::endl;
 }
+
+void CSpaceUnit::LoadAgent(std::ifstream& inFile)
+{
+	// Load in the data required and store the data
+	int faction;
+	int state;
+	inFile >> faction >> state >> mHealth;
+
+	mFaction = static_cast<EFactions>(faction);
+	mState = static_cast<EObjectStates>(state);
+}

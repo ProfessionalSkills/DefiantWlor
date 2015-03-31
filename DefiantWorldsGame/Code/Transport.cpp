@@ -165,8 +165,25 @@ void CTransport::SaveAgent(std::ofstream& outFile)
 	// Loop through the held units
 	for (int i = 0; i < mNumUnitsHeld; i++)
 	{
-		//outFile << " " << mpSpaceUnitsList[i]
+		//outFile << " " << 
 	}
 
 	outFile << std::endl;
+}
+
+void CTransport::LoadAgent(std::ifstream& inFile)
+{
+	// Load in the data required and store the data
+	int faction;
+	int state;
+	inFile >> faction >> state >> mHealth >> mNumUnitsHeld;
+
+	mFaction = static_cast<EFactions>(faction);
+	mState = static_cast<EObjectStates>(state);
+
+	// Loop through all held units and add them to the transport ship's container
+	for (int i = 0; i < mNumUnitsHeld; i++)
+	{
+
+	}
 }
