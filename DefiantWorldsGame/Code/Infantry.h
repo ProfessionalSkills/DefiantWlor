@@ -24,7 +24,7 @@ private:
 
 public:
 	static IMesh* mspMshInfantry;
-
+	static IMesh* mspMshInfantryBullet;
 
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------

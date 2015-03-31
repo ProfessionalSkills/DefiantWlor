@@ -9,7 +9,7 @@
 #include "Infantry.h"
 
 IMesh* CInfantry::mspMshInfantry = nullptr;
-
+IMesh* CInfantry::mspMshInfantryBullet = nullptr;
 
 //-----------------------------------------------------
 // INFANTRY CLASS CONSTRUCTORS & DESTRUCTOR
@@ -24,8 +24,10 @@ CInfantry::CInfantry()
 	mProductionCost = 0.0f;
 	mCurProductionTimeLeft = mProductionTime;
 	mDamage = 1.0f;
+	mFireRate = 2.0f;
+	mAttackTimer = 1.0f / mFireRate;
 	mHasPathTarget = false;
-
+	mAttackTarget = nullptr;
 	//mAttackParticleFX;
 	//mDestroyParticleFX;
 	mState = OBJ_CONSTRUCTING;
@@ -78,6 +80,20 @@ void CInfantry::LoadIModel()
 //-----------------------------------------------------
 bool CInfantry::Attack(CGameObject* target, float hitMod, float damageMod)
 {
+	if (mAttackTimer >= (1.0f / mFireRate))
+	{
+		mAttackTimer = 0.0f;
+		SProjectile* newProjectile = new SProjectile();
+		newProjectile->mModel = mspMshInfantryBullet->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
+		newProjectile->mModel->LookAt(mAttackTarget->GetModel());
+		newProjectile->mSpeed = 50.0f;
+
+		mpProjectiles.push_back(newProjectile);
+	}
+	else
+	{
+		mAttackTimer += gFrameTime;
+	}
 	return false;
 }
 

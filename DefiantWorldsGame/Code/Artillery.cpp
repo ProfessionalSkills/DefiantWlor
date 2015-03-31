@@ -9,6 +9,7 @@
 #include "Artillery.h"
 
 IMesh* CArtillery::mspMshArtillery = nullptr;
+IMesh* CArtillery::mspMshArtilleryShell = nullptr;
 
 
 //-----------------------------------------------------
@@ -23,13 +24,16 @@ CArtillery::CArtillery()
 	mProductionTime = 15.0f;
 	mProductionCost = 0.0f;
 	mCurProductionTimeLeft = mProductionTime;
-	mDamage = 1.0f;
+	mDamage = 20.0f;
+	mFireRate = 0.333333f;
+	mAttackTimer = 1.0f / mFireRate;
 	//mAttackParticleFX;
 	//mDestroyParticleFX;
 	mState = OBJ_CONSTRUCTING;
 	//mDestGridSq;
 	mIsMoving = false;
 	mHasPathTarget = false;
+	mAttackTarget = nullptr;
 	mScale = 1.5f;
 	mBuildCost = 150;
 	mPopCost = 4;
@@ -77,6 +81,20 @@ void CArtillery::LoadIModel()
 //-----------------------------------------------------
 bool CArtillery::Attack(CGameObject* target, float hitMod, float damageMod)
 {
+	if (mAttackTimer >= (1.0f / mFireRate))
+	{
+		mAttackTimer = 0.0f;
+		SProjectile* newProjectile = new SProjectile();
+		newProjectile->mModel = mspMshArtilleryShell->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
+		newProjectile->mModel->LookAt(mAttackTarget->GetModel());
+		newProjectile->mSpeed = 50.0f;
+
+		mpProjectiles.push_back(newProjectile);
+	}
+	else
+	{
+		mAttackTimer += gFrameTime;
+	}
 	return false;
 }
 

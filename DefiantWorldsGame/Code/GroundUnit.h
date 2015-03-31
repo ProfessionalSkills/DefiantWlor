@@ -45,7 +45,7 @@ public:
 
 	// OVERRIDE METHODS
 	//---------------------------
-	virtual bool Attack(CGameObject* target, float hitMod, float damageMod);
+	virtual bool Attack(CGameObject* target, float hitMod, float damageMod) = 0;
 	//virtual void MoveTo(CTile* dest);
 	bool Update();
 	virtual void UnloadIModel()=0;
@@ -55,7 +55,7 @@ public:
 
 	}
 	void Spawn(CGrid* pGrid, SPointData pCentre);
-	bool LookingAt();
+	bool LookingAt(DX::XMFLOAT3 targetPosition);
 	virtual void Move();
 
 private:

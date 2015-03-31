@@ -24,7 +24,7 @@ private:
 
 public:
 	static IMesh* mspMshWorker;
-
+	static IMesh* mspMshWorkerBullet;
 
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------

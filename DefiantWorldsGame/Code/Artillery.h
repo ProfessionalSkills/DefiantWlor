@@ -23,7 +23,7 @@ private:
 
 public:
 	static IMesh* mspMshArtillery;
-
+	static IMesh* mspMshArtilleryShell;
 
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------

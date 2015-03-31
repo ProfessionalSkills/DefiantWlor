@@ -209,13 +209,16 @@ void SetupEngine()
 	CFighter::mspMshFighterBullet = gpEngine->LoadMesh("particle.x");
 	//Worker
 	CWorker::mspMshWorker = gpEngine->LoadMesh("transportTruck_german.x");
+	CWorker::mspMshWorkerBullet = gpEngine->LoadMesh("particle.x");
 	//Tank
 	CTank::mspMshTank = gpEngine->LoadMesh("HoverTank01.x");
+	CTank::mspMshTankShell = gpEngine->LoadMesh("particle.x");
 	//Infantry
 	CInfantry::mspMshInfantry = gpEngine->LoadMesh("tigerAusfH.x");
+	CInfantry::mspMshInfantryBullet = gpEngine->LoadMesh("particle.x");
 	//Artillery
 	CArtillery::mspMshArtillery = gpEngine->LoadMesh("marsAA.x");
-
+	CArtillery::mspMshArtilleryShell = gpEngine->LoadMesh("particle.x");
 	//Particle Mesh
 	CParticle::mspMshParticle = gpEngine->LoadMesh("particle.x");
 }

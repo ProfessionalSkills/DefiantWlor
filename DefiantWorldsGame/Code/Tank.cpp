@@ -9,7 +9,7 @@
 #include "Tank.h"
 
 IMesh* CTank::mspMshTank = nullptr;
-
+IMesh* CTank::mspMshTankShell = nullptr;
 //-----------------------------------------------------
 // TANK CLASS CONSTRUCTORS & DESTRUCTOR
 //-----------------------------------------------------
@@ -23,7 +23,10 @@ CTank::CTank()
 	mProductionCost = 0.0f;
 	mCurProductionTimeLeft = mProductionTime;
 	mDamage = 1.0f;
+	mFireRate = 0.5f;
+	mAttackTimer = 1.0f / mFireRate;
 	mHasPathTarget = false;
+	mAttackTarget = nullptr;
 	//mAttackParticleFX;
 	//mDestroyParticleFX;
 	mState = OBJ_CONSTRUCTING;
@@ -76,6 +79,20 @@ void CTank::LoadIModel()
 //-----------------------------------------------------
 bool CTank::Attack(CGameObject* target, float hitMod, float damageMod)
 {
+	if (mAttackTimer >= (1.0f / mFireRate))
+	{
+		mAttackTimer = 0.0f;
+		SProjectile* newProjectile = new SProjectile();
+		newProjectile->mModel = mspMshTankShell->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
+		newProjectile->mModel->LookAt(mAttackTarget->GetModel());
+		newProjectile->mSpeed = 50.0f;
+
+		mpProjectiles.push_back(newProjectile);
+	}
+	else
+	{
+		mAttackTimer += gFrameTime;
+	}
 	return false;
 }
 

@@ -24,7 +24,7 @@ private:
 
 public:
 	static IMesh* mspMshTank;
-
+	static IMesh* mspMshTankShell;
 
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
