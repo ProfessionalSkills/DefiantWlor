@@ -125,6 +125,7 @@ void CStructure::CreateStructure(CGrid* pGrid)
 
 	// Set to placed texture
 	SetPlacedTexture();
+	CalculateBoundingBox();
 }
 
 void CStructure::CalculateBoundingBox()
