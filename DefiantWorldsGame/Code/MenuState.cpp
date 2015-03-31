@@ -34,6 +34,22 @@ void CMenuState::NewGame()
 
 void CMenuState::LoadGame()
 {
+	// Verify the file name provided
+	std::stringstream fileName;
+	fileName << "..\\Saves\\" << mpTypeBox->GetText() << ".dws";
+	ifstream validate(fileName.str());
+
+	// If the file opens, it is successful otherwise it is not valid
+	if (!validate.good())
+	{
+		// File failed to open
+		validate.close();
+		std::string error = "File not found! (Delete key to clear)";
+		mpTypeBox->SetText(error);
+		return;
+	}
+	validate.close();
+
 	// If the players are already initialised, remove them
 	CPlayerManager* pPlayerManager = CStateControl::GetInstance()->GetPlayerManager();
 	if (pPlayerManager->ArePlayersInitialised())
@@ -41,12 +57,9 @@ void CMenuState::LoadGame()
 		pPlayerManager->RemovePlayers();
 	}
 
-	// Verify the file name provided
-
-
 	// Pass on the name of the file to be loaded
 	CStateControl::GetInstance()->GetSettingsManager()->SetIfLoadingGame(true);
-	CStateControl::GetInstance()->GetSettingsManager()->SetLoadFile(mpTypeBox->GetText());
+	CStateControl::GetInstance()->GetSettingsManager()->SetLoadFile(fileName.str());
 
 	// Set current state to be world state
 	gCurState = GS_WORLD;

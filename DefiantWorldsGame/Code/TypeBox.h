@@ -49,6 +49,13 @@ public:
 		mMouseOver = mouseOver;
 	}
 
+	inline void SetText(std::string& text)
+	{
+		mTypeStream.str("");
+		mTypeStream << text;
+		mCurLength = text.length();
+	}
+
 
 	// METHODS
 	//---------------------------

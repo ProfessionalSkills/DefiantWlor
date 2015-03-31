@@ -9,6 +9,8 @@
 //-----------------------------------------------------
 // INCLUDES
 //-----------------------------------------------------
+#include <fstream>
+
 #include "BaseGameState.h"
 #include "AdvancedButton.h"
 #include "TypeBox.h"
