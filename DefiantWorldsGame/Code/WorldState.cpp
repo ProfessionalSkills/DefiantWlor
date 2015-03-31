@@ -1139,7 +1139,7 @@ void CWorldState::StateUpdate()
 		{
 			// Update pause menu visuals
 			mpTitleFont->Draw("SAVE GAME", 1015, 90, kCyan, kCentre, kTop);
-			mpButtonFont->Draw("TYPE THEN NAME OF THE SAVE FILE BELOW:", 900, 200, kWhite, kCentre, kTop);
+			mpButtonFont->Draw("TYPE THE NAME OF THE SAVE FILE BELOW:", 770, 200, kWhite, kLeft, kTop);
 			mpButtonFont->Draw("SAVE", 945, 295, kWhite, kCentre, kTop);
 			mpButtonFont->Draw("CANCEL", 1085, 295, kWhite, kCentre, kTop);
 
@@ -1862,7 +1862,7 @@ void CWorldState::OnUnPause()
 void CWorldState::OnChooseSave()
 {
 	// Create a typebox
-	mpTypeBox = new CTypeBox(SPointData{ 815, 200 });
+	mpTypeBox = new CTypeBox(SPointData{ 760, 220 });
 
 	// Remove the buttons as they are no longer needed
 	while (!mpPauseButtonList.empty())
