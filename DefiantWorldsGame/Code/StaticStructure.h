@@ -75,6 +75,7 @@ public:
 
 	// Save the structure's details
 	virtual void SaveStructure(std::ofstream& outFile) override;
+	virtual void LoadStructure(std::ifstream& inFile, CGrid* pGrid, CRTSPlayer* pPlayer) override;
 };
 
 #endif /* _STATIC_STRUCTURE_H_ */

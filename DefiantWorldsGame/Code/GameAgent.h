@@ -163,10 +163,16 @@ public:
 	//---------------------------
 	bool Heal(float amount);
 	void SetState(EObjectStates newState);
+	
+	inline void SetProdTimeLeft(float timeLeft)
+	{
+		mCurProductionTimeLeft = timeLeft;
+	}
 
 	// METHODS
 	//---------------------------
 	bool Construct();
+	void CalculateBoundingSphere();
 	void Destroy();
 
 	// VIRTUAL METHODS
@@ -185,6 +191,7 @@ public:
 
 	// Save the data for this unit
 	virtual void SaveAgent(std::ofstream& outFile);
+	virtual void LoadAgent(std::ifstream& inFile);
 
 
 private:

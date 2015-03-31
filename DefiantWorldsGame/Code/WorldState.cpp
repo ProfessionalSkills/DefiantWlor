@@ -997,6 +997,10 @@ void CWorldState::StateSetup()
 		// Create the resource piles for each player
 		mpHumanPlayer->CreateResourcePiles();
 		mpAIPlayer->CreateResourcePiles();
+
+		// Create the walls for the players
+		mpHumanPlayer->ConstructWalls();
+		mpAIPlayer->ConstructWalls();
 	}
 	else
 	{
@@ -1010,6 +1014,10 @@ void CWorldState::StateSetup()
 		SafeDelete(mpMarsGrid);
 		mpEarthGrid = mpHumanPlayer->GetPlayerGrid();
 		mpMarsGrid = mpAIPlayer->GetPlayerGrid();
+
+		// Create the walls for the players
+		mpHumanPlayer->ConstructWalls();
+		mpAIPlayer->ConstructWalls();
 	}
 
 	// Load trees around earth
@@ -1069,10 +1077,6 @@ void CWorldState::StateSetup()
 		mpMdlRockList.back()->Scale(scale);
 		mpMdlRockList.back()->RotateY(rotation);
 	}
-
-	// Create the walls for the players
-	mpHumanPlayer->ConstructWalls();
-	mpAIPlayer->ConstructWalls();
 
 
 	// INITIALISE CAMERAS

@@ -69,6 +69,7 @@ public:
 
 	// Save the data for this unit
 	virtual void SaveAgent(std::ofstream& outFile) override;
+	virtual void LoadAgent(std::ifstream& inFile) override;
 
 	void FireLazer(CGameObject* target);
 	void ChargeLazer();

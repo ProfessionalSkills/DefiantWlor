@@ -92,6 +92,15 @@ void CStructure::SetDeselectedTexture()
 //-----------------------------------------------------
 void CStructure::CreateStructure(CGrid* pGrid)
 {
+	SetGridData(pGrid);
+	
+	// Set to placed texture
+	SetPlacedTexture();
+	CalculateBoundingBox();
+}
+
+void CStructure::SetGridData(CGrid* pGrid)
+{
 	mpGrid = pGrid;
 	SPointData gridPoint;
 
@@ -122,10 +131,10 @@ void CStructure::CreateStructure(CGrid* pGrid)
 
 	// Store spawn world location
 	mWorldSpawnLoc = pNextTile->GetWorldPos();
+}
 
-	// Set to placed texture
-	SetPlacedTexture();
-
+void CStructure::CalculateBoundingBox()
+{
 	// Calculate bounding box
 	float top = mWorldPos.z + ((float)mStructureTR.mPosY * GRID_TILE_SIZE) + (GRID_TILE_SIZE / 2.0f);
 	float bottom = mWorldPos.z + ((float)mStructureBL.mPosY * GRID_TILE_SIZE) - (GRID_TILE_SIZE / 2.0f);

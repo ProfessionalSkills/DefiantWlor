@@ -20,7 +20,7 @@ class CAirUnit : public CGameAgent
 private:
 	// DATA
 	//---------------------------
-	float mYaw;
+	float mYaw = 0.0f;
 
 public:
 	// CONSTRUCTORS & DESTRUCTOR

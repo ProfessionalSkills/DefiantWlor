@@ -28,23 +28,23 @@ CRTSPlayer::CRTSPlayer(EFactions playerFaction, int startingResources) : MINERAL
 	mpPlayerGrid = nullptr;
 	mpRandomiser = new CRandomiser();
 
-	CSpaceFighter* Temp;
-	for (int i = 0; i <25; i++)
-	{
-		Temp = new CSpaceFighter();
-		Temp->SetFaction(mPlayerFaction);
-		mpSpaceUnitsList.push_back(Temp);
-	}
-	CTransport* temp;
-	for (int i = 0; i < 5; i++)
-	{
-		temp = new CTransport();
-		temp->SetFaction(mPlayerFaction);
-		mpSpaceUnitsList.push_back(temp);
-	}
+	//CSpaceFighter* Temp;
+	//for (int i = 0; i <25; i++)
+	//{
+	//	Temp = new CSpaceFighter();
+	//	Temp->SetFaction(mPlayerFaction);
+	//	mpSpaceUnitsList.push_back(Temp);
+	//}
+	//CTransport* temp;
+	//for (int i = 0; i < 5; i++)
+	//{
+	//	temp = new CTransport();
+	//	temp->SetFaction(mPlayerFaction);
+	//	mpSpaceUnitsList.push_back(temp);
+	//}
 
-	mpSpaceUnitsList.push_back(new CMothership());
-	mpSpaceUnitsList.back()->SetFaction(mPlayerFaction);
+	//mpSpaceUnitsList.push_back(new CMothership());
+	//mpSpaceUnitsList.back()->SetFaction(mPlayerFaction);
 }
 
 CRTSPlayer::~CRTSPlayer()
@@ -460,11 +460,17 @@ void CRTSPlayer::SavePlayerData(std::ofstream& outFile)
 	// Save the grid information for this player
 	mpPlayerGrid->SaveTiles(outFile);
 
+	// Save number of structures
+	outFile << mpStructuresMap.size() << std::endl;
+
 	// For each structure, save its data
 	for (miterStructuresMap = mpStructuresMap.begin(); miterStructuresMap != mpStructuresMap.end(); miterStructuresMap++)
 	{
 		miterStructuresMap->second->SaveStructure(outFile);
 	}
+
+	// Save number of world units
+	outFile << mpUnitsMap.size() << std::endl;
 
 	// For each world unit, save its data
 	for (miterUnitsMap = mpUnitsMap.begin(); miterUnitsMap != mpUnitsMap.end(); miterUnitsMap++)
@@ -472,11 +478,17 @@ void CRTSPlayer::SavePlayerData(std::ofstream& outFile)
 		miterUnitsMap->second->SaveAgent(outFile);
 	}
 
+	// Save number of space units
+	outFile << mpSpaceUnitsList.size() << std::endl;
+
 	// For each space unit, save its data
 	for (mpiterSpaceUnits = mpSpaceUnitsList.begin(); mpiterSpaceUnits != mpSpaceUnitsList.end(); mpiterSpaceUnits++)
 	{
 		(*mpiterSpaceUnits)->SaveAgent(outFile);
 	}
+
+	// Save number of resources
+	outFile << mpMineralsList.size() << std::endl;
 
 	// Loop through all resources and save them
 	for (miterMineralsList = mpMineralsList.begin(); miterMineralsList != mpMineralsList.end(); miterMineralsList++)
@@ -490,11 +502,140 @@ void CRTSPlayer::LoadPlayerData(std::ifstream& inFile)
 {
 	// Load player specific data
 	int faction = 0;
-	inFile >> mNumMinerals >> faction >> mNumSpaceFighter >> mNumTransport >> mNumMothership;
+	int minerals = 0;
+	inFile >> minerals >> faction >> mNumSpaceFighter >> mNumTransport >> mNumMothership;
+	// give more minerals than they will need
+	mNumMinerals = 99999;
 
 	// Convert faction to enumeration
 	mPlayerFaction = static_cast<EFactions>(faction);
 
 	// Load grid tiles
 	mpPlayerGrid->LoadTiles(inFile);
+
+	// Load in structures
+	int numStructures;
+	inFile >> numStructures;
+	int structureType;
+	EGameStructureTypes sType;
+	for (int i = 0; i < numStructures; i++)
+	{
+		// Determine type
+		inFile >> structureType;
+		sType = static_cast<EGameStructureTypes>(structureType);
+		CStructure* pLoadedStructure = nullptr;
+		switch (sType)
+		{
+		case STR_HOUSE:
+			pLoadedStructure = new CHouse();
+			break;
+		case STR_COM_CENTRE:
+			pLoadedStructure = new CComCentre();
+			break;
+		case STR_SPACE_CENTRE:
+			pLoadedStructure = new CSpaceCentre();
+			break;
+		case STR_BARRACKS:
+			pLoadedStructure = new CBarracks();
+			break;
+		case STR_HELLIPAD:
+			pLoadedStructure = new CHellipad();
+			break;
+		case STR_WALL:
+			pLoadedStructure = new CWall();
+			break;
+		}
+
+		// Load saved information for the structure
+		pLoadedStructure->LoadStructure(inFile, mpPlayerGrid, this);
+
+		// Add to structures map
+		mpStructuresMap.insert(GS_MultiMap::value_type(sType, pLoadedStructure));
+	}
+
+	// Load in world units
+	int numWorldUnits;
+	inFile >> numWorldUnits;
+	int worldUnitType;
+	EGameAgentVariations wuType;
+	for (int i = 0; i < numWorldUnits; i++)
+	{
+		// Determine type
+		inFile >> worldUnitType;
+		wuType = static_cast<EGameAgentVariations>(worldUnitType);
+		CGameAgent* pLoadedUnit = nullptr;
+		switch (wuType)
+		{
+		case GAV_ARTILLERY:
+			pLoadedUnit = new CArtillery();
+			break;
+		case GAV_BOMBER:
+			pLoadedUnit = new CBomber();
+			break;
+		case GAV_FIGHTER:
+			pLoadedUnit = new CFighter();
+			break;
+		case GAV_INFANTRY:
+			pLoadedUnit = new CInfantry();
+			break;
+		case GAV_TANK:
+			pLoadedUnit = new CTank();
+			break;
+		case GAV_WORKER:
+			pLoadedUnit = new CWorker();
+			break;
+		}
+
+		// Load saved information for the structure
+		pLoadedUnit->LoadAgent(inFile);
+
+		// Add to structures map
+		mpUnitsMap.insert(GA_MultiMap::value_type(wuType, pLoadedUnit));
+	}
+
+	// Load in space units
+	int numSpaceUnits;
+	inFile >> numSpaceUnits;
+	int spaceUnitType;
+	EGameAgentVariations suType;
+	for (int i = 0; i < numSpaceUnits; i++)
+	{
+		// Determine type
+		inFile >> spaceUnitType;
+		suType = static_cast<EGameAgentVariations>(spaceUnitType);
+		CGameAgent* pLoadedUnit = nullptr;
+		switch (suType)
+		{
+		case GAV_MOTHERSHIP:
+			pLoadedUnit = new CMothership();
+			break;
+		case GAV_SPACE_FIGHTER:
+			pLoadedUnit = new CSpaceFighter();
+			break;
+		case GAV_TRANSPORT:
+			pLoadedUnit = new CTransport();
+			break;
+		}
+
+		// Load saved information for the structure
+		pLoadedUnit->LoadAgent(inFile);
+
+		// Add to structures map
+		mpSpaceUnitsList.push_back(pLoadedUnit);
+	}
+
+	// Load minerals
+	int numMinerals;
+	inFile >> numMinerals;
+	for (int i = 0; i < numMinerals; i++)
+	{
+		SPointData spawnTile;
+		inFile >> spawnTile.mPosX >> spawnTile.mPosY;
+		CMinerals* pNewMineral = new CMinerals();
+		pNewMineral->CreateResource(mpPlayerGrid, spawnTile);
+		mpMineralsList.push_back(pNewMineral);
+	}
+
+	// Store correct amount of minerals
+	mNumMinerals = minerals;
 }

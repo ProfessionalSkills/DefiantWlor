@@ -82,6 +82,7 @@ public:
 
 	// Save the data for this unit
 	void SaveAgent(std::ofstream& outFile) override;
+	void LoadAgent(std::ifstream& inFile) override;
 
 private:
 	bool Destroy();
