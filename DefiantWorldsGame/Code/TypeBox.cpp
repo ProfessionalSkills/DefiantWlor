@@ -14,7 +14,7 @@ CTypeBox::CTypeBox(SPointData position)
 	mPosition = position;
 
 	// Load the sprites & Fonts
-	mpSprBox = gpEngine->CreateSprite("SliderBack.png", (float)position.mPosX, (float)position.mPosY, 0.6f);
+	mpSprBox = gpEngine->CreateSprite("TypeBoxBack.png", (float)position.mPosX, (float)position.mPosY, 0.6f);
 	mpFntText = gpEngine->LoadFont("font2.bmp", 25U);
 
 	// Define the bounding box around the slider
@@ -41,7 +41,7 @@ CTypeBox::~CTypeBox()
 void CTypeBox::Update()
 {
 	// Draw the current text
-	mpFntText->Draw(mTypeStream.str(), mPosition.mPosX + 5, mPosition.mPosY, kWhite, kLeft, kVCentre);
+	mpFntText->Draw(mTypeStream.str(), mPosition.mPosX + 10, mPosition.mPosY + 20, kBlack, kLeft, kVCentre);
 
 	// In the update area, all this is doing is looking for key presses to add to the current text
 	// Use the delete button to clear the contents

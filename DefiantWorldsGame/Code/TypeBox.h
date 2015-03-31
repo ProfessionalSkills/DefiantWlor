@@ -65,7 +65,7 @@ private:
 	// TYPE BOX PROPERTIES
 	//---------------------------
 	SPointData mPosition{ 0, 0 };
-	DX::XMFLOAT2 mBoxDimensions{ 500.0f, 20.0f };		// Dimensions of the input box: x = width, y = height
+	DX::XMFLOAT2 mBoxDimensions{ 500.0f, 40.0f };		// Dimensions of the input box: x = width, y = height
 	SAABoundingBox mBoundingBox;
 	std::stringstream mTypeStream;
 
