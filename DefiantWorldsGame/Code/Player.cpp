@@ -502,7 +502,10 @@ void CRTSPlayer::LoadPlayerData(std::ifstream& inFile)
 {
 	// Load player specific data
 	int faction = 0;
-	inFile >> mNumMinerals >> faction >> mNumSpaceFighter >> mNumTransport >> mNumMothership;
+	int minerals = 0;
+	inFile >> minerals >> faction >> mNumSpaceFighter >> mNumTransport >> mNumMothership;
+	// give more minerals than they will need
+	mNumMinerals = 99999;
 
 	// Convert faction to enumeration
 	mPlayerFaction = static_cast<EFactions>(faction);
@@ -620,4 +623,19 @@ void CRTSPlayer::LoadPlayerData(std::ifstream& inFile)
 		// Add to structures map
 		mpSpaceUnitsList.push_back(pLoadedUnit);
 	}
+
+	// Load minerals
+	int numMinerals;
+	inFile >> numMinerals;
+	for (int i = 0; i < numMinerals; i++)
+	{
+		SPointData spawnTile;
+		inFile >> spawnTile.mPosX >> spawnTile.mPosY;
+		CMinerals* pNewMineral = new CMinerals();
+		pNewMineral->CreateResource(mpPlayerGrid, spawnTile);
+		mpMineralsList.push_back(pNewMineral);
+	}
+
+	// Store correct amount of minerals
+	mNumMinerals = minerals;
 }
