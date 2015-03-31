@@ -1126,12 +1126,26 @@ void CWorldState::StateUpdate()
 			mLMouseClicked = true;
 		}
 
-		// Update pause menu visuals
-		mpTitleFont->Draw("GAME PAUSED", 1015, 90, kCyan, kCentre, kTop);
+		// Check if the type box exists - will determine whether the user is typing or not
+		if (mpTypeBox == nullptr)
+		{
+			// Update pause menu visuals
+			mpTitleFont->Draw("GAME PAUSED", 1015, 90, kCyan, kCentre, kTop);
+			mpButtonFont->Draw("CONTINUE GAME", 1015, 365, kWhite, kCentre, kTop);
+			mpButtonFont->Draw("SAVE GAME", 1015, 435, kWhite, kCentre, kTop);
+			mpButtonFont->Draw("QUIT TO MAIN MENU", 1015, 505, kWhite, kCentre, kTop);
+		}
+		else
+		{
+			// Update pause menu visuals
+			mpTitleFont->Draw("SAVE GAME", 1015, 90, kCyan, kCentre, kTop);
+			mpButtonFont->Draw("TYPE THEN NAME OF THE SAVE FILE BELOW:", 900, 200, kWhite, kCentre, kTop);
+			mpButtonFont->Draw("SAVE", 945, 295, kWhite, kCentre, kTop);
+			mpButtonFont->Draw("CANCEL", 1085, 295, kWhite, kCentre, kTop);
 
-		mpButtonFont->Draw("CONTINUE GAME", 1015, 365, kWhite, kCentre, kTop);
-		mpButtonFont->Draw("SAVE GAME", 1015, 435, kWhite, kCentre, kTop);
-		mpButtonFont->Draw("QUIT TO MAIN MENU", 1015, 505, kWhite, kCentre, kTop);
+			// Update the type box
+			mpTypeBox->Update();
+		}
 
 		// Update buttons
 		for (miterPauseButtons = mpPauseButtonList.begin(); miterPauseButtons != mpPauseButtonList.end(); miterPauseButtons++)
@@ -1163,9 +1177,6 @@ void CWorldState::StateUpdate()
 			// Update the button
 			pButton->Update();
 		}
-
-		// Update the type box
-		mpTypeBox->Update();
 
 		// Exit this function so everything underneath does not get executed
 		mLMouseClicked = false;
@@ -1816,14 +1827,12 @@ void CWorldState::OnPause()
 	mpPauseButtonList.push_back(pNewButton);
 
 	pNewButton = new CAdvancedButton<CWorldState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 420),
-		SAABoundingBox(470.0f, 1215.0f, 420.0f, 815.0f), *this, &CWorldState::SaveGame);
+		SAABoundingBox(470.0f, 1215.0f, 420.0f, 815.0f), *this, &CWorldState::OnChooseSave);
 	mpPauseButtonList.push_back(pNewButton);
 
 	pNewButton = new CAdvancedButton<CWorldState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 490),
 		SAABoundingBox(540.0f, 1215.0f, 490.0f, 815.0f), *this, &CWorldState::QuitGame);
 	mpPauseButtonList.push_back(pNewButton);
-
-	mpTypeBox = new CTypeBox(SPointData{ 815, 200 });
 }
 
 void CWorldState::OnUnPause()
@@ -1848,6 +1857,56 @@ void CWorldState::OnUnPause()
 	}
 
 	if (mpTypeBox) SafeDelete(mpTypeBox);
+}
+
+void CWorldState::OnChooseSave()
+{
+	// Create a typebox
+	mpTypeBox = new CTypeBox(SPointData{ 815, 200 });
+
+	// Remove the buttons as they are no longer needed
+	while (!mpPauseButtonList.empty())
+	{
+		CAdvancedButton<CWorldState, void>* pButton = mpPauseButtonList.back();
+		SafeDelete(pButton);
+		mpPauseButtonList.pop_back();
+	}
+
+	// Create the save related buttons
+	CAdvancedButton<CWorldState, void>* pNewButton = new CAdvancedButton<CWorldState, void>("DefSmallButton.png", "SelSmallButton.png", SPointData(895, 280),
+		SAABoundingBox(330.0f, 995.0f, 280.0f, 895.0f), *this, &CWorldState::SaveGame);
+	mpPauseButtonList.push_back(pNewButton);
+
+	pNewButton = new CAdvancedButton<CWorldState, void>("DefSmallButton.png", "SelSmallButton.png", SPointData(1035, 280),
+		SAABoundingBox(330.0f, 1135.0f, 280.0f, 1035.0f), *this, &CWorldState::OnChooseCancel);
+	mpPauseButtonList.push_back(pNewButton);
+}
+
+void CWorldState::OnChooseCancel()
+{
+	// Remove visual items no longer required
+	if (mpTypeBox) SafeDelete(mpTypeBox);
+
+	// Remove the save buttons as they are no longer needed
+	while (!mpPauseButtonList.empty())
+	{
+		CAdvancedButton<CWorldState, void>* pButton = mpPauseButtonList.back();
+		SafeDelete(pButton);
+		mpPauseButtonList.pop_back();
+	}
+
+	// Replace with buttons
+	CAdvancedButton<CWorldState, void>* pNewButton = new CAdvancedButton<CWorldState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 350),
+		SAABoundingBox(400.0f, 1215.0f, 350.0f, 815.0f), *this, &CWorldState::Continue);
+	mpPauseButtonList.push_back(pNewButton);
+
+	pNewButton = new CAdvancedButton<CWorldState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 420),
+		SAABoundingBox(470.0f, 1215.0f, 420.0f, 815.0f), *this, &CWorldState::OnChooseSave);
+	mpPauseButtonList.push_back(pNewButton);
+
+	pNewButton = new CAdvancedButton<CWorldState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 490),
+		SAABoundingBox(540.0f, 1215.0f, 490.0f, 815.0f), *this, &CWorldState::QuitGame);
+	mpPauseButtonList.push_back(pNewButton);
 }
 
 

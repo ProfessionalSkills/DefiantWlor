@@ -247,6 +247,8 @@ private:
 	void OnItemHealthChange();
 	void OnPause();
 	void OnUnPause();
+	void OnChooseSave();
+	void OnChooseCancel();
 };
 
 
