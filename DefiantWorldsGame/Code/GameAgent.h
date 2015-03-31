@@ -163,6 +163,11 @@ public:
 	//---------------------------
 	bool Heal(float amount);
 	void SetState(EObjectStates newState);
+	
+	inline void SetProdTimeLeft(float timeLeft)
+	{
+		mCurProductionTimeLeft = timeLeft;
+	}
 
 	// METHODS
 	//---------------------------

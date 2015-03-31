@@ -329,11 +329,11 @@ void CProductionStructure::SaveStructure(std::ofstream& outFile)
 	outFile << mOrientation << std::endl;
 }
 
-void CProductionStructure::LoadStructure(std::ifstream& inFile)
+void CProductionStructure::LoadStructure(std::ifstream& inFile, CGrid* pGrid, CRTSPlayer* pPlayer)
 {
 	// Ensure no model is already loaded for it
 	UnloadIModel();
-	
+
 	// Store the required data for the structure
 	int faction;
 	int state;
@@ -341,22 +341,43 @@ void CProductionStructure::LoadStructure(std::ifstream& inFile)
 	inFile >> mGridPos.mPosX >> mGridPos.mPosY >> faction >> state >> mWorldPos.x >> mWorldPos.y
 		>> mWorldPos.z >> mHealth >> qSize;
 
-	// Base don the queue size, load in the required details for each queue item
-	int type;
-	int progress;
-	for (int i = 0; i < qSize; i++)
-	{
-		inFile >> type >> progress;
-	}
-
 	// Convert required values to enums
 	mFaction = static_cast<EFactions>(faction);
 	mState = static_cast<EObjectStates>(state);
+
+	// Based on the queue size, load in the required details for each queue item
+	int type;
+	int progress;
+	EGameAgentVariations agentType;
+	for (int i = 0; i < qSize; i++)
+	{
+		inFile >> type >> progress;
+		// Convert type into an agent type
+		agentType = static_cast<EGameAgentVariations>(type);
+
+		// Loop through respective agents list and get the index of the unit to create it
+		int counter = 0;			// Counter is used as an index for the QueueUnit method
+		for (miterRespectiveAgents = mRespectiveAgentsList.begin(); miterRespectiveAgents != mRespectiveAgentsList.end(); miterRespectiveAgents++)
+		{
+			// Check if this agent matches the agent trying to be created
+			if (agentType == (*miterRespectiveAgents)->GetAgentData()->mAgentType)
+			{
+				// Queue the unit using the index
+				AddToQueue(counter, pPlayer);
+				mpProductionQueue.back()->SetProdTimeLeft(progress);
+			}
+			// Increment counter
+			counter++;
+		}
+	}
 
 	// Load in orientation
 	inFile >> mOrientation;
 
 	// Load the 3D model
 	LoadIModel();
+
+	// Create the structure
+	SetGridData(pGrid);
 	CalculateBoundingBox();
 }

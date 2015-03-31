@@ -550,7 +550,7 @@ void CRTSPlayer::LoadPlayerData(std::ifstream& inFile)
 		}
 
 		// Load saved information for the structure
-		pLoadedStructure->LoadStructure(inFile);
+		pLoadedStructure->LoadStructure(inFile, mpPlayerGrid, this);
 
 		// Add to structures map
 		mpStructuresMap.insert(GS_MultiMap::value_type(sType, pLoadedStructure));

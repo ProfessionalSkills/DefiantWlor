@@ -175,6 +175,7 @@ public:
 	void CreateStructure(CGrid* pGrid);
 	bool TestStructureArea(CGrid* pGrid, CTile* pTile);
 	bool RayCollision(DX::XMFLOAT3 origin, DX::XMFLOAT3 direction, float& distance);
+	void SetGridData(CGrid* pGrid);
 	void CalculateBoundingBox();
 	void Destroy();
 
@@ -199,7 +200,7 @@ public:
 
 	// Save the structure's details
 	virtual void SaveStructure(std::ofstream& outFile) = 0;
-	virtual void LoadStructure(std::ifstream& inFile) = 0;
+	virtual void LoadStructure(std::ifstream& inFile, CGrid* pGrid, CRTSPlayer* pPlayer) = 0;
 };
 
 #endif /* _STRUCTURE_H_ */

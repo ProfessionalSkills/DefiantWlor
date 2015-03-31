@@ -59,7 +59,7 @@ void CStaticStructure::SaveStructure(std::ofstream& outFile)
 	outFile << mOrientation << std::endl;
 }
 
-void CStaticStructure::LoadStructure(std::ifstream& inFile)
+void CStaticStructure::LoadStructure(std::ifstream& inFile, CGrid* pGrid, CRTSPlayer* pPlayer)
 {
 	// Ensure no model is already loaded for it
 	UnloadIModel();
