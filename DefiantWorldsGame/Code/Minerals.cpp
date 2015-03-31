@@ -31,10 +31,12 @@ CMinerals::~CMinerals()
 //-----------------------------------------------------
 // MINERALS CLASS METHODS
 //-----------------------------------------------------
-void CMinerals::CreateResource(DX::XMFLOAT3 pos)
+void CMinerals::CreateResource(CGrid* pGrid, SPointData gridPos)
 {
-	mpObjModel = mspMshMineral->CreateModel(pos.x, pos.y, pos.z);
-	mWorldPos = pos;
+	CTile* pTile = pGrid->GetTileData(gridPos);
+	mGridPos = gridPos;
+	mWorldPos = pTile->GetWorldPos();
+	mpObjModel = mspMshMineral->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
 	mpObjModel->RotateX(mOrientation);
 	mpObjModel->Scale(mScale);
 	mpObjModel->ScaleY(3.0f);

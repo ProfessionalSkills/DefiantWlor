@@ -34,12 +34,18 @@ void CMenuState::NewGame()
 
 void CMenuState::LoadGame()
 {
-	// Check to see if a game is already in play
+	// If the players are already initialised, remove them
 	CPlayerManager* pPlayerManager = CStateControl::GetInstance()->GetPlayerManager();
 	if (pPlayerManager->ArePlayersInitialised())
 	{
-		gCurState = GS_WORLD;
+		pPlayerManager->RemovePlayers();
 	}
+
+	// Pass on the name of the file to be loaded - VERIFY FILE PROVIDED
+
+
+	// Set current state to be world state
+	gCurState = GS_WORLD;
 }
 
 void CMenuState::ChangeSettings()

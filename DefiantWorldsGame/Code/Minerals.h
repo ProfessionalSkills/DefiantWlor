@@ -10,6 +10,7 @@
 // INCLUDES
 //-----------------------------------------------------
 #include "GameObject.h"
+#include "Grid.h"
 
 
 //-----------------------------------------------------
@@ -47,7 +48,7 @@ public:
 
 	// METHODS
 	//---------------------------
-	void CreateResource(DX::XMFLOAT3 pos);
+	void CreateResource(CGrid* pGrid, SPointData gridPos);
 	void LoadIModel();
 	void UnloadIModel();
 };

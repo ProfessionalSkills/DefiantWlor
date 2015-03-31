@@ -39,6 +39,11 @@ public:
 		return mStartingResources;
 	}
 
+	inline bool IsGameBeingLoaded()
+	{
+		return mLoadingGame;
+	}
+
 	int GetStartingResourcesAmount();
 
 
@@ -64,6 +69,11 @@ public:
 		mStartingResources = amount;
 	}
 
+	void SetIfLoadingGame(bool loading)
+	{
+		mLoadingGame = loading;
+	}
+
 
 	// METHODS
 	//---------------------------
@@ -73,10 +83,12 @@ public:
 private:
 	// SETTINGS DATA
 	//---------------------------
+	bool mLoadingGame = false;				// Used to identify whether or not the player is loading a game from file
+
 	float mMusicVolume = 0.8f;
 	float mEffectsVolume = 0.6f;
 
-	int mAIDifficulty = 0;
+	int mAIDifficulty = 1;
 	int mStartingResources = 1;
 };
 

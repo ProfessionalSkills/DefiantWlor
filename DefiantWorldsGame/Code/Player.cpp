@@ -401,7 +401,7 @@ void CRTSPlayer::CreateResourcePiles()
 
 		// Found a tile not in use - spawn the tile here
 		pNewMineral = new CMinerals();
-		pNewMineral->CreateResource(pTile->GetWorldPos());
+		pNewMineral->CreateResource(mpPlayerGrid, spawnTile);
 		mpMineralsList.push_back(pNewMineral);
 
 		// Ensure tile is labelled as used
