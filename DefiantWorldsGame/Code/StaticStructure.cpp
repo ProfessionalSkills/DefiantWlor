@@ -58,3 +58,24 @@ void CStaticStructure::SaveStructure(std::ofstream& outFile)
 
 	outFile << mOrientation << std::endl;
 }
+
+void CStaticStructure::LoadStructure(std::ifstream& inFile)
+{
+	// Ensure no model is already loaded for it
+	UnloadIModel();
+	
+	// Store the required data for the structure
+	int faction;
+	int state;
+	int pad;
+	inFile >> mGridPos.mPosX >> mGridPos.mPosY >> faction >> state >> mWorldPos.x >> mWorldPos.y
+		>> mWorldPos.z >> mHealth >> pad >> mOrientation;
+
+	// Convert required values to enums
+	mFaction = static_cast<EFactions>(faction);
+	mState = static_cast<EObjectStates>(state);
+
+	// Load the 3D model
+	LoadIModel();
+	CalculateBoundingBox();
+}

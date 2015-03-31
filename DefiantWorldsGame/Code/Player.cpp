@@ -461,7 +461,7 @@ void CRTSPlayer::SavePlayerData(std::ofstream& outFile)
 	mpPlayerGrid->SaveTiles(outFile);
 
 	// Save number of structures
-	outFile << mpStructuresMap.size();
+	outFile << mpStructuresMap.size() << std::endl;
 
 	// For each structure, save its data
 	for (miterStructuresMap = mpStructuresMap.begin(); miterStructuresMap != mpStructuresMap.end(); miterStructuresMap++)
@@ -470,7 +470,7 @@ void CRTSPlayer::SavePlayerData(std::ofstream& outFile)
 	}
 
 	// Save number of world units
-	outFile << mpUnitsMap.size();
+	outFile << mpUnitsMap.size() << std::endl;
 
 	// For each world unit, save its data
 	for (miterUnitsMap = mpUnitsMap.begin(); miterUnitsMap != mpUnitsMap.end(); miterUnitsMap++)
@@ -479,7 +479,7 @@ void CRTSPlayer::SavePlayerData(std::ofstream& outFile)
 	}
 
 	// Save number of space units
-	outFile << mpSpaceUnitsList.size();
+	outFile << mpSpaceUnitsList.size() << std::endl;
 
 	// For each space unit, save its data
 	for (mpiterSpaceUnits = mpSpaceUnitsList.begin(); mpiterSpaceUnits != mpSpaceUnitsList.end(); mpiterSpaceUnits++)
@@ -488,7 +488,7 @@ void CRTSPlayer::SavePlayerData(std::ofstream& outFile)
 	}
 
 	// Save number of resources
-	outFile << mpMineralsList.size();
+	outFile << mpMineralsList.size() << std::endl;
 
 	// Loop through all resources and save them
 	for (miterMineralsList = mpMineralsList.begin(); miterMineralsList != mpMineralsList.end(); miterMineralsList++)
@@ -509,4 +509,50 @@ void CRTSPlayer::LoadPlayerData(std::ifstream& inFile)
 
 	// Load grid tiles
 	mpPlayerGrid->LoadTiles(inFile);
+
+	/*pWall = new CWall(true);
+	pWall->SetWorldPos(DX::XMFLOAT3((gridCentre.x - ((gridTopRight.x - gridCentre.x) / 2.0f)), 0.0f, gridTopRight.z + 7.0f));
+	pWall->SetFaction(mPlayerFaction);
+	pWall->LoadIModel();
+	mpStructuresMap.insert(GS_MultiMap::value_type(pWall->GetStructureType(), pWall));*/
+
+	// Load in structures
+	int numStructures;
+	inFile >> numStructures;
+	int structureType;
+	EGameStructureTypes sType;
+	for (int i = 0; i < numStructures; i++)
+	{
+		// Determine type
+		inFile >> structureType;
+		sType = static_cast<EGameStructureTypes>(structureType);
+		CStructure* pLoadedStructure = nullptr;
+		switch (sType)
+		{
+		case STR_HOUSE:
+			pLoadedStructure = new CHouse();
+			break;
+		case STR_COM_CENTRE:
+			pLoadedStructure = new CComCentre();
+			break;
+		case STR_SPACE_CENTRE:
+			pLoadedStructure = new CSpaceCentre();
+			break;
+		case STR_BARRACKS:
+			pLoadedStructure = new CBarracks();
+			break;
+		case STR_HELLIPAD:
+			pLoadedStructure = new CHellipad();
+			break;
+		case STR_WALL:
+			pLoadedStructure = new CWall();
+			break;
+		}
+
+		// Load saved information for the structure
+		pLoadedStructure->LoadStructure(inFile);
+
+		// Add to structures map
+		mpStructuresMap.insert(GS_MultiMap::value_type(sType, pLoadedStructure));
+	}
 }

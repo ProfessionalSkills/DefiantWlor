@@ -125,7 +125,10 @@ void CStructure::CreateStructure(CGrid* pGrid)
 
 	// Set to placed texture
 	SetPlacedTexture();
+}
 
+void CStructure::CalculateBoundingBox()
+{
 	// Calculate bounding box
 	float top = mWorldPos.z + ((float)mStructureTR.mPosY * GRID_TILE_SIZE) + (GRID_TILE_SIZE / 2.0f);
 	float bottom = mWorldPos.z + ((float)mStructureBL.mPosY * GRID_TILE_SIZE) - (GRID_TILE_SIZE / 2.0f);

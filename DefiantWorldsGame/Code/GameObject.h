@@ -34,7 +34,7 @@ protected:
 
 	// TLE OBJECT DATA
 	//---------------------------
-	IModel* mpObjModel;
+	IModel* mpObjModel = nullptr;
 
 	CExplosion* mDestructionExplosion;
 	// SOUND

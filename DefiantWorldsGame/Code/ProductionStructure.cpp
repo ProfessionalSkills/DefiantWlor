@@ -328,3 +328,35 @@ void CProductionStructure::SaveStructure(std::ofstream& outFile)
 
 	outFile << mOrientation << std::endl;
 }
+
+void CProductionStructure::LoadStructure(std::ifstream& inFile)
+{
+	// Ensure no model is already loaded for it
+	UnloadIModel();
+	
+	// Store the required data for the structure
+	int faction;
+	int state;
+	int qSize;
+	inFile >> mGridPos.mPosX >> mGridPos.mPosY >> faction >> state >> mWorldPos.x >> mWorldPos.y
+		>> mWorldPos.z >> mHealth >> qSize;
+
+	// Base don the queue size, load in the required details for each queue item
+	int type;
+	int progress;
+	for (int i = 0; i < qSize; i++)
+	{
+		inFile >> type >> progress;
+	}
+
+	// Convert required values to enums
+	mFaction = static_cast<EFactions>(faction);
+	mState = static_cast<EObjectStates>(state);
+
+	// Load in orientation
+	inFile >> mOrientation;
+
+	// Load the 3D model
+	LoadIModel();
+	CalculateBoundingBox();
+}

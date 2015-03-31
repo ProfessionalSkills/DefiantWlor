@@ -23,6 +23,7 @@ public:
 
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
+	CWall();
 	CWall(bool horizontal);
 	virtual ~CWall();
 
@@ -32,9 +33,6 @@ public:
 	void CalculateBoundingBox();
 	void UnloadIModel() override;
 	void LoadIModel() override;
-
-	// Save the structure's details
-	void SaveStructure(std::ofstream& outFile) override;
 
 
 private:

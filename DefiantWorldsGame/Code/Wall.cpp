@@ -16,6 +16,28 @@ IMesh* CWall::mspMshStructure = nullptr;
 //-----------------------------------------------------
 // WALL CLASS CONSTRUCTORS & DESTRUCTOR
 //-----------------------------------------------------
+CWall::CWall()
+{
+	// Define default variables for this type of structure
+	CRandomiser* pRandom = new CRandomiser();
+	mScale = pRandom->GetRandomFloat(9.0f, 9.1f);
+
+	mIsHorizontal = false;
+	mHealth = 1000.0f;
+	mBuildTime = 5.0f;
+	mRepairSpeed = 1.0f;
+	mCurBuildTimeLeft = mBuildTime;
+	mBuildCost = 0;
+
+	mState = OBJ_BUILT;
+	mStructureType = STR_WALL;
+
+	mHeight = 50.0f;
+	mOrientation = 0.0f;
+
+	SafeDelete(pRandom);
+}
+
 CWall::CWall(bool horizontal)
 {
 	// Define default variables for this type of structure
@@ -110,13 +132,4 @@ void CWall::LoadIModel()
 
 		CalculateBoundingBox();
 	}
-}
-
-void CWall::SaveStructure(std::ofstream& outFile)
-{
-	// Save to the output file all the required data
-	outFile << mStructureType << " " << mGridPos.mPosX << " " << mGridPos.mPosY << " " << mFaction << " " << mState
-		<< " " << mWorldPos.x << " " << mWorldPos.y << " " << mWorldPos.z << " " << mHealth << " " << 0 << " ";
-
-	outFile << mOrientation << std::endl;
 }

@@ -175,6 +175,7 @@ public:
 	void CreateStructure(CGrid* pGrid);
 	bool TestStructureArea(CGrid* pGrid, CTile* pTile);
 	bool RayCollision(DX::XMFLOAT3 origin, DX::XMFLOAT3 direction, float& distance);
+	void CalculateBoundingBox();
 	void Destroy();
 
 
@@ -194,10 +195,11 @@ public:
 	virtual void DisplayInfo(IFont* font) = 0;
 	virtual void SetBuiltModel() = 0;
 	virtual void UnloadIModel() = 0;
-	virtual void LoadIModel()=0;
+	virtual void LoadIModel() = 0;
 
 	// Save the structure's details
 	virtual void SaveStructure(std::ofstream& outFile) = 0;
+	virtual void LoadStructure(std::ifstream& inFile) = 0;
 };
 
 #endif /* _STRUCTURE_H_ */
