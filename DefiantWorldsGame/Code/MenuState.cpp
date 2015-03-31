@@ -29,6 +29,7 @@ CMenuState::~CMenuState()
 //-----------------------------------------------------
 void CMenuState::NewGame()
 {
+	CStateControl::GetInstance()->GetSettingsManager()->SetIfLoadingGame(false);
 	gCurState = GS_NEW_GAME;
 }
 
@@ -78,7 +79,7 @@ void CMenuState::Quit()
 void CMenuState::OnChooseLoadGame()
 {
 	// Create a typebox
-	mpTypeBox = new CTypeBox(SPointData{ 760, 420 });
+	mpTypeBox = new CTypeBox(SPointData{ 770, 420 });
 
 	// Remove the buttons as they are no longer needed
 	while (!mpButtonList.empty())
@@ -90,11 +91,11 @@ void CMenuState::OnChooseLoadGame()
 
 	// Create the save related buttons
 	CAdvancedButton<CMenuState, void>* pNewButton = new CAdvancedButton<CMenuState, void>("DefSmallButton.png", "SelSmallButton.png", SPointData(895, 480),
-		SAABoundingBox(730.0f, 995.0f, 480.0f, 895.0f), *this, &CMenuState::LoadGame);
+		SAABoundingBox(530.0f, 995.0f, 480.0f, 895.0f), *this, &CMenuState::LoadGame);
 	mpButtonList.push_back(pNewButton);
 
 	pNewButton = new CAdvancedButton<CMenuState, void>("DefSmallButton.png", "SelSmallButton.png", SPointData(1035, 480),
-		SAABoundingBox(730.0f, 1135.0f, 480.0f, 1035.0f), *this, &CMenuState::OnChooseCancel);
+		SAABoundingBox(530.0f, 1135.0f, 480.0f, 1035.0f), *this, &CMenuState::OnChooseCancel);
 	mpButtonList.push_back(pNewButton);
 }
 
@@ -251,7 +252,7 @@ void CMenuState::StateUpdate()
 	else
 	{
 		// Update pause menu visuals
-		mpButtonFont->Draw("TYPE THE NAME OF THE FILE YOU WANT TO LOAD BELOW:", 770, 400, kWhite, kLeft, kTop);
+		mpButtonFont->Draw("TYPE THE NAME OF THE FILE YOU WANT TO LOAD BELOW:", 780, 400, kWhite, kLeft, kTop);
 		mpButtonFont->Draw("LOAD", 945, 495, kWhite, kCentre, kTop);
 		mpButtonFont->Draw("CANCEL", 1085, 495, kWhite, kCentre, kTop);
 

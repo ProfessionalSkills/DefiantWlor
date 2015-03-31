@@ -39,6 +39,8 @@ void CGameSaverLoader::SaveGame(std::string& fileName)
 	ofstream saveStream(saveFile.str());
 
 	// SAVE FILE STRUCTURE:
+	// Settings
+	//     - Music vol, Effects vol, AI Difficulty, Starting Resources
 	// <Player>
 	//     - Minerals, Faction, num spacefighters, num transport ships, num motherships
 	// Grid
@@ -51,14 +53,10 @@ void CGameSaverLoader::SaveGame(std::string& fileName)
 	//     - Type, Faction, State, Health, /* cargo (transport ships only) */ <- CHALLENGE
 	// Resources
 	//     - Grid Position
-	// Settings
-	//     - Music vol, Effects vol, AI Difficulty, Starting Resources
-
-
-	// FIRST PLAYER
-	// Save player data
-	CStateControl::GetInstance()->GetPlayerManager()->SavePlayers(saveStream);
 
 	// Save settings data through the settings manager
 	CStateControl::GetInstance()->GetSettingsManager()->SaveSettings(saveStream);
+
+	// Save player data
+	CStateControl::GetInstance()->GetPlayerManager()->SavePlayers(saveStream);
 }

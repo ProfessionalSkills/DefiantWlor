@@ -913,10 +913,22 @@ void CWorldState::StateSetup()
 	mpMdlMarsGrassArea->SetSkin("sand.jpg");
 
 
-	// CONSTRUCT COMMAND CENTRES
+	// LOAD IN OR CREATE PLAYERS
 	//-----------------------------
+	// Check if a game is being loaded by file
+	if (CStateControl::GetInstance()->GetSettingsManager()->IsGameBeingLoaded())
+	{
+		// Load the game from the provided file
+		std::string fileToLoad;
+		CStateControl::GetInstance()->GetSettingsManager()->GetLoadFileName(fileToLoad);
+
+		// Create an input file stream - already know it exists through verification so no need to check again
+		std::ifstream inFile(fileToLoad);
+
+
+	}
 	// if players have already been initialised, this is not necessary
-	if (!mpPlayerManager->ArePlayersInitialised())
+	else if (!mpPlayerManager->ArePlayersInitialised())
 	{
 		// INITIALISE PLAYERS
 		//-----------------------------
@@ -1139,7 +1151,7 @@ void CWorldState::StateUpdate()
 		{
 			// Update pause menu visuals
 			mpTitleFont->Draw("SAVE GAME", 1015, 90, kCyan, kCentre, kTop);
-			mpButtonFont->Draw("TYPE THE NAME OF THE SAVE FILE BELOW:", 770, 200, kWhite, kLeft, kTop);
+			mpButtonFont->Draw("TYPE THE NAME OF THE SAVE FILE BELOW:", 780, 200, kWhite, kLeft, kTop);
 			mpButtonFont->Draw("SAVE", 945, 295, kWhite, kCentre, kTop);
 			mpButtonFont->Draw("CANCEL", 1085, 295, kWhite, kCentre, kTop);
 
@@ -1862,7 +1874,7 @@ void CWorldState::OnUnPause()
 void CWorldState::OnChooseSave()
 {
 	// Create a typebox
-	mpTypeBox = new CTypeBox(SPointData{ 760, 220 });
+	mpTypeBox = new CTypeBox(SPointData{ 770, 220 });
 
 	// Remove the buttons as they are no longer needed
 	while (!mpPauseButtonList.empty())
