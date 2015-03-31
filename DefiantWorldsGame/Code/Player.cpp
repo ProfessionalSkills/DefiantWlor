@@ -485,3 +485,16 @@ void CRTSPlayer::SavePlayerData(std::ofstream& outFile)
 		outFile << mineralPos.mPosX << " " << mineralPos.mPosY << std::endl;
 	}
 }
+
+void CRTSPlayer::LoadPlayerData(std::ifstream& inFile)
+{
+	// Load player specific data
+	int faction = 0;
+	inFile >> mNumMinerals >> faction >> mNumSpaceFighter >> mNumTransport >> mNumMothership;
+
+	// Convert faction to enumeration
+	mPlayerFaction = static_cast<EFactions>(faction);
+
+	// Load grid tiles
+	mpPlayerGrid->LoadTiles(inFile);
+}

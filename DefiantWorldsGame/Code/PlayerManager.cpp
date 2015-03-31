@@ -80,3 +80,15 @@ void CPlayerManager::SavePlayers(std::ofstream& outFile)
 		mpAI[i]->SavePlayerData(outFile);
 	}
 }
+
+void CPlayerManager::LoadPlayers(std::ifstream& inFile)
+{
+	// Human player first
+	mpHuman->LoadPlayerData(inFile);
+
+	// Loop through and load each AI
+	for (int i = 0; i < mNumAI; i++)
+	{
+		mpAI[i]->LoadPlayerData(inFile);
+	}
+}

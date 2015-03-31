@@ -30,6 +30,7 @@ public:
 	void RemovePlayers();
 	void UpdatePlayers();
 	void SavePlayers(std::ofstream& outFile);
+	void LoadPlayers(std::ifstream& inFile);
 
 
 	// ACCESSORS

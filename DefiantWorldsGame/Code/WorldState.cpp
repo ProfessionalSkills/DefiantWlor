@@ -920,8 +920,32 @@ void CWorldState::StateSetup()
 	{
 		// Create an instance of the loading and saving manager
 		CGameSaverLoader* pLoader = new CGameSaverLoader();
+
+		// Load the game from the provided file
+		std::string fileToLoad;
+		CStateControl::GetInstance()->GetSettingsManager()->GetLoadFileName(fileToLoad);
+
+		// Create an input file stream - already know it exists through verification so no need to check again
+		std::ifstream inFile(fileToLoad);
+
+		// Load settings through settings manager
+		CStateControl::GetInstance()->GetSettingsManager()->LoadSettings(inFile);
+
+		// Create players based on the settings just loaded
+		CStateControl::GetInstance()->GetPlayerManager()->CreatePlayers(FAC_EARTH_DEFENSE_FORCE, 1, CStateControl::GetInstance()->GetSettingsManager()->GetStartingResourcesAmount(),
+			CStateControl::GetInstance()->GetSettingsManager()->GetAIDifficulty());
+
+		// Get the players from the player manager & store relevant grids
+		mpHumanPlayer = mpPlayerManager->GetHumanPlayer();
+		mpAIPlayer = mpPlayerManager->GetAIPlayer(0);
+		mpHumanPlayer->StorePlayerGridState(mpEarthGrid);
+		mpAIPlayer->StorePlayerGridState(mpMarsGrid);
+
 		// Load the game (required data on load file stored in settings)
-		pLoader->LoadGame();
+		pLoader->LoadGame(inFile);
+
+		// Initialise news ticker
+		gpNewsTicker = new CNewsTicker();
 	}
 	// if players have already been initialised, this is not necessary
 	else if (!mpPlayerManager->ArePlayersInitialised())
@@ -982,6 +1006,8 @@ void CWorldState::StateSetup()
 		mpAIPlayer->LoadPlayerGridModels();
 
 		// Re-assign previous grid data
+		SafeDelete(mpEarthGrid);
+		SafeDelete(mpMarsGrid);
 		mpEarthGrid = mpHumanPlayer->GetPlayerGrid();
 		mpMarsGrid = mpAIPlayer->GetPlayerGrid();
 	}

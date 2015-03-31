@@ -242,3 +242,17 @@ void CGrid::SaveTiles(std::ofstream& outFile)
 	}
 	outFile << std::endl;
 }
+
+void CGrid::LoadTiles(std::ifstream& inFile)
+{
+	// Loop through all tiles to load their information
+	bool used = false;
+	for (int x = 0; x < GRID_SIZE_X; x++)
+	{
+		for (int y = 0; y < GRID_SIZE_Y; y++)
+		{
+			inFile >> used;
+			mpGridArea[x][y]->SetTileUsage(used);
+		}
+	}
+}

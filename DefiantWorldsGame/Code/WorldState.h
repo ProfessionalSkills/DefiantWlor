@@ -27,9 +27,9 @@ class CWorldState : public CGameState
 private:
 	// CAMERA DATA
 	//--------------------------- 
-	CSphericalCamera* mpCamEarth;
-	CSphericalCamera* mpCamMars;
-	CSphericalCamera* mpCamCurrent;
+	CSphericalCamera* mpCamEarth = nullptr;
+	CSphericalCamera* mpCamMars = nullptr;
+	CSphericalCamera* mpCamCurrent = nullptr;
 
 	DX::XMFLOAT3 mMinEarthPos;
 	DX::XMFLOAT3 mMaxEarthPos;
@@ -50,9 +50,9 @@ private:
 
 	// MESHES
 	//---------------------------
-	IMesh* mpMshSkybox;
-	IMesh* mpMshGridArea;
-	IMesh* mpMshGrassArea;
+	IMesh* mpMshSkybox = nullptr;
+	IMesh* mpMshGridArea = nullptr;
+	IMesh* mpMshGrassArea = nullptr;
 	IMesh* mpTreeMeshes[2];
 	IMesh* mpRockMeshes[11];
 
@@ -70,10 +70,10 @@ private:
 
 	// GRIDS
 	//---------------------------
-	CGrid* mpEarthGrid;
-	CGrid* mpMarsGrid;
-	CTile* mpNullTile;
-	CTile* mpCurTile;
+	CGrid* mpEarthGrid = nullptr;
+	CGrid* mpMarsGrid = nullptr;
+	CTile* mpNullTile = nullptr;
+	CTile* mpCurTile = nullptr;
 
 
 	// USER INTERFACE
@@ -150,10 +150,10 @@ private:
 
 	// SELECTION DATA
 	//---------------------------
-	CStructure* mpPlacingStructure;
-	CStructure* mpCurSelectedStructure;
-	CGameAgent* mpCurSelectedAgent;
-	CMinerals* mpCurSelectedResource;
+	CStructure* mpPlacingStructure = nullptr;
+	CStructure* mpCurSelectedStructure = nullptr;
+	CGameAgent* mpCurSelectedAgent = nullptr;
+	CMinerals* mpCurSelectedResource = nullptr;
 
 	std::vector<CGameAgent*> mpUnitSelectionList;
 	std::vector<CGameAgent*>::iterator miterUnitSelectionList;

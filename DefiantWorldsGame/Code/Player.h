@@ -210,6 +210,7 @@ public:
 
 	// Save all player data
 	void SavePlayerData(std::ofstream& outFile);
+	void LoadPlayerData(std::ifstream& inFile);
 };
 
 

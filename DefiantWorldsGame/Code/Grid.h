@@ -64,6 +64,7 @@ public:
 	void ResetTilesModels();
 	bool TurnOnTiles(CTile* gridPos, SPointData pointBL, SPointData pointTR, SPointData pointSpawn);
 	void SaveTiles(std::ofstream& outFile);
+	void LoadTiles(std::ifstream& inFile);
 };
 
 #endif /* _GRID_H_ */

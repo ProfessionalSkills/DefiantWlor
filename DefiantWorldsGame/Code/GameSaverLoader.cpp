@@ -26,15 +26,8 @@ CGameSaverLoader::~CGameSaverLoader()
 //-----------------------------------------------------
 // GAME SAVER & LOADER CLASS METHODS
 //-----------------------------------------------------
-void CGameSaverLoader::LoadGame()
+void CGameSaverLoader::LoadGame(std::ifstream& inFile)
 {
-	// Load the game from the provided file
-	std::string fileToLoad;
-	CStateControl::GetInstance()->GetSettingsManager()->GetLoadFileName(fileToLoad);
-
-	// Create an input file stream - already know it exists through verification so no need to check again
-	std::ifstream inFile(fileToLoad);
-	
 	// SAVE FILE STRUCTURE:
 	// Settings
 	//     - Music vol, Effects vol, AI Difficulty, Starting Resources
@@ -51,9 +44,8 @@ void CGameSaverLoader::LoadGame()
 	// Resources
 	//     - Grid Position
 
-	// Load settings
-	// Save settings data through the settings manager
-	CStateControl::GetInstance()->GetSettingsManager()->LoadSettings(inFile);
+	// Load players through player manager
+	CStateControl::GetInstance()->GetPlayerManager()->LoadPlayers(inFile);
 }
 
 void CGameSaverLoader::SaveGame(std::string& fileName)
