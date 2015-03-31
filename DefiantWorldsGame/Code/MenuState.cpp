@@ -41,8 +41,12 @@ void CMenuState::LoadGame()
 		pPlayerManager->RemovePlayers();
 	}
 
-	// Pass on the name of the file to be loaded - VERIFY FILE PROVIDED
+	// Verify the file name provided
 
+
+	// Pass on the name of the file to be loaded
+	CStateControl::GetInstance()->GetSettingsManager()->SetIfLoadingGame(true);
+	CStateControl::GetInstance()->GetSettingsManager()->SetLoadFile(mpTypeBox->GetText());
 
 	// Set current state to be world state
 	gCurState = GS_WORLD;
@@ -56,6 +60,60 @@ void CMenuState::ChangeSettings()
 void CMenuState::Quit()
 {
 	gpEngine->Stop();
+}
+
+void CMenuState::OnChooseLoadGame()
+{
+	// Create a typebox
+	mpTypeBox = new CTypeBox(SPointData{ 760, 420 });
+
+	// Remove the buttons as they are no longer needed
+	while (!mpButtonList.empty())
+	{
+		CAdvancedButton<CMenuState, void>* pButton = mpButtonList.back();
+		SafeDelete(pButton);
+		mpButtonList.pop_back();
+	}
+
+	// Create the save related buttons
+	CAdvancedButton<CMenuState, void>* pNewButton = new CAdvancedButton<CMenuState, void>("DefSmallButton.png", "SelSmallButton.png", SPointData(895, 480),
+		SAABoundingBox(730.0f, 995.0f, 480.0f, 895.0f), *this, &CMenuState::LoadGame);
+	mpButtonList.push_back(pNewButton);
+
+	pNewButton = new CAdvancedButton<CMenuState, void>("DefSmallButton.png", "SelSmallButton.png", SPointData(1035, 480),
+		SAABoundingBox(730.0f, 1135.0f, 480.0f, 1035.0f), *this, &CMenuState::OnChooseCancel);
+	mpButtonList.push_back(pNewButton);
+}
+
+void CMenuState::OnChooseCancel()
+{
+	// Remove type box
+	SafeDelete(mpTypeBox);
+
+	// Remove the buttons as they are no longer needed
+	while (!mpButtonList.empty())
+	{
+		CAdvancedButton<CMenuState, void>* pButton = mpButtonList.back();
+		SafeDelete(pButton);
+		mpButtonList.pop_back();
+	}
+
+	// Return main menu buttons
+	CAdvancedButton<CMenuState, void>* pNewButton = new CAdvancedButton<CMenuState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 350),
+		SAABoundingBox(400.0f, 1215.0f, 350.0f, 815.0f), *this, &CMenuState::NewGame);
+	mpButtonList.push_back(pNewButton);
+
+	pNewButton = new CAdvancedButton<CMenuState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 420),
+		SAABoundingBox(470.0f, 1215.0f, 420.0f, 815.0f), *this, &CMenuState::OnChooseLoadGame);
+	mpButtonList.push_back(pNewButton);
+
+	pNewButton = new CAdvancedButton<CMenuState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 490),
+		SAABoundingBox(540.0f, 1215.0f, 490.0f, 815.0f), *this, &CMenuState::ChangeSettings);
+	mpButtonList.push_back(pNewButton);
+
+	pNewButton = new CAdvancedButton<CMenuState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 560),
+		SAABoundingBox(610.0f, 1215.0f, 560.0f, 815.0f), *this, &CMenuState::Quit);
+	mpButtonList.push_back(pNewButton);
 }
 
 
@@ -122,7 +180,7 @@ void CMenuState::StateSetup()
 	mpButtonList.push_back(pNewButton);
 
 	pNewButton = new CAdvancedButton<CMenuState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 420),
-		SAABoundingBox(470.0f, 1215.0f, 420.0f, 815.0f), *this, &CMenuState::LoadGame);
+		SAABoundingBox(470.0f, 1215.0f, 420.0f, 815.0f), *this, &CMenuState::OnChooseLoadGame);
 	mpButtonList.push_back(pNewButton);
 
 	pNewButton = new CAdvancedButton<CMenuState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 490),
@@ -169,10 +227,24 @@ void CMenuState::StateUpdate()
 
 	// UPDATE BUTTONS
 	//------------------------------
-	mpButtonFont->Draw("NEW GAME", 1015, 365, kWhite, kCentre, kTop);
-	mpButtonFont->Draw("LOAD GAME", 1015, 435, kWhite, kCentre, kTop);
-	mpButtonFont->Draw("CHANGE SETTINGS", 1015, 505, kWhite, kCentre, kTop);
-	mpButtonFont->Draw("QUIT GAME", 1015, 575, kWhite, kCentre, kTop);
+	// The state of the type box determines whether the buttons have changed or not
+	if (mpTypeBox == nullptr)
+	{
+		mpButtonFont->Draw("NEW GAME", 1015, 365, kWhite, kCentre, kTop);
+		mpButtonFont->Draw("LOAD GAME", 1015, 435, kWhite, kCentre, kTop);
+		mpButtonFont->Draw("CHANGE SETTINGS", 1015, 505, kWhite, kCentre, kTop);
+		mpButtonFont->Draw("QUIT GAME", 1015, 575, kWhite, kCentre, kTop);
+	}
+	else
+	{
+		// Update pause menu visuals
+		mpButtonFont->Draw("TYPE THE NAME OF THE FILE YOU WANT TO LOAD BELOW:", 770, 400, kWhite, kLeft, kTop);
+		mpButtonFont->Draw("LOAD", 945, 495, kWhite, kCentre, kTop);
+		mpButtonFont->Draw("CANCEL", 1085, 495, kWhite, kCentre, kTop);
+
+		// Update the type box
+		mpTypeBox->Update();
+	}
 
 	mMousePos.x = (float)gpEngine->GetMouseX();
 	mMousePos.y = (float)gpEngine->GetMouseY();
@@ -197,6 +269,8 @@ void CMenuState::StateUpdate()
 			{
 				// Raise click flag
 				pButton->Execute();
+				// Remove self from for loop
+				break;
 			}
 		}
 
@@ -228,14 +302,10 @@ void CMenuState::StateCleanup()
 	// Remove buttons
 	while (!mpButtonList.empty())
 	{
-		CAdvancedButton<CMenuState, void>* tmp;
-		tmp = mpButtonList.back();
-		if (tmp)
-		{
-			delete tmp;
-			tmp = nullptr;
-		}
-
+		CAdvancedButton<CMenuState, void>* tmp = mpButtonList.back();
+		SafeDelete(tmp);
 		mpButtonList.pop_back();
 	}
+
+	SafeDelete(mpTypeBox);
 }

@@ -11,6 +11,7 @@
 //-----------------------------------------------------
 #include "BaseGameState.h"
 #include "AdvancedButton.h"
+#include "TypeBox.h"
 
 
 //-----------------------------------------------------
@@ -47,6 +48,8 @@ private:
 	std::vector<CAdvancedButton<CMenuState, void>*> mpButtonList;
 	std::vector<CAdvancedButton<CMenuState, void>*>::iterator miterButtons;
 
+	CTypeBox* mpTypeBox = nullptr;
+
 
 	// FONTS
 	//--------------------------- 
@@ -80,6 +83,9 @@ public:
 	void LoadGame();
 	void ChangeSettings();
 	void Quit();
+
+	void OnChooseLoadGame();
+	void OnChooseCancel();
 
 
 	// OVERRIDE METHODS

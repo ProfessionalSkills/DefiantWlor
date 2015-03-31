@@ -44,6 +44,11 @@ public:
 		return mLoadingGame;
 	}
 
+	inline void GetLoadFileName(std::string& loadFileName)
+	{
+		loadFileName = mLoadFileName;
+	}
+
 	int GetStartingResourcesAmount();
 
 
@@ -74,6 +79,11 @@ public:
 		mLoadingGame = loading;
 	}
 
+	void SetLoadFile(std::string& loadFileName)
+	{
+		mLoadFileName = loadFileName;
+	}
+
 
 	// METHODS
 	//---------------------------
@@ -84,6 +94,7 @@ private:
 	// SETTINGS DATA
 	//---------------------------
 	bool mLoadingGame = false;				// Used to identify whether or not the player is loading a game from file
+	std::string mLoadFileName = "";
 
 	float mMusicVolume = 0.8f;
 	float mEffectsVolume = 0.6f;
