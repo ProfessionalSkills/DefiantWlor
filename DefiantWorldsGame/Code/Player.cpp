@@ -510,12 +510,6 @@ void CRTSPlayer::LoadPlayerData(std::ifstream& inFile)
 	// Load grid tiles
 	mpPlayerGrid->LoadTiles(inFile);
 
-	/*pWall = new CWall(true);
-	pWall->SetWorldPos(DX::XMFLOAT3((gridCentre.x - ((gridTopRight.x - gridCentre.x) / 2.0f)), 0.0f, gridTopRight.z + 7.0f));
-	pWall->SetFaction(mPlayerFaction);
-	pWall->LoadIModel();
-	mpStructuresMap.insert(GS_MultiMap::value_type(pWall->GetStructureType(), pWall));*/
-
 	// Load in structures
 	int numStructures;
 	inFile >> numStructures;
@@ -554,5 +548,45 @@ void CRTSPlayer::LoadPlayerData(std::ifstream& inFile)
 
 		// Add to structures map
 		mpStructuresMap.insert(GS_MultiMap::value_type(sType, pLoadedStructure));
+	}
+
+	// Load in world units
+	int numWorldUnits;
+	inFile >> numWorldUnits;
+	int worldUnitType;
+	EGameAgentVariations wuType;
+	for (int i = 0; i < numWorldUnits; i++)
+	{
+		// Determine type
+		inFile >> worldUnitType;
+		wuType = static_cast<EGameAgentVariations>(worldUnitType);
+		CGameAgent* pLoadedUnit = nullptr;
+		switch (wuType)
+		{
+		case GAV_ARTILLERY:
+			pLoadedUnit = new CArtillery();
+			break;
+		case GAV_BOMBER:
+			pLoadedUnit = new CBomber();
+			break;
+		case GAV_FIGHTER:
+			pLoadedUnit = new CFighter();
+			break;
+		case GAV_INFANTRY:
+			pLoadedUnit = new CInfantry();
+			break;
+		case GAV_TANK:
+			pLoadedUnit = new CTank();
+			break;
+		case GAV_WORKER:
+			pLoadedUnit = new CWorker();
+			break;
+		}
+
+		// Load saved information for the structure
+		pLoadedUnit->LoadAgent(inFile);
+
+		// Add to structures map
+		mpUnitsMap.insert(GA_MultiMap::value_type(wuType, pLoadedUnit));
 	}
 }

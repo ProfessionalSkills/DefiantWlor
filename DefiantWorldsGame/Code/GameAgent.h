@@ -172,6 +172,7 @@ public:
 	// METHODS
 	//---------------------------
 	bool Construct();
+	void CalculateBoundingSphere();
 	void Destroy();
 
 	// VIRTUAL METHODS
@@ -190,6 +191,7 @@ public:
 
 	// Save the data for this unit
 	virtual void SaveAgent(std::ofstream& outFile);
+	virtual void LoadAgent(std::ifstream& inFile);
 
 
 private:

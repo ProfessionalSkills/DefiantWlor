@@ -43,10 +43,7 @@ void CGroundUnit::Spawn(CGrid* pGrid, SPointData pCentre)
 	mWorldPos.z = pGrid->GetTileData(pCentre)->GetWorldPos().z;
 	mpObjModel->Scale(mScale);
 
-	DX::XMFLOAT3 centre = { mpObjModel->GetX(), mpObjModel->GetY(), mpObjModel->GetZ() };
-	float radius = 5.0f;
-
-	mBoundingSphere = SBoundingSphere(centre, radius);
+	CalculateBoundingSphere();
 }
 
 

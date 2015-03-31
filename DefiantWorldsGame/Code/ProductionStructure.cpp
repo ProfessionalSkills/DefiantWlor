@@ -347,7 +347,7 @@ void CProductionStructure::LoadStructure(std::ifstream& inFile, CGrid* pGrid, CR
 
 	// Based on the queue size, load in the required details for each queue item
 	int type;
-	int progress;
+	float progress;
 	EGameAgentVariations agentType;
 	for (int i = 0; i < qSize; i++)
 	{
@@ -365,6 +365,7 @@ void CProductionStructure::LoadStructure(std::ifstream& inFile, CGrid* pGrid, CR
 				// Queue the unit using the index
 				AddToQueue(counter, pPlayer);
 				mpProductionQueue.back()->SetProdTimeLeft(progress);
+				break;
 			}
 			// Increment counter
 			counter++;

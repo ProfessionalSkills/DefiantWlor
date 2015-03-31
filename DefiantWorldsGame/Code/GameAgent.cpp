@@ -56,7 +56,6 @@ bool CGameAgent::DragBoxCollision(DX::BoundingBox& box)
 	return mBoundingSphere.CollidingWithBox(box);
 }
 
-
 void CGameAgent::DisplayInfo(IFont* font)
 {
 	// Output selected agent
@@ -111,6 +110,14 @@ void CGameAgent::DisplayInfo(IFont* font)
 //-----------------------------------------------------
 // GAME AGENT CLASS METHODS
 //-----------------------------------------------------
+void CGameAgent::CalculateBoundingSphere()
+{
+	DX::XMFLOAT3 centre = { mpObjModel->GetX(), mpObjModel->GetY(), mpObjModel->GetZ() };
+	float radius = 5.0f;
+
+	mBoundingSphere = SBoundingSphere(centre, radius);
+}
+
 void CGameAgent::SetState(EObjectStates newState)
 {
 	mState = newState;
@@ -186,4 +193,26 @@ void CGameAgent::SaveAgent(std::ofstream& outFile)
 	// Save the data for this unit
 	outFile << mAgentInfo.mAgentType << " " << mFaction << " " << mState << " " << mWorldPos.x << " "
 		<< mWorldPos.y << " " << mWorldPos.z << " " << mHealth << std::endl;
+}
+
+void CGameAgent::LoadAgent(std::ifstream& inFile)
+{
+	// Ensure the model for the unit is not already loaded
+	UnloadIModel();
+
+	// Store the required data for the structure
+	int faction;
+	int state;
+	int qSize;
+	inFile >> faction >> state >> mWorldPos.x >> mWorldPos.y >> mWorldPos.z >> mHealth;
+
+	// Convert required values to enums
+	mFaction = static_cast<EFactions>(faction);
+	mState = static_cast<EObjectStates>(state);
+
+	// Load the model
+	LoadIModel();
+
+	// Calculate the bounding sphere
+	CalculateBoundingSphere();
 }
