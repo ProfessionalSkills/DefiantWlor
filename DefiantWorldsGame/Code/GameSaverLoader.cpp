@@ -35,11 +35,11 @@ void CGameSaverLoader::LoadGame(std::ifstream& inFile)
 	//     - Minerals, Faction, num spacefighters, num transport ships, num motherships
 	// Grid
 	//     - Line by line get state of grid (used or not)  -- ASSESS WHETHER REQUIRED
-	// Structures
+	// Structures - amount
 	//     - Type, Grid Position, Faction, State, World Position, Health, Queue items (Type, Progress), Rotation (currently just for wall data)
-	// Ground/Air units
+	// Ground/Air units - amount
 	//     - Type, Faction, State, Position, Health
-	// Space Units
+	// Space Units - amount
 	//     - Type, Faction, State, Health, /* cargo (transport ships only) */ <- CHALLENGE
 	// Resources
 	//     - Grid Position
@@ -62,13 +62,13 @@ void CGameSaverLoader::SaveGame(std::string& fileName)
 	//     - Minerals, Faction, num spacefighters, num transport ships, num motherships
 	// Grid
 	//     - Line by line get state of grid (used or not)  -- ASSESS WHETHER REQUIRED
-	// Structures
+	// Structures - amount
 	//     - Type, Grid Position, Faction, State, World Position, Health, Queue items (Type, Progress), Rotation (currently just for wall data)
-	// Ground/Air units
+	// Ground/Air units - amount
 	//     - Type, Faction, State, Position, Health
-	// Space Units
+	// Space Units - amount
 	//     - Type, Faction, State, Health, /* cargo (transport ships only) */ <- CHALLENGE
-	// Resources
+	// Resources - amount
 	//     - Grid Position
 
 	// Save settings data through the settings manager

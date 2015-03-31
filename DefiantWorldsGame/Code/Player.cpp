@@ -460,11 +460,17 @@ void CRTSPlayer::SavePlayerData(std::ofstream& outFile)
 	// Save the grid information for this player
 	mpPlayerGrid->SaveTiles(outFile);
 
+	// Save number of structures
+	outFile << mpStructuresMap.size();
+
 	// For each structure, save its data
 	for (miterStructuresMap = mpStructuresMap.begin(); miterStructuresMap != mpStructuresMap.end(); miterStructuresMap++)
 	{
 		miterStructuresMap->second->SaveStructure(outFile);
 	}
+
+	// Save number of world units
+	outFile << mpUnitsMap.size();
 
 	// For each world unit, save its data
 	for (miterUnitsMap = mpUnitsMap.begin(); miterUnitsMap != mpUnitsMap.end(); miterUnitsMap++)
@@ -472,11 +478,17 @@ void CRTSPlayer::SavePlayerData(std::ofstream& outFile)
 		miterUnitsMap->second->SaveAgent(outFile);
 	}
 
+	// Save number of space units
+	outFile << mpSpaceUnitsList.size();
+
 	// For each space unit, save its data
 	for (mpiterSpaceUnits = mpSpaceUnitsList.begin(); mpiterSpaceUnits != mpSpaceUnitsList.end(); mpiterSpaceUnits++)
 	{
 		(*mpiterSpaceUnits)->SaveAgent(outFile);
 	}
+
+	// Save number of resources
+	outFile << mpMineralsList.size();
 
 	// Loop through all resources and save them
 	for (miterMineralsList = mpMineralsList.begin(); miterMineralsList != mpMineralsList.end(); miterMineralsList++)
