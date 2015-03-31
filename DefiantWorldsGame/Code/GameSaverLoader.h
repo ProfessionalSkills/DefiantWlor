@@ -30,7 +30,7 @@ public:
 
 	// METHODS
 	//---------------------------
-	void LoadGame(std::string& fileName);
+	void LoadGame();
 	void SaveGame(std::string& fileName);
 
 

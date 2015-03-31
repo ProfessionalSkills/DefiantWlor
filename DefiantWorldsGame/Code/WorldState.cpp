@@ -918,14 +918,10 @@ void CWorldState::StateSetup()
 	// Check if a game is being loaded by file
 	if (CStateControl::GetInstance()->GetSettingsManager()->IsGameBeingLoaded())
 	{
-		// Load the game from the provided file
-		std::string fileToLoad;
-		CStateControl::GetInstance()->GetSettingsManager()->GetLoadFileName(fileToLoad);
-
-		// Create an input file stream - already know it exists through verification so no need to check again
-		std::ifstream inFile(fileToLoad);
-
-
+		// Create an instance of the loading and saving manager
+		CGameSaverLoader* pLoader = new CGameSaverLoader();
+		// Load the game (required data on load file stored in settings)
+		pLoader->LoadGame();
 	}
 	// if players have already been initialised, this is not necessary
 	else if (!mpPlayerManager->ArePlayersInitialised())

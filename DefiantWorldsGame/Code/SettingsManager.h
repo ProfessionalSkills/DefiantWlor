@@ -88,6 +88,7 @@ public:
 	// METHODS
 	//---------------------------
 	void SaveSettings(std::ofstream& outFile);
+	void LoadSettings(std::ifstream& inFile);
 
 
 private:

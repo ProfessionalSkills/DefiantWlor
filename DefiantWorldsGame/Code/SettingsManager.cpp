@@ -44,3 +44,9 @@ void CSettingsManager::SaveSettings(std::ofstream& outFile)
 	// Save the settings
 	outFile << mMusicVolume << " " << mEffectsVolume << " " << mAIDifficulty << " " << mStartingResources << std::endl;
 }
+
+void CSettingsManager::LoadSettings(std::ifstream& inFile)
+{
+	// Get the required settings from the file
+	inFile >> mMusicVolume >> mEffectsVolume >> mAIDifficulty >> mStartingResources;
+}
