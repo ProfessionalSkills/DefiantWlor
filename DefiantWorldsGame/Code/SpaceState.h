@@ -35,6 +35,7 @@ private:
 	//--------------------------- 
 	IMesh* mpMshSkybox;
 	IMesh* mpMshPlanet;
+	IMesh* mpMshAtmosphere;
 
 
 	// MODELS
@@ -50,6 +51,10 @@ private:
 	IModel* mpMdlVenus;
 	IModel* mpMdlMercury;
 	IModel* mpMdlNeptune;
+
+	//atmosphere
+	IModel* mpMdlEarthAtmos;
+
 
 
 	// FLEET

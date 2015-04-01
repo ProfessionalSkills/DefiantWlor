@@ -25,6 +25,7 @@ mDisplacement(30), mNumCamStates(4),CGameState()
 	mpMdlVenus = 0;
 	mpMdlMercury = 0;
 	mpMdlNeptune = 0;
+	mpMdlEarthAtmos = 0;
 
 	mTimeSinceUpdate = 0.0f;
 
@@ -255,6 +256,7 @@ void CSpaceState::StateCleanup()
 
 	//unload models
 	if (mpMdlSkybox) mpMshSkybox->RemoveModel(mpMdlSkybox);
+
 	if (mpMdlEarth) mpMshPlanet->RemoveModel(mpMdlEarth);
 	if (mpMdlJupiter) mpMshPlanet->RemoveModel(mpMdlJupiter);
 	if (mpMdlMars) mpMshPlanet->RemoveModel(mpMdlMars);
@@ -263,6 +265,9 @@ void CSpaceState::StateCleanup()
 	if (mpMdlVenus) mpMshPlanet->RemoveModel(mpMdlVenus);
 	if (mpMdlMercury) mpMshPlanet->RemoveModel(mpMdlMercury);
 	if (mpMdlNeptune) mpMshPlanet->RemoveModel(mpMdlNeptune);
+
+	if (mpMdlEarthAtmos) mpMshAtmosphere->RemoveModel(mpMdlEarthAtmos);
+
 
 
 	//return fleets
@@ -318,6 +323,12 @@ void CSpaceState::LoadPlanets()
 	mpMshPlanet = gpEngine->LoadMesh("Planet.x");
 	mpMdlEarth = mpMshPlanet->CreateModel(mEarthPos.x, mEarthPos.y, mEarthPos.z);
 	mpMdlEarth->Scale(mEarthPos.w);
+
+	// Earth Atmosphere
+	mpMshAtmosphere = gpEngine->LoadMesh("Atmos.x");
+	mpMdlEarthAtmos = mpMshAtmosphere->CreateModel();
+	mpMdlEarthAtmos->AttachToParent(mpMdlEarth);
+	mpMdlEarthAtmos->Scale(1.02f);
 
 	// Moon
 	mpMdlMoon = mpMshPlanet->CreateModel(mEarthPos.x + mMoonPos.x, mEarthPos.y + mMoonPos.y, mEarthPos.z +mMoonPos.z);
