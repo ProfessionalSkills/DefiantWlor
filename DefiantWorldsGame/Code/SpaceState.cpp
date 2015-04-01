@@ -35,9 +35,10 @@ mDisplacement(30), mNumCamStates(4),CGameState()
 
 	//Set Planet Positions
 	mEarthPos = { -1000,-50 , 50, 100 };
+	mMoonPos = { 100, 100, 100, 10 };
 	mMarsPos = { 500, -400, 100, 25 };
 	mSunPos = { 100, 50, -1000, 400 };
-	mJupiterPos={ -1000, -900, 800, 40 };
+	mJupiterPos={ -900, -900, 800, 80 };
 }
 
 CSpaceState::~CSpaceState()
@@ -309,6 +310,10 @@ void CSpaceState::LoadPlanets()
 	mpMdlEarth = mpMshPlanet->CreateModel(mEarthPos.x, mEarthPos.y, mEarthPos.z);
 	mpMdlEarth->Scale(mEarthPos.w);
 
+	// Moon
+	mpMdlMoon = mpMshPlanet->CreateModel(mEarthPos.x + mMoonPos.x, mEarthPos.y + mMoonPos.y, mEarthPos.z +mMoonPos.z);
+	mpMdlMoon->SetSkin("texture_moon.jpg");
+	mpMdlMoon->Scale(mMoonPos.w);
 	// Mars
 	mpMdlMars = mpMshPlanet->CreateModel(mMarsPos.x, mMarsPos.y, mMarsPos.z);
 	mpMdlMars->SetSkin("Mars.jpg");
@@ -321,6 +326,6 @@ void CSpaceState::LoadPlanets()
 
 	// Jupiter
 	mpMdlJupiter = mpMshPlanet->CreateModel(mJupiterPos.x, mJupiterPos.y, mJupiterPos.z);
-	mpMdlJupiter->SetSkin("Mars.jpg");
+	mpMdlJupiter->SetSkin("texture_jupiter.jpg");
 	mpMdlJupiter->Scale(mJupiterPos.w);
 }
