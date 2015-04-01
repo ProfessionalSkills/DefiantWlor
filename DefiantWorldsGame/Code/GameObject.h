@@ -112,6 +112,11 @@ public:
 		return mHealth;
 	}
 
+	inline float GetMaxHealth()
+	{
+		return mMaxHealth;
+	}
+
 	inline IModel* GetModel()
 	{
 		return mpObjModel;

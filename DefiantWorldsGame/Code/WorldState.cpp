@@ -447,7 +447,7 @@ void CWorldState::DisplaySelectedBuildingInfo()
 	// Check if the building has been destoryed
 	if (mpCurSelectedStructure)
 	{
-		if (mpCurSelectedStructure->GetState() == OBJ_DEAD)
+		if (mpCurSelectedStructure->GetHealth() <= 0.0f)
 		{
 			// Select nothing
 			OnStructureSelectChange(nullptr);
@@ -572,7 +572,28 @@ void CWorldState::DisplaySelectedBuildingInfo()
 		}
 		else
 		{
-			newHealthAmount = 100;
+			// When constructing, health is based upon construction percentage
+			// Calculate construction percentage
+			float healthLeft = mpCurSelectedStructure->GetHealth();
+			float maxHealth = mpCurSelectedStructure->GetMaxHealth();
+			int percentage = (int)((healthLeft / maxHealth) * 100.0f);
+
+			// Check if the completion percentage is a multiple of 5
+			if (percentage % 5 == 0)
+			{
+				// Percentage is a multiple of 5 - use its value as the new health bar amount
+				newHealthAmount = percentage;
+			}
+			else
+			{
+				// maintain previous value
+				newHealthAmount = mPrevHealth;
+			}
+
+			// Draw amount to screen
+			strStream << healthLeft << " / " << maxHealth;
+			mFntDebug->Draw(strStream.str(), 1130, 800, kWhite, kRight, kTop);
+			strStream.str("");
 		}
 
 		// Hide building construction buttons
@@ -2005,7 +2026,6 @@ void CWorldState::UnqueueUnit(int index)
 
 void CWorldState::CreateBarracks()
 {
-	
 	CStructure* pStructure = new CBarracks();
 	OnPlacingStructureChange(pStructure);
 	mLMouseClicked = false;
