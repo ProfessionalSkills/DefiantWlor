@@ -54,16 +54,6 @@ void CMothership::HitFlash()
 	{
 		mpTempShield = mspMshSheild->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
 		mpTempShield->Scale(mScale + 0.1f);
-
-		/*if (mWorldPos.x < 0.0f)
-		{
-			mpTempShield->RotateY(90.0f);
-		}
-		else
-		{
-			mpTempShield->RotateY(-90.0f);
-		}*/
-
 		mpTempShield->RotateX(-35.0f);
 	}
 	else
@@ -114,16 +104,6 @@ void CMothership::LoadModel(float x, float y, float z)
 	mWorldPos.x = x;
 	mWorldPos.y = y;
 	mWorldPos.z = z;
-	/*
-	if (x < 0.0f)
-	{
-		mpObjModel->RotateY(90.0f);
-	}
-	else
-	{
-		mpObjModel->RotateY(-90.0f);
-	}*/
-
 	mpObjModel->RotateX(-35.0f);
 	mpObjModel->Scale(mScale);
 }
@@ -140,7 +120,11 @@ void CMothership::UnloadIModel()
 		mspMshSheild->RemoveModel(mpTempShield);
 		mpTempShield = nullptr;
 	}
-	UnloadLazer();
+	if (mpTempLazer != 0)
+	{
+		mspMshLazer->RemoveModel(mpTempLazer);
+		mpTempLazer = 0;
+	}
 }
 
 bool CMothership::Destroy()

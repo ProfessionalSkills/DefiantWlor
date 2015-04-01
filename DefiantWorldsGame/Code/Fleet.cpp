@@ -282,7 +282,8 @@ float CFleet::GetFleetTotalHealth()
 
 float CFleet::GetFleetAvargeHealth()
 {
-	return GetFleetTotalHealth() / (float)mSize;
+	if (GetFleetTotalHealth()!=0) return GetFleetTotalHealth() / (float)mSize;
+	else return 0;
 }
 
 //-----------------------------------------------------

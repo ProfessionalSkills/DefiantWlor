@@ -88,17 +88,6 @@ void CTransport::HitFlash()
 	{
 		mpTempShield = mspMshSheild->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
 		mpTempShield->Scale(mScale + 0.03f);
-
-		/*if (mWorldPos.x < 0.0f)
-		{
-			mpTempShield->RotateY(90.0f);
-
-		}
-		else
-		{
-			mpTempShield->RotateY(-90.0f);
-		}*/
-
 		mpTempShield->RotateX(-35.0f);
 	}
 }
@@ -121,16 +110,6 @@ void CTransport::LoadModel(float x, float y, float z)
 	mWorldPos.x = x;
 	mWorldPos.y = y;
 	mWorldPos.z = z;
-
-	/*if (x < 0.0f)
-	{
-		mpObjModel->RotateY(90.0f);	
-	}
-	else
-	{
-		mpObjModel->RotateY(-90.0f);
-		mSpeed = -mSpeed;
-	}*/
 	mpObjModel->RotateX(-35.0f);
 
 	mpObjModel->Scale(mScale);
@@ -149,7 +128,11 @@ void CTransport::UnloadIModel()
 		mspMshSheild->RemoveModel(mpTempShield);
 		mpTempShield = nullptr;
 	}
-	UnloadLazer();
+	if (mpTempLazer != 0)
+	{
+		mspMshLazer->RemoveModel(mpTempLazer);
+		mpTempLazer = 0;
+	}
 }
 
 bool CTransport::Destroy()

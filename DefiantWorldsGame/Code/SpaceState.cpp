@@ -130,6 +130,11 @@ void CSpaceState::StateUpdate()
 		gCurState = GS_MAIN_MENU;
 	}
 
+	if (gpEngine->KeyHit(Key_Escape))
+	{
+		gCurState = GS_MAIN_MENU;
+	}
+
 	if (gpEngine->KeyHit(Key_C))
 	{
 		mCamState = (mCamState + 1) % mNumCamStates;

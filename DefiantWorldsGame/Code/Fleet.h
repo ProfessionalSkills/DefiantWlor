@@ -98,7 +98,8 @@ public:
 	}
 	inline float GetHitPercentage()
 	{
-		return ((float)mHits / (float)mShotsFired)*100.0f;
+		if (mShotsFired!=0) return ((float)mHits / (float)mShotsFired)*100.0f;
+		else return 0;
 	}
 
 	// MUTATORS
