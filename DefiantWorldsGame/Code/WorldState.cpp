@@ -410,28 +410,28 @@ void CWorldState::CheckKeyPresses()
 	}
 
 
-	// TEST FUNCTIONS FOR SPACE
+	// tactic FUNCTIONS FOR SPACE
 	//------------------------------
 
 	//temporary, just used to test the transfering of ships to the fleet
-	if (gpEngine->KeyHit(Key_R))
+	if (gpEngine->KeyHit(Key_L))
 	{
 		mpHumanPlayer->LaunchAttack();
 		mpAIPlayer->LaunchAttack();
 		gCurState = GS_SPACE;
 	}
 	
-	if (gpEngine->KeyHit(Key_T))
+	if (gpEngine->KeyHit(Key_N))
 	{
 		mpHumanPlayer->GetFleet()->SetTactic(None);
 	}
 
-	if (gpEngine->KeyHit(Key_Y))
+	if (gpEngine->KeyHit(Key_T))
 	{
 		mpHumanPlayer->GetFleet()->SetTactic(Targeted);
 	}
 
-	if (gpEngine->KeyHit(Key_U))
+	if (gpEngine->KeyHit(Key_R))
 	{
 		mpHumanPlayer->GetFleet()->SetTactic(Rapid);
 	}
