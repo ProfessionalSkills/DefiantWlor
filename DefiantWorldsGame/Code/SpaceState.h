@@ -48,7 +48,7 @@ private:
 	IModel* mpMdlMoon;
 	IModel* mpMdlJupiter;
 	IModel* mpMdlVenus;
-
+	IModel* mpMdlMercury;
 
 	// FLEET
 	//---------------------------
@@ -81,6 +81,7 @@ private:
 	DirectX::XMFLOAT4 mMoonPos;
 	DirectX::XMFLOAT4 mJupiterPos;
 	DirectX::XMFLOAT4 mVenusPos;
+	DirectX::XMFLOAT4 mMercuryPos;
 	void LoadPlanets();
 
 	// MISC
