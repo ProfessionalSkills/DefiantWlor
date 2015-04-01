@@ -519,13 +519,9 @@ void CWorldState::DisplaySelectedBuildingInfo()
 		}		
 		// BUILDING DESTRUCTION
 		//------------------------------
-		if (gpEngine->KeyHit(Key_D))
+		if (gpEngine->KeyHit(Key_Delete))
 		{
-			// Set object to be deleted
-			mpCurSelectedStructure->SetState(OBJ_DEAD);
-			// pointer set to null
-			mpCurSelectedStructure = nullptr;
-			// Leave function so next function call is not executed
+			DeleteStructure();
 			return;
 		}
 		
@@ -2042,7 +2038,7 @@ void CWorldState::DeleteStructure()
 		mpCurSelectedStructure->SetState(OBJ_WARNING);
 		mpCurSelectedStructure->SetHealth(0.0f);
 		// pointer set to null
-		mpCurSelectedStructure = nullptr;
+		OnStructureSelectChange(nullptr);
 		mLMouseClicked = false;
 	}
 	if (mpCurSelectedAgent)
