@@ -24,6 +24,7 @@ mDisplacement(30), mNumCamStates(4),CGameState()
 	mpMdlSun = 0;
 	mpMdlVenus = 0;
 	mpMdlMercury = 0;
+	mpMdlNeptune = 0;
 
 	mTimeSinceUpdate = 0.0f;
 
@@ -38,11 +39,12 @@ mDisplacement(30), mNumCamStates(4),CGameState()
 	//Set Planet Positions
 	mEarthPos = { -1000,-50 , 50, 100 };
 	mMoonPos = { 100, 100, 100, 10 };
-	mMarsPos = { 500, -400, 100, 25 };
+	mMarsPos = { 500, -400, 100, 50 };
 	mSunPos = { 100, 50, -1000, 400 };
 	mJupiterPos={ -900, -900, 800, 80 };
 	mMercuryPos = { -200, -900, -600, 10 };
 	mVenusPos ={ -200, 0, 700, 15 };
+	mNeptunePos ={ 600, 100, 650, 25 };
 }
 
 CSpaceState::~CSpaceState()
@@ -260,6 +262,8 @@ void CSpaceState::StateCleanup()
 	if (mpMdlSun) mpMshPlanet->RemoveModel(mpMdlSun);
 	if (mpMdlVenus) mpMshPlanet->RemoveModel(mpMdlVenus);
 	if (mpMdlMercury) mpMshPlanet->RemoveModel(mpMdlMercury);
+	if (mpMdlNeptune) mpMshPlanet->RemoveModel(mpMdlNeptune);
+
 
 	//return fleets
 	if (mpPlayerOneFleet) mpPlayerOneFleet->ReturnFleet(mpHumanPlayer);
@@ -344,4 +348,9 @@ void CSpaceState::LoadPlanets()
 	mpMdlJupiter = mpMshPlanet->CreateModel(mVenusPos.x, mVenusPos.y, mVenusPos.z);
 	mpMdlJupiter->SetSkin("texture_venus_surface.jpg");
 	mpMdlJupiter->Scale(mVenusPos.w);
+
+	// Neptune
+	mpMdlNeptune = mpMshPlanet->CreateModel(mNeptunePos.x, mNeptunePos.y, mNeptunePos.z);
+	mpMdlNeptune->SetSkin("texture_neptune.jpg");
+	mpMdlNeptune->Scale(mNeptunePos.w);
 }
