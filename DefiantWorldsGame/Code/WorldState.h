@@ -139,6 +139,7 @@ private:
 	bool mLMouseHeld;
 
 	bool mPaused = false;
+	bool mEnd = false;
 
 	EMouseStates mMouseState;		// Stores whether mouse is within a grid or not - and which grid it is in
 
@@ -249,6 +250,7 @@ private:
 	void OnUnPause();
 	void OnChooseSave();
 	void OnChooseCancel();
+	void OnEnd();
 };
 
 

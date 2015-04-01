@@ -999,6 +999,10 @@ void CWorldState::StateSetup()
 
 		// INITIALISE WORLDS
 		//-----------------------------
+		// Set grids for each player for easy referal
+		mpHumanPlayer->StorePlayerGridState(mpEarthGrid);
+		mpAIPlayer->StorePlayerGridState(mpMarsGrid);
+
 		// Initialise news ticker
 		gpNewsTicker = new CNewsTicker();		
 		
@@ -1007,31 +1011,15 @@ void CWorldState::StateSetup()
 		CStructure* pTemp = new CComCentre();
 		mpCurTile = mpEarthGrid->GetTileData(SPointData((int)(GRID_SIZE_X / 2.0f), (int)(GRID_SIZE_Y / 2.0f)));
 		OnPlacingStructureChange(pTemp);
-
-		if (mpHumanPlayer->PurchaseStructure(mpPlacingStructure, mpEarthGrid, mpCurTile))
-		{
-			mpPlacingStructure = nullptr;
-			mpEarthGrid->ResetTilesModels();
-		}
+		mpHumanPlayer->PurchaseStructure(mpPlacingStructure, mpEarthGrid, mpCurTile);
 
 		// MARS
 		mpPlacingStructure = nullptr;
 		pTemp = new CComCentre();
 		mpCurTile = mpMarsGrid->GetTileData(SPointData((int)(GRID_SIZE_X / 2.0f), (int)(GRID_SIZE_Y / 2.0f)));
 		OnPlacingStructureChange(pTemp);
-
-		if (mpAIPlayer->PurchaseStructure(mpPlacingStructure, mpMarsGrid, mpCurTile))
-		{
-			mpPlacingStructure = nullptr;
-			mpEarthGrid->ResetTilesModels();
-		}
+		mpAIPlayer->PurchaseStructure(mpPlacingStructure, mpMarsGrid, mpCurTile);
 		mpPlacingStructure = nullptr;
-
-		// Set grids for each player for easy referal
-		mpHumanPlayer->StorePlayerGridState(mpEarthGrid);
-		mpAIPlayer->StorePlayerGridState(mpMarsGrid);
-		mpEarthGrid->ResetTilesModels();
-		mpMarsGrid->ResetTilesModels();
 
 		// Create the resource piles for each player
 		mpHumanPlayer->CreateResourcePiles();
@@ -1040,6 +1028,10 @@ void CWorldState::StateSetup()
 		// Create the walls for the players
 		mpHumanPlayer->ConstructWalls();
 		mpAIPlayer->ConstructWalls();
+
+		// Ensure no tiles are glowing red
+		mpEarthGrid->ResetTilesModels();
+		mpMarsGrid->ResetTilesModels();
 	}
 	else
 	{
@@ -1175,6 +1167,61 @@ void CWorldState::StateUpdate()
 	mpMouseScreenPos->mPosY = gpEngine->GetMouseY();
 
 	mpSprCursor->SetPosition(mpMouseScreenPos->mPosX, mpMouseScreenPos->mPosY);
+
+
+	// IF GAME HAS ENDED
+	//------------------------------
+	if (mEnd)
+	{
+		// End menu updates
+		// Check for click
+		if (gpEngine->KeyHit(Mouse_LButton))
+		{
+			mLMouseClicked = true;
+		}
+
+		// Update pause menu visuals
+		// Determine which player has lost
+		if (mpHumanPlayer->IsAlive()) mpTitleFont->Draw("HEROIC VICTORY!", 1015, 90, kCyan, kCentre, kTop);
+		else if (mpAIPlayer->IsAlive()) mpTitleFont->Draw("HUMILIATING DEFEAT!", 1015, 90, kCyan, kCentre, kTop);
+
+		mpButtonFont->Draw("QUIT TO MAIN MENU", 1015, 505, kWhite, kCentre, kTop);
+
+		// Update buttons
+		for (miterPauseButtons = mpPauseButtonList.begin(); miterPauseButtons != mpPauseButtonList.end(); miterPauseButtons++)
+		{
+			CAdvancedButton<CWorldState, void>* pButton = (*miterPauseButtons);
+			// Check if the mouse is colliding with the object
+			if (pButton->GetBoundingBox().IsColliding(DX::XMFLOAT3(mpMouseScreenPos->mPosX, 0.0f, mpMouseScreenPos->mPosY)))
+			{
+				pButton->SetMouseOver(true);
+			}
+			else
+			{
+				pButton->SetMouseOver(false);
+			}
+
+			// Check for click 
+			if (pButton->GetMouseOver())
+			{
+				// Check if the mouse is over the button
+				if (mLMouseClicked)
+				{
+					// Execute the command attached to the button which has been clicked
+					pButton->Execute();
+					mLMouseClicked = false;
+					return;
+				}
+			}
+
+			// Update the button
+			pButton->Update();
+		}
+
+		// Exit this function so everything underneath does not get executed
+		mLMouseClicked = false;
+		return;
+	}
 
 
 	// CHECK FOR PAUSE
@@ -1609,11 +1656,19 @@ void CWorldState::StateUpdate()
 
 	// UPDATE PLAYERS
 	//------------------------------
-	mpPlayerManager->UpdatePlayers();
+	int updateResult = mpPlayerManager->UpdatePlayers();
+	if (updateResult == 1 || updateResult == 2)
+	{
+		OnEnd();
+	}
 }
 
 void CWorldState::StateCleanup()
 {
+	// Lower any raised flags
+	mPaused = false;
+	mEnd = false;
+	
 	// Unload pause menu
 	OnUnPause();
 	
@@ -1982,6 +2037,23 @@ void CWorldState::OnChooseCancel()
 	mpPauseButtonList.push_back(pNewButton);
 
 	pNewButton = new CAdvancedButton<CWorldState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 490),
+		SAABoundingBox(540.0f, 1215.0f, 490.0f, 815.0f), *this, &CWorldState::QuitGame);
+	mpPauseButtonList.push_back(pNewButton);
+}
+
+void CWorldState::OnEnd()
+{
+	// Raise the paused flag & stop music
+	mEnd = true;
+	mMusic->StopSound();
+
+	// Create the visuals for the pause menu
+	mpButtonFont = gpEngine->LoadFont("font2.bmp", 15U);
+	mpTitleFont = gpEngine->LoadFont("font2.bmp", 35U);
+	mpSprBackground = gpEngine->CreateSprite("PauseMenuBG.png", 400.0f, 50.0f, 0.75f);
+	
+	// Only the quit button is required here.
+	CAdvancedButton<CWorldState, void>* pNewButton = new CAdvancedButton<CWorldState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 490),
 		SAABoundingBox(540.0f, 1215.0f, 490.0f, 815.0f), *this, &CWorldState::QuitGame);
 	mpPauseButtonList.push_back(pNewButton);
 }

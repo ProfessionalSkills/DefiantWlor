@@ -93,6 +93,23 @@ void CRTSPlayer::SetNumMothership(int numShips)
 	mNumMothership = numShips;
 }
 
+bool CRTSPlayer::IsAlive()
+{
+	// Returns true if the player's command centre still has health
+	// Get a pointer to the command centre
+	// Infantry is from barracks - get all instances of barracks	
+	auto range = mpStructuresMap.equal_range(STR_COM_CENTRE);
+
+	// If there is no instance of a command centre, then this player has lost
+	if (range.first == mpStructuresMap.end())
+	{
+		// Player has lost their command centre
+		return false;
+	}
+	// Player's command centre remains standing
+	return true;
+}
+
 
 //-----------------------------------------------------
 // PLAYER CLASS METHODS
@@ -321,7 +338,6 @@ void CRTSPlayer::Update()
 		MineralTransaction(mMineralBaseAddition);
 
 		// Count how many workers the player has
-		// Infantry is from barracks - get all instances of barracks	
 		auto range = mpUnitsMap.equal_range(GAV_WORKER);
 
 		// Check that some structures exist

@@ -158,6 +158,9 @@ public:
 		return mNumMothership;
 	}
 
+	// Function to determine whether or not the player's command centre is still standing
+	bool IsAlive();
+
 
 	// MUTATORS
 	//---------------------------

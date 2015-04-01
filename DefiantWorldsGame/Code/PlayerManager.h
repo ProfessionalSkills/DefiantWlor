@@ -28,7 +28,7 @@ public:
 	//---------------------------
 	void CreatePlayers(EFactions humanFaction, int numAI, int startingResources, int difficulty);
 	void RemovePlayers();
-	void UpdatePlayers();
+	int UpdatePlayers();
 	void SavePlayers(std::ofstream& outFile);
 	void LoadPlayers(std::ifstream& inFile);
 
