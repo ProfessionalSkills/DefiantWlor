@@ -187,6 +187,28 @@ public:
 		mCurPop += value;
 	}
 
+	//Debugging function to add ships
+	inline void AddShips()
+	{
+		CSpaceFighter* Temp;
+		for (int i = 0; i <25; i++)
+		{
+			Temp = new CSpaceFighter();
+			Temp->SetFaction(mPlayerFaction);
+			mpSpaceUnitsList.push_back(Temp);
+		}
+		CTransport* temp;
+		for (int i = 0; i < 5; i++)
+		{
+			temp = new CTransport();
+			temp->SetFaction(mPlayerFaction);
+			mpSpaceUnitsList.push_back(temp);
+		}
+
+		mpSpaceUnitsList.push_back(new CMothership());
+		mpSpaceUnitsList.back()->SetFaction(mPlayerFaction);
+	}
+
 	bool MineralTransaction(int amount);
 
 	void SetNumSpaceFighter(int NumShips);

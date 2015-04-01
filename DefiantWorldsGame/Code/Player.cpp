@@ -28,23 +28,7 @@ CRTSPlayer::CRTSPlayer(EFactions playerFaction, int startingResources) : MINERAL
 	mpPlayerGrid = nullptr;
 	mpRandomiser = new CRandomiser();
 
-	//CSpaceFighter* Temp;
-	//for (int i = 0; i <25; i++)
-	//{
-	//	Temp = new CSpaceFighter();
-	//	Temp->SetFaction(mPlayerFaction);
-	//	mpSpaceUnitsList.push_back(Temp);
-	//}
-	//CTransport* temp;
-	//for (int i = 0; i < 5; i++)
-	//{
-	//	temp = new CTransport();
-	//	temp->SetFaction(mPlayerFaction);
-	//	mpSpaceUnitsList.push_back(temp);
-	//}
-
-	//mpSpaceUnitsList.push_back(new CMothership());
-	//mpSpaceUnitsList.back()->SetFaction(mPlayerFaction);
+	//AddShips();
 }
 
 CRTSPlayer::~CRTSPlayer()

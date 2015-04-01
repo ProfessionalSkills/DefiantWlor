@@ -410,8 +410,8 @@ void CWorldState::CheckKeyPresses()
 	}
 
 
-	// tactic FUNCTIONS FOR SPACE
-	//------------------------------
+	// SHORTCUT FUNCTIONS FOR TACTICS
+	//--------------------------------
 
 	//temporary, just used to test the transfering of ships to the fleet
 	if (gpEngine->KeyHit(Key_L))
@@ -435,6 +435,14 @@ void CWorldState::CheckKeyPresses()
 	{
 		mpHumanPlayer->GetFleet()->SetTactic(Rapid);
 	}
+
+	//add units to both players
+	if (gpEngine->KeyHit(Key_P))
+	{
+		mpHumanPlayer->AddShips();
+		mpAIPlayer->AddShips();
+	}
+
 
 	mRMouseClicked = false;
 }
