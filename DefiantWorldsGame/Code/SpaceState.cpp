@@ -16,17 +16,33 @@
 CSpaceState::CSpaceState() :mTimeToUpdate(1.0f), mTimeToUpdateEffects(0.1f), mCamRotSpeed(0.7), mCamZAdjust(-10.4f), mBaseCamZ(-188.0f), mCameraMoveSpeed(4.0f),
 mDisplacement(30), mNumCamStates(4),CGameState()
 {
+	mpMdlSkybox = 0;
+	mpMdlEarth = 0;
+	mpMdlJupiter = 0;
+	mpMdlMars = 0;
+	mpMdlMoon = 0;
+	mpMdlSun = 0;
+	mpMdlVenus = 0;
 	mTimeSinceUpdate = 0.0f;
+
+	mpPlayerOneFleet = 0;
+	mpPlayerTwoFleet = 0;
+
+	//Set Camera Values
 	mCamZ = 0.0f;
 	mCamState = 0;
 	mCamZMovement = 0.0f;
-	mEarthDistance = -1000.0F;
-	mMarsDistance = 500.0f;
+
+	//Set Planet Positions
+	mEarthPos = { -1000,-50 , 50, 100 };
+	mMarsPos = { 500, -400, 100, 25 };
+	mSunPos = { 100, 50, -1000, 400 };
+	mJupiterPos={ -1000, -900, 800, 40 };
 }
 
 CSpaceState::~CSpaceState()
 {
-
+	StateCleanup();
 }
 
 
@@ -231,12 +247,17 @@ void CSpaceState::StateCleanup()
 	mMusic->StopSound();
 
 	//unload models
-	mpMshSkybox->RemoveModel(mpMdlSkybox);
+	if (mpMdlSkybox) mpMshSkybox->RemoveModel(mpMdlSkybox);
+	if (mpMdlEarth) mpMshPlanet->RemoveModel(mpMdlEarth);
+	if (mpMdlJupiter) mpMshPlanet->RemoveModel(mpMdlJupiter);
+	if (mpMdlMars) mpMshPlanet->RemoveModel(mpMdlMars);
+	if (mpMdlMoon) mpMshPlanet->RemoveModel(mpMdlMoon);
+	if (mpMdlSun) mpMshPlanet->RemoveModel(mpMdlSun);
+	if (mpMdlVenus) mpMshPlanet->RemoveModel(mpMdlVenus);
 
-	mpPlayerOneFleet->ReturnFleet(mpHumanPlayer);
-	mpPlayerTwoFleet->ReturnFleet(mpAIPlayer);
-	mpMshPlanet->RemoveModel(mpMdlMars);
-	mpMshPlanet->RemoveModel(mpMdlEarth);
+	//return fleets
+	if (mpPlayerOneFleet) mpPlayerOneFleet->ReturnFleet(mpHumanPlayer);
+	if (mpPlayerTwoFleet) mpPlayerTwoFleet->ReturnFleet(mpAIPlayer);
 
 	//reset camera
 	mCamZMovement = 0.0f;
@@ -285,11 +306,21 @@ void CSpaceState::LoadPlanets()
 	//------------------------------
 	// Earth
 	mpMshPlanet = gpEngine->LoadMesh("Planet.x");
-	mpMdlEarth = mpMshPlanet->CreateModel(mEarthDistance, 0.0f, 0.0f);
-	mpMdlEarth->Scale(100.0f);
+	mpMdlEarth = mpMshPlanet->CreateModel(mEarthPos.x, mEarthPos.y, mEarthPos.z);
+	mpMdlEarth->Scale(mEarthPos.w);
 
 	// Mars
-	mpMdlMars = mpMshPlanet->CreateModel(mMarsDistance, 0.0f, 0.0f);
+	mpMdlMars = mpMshPlanet->CreateModel(mMarsPos.x, mMarsPos.y, mMarsPos.z);
 	mpMdlMars->SetSkin("Mars.jpg");
-	mpMdlMars->Scale(26.0f);
+	mpMdlMars->Scale(mMarsPos.w);
+
+	// Sun
+	mpMdlSun = mpMshPlanet->CreateModel(mSunPos.x, mSunPos.y, mSunPos.z);
+	mpMdlSun->SetSkin("texture_sun.jpg");
+	mpMdlSun->Scale(mSunPos.w);
+
+	// Jupiter
+	mpMdlJupiter = mpMshPlanet->CreateModel(mJupiterPos.x, mJupiterPos.y, mJupiterPos.z);
+	mpMdlJupiter->SetSkin("Mars.jpg");
+	mpMdlJupiter->Scale(mJupiterPos.w);
 }

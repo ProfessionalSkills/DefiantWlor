@@ -40,8 +40,15 @@ private:
 	// MODELS
 	//--------------------------- 
 	IModel* mpMdlSkybox;
+
+	//planets
 	IModel* mpMdlEarth;
 	IModel* mpMdlMars;
+	IModel* mpMdlSun;
+	IModel* mpMdlMoon;
+	IModel* mpMdlJupiter;
+	IModel* mpMdlVenus;
+
 
 	// FLEET
 	//---------------------------
@@ -66,10 +73,14 @@ private:
 
 	void DrawFontData();
 
-	// PLANET 
+	// PLANET POSITIONS
 	//---------------------------
-	float mEarthDistance;			// Distance of Earth from centre point
-	float mMarsDistance;			// Distance of Mars from centre point
+	DirectX::XMFLOAT4 mEarthPos;
+	DirectX::XMFLOAT4 mMarsPos;
+	DirectX::XMFLOAT4 mSunPos;
+	DirectX::XMFLOAT4 mMoonPos;
+	DirectX::XMFLOAT4 mJupiterPos;
+	DirectX::XMFLOAT4 mVenusPos;
 	void LoadPlanets();
 
 	// MISC
