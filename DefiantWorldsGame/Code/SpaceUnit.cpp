@@ -22,6 +22,7 @@ CSpaceUnit::CSpaceUnit() :mChargeTimeMax(3.0f), mChargeTimeMin(1.0f)
 	mChargingLazers = true;
 	mCharged = false;
 	mChargeTime = mChargeTimeMax;
+	mGenSound = nullptr;
 }
 
 CSpaceUnit::~CSpaceUnit()
@@ -102,6 +103,7 @@ void CSpaceUnit::FireLazer(CGameObject* target)
 	ModelZNormal.x = ModelMatrix.m[2][0] * 6;
 	ModelZNormal.y = ModelMatrix.m[2][1] * 6;
 	ModelZNormal.z = ModelMatrix.m[2][2] * 6;
+	if (mGenSound) mGenSound->PlaySound();
 
 	if (!mpTempLazer)
 	{

@@ -97,6 +97,11 @@ void CSpaceFighter::UnloadIModel()
 		mspMshLazer->RemoveModel(mpTempLazer);
 		mpTempLazer = nullptr;
 	}
+	if (mGenSound)
+	{
+		delete mGenSound;
+		mGenSound = 0;
+	}
 }
 
 void CSpaceFighter::MoveY(float yChange)
@@ -114,7 +119,6 @@ bool CSpaceFighter::Attack(CGameObject* target, float hitMod, float damageMod)
 	if (mpToHitRoll->GetRandomFloat(1.0, 100.0) < (hitMod*mHitChance) * 100)
 	{
 		target->TakeDamage(mDamage*damageMod);
-		mGenSound->PlaySound();
 		CSpaceUnit* mpTemp = (CSpaceUnit*)(target);
 		mpTemp->HitFlash();
 		FireLazer(target);

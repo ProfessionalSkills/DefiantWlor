@@ -86,7 +86,7 @@ CSound::~CSound()
 
 void CSound::PlaySound()
 {
-	if (mIsPlaying) return;
+	if (mIsPlaying) alSourceStop(mSource);
 
 	alSourcePlay(mSource);
 	mIsPlaying = true;
