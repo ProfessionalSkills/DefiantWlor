@@ -470,6 +470,7 @@ void CWorldState::DisplaySelectedBuildingInfo()
 
 			// Show this building's buttons
 			mpBarracksButtons->Show();
+			mpButtonDelete->Show();
 			break;
 
 		case STR_COM_CENTRE:
@@ -481,6 +482,7 @@ void CWorldState::DisplaySelectedBuildingInfo()
 
 			// Show this building's buttons
 			mpComCentreButtons->Show();
+			mpButtonDelete->Show();
 			break;
 
 		case STR_HELLIPAD:
@@ -492,6 +494,7 @@ void CWorldState::DisplaySelectedBuildingInfo()
 
 			// Show this building's buttons
 			mpHellipadButtons->Show();
+			mpButtonDelete->Show();
 			break;
 
 		case STR_SPACE_CENTRE:
@@ -503,6 +506,15 @@ void CWorldState::DisplaySelectedBuildingInfo()
 
 			// Show this building's buttons
 			mpSpaceCentreButtons->Show();
+			mpButtonDelete->Show();
+			break;
+		case STR_WALL:
+			// Hide other buildings' buttons
+			mpBarracksButtons->Hide();
+			mpHellipadButtons->Hide();
+			mpComCentreButtons->Hide();
+			mpSpaceCentreButtons->Hide();
+			mpButtonDelete->Hide();
 			break;
 		}		
 		// BUILDING DESTRUCTION
