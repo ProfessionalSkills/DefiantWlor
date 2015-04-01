@@ -42,6 +42,7 @@ mDisplacement(30), mNumCamStates(4),CGameState()
 	mSunPos = { 100, 50, -1000, 400 };
 	mJupiterPos={ -900, -900, 800, 80 };
 	mMercuryPos = { -200, -900, -600, 10 };
+	mVenusPos ={ -200, 0, 700, 15 };
 }
 
 CSpaceState::~CSpaceState()
@@ -334,8 +335,13 @@ void CSpaceState::LoadPlanets()
 	mpMdlJupiter->SetSkin("texture_jupiter.jpg");
 	mpMdlJupiter->Scale(mJupiterPos.w);
 
-	// mercury
+	// Mercury
 	mpMdlJupiter = mpMshPlanet->CreateModel(mMercuryPos.x, mMercuryPos.y, mMercuryPos.z);
 	mpMdlJupiter->SetSkin("texture_mercury.jpg");
 	mpMdlJupiter->Scale(mMercuryPos.w);
+
+	// Venus
+	mpMdlJupiter = mpMshPlanet->CreateModel(mVenusPos.x, mVenusPos.y, mVenusPos.z);
+	mpMdlJupiter->SetSkin("texture_venus_surface.jpg");
+	mpMdlJupiter->Scale(mVenusPos.w);
 }
