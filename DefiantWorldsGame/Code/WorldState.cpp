@@ -2017,8 +2017,8 @@ void CWorldState::DeleteStructure()
 	if (mpCurSelectedStructure)
 	{
 		// Set object to be deleted
-		mpCurSelectedStructure->SetState(OBJ_DEAD);
-		mpCurSelectedStructure->Destroy();
+		mpCurSelectedStructure->SetState(OBJ_WARNING);
+		mpCurSelectedStructure->SetHealth(0.0f);
 		// pointer set to null
 		mpCurSelectedStructure = nullptr;
 		mLMouseClicked = false;
@@ -2026,8 +2026,7 @@ void CWorldState::DeleteStructure()
 	if (mpCurSelectedAgent)
 	{
 		// Set object to be deleted
-		mpCurSelectedAgent->SetState(OBJ_DEAD);
-		mpCurSelectedAgent->Destroy();
+		mpCurSelectedAgent->SetState(OBJ_WARNING);
 		// pointer set to null
 		mpCurSelectedAgent = nullptr;
 		mLMouseClicked = false;

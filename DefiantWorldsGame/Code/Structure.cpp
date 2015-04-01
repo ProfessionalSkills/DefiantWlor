@@ -265,5 +265,5 @@ void CStructure::Destroy()
 	pNextTile->SetTileUsage(false);
 
 	// Remove the model
-	//UnloadIModel();
+	UnloadIModel();
 }

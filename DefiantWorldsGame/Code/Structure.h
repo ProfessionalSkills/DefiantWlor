@@ -155,6 +155,11 @@ public:
 		mBuildLoc = gridPos;
 	}
 
+	inline void SetHealth(float health)
+	{
+		mHealth = health;
+	}
+
 	// Change the state of the building to a new state
 	void SetState(EObjectStates newState);
 	// Let the building take a set amount of damage

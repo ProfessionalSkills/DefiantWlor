@@ -265,7 +265,6 @@ bool CProductionStructure::Update(CRTSPlayer* pPlayer)
 			break;
 
 		case OBJ_DAMAGED:
-
 			if (((mHealth / mMaxHealth) * 100.0f) < 33.0f)
 			{
 				mState = OBJ_WARNING;
@@ -277,15 +276,20 @@ bool CProductionStructure::Update(CRTSPlayer* pPlayer)
 		case OBJ_WARNING:
 			if ((mHealth <= 0.0f))
 			{
-				
 				if (mDestructionExplosion == nullptr)
 				{
 					mDestructionExplosion = new CExplosion(mpObjModel, 200);
-					UnloadIModel();
+					Destroy();
 				}
 				else
 				{
-					mDestructionExplosion->UpdateSystem();
+					// Check if the explosion system has finished
+					if (!mDestructionExplosion->UpdateSystem())
+					{
+						// particle system is finished
+						SafeDelete(mDestructionExplosion);
+						mState = OBJ_DEAD;
+					}
 				}
 			}
 			return true;
@@ -293,10 +297,6 @@ bool CProductionStructure::Update(CRTSPlayer* pPlayer)
 			break;
 
 		case OBJ_DEAD:
-
-			// ONCE THE PARTICLES FOR THE DESTRUCTION OF BUILDING HAS FINISHED
-			// only then call the destory! - Particles not yet implemented
-			Destroy();
 
 			// Object no longer alive
 			return false;
