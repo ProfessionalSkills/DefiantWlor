@@ -444,6 +444,16 @@ void CWorldState::DisplaySelectedBuildingInfo()
 	int newProgressAmount = 0;
 	int newHealthAmount = -5;
 	
+	// Check if the building has been destoryed
+	if (mpCurSelectedStructure)
+	{
+		if (mpCurSelectedStructure->GetState() == OBJ_DEAD)
+		{
+			// Select nothing
+			OnStructureSelectChange(nullptr);
+		}
+	}
+
 	// If an object is selected, display its info
 	if (mpCurSelectedStructure)
 	{

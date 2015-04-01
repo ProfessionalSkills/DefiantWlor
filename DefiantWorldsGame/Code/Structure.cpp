@@ -69,6 +69,9 @@ void CStructure::SetSelectedTexture()
 
 void CStructure::SetDeselectedTexture()
 {
+	// If the object does not exist, then just leave
+	if (!mpObjModel) return;
+
 	// Check if the structure is still building
 	if (mState == OBJ_CONSTRUCTING)
 	{
@@ -263,6 +266,9 @@ void CStructure::Destroy()
 	gridPoint.mPosY = mGridSpawnLoc.mPosY;
 	pNextTile = mpGrid->GetTileData(gridPoint);
 	pNextTile->SetTileUsage(false);
+
+	// Do not allow the building to be selected again by removing the bounding box
+	mBoundingBox = SBoundingCube();
 
 	// Remove the model
 	UnloadIModel();
