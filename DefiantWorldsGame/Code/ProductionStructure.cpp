@@ -253,19 +253,41 @@ bool CProductionStructure::Update(CRTSPlayer* pPlayer)
 					SpawnFront();
 				}
 			}
+
+			if (((mHealth / mMaxHealth) * 100.0f) < 66.0f)
+			{
+				mState = OBJ_DAMAGED;
+			}
+			
 			// Object still alive
 			return true;
 
 			break;
 
 		case OBJ_DAMAGED:
-			// Object still alive
+
+			if (((mHealth / mMaxHealth) * 100.0f) < 33.0f)
+			{
+				mState = OBJ_WARNING;
+			}
 			return true;
 
 			break;
 
 		case OBJ_WARNING:
-			// Object still alive
+			if ((mHealth <= 0.0f))
+			{
+				
+				if (mDestructionExplosion == nullptr)
+				{
+					mDestructionExplosion = new CExplosion(mpObjModel, 200);
+					UnloadIModel();
+				}
+				else
+				{
+					mDestructionExplosion->UpdateSystem();
+				}
+			}
 			return true;
 
 			break;

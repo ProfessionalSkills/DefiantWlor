@@ -37,7 +37,7 @@ class CStructure : public CGameObject
 protected:
 	// DATA
 	//---------------------------
-	float mHealth;
+	//float mHealth;
 	float mBuildTime;
 	float mRepairSpeed;
 	float mCurBuildTimeLeft;			// Time left until structure is built

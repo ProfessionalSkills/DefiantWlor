@@ -107,6 +107,11 @@ public:
 		mHealth -= amount;
 	}
 
+	inline float GetHealth()
+	{
+		return mHealth;
+	}
+
 	inline IModel* GetModel()
 	{
 		return mpObjModel;

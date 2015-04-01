@@ -22,6 +22,7 @@ CHellipad::CHellipad()
 	mOrientation = 0.0f;
 
 	mHealth = 1000.0f;
+	mMaxHealth = 1000.0f;
 	mBuildTime = 10.0f;
 	mRepairSpeed = 1.0f;
 	mCurBuildTimeLeft = mBuildTime;

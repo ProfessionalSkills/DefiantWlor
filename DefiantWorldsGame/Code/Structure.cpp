@@ -38,6 +38,7 @@ void CStructure::SetState(EObjectStates newState)
 
 bool CStructure::TakeDamage(float amount)
 {
+	mHealth -= amount;
 	return false;
 }
 
@@ -264,6 +265,5 @@ void CStructure::Destroy()
 	pNextTile->SetTileUsage(false);
 
 	// Remove the model
-	mDestructionExplosion = new CExplosion(mpObjModel, 100);
-	UnloadIModel();
+	//UnloadIModel();
 }

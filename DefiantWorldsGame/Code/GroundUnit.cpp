@@ -71,12 +71,16 @@ bool CGroundUnit::Update()
 
 				if (projectile == mpProjectiles.front()) //As all projectiles move at the same speed, the only projectile that will collide is the one fired first  
 				{
-					if (BoxCollision(position, mAttackTarget->GetWorldPos(), 3.0f)) //Point to Box collision between the projectile and the attack target
+					if ((mAttackTarget == nullptr)||(BoxCollision(position, mAttackTarget->GetWorldPos(), 3.0f))) //Point to Box collision between the projectile and the attack target
 					{
+						if (mAttackTarget != nullptr)
+						{
+							mAttackTarget->TakeDamage(mDamage);
+						}
+						mpAttackExplosions.push_back(new CExplosion(projectile->mModel, 50));
 						SProjectile* tmp = projectile;
 						SafeDelete(tmp);
 						mpProjectiles.erase(mpProjectiles.begin());
-						mpAttackExplosions.push_back(new CExplosion(mAttackTarget->GetModel(), 50));
 						break; //Breaks out of the loop as the vector size has been changed, comprimising the iterator loop
 					}
 				}
@@ -183,7 +187,14 @@ void CGroundUnit::Move()
 		}
 		else
 		{
-			Attack(mAttackTarget, 100, mDamage);
+			if (mAttackTarget->GetHealth() <= 0.0f)
+			{
+				mAttackTarget = nullptr;
+			}
+			else
+			{
+				Attack(mAttackTarget, 100, mDamage);
+			}
 		}
 	}
 }

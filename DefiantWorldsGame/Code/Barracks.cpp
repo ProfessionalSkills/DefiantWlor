@@ -20,8 +20,8 @@ CBarracks::CBarracks()
 	// Define default variables for this type of structure
 	mScale = 0.6f;
 	mOrientation = 0.0f;
-
 	mHealth = 1000.0f;
+	mMaxHealth = 1000.0f;
 	mBuildTime = 5.0f;
 	mRepairSpeed = 1.0f;
 	mCurBuildTimeLeft = mBuildTime;
