@@ -59,6 +59,10 @@ private:
 	std::vector<CAdvancedButton<CMenuState, void>*> mpButtonList;
 	std::vector<CAdvancedButton<CMenuState, void>*>::iterator miterButtons;
 
+	std::vector<CAdvancedButton<CMenuState, void, int>*> mpAIDButtonList;					// List of buttons for AI difficulty
+	std::vector<CAdvancedButton<CMenuState, void, int>*> mpStartingResButtonList;			// List of buttons for Starting Resources
+	std::vector<CAdvancedButton<CMenuState, void, int>*>::iterator miterIntButtons;
+
 	CTypeBox* mpTypeBox = nullptr;
 
 
@@ -66,6 +70,7 @@ private:
 	//--------------------------- 
 	IFont* mpButtonFont = nullptr;
 	IFont* mpIncDecFont = nullptr;
+	IFont* mpTitleFont = nullptr;
 
 
 	// TEMPORARY SETTINGS VARIABLES

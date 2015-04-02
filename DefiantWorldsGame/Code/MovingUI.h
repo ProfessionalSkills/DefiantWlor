@@ -56,7 +56,7 @@ protected:
 	// PROPERTIES
 	//---------------------------
 	SPointData mStartPosition;
-	SPointData mCurPosition;
+	DX::XMFLOAT2 mCurPosition;
 	SPointData mDestination;
 	ETransitionTypes mTransitionType;
 	float mTransitionSpeed;

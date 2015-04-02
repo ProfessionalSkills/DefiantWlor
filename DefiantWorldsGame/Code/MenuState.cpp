@@ -38,6 +38,8 @@ void CMenuState::NewGame()
 	mpButtonList[2]->Hide();
 	mpButtonList[3]->Hide();
 
+	mpSprLogo->SetZ(-1.0f);
+
 	// Show the save related items
 	mpButtonList[6]->Show();
 	mpButtonList[7]->Show();
@@ -137,6 +139,8 @@ void CMenuState::OnChooseCancel()
 	mpButtonList[6]->Hide();
 	mpButtonList[7]->Hide();
 
+	mpSprLogo->SetZ(0.8f);
+
 	// Show the main menu items
 	mpButtonList[0]->Show();
 	mpButtonList[1]->Show();
@@ -219,6 +223,7 @@ void CMenuState::StateSetup()
 	//------------------------------
 	mpButtonFont = gpEngine->LoadFont("font2.bmp", 15U);
 	mpIncDecFont = gpEngine->LoadFont("font2.bmp", 25U);
+	mpTitleFont = gpEngine->LoadFont("font2.bmp", 35U);
 
 	mpSprBackground = gpEngine->CreateSprite("MenuBG.png", 400.0f, 50.0f, 0.9f);
 	mpSprLogo = gpEngine->CreateSprite("Logo.png", 800.0f, 100.0f, 0.8f);
@@ -306,8 +311,14 @@ void CMenuState::StateUpdate()
 		if (mpButtonList[3]->IsInPlace()) mpButtonFont->Draw("QUIT GAME", 1015, 575, kWhite, kCentre, kTop);
 		break;
 	case MENU_NEW_GAME:
+		// Check the buttons are in place before attempting to show the button's text
 		if (mpButtonList[6]->IsInPlace()) mpButtonFont->Draw("START NEW GAME", 1015, 635, kWhite, kCentre, kTop);
 		if (mpButtonList[7]->IsInPlace()) mpButtonFont->Draw("CANCEL", 1015, 705, kWhite, kCentre, kTop);
+
+		mpIncDecFont->Draw("AI DIFFICULTY", 1015, 180, kWhite, kCentre, kTop);
+		mpIncDecFont->Draw("STARTING RESOURCES", 1015, 300, kWhite, kCentre, kTop);
+
+		mpTitleFont->Draw("NEW GAME OPTIONS", 1015, 90, kCyan, kCentre, kTop);
 		break;
 	case MENU_LOAD:
 		// Update pause menu visuals

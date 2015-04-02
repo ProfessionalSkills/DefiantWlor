@@ -55,7 +55,8 @@ CMovingUI::CMovingUI(SPointData destination, SAABoundingBox boundingBox, ETransi
 	}
 
 	// Store the current position as the start position
-	mCurPosition = mStartPosition;
+	mCurPosition.x = (float)mStartPosition.mPosX;
+	mCurPosition.y = (float)mStartPosition.mPosY;
 }
 
 CMovingUI::~CMovingUI()
@@ -85,27 +86,29 @@ void CMovingUI::UpdateTransition()
 		{
 			// With transition type left, the item will be coming in from the right - a negative x direction
 			// Check to see if it has overtaken the destination
-			if (mCurPosition.mPosX <= mDestination.mPosX)
+			if (mCurPosition.x <= mDestination.mPosX)
 			{
 				// Destination reached - no longer transitioning
-				mCurPosition = mDestination;
+				mCurPosition.x = (float)mDestination.mPosX;
+				mCurPosition.y = (float)mDestination.mPosY;
 				mToTransitionIn = false;
 				mIsAtDestination = true;
 			}
 			else
 			{
 				// Not yet where it should be positioned - move it closer
-				mCurPosition.mPosX -= (int)(mTransitionSpeed * gFrameTime);
+				mCurPosition.x -= mTransitionSpeed * gFrameTime;
 			}
 		}
 		else if (mToTransitionOut)
 		{
 			// Transition out to the right - positive x
 			// Check to see if it has overtaken the destination
-			if (mCurPosition.mPosX >= mStartPosition.mPosX)
+			if (mCurPosition.x >= mStartPosition.mPosX)
 			{
 				// Destination reached - no longer transitioning
-				mCurPosition = mStartPosition;
+				mCurPosition.x = (float)mStartPosition.mPosX;
+				mCurPosition.y = (float)mStartPosition.mPosY;
 				mToTransitionOut = false;
 				mIsAtDestination = false;
 				mIsOffScreen = true;
@@ -113,7 +116,7 @@ void CMovingUI::UpdateTransition()
 			else
 			{
 				// Not yet where it should be positioned - move it closer
-				mCurPosition.mPosX += (int)(mTransitionSpeed * gFrameTime);
+				mCurPosition.x += mTransitionSpeed * gFrameTime;
 			}
 		}
 		break;

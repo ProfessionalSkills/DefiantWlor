@@ -27,8 +27,8 @@ public:
 		mTargetMethod(targetMethod), mIsHidden(false), mMouseIsOver(false)
 	{
 		mIsHidden = !active;
-		mpSprBasic = gpEngine->CreateSprite(defaultTex, (float)mCurPosition.mPosX, (float)mCurPosition.mPosY, 0.7f);
-		mpSprMO = gpEngine->CreateSprite(selectedTex, (float)mCurPosition.mPosX, (float)mCurPosition.mPosY, -1.0f);
+		mpSprBasic = gpEngine->CreateSprite(defaultTex, mCurPosition.x, mCurPosition.y, 0.7f);
+		mpSprMO = gpEngine->CreateSprite(selectedTex, mCurPosition.x, mCurPosition.y, -1.0f);
 	}
 
 	CAdvancedButton(SPointData pos, SAABoundingBox boundingBox, C& targetClass, ButtonMethod targetMethod,
@@ -72,13 +72,13 @@ public:
 			// If sprite exists
 			if (mpSprBasic)
 			{
-				mpSprBasic->SetX((float)mCurPosition.mPosX);
-				mpSprBasic->SetY((float)mCurPosition.mPosY);
+				mpSprBasic->SetX(mCurPosition.x);
+				mpSprBasic->SetY(mCurPosition.y);
 			}
 			if (mpSprMO)
 			{
-				mpSprMO->SetX((float)mCurPosition.mPosX);
-				mpSprMO->SetY((float)mCurPosition.mPosY);
+				mpSprMO->SetX(mCurPosition.x);
+				mpSprMO->SetY(mCurPosition.y);
 			}
 		}
 		
@@ -143,12 +143,12 @@ public:
 	{
 		if (!mpSprBasic)
 		{
-			mpSprBasic = gpEngine->CreateSprite(defTexture, (float)mCurPosition.mPosX, (float)mCurPosition.mPosY, 0.7f);
+			mpSprBasic = gpEngine->CreateSprite(defTexture, mCurPosition.x, mCurPosition.y, 0.7f);
 		}
 
 		if (!mpSprMO)
 		{
-			mpSprMO = gpEngine->CreateSprite(selTexture, (float)mCurPosition.mPosX, (float)mCurPosition.mPosY, -1.0f);
+			mpSprMO = gpEngine->CreateSprite(selTexture, mCurPosition.x, mCurPosition.y, -1.0f);
 		}
 	}
 
@@ -176,7 +176,7 @@ public:
 			mpSprBasic = nullptr;
 		}
 
-		mpSprBasic = gpEngine->CreateSprite(fileName, (float)mCurPosition.mPosX, (float)mCurPosition.mPosY, 0.7f);
+		mpSprBasic = gpEngine->CreateSprite(fileName, mCurPosition.x, mCurPosition.y, 0.7f);
 	}
 
 
