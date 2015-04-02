@@ -81,22 +81,15 @@ void CMenuState::OnChooseLoadGame()
 	// Create a typebox
 	mpTypeBox = new CTypeBox(SPointData{ 770, 420 });
 
-	// Remove the buttons as they are no longer needed
-	while (!mpButtonList.empty())
-	{
-		CAdvancedButton<CMenuState, void>* pButton = mpButtonList.back();
-		SafeDelete(pButton);
-		mpButtonList.pop_back();
-	}
+	// Hide the main menu buttons
+	mpButtonList[0]->Hide();
+	mpButtonList[1]->Hide();
+	mpButtonList[2]->Hide();
+	mpButtonList[3]->Hide();
 
-	// Create the save related buttons
-	CAdvancedButton<CMenuState, void>* pNewButton = new CAdvancedButton<CMenuState, void>("DefSmallButton.png", "SelSmallButton.png", SPointData(895, 480),
-		SAABoundingBox(530.0f, 995.0f, 480.0f, 895.0f), *this, &CMenuState::LoadGame);
-	mpButtonList.push_back(pNewButton);
-
-	pNewButton = new CAdvancedButton<CMenuState, void>("DefSmallButton.png", "SelSmallButton.png", SPointData(1035, 480),
-		SAABoundingBox(530.0f, 1135.0f, 480.0f, 1035.0f), *this, &CMenuState::OnChooseCancel);
-	mpButtonList.push_back(pNewButton);
+	// Show the save related items
+	mpButtonList[4]->Show();
+	mpButtonList[5]->Show();
 }
 
 void CMenuState::OnChooseCancel()
@@ -104,30 +97,15 @@ void CMenuState::OnChooseCancel()
 	// Remove type box
 	SafeDelete(mpTypeBox);
 
-	// Remove the buttons as they are no longer needed
-	while (!mpButtonList.empty())
-	{
-		CAdvancedButton<CMenuState, void>* pButton = mpButtonList.back();
-		SafeDelete(pButton);
-		mpButtonList.pop_back();
-	}
+	// Hide the save related buttons
+	mpButtonList[4]->Hide();
+	mpButtonList[5]->Hide();
 
-	// Return main menu buttons
-	CAdvancedButton<CMenuState, void>* pNewButton = new CAdvancedButton<CMenuState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 350),
-		SAABoundingBox(400.0f, 1215.0f, 350.0f, 815.0f), *this, &CMenuState::NewGame);
-	mpButtonList.push_back(pNewButton);
-
-	pNewButton = new CAdvancedButton<CMenuState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 420),
-		SAABoundingBox(470.0f, 1215.0f, 420.0f, 815.0f), *this, &CMenuState::OnChooseLoadGame);
-	mpButtonList.push_back(pNewButton);
-
-	pNewButton = new CAdvancedButton<CMenuState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 490),
-		SAABoundingBox(540.0f, 1215.0f, 490.0f, 815.0f), *this, &CMenuState::ChangeSettings);
-	mpButtonList.push_back(pNewButton);
-
-	pNewButton = new CAdvancedButton<CMenuState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 560),
-		SAABoundingBox(610.0f, 1215.0f, 560.0f, 815.0f), *this, &CMenuState::Quit);
-	mpButtonList.push_back(pNewButton);
+	// Show the main menu items
+	mpButtonList[0]->Show();
+	mpButtonList[1]->Show();
+	mpButtonList[2]->Show();
+	mpButtonList[3]->Show();
 }
 
 
@@ -190,19 +168,27 @@ void CMenuState::StateSetup()
 	mpSprCursor = gpEngine->CreateSprite("BaseCursor.png", 5.0f, 50.0f, 0.0f);
 
 	CAdvancedButton<CMenuState, void>* pNewButton = new CAdvancedButton<CMenuState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 350),
-		SAABoundingBox(400.0f, 1215.0f, 350.0f, 815.0f), *this, &CMenuState::NewGame);
+		SAABoundingBox(400.0f, 1215.0f, 350.0f, 815.0f), *this, &CMenuState::NewGame, TR_LEFT);
 	mpButtonList.push_back(pNewButton);
 
 	pNewButton = new CAdvancedButton<CMenuState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 420),
-		SAABoundingBox(470.0f, 1215.0f, 420.0f, 815.0f), *this, &CMenuState::OnChooseLoadGame);
+		SAABoundingBox(470.0f, 1215.0f, 420.0f, 815.0f), *this, &CMenuState::OnChooseLoadGame, TR_LEFT);
 	mpButtonList.push_back(pNewButton);
 
 	pNewButton = new CAdvancedButton<CMenuState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 490),
-		SAABoundingBox(540.0f, 1215.0f, 490.0f, 815.0f), *this, &CMenuState::ChangeSettings);
+		SAABoundingBox(540.0f, 1215.0f, 490.0f, 815.0f), *this, &CMenuState::ChangeSettings, TR_LEFT);
 	mpButtonList.push_back(pNewButton);
 
 	pNewButton = new CAdvancedButton<CMenuState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 560),
-		SAABoundingBox(610.0f, 1215.0f, 560.0f, 815.0f), *this, &CMenuState::Quit);
+		SAABoundingBox(610.0f, 1215.0f, 560.0f, 815.0f), *this, &CMenuState::Quit, TR_LEFT);
+	mpButtonList.push_back(pNewButton);
+
+	pNewButton = new CAdvancedButton<CMenuState, void>("DefSmallButton.png", "SelSmallButton.png", SPointData(895, 480),
+		SAABoundingBox(530.0f, 995.0f, 480.0f, 895.0f), *this, &CMenuState::LoadGame, TR_LEFT, false);
+	mpButtonList.push_back(pNewButton);
+
+	pNewButton = new CAdvancedButton<CMenuState, void>("DefSmallButton.png", "SelSmallButton.png", SPointData(1035, 480),
+		SAABoundingBox(530.0f, 1135.0f, 480.0f, 1035.0f), *this, &CMenuState::OnChooseCancel, TR_LEFT, false);
 	mpButtonList.push_back(pNewButton);
 }
 
@@ -244,17 +230,18 @@ void CMenuState::StateUpdate()
 	// The state of the type box determines whether the buttons have changed or not
 	if (mpTypeBox == nullptr)
 	{
-		mpButtonFont->Draw("NEW GAME", 1015, 365, kWhite, kCentre, kTop);
-		mpButtonFont->Draw("LOAD GAME", 1015, 435, kWhite, kCentre, kTop);
-		mpButtonFont->Draw("CHANGE SETTINGS", 1015, 505, kWhite, kCentre, kTop);
-		mpButtonFont->Draw("QUIT GAME", 1015, 575, kWhite, kCentre, kTop);
+		// Only display the button text if the button is in position
+		if (mpButtonList[0]->IsInPlace()) mpButtonFont->Draw("NEW GAME", 1015, 365, kWhite, kCentre, kTop);
+		if (mpButtonList[1]->IsInPlace()) mpButtonFont->Draw("LOAD GAME", 1015, 435, kWhite, kCentre, kTop);
+		if (mpButtonList[2]->IsInPlace()) mpButtonFont->Draw("CHANGE SETTINGS", 1015, 505, kWhite, kCentre, kTop);
+		if (mpButtonList[3]->IsInPlace()) mpButtonFont->Draw("QUIT GAME", 1015, 575, kWhite, kCentre, kTop);
 	}
 	else
 	{
 		// Update pause menu visuals
 		mpButtonFont->Draw("TYPE THE NAME OF THE FILE YOU WANT TO LOAD BELOW:", 780, 400, kWhite, kLeft, kTop);
-		mpButtonFont->Draw("LOAD", 945, 495, kWhite, kCentre, kTop);
-		mpButtonFont->Draw("CANCEL", 1085, 495, kWhite, kCentre, kTop);
+		if (mpButtonList[4]->IsInPlace()) mpButtonFont->Draw("LOAD", 945, 495, kWhite, kCentre, kTop);
+		if (mpButtonList[5]->IsInPlace()) mpButtonFont->Draw("CANCEL", 1085, 495, kWhite, kCentre, kTop);
 
 		// Update the type box
 		mpTypeBox->Update();

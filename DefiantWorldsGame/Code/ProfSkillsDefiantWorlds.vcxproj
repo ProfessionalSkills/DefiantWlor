@@ -150,6 +150,7 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
     <ClCompile Include="MenuState.cpp" />
     <ClCompile Include="Minerals.cpp" />
     <ClCompile Include="Mothership.cpp" />
+    <ClCompile Include="MovingUI.cpp" />
     <ClCompile Include="NewGameState.cpp" />
     <ClCompile Include="NewsTicker.cpp" />
     <ClCompile Include="ParticleEmitter.cpp" />
@@ -207,6 +208,7 @@ copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; 
     <ClInclude Include="MenuState.h" />
     <ClInclude Include="Minerals.h" />
     <ClInclude Include="Mothership.h" />
+    <ClInclude Include="MovingUI.h" />
     <ClInclude Include="NewGameState.h" />
     <ClInclude Include="NewsTicker.h" />
     <ClInclude Include="ParticleEmitter.h" />

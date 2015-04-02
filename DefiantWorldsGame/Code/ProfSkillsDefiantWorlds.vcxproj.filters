@@ -297,6 +297,9 @@
     <ClCompile Include="TypeBox.cpp">
       <Filter>Utilities\User Interface</Filter>
     </ClCompile>
+    <ClCompile Include="MovingUI.cpp">
+      <Filter>Utilities\User Interface</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common.h">
@@ -456,6 +459,9 @@
       <Filter>Managers</Filter>
     </ClInclude>
     <ClInclude Include="TypeBox.h">
+      <Filter>Utilities\User Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="MovingUI.h">
       <Filter>Utilities\User Interface</Filter>
     </ClInclude>
   </ItemGroup>

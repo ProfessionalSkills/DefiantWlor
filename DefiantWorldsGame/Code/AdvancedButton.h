@@ -4,20 +4,16 @@
 #ifndef _ADVANCED_BUTTON_H_
 #define _ADVANCED_BUTTON_H_
 
-
-//-----------------------------------------------------
-// INCLUDES
-//-----------------------------------------------------
-#include "Common.h"
+#include "MovingUI.h"
 
 
 //-----------------------------------------------------
-// ADVANCED BUTTON CLASS
+// ADVANCED BUTTON CLASS : CHILD OF MOVING UI CLASS
 //-----------------------------------------------------
 template <class C, class CRt, class... CArgs>	// C = class type for button
 												// CRt = return type
 												// CArgs = parameters for pointer function
-class CAdvancedButton
+class CAdvancedButton : public CMovingUI
 {
 public:
 	// CONSTRUCTOR & DESTRUCTOR
@@ -25,18 +21,22 @@ public:
 	typedef CRt(C::*ButtonMethod)(CArgs...);
 	
 	CAdvancedButton(std::string defaultTex, std::string selectedTex, SPointData pos,
-		SAABoundingBox boundingBox, C& targetClass, ButtonMethod targetMethod) :
-		mPosition(pos), mBoundingBox(boundingBox), mTargetClass(targetClass), mTargetMethod(targetMethod),
-		mIsHidden(false), mMouseIsOver(false)
+		SAABoundingBox boundingBox, C& targetClass, ButtonMethod targetMethod,
+		ETransitionTypes transitionType = TR_NONE, bool active = true, float transitionTime = 0.5f) :
+		CMovingUI(pos, boundingBox, transitionType, active, transitionTime), mTargetClass(targetClass),
+		mTargetMethod(targetMethod), mIsHidden(false), mMouseIsOver(false)
 	{
-		mpSprBasic = gpEngine->CreateSprite(defaultTex, (float)pos.mPosX, (float)pos.mPosY, 0.7f);
-		mpSprMO = gpEngine->CreateSprite(selectedTex, (float)pos.mPosX, (float)pos.mPosY, -1.0f);
+		mIsHidden = !active;
+		mpSprBasic = gpEngine->CreateSprite(defaultTex, (float)mCurPosition.mPosX, (float)mCurPosition.mPosY, 0.7f);
+		mpSprMO = gpEngine->CreateSprite(selectedTex, (float)mCurPosition.mPosX, (float)mCurPosition.mPosY, -1.0f);
 	}
 
-	CAdvancedButton(SPointData pos, SAABoundingBox boundingBox, C& targetClass, ButtonMethod targetMethod) :
-		mPosition(pos), mBoundingBox(boundingBox), mTargetClass(targetClass), mTargetMethod(targetMethod),
-		mIsHidden(false), mMouseIsOver(false)
+	CAdvancedButton(SPointData pos, SAABoundingBox boundingBox, C& targetClass, ButtonMethod targetMethod,
+		ETransitionTypes transitionType = TR_NONE, bool active = true, float transitionTime = 0.5f) :
+		CMovingUI(pos, boundingBox, transitionType, active, transitionTime), mTargetClass(targetClass),
+		mTargetMethod(targetMethod), mIsHidden(false), mMouseIsOver(false)
 	{
+		mIsHidden = !active;
 		mpSprBasic = nullptr;
 		mpSprMO = nullptr;
 	}
@@ -64,6 +64,17 @@ public:
 
 	void Update()
 	{
+		// If it is transitioning in or out, update the button's position
+		if (mToTransitionIn || mToTransitionOut)
+		{
+			// This is a moving user interface element - call the parent function first to update its position
+			UpdateTransition();
+			mpSprBasic->SetX((float)mCurPosition.mPosX);
+			mpSprBasic->SetY((float)mCurPosition.mPosY);
+			mpSprMO->SetX((float)mCurPosition.mPosX);
+			mpSprMO->SetY((float)mCurPosition.mPosY);
+		}
+		
 		// Check if the button is hovered over
 		if (mMouseIsOver && !mIsHidden && mpSprBasic)
 		{
@@ -81,11 +92,16 @@ public:
 	void Show()
 	{
 		// If already shown, just return
-		if (mIsHidden  && mpSprBasic)
+		if (mIsHidden && mpSprBasic)
 		{
 			mIsHidden = false;
-			mpSprBasic->SetZ(0.75f);
-			mpSprMO->SetZ(-1.0f);
+			//mpSprBasic->SetZ(0.75f);
+			//mpSprMO->SetZ(-1.0f);
+
+			// Set to transition in
+			mToTransitionIn = true;
+			mIsAtDestination = false;
+			mIsOffScreen = false;
 		}
 	}
 
@@ -94,9 +110,15 @@ public:
 		// If already hidden, just return
 		if (!mIsHidden && mpSprBasic)
 		{
+			// Raise hidden flag
 			mIsHidden = true;
-			mpSprBasic->SetZ(-1.0f);
-			mpSprMO->SetZ(-1.0f);
+			//mpSprBasic->SetZ(-1.0f);
+			//mpSprMO->SetZ(-1.0f);
+
+			// Set to transition out
+			mToTransitionOut = true;
+			mIsAtDestination = false;
+			mIsOffScreen = false;
 		}
 	}
 
@@ -104,12 +126,12 @@ public:
 	{
 		if (!mpSprBasic)
 		{
-			mpSprBasic = gpEngine->CreateSprite(defTexture, (float)mPosition.mPosX, (float)mPosition.mPosY, 0.7f);
+			mpSprBasic = gpEngine->CreateSprite(defTexture, (float)mCurPosition.mPosX, (float)mCurPosition.mPosY, 0.7f);
 		}
 
 		if (!mpSprMO)
 		{
-			mpSprMO = gpEngine->CreateSprite(selTexture, (float)mPosition.mPosX, (float)mPosition.mPosY, -1.0f);
+			mpSprMO = gpEngine->CreateSprite(selTexture, (float)mCurPosition.mPosX, (float)mCurPosition.mPosY, -1.0f);
 		}
 	}
 
@@ -137,17 +159,12 @@ public:
 			mpSprBasic = nullptr;
 		}
 
-		mpSprBasic = gpEngine->CreateSprite(fileName, (float)mPosition.mPosX, (float)mPosition.mPosY, 0.7f);
+		mpSprBasic = gpEngine->CreateSprite(fileName, (float)mCurPosition.mPosX, (float)mCurPosition.mPosY, 0.7f);
 	}
 
 
 	// ACCESSORS
 	//---------------------------
-	inline SAABoundingBox GetBoundingBox()
-	{
-		return mBoundingBox;
-	}
-
 	inline bool GetMouseOver()
 	{
 		return mMouseIsOver;
@@ -179,12 +196,6 @@ private:
 	//---------------------------
 	ButtonMethod mTargetMethod;
 	C& mTargetClass;
-
-
-	// BUTTON POSITIONING
-	//---------------------------
-	SPointData mPosition;
-	SAABoundingBox mBoundingBox;
 
 
 	// BUTTON PROPERTIES
@@ -246,7 +257,7 @@ struct SStructureButtons
 	}
 
 	void Update()
-	{
+	{	
 		for (int i = 0; i < mNumButtons; i++)
 		{
 			if (mpButtons[i])
