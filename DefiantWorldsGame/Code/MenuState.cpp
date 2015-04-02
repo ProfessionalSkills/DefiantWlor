@@ -30,8 +30,7 @@ CMenuState::~CMenuState()
 void CMenuState::NewGame()
 {
 	// Set the menu state to new game
-	//mMenuState = MENU_NEW_GAME;
-	gCurState = GS_NEW_GAME;
+	mMenuState = MENU_NEW_GAME;
 
 	// Hide menu buttons
 	mpButtonList[0]->Hide();
@@ -307,7 +306,8 @@ void CMenuState::StateUpdate()
 		if (mpButtonList[3]->IsInPlace()) mpButtonFont->Draw("QUIT GAME", 1015, 575, kWhite, kCentre, kTop);
 		break;
 	case MENU_NEW_GAME:
-
+		if (mpButtonList[6]->IsInPlace()) mpButtonFont->Draw("START NEW GAME", 1015, 635, kWhite, kCentre, kTop);
+		if (mpButtonList[7]->IsInPlace()) mpButtonFont->Draw("CANCEL", 1015, 705, kWhite, kCentre, kTop);
 		break;
 	case MENU_LOAD:
 		// Update pause menu visuals
