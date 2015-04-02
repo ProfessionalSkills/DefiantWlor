@@ -94,6 +94,7 @@ public:
 	// METHODS
 	//---------------------------
 	void NewGame();
+	void StartNewGame();
 	void LoadGame();
 	void ChangeSettings();
 	void Quit();

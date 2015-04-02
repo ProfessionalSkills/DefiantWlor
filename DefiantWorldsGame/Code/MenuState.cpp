@@ -29,8 +29,36 @@ CMenuState::~CMenuState()
 //-----------------------------------------------------
 void CMenuState::NewGame()
 {
+	// Set the menu state to new game
+	mMenuState = MENU_NEW_GAME;
+
+	// Hide menu buttons
+	mpButtonList[0]->Hide();
+	mpButtonList[1]->Hide();
+	mpButtonList[2]->Hide();
+	mpButtonList[3]->Hide();
+
+	// Show the save related items
+	mpButtonList[6]->Show();
+	mpButtonList[7]->Show();
+}
+
+void CMenuState::StartNewGame()
+{
+	// Let the game manager know we are not loading a game from file
 	CStateControl::GetInstance()->GetSettingsManager()->SetIfLoadingGame(false);
-	gCurState = GS_NEW_GAME;
+
+	// Save the settings to the settings manager
+	CSettingsManager* pSettings = CStateControl::GetInstance()->GetSettingsManager();
+	//pSettings->SetAIDifficulty(mCurAIDifficulty);
+	//pSettings->SetStartingResources(mCurStartingResources);
+
+	// Unload any previous players & create new players
+	CPlayerManager* pPlayerManager = CStateControl::GetInstance()->GetPlayerManager();
+	pPlayerManager->RemovePlayers();
+
+	// Set new state
+	gCurState = GS_WORLD;
 }
 
 void CMenuState::LoadGame()
@@ -106,6 +134,8 @@ void CMenuState::OnChooseCancel()
 	// Hide the save related buttons
 	mpButtonList[4]->Hide();
 	mpButtonList[5]->Hide();
+	mpButtonList[6]->Hide();
+	mpButtonList[7]->Hide();
 
 	// Show the main menu items
 	mpButtonList[0]->Show();
@@ -198,6 +228,15 @@ void CMenuState::StateSetup()
 
 	pNewButton = new CAdvancedButton<CMenuState, void>("DefSmallButton.png", "SelSmallButton.png", SPointData(1035, 480),
 		SAABoundingBox(530.0f, 1135.0f, 480.0f, 1035.0f), *this, &CMenuState::OnChooseCancel, TR_LEFT, false);
+	mpButtonList.push_back(pNewButton);
+
+	// ID NUMBERS 6 & 7 linked to starting a new game
+	pNewButton = new CAdvancedButton<CMenuState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 620),
+		SAABoundingBox(670.0f, 1215.0f, 620.0f, 815.0f), *this, &CMenuState::StartNewGame, TR_LEFT, false);
+	mpButtonList.push_back(pNewButton);
+
+	pNewButton = new CAdvancedButton<CMenuState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 690),
+		SAABoundingBox(740.0f, 1215.0f, 690.0f, 815.0f), *this, &CMenuState::OnChooseCancel, TR_LEFT, false);
 	mpButtonList.push_back(pNewButton);
 }
 
