@@ -78,6 +78,9 @@ void CMenuState::Quit()
 
 void CMenuState::OnChooseLoadGame()
 {
+	// Set state back to main menu
+	mMenuState = MENU_LOAD;
+	
 	// Create a typebox
 	mpTypeBox = new CTypeBox(SPointData{ 770, 420 });
 
@@ -94,6 +97,9 @@ void CMenuState::OnChooseLoadGame()
 
 void CMenuState::OnChooseCancel()
 {
+	// Set state back to main menu
+	mMenuState = MENU_MAIN;
+
 	// Remove type box
 	SafeDelete(mpTypeBox);
 
@@ -162,11 +168,13 @@ void CMenuState::StateSetup()
 	// CREATE SPRITES, BUTTONS & FONTS
 	//------------------------------
 	mpButtonFont = gpEngine->LoadFont("font2.bmp", 15U);
+	mpIncDecFont = gpEngine->LoadFont("font2.bmp", 25U);
 
 	mpSprBackground = gpEngine->CreateSprite("MenuBG.png", 400.0f, 50.0f, 0.9f);
 	mpSprLogo = gpEngine->CreateSprite("Logo.png", 800.0f, 100.0f, 0.8f);
 	mpSprCursor = gpEngine->CreateSprite("BaseCursor.png", 5.0f, 50.0f, 0.0f);
 
+	// ID NUMBERS 0-3 are main menu items
 	CAdvancedButton<CMenuState, void>* pNewButton = new CAdvancedButton<CMenuState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 350),
 		SAABoundingBox(400.0f, 1215.0f, 350.0f, 815.0f), *this, &CMenuState::NewGame, TR_LEFT);
 	mpButtonList.push_back(pNewButton);
@@ -183,6 +191,7 @@ void CMenuState::StateSetup()
 		SAABoundingBox(610.0f, 1215.0f, 560.0f, 815.0f), *this, &CMenuState::Quit, TR_LEFT);
 	mpButtonList.push_back(pNewButton);
 
+	// ID NUMBERS 4 & 5 are linked to saving
 	pNewButton = new CAdvancedButton<CMenuState, void>("DefSmallButton.png", "SelSmallButton.png", SPointData(895, 480),
 		SAABoundingBox(530.0f, 995.0f, 480.0f, 895.0f), *this, &CMenuState::LoadGame, TR_LEFT, false);
 	mpButtonList.push_back(pNewButton);
@@ -227,17 +236,20 @@ void CMenuState::StateUpdate()
 
 	// UPDATE BUTTONS
 	//------------------------------
-	// The state of the type box determines whether the buttons have changed or not
-	if (mpTypeBox == nullptr)
+	// The state of the menu determines whether the buttons have changed or not
+	switch (mMenuState)
 	{
+	case MENU_MAIN:
 		// Only display the button text if the button is in position
 		if (mpButtonList[0]->IsInPlace()) mpButtonFont->Draw("NEW GAME", 1015, 365, kWhite, kCentre, kTop);
 		if (mpButtonList[1]->IsInPlace()) mpButtonFont->Draw("LOAD GAME", 1015, 435, kWhite, kCentre, kTop);
 		if (mpButtonList[2]->IsInPlace()) mpButtonFont->Draw("CHANGE SETTINGS", 1015, 505, kWhite, kCentre, kTop);
 		if (mpButtonList[3]->IsInPlace()) mpButtonFont->Draw("QUIT GAME", 1015, 575, kWhite, kCentre, kTop);
-	}
-	else
-	{
+		break;
+	case MENU_NEW_GAME:
+
+		break;
+	case MENU_LOAD:
 		// Update pause menu visuals
 		mpButtonFont->Draw("TYPE THE NAME OF THE FILE YOU WANT TO LOAD BELOW:", 780, 400, kWhite, kLeft, kTop);
 		if (mpButtonList[4]->IsInPlace()) mpButtonFont->Draw("LOAD", 945, 495, kWhite, kCentre, kTop);
@@ -245,6 +257,7 @@ void CMenuState::StateUpdate()
 
 		// Update the type box
 		mpTypeBox->Update();
+		break;
 	}
 
 	mMousePos.x = (float)gpEngine->GetMouseX();

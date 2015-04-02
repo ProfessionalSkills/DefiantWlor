@@ -17,6 +17,15 @@
 
 
 //-----------------------------------------------------
+// MAIN MENU STATE ENUMERATIONS
+//-----------------------------------------------------
+enum EMenuState
+{
+	MENU_MAIN, MENU_NEW_GAME, MENU_LOAD, MENU_SETTINGS
+};
+
+
+//-----------------------------------------------------
 // MENU STATE CLASS
 //-----------------------------------------------------
 class CMenuState : public CGameState
@@ -55,11 +64,14 @@ private:
 
 	// FONTS
 	//--------------------------- 
-	IFont* mpButtonFont;
+	IFont* mpButtonFont = nullptr;
+	IFont* mpIncDecFont = nullptr;
 
 
 	// ADDITIONAL VARIABLES
 	//--------------------------- 
+	EMenuState mMenuState = MENU_MAIN;		// The current state which the menu is in
+
 	DX::XMFLOAT2 mMousePos;			// Position of mouse on screen
 
 	DX::XMFLOAT3 mOrbitCentre;		// The position in which the planets orbit
