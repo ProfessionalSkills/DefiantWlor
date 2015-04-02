@@ -43,6 +43,27 @@ void CMenuState::NewGame()
 	// Show the save related items
 	mpButtonList[6]->Show();
 	mpButtonList[7]->Show();
+
+	// Show AI Buttons
+	for (miterIntButtons = mpAIDButtonList.begin(); miterIntButtons != mpAIDButtonList.end(); miterIntButtons++)
+	{
+		(*miterIntButtons)->Show();
+	}
+
+	// Show resource buttons
+	for (miterIntButtons = mpStartingResButtonList.begin(); miterIntButtons != mpStartingResButtonList.end(); miterIntButtons++)
+	{
+		(*miterIntButtons)->Show();
+	}
+
+	// Highlight already selected AI
+	CSettingsManager* pSettings = CStateControl::GetInstance()->GetSettingsManager();
+	mCurAIDifficulty = pSettings->GetAIDifficulty();
+	mpAIDButtonList[mCurAIDifficulty]->SetNewButtonSkin("ChoSmallButton.png");
+
+	// Highlight already selected starting resources
+	mCurStartingResources = pSettings->GetStartingResourcesIndex();
+	mpStartingResButtonList[mCurStartingResources]->SetNewButtonSkin("ChoSmallButton.png");
 }
 
 void CMenuState::StartNewGame()
@@ -141,6 +162,18 @@ void CMenuState::OnChooseCancel()
 
 	mpSprLogo->SetZ(0.8f);
 
+	// Hide AI Buttons
+	for (miterIntButtons = mpAIDButtonList.begin(); miterIntButtons != mpAIDButtonList.end(); miterIntButtons++)
+	{
+		(*miterIntButtons)->Hide();
+	}
+
+	// Hide resource buttons
+	for (miterIntButtons = mpStartingResButtonList.begin(); miterIntButtons != mpStartingResButtonList.end(); miterIntButtons++)
+	{
+		(*miterIntButtons)->Hide();
+	}
+
 	// Show the main menu items
 	mpButtonList[0]->Show();
 	mpButtonList[1]->Show();
@@ -151,21 +184,21 @@ void CMenuState::OnChooseCancel()
 void CMenuState::SetAIDifficulty(int difficulty)
 {
 	// Take the current AI difficulty button and reset its texture
-	//mpAIDButtonList[mCurAIDifficulty]->SetNewButtonSkin("DefSmallButton.png");
+	mpAIDButtonList[mCurAIDifficulty]->SetNewButtonSkin("DefSmallButton.png");
 
 	// Store new difficulty and update that button's texture
 	mCurAIDifficulty = difficulty;
-	//mpAIDButtonList[mCurAIDifficulty]->SetNewButtonSkin("ChoSmallButton.png");
+	mpAIDButtonList[mCurAIDifficulty]->SetNewButtonSkin("ChoSmallButton.png");
 }
 
 void CMenuState::SetStartingResources(int amount)
 {
 	// Take the current AI difficulty button and reset its texture
-	//mpStartingResButtonList[mCurStartingResources]->SetNewButtonSkin("DefSmallButton.png");
+	mpStartingResButtonList[mCurStartingResources]->SetNewButtonSkin("DefSmallButton.png");
 
 	// Store new difficulty and update that button's texture
 	mCurStartingResources = amount;
-	//mpStartingResButtonList[mCurStartingResources]->SetNewButtonSkin("ChoSmallButton.png");
+	mpStartingResButtonList[mCurStartingResources]->SetNewButtonSkin("ChoSmallButton.png");
 }
 
 
@@ -176,6 +209,8 @@ void CMenuState::StateSetup()
 {
 	// INITIALISE ADDITIONAL VARIABLES
 	//------------------------------
+	mMenuState = MENU_MAIN;
+
 	mOrbitCentre = DX::XMFLOAT3(-60.0f, 0.0f, 50.0f);
 
 	mEarthDistance = 35.0f;
@@ -263,6 +298,37 @@ void CMenuState::StateSetup()
 	pNewButton = new CAdvancedButton<CMenuState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 690),
 		SAABoundingBox(740.0f, 1215.0f, 690.0f, 815.0f), *this, &CMenuState::OnChooseCancel, TR_LEFT, false);
 	mpButtonList.push_back(pNewButton);
+
+
+	// AI Difficulty buttons
+	CAdvancedButton<CMenuState, void, int>* pNewIntButton = new CAdvancedButton<CMenuState, void, int>("DefSmallButton.png", "SelSmallButton.png", SPointData(755, 220),
+		SAABoundingBox(270.0f, 855.0f, 220.0f, 755.0f), *this, &CMenuState::SetAIDifficulty, TR_LEFT, false);
+	mpAIDButtonList.push_back(pNewIntButton);
+
+	pNewIntButton = new CAdvancedButton<CMenuState, void, int>("DefSmallButton.png", "SelSmallButton.png", SPointData(895, 220),
+		SAABoundingBox(270.0f, 995.0f, 220.0f, 895.0f), *this, &CMenuState::SetAIDifficulty, TR_LEFT, false);
+	mpAIDButtonList.push_back(pNewIntButton);
+
+	pNewIntButton = new CAdvancedButton<CMenuState, void, int>("DefSmallButton.png", "SelSmallButton.png", SPointData(1035, 220),
+		SAABoundingBox(270.0f, 1135.0f, 220.0f, 1035.0f), *this, &CMenuState::SetAIDifficulty, TR_LEFT, false);
+	mpAIDButtonList.push_back(pNewIntButton);
+
+	pNewIntButton = new CAdvancedButton<CMenuState, void, int>("DefSmallButton.png", "SelSmallButton.png", SPointData(1175, 220),
+		SAABoundingBox(270.0f, 1275.0f, 220.0f, 1175.0f), *this, &CMenuState::SetAIDifficulty, TR_LEFT, false);
+	mpAIDButtonList.push_back(pNewIntButton);
+
+	// Starting resources buttons
+	pNewIntButton = new CAdvancedButton<CMenuState, void, int>("DefSmallButton.png", "SelSmallButton.png", SPointData(825, 340),
+		SAABoundingBox(390.0f, 925.0f, 340.0f, 825.0f), *this, &CMenuState::SetStartingResources, TR_LEFT, false);
+	mpStartingResButtonList.push_back(pNewIntButton);
+
+	pNewIntButton = new CAdvancedButton<CMenuState, void, int>("DefSmallButton.png", "SelSmallButton.png", SPointData(965, 340),
+		SAABoundingBox(390.0f, 1065.0f, 340.0f, 965.0f), *this, &CMenuState::SetStartingResources, TR_LEFT, false);
+	mpStartingResButtonList.push_back(pNewIntButton);
+
+	pNewIntButton = new CAdvancedButton<CMenuState, void, int>("DefSmallButton.png", "SelSmallButton.png", SPointData(1105, 340),
+		SAABoundingBox(390.0f, 1205.0f, 340.0f, 1105.0f), *this, &CMenuState::SetStartingResources, TR_LEFT, false);
+	mpStartingResButtonList.push_back(pNewIntButton);
 }
 
 void CMenuState::StateUpdate()
@@ -315,10 +381,24 @@ void CMenuState::StateUpdate()
 		if (mpButtonList[6]->IsInPlace()) mpButtonFont->Draw("START NEW GAME", 1015, 635, kWhite, kCentre, kTop);
 		if (mpButtonList[7]->IsInPlace()) mpButtonFont->Draw("CANCEL", 1015, 705, kWhite, kCentre, kTop);
 
-		mpIncDecFont->Draw("AI DIFFICULTY", 1015, 180, kWhite, kCentre, kTop);
-		mpIncDecFont->Draw("STARTING RESOURCES", 1015, 300, kWhite, kCentre, kTop);
-
 		mpTitleFont->Draw("NEW GAME OPTIONS", 1015, 90, kCyan, kCentre, kTop);
+
+		if (mpAIDButtonList[0]->IsInPlace())
+		{
+			mpIncDecFont->Draw("AI DIFFICULTY", 1015, 180, kWhite, kCentre, kTop);
+			mpButtonFont->Draw("EASY", 805, 235, kWhite, kCentre, kTop);
+			mpButtonFont->Draw("MEDIUM", 945, 235, kWhite, kCentre, kTop);
+			mpButtonFont->Draw("HARD", 1085, 235, kWhite, kCentre, kTop);
+			mpButtonFont->Draw("INSANE", 1225, 235, kWhite, kCentre, kTop);
+		}
+
+		if (mpStartingResButtonList[0]->IsInPlace())
+		{
+			mpIncDecFont->Draw("STARTING RESOURCES", 1015, 300, kWhite, kCentre, kTop);
+			mpButtonFont->Draw("MINIMAL", 875, 355, kWhite, kCentre, kTop);
+			mpButtonFont->Draw("ENOUGH", 1015, 355, kWhite, kCentre, kTop);
+			mpButtonFont->Draw("PLENTIFUL", 1155, 355, kWhite, kCentre, kTop);
+		}
 		break;
 	case MENU_LOAD:
 		// Update pause menu visuals
@@ -329,6 +409,12 @@ void CMenuState::StateUpdate()
 		// Update the type box
 		mpTypeBox->Update();
 		break;
+	}
+
+	bool leftClicked = false;
+	if (gpEngine->KeyHit(Mouse_LButton))
+	{
+		leftClicked = true;
 	}
 
 	mMousePos.x = (float)gpEngine->GetMouseX();
@@ -350,10 +436,11 @@ void CMenuState::StateUpdate()
 		if (pButton->GetMouseOver())
 		{
 			// Check if the mouse is over the button
-			if (gpEngine->KeyHit(Mouse_LButton))
+			if (leftClicked)
 			{
 				// Raise click flag
 				pButton->Execute();
+				leftClicked = false;
 				// Remove self from for loop
 				break;
 			}
@@ -361,6 +448,66 @@ void CMenuState::StateUpdate()
 
 		// Update the button
 		pButton->Update();
+	}
+
+	int counter = 0;
+	for (miterIntButtons = mpAIDButtonList.begin(); miterIntButtons != mpAIDButtonList.end(); miterIntButtons++)
+	{
+		CAdvancedButton<CMenuState, void, int>* pButton = (*miterIntButtons);
+		// Check if the mouse is colliding with the object
+		if (pButton->GetBoundingBox().IsColliding(DX::XMFLOAT3(mMousePos.x, 0.0f, mMousePos.y)))
+		{
+			pButton->SetMouseOver(true);
+		}
+		else
+		{
+			pButton->SetMouseOver(false);
+		}
+
+		// Check for click 
+		if (pButton->GetMouseOver())
+		{
+			// Check if the mouse is over the button
+			if (leftClicked)
+			{
+				// Raise click flag
+				pButton->Execute(counter);
+			}
+		}
+
+		// Update the button
+		pButton->Update();
+		counter++;
+	}
+
+	counter = 0;
+	for (miterIntButtons = mpStartingResButtonList.begin(); miterIntButtons != mpStartingResButtonList.end(); miterIntButtons++)
+	{
+		CAdvancedButton<CMenuState, void, int>* pButton = (*miterIntButtons);
+		// Check if the mouse is colliding with the object
+		if (pButton->GetBoundingBox().IsColliding(DX::XMFLOAT3(mMousePos.x, 0.0f, mMousePos.y)))
+		{
+			pButton->SetMouseOver(true);
+		}
+		else
+		{
+			pButton->SetMouseOver(false);
+		}
+
+		// Check for click 
+		if (pButton->GetMouseOver())
+		{
+			// Check if the mouse is over the button
+			if (leftClicked)
+			{
+				// Raise click flag
+				pButton->Execute(counter);
+			}
+		}
+
+		// Update the button
+		pButton->Update();
+		counter++;
 	}
 
 
@@ -384,12 +531,42 @@ void CMenuState::StateCleanup()
 	gpEngine->RemoveSprite(mpSprLogo);
 	gpEngine->RemoveSprite(mpSprCursor);
 
+	gpEngine->RemoveFont(mpButtonFont);
+	gpEngine->RemoveFont(mpTitleFont);
+	gpEngine->RemoveFont(mpIncDecFont);
+
 	// Remove buttons
 	while (!mpButtonList.empty())
 	{
 		CAdvancedButton<CMenuState, void>* tmp = mpButtonList.back();
 		SafeDelete(tmp);
 		mpButtonList.pop_back();
+	}
+
+	while (!mpStartingResButtonList.empty())
+	{
+		CAdvancedButton<CMenuState, void, int>* tmp;
+		tmp = mpStartingResButtonList.back();
+		if (tmp)
+		{
+			delete tmp;
+			tmp = nullptr;
+		}
+
+		mpStartingResButtonList.pop_back();
+	}
+
+	while (!mpAIDButtonList.empty())
+	{
+		CAdvancedButton<CMenuState, void, int>* tmp;
+		tmp = mpAIDButtonList.back();
+		if (tmp)
+		{
+			delete tmp;
+			tmp = nullptr;
+		}
+
+		mpAIDButtonList.pop_back();
 	}
 
 	SafeDelete(mpTypeBox);
