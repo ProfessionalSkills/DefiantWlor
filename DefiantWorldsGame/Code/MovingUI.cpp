@@ -26,8 +26,9 @@ CMovingUI::CMovingUI(SPointData destination, SAABoundingBox boundingBox, ETransi
 		// Object is transitioning in from the right of the screen - x is different y is the same
 		mStartPosition.mPosX = 1600;
 		mStartPosition.mPosY = destination.mPosY;
-		// Calculate the transitioning speed (s = d/t)
-		mTransitionSpeed = ((float)(mStartPosition.mPosX - destination.mPosX)) / transitionTime;
+		
+		mTransitionTime = transitionTime;
+		mTransitionDistance = (float)(mStartPosition.mPosX - destination.mPosX);
 		break;
 	case TR_RIGHT:
 		{
@@ -86,25 +87,34 @@ void CMovingUI::UpdateTransition()
 		{
 			// With transition type left, the item will be coming in from the right - a negative x direction
 			// Check to see if it has overtaken the destination
-			if (mCurPosition.x <= mDestination.mPosX)
+			if (mTimer >= mTransitionTime)
 			{
 				// Destination reached - no longer transitioning
 				mCurPosition.x = (float)mDestination.mPosX;
 				mCurPosition.y = (float)mDestination.mPosY;
 				mToTransitionIn = false;
 				mIsAtDestination = true;
+
+				// Reset timer
+				mTimer = 0.0f;
 			}
 			else
 			{
-				// Not yet where it should be positioned - move it closer
-				mCurPosition.x -= mTransitionSpeed * gFrameTime;
+				// Increment timer
+				mTimer += gFrameTime;
+
+				// Use the timer to calculate percentage
+				float percentage = mTimer / mTransitionTime;
+
+				// Use percentage to determine new position based on distance to travel and starting position
+				mCurPosition.x = (float)mStartPosition.mPosX - (percentage * mTransitionDistance);
 			}
 		}
 		else if (mToTransitionOut)
 		{
 			// Transition out to the right - positive x
 			// Check to see if it has overtaken the destination
-			if (mCurPosition.x >= mStartPosition.mPosX)
+			if (mTimer >= mTransitionTime)
 			{
 				// Destination reached - no longer transitioning
 				mCurPosition.x = (float)mStartPosition.mPosX;
@@ -112,11 +122,20 @@ void CMovingUI::UpdateTransition()
 				mToTransitionOut = false;
 				mIsAtDestination = false;
 				mIsOffScreen = true;
+
+				// reset timer
+				mTimer = 0.0f;
 			}
 			else
 			{
-				// Not yet where it should be positioned - move it closer
-				mCurPosition.x += mTransitionSpeed * gFrameTime;
+				// Increment timer
+				mTimer += gFrameTime;
+
+				// Use the timer to calculate percentage
+				float percentage = mTimer / mTransitionTime;
+
+				// Use percentage to determine new position based on distance to travel and starting position
+				mCurPosition.x = (float)mDestination.mPosX + (percentage * mTransitionDistance);
 			}
 		}
 		break;

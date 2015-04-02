@@ -59,7 +59,9 @@ protected:
 	DX::XMFLOAT2 mCurPosition;
 	SPointData mDestination;
 	ETransitionTypes mTransitionType;
-	float mTransitionSpeed;
+	float mTransitionTime;
+	float mTransitionDistance;
+	float mTimer = 0.0f;
 	SAABoundingBox mBoundingBox;
 
 	// Determines what the destination is
