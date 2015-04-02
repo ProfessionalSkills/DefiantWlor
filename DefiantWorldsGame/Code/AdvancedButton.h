@@ -69,10 +69,17 @@ public:
 		{
 			// This is a moving user interface element - call the parent function first to update its position
 			UpdateTransition();
-			mpSprBasic->SetX((float)mCurPosition.mPosX);
-			mpSprBasic->SetY((float)mCurPosition.mPosY);
-			mpSprMO->SetX((float)mCurPosition.mPosX);
-			mpSprMO->SetY((float)mCurPosition.mPosY);
+			// If sprite exists
+			if (mpSprBasic)
+			{
+				mpSprBasic->SetX((float)mCurPosition.mPosX);
+				mpSprBasic->SetY((float)mCurPosition.mPosY);
+			}
+			if (mpSprMO)
+			{
+				mpSprMO->SetX((float)mCurPosition.mPosX);
+				mpSprMO->SetY((float)mCurPosition.mPosY);
+			}
 		}
 		
 		// Check if the button is hovered over
@@ -95,8 +102,13 @@ public:
 		if (mIsHidden && mpSprBasic)
 		{
 			mIsHidden = false;
-			//mpSprBasic->SetZ(0.75f);
-			//mpSprMO->SetZ(-1.0f);
+
+			// If not using transitioning, show the buttons
+			if (mTransitionType == TR_NONE)
+			{
+				mpSprBasic->SetZ(0.75f);
+				mpSprMO->SetZ(-1.0f);
+			}
 
 			// Set to transition in
 			mToTransitionIn = true;
@@ -112,8 +124,13 @@ public:
 		{
 			// Raise hidden flag
 			mIsHidden = true;
-			//mpSprBasic->SetZ(-1.0f);
-			//mpSprMO->SetZ(-1.0f);
+			
+			// If not using transitioning, hide the buttons
+			if (mTransitionType == TR_NONE)
+			{
+				mpSprBasic->SetZ(-1.0f);
+				mpSprMO->SetZ(-1.0f);
+			}
 
 			// Set to transition out
 			mToTransitionOut = true;
