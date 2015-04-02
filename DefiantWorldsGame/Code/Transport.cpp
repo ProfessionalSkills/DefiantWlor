@@ -24,6 +24,8 @@ CTransport::CTransport()
 	mHitChance = 0.4f;
 	mFleetPosition = centre;
 	mPopCost = 1;	
+	mUnitCapacity = 5;
+	mNumUnitsHeld = 0;
 
 	//Production Values
 	mProductionTime = 15.5f;
@@ -184,4 +186,9 @@ void CTransport::LoadAgent(std::ifstream& inFile)
 	{
 
 	}
+}
+
+bool CTransport::StoreUnits(CGameAgent* unit)
+{
+	return AddUnit(unit);
 }

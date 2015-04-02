@@ -53,6 +53,8 @@ public:
 	void UnloadFlash();
 	float GetUnitSpacing();
 	void MoveY(float yChange);
+	bool StoreUnits(CGameAgent* unit);
+
 private:
 	bool Destroy();
 };

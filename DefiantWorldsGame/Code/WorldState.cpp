@@ -443,6 +443,10 @@ void CWorldState::CheckKeyPresses()
 		mpAIPlayer->AddShips();
 	}
 
+	if (gpEngine->KeyHit(Key_K))
+	{
+		//mpHumanPlayer->GetFleet()->ManFleet(mpHumanPlayer->GetWorldUnitList());
+	}
 
 	mRMouseClicked = false;
 }

@@ -295,6 +295,18 @@ void CFleet::SetEnemy(CFleet* myEnemy)
 	mpEnemyFleet = myEnemy;
 }
 
+void CFleet::ManFleet(vector <CGameAgent*> &UnitsToLoad)
+{
+	for (int i = 0; i < mpFleet.size(); i++)
+	{
+		CSpaceUnit* mpTemp = (CSpaceUnit*)(mpFleet[i]);
+		for (int j = 0; j < UnitsToLoad.size(); j++)
+		{
+			if (!mpTemp->StoreUnits(UnitsToLoad[j])) break;
+		}
+	}
+}
+
 vector <CGameAgent*>* CFleet::LaunchFleet(vector <CGameAgent*>* possibleShips)
 {
 	//temporary functionthat just transfers all of the ships from player onto fleet

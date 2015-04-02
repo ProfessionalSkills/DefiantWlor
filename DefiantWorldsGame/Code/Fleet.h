@@ -108,5 +108,6 @@ public:
 	vector <CGameAgent*>* LaunchFleet(vector <CGameAgent*>* possibleShips);//gets ships a player has, then adds a number of them to the fleet to attack
 	void ReturnFleet(CRTSPlayer* Player);
 	void SetTactic(Tactics tactics);
+	void ManFleet(vector <CGameAgent*> &UnitsToLoad);
 };
 

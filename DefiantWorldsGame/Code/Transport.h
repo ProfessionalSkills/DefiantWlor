@@ -55,7 +55,9 @@ public:
 		{
 			mNumUnitsHeld++;
 			mpSpaceUnitsList.push_back(newUnit);
+			return true;
 		}
+		return false;
 	}
 
 	inline std::vector < CGameAgent* > ReturnUnitList()
@@ -79,6 +81,7 @@ public:
 	void UnloadFlash();
 	float GetUnitSpacing();
 	void MoveY(float yChange);
+	bool StoreUnits(CGameAgent* unit);
 
 	// Save the data for this unit
 	void SaveAgent(std::ofstream& outFile) override;

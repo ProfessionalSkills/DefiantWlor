@@ -79,6 +79,12 @@ void CSpaceFighter::LoadModel(float x,float y, float z)
 	mpObjModel->Scale(mScale);
 }
 
+bool CSpaceFighter::StoreUnits(CGameAgent* unit)
+{
+	return false;
+}
+
+
 void CSpaceFighter::UnloadIModel()
 {
 	if (mpObjModel != 0)

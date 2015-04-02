@@ -100,6 +100,11 @@ float CMothership::GetUnitSpacing()
 	return mUnitSpacing;
 }
 
+bool CMothership::StoreUnits(CGameAgent* unit)
+{
+	return false;
+}
+
 void CMothership::LoadModel(float x, float y, float z)
 {
 	mpObjModel = mspMshMothership->CreateModel(x, y, z);
