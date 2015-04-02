@@ -34,6 +34,9 @@ protected:
 	bool mChargingLazers;
 	bool mCharged;
 	bool mFiredLazer;
+	CSound* mSoundExplosion;	
+	string  mSoundFileLazer;
+	string mSoundFileExplosion;
 
 public:
 	// CONSTRUCTORS & DESTRUCTOR
@@ -52,7 +55,10 @@ public:
 
 	// METHODS
 	//---------------------------
-
+	inline void Explode()
+	{
+		if (mSoundExplosion) mSoundExplosion->PlaySound();
+	}
 	// OVERRIDE METHODS
 	//---------------------------
 	virtual bool Attack(CGameObject* target,float hitMod, float damageMod);

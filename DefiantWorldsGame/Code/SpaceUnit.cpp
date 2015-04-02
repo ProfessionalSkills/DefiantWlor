@@ -23,6 +23,10 @@ CSpaceUnit::CSpaceUnit() :mChargeTimeMax(3.0f), mChargeTimeMin(1.0f)
 	mCharged = false;
 	mChargeTime = mChargeTimeMax;
 	mGenSound = nullptr;
+	mSoundFileLazer = "shoot.wav";
+	mSoundFileExplosion = "Spaceship_Explosion";
+	mSoundExplosion = nullptr;
+	mGenSound = nullptr;
 }
 
 CSpaceUnit::~CSpaceUnit()

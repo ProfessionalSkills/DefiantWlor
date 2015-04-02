@@ -119,7 +119,6 @@ void CSpaceState::StateUpdate()
 {
 	// Draw the scene
 	gpEngine->DrawScene();
-
 	if (gpEngine->KeyHit(Key_R))
 	{
 		gCurState = GS_WORLD;
@@ -132,7 +131,7 @@ void CSpaceState::StateUpdate()
 
 	if (gpEngine->KeyHit(Key_Escape))
 	{
-		gCurState = GS_MAIN_MENU;
+		gCurState = GS_WORLD;
 	}
 
 	if (gpEngine->KeyHit(Key_C))

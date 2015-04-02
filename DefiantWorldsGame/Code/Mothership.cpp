@@ -7,6 +7,8 @@
 // INCLUDES
 //-----------------------------------------------------
 #include "Mothership.h"
+#include "GameStateControl.h"
+
 IMesh* CMothership::mspMshMothership = nullptr;
 IMesh* CMothership::mspMshSheild = nullptr;
 //-----------------------------------------------------
@@ -104,6 +106,18 @@ void CMothership::LoadModel(float x, float y, float z)
 	mWorldPos.x = x;
 	mWorldPos.y = y;
 	mWorldPos.z = z;
+
+	DX::XMFLOAT3 mSourcePos = { mWorldPos.x, mWorldPos.y, mWorldPos.z };
+	DX::XMFLOAT3 mSourceVel = { 0.0F, 0.0f, 0.0f };
+	DX::XMFLOAT3 listenerPos = { 0.0f, 0.0f, -150.0f };
+	DX::XMFLOAT3 listenerVel = { 0.0f, 0.0f, 0.0f };
+	if (mWorldPos.x<0.0f)  mSourceVel.x = { 100.0f };
+	else  mSourceVel.x = { -100.0f };
+	float volume = CStateControl::GetInstance()->GetSettingsManager()->GetEffectsVolume();		// MAKE SURE TO INCLUDE GameStateControl in the
+
+	// .cpp file ONLY otherwise you'll get cyclic redundancy
+	mGenSound = new CSound(mSoundFileLazer, mSourcePos, mSourceVel, false, volume, listenerPos, listenerVel);
+	mSoundExplosion = new CSound(mSoundFileExplosion, mSourcePos, mSourceVel, false, volume, listenerPos, listenerVel);
 	mpObjModel->RotateX(-35.0f);
 	mpObjModel->Scale(mScale);
 }
