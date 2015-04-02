@@ -30,7 +30,8 @@ CMenuState::~CMenuState()
 void CMenuState::NewGame()
 {
 	// Set the menu state to new game
-	mMenuState = MENU_NEW_GAME;
+	//mMenuState = MENU_NEW_GAME;
+	gCurState = GS_NEW_GAME;
 
 	// Hide menu buttons
 	mpButtonList[0]->Hide();
@@ -50,8 +51,8 @@ void CMenuState::StartNewGame()
 
 	// Save the settings to the settings manager
 	CSettingsManager* pSettings = CStateControl::GetInstance()->GetSettingsManager();
-	//pSettings->SetAIDifficulty(mCurAIDifficulty);
-	//pSettings->SetStartingResources(mCurStartingResources);
+	pSettings->SetAIDifficulty(mCurAIDifficulty);
+	pSettings->SetStartingResources(mCurStartingResources);
 
 	// Unload any previous players & create new players
 	CPlayerManager* pPlayerManager = CStateControl::GetInstance()->GetPlayerManager();
@@ -142,6 +143,26 @@ void CMenuState::OnChooseCancel()
 	mpButtonList[1]->Show();
 	mpButtonList[2]->Show();
 	mpButtonList[3]->Show();
+}
+
+void CMenuState::SetAIDifficulty(int difficulty)
+{
+	// Take the current AI difficulty button and reset its texture
+	//mpAIDButtonList[mCurAIDifficulty]->SetNewButtonSkin("DefSmallButton.png");
+
+	// Store new difficulty and update that button's texture
+	mCurAIDifficulty = difficulty;
+	//mpAIDButtonList[mCurAIDifficulty]->SetNewButtonSkin("ChoSmallButton.png");
+}
+
+void CMenuState::SetStartingResources(int amount)
+{
+	// Take the current AI difficulty button and reset its texture
+	//mpStartingResButtonList[mCurStartingResources]->SetNewButtonSkin("DefSmallButton.png");
+
+	// Store new difficulty and update that button's texture
+	mCurStartingResources = amount;
+	//mpStartingResButtonList[mCurStartingResources]->SetNewButtonSkin("ChoSmallButton.png");
 }
 
 

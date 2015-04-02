@@ -68,6 +68,13 @@ private:
 	IFont* mpIncDecFont = nullptr;
 
 
+	// TEMPORARY SETTINGS VARIABLES
+	//--------------------------- 
+	int mCurAIDifficulty = 0;			// Current index for AI difficulty
+	int mCurStartingResources = 0;		// Current index for Starting Resources
+	std::stringstream mStrStream;
+
+
 	// ADDITIONAL VARIABLES
 	//--------------------------- 
 	EMenuState mMenuState = MENU_MAIN;		// The current state which the menu is in
@@ -99,6 +106,8 @@ public:
 	void ChangeSettings();
 	void Quit();
 
+	void SetAIDifficulty(int difficulty);
+	void SetStartingResources(int amount);
 	void OnChooseLoadGame();
 	void OnChooseCancel();
 
