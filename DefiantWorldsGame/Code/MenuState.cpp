@@ -616,6 +616,35 @@ void CMenuState::StateUpdate()
 		counter++;
 	}
 
+	// CHECK FOR SLIDER MOUSE OVER AND CLICKS
+	if (mpMusicSlider->GetBoundingBox().IsColliding(DX::XMFLOAT3(mMousePos.x, 0.0f, mMousePos.y)))
+	{
+		mpMusicSlider->SetMouseOver(true);
+		if (leftClicked)
+		{
+			mpMusicSlider->OnClick(mMousePos.x);
+			leftClicked = false;
+		}
+	}
+	else
+	{
+		mpMusicSlider->SetMouseOver(false);
+	}
+
+	if (mpEffectsSlider->GetBoundingBox().IsColliding(DX::XMFLOAT3(mMousePos.x, 0.0f, mMousePos.y)))
+	{
+		mpEffectsSlider->SetMouseOver(true);
+		if (leftClicked)
+		{
+			mpEffectsSlider->OnClick(mMousePos.x);
+			leftClicked = false;
+		}
+	}
+	else
+	{
+		mpEffectsSlider->SetMouseOver(false);
+	}
+
 
 	// UPDATE MISC UI ELEMENTS
 	//------------------------------
@@ -683,4 +712,6 @@ void CMenuState::StateCleanup()
 	}
 
 	SafeDelete(mpTypeBox);
+	SafeDelete(mpMusicSlider);
+	SafeDelete(mpEffectsSlider);
 }

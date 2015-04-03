@@ -264,9 +264,6 @@
     <ClCompile Include="BestFirst.cpp">
       <Filter>Pathfinding</Filter>
     </ClCompile>
-    <ClCompile Include="SettingsScreenState.cpp">
-      <Filter>Game States\Child State Classes</Filter>
-    </ClCompile>
     <ClCompile Include="Wall.cpp">
       <Filter>Entities\Game Objects\Child\Structure\Child\Static\Child</Filter>
     </ClCompile>
@@ -421,9 +418,6 @@
     </ClInclude>
     <ClInclude Include="BestFirst.h">
       <Filter>Pathfinding</Filter>
-    </ClInclude>
-    <ClInclude Include="SettingsScreenState.h">
-      <Filter>Game States\Child State Classes</Filter>
     </ClInclude>
     <ClInclude Include="Wall.h">
       <Filter>Entities\Game Objects\Child\Structure\Child\Static\Child</Filter>

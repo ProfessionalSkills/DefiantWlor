@@ -21,7 +21,6 @@ CStateControl::CStateControl(EGameStates inStartState)
 	mpMenuState = new CMenuState();
 	mpSpaceState = new CSpaceState();
 	mpWorldState = new CWorldState();
-	mpSettingsState = new CSettingsScreenState();
 
 	// Initialise player manager
 	mpPlayerManager = new CPlayerManager();
@@ -56,10 +55,6 @@ CStateControl::CStateControl(EGameStates inStartState)
 		case GS_WORLD:
 			mpCurGameState = mpWorldState;
 			break;
-		case GS_SETTINGS:
-			mpCurGameState = mpSettingsState;
-			mMusic->PlaySound();
-			break;
 	}
 
 	// Setup scene
@@ -73,7 +68,6 @@ CStateControl::~CStateControl()
 	SafeDelete(mpMenuState);
 	SafeDelete(mpSpaceState);
 	SafeDelete(mpWorldState);
-	SafeDelete(mpSettingsState);
 }
 
 
@@ -99,10 +93,6 @@ void CStateControl::SetCurrentState(EGameStates inNewState)
 	case GS_WORLD:
 		mpCurGameState = mpWorldState;
 		mMusic->StopSound();
-		break;
-	case GS_SETTINGS:
-		mpCurGameState = mpSettingsState;
-		mMusic->PlaySound();
 		break;
 	}
 

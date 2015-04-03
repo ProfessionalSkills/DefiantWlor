@@ -27,7 +27,7 @@
 //-----------------------------------------------------
 enum EGameStates
 {
-	GS_MAIN_MENU, GS_WORLD, GS_SPACE, GS_SETTINGS
+	GS_MAIN_MENU, GS_WORLD, GS_SPACE
 };
 
 enum EMouseStates
