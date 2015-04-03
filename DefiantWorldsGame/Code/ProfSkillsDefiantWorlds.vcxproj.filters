@@ -279,9 +279,6 @@
     <ClCompile Include="SliderTool.cpp">
       <Filter>Utilities\User Interface</Filter>
     </ClCompile>
-    <ClCompile Include="NewGameState.cpp">
-      <Filter>Game States\Child State Classes</Filter>
-    </ClCompile>
     <ClCompile Include="PlayerManager.cpp">
       <Filter>Managers</Filter>
     </ClCompile>
@@ -442,9 +439,6 @@
     </ClInclude>
     <ClInclude Include="SliderTool.h">
       <Filter>Utilities\User Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="NewGameState.h">
-      <Filter>Game States\Child State Classes</Filter>
     </ClInclude>
     <ClInclude Include="PlayerManager.h">
       <Filter>Managers</Filter>
