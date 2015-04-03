@@ -119,7 +119,30 @@ void CMenuState::LoadGame()
 
 void CMenuState::ChangeSettings()
 {
-	gCurState = GS_SETTINGS;
+	// Change the state of the main menu
+	mMenuState = MENU_SETTINGS;
+
+	// Set the sliders to the previously saved values
+	CSettingsManager* pSettings = CStateControl::GetInstance()->GetSettingsManager();
+	mpMusicSlider->SetSliderSetting((int)(pSettings->GetMusicVolume() * 50));
+	mpEffectsSlider->SetSliderSetting((int)(pSettings->GetEffectsVolume() * 50));
+
+	// Show the sliders
+	//mpMusicSlider->Show();
+	//mpEffectsSlider->Show();
+
+	// Hide the logo
+	mpSprLogo->SetZ(-1.0f);
+
+	// Hide the main menu buttons
+	mpButtonList[0]->Hide();
+	mpButtonList[1]->Hide();
+	mpButtonList[2]->Hide();
+	mpButtonList[3]->Hide();
+
+	// Show the save settings buttons
+	mpButtonList[8]->Show();
+	mpButtonList[7]->Show();
 }
 
 void CMenuState::Quit()
@@ -154,11 +177,16 @@ void CMenuState::OnChooseCancel()
 	// Hide type box
 	mpTypeBox->Hide();
 
+	// Hide sliders
+	//mpMusicSlider->Hide();
+	//mpEffectsSlider->Hide();
+
 	// Hide the save related buttons
 	mpButtonList[4]->Hide();
 	mpButtonList[5]->Hide();
 	mpButtonList[6]->Hide();
 	mpButtonList[7]->Hide();
+	mpButtonList[8]->Hide();
 
 	mpSprLogo->SetZ(0.8f);
 
@@ -199,6 +227,37 @@ void CMenuState::SetStartingResources(int amount)
 	// Store new difficulty and update that button's texture
 	mCurStartingResources = amount;
 	mpStartingResButtonList[mCurStartingResources]->SetNewButtonSkin("ChoSmallButton.png");
+}
+
+void CMenuState::SaveSettings()
+{
+	// Save the settings to the settings manager
+	CSettingsManager* pSettings = CStateControl::GetInstance()->GetSettingsManager();
+	pSettings->SetMusicVolume((float)(mpMusicSlider->GetSliderSetting() / 50.0f));
+	pSettings->SetEffectsVolume((float)(mpEffectsSlider->GetSliderSetting() / 50.0f));
+
+	// Unload everything already loaded & return to main screen
+	OnChooseCancel();
+}
+
+void CMenuState::IncrementMusic()
+{
+	mpMusicSlider->IncrementSlider();
+}
+
+void CMenuState::DecrementMusic()
+{
+	mpMusicSlider->DecrementSlider();
+}
+
+void CMenuState::IncrementEffects()
+{
+	mpEffectsSlider->IncrementSlider();
+}
+
+void CMenuState::DecrementEffects()
+{
+	mpEffectsSlider->DecrementSlider();
 }
 
 
@@ -299,6 +358,10 @@ void CMenuState::StateSetup()
 		DX::XMFLOAT2(400.0f, 50.0f), *this, &CMenuState::OnChooseCancel, TR_LEFT, false);
 	mpButtonList.push_back(pNewButton);
 
+	pNewButton = new CAdvancedButton<CMenuState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 620),
+		DX::XMFLOAT2(400.0f, 50.0f), *this, &CMenuState::SaveSettings, TR_LEFT, false);
+	mpButtonList.push_back(pNewButton);
+
 
 	// AI Difficulty buttons
 	CAdvancedButton<CMenuState, void, int>* pNewIntButton = new CAdvancedButton<CMenuState, void, int>("DefSmallButton.png", "SelSmallButton.png", SPointData(755, 220),
@@ -332,6 +395,10 @@ void CMenuState::StateSetup()
 
 	// Create a typebox
 	mpTypeBox = new CTypeBox(SPointData{ 770, 420 }, DX::XMFLOAT2{ 500.0f, 40.0f }, TR_LEFT, false);
+
+	// Create sliders
+	mpMusicSlider = new CSliderTool(SPointData{ 760, 213 }, 100, 1);
+	mpEffectsSlider = new CSliderTool(SPointData{ 760, 323 }, 100, 1);
 }
 
 void CMenuState::StateUpdate()
@@ -408,6 +475,11 @@ void CMenuState::StateUpdate()
 		if (mpTypeBox->IsInPlace()) mpButtonFont->Draw("TYPE THE NAME OF THE FILE YOU WANT TO LOAD BELOW:", 780, 400, kWhite, kLeft, kTop);
 		if (mpButtonList[4]->IsInPlace()) mpButtonFont->Draw("LOAD", 945, 495, kWhite, kCentre, kTop);
 		if (mpButtonList[5]->IsInPlace()) mpButtonFont->Draw("CANCEL", 1085, 495, kWhite, kCentre, kTop);
+		break;
+	case MENU_SETTINGS:
+		// Check the buttons are in place before attempting to show the button's text
+		if (mpButtonList[8]->IsInPlace()) mpButtonFont->Draw("SAVE SETTINGS", 1015, 635, kWhite, kCentre, kTop);
+		if (mpButtonList[7]->IsInPlace()) mpButtonFont->Draw("CANCEL", 1015, 705, kWhite, kCentre, kTop);
 		break;
 	}
 

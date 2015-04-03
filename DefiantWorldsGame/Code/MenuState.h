@@ -14,6 +14,7 @@
 #include "BaseGameState.h"
 #include "AdvancedButton.h"
 #include "TypeBox.h"
+#include "SliderTool.h"
 
 
 //-----------------------------------------------------
@@ -65,6 +66,9 @@ private:
 
 	CTypeBox* mpTypeBox = nullptr;
 
+	CSliderTool* mpMusicSlider = nullptr;
+	CSliderTool* mpEffectsSlider = nullptr;
+
 
 	// FONTS
 	//--------------------------- 
@@ -114,6 +118,13 @@ public:
 	void SetAIDifficulty(int difficulty);
 	void SetStartingResources(int amount);
 	void OnChooseLoadGame();
+
+	void SaveSettings();
+	void IncrementMusic();
+	void DecrementMusic();
+	void IncrementEffects();
+	void DecrementEffects();
+
 	void OnChooseCancel();
 
 
