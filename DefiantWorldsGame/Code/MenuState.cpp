@@ -128,8 +128,8 @@ void CMenuState::ChangeSettings()
 	mpEffectsSlider->SetSliderSetting((int)(pSettings->GetEffectsVolume() * 50));
 
 	// Show the sliders
-	//mpMusicSlider->Show();
-	//mpEffectsSlider->Show();
+	mpMusicSlider->Show();
+	mpEffectsSlider->Show();
 
 	// Hide the logo
 	mpSprLogo->SetZ(-1.0f);
@@ -178,8 +178,8 @@ void CMenuState::OnChooseCancel()
 	mpTypeBox->Hide();
 
 	// Hide sliders
-	//mpMusicSlider->Hide();
-	//mpEffectsSlider->Hide();
+	mpMusicSlider->Hide();
+	mpEffectsSlider->Hide();
 
 	// Hide the save related buttons
 	mpButtonList[4]->Hide();
@@ -397,8 +397,8 @@ void CMenuState::StateSetup()
 	mpTypeBox = new CTypeBox(SPointData{ 770, 420 }, DX::XMFLOAT2{ 500.0f, 40.0f }, TR_LEFT, false);
 
 	// Create sliders
-	mpMusicSlider = new CSliderTool(SPointData{ 760, 213 }, 100, 1);
-	mpEffectsSlider = new CSliderTool(SPointData{ 760, 323 }, 100, 1);
+	mpMusicSlider = new CSliderTool(SPointData{ 760, 213 }, 100, 1, DX::XMFLOAT2{500.0f, 40.0f}, TR_LEFT, false);
+	mpEffectsSlider = new CSliderTool(SPointData{ 760, 323 }, 100, 1, DX::XMFLOAT2{500.0f, 40.0f}, TR_LEFT, false);
 }
 
 void CMenuState::StateUpdate()
@@ -480,6 +480,8 @@ void CMenuState::StateUpdate()
 		// Check the buttons are in place before attempting to show the button's text
 		if (mpButtonList[8]->IsInPlace()) mpButtonFont->Draw("SAVE SETTINGS", 1015, 635, kWhite, kCentre, kTop);
 		if (mpButtonList[7]->IsInPlace()) mpButtonFont->Draw("CANCEL", 1015, 705, kWhite, kCentre, kTop);
+
+		mpTitleFont->Draw("CHANGE GAME SETTINGS", 1015, 90, kCyan, kCentre, kTop);
 		break;
 	}
 
@@ -586,6 +588,8 @@ void CMenuState::StateUpdate()
 	// UPDATE MISC UI ELEMENTS
 	//------------------------------
 	mpTypeBox->Update();
+	mpMusicSlider->Update();
+	mpEffectsSlider->Update();
 
 
 	// UPDATE CURSOR

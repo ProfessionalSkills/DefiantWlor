@@ -8,18 +8,19 @@
 //-----------------------------------------------------
 // INCLUDES
 //-----------------------------------------------------
-#include "Common.h"
+#include "MovingUI.h"
 
 
 //-----------------------------------------------------
-// BUILD REQUEST CLASS
+// BUILD REQUEST CLASS : CHILD OF MOVING UI BASE CLASS
 //-----------------------------------------------------
-class CSliderTool
+class CSliderTool : public CMovingUI
 {
 public:
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
-	CSliderTool(SPointData position, int numSettings, int curSetting);
+	CSliderTool(SPointData position, int numSettings, int curSetting, DX::XMFLOAT2 boxDimensions, 
+		ETransitionTypes trnsitionType = TR_NONE, bool active = true, float transitionTime = 0.5f);
 	~CSliderTool();
 
 
@@ -60,6 +61,8 @@ public:
 
 	// METHODS
 	//---------------------------
+	void Show();
+	void Hide();
 	void Update();
 
 
@@ -73,21 +76,18 @@ private:
 
 	// SLIDER BAR PROPERTIES
 	//---------------------------
-	SPointData mPosition{0, 0};
-
 	int mCurSetting = 0;
 	int mNumSettings = 1;
 
-	DX::XMFLOAT2 mBarDimensions{500.0f, 20.0f};		// Dimensions of the slider bar: x = width, y = height
+	//DX::XMFLOAT2 mBarDimensions{500.0f, 20.0f};		// Dimensions of the slider bar: x = width, y = height
 
 	std::vector<DX::XMFLOAT2> mSettingPositions;	// A setting position for each stop which spans length of bar
 													// Using mCurSetting as an index, the stop position can be accessed
 
-	SAABoundingBox mBoundingBox;
-
 
 	// SLIDER BAR STATES
 	//---------------------------
+	bool mIsHidden = false;
 	bool mMouseOver = false;
 };
 

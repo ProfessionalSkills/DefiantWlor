@@ -155,8 +155,8 @@ void CSettingsScreenState::StateSetup()
 	// ADDITIONAL USER INTERFACE ELEMENTS
 	//------------------------------
 	CSettingsManager* pSettings = CStateControl::GetInstance()->GetSettingsManager();
-	mpMusicSlider = new CSliderTool(SPointData{ 760, 213 }, 100, (int)(pSettings->GetMusicVolume() * 50));
-	mpEffectsSlider = new CSliderTool(SPointData{ 760, 323 }, 100, (int)(pSettings->GetEffectsVolume() * 50));
+//	mpMusicSlider = new CSliderTool(SPointData{ 760, 213 }, 100, (int)(pSettings->GetMusicVolume() * 50));
+//	mpEffectsSlider = new CSliderTool(SPointData{ 760, 323 }, 100, (int)(pSettings->GetEffectsVolume() * 50));
 }
 
 void CSettingsScreenState::StateUpdate()

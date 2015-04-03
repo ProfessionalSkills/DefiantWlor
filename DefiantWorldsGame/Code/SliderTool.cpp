@@ -7,21 +7,23 @@
 //-----------------------------------------------------
 // SLIDER TOOL CLASS CONSTRUCTORS & DESTRUCTOR
 //-----------------------------------------------------
-CSliderTool::CSliderTool(SPointData position, int numSettings, int curSetting)
+CSliderTool::CSliderTool(SPointData position, int numSettings, int curSetting, DX::XMFLOAT2 boxDimensions,
+	ETransitionTypes transitionType, bool active, float transitionTime) : CMovingUI(position, boxDimensions, 
+	transitionType, active, transitionTime)
 {
 	// Set the slider's properties
-	mPosition = position;
 	mNumSettings = numSettings;
 	SetSliderSetting(curSetting);
+	mIsHidden = !active;
 
 	// Load the sprites
-	DX::XMFLOAT2 pullStartPos{ (float)position.mPosX - 15.0f, (float)position.mPosY - 5.0f };
-	mpSprSlider = gpEngine->CreateSprite("SliderBack.png", (float)position.mPosX, (float)position.mPosY, 0.8f);
+	DX::XMFLOAT2 pullStartPos{ mCurPosition.x - 15.0f, mCurPosition.y - 5.0f };
+	mpSprSlider = gpEngine->CreateSprite("SliderBack.png", mCurPosition.x, mCurPosition.y, 0.8f);
 	mpSprPullBasic = gpEngine->CreateSprite("DefSliderPull.png", pullStartPos.x, pullStartPos.y, 0.7f);
 	mpSprPullMO = gpEngine->CreateSprite("SelSliderPull.png", pullStartPos.x, pullStartPos.y, -1.0f);
 
 	// Determine each stop position
-	float step = mBarDimensions.x / (float)numSettings;
+	float step = mBoxDimensions.x / (float)numSettings;
 	for (int i = 0; i < numSettings; i++)
 	{
 		mSettingPositions.push_back(pullStartPos);
@@ -33,7 +35,8 @@ CSliderTool::CSliderTool(SPointData position, int numSettings, int curSetting)
 	mpSprPullMO->SetX(mSettingPositions[mCurSetting].x);
 
 	// Define the bounding box around the slider
-	mBoundingBox = SAABoundingBox(position.mPosY + mBarDimensions.y, position.mPosX + mBarDimensions.x, position.mPosY, position.mPosX);
+	mBoundingBox = SAABoundingBox(mCurPosition.y + mBoxDimensions.y, mCurPosition.x + mBoxDimensions.x,
+		mCurPosition.y, mCurPosition.x);
 }
 
 CSliderTool::~CSliderTool()
@@ -125,11 +128,84 @@ void CSliderTool::OnClick(int mousePosX)
 //-----------------------------------------------------
 // SLIDER TOOL CLASS METHODS
 //-----------------------------------------------------
+void CSliderTool::Show()
+{
+	// If already shown, just return
+	if (mIsHidden && mpSprSlider)
+	{
+		mIsHidden = false;
+
+		// If not using transitioning, show the buttons
+		if (mTransitionType == TR_NONE)
+		{
+			mpSprSlider->SetZ(0.8f);
+			mpSprPullBasic->SetZ(0.7f);
+		}
+
+		// Set to transition in
+		mToTransitionIn = true;
+		mIsAtDestination = false;
+		mIsOffScreen = false;
+	}
+}
+
+void CSliderTool::Hide()
+{
+	// If already hidden, just return
+	if (!mIsHidden && mpSprSlider)
+	{
+		// Raise hidden flag
+		mIsHidden = true;
+
+		// If not using transitioning, hide the buttons
+		if (mTransitionType == TR_NONE)
+		{
+			mpSprSlider->SetZ(-1.0f);
+			mpSprPullBasic->SetZ(-1.0f);
+		}
+
+		// Set to transition out
+		mToTransitionOut = true;
+		mIsAtDestination = false;
+		mIsOffScreen = false;
+	}
+}
+
 void CSliderTool::Update()
 {
+	// If it is transitioning in or out, update the button's position
+	if (mToTransitionIn || mToTransitionOut)
+	{
+		// This is a moving user interface element - call the parent function first to update its position
+		UpdateTransition();
+
+		// Calculate bounding box based on provided dimensions and position
+		mBoundingBox = { mCurPosition.y + mBoxDimensions.y, mCurPosition.x + mBoxDimensions.x, mCurPosition.y, mCurPosition.x };
+
+		// If sprite exists
+		if (mpSprSlider)
+		{
+			mpSprSlider->SetX(mCurPosition.x);
+			mpSprSlider->SetY(mCurPosition.y);
+		}
+
+		// Update draw positions
+		DX::XMFLOAT2 pullStartPos{ mCurPosition.x - 15.0f, mCurPosition.y - 5.0f };
+		mSettingPositions.clear();
+		float step = mBoxDimensions.x / (float)mNumSettings;
+		for (int i = 0; i < mNumSettings; i++)
+		{
+			mSettingPositions.push_back(pullStartPos);
+			pullStartPos.x += step;
+		}
+	}
+
 	// Set the pull sprite to the position of its index
 	mpSprPullBasic->SetX(mSettingPositions[mCurSetting].x);
 	mpSprPullMO->SetX(mSettingPositions[mCurSetting].x);
+
+	// If the element is hidden, do not do the rest of the function
+	if (mIsHidden) return;
 
 	// Check to see if there is a mouse over event taking place
 	if (mMouseOver)

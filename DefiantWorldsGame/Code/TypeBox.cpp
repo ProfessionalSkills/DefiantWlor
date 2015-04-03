@@ -32,7 +32,7 @@ CTypeBox::~CTypeBox()
 
 
 //-----------------------------------------------------
-// SLIDER TOOL CLASS METHODS
+// TYPE BOX CLASS METHODS
 //-----------------------------------------------------
 void CTypeBox::Show()
 {
