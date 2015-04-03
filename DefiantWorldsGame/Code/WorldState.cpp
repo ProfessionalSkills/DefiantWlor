@@ -807,7 +807,7 @@ void CWorldState::StateSetup()
 	CAdvancedButton<CWorldState, void>* pNewButton = nullptr;
 
 	pNewButton = new CAdvancedButton<CWorldState, void>("DefBarracksButton.png", "SelBarracksButton.png", SPointData(1219, 695),
-		DX::XMFLOAT2(103.0f, 97.0f), *this, &CWorldState::CreateBarracks);
+		DX::XMFLOAT2(103.0f, 97.0f), *this, &CWorldState::CreateBarracks, TR_UP);
 	mpButtonBarracks = pNewButton;
 	mpGenericButtonList.push_back(pNewButton);
 

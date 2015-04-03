@@ -39,23 +39,32 @@ CMovingUI::CMovingUI(SPointData destination, DX::XMFLOAT2 boxDimensions, ETransi
 		{
 			// Object is transitioning in from the left of the screen - x is different y is the same
 			// Use the bounding box dimensions to determine how far offscreen to the left it should be placed
-			int offset = mBoundingBox.mLeft - mBoundingBox.mRight;
-			mStartPosition.mPosX = offset;
+			int offset = mBoxDimensions.x;
+			mStartPosition.mPosX = -offset;
 			mStartPosition.mPosY = destination.mPosY;
+
+			mTransitionTime = transitionTime;
+			mTransitionDistance = (float)(destination.mPosX - mStartPosition.mPosX);
 		}
 		break;
 	case TR_UP:
 		// Object is transitioning in from the bottom of the screen - x is the same y is different
 		mStartPosition.mPosX = destination.mPosX;
 		mStartPosition.mPosY = 900;
+
+		mTransitionTime = transitionTime;
+		mTransitionDistance = (float)(mStartPosition.mPosY - destination.mPosY);
 		break;
 	case TR_DOWN:
 		{
 			// Object is transitioning in from the top of the screen - x is the same y is different
 			// Use the bounding box dimensions to determine how far offscreen to the top it should be placed
-			int offset = mBoundingBox.mLeft - mBoundingBox.mRight;
+			int offset = mBoxDimensions.y;
 			mStartPosition.mPosX = destination.mPosX;
-			mStartPosition.mPosY = offset;
+			mStartPosition.mPosY = -offset;
+
+			mTransitionTime = transitionTime;
+			mTransitionDistance = (float)(destination.mPosY - mStartPosition.mPosY);
 		}
 		break;
 	}
@@ -148,34 +157,174 @@ void CMovingUI::UpdateTransition()
 		// Determine whether or not the item is transitioning in or out
 		if (mToTransitionIn)
 		{
-			// With transition type right, the item will be coming in from the left - a positive x direction
+			// With transition type left, the item will be coming in from the right - a negative x direction
+			// Check to see if it has overtaken the destination
+			if (mTimer >= mTransitionTime)
+			{
+				// Destination reached - no longer transitioning
+				mCurPosition.x = (float)mDestination.mPosX;
+				mCurPosition.y = (float)mDestination.mPosY;
+				mToTransitionIn = false;
+				mIsAtDestination = true;
+
+				// Reset timer
+				mTimer = 0.0f;
+			}
+			else
+			{
+				// Increment timer
+				mTimer += gFrameTime;
+
+				// Use the timer to calculate percentage
+				float percentage = mTimer / mTransitionTime;
+
+				// Use percentage to determine new position based on distance to travel and starting position
+				mCurPosition.x = (float)mStartPosition.mPosX + (percentage * mTransitionDistance);
+			}
 		}
 		else if (mToTransitionOut)
 		{
-			// Transition out to the left - negative x
+			// Transition out to the right - positive x
+			// Check to see if it has overtaken the destination
+			if (mTimer >= mTransitionTime)
+			{
+				// Destination reached - no longer transitioning
+				mCurPosition.x = (float)mStartPosition.mPosX;
+				mCurPosition.y = (float)mStartPosition.mPosY;
+				mToTransitionOut = false;
+				mIsAtDestination = false;
+				mIsOffScreen = true;
+
+				// reset timer
+				mTimer = 0.0f;
+			}
+			else
+			{
+				// Increment timer
+				mTimer += gFrameTime;
+
+				// Use the timer to calculate percentage
+				float percentage = mTimer / mTransitionTime;
+
+				// Use percentage to determine new position based on distance to travel and starting position
+				mCurPosition.x = (float)mDestination.mPosX - (percentage * mTransitionDistance);
+			}
 		}
 		break;
 	case TR_UP:
 		// Determine whether or not the item is transitioning in or out
 		if (mToTransitionIn)
 		{
-			// With transition type up, the item will be coming in from the bottom - a negative y direction
+			// With transition type left, the item will be coming in from the right - a negative x direction
+			// Check to see if it has overtaken the destination
+			if (mTimer >= mTransitionTime)
+			{
+				// Destination reached - no longer transitioning
+				mCurPosition.x = (float)mDestination.mPosX;
+				mCurPosition.y = (float)mDestination.mPosY;
+				mToTransitionIn = false;
+				mIsAtDestination = true;
+
+				// Reset timer
+				mTimer = 0.0f;
+			}
+			else
+			{
+				// Increment timer
+				mTimer += gFrameTime;
+
+				// Use the timer to calculate percentage
+				float percentage = mTimer / mTransitionTime;
+
+				// Use percentage to determine new position based on distance to travel and starting position
+				mCurPosition.y = (float)mStartPosition.mPosY - (percentage * mTransitionDistance);
+			}
 		}
 		else if (mToTransitionOut)
 		{
-			// Transition out to the bottom - positive y
+			// Transition out to the right - positive x
+			// Check to see if it has overtaken the destination
+			if (mTimer >= mTransitionTime)
+			{
+				// Destination reached - no longer transitioning
+				mCurPosition.x = (float)mStartPosition.mPosX;
+				mCurPosition.y = (float)mStartPosition.mPosY;
+				mToTransitionOut = false;
+				mIsAtDestination = false;
+				mIsOffScreen = true;
+
+				// reset timer
+				mTimer = 0.0f;
+			}
+			else
+			{
+				// Increment timer
+				mTimer += gFrameTime;
+
+				// Use the timer to calculate percentage
+				float percentage = mTimer / mTransitionTime;
+
+				// Use percentage to determine new position based on distance to travel and starting position
+				mCurPosition.y = (float)mDestination.mPosY + (percentage * mTransitionDistance);
+			}
 		}
 		break;
 	case TR_DOWN:
 		// Determine whether or not the item is transitioning in or out
 		if (mToTransitionIn)
 		{
-			// With transition type down, the item will be coming in from the top - a positive y direction
+			// With transition type left, the item will be coming in from the right - a negative x direction
+			// Check to see if it has overtaken the destination
+			if (mTimer >= mTransitionTime)
+			{
+				// Destination reached - no longer transitioning
+				mCurPosition.x = (float)mDestination.mPosX;
+				mCurPosition.y = (float)mDestination.mPosY;
+				mToTransitionIn = false;
+				mIsAtDestination = true;
 
+				// Reset timer
+				mTimer = 0.0f;
+			}
+			else
+			{
+				// Increment timer
+				mTimer += gFrameTime;
+
+				// Use the timer to calculate percentage
+				float percentage = mTimer / mTransitionTime;
+
+				// Use percentage to determine new position based on distance to travel and starting position
+				mCurPosition.y = (float)mStartPosition.mPosY + (percentage * mTransitionDistance);
+			}
 		}
 		else if (mToTransitionOut)
 		{
-			// Transition out to the top - negative y
+			// Transition out to the right - positive x
+			// Check to see if it has overtaken the destination
+			if (mTimer >= mTransitionTime)
+			{
+				// Destination reached - no longer transitioning
+				mCurPosition.x = (float)mStartPosition.mPosX;
+				mCurPosition.y = (float)mStartPosition.mPosY;
+				mToTransitionOut = false;
+				mIsAtDestination = false;
+				mIsOffScreen = true;
+
+				// reset timer
+				mTimer = 0.0f;
+			}
+			else
+			{
+				// Increment timer
+				mTimer += gFrameTime;
+
+				// Use the timer to calculate percentage
+				float percentage = mTimer / mTransitionTime;
+
+				// Use percentage to determine new position based on distance to travel and starting position
+				mCurPosition.y = (float)mDestination.mPosY - (percentage * mTransitionDistance);
+			}
 		}
 		break;
 	}
