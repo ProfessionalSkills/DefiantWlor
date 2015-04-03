@@ -60,6 +60,8 @@ public:
 
 	// METHODS
 	//---------------------------
+	void Show();
+	void Hide();
 	void Update();
 
 
@@ -78,6 +80,7 @@ private:
 
 	// MISC
 	//---------------------------
+	bool mIsHidden = false;
 	bool mMouseOver = false;
 	int mCurLength = 0;			// Tracks the length of the entered string
 };

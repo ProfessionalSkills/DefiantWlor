@@ -14,6 +14,7 @@ CTypeBox::CTypeBox(SPointData position, DX::XMFLOAT2 boxDimensions, ETransitionT
 	// Load the sprites & Fonts
 	mpSprBox = gpEngine->CreateSprite("TypeBoxBack.png", mCurPosition.x, mCurPosition.y, 0.6f);
 	mpFntText = gpEngine->LoadFont("font2.bmp", 25U);
+	mIsHidden = !active;
 }
 
 CTypeBox::~CTypeBox()
@@ -33,6 +34,47 @@ CTypeBox::~CTypeBox()
 //-----------------------------------------------------
 // SLIDER TOOL CLASS METHODS
 //-----------------------------------------------------
+void CTypeBox::Show()
+{
+	// If already shown, just return
+	if (mIsHidden && mpSprBox)
+	{
+		mIsHidden = false;
+
+		// If not using transitioning, show the buttons
+		if (mTransitionType == TR_NONE)
+		{
+			mpSprBox->SetZ(0.6f);
+		}
+
+		// Set to transition in
+		mToTransitionIn = true;
+		mIsAtDestination = false;
+		mIsOffScreen = false;
+	}
+}
+
+void CTypeBox::Hide()
+{
+	// If already hidden, just return
+	if (!mIsHidden && mpSprBox)
+	{
+		// Raise hidden flag
+		mIsHidden = true;
+
+		// If not using transitioning, hide the buttons
+		if (mTransitionType == TR_NONE)
+		{
+			mpSprBox->SetZ(-1.0f);
+		}
+
+		// Set to transition out
+		mToTransitionOut = true;
+		mIsAtDestination = false;
+		mIsOffScreen = false;
+	}
+}
+
 void CTypeBox::Update()
 {
 	// If it is transitioning in or out, update the button's position
@@ -54,6 +96,9 @@ void CTypeBox::Update()
 	
 	// Draw the current text
 	mpFntText->Draw(mTypeStream.str(), mCurPosition.x + 10, mCurPosition.y + 20, kBlack, kLeft, kVCentre);
+
+	// If the element is hidden, do not do the rest of the function
+	if (mIsHidden) return;
 
 	// In the update area, all this is doing is looking for key presses to add to the current text
 	// Use the delete button to clear the contents

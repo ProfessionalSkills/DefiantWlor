@@ -131,9 +131,9 @@ void CMenuState::OnChooseLoadGame()
 {
 	// Set state back to main menu
 	mMenuState = MENU_LOAD;
-	
-	// Create a typebox
-	mpTypeBox = new CTypeBox(SPointData{ 770, 420 }, DX::XMFLOAT2{ 500.0f, 40.0f });
+
+	// Show the type box
+	mpTypeBox->Show();
 
 	// Hide the main menu buttons
 	mpButtonList[0]->Hide();
@@ -151,8 +151,8 @@ void CMenuState::OnChooseCancel()
 	// Set state back to main menu
 	mMenuState = MENU_MAIN;
 
-	// Remove type box
-	SafeDelete(mpTypeBox);
+	// Hide type box
+	mpTypeBox->Hide();
 
 	// Hide the save related buttons
 	mpButtonList[4]->Hide();
@@ -329,6 +329,9 @@ void CMenuState::StateSetup()
 	pNewIntButton = new CAdvancedButton<CMenuState, void, int>("DefSmallButton.png", "SelSmallButton.png", SPointData(1105, 340),
 		DX::XMFLOAT2(100.0f, 50.0f), *this, &CMenuState::SetStartingResources, TR_LEFT, false);
 	mpStartingResButtonList.push_back(pNewIntButton);
+
+	// Create a typebox
+	mpTypeBox = new CTypeBox(SPointData{ 770, 420 }, DX::XMFLOAT2{ 500.0f, 40.0f }, TR_LEFT, false);
 }
 
 void CMenuState::StateUpdate()
@@ -402,12 +405,9 @@ void CMenuState::StateUpdate()
 		break;
 	case MENU_LOAD:
 		// Update pause menu visuals
-		mpButtonFont->Draw("TYPE THE NAME OF THE FILE YOU WANT TO LOAD BELOW:", 780, 400, kWhite, kLeft, kTop);
+		if (mpTypeBox->IsInPlace()) mpButtonFont->Draw("TYPE THE NAME OF THE FILE YOU WANT TO LOAD BELOW:", 780, 400, kWhite, kLeft, kTop);
 		if (mpButtonList[4]->IsInPlace()) mpButtonFont->Draw("LOAD", 945, 495, kWhite, kCentre, kTop);
 		if (mpButtonList[5]->IsInPlace()) mpButtonFont->Draw("CANCEL", 1085, 495, kWhite, kCentre, kTop);
-
-		// Update the type box
-		mpTypeBox->Update();
 		break;
 	}
 
@@ -509,6 +509,11 @@ void CMenuState::StateUpdate()
 		pButton->Update();
 		counter++;
 	}
+
+
+	// UPDATE MISC UI ELEMENTS
+	//------------------------------
+	mpTypeBox->Update();
 
 
 	// UPDATE CURSOR
