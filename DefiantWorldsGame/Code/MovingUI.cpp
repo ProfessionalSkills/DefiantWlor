@@ -8,11 +8,11 @@
 //-----------------------------------------------------
 // MOVING UI CLASS CONSTRUCTORS & DESTRUCTOR
 //-----------------------------------------------------
-CMovingUI::CMovingUI(SPointData destination, SAABoundingBox boundingBox, ETransitionTypes transitionType, bool active, float transitionTime)
+CMovingUI::CMovingUI(SPointData destination, DX::XMFLOAT2 boxDimensions, ETransitionTypes transitionType, bool active, float transitionTime)
 {
 	mDestination = destination;
 	mTransitionType = transitionType;
-	mBoundingBox = boundingBox;
+	mBoxDimensions = boxDimensions;
 	mToTransitionIn = active;
 
 	// Calculate the start position based on its transition
@@ -21,6 +21,11 @@ CMovingUI::CMovingUI(SPointData destination, SAABoundingBox boundingBox, ETransi
 	case TR_NONE:
 		// There is no transition, so the starting position is the same as the destination
 		mStartPosition = destination;
+		mCurPosition.x = (float)destination.mPosX;
+		mCurPosition.y = (float)destination.mPosY;
+
+		// Calculate bounding box based on provided dimensions and position
+		mBoundingBox = { mCurPosition.y + mBoxDimensions.y, mCurPosition.x + mBoxDimensions.x, mCurPosition.y, mCurPosition.x };
 		break;
 	case TR_LEFT:
 		// Object is transitioning in from the right of the screen - x is different y is the same

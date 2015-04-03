@@ -807,23 +807,23 @@ void CWorldState::StateSetup()
 	CAdvancedButton<CWorldState, void>* pNewButton = nullptr;
 
 	pNewButton = new CAdvancedButton<CWorldState, void>("DefBarracksButton.png", "SelBarracksButton.png", SPointData(1219, 695),
-		SAABoundingBox(772.0f, 1322.0f, 695.0f, 1219.0f), *this, &CWorldState::CreateBarracks);
+		DX::XMFLOAT2(103.0f, 97.0f), *this, &CWorldState::CreateBarracks);
 	mpButtonBarracks = pNewButton;
 	mpGenericButtonList.push_back(pNewButton);
 
 	pNewButton = new CAdvancedButton<CWorldState, void>("DefHellipadButton.png", "SelHellipadButton.png", SPointData(1219, 782),
-		SAABoundingBox(879.0f, 1322.0f, 782.0f, 1219.0f), *this, &CWorldState::CreateHellipad);
+		DX::XMFLOAT2(103.0f, 97.0f), *this, &CWorldState::CreateHellipad);
 	mpButtonHellipad = pNewButton;
 	mpGenericButtonList.push_back(pNewButton);
 
 	pNewButton = new CAdvancedButton<CWorldState, void>("DefSpaceCentreButton.png", "SelSpaceCentreButton.png", SPointData(1342, 695),
-		SAABoundingBox(772.0f, 1439.0f, 695.0f, 1342.0f), *this, &CWorldState::CreateSpaceCentre);
+		DX::XMFLOAT2(103.0f, 97.0f), *this, &CWorldState::CreateSpaceCentre);
 	mpButtonSpaceCentre = pNewButton;
 	mpGenericButtonList.push_back(pNewButton);
 
 
 	pNewButton = new CAdvancedButton<CWorldState, void>("DefDeleteButton.png", "SelDeleteButton.png", SPointData(1465, 782),
-		SAABoundingBox(879.0f, 1542.0f, 782.0f, 1465.0f), *this, &CWorldState::DeleteStructure);
+		DX::XMFLOAT2(103.0f, 97.0f), *this, &CWorldState::DeleteStructure);
 	pNewButton->Hide();
 	mpButtonDelete = pNewButton;
 	mpGenericButtonList.push_back(pNewButton);
@@ -831,11 +831,11 @@ void CWorldState::StateSetup()
 	// Barracks units buttons
 	mpBarracksButtons = new SStructureButtons<CWorldState>(3);
 	mpBarracksButtons->mpButtons[0] = new CAdvancedButton<CWorldState, void, int>("DefInfantryButton.png", "SelInfantryButton.png", SPointData(1219, 695),
-		SAABoundingBox(772.0f, 1322.0f, 695.0f, 1219.0f), *this, &CWorldState::QueueUnit);
+		DX::XMFLOAT2(103.0f, 97.0f), *this, &CWorldState::QueueUnit);
 	mpBarracksButtons->mpButtons[1] = new CAdvancedButton<CWorldState, void, int>("DefArtilleryButton.png", "SelArtilleryButton.png", SPointData(1219, 782),
-		SAABoundingBox(879.0f, 1322.0f, 782.0f, 1219.0f), *this, &CWorldState::QueueUnit);
+		DX::XMFLOAT2(103.0f, 97.0f), *this, &CWorldState::QueueUnit);
 	mpBarracksButtons->mpButtons[2] = new CAdvancedButton<CWorldState, void, int>("DefTankButton.png", "SelTankButton.png", SPointData(1342, 695),
-		SAABoundingBox(772.0f, 1439.0f, 695.0f, 1342.0f), *this, &CWorldState::QueueUnit);
+		DX::XMFLOAT2(103.0f, 97.0f), *this, &CWorldState::QueueUnit);
 	mpBarracksButtons->Hide();
 
 	for (int i = 0; i < mpBarracksButtons->mNumButtons; i++)
@@ -846,9 +846,9 @@ void CWorldState::StateSetup()
 	// hellipad units buttons
 	mpHellipadButtons = new SStructureButtons<CWorldState>(2);
 	mpHellipadButtons->mpButtons[0] = new CAdvancedButton<CWorldState, void, int>("DefFighterButton.png", "SelFighterButton.png", SPointData(1219, 695),
-		SAABoundingBox(772.0f, 1322.0f, 695.0f, 1219.0f), *this, &CWorldState::QueueUnit);
+		DX::XMFLOAT2(103.0f, 97.0f), *this, &CWorldState::QueueUnit);
 	mpHellipadButtons->mpButtons[1] = new CAdvancedButton<CWorldState, void, int>("DefBomberButton.png", "SelBomberButton.png", SPointData(1219, 782),
-		SAABoundingBox(879.0f, 1322.0f, 782.0f, 1219.0f), *this, &CWorldState::QueueUnit);
+		DX::XMFLOAT2(103.0f, 97.0f), *this, &CWorldState::QueueUnit);
 
 	for (int i = 0; i < mpHellipadButtons->mNumButtons; i++)
 	{
@@ -858,11 +858,11 @@ void CWorldState::StateSetup()
 	// Space centre units buttons
 	mpSpaceCentreButtons = new SStructureButtons<CWorldState>(3);
 	mpSpaceCentreButtons->mpButtons[0] = new CAdvancedButton<CWorldState, void, int>("DefSpaceFighterButton.png", "SelSpaceFighterButton.png", SPointData(1219, 695),
-		SAABoundingBox(772.0f, 1322.0f, 695.0f, 1219.0f), *this, &CWorldState::QueueUnit);
+		DX::XMFLOAT2(103.0f, 97.0f), *this, &CWorldState::QueueUnit);
 	mpSpaceCentreButtons->mpButtons[1] = new CAdvancedButton<CWorldState, void, int>("DefTransportButton.png", "SelTransportButton.png", SPointData(1219, 782),
-		SAABoundingBox(879.0f, 1322.0f, 782.0f, 1219.0f), *this, &CWorldState::QueueUnit);
+		DX::XMFLOAT2(103.0f, 97.0f), *this, &CWorldState::QueueUnit);
 	mpSpaceCentreButtons->mpButtons[2] = new CAdvancedButton<CWorldState, void, int>("DefMothershipButton.png", "SelMothershipButton.png", SPointData(1342, 695),
-		SAABoundingBox(772.0f, 1439.0f, 695.0f, 1342.0f), *this, &CWorldState::QueueUnit);
+		DX::XMFLOAT2(103.0f, 97.0f), *this, &CWorldState::QueueUnit);
 	mpSpaceCentreButtons->Hide();
 
 	for (int i = 0; i < mpSpaceCentreButtons->mNumButtons; i++)
@@ -873,7 +873,7 @@ void CWorldState::StateSetup()
 	// Command centre units buttons
 	mpComCentreButtons = new SStructureButtons<CWorldState>(1);
 	mpComCentreButtons->mpButtons[0] = new CAdvancedButton<CWorldState, void, int>("DefWorkerButton.png", "SelWorkerButton.png", SPointData(1219, 695),
-		SAABoundingBox(772.0f, 1322.0f, 695.0f, 1219.0f), *this, &CWorldState::QueueUnit);
+		DX::XMFLOAT2(103.0f, 97.0f), *this, &CWorldState::QueueUnit);
 	mpComCentreButtons->Hide();
 
 	for (int i = 0; i < mpComCentreButtons->mNumButtons; i++)
@@ -884,15 +884,15 @@ void CWorldState::StateSetup()
 
 	// Queue buttons
 	mpQueueButtons = new SStructureButtons<CWorldState>(5);
-	mpQueueButtons->mpButtons[0] = new CAdvancedButton<CWorldState, void, int>(SPointData(5, 5), SAABoundingBox(82.0f, 108.0f, 5.0f, 5.0f), 
+	mpQueueButtons->mpButtons[0] = new CAdvancedButton<CWorldState, void, int>(SPointData(5, 5), DX::XMFLOAT2(103.0f, 97.0f),
 		*this, &CWorldState::UnqueueUnit);
-	mpQueueButtons->mpButtons[1] = new CAdvancedButton<CWorldState, void, int>(SPointData(118, 5), SAABoundingBox(82.0f, 221.0f, 5.0f, 118.0f),
+	mpQueueButtons->mpButtons[1] = new CAdvancedButton<CWorldState, void, int>(SPointData(118, 5), DX::XMFLOAT2(103.0f, 97.0f),
 		*this, &CWorldState::UnqueueUnit);
-	mpQueueButtons->mpButtons[2] = new CAdvancedButton<CWorldState, void, int>(SPointData(231, 5), SAABoundingBox(82.0f, 334.0f, 5.0f, 231.0f),
+	mpQueueButtons->mpButtons[2] = new CAdvancedButton<CWorldState, void, int>(SPointData(231, 5), DX::XMFLOAT2(103.0f, 97.0f),
 		*this, &CWorldState::UnqueueUnit);
-	mpQueueButtons->mpButtons[3] = new CAdvancedButton<CWorldState, void, int>(SPointData(344, 5), SAABoundingBox(82.0f, 447.0f, 5.0f, 344.0f),
+	mpQueueButtons->mpButtons[3] = new CAdvancedButton<CWorldState, void, int>(SPointData(344, 5), DX::XMFLOAT2(103.0f, 97.0f),
 		*this, &CWorldState::UnqueueUnit);
-	mpQueueButtons->mpButtons[4] = new CAdvancedButton<CWorldState, void, int>(SPointData(457, 5), SAABoundingBox(82.0f, 560.0f, 5.0f, 457.0f),
+	mpQueueButtons->mpButtons[4] = new CAdvancedButton<CWorldState, void, int>(SPointData(457, 5), DX::XMFLOAT2(103.0f, 97.0f),
 		*this, &CWorldState::UnqueueUnit);
 
 	for (int i = 0; i < mpQueueButtons->mNumButtons; i++)
@@ -905,19 +905,19 @@ void CWorldState::StateSetup()
 
 
 	// Space Buttons
-	mpSpaceAtaackButtons = new CAdvancedButton<CWorldState, void>("AttackButton.png", "AttackButtonMO.png", SPointData(10, 695), SAABoundingBox(773.0f, 113.0f, 695.0f, 10.0f),
+	mpSpaceAtaackButtons = new CAdvancedButton<CWorldState, void>("AttackButton.png", "AttackButtonMO.png", SPointData(10, 695), DX::XMFLOAT2(103.0f, 97.0f),
 		*this, &CWorldState::LaunchAttack);
 	mpGenericButtonList.push_back(mpSpaceAtaackButtons);
 
-	mpSpaceTacNoneButton = new CAdvancedButton<CWorldState, void>("NoTactics.png", "NoTacticsMO.png", SPointData(138, 695), SAABoundingBox(773.0f, 246.0f, 695.0f, 138.0f),
+	mpSpaceTacNoneButton = new CAdvancedButton<CWorldState, void>("NoTactics.png", "NoTacticsMO.png", SPointData(138, 695), DX::XMFLOAT2(103.0f, 97.0f),
 		*this, &CWorldState::ChangeTacNone);
 	mpGenericButtonList.push_back(mpSpaceTacNoneButton);
 
-	mpSpaceTacTargetedButton = new CAdvancedButton<CWorldState, void>("TargetButton.png", "TargetButtonMO.png", SPointData(265, 695), SAABoundingBox(773.0f, 369.0f, 695.0f, 265.0f),
+	mpSpaceTacTargetedButton = new CAdvancedButton<CWorldState, void>("TargetButton.png", "TargetButtonMO.png", SPointData(265, 695), DX::XMFLOAT2(103.0f, 97.0f),
 		*this, &CWorldState::ChangeTacTargated);
 	mpGenericButtonList.push_back(mpSpaceTacTargetedButton);
 
-	mpSpaceTacRapidButton = new CAdvancedButton<CWorldState, void>("DefRapidFireButton.png", "SelRapidFireButton.png", SPointData(10, 783), SAABoundingBox(860.0f, 113.0f, 783.0f, 10.0f),
+	mpSpaceTacRapidButton = new CAdvancedButton<CWorldState, void>("DefRapidFireButton.png", "SelRapidFireButton.png", SPointData(10, 783), DX::XMFLOAT2(103.0f, 97.0f),
 		*this, &CWorldState::ChangeTacRapid);
 	mpGenericButtonList.push_back(mpSpaceTacRapidButton);
 
@@ -1967,15 +1967,15 @@ void CWorldState::OnPause()
 
 	// Load buttons
 	CAdvancedButton<CWorldState, void>* pNewButton = new CAdvancedButton<CWorldState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 350),
-		SAABoundingBox(400.0f, 1215.0f, 350.0f, 815.0f), *this, &CWorldState::Continue);
+		DX::XMFLOAT2(400.0f, 50.0f), *this, &CWorldState::Continue);
 	mpPauseButtonList.push_back(pNewButton);
 
 	pNewButton = new CAdvancedButton<CWorldState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 420),
-		SAABoundingBox(470.0f, 1215.0f, 420.0f, 815.0f), *this, &CWorldState::OnChooseSave);
+		DX::XMFLOAT2(400.0f, 50.0f), *this, &CWorldState::OnChooseSave);
 	mpPauseButtonList.push_back(pNewButton);
 
 	pNewButton = new CAdvancedButton<CWorldState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 490),
-		SAABoundingBox(540.0f, 1215.0f, 490.0f, 815.0f), *this, &CWorldState::QuitGame);
+		DX::XMFLOAT2(400.0f, 50.0f), *this, &CWorldState::QuitGame);
 	mpPauseButtonList.push_back(pNewButton);
 }
 
@@ -2006,7 +2006,7 @@ void CWorldState::OnUnPause()
 void CWorldState::OnChooseSave()
 {
 	// Create a typebox
-	mpTypeBox = new CTypeBox(SPointData{ 770, 220 });
+	mpTypeBox = new CTypeBox(SPointData{ 770, 220 }, DX::XMFLOAT2{ 500.0f, 40.0f });
 
 	// Remove the buttons as they are no longer needed
 	while (!mpPauseButtonList.empty())
@@ -2018,11 +2018,11 @@ void CWorldState::OnChooseSave()
 
 	// Create the save related buttons
 	CAdvancedButton<CWorldState, void>* pNewButton = new CAdvancedButton<CWorldState, void>("DefSmallButton.png", "SelSmallButton.png", SPointData(895, 280),
-		SAABoundingBox(330.0f, 995.0f, 280.0f, 895.0f), *this, &CWorldState::SaveGame);
+		DX::XMFLOAT2(100.0f, 50.0f), *this, &CWorldState::SaveGame);
 	mpPauseButtonList.push_back(pNewButton);
 
 	pNewButton = new CAdvancedButton<CWorldState, void>("DefSmallButton.png", "SelSmallButton.png", SPointData(1035, 280),
-		SAABoundingBox(330.0f, 1135.0f, 280.0f, 1035.0f), *this, &CWorldState::OnChooseCancel);
+		DX::XMFLOAT2(100.0f, 50.0f), *this, &CWorldState::OnChooseCancel);
 	mpPauseButtonList.push_back(pNewButton);
 }
 
@@ -2041,15 +2041,15 @@ void CWorldState::OnChooseCancel()
 
 	// Replace with buttons
 	CAdvancedButton<CWorldState, void>* pNewButton = new CAdvancedButton<CWorldState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 350),
-		SAABoundingBox(400.0f, 1215.0f, 350.0f, 815.0f), *this, &CWorldState::Continue);
+		DX::XMFLOAT2(400.0f, 50.0f), *this, &CWorldState::Continue);
 	mpPauseButtonList.push_back(pNewButton);
 
 	pNewButton = new CAdvancedButton<CWorldState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 420),
-		SAABoundingBox(470.0f, 1215.0f, 420.0f, 815.0f), *this, &CWorldState::OnChooseSave);
+		DX::XMFLOAT2(400.0f, 50.0f), *this, &CWorldState::OnChooseSave);
 	mpPauseButtonList.push_back(pNewButton);
 
 	pNewButton = new CAdvancedButton<CWorldState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 490),
-		SAABoundingBox(540.0f, 1215.0f, 490.0f, 815.0f), *this, &CWorldState::QuitGame);
+		DX::XMFLOAT2(400.0f, 50.0f), *this, &CWorldState::QuitGame);
 	mpPauseButtonList.push_back(pNewButton);
 }
 
@@ -2066,7 +2066,7 @@ void CWorldState::OnEnd()
 	
 	// Only the quit button is required here.
 	CAdvancedButton<CWorldState, void>* pNewButton = new CAdvancedButton<CWorldState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 490),
-		SAABoundingBox(540.0f, 1215.0f, 490.0f, 815.0f), *this, &CWorldState::QuitGame);
+		DX::XMFLOAT2(400.0f, 50.0f), *this, &CWorldState::QuitGame);
 	mpPauseButtonList.push_back(pNewButton);
 }
 

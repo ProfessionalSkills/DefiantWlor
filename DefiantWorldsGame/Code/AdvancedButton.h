@@ -21,9 +21,9 @@ public:
 	typedef CRt(C::*ButtonMethod)(CArgs...);
 	
 	CAdvancedButton(std::string defaultTex, std::string selectedTex, SPointData pos,
-		SAABoundingBox boundingBox, C& targetClass, ButtonMethod targetMethod,
+		DX::XMFLOAT2 boxDimensions, C& targetClass, ButtonMethod targetMethod,
 		ETransitionTypes transitionType = TR_NONE, bool active = true, float transitionTime = 0.5f) :
-		CMovingUI(pos, boundingBox, transitionType, active, transitionTime), mTargetClass(targetClass),
+		CMovingUI(pos, boxDimensions, transitionType, active, transitionTime), mTargetClass(targetClass),
 		mTargetMethod(targetMethod), mIsHidden(false), mMouseIsOver(false)
 	{
 		mIsHidden = !active;
@@ -31,9 +31,9 @@ public:
 		mpSprMO = gpEngine->CreateSprite(selectedTex, mCurPosition.x, mCurPosition.y, -1.0f);
 	}
 
-	CAdvancedButton(SPointData pos, SAABoundingBox boundingBox, C& targetClass, ButtonMethod targetMethod,
+	CAdvancedButton(SPointData pos, DX::XMFLOAT2 boxDimensions, C& targetClass, ButtonMethod targetMethod,
 		ETransitionTypes transitionType = TR_NONE, bool active = true, float transitionTime = 0.5f) :
-		CMovingUI(pos, boundingBox, transitionType, active, transitionTime), mTargetClass(targetClass),
+		CMovingUI(pos, boxDimensions, transitionType, active, transitionTime), mTargetClass(targetClass),
 		mTargetMethod(targetMethod), mIsHidden(false), mMouseIsOver(false)
 	{
 		mIsHidden = !active;
@@ -69,6 +69,10 @@ public:
 		{
 			// This is a moving user interface element - call the parent function first to update its position
 			UpdateTransition();
+
+			// Calculate bounding box based on provided dimensions and position
+			mBoundingBox = { mCurPosition.y + mBoxDimensions.y, mCurPosition.x + mBoxDimensions.x, mCurPosition.y, mCurPosition.x };
+
 			// If sprite exists
 			if (mpSprBasic)
 			{

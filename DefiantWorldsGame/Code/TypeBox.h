@@ -9,18 +9,19 @@
 //-----------------------------------------------------
 // INCLUDES
 //-----------------------------------------------------
-#include "Common.h"
+#include "MovingUI.h"
 
 
 //-----------------------------------------------------
-// TYPE BOX CLASS
+// TYPE BOX CLASS : CHILD OF MOVING UI BASE CLASS
 //-----------------------------------------------------
-class CTypeBox
+class CTypeBox : public CMovingUI
 {
 public:
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
-	CTypeBox(SPointData position);
+	CTypeBox(SPointData position, DX::XMFLOAT2 boxDimensions, ETransitionTypes transitionType = TR_NONE,
+		bool active = true, float transitionTime = 0.5f);
 	~CTypeBox();
 
 
@@ -71,9 +72,7 @@ private:
 
 	// TYPE BOX PROPERTIES
 	//---------------------------
-	SPointData mPosition{ 0, 0 };
-	DX::XMFLOAT2 mBoxDimensions{ 500.0f, 40.0f };		// Dimensions of the input box: x = width, y = height
-	SAABoundingBox mBoundingBox;
+	//DX::XMFLOAT2 mBoxDimensions{ 500.0f, 40.0f };		// Dimensions of the input box: x = width, y = height
 	std::stringstream mTypeStream;
 
 

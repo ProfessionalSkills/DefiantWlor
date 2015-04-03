@@ -25,7 +25,7 @@ class CMovingUI
 public:
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
-	CMovingUI(SPointData destination, SAABoundingBox boundingBox, ETransitionTypes transitionType, bool active, float transitionTime);
+	CMovingUI(SPointData destination, DX::XMFLOAT2 boxDimensions, ETransitionTypes transitionType, bool active, float transitionTime);
 	~CMovingUI();
 
 
@@ -62,6 +62,8 @@ protected:
 	float mTransitionTime;
 	float mTransitionDistance;
 	float mTimer = 0.0f;
+
+	DX::XMFLOAT2 mBoxDimensions;
 	SAABoundingBox mBoundingBox;
 
 	// Determines what the destination is

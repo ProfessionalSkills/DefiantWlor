@@ -133,7 +133,7 @@ void CMenuState::OnChooseLoadGame()
 	mMenuState = MENU_LOAD;
 	
 	// Create a typebox
-	mpTypeBox = new CTypeBox(SPointData{ 770, 420 });
+	mpTypeBox = new CTypeBox(SPointData{ 770, 420 }, DX::XMFLOAT2{ 500.0f, 40.0f });
 
 	// Hide the main menu buttons
 	mpButtonList[0]->Hide();
@@ -266,68 +266,68 @@ void CMenuState::StateSetup()
 
 	// ID NUMBERS 0-3 are main menu items
 	CAdvancedButton<CMenuState, void>* pNewButton = new CAdvancedButton<CMenuState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 350),
-		SAABoundingBox(400.0f, 1215.0f, 350.0f, 815.0f), *this, &CMenuState::NewGame, TR_LEFT);
+		DX::XMFLOAT2(400.0f, 50.0f), *this, &CMenuState::NewGame, TR_LEFT);
 	mpButtonList.push_back(pNewButton);
 
 	pNewButton = new CAdvancedButton<CMenuState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 420),
-		SAABoundingBox(470.0f, 1215.0f, 420.0f, 815.0f), *this, &CMenuState::OnChooseLoadGame, TR_LEFT);
+		DX::XMFLOAT2(400.0f, 50.0f), *this, &CMenuState::OnChooseLoadGame, TR_LEFT);
 	mpButtonList.push_back(pNewButton);
 
 	pNewButton = new CAdvancedButton<CMenuState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 490),
-		SAABoundingBox(540.0f, 1215.0f, 490.0f, 815.0f), *this, &CMenuState::ChangeSettings, TR_LEFT);
+		DX::XMFLOAT2(400.0f, 50.0f), *this, &CMenuState::ChangeSettings, TR_LEFT);
 	mpButtonList.push_back(pNewButton);
 
 	pNewButton = new CAdvancedButton<CMenuState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 560),
-		SAABoundingBox(610.0f, 1215.0f, 560.0f, 815.0f), *this, &CMenuState::Quit, TR_LEFT);
+		DX::XMFLOAT2(400.0f, 50.0f), *this, &CMenuState::Quit, TR_LEFT);
 	mpButtonList.push_back(pNewButton);
 
 	// ID NUMBERS 4 & 5 are linked to saving
 	pNewButton = new CAdvancedButton<CMenuState, void>("DefSmallButton.png", "SelSmallButton.png", SPointData(895, 480),
-		SAABoundingBox(530.0f, 995.0f, 480.0f, 895.0f), *this, &CMenuState::LoadGame, TR_LEFT, false);
+		DX::XMFLOAT2(100.0f, 50.0f), *this, &CMenuState::LoadGame, TR_LEFT, false);
 	mpButtonList.push_back(pNewButton);
 
 	pNewButton = new CAdvancedButton<CMenuState, void>("DefSmallButton.png", "SelSmallButton.png", SPointData(1035, 480),
-		SAABoundingBox(530.0f, 1135.0f, 480.0f, 1035.0f), *this, &CMenuState::OnChooseCancel, TR_LEFT, false);
+		DX::XMFLOAT2(100.0f, 50.0f), *this, &CMenuState::OnChooseCancel, TR_LEFT, false);
 	mpButtonList.push_back(pNewButton);
 
 	// ID NUMBERS 6 & 7 linked to starting a new game
 	pNewButton = new CAdvancedButton<CMenuState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 620),
-		SAABoundingBox(670.0f, 1215.0f, 620.0f, 815.0f), *this, &CMenuState::StartNewGame, TR_LEFT, false);
+		DX::XMFLOAT2(400.0f, 50.0f), *this, &CMenuState::StartNewGame, TR_LEFT, false);
 	mpButtonList.push_back(pNewButton);
 
 	pNewButton = new CAdvancedButton<CMenuState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 690),
-		SAABoundingBox(740.0f, 1215.0f, 690.0f, 815.0f), *this, &CMenuState::OnChooseCancel, TR_LEFT, false);
+		DX::XMFLOAT2(400.0f, 50.0f), *this, &CMenuState::OnChooseCancel, TR_LEFT, false);
 	mpButtonList.push_back(pNewButton);
 
 
 	// AI Difficulty buttons
 	CAdvancedButton<CMenuState, void, int>* pNewIntButton = new CAdvancedButton<CMenuState, void, int>("DefSmallButton.png", "SelSmallButton.png", SPointData(755, 220),
-		SAABoundingBox(270.0f, 855.0f, 220.0f, 755.0f), *this, &CMenuState::SetAIDifficulty, TR_LEFT, false);
+		DX::XMFLOAT2(100.0f, 50.0f), *this, &CMenuState::SetAIDifficulty, TR_LEFT, false);
 	mpAIDButtonList.push_back(pNewIntButton);
 
 	pNewIntButton = new CAdvancedButton<CMenuState, void, int>("DefSmallButton.png", "SelSmallButton.png", SPointData(895, 220),
-		SAABoundingBox(270.0f, 995.0f, 220.0f, 895.0f), *this, &CMenuState::SetAIDifficulty, TR_LEFT, false);
+		DX::XMFLOAT2(100.0f, 50.0f), *this, &CMenuState::SetAIDifficulty, TR_LEFT, false);
 	mpAIDButtonList.push_back(pNewIntButton);
 
 	pNewIntButton = new CAdvancedButton<CMenuState, void, int>("DefSmallButton.png", "SelSmallButton.png", SPointData(1035, 220),
-		SAABoundingBox(270.0f, 1135.0f, 220.0f, 1035.0f), *this, &CMenuState::SetAIDifficulty, TR_LEFT, false);
+		DX::XMFLOAT2(100.0f, 50.0f), *this, &CMenuState::SetAIDifficulty, TR_LEFT, false);
 	mpAIDButtonList.push_back(pNewIntButton);
 
 	pNewIntButton = new CAdvancedButton<CMenuState, void, int>("DefSmallButton.png", "SelSmallButton.png", SPointData(1175, 220),
-		SAABoundingBox(270.0f, 1275.0f, 220.0f, 1175.0f), *this, &CMenuState::SetAIDifficulty, TR_LEFT, false);
+		DX::XMFLOAT2(100.0f, 50.0f), *this, &CMenuState::SetAIDifficulty, TR_LEFT, false);
 	mpAIDButtonList.push_back(pNewIntButton);
 
 	// Starting resources buttons
 	pNewIntButton = new CAdvancedButton<CMenuState, void, int>("DefSmallButton.png", "SelSmallButton.png", SPointData(825, 340),
-		SAABoundingBox(390.0f, 925.0f, 340.0f, 825.0f), *this, &CMenuState::SetStartingResources, TR_LEFT, false);
+		DX::XMFLOAT2(100.0f, 50.0f), *this, &CMenuState::SetStartingResources, TR_LEFT, false);
 	mpStartingResButtonList.push_back(pNewIntButton);
 
 	pNewIntButton = new CAdvancedButton<CMenuState, void, int>("DefSmallButton.png", "SelSmallButton.png", SPointData(965, 340),
-		SAABoundingBox(390.0f, 1065.0f, 340.0f, 965.0f), *this, &CMenuState::SetStartingResources, TR_LEFT, false);
+		DX::XMFLOAT2(100.0f, 50.0f), *this, &CMenuState::SetStartingResources, TR_LEFT, false);
 	mpStartingResButtonList.push_back(pNewIntButton);
 
 	pNewIntButton = new CAdvancedButton<CMenuState, void, int>("DefSmallButton.png", "SelSmallButton.png", SPointData(1105, 340),
-		SAABoundingBox(390.0f, 1205.0f, 340.0f, 1105.0f), *this, &CMenuState::SetStartingResources, TR_LEFT, false);
+		DX::XMFLOAT2(100.0f, 50.0f), *this, &CMenuState::SetStartingResources, TR_LEFT, false);
 	mpStartingResButtonList.push_back(pNewIntButton);
 }
 

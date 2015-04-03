@@ -8,17 +8,12 @@
 //-----------------------------------------------------
 // TYPE BOX CLASS CONSTRUCTORS & DESTRUCTOR
 //-----------------------------------------------------
-CTypeBox::CTypeBox(SPointData position)
+CTypeBox::CTypeBox(SPointData position, DX::XMFLOAT2 boxDimensions, ETransitionTypes transitionType,
+	bool active, float transitionTime) : CMovingUI(position, boxDimensions, transitionType, active, transitionTime)
 {
-	// Set the slider's properties
-	mPosition = position;
-
 	// Load the sprites & Fonts
-	mpSprBox = gpEngine->CreateSprite("TypeBoxBack.png", (float)position.mPosX, (float)position.mPosY, 0.6f);
+	mpSprBox = gpEngine->CreateSprite("TypeBoxBack.png", mCurPosition.x, mCurPosition.y, 0.6f);
 	mpFntText = gpEngine->LoadFont("font2.bmp", 25U);
-
-	// Define the bounding box around the slider
-	mBoundingBox = SAABoundingBox(position.mPosY + mBoxDimensions.y, position.mPosX + mBoxDimensions.x, position.mPosY, position.mPosX);
 }
 
 CTypeBox::~CTypeBox()
@@ -40,8 +35,25 @@ CTypeBox::~CTypeBox()
 //-----------------------------------------------------
 void CTypeBox::Update()
 {
+	// If it is transitioning in or out, update the button's position
+	if (mToTransitionIn || mToTransitionOut)
+	{
+		// This is a moving user interface element - call the parent function first to update its position
+		UpdateTransition();
+
+		// Calculate bounding box based on provided dimensions and position
+		mBoundingBox = { mCurPosition.y + mBoxDimensions.y, mCurPosition.x + mBoxDimensions.x, mCurPosition.y, mCurPosition.x };
+
+		// If sprite exists
+		if (mpSprBox)
+		{
+			mpSprBox->SetX(mCurPosition.x);
+			mpSprBox->SetY(mCurPosition.y);
+		}
+	}
+	
 	// Draw the current text
-	mpFntText->Draw(mTypeStream.str(), mPosition.mPosX + 10, mPosition.mPosY + 20, kBlack, kLeft, kVCentre);
+	mpFntText->Draw(mTypeStream.str(), mCurPosition.x + 10, mCurPosition.y + 20, kBlack, kLeft, kVCentre);
 
 	// In the update area, all this is doing is looking for key presses to add to the current text
 	// Use the delete button to clear the contents

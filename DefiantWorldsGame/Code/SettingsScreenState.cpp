@@ -126,29 +126,29 @@ void CSettingsScreenState::StateSetup()
 	mpSprCursor = gpEngine->CreateSprite("BaseCursor.png", 5.0f, 50.0f, 0.0f);
 
 	CAdvancedButton<CSettingsScreenState, void>* pNewButton = new CAdvancedButton<CSettingsScreenState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 620),
-		SAABoundingBox(670.0f, 1215.0f, 620.0f, 815.0f), *this, &CSettingsScreenState::SaveSettings);
+		DX::XMFLOAT2(400.0f, 50.0f), *this, &CSettingsScreenState::SaveSettings);
 	mpButtonList.push_back(pNewButton);
 
 	pNewButton = new CAdvancedButton<CSettingsScreenState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(815, 690),
-		SAABoundingBox(740.0f, 1215.0f, 690.0f, 815.0f), *this, &CSettingsScreenState::Cancel);
+		DX::XMFLOAT2(400.0f, 50.0f), *this, &CSettingsScreenState::Cancel);
 	mpButtonList.push_back(pNewButton);
 
 
 	// Settings buttons
 	pNewButton = new CAdvancedButton<CSettingsScreenState, void>("DefSmallButton.png", "SelSmallButton.png", SPointData(650, 200),
-		SAABoundingBox(250.0f, 750.0f, 200.0f, 650.0f), *this, &CSettingsScreenState::DecrementMusic);
+		DX::XMFLOAT2(100.0f, 50.0f), *this, &CSettingsScreenState::DecrementMusic);
 	mpButtonList.push_back(pNewButton);
 
 	pNewButton = new CAdvancedButton<CSettingsScreenState, void>("DefSmallButton.png", "SelSmallButton.png", SPointData(1270, 200),
-		SAABoundingBox(250.0f, 1370.0f, 200.0f, 1270.0f), *this, &CSettingsScreenState::IncrementMusic);
+		DX::XMFLOAT2(100.0f, 50.0f), *this, &CSettingsScreenState::IncrementMusic);
 	mpButtonList.push_back(pNewButton);
 
 	pNewButton = new CAdvancedButton<CSettingsScreenState, void>("DefSmallButton.png", "SelSmallButton.png", SPointData(650, 310),
-		SAABoundingBox(360.0f, 750.0f, 310.0f, 650.0f), *this, &CSettingsScreenState::DecrementEffects);
+		DX::XMFLOAT2(100.0f, 50.0f), *this, &CSettingsScreenState::DecrementEffects);
 	mpButtonList.push_back(pNewButton);
 
 	pNewButton = new CAdvancedButton<CSettingsScreenState, void>("DefSmallButton.png", "SelSmallButton.png", SPointData(1270, 310),
-		SAABoundingBox(360.0f, 1370.0f, 310.0f, 1270.0f), *this, &CSettingsScreenState::IncrementEffects);
+		DX::XMFLOAT2(100.0f, 50.0f), *this, &CSettingsScreenState::IncrementEffects);
 	mpButtonList.push_back(pNewButton);
 
 
