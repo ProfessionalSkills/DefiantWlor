@@ -143,6 +143,10 @@ void CMenuState::ChangeSettings()
 	// Show the save settings buttons
 	mpButtonList[8]->Show();
 	mpButtonList[7]->Show();
+	mpButtonList[9]->Show();
+	mpButtonList[10]->Show();
+	mpButtonList[11]->Show();
+	mpButtonList[12]->Show();
 }
 
 void CMenuState::Quit()
@@ -187,6 +191,10 @@ void CMenuState::OnChooseCancel()
 	mpButtonList[6]->Hide();
 	mpButtonList[7]->Hide();
 	mpButtonList[8]->Hide();
+	mpButtonList[9]->Hide();
+	mpButtonList[10]->Hide();
+	mpButtonList[11]->Hide();
+	mpButtonList[12]->Hide();
 
 	mpSprLogo->SetZ(0.8f);
 
@@ -362,6 +370,22 @@ void CMenuState::StateSetup()
 		DX::XMFLOAT2(400.0f, 50.0f), *this, &CMenuState::SaveSettings, TR_LEFT, false);
 	mpButtonList.push_back(pNewButton);
 
+	// Settings buttons
+	pNewButton = new CAdvancedButton<CMenuState, void>("DefSmallButton.png", "SelSmallButton.png", SPointData(650, 200),
+		DX::XMFLOAT2(100.0f, 50.0f), *this, &CMenuState::DecrementMusic, TR_LEFT, false);
+	mpButtonList.push_back(pNewButton);
+
+	pNewButton = new CAdvancedButton<CMenuState, void>("DefSmallButton.png", "SelSmallButton.png", SPointData(1270, 200),
+		DX::XMFLOAT2(100.0f, 50.0f), *this, &CMenuState::IncrementMusic, TR_LEFT, false);
+	mpButtonList.push_back(pNewButton);
+
+	pNewButton = new CAdvancedButton<CMenuState, void>("DefSmallButton.png", "SelSmallButton.png", SPointData(650, 310),
+		DX::XMFLOAT2(100.0f, 50.0f), *this, &CMenuState::DecrementEffects, TR_LEFT, false);
+	mpButtonList.push_back(pNewButton);
+
+	pNewButton = new CAdvancedButton<CMenuState, void>("DefSmallButton.png", "SelSmallButton.png", SPointData(1270, 310),
+		DX::XMFLOAT2(100.0f, 50.0f), *this, &CMenuState::IncrementEffects, TR_LEFT, false);
+	mpButtonList.push_back(pNewButton);
 
 	// AI Difficulty buttons
 	CAdvancedButton<CMenuState, void, int>* pNewIntButton = new CAdvancedButton<CMenuState, void, int>("DefSmallButton.png", "SelSmallButton.png", SPointData(755, 220),
@@ -481,7 +505,15 @@ void CMenuState::StateUpdate()
 		if (mpButtonList[8]->IsInPlace()) mpButtonFont->Draw("SAVE SETTINGS", 1015, 635, kWhite, kCentre, kTop);
 		if (mpButtonList[7]->IsInPlace()) mpButtonFont->Draw("CANCEL", 1015, 705, kWhite, kCentre, kTop);
 
+		if (mpButtonList[9]->IsInPlace()) mpIncDecFont->Draw("--", 700, 210, kWhite, kCentre, kTop);
+		if (mpButtonList[10]->IsInPlace())mpIncDecFont->Draw("++", 1320, 212, kWhite, kCentre, kTop);
+		if (mpButtonList[11]->IsInPlace())mpIncDecFont->Draw("--", 700, 320, kWhite, kCentre, kTop);
+		if (mpButtonList[12]->IsInPlace())mpIncDecFont->Draw("++", 1320, 322, kWhite, kCentre, kTop);
+
 		mpTitleFont->Draw("CHANGE GAME SETTINGS", 1015, 90, kCyan, kCentre, kTop);
+
+		if (mpMusicSlider->IsInPlace()) mpIncDecFont->Draw("MUSIC VOLUME", 1015, 180, kWhite, kCentre, kTop);
+		if (mpEffectsSlider->IsInPlace()) mpIncDecFont->Draw("EFFECTS VOLUME", 1015, 290, kWhite, kCentre, kTop);
 		break;
 	}
 
