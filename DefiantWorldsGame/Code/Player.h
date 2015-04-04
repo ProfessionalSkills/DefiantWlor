@@ -197,20 +197,21 @@ public:
 			mCurPop += Temp->GetPopValue();
 			Temp->SetFaction(mPlayerFaction);
 			mpSpaceUnitsList.push_back(Temp);
+			mNumSpaceFighter++;
 		}
 		CTransport* temp;
 		for (int i = 0; i < 5; i++)
 		{
-			
-
 			temp = new CTransport();
 			mCurPop += temp->GetPopValue();
 			temp->SetFaction(mPlayerFaction);
 			mpSpaceUnitsList.push_back(temp);
+			mNumTransport++;
 		}
 		mCurPop += 10;
 		mpSpaceUnitsList.push_back(new CMothership());
 		mpSpaceUnitsList.back()->SetFaction(mPlayerFaction);
+		mNumMothership++;
 	}
 
 	bool MineralTransaction(int amount);

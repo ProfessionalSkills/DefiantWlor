@@ -436,16 +436,24 @@ void CWorldState::CheckKeyPresses()
 		mpHumanPlayer->GetFleet()->SetTactic(Rapid);
 	}
 
+
+	if (gpEngine->KeyHit(Key_K))
+	{
+		//mpHumanPlayer->GetFleet()->ManFleet(mpHumanPlayer->GetWorldUnitList());
+	}
+
+
+	//-- DEBUG CONTROLS --//
+	//used to make the ai fleet win in testing
+	if (gpEngine->KeyHit(Key_J))
+	{
+		mpAIPlayer->GetFleet()->SetTactic(Targeted);
+	}
 	//add units to both players
 	if (gpEngine->KeyHit(Key_P))
 	{
 		mpHumanPlayer->AddShips();
 		mpAIPlayer->AddShips();
-	}
-
-	if (gpEngine->KeyHit(Key_K))
-	{
-		//mpHumanPlayer->GetFleet()->ManFleet(mpHumanPlayer->GetWorldUnitList());
 	}
 
 	mRMouseClicked = false;

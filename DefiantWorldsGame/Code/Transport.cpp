@@ -109,6 +109,12 @@ void CTransport::UnloadFlash()
 
 void CTransport::LoadModel(float x, float y, float z)
 {
+
+	mChargeTime = mChargeTimeMax;
+	mChargingLazers = false;
+	mCharged = false;
+	mFiredLazer = false;
+
 	mpObjModel = mspMshTransport->CreateModel(x, y, z);
 
 	mWorldPos.x = x;

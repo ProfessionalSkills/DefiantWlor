@@ -112,6 +112,11 @@ void CMothership::LoadModel(float x, float y, float z)
 	mWorldPos.y = y;
 	mWorldPos.z = z;
 
+	mChargeTime = mChargeTimeMax;
+	mChargingLazers = false;
+	mCharged = false;
+	mFiredLazer = false;
+
 	DX::XMFLOAT3 mSourcePos = { mWorldPos.x, mWorldPos.y, mWorldPos.z };
 	DX::XMFLOAT3 mSourceVel = { 0.0F, 0.0f, 0.0f };
 	DX::XMFLOAT3 listenerPos = { 0.0f, 0.0f, -150.0f };

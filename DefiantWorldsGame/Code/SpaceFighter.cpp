@@ -60,6 +60,11 @@ CSpaceFighter::~CSpaceFighter()
 //-----------------------------------------------------
 void CSpaceFighter::LoadModel(float x,float y, float z)
 {
+	mChargeTime = mChargeTimeMax;
+	mChargingLazers=false;
+	mCharged = false;
+	mFiredLazer = false;
+
 	mpObjModel = mspMshSpaceFighter->CreateModel(x, y, z);
 	mWorldPos.x = x;
 	mWorldPos.y = y;
@@ -77,6 +82,7 @@ void CSpaceFighter::LoadModel(float x,float y, float z)
 
 	mpObjModel->RotateX(-35.0f);
 	mpObjModel->Scale(mScale);
+
 }
 
 bool CSpaceFighter::StoreUnits(CGameAgent* unit)
