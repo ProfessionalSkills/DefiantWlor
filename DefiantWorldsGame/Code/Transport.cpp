@@ -23,7 +23,7 @@ CTransport::CTransport()
 	mDamage = 10.0f;
 	mHitChance = 0.4f;
 	mFleetPosition = centre;
-	mPopCost = 1;	
+	mPopCost = 3;	
 	mUnitCapacity = 5;
 	mNumUnitsHeld = 0;
 
