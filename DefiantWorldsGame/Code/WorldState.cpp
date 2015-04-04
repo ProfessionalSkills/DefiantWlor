@@ -2162,7 +2162,6 @@ void CWorldState::LaunchAttack()
 	gCurState = GS_SPACE;
 }
 
-
 void CWorldState::ChangeTacNone()
 {
 	mpHumanPlayer->GetFleet()->SetTactic(None);

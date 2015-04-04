@@ -194,17 +194,21 @@ public:
 		for (int i = 0; i <25; i++)
 		{
 			Temp = new CSpaceFighter();
+			mCurPop += Temp->GetPopValue();
 			Temp->SetFaction(mPlayerFaction);
 			mpSpaceUnitsList.push_back(Temp);
 		}
 		CTransport* temp;
 		for (int i = 0; i < 5; i++)
 		{
+			
+
 			temp = new CTransport();
+			mCurPop += temp->GetPopValue();
 			temp->SetFaction(mPlayerFaction);
 			mpSpaceUnitsList.push_back(temp);
 		}
-
+		mCurPop += 10;
 		mpSpaceUnitsList.push_back(new CMothership());
 		mpSpaceUnitsList.back()->SetFaction(mPlayerFaction);
 	}
