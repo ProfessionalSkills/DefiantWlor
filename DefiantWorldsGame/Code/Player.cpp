@@ -64,19 +64,22 @@ bool CRTSPlayer::MineralTransaction(int amount)
 
 void CRTSPlayer::SetNumSpaceFighter(int numShips)
 {
-	if (numShips < mNumSpaceFighter) mCurPop -= (mNumSpaceFighter - numShips) * 1;
+	CSpaceFighter* Temp = new CSpaceFighter;
+	if (numShips < mNumSpaceFighter) mCurPop -= (mNumSpaceFighter - numShips) * Temp->GetPopValue();
 	mNumSpaceFighter = numShips;
 }
 
 void CRTSPlayer::SetNumTransport(int numShips)
 {
-	if (numShips < mNumTransport) mCurPop -= (mNumTransport - numShips) * 3;
+	CTransport* Temp = new CTransport;
+	if (numShips < mNumTransport) mCurPop -= (mNumTransport - numShips) * Temp->GetPopValue();
 	mNumTransport = numShips;
 }
 
 void CRTSPlayer::SetNumMothership(int numShips)
 {
-	if (numShips < mNumMothership) mCurPop -= (mNumMothership - numShips) * 10;
+	CMothership* Temp=new CMothership;
+	if (numShips < mNumMothership) mCurPop -= (mNumMothership - numShips) * Temp->GetPopValue();
 	mNumMothership = numShips;
 }
 
