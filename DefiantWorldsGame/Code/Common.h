@@ -75,8 +75,8 @@ enum EErrorTypes
 //-----------------------------------------------------
 // GLOBAL VARIABLES
 //-----------------------------------------------------
-const int WINDOW_POS_X = 50;
-const int WINDOW_POS_Y = 50;
+const int WINDOW_POS_X = 0;
+const int WINDOW_POS_Y = 0;
 
 const int WINDOW_WIDTH = 1600;
 const int WINDOW_HEIGHT = 900;

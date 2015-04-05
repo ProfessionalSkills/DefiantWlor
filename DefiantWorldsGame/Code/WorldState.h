@@ -132,6 +132,7 @@ private:
 
 	RECT mBaseClip;			    // The rectangle of the window (for undoing mouse clip)
 	RECT mWindowClip;		    // Limit the mouse to stay within the window
+	RECT mClientRect;			// Will store the dimensions of the actual render area of the window
 	bool mLMouseClicked;
 	bool mRMouseClicked;
 	float mHoldCount;

@@ -38,7 +38,7 @@ void CWorldState::UpdateMatrices()
 	// XMMATRIX variables calculations
 	DX::XMMATRIX world = DX::XMLoadFloat4x4(&mCamWorldMatrix);
 	DX::XMMATRIX view = DX::XMMatrixInverse(NULL, DX::XMLoadFloat4x4(&mCamWorldMatrix));
-	DX::XMMATRIX proj = DX::XMMatrixPerspectiveFovLH(DX::XM_PI / 3.4f, 1584.0f / 862.0f, NEAR_CLIP, FAR_CLIP);
+	DX::XMMATRIX proj = DX::XMMatrixPerspectiveFovLH(DX::XM_PI / 3.4f, (float)mClientRect.right / (float)mClientRect.bottom, NEAR_CLIP, FAR_CLIP);
 	DX::XMMATRIX viewProj = view * proj;
 	DX::XMMATRIX invViewProj = DX::XMMatrixInverse(NULL, viewProj);
 
@@ -81,8 +81,8 @@ void CWorldState::UpdateHeldStructure()
 void CWorldState::CalculateMouseGridPos()
 {
 	// Convert mouse co-ordinates to have a -1 to 1 range
-	DX::XMFLOAT2 mousePoint(((2.0f * (float)mpMouseScreenPos->mPosX) / 1584.0f) - 1.0f,
-		(((2.0f * (float)mpMouseScreenPos->mPosY) / 862.0f) - 1.0f) * -1.0f);
+	DX::XMFLOAT2 mousePoint(((2.0f * (float)mpMouseScreenPos->mPosX) / (float)mClientRect.right) - 1.0f,
+		(((2.0f * (float)mpMouseScreenPos->mPosY) / (float)mClientRect.bottom) - 1.0f) * -1.0f);
 
 	// Mouse vectors
 	DX::XMFLOAT3 nearVec(mousePoint.x, mousePoint.y, 0.0f);
@@ -742,12 +742,25 @@ void CWorldState::StateSetup()
 	mWindowClip = { 0 };
 	GetClipCursor(&mBaseClip);
 	GetWindowRect((HWND)gpEngine->GetWindow(), &mWindowClip);
+	GetClientRect((HWND)gpEngine->GetWindow(), &mClientRect);
+
+	// Calculate how much of the window is made up of bars (i.e. window bar & side/bottom adjustment bars)
+	// WIDTH - find difference in width between client rectangle and window rectangle
+	int difference = mWindowClip.right - mClientRect.right;
+	// Small bars are same size on either side of the window - so simply divide difference by 2
+	int smallBarSize = difference / 2;
+
+	// HEIGHT
+	difference = mWindowClip.bottom - mClientRect.bottom;
+	// Window bar at top is a different size to the smaller bar
+	// Usr the small bar size to find out the size of the large bar at the top
+	int largeBarSize = difference - smallBarSize;
 
 	// Shrink the rectangle to not include side bars and window bar
-	mWindowClip.top += 30;
-	mWindowClip.left += 8;
-	mWindowClip.right -= 8;
-	mWindowClip.bottom -= 8;
+	mWindowClip.top += largeBarSize;
+	mWindowClip.left += smallBarSize;
+	mWindowClip.right -= smallBarSize;
+	mWindowClip.bottom -= smallBarSize;
 
 	// Set the cursor's limits
 	ClipCursor(&mWindowClip);
