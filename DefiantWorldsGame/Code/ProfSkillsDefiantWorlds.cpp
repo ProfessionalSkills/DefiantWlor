@@ -144,7 +144,6 @@ void main()
 //----------------------
 void SetupEngine()
 {
-	// Do we want to define our own resolution? Maybe fullscreen?
 	//setting up windows
 	gpEngine->StartWindowed(WINDOW_WIDTH, WINDOW_HEIGHT);
 	SetWindowPos((HWND)gpEngine->GetWindow(), HWND_TOP, WINDOW_POS_X, WINDOW_POS_Y, WINDOW_WIDTH, WINDOW_HEIGHT, 0U);
