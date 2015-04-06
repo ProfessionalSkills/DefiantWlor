@@ -790,7 +790,7 @@ void CWorldState::StateSetup()
 	// hellipad units buttons
 	mpHellipadButtons = new SStructureButtons<CWorldState>(2);
 	mpHellipadButtons->mpButtons[0] = new CAdvancedButton<CWorldState, void, int>("DefFighterButton.png", "SelFighterButton.png", SPointData(1219, 695),
-		DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::QueueUnit), TR_UP, false, 0.2f;
+		DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::QueueUnit, TR_UP, false, 0.2f);
 	mpHellipadButtons->mpButtons[1] = new CAdvancedButton<CWorldState, void, int>("DefBomberButton.png", "SelBomberButton.png", SPointData(1219, 782),
 		DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::QueueUnit, TR_UP, false, 0.2f);
 

@@ -72,7 +72,7 @@
       <FloatingPointModel>Fast</FloatingPointModel>
       <FunctionLevelLinking>
       </FunctionLevelLinking>
-      <DebugInformationFormat>None</DebugInformationFormat>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
