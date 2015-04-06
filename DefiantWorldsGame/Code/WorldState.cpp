@@ -1768,48 +1768,49 @@ void CWorldState::OnStructureSelectChange(CStructure* pSelStructure)
 		mpCurSelectedStructure->SetDeselectedTexture();
 	}
 	
-	// Set the currently selected structure to the parameter passed in
-	mpCurSelectedStructure = pSelStructure;
-	
 	// Check if something is slelected
-	if (mpCurSelectedStructure)
+	if (pSelStructure)
 	{
-		// Hide basic buttons
-		mpButtonBarracks->Hide();
-		mpButtonHellipad->Hide();
-		mpButtonSpaceCentre->Hide();
-
-		// Hide structure buttons - correct button list will be displayed later
-		mpBarracksButtons->Hide();
-		mpHellipadButtons->Hide();
-		mpComCentreButtons->Hide();
-		mpSpaceCentreButtons->Hide();
-
-		// Show specific structure buttons
-		mpButtonDelete->Show();
-		// Identify type of building in order to display the correct buttons for it
-		switch (mpCurSelectedStructure->GetStructureType())
+		// Update buttons if the new selected building is not the same as the previous one
+		if (mpCurSelectedStructure != pSelStructure)
 		{
-		case STR_BARRACKS:
-			mpBarracksButtons->Show();
-			break;
-		case STR_COM_CENTRE:
-			mpComCentreButtons->Show();
-			break;
-		case STR_HELLIPAD:
-			mpHellipadButtons->Show();
-			break;
-		case STR_HOUSE:
-			break;
-		case STR_SPACE_CENTRE:
-			mpSpaceCentreButtons->Show();
-			break;
-		case STR_WALL:
-			break;
+			// Hide basic buttons
+			mpButtonBarracks->Hide();
+			mpButtonHellipad->Hide();
+			mpButtonSpaceCentre->Hide();
+
+			// Hide structure buttons - correct button list will be displayed later
+			mpBarracksButtons->Hide();
+			mpHellipadButtons->Hide();
+			mpComCentreButtons->Hide();
+			mpSpaceCentreButtons->Hide();
+
+			// Show specific structure buttons
+			mpButtonDelete->Show();
+			// Identify type of building in order to display the correct buttons for it
+			switch (pSelStructure->GetStructureType())
+			{
+			case STR_BARRACKS:
+				mpBarracksButtons->Show();
+				break;
+			case STR_COM_CENTRE:
+				mpComCentreButtons->Show();
+				break;
+			case STR_HELLIPAD:
+				mpHellipadButtons->Show();
+				break;
+			case STR_HOUSE:
+				break;
+			case STR_SPACE_CENTRE:
+				mpSpaceCentreButtons->Show();
+				break;
+			case STR_WALL:
+				break;
+			}
 		}
 		
 		// Set its texture to be selected
-		mpCurSelectedStructure->SetSelectedTexture();
+		pSelStructure->SetSelectedTexture();
 		
 		// Unload the existing queue buttons
 		mpQueueButtons->UnloadSprites();
@@ -1818,7 +1819,7 @@ void CWorldState::OnStructureSelectChange(CStructure* pSelStructure)
 		std::deque<CGameAgent*>::iterator iterQ;
 
 		// Get the pointer to the queue
-		pQueue = mpCurSelectedStructure->GetQueue();
+		pQueue = pSelStructure->GetQueue();
 
 		// Loop through the queue to create the buttons for each of the units in the queue
 		if (pQueue != nullptr)
@@ -1887,6 +1888,9 @@ void CWorldState::OnStructureSelectChange(CStructure* pSelStructure)
 		mpButtonHellipad->Show();
 		mpButtonSpaceCentre->Show();
 	}
+
+	// Set the currently selected structure to the parameter passed in
+	mpCurSelectedStructure = pSelStructure;
 }
 
 void CWorldState::OnUnitSelectChange(CGameAgent* pSelAgent)
