@@ -245,6 +245,7 @@ private:
 	//---------------------------
 	void OnPlacingStructureChange(CStructure* selStructure);
 	void OnStructureSelectChange(CStructure* pSelStructure);
+	void OnUnitSelectChange(CGameAgent* pSelAgent);
 	void OnStructureQueueProgressChange();
 	void OnItemHealthChange();
 	void OnPause();

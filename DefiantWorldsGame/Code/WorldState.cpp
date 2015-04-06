@@ -277,17 +277,19 @@ void CWorldState::CheckKeyPresses()
 				mpHumanPlayer->CheckGameObjectSelection(pNewSelectedStructure, mpCurSelectedAgent,
 					mMouseOrigin, mMouseDirection);
 				OnStructureSelectChange(pNewSelectedStructure);
-				
+				OnUnitSelectChange(mpCurSelectedAgent);
 				break;
 
 			case MS_MARS_GRID:
 				mpAIPlayer->CheckGameObjectSelection(pNewSelectedStructure, mpCurSelectedAgent,
 					mMouseOrigin, mMouseDirection);
 				OnStructureSelectChange(pNewSelectedStructure);
+				OnUnitSelectChange(mpCurSelectedAgent);
 				break;
 
 			case MS_UI:
 				OnStructureSelectChange(pNewSelectedStructure);
+				OnUnitSelectChange(mpCurSelectedAgent);
 				break;
 			}
 
@@ -404,7 +406,7 @@ void CWorldState::CheckKeyPresses()
 
 		// Ensure no buildings can be brought over
 		OnPlacingStructureChange(nullptr);
-		mpCurSelectedAgent = nullptr;
+		OnUnitSelectChange(nullptr);
 		OnStructureSelectChange(nullptr);
 		mpUnitSelectionList.clear();
 	}
@@ -477,66 +479,6 @@ void CWorldState::DisplaySelectedBuildingInfo()
 	// If an object is selected, display its info
 	if (mpCurSelectedStructure)
 	{
-		// Show building & unit related buttons
-		mpButtonDelete->Show();
-		switch (mpCurSelectedStructure->GetStructureType())
-		{
-		case STR_BARRACKS:
-			
-			// Hide other buildings' buttons
-			mpHellipadButtons->Hide();
-			mpSpaceCentreButtons->Hide();
-			mpComCentreButtons->Hide();
-
-			// Show this building's buttons
-			mpBarracksButtons->Show();
-			mpButtonDelete->Show();
-			break;
-
-		case STR_COM_CENTRE:
-			 //Sets the music file
-			// Hide other buildings' buttons
-			mpBarracksButtons->Hide();
-			mpHellipadButtons->Hide();
-			mpSpaceCentreButtons->Hide();
-
-			// Show this building's buttons
-			mpComCentreButtons->Show();
-			mpButtonDelete->Show();
-			break;
-
-		case STR_HELLIPAD:
-			 //Sets the music file
-			// Hide other buildings' buttons
-			mpBarracksButtons->Hide();
-			mpSpaceCentreButtons->Hide();
-			mpComCentreButtons->Hide();
-
-			// Show this building's buttons
-			mpHellipadButtons->Show();
-			mpButtonDelete->Show();
-			break;
-
-		case STR_SPACE_CENTRE:
-			 //Sets the music file
-			// Hide other buildings' buttons
-			mpBarracksButtons->Hide();
-			mpHellipadButtons->Hide();
-			mpComCentreButtons->Hide();
-
-			// Show this building's buttons
-			mpSpaceCentreButtons->Show();
-			mpButtonDelete->Show();
-			break;
-		case STR_WALL:
-			// Hide other buildings' buttons
-			mpBarracksButtons->Hide();
-			mpHellipadButtons->Hide();
-			mpComCentreButtons->Hide();
-			mpSpaceCentreButtons->Hide();
-			mpButtonDelete->Hide();
-			break;
-		}		
 		// BUILDING DESTRUCTION
 		//------------------------------
 		if (gpEngine->KeyHit(Key_Delete))
@@ -615,26 +557,9 @@ void CWorldState::DisplaySelectedBuildingInfo()
 			mFntDebug->Draw(strStream.str(), 1130, 800, kWhite, kRight, kTop);
 			strStream.str("");
 		}
-
-		// Hide building construction buttons
-		mpButtonBarracks->Hide();
-		mpButtonHellipad->Hide();
-		mpButtonSpaceCentre->Hide();
 	}
 	else
 	{
-		// Hide building & unit related buttons
-		mpButtonDelete->Hide();
-		mpBarracksButtons->Hide();
-		mpHellipadButtons->Hide();
-		mpSpaceCentreButtons->Hide();
-		mpComCentreButtons->Hide();
-
-		// Show building construction buttons
-		mpButtonBarracks->Show();
-		mpButtonHellipad->Show();
-		mpButtonSpaceCentre->Show();
-
 		// Nothing is selected - ensure newProgressAmount is 0
 		newProgressAmount = 0;
 
@@ -671,34 +596,32 @@ void CWorldState::DisplaySelectedAgentInfo()
 {
 	int newHealthAmount = -5;
 	
+	// Check if the building has been destoryed
+	if (mpCurSelectedAgent)
+	{
+		if (mpCurSelectedAgent->GetHealth() <= 0.0f)
+		{
+			// Select nothing
+			OnUnitSelectChange(nullptr);
+		}
+	}
+
 	// If an object is selected, display its info
 	if (mpCurSelectedAgent)
 	{
-		mpButtonDelete->Show();
-		mpHellipadButtons->Hide();
-		mpSpaceCentreButtons->Hide();
-		mpComCentreButtons->Hide();
-		mpBarracksButtons->Hide();
-
-		// Show this building's buttons
-		// BUILDING DESTRUCTION
+		// UNIT DESTRUCTION
 		//------------------------------
 		if (gpEngine->KeyHit(Key_D))
 		{
 			// Set object to be deleted
-			mpCurSelectedAgent->SetAgentState(OBJ_DEAD);
+			mpCurSelectedAgent->SetState(OBJ_WARNING);
 			// pointer set to null
-			mpCurSelectedAgent = nullptr;
+			OnUnitSelectChange(nullptr);
 			// Leave function so next function call is not executed
 			return;
 		}
 
 		mpCurSelectedAgent->DisplayInfo(mFntDebug);
-
-		// Hide building construction buttons
-		mpButtonBarracks->Hide();
-		mpButtonHellipad->Hide();
-		mpButtonSpaceCentre->Hide();
 
 		// Calculate new health - temporarily set to 100
 		newHealthAmount = 100;
@@ -930,8 +853,8 @@ void CWorldState::StateSetup()
 		DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::LaunchAttack);
 	mpGenericButtonList.push_back(mpSpaceAtaackButtons);
 
-	mpSpaceTacNoneButton = new CAdvancedButton<CWorldState, void>("NoTactics.png", "NoTacticsMO.png", SPointData(138, 695), DX::XMFLOAT2(103.0f, 77.0f),
-		*this, &CWorldState::ChangeTacNone);
+	mpSpaceTacNoneButton = new CAdvancedButton<CWorldState, void>("NoTactics.png", "NoTacticsMO.png", SPointData(138, 695),
+		DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::ChangeTacNone);
 	mpGenericButtonList.push_back(mpSpaceTacNoneButton);
 
 	mpSpaceTacTargetedButton = new CAdvancedButton<CWorldState, void>("TargetButton.png", "TargetButtonMO.png", SPointData(265, 695),
@@ -1488,10 +1411,7 @@ void CWorldState::StateUpdate()
 	mMouseState = UpdateMouseState();
 	DrawFontData();
 	DisplaySelectedBuildingInfo();
-	if (mpCurSelectedAgent != nullptr)
-	{
-		DisplaySelectedAgentInfo();
-	}
+	DisplaySelectedAgentInfo();
 
 	// Update the current queue size ( if a structure is slected 0. Returns true if a change has occured
 	if (CheckForQueueChange())
@@ -1848,6 +1768,34 @@ void CWorldState::OnStructureSelectChange(CStructure* pSelStructure)
 	// Check if something is slelected
 	if (mpCurSelectedStructure)
 	{
+		// Hide basic buttons
+		mpButtonBarracks->Hide();
+		mpButtonHellipad->Hide();
+		mpButtonSpaceCentre->Hide();
+
+		// Show specific structure buttons
+		mpButtonDelete->Show();
+		// Identify type of building in order to display the correct buttons for it
+		switch (mpCurSelectedStructure->GetStructureType())
+		{
+		case STR_BARRACKS:
+			mpBarracksButtons->Show();
+			break;
+		case STR_COM_CENTRE:
+			mpComCentreButtons->Show();
+			break;
+		case STR_HELLIPAD:
+			mpHellipadButtons->Show();
+			break;
+		case STR_HOUSE:
+			break;
+		case STR_SPACE_CENTRE:
+			mpSpaceCentreButtons->Show();
+			break;
+		case STR_WALL:
+			break;
+		}
+		
 		// Set its texture to be selected
 		mpCurSelectedStructure->SetSelectedTexture();
 		
@@ -1909,10 +1857,52 @@ void CWorldState::OnStructureSelectChange(CStructure* pSelStructure)
 			}
 		}
 	}
-	else
+	// If no unit is selected, display the other required buttons
+	else if (!mpCurSelectedAgent)
 	{
 		// Nothing selected - unload sprites
 		mpQueueButtons->UnloadSprites();
+
+		// Hide structure specific buttons buttons
+		mpButtonDelete->Hide();
+		mpBarracksButtons->Hide();
+		mpSpaceCentreButtons->Hide();
+		mpHellipadButtons->Hide();
+		mpComCentreButtons->Hide();
+
+		// Show base buttons
+		mpButtonBarracks->Show();
+		mpButtonHellipad->Show();
+		mpButtonSpaceCentre->Show();
+	}
+}
+
+void CWorldState::OnUnitSelectChange(CGameAgent* pSelAgent)
+{
+	// Set the currently selected agent to the parameter passed in
+	mpCurSelectedAgent = pSelAgent;
+
+	// Check if something is selected
+	if (mpCurSelectedAgent)
+	{
+		// Show the buttons specific to units
+		mpButtonDelete->Show();
+
+		// Hide base buttons
+		mpButtonBarracks->Hide();
+		mpButtonHellipad->Hide();
+		mpButtonSpaceCentre->Hide();
+	}
+	// If no building is selected, show the other buttons
+	else if (!mpCurSelectedStructure)
+	{
+		// Nothing selected - hide buttons no longer required
+		mpButtonDelete->Hide();
+
+		// Show base buttons
+		mpButtonBarracks->Show();
+		mpButtonHellipad->Show();
+		mpButtonSpaceCentre->Show();
 	}
 }
 
@@ -2171,7 +2161,7 @@ void CWorldState::DeleteStructure()
 		// Set object to be deleted
 		mpCurSelectedAgent->SetState(OBJ_WARNING);
 		// pointer set to null
-		mpCurSelectedAgent = nullptr;
+		OnUnitSelectChange(nullptr);
 		mLMouseClicked = false;
 	}
 }
