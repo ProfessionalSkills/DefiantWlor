@@ -1094,6 +1094,12 @@ void CWorldState::StateSetup()
 	mCurCamPrevPos = DX::XMFLOAT3(0.0f, mpCamEarth->GetCamera()->GetY(), 0.0f);
 
 
+	// FINALISE BUTTONS
+	//-----------------------------
+	OnStructureSelectChange(nullptr);
+	OnUnitSelectChange(nullptr);
+
+
 	// INITIALISE MUSIC
 	//-----------------------------
 	string mMusicFile = "Perpetual Tension.wav"; //Sets the music file
