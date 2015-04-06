@@ -767,7 +767,7 @@ void CWorldState::StateSetup()
 
 
 	pNewButton = new CAdvancedButton<CWorldState, void>("DefDeleteButton.png", "SelDeleteButton.png", SPointData(1465, 782),
-		DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::DeleteStructure, TR_UP, false, 0.2f);
+		DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::DeleteStructure, TR_LEFT, false, 0.2f);
 	pNewButton->Hide();
 	mpButtonDelete = pNewButton;
 	mpGenericButtonList.push_back(pNewButton);
@@ -790,9 +790,9 @@ void CWorldState::StateSetup()
 	// hellipad units buttons
 	mpHellipadButtons = new SStructureButtons<CWorldState>(2);
 	mpHellipadButtons->mpButtons[0] = new CAdvancedButton<CWorldState, void, int>("DefFighterButton.png", "SelFighterButton.png", SPointData(1219, 695),
-		DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::QueueUnit);
+		DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::QueueUnit), TR_UP, false, 0.2f;
 	mpHellipadButtons->mpButtons[1] = new CAdvancedButton<CWorldState, void, int>("DefBomberButton.png", "SelBomberButton.png", SPointData(1219, 782),
-		DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::QueueUnit);
+		DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::QueueUnit, TR_UP, false, 0.2f);
 
 	for (int i = 0; i < mpHellipadButtons->mNumButtons; i++)
 	{
@@ -802,11 +802,11 @@ void CWorldState::StateSetup()
 	// Space centre units buttons
 	mpSpaceCentreButtons = new SStructureButtons<CWorldState>(3);
 	mpSpaceCentreButtons->mpButtons[0] = new CAdvancedButton<CWorldState, void, int>("DefSpaceFighterButton.png", "SelSpaceFighterButton.png", SPointData(1219, 695),
-		DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::QueueUnit);
+		DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::QueueUnit, TR_UP, false, 0.2f);
 	mpSpaceCentreButtons->mpButtons[1] = new CAdvancedButton<CWorldState, void, int>("DefTransportButton.png", "SelTransportButton.png", SPointData(1219, 782),
-		DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::QueueUnit);
+		DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::QueueUnit, TR_UP, false, 0.2f);
 	mpSpaceCentreButtons->mpButtons[2] = new CAdvancedButton<CWorldState, void, int>("DefMothershipButton.png", "SelMothershipButton.png", SPointData(1342, 695),
-		DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::QueueUnit);
+		DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::QueueUnit, TR_UP, false, 0.2f);
 	mpSpaceCentreButtons->Hide();
 
 	for (int i = 0; i < mpSpaceCentreButtons->mNumButtons; i++)
@@ -817,7 +817,7 @@ void CWorldState::StateSetup()
 	// Command centre units buttons
 	mpComCentreButtons = new SStructureButtons<CWorldState>(1);
 	mpComCentreButtons->mpButtons[0] = new CAdvancedButton<CWorldState, void, int>("DefWorkerButton.png", "SelWorkerButton.png", SPointData(1219, 695),
-		DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::QueueUnit);
+		DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::QueueUnit, TR_UP, false, 0.2f);
 	mpComCentreButtons->Hide();
 
 	for (int i = 0; i < mpComCentreButtons->mNumButtons; i++)
@@ -829,15 +829,15 @@ void CWorldState::StateSetup()
 	// Queue buttons
 	mpQueueButtons = new SStructureButtons<CWorldState>(5);
 	mpQueueButtons->mpButtons[0] = new CAdvancedButton<CWorldState, void, int>(SPointData(5, 5), DX::XMFLOAT2(103.0f, 77.0f),
-		*this, &CWorldState::UnqueueUnit);
+		*this, &CWorldState::UnqueueUnit, TR_DOWN, true, 0.2f);
 	mpQueueButtons->mpButtons[1] = new CAdvancedButton<CWorldState, void, int>(SPointData(118, 5), DX::XMFLOAT2(103.0f, 77.0f),
-		*this, &CWorldState::UnqueueUnit);
+		*this, &CWorldState::UnqueueUnit, TR_DOWN, true, 0.2f);
 	mpQueueButtons->mpButtons[2] = new CAdvancedButton<CWorldState, void, int>(SPointData(231, 5), DX::XMFLOAT2(103.0f, 77.0f),
-		*this, &CWorldState::UnqueueUnit);
+		*this, &CWorldState::UnqueueUnit, TR_DOWN, true, 0.2f);
 	mpQueueButtons->mpButtons[3] = new CAdvancedButton<CWorldState, void, int>(SPointData(344, 5), DX::XMFLOAT2(103.0f, 77.0f),
-		*this, &CWorldState::UnqueueUnit);
+		*this, &CWorldState::UnqueueUnit, TR_DOWN, true, 0.2f);
 	mpQueueButtons->mpButtons[4] = new CAdvancedButton<CWorldState, void, int>(SPointData(457, 5), DX::XMFLOAT2(103.0f, 77.0f),
-		*this, &CWorldState::UnqueueUnit);
+		*this, &CWorldState::UnqueueUnit, TR_DOWN, true, 0.2f);
 
 	for (int i = 0; i < mpQueueButtons->mNumButtons; i++)
 	{
