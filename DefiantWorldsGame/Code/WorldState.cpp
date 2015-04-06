@@ -530,11 +530,10 @@ void CWorldState::DisplaySelectedBuildingInfo()
 			// Draw amount to screen
 			strStream << percentage << "%";
 			mFntDebug->Draw(strStream.str(), 1130, 800, kWhite, kRight, kTop);
-			strStream.str("");
+			strStream.str(""); 
 		}
 		else
 		{
-			// When constructing, health is based upon construction percentage
 			// Calculate construction percentage
 			float healthLeft = mpCurSelectedStructure->GetHealth();
 			float maxHealth = mpCurSelectedStructure->GetMaxHealth();
@@ -623,8 +622,22 @@ void CWorldState::DisplaySelectedAgentInfo()
 
 		mpCurSelectedAgent->DisplayInfo(mFntDebug);
 
-		// Calculate new health - temporarily set to 100
-		newHealthAmount = 100;
+		// Calculate construction percentage
+		float healthLeft = mpCurSelectedAgent->GetHealth();
+		float maxHealth = mpCurSelectedAgent->GetMaxHealth();
+		int percentage = (int)((healthLeft / maxHealth) * 100.0f);
+
+		// Check if the completion percentage is a multiple of 5
+		if (percentage % 5 == 0)
+		{
+			// Percentage is a multiple of 5 - use its value as the new health bar amount
+			newHealthAmount = percentage;
+		}
+		else
+		{
+			// maintain previous value
+			newHealthAmount = mPrevHealth;
+		}
 	}
 	else
 	{
