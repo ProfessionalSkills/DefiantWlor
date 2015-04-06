@@ -1779,6 +1779,12 @@ void CWorldState::OnStructureSelectChange(CStructure* pSelStructure)
 		mpButtonHellipad->Hide();
 		mpButtonSpaceCentre->Hide();
 
+		// Hide structure buttons - correct button list will be displayed later
+		mpBarracksButtons->Hide();
+		mpHellipadButtons->Hide();
+		mpComCentreButtons->Hide();
+		mpSpaceCentreButtons->Hide();
+
 		// Show specific structure buttons
 		mpButtonDelete->Show();
 		// Identify type of building in order to display the correct buttons for it
