@@ -80,11 +80,14 @@ protected:
 	GS_MultiMap::iterator miterStructuresMap;
 	GA_MultiMap::iterator miterUnitsMap;
 
+
+
 	std::vector<CGameAgent*> mpSpaceUnitsList;
 	std::vector<CGameAgent*>::iterator mpiterSpaceUnits;
 
 	std::vector<CMinerals*> mpMineralsList;
 	std::vector<CMinerals*>::iterator miterMineralsList;
+	
 
 	CFleet* mpFleet;
 
@@ -101,6 +104,18 @@ public:
 	inline std::string GetPlayerName()
 	{
 		return mName;
+	}
+
+	inline void PutUnitsOnShips()
+	{
+		for (miterUnitsMap = mpUnitsMap.begin(); miterUnitsMap != mpUnitsMap.end(); miterUnitsMap++)
+		{
+			for (int i = 0; i < mpSpaceUnitsList.size(); i++)
+			{
+				CSpaceUnit* mpTemp = (CSpaceUnit*)(mpSpaceUnitsList[i]);
+				if (!mpTemp->StoreUnits(miterUnitsMap->second)) break;
+			}
+		}
 	}
 
 	inline int GetMineralAmount()

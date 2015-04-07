@@ -86,6 +86,7 @@ private:
 
 	std::vector<CAdvancedButton<CWorldState, void>*> mpGenericButtonList;
 	std::vector<CAdvancedButton<CWorldState, void>*>::iterator miterGenericButtons;
+	
 
 	std::vector<CAdvancedButton<CWorldState, void, int>*> mpUnitsButtonList;
 	std::vector<CAdvancedButton<CWorldState, void, int>*>::iterator miterUnitsButtons;
