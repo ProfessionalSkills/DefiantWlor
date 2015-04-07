@@ -33,6 +33,7 @@ CFleet::CFleet() :mFleetRowSize(20), mFleetRowSeperation(7), mFleetZAdjust(8), m
 	mNumMothership = 0;
 	mNumSpaceFighter = 0;
 	mNumTransport = 0;
+	mUnitsLostValue = 0;
 
 	mFleetWidth = (mFleetRowSize/2)-1;
 }
@@ -152,6 +153,7 @@ void CFleet::UpdateCondition()
 			}
 
 			CGameAgent*temp = mpFleet[i];
+			mUnitsLostValue+= temp->GetPopValue();
 			mpFleet[i] = mpFleet[mSize - 1];
 			mpFleet.pop_back();
 			delete temp;
@@ -295,16 +297,15 @@ void CFleet::SetEnemy(CFleet* myEnemy)
 	mpEnemyFleet = myEnemy;
 }
 
-void CFleet::ManFleet(vector <CGameAgent*> &UnitsToLoad)
+bool CFleet::ManFleet(CGameAgent* UnitToLoad)
 {
 	for (int i = 0; i < mpFleet.size(); i++)
 	{
 		CSpaceUnit* mpTemp = (CSpaceUnit*)(mpFleet[i]);
-		for (int j = 0; j < UnitsToLoad.size(); j++)
-		{
-			if (!mpTemp->StoreUnits(UnitsToLoad[j])) break;
-		}
+
+		if (!mpTemp->StoreUnits(UnitToLoad)) return true;
 	}
+	return false;
 }
 
 vector <CGameAgent*>* CFleet::LaunchFleet(vector <CGameAgent*>* possibleShips)
@@ -372,6 +373,8 @@ void CFleet::ReturnFleet(CRTSPlayer* Player)
 		mpFleet.pop_back();
 		mSize--;
 	}
+
+	Player->LosePop(mUnitsLostValue);
 
 	Player->SetNumMothership(mNumMothership);
 	Player->SetNumSpaceFighter(mNumSpaceFighter);

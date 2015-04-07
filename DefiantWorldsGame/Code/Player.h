@@ -61,6 +61,11 @@ protected:
 	int mNumMothership;
 	int mNumTransport;
 
+	int mNumArtillery;
+	int mNumInfantry;
+	int mNumTank;
+	int mNumFighter; 
+	int mNumBomber;
 	CGrid* mpPlayerGrid;
 
 	const float MINERAL_UPDATE_TIME;
@@ -167,6 +172,12 @@ public:
 	inline void SetPlayerName(std::string name)
 	{
 		mName = name;
+	}
+
+	inline void LosePop(int popLost)
+	{
+		mCurPop -= popLost;
+		if (mCurPop < 0)mCurPop = 0;
 	}
 
 	inline void SetSpaceUnitList(std::vector<CGameAgent*>* newUnits)

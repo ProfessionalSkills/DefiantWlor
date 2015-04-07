@@ -469,7 +469,8 @@ void CWorldState::CheckKeyPresses()
 
 	if (gpEngine->KeyHit(Key_K))
 	{
-		//mpHumanPlayer->GetFleet()->ManFleet(mpHumanPlayer->GetWorldUnitList());
+
+	//	mpHumanPlayer->GetFleet()->ManFleet(mpHumanPlayer->GetWorldUnitList());
 	}
 
 
