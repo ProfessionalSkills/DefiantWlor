@@ -24,6 +24,7 @@ CWall::CWall()
 
 	mIsHorizontal = false;
 	mHealth = 1000.0f;
+	mMaxHealth = 1000.0f;
 	mBuildTime = 5.0f;
 	mRepairSpeed = 1.0f;
 	mCurBuildTimeLeft = mBuildTime;
@@ -46,6 +47,7 @@ CWall::CWall(bool horizontal)
 
 	mIsHorizontal = horizontal;
 	mHealth = 1000.0f;
+	mMaxHealth = 1000.0f;
 	mBuildTime = 5.0f;
 	mRepairSpeed = 1.0f;
 	mCurBuildTimeLeft = mBuildTime;
