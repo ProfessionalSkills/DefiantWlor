@@ -84,8 +84,6 @@ public:
 		return mHealth;
 	}
 
-
-
 	inline float GetSpeed()
 	{
 		return mSpeed;
@@ -168,6 +166,12 @@ public:
 	{
 		mCurProductionTimeLeft = timeLeft;
 	}
+
+	inline void SetHealth(float health)
+	{
+		mHealth = health;
+	}
+
 
 	// METHODS
 	//---------------------------

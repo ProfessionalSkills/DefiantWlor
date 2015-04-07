@@ -334,12 +334,40 @@ void CWorldState::CheckKeyPresses()
 		}
 		else if (mpUnitSelectionList.size() > 0)
 		{
-			// Update all the units in the list to the current path position
-			for (miterUnitSelectionList = mpUnitSelectionList.begin(); miterUnitSelectionList != mpUnitSelectionList.end(); miterUnitSelectionList++)
+			// Update all the units in the list to the current path position if the tile is not in use
+			if (!mpCurTile->IsTileUsed())
 			{
-				(*miterUnitSelectionList)->SetPathTarget(mMouseWorldPos);
+				for (miterUnitSelectionList = mpUnitSelectionList.begin(); miterUnitSelectionList != mpUnitSelectionList.end(); miterUnitSelectionList++)
+				{
+					(*miterUnitSelectionList)->SetPathTarget(mMouseWorldPos);
+				}
+				mRMouseClicked = false;
 			}
-			mRMouseClicked = false;
+			else
+			{
+				CStructure* pTargetStructure = nullptr;
+				CGameAgent* pTargetGameAgent = nullptr;
+				mpHumanPlayer->CheckGameObjectSelection(pTargetStructure, pTargetGameAgent, mMouseOrigin, mMouseDirection);
+				if (pTargetStructure != nullptr)
+				{
+					if (pTargetStructure->GetFaction() == FAC_EARTH_DEFENSE_FORCE)
+					{
+						for (miterUnitSelectionList = mpUnitSelectionList.begin(); miterUnitSelectionList != mpUnitSelectionList.end(); miterUnitSelectionList++)
+						{
+							(*miterUnitSelectionList)->SetAttackTarget(pTargetStructure);
+						}
+					}
+				}
+				else if (pTargetGameAgent != nullptr)
+				{
+					for (miterUnitSelectionList = mpUnitSelectionList.begin(); miterUnitSelectionList != mpUnitSelectionList.end(); miterUnitSelectionList++)
+					{
+						(*miterUnitSelectionList)->SetAttackTarget(pTargetStructure);
+					}
+				}
+
+				mRMouseClicked = false;
+			}
 		}
 	}
 	mLMouseClicked = false;
@@ -612,11 +640,7 @@ void CWorldState::DisplaySelectedAgentInfo()
 		//------------------------------
 		if (gpEngine->KeyHit(Key_D))
 		{
-			// Set object to be deleted
-			mpCurSelectedAgent->SetState(OBJ_WARNING);
-			// pointer set to null
-			OnUnitSelectChange(nullptr);
-			// Leave function so next function call is not executed
+			DeleteStructure();
 			return;
 		}
 
@@ -2189,6 +2213,7 @@ void CWorldState::DeleteStructure()
 	{
 		// Set object to be deleted
 		mpCurSelectedAgent->SetState(OBJ_WARNING);
+		mpCurSelectedAgent->SetHealth(0.0f);
 		// pointer set to null
 		OnUnitSelectChange(nullptr);
 		mLMouseClicked = false;

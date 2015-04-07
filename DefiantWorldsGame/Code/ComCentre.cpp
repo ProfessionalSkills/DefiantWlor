@@ -21,8 +21,8 @@ CComCentre::CComCentre()
 	mScale = 0.85f;
 	mOrientation = 0.0f;
 
-	mHealth = 1000.0f;
-	mMaxHealth = 1000.0f;
+	mHealth = 10000.0f;
+	mMaxHealth = 10000.0f;
 	mBuildTime = 0.0f;
 	mRepairSpeed = 1.0f;
 	mCurBuildTimeLeft = mBuildTime;
