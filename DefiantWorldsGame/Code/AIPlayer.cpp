@@ -129,6 +129,17 @@ void CRTSAIPlayer::Update()
 				mpTaskQ.pop();
 			}
 		}
+		if (mpTaskQ.size() > 100)
+		{
+			// Too many items in the list - clear it
+			for (int i = 0; i < 95; i++)
+			{
+				// Remove most of the items
+				CBuildRequest* pRequest = mpTaskQ.top();
+				SafeDelete(pRequest);
+				mpTaskQ.pop();
+			}
+		}
 
 		// Reset update time
 		mUpdateTime = CRTSAIPlayer::UPDATE_TIME;
@@ -224,11 +235,11 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 			// Check that some structures exist
 			if (range.first == mpStructuresMap.end())
 			{
-				// Move the item down in priority
-				DecreaseTopItem();
 				// Add request for a barracks as top priority
 				mpTaskQ.push(new CBuildRequest(Q_BARRACKS, 1));
-				return false;
+
+				// Move the item down in priority
+				return DecreaseTopItem();
 			}
 
 			for (auto iter = range.first; iter != range.second; ++iter)
@@ -246,11 +257,10 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 			if (lowest == MAX_QUEUE_SIZE)
 			{
 				// There are no available buildings - construct more!
-				// Move the item down in priority
-				DecreaseTopItem();
 				// Add request for a barracks as top priority
 				mpTaskQ.push(new CBuildRequest(Q_BARRACKS, 1));
-				return false;
+				// Move the item down in priority
+				return DecreaseTopItem();
 			}
 			else if (lowest >= MAX_QUEUE_SIZE / 2)
 			{
@@ -272,11 +282,10 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 			// Check that at least one structure exists
 			if (range.first == mpStructuresMap.end())
 			{
-				// Move the item down in priority
-				DecreaseTopItem();
 				// Add request for a barracks as top priority
 				mpTaskQ.push(new CBuildRequest(Q_BARRACKS, 1));
-				return false;
+				// Move the item down in priority
+				return DecreaseTopItem();
 			}
 
 			for (auto iter = range.first; iter != range.second; ++iter)
@@ -294,11 +303,10 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 			if (lowest == MAX_QUEUE_SIZE)
 			{
 				// There are no available buildings - construct more!
-				// Move the item down in priority
-				DecreaseTopItem();
 				// Add request for a barracks as top priority
 				mpTaskQ.push(new CBuildRequest(Q_BARRACKS, 1));
-				return false;
+				// Move the item down in priority
+				return DecreaseTopItem();
 			}
 			else if (lowest >= MAX_QUEUE_SIZE / 2)
 			{
@@ -320,11 +328,10 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 			// Check that at least one structure exists
 			if (range.first == mpStructuresMap.end())
 			{
-				// Move the item down in priority
-				DecreaseTopItem();
 				// Add request for a barracks as top priority
 				mpTaskQ.push(new CBuildRequest(Q_BARRACKS, 1));
-				return false;
+				// Move the item down in priority
+				return DecreaseTopItem();
 			}
 
 			for (auto iter = range.first; iter != range.second; ++iter)
@@ -342,11 +349,10 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 			if (lowest == MAX_QUEUE_SIZE)
 			{
 				// There are no available buildings - construct more!
-				// Move the item down in priority
-				DecreaseTopItem();
 				// Add request for a barracks as top priority
 				mpTaskQ.push(new CBuildRequest(Q_BARRACKS, 1));
-				return false;
+				// Move the item down in priority
+				return DecreaseTopItem();
 			}
 			else if (lowest >= MAX_QUEUE_SIZE / 2)
 			{
@@ -368,11 +374,10 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 			// Check that at least one structure exists
 			if (range.first == mpStructuresMap.end())
 			{
-				// Move the item down in priority
-				DecreaseTopItem();
 				// Add request for a barracks as top priority
 				mpTaskQ.push(new CBuildRequest(Q_SPACE_CENTRE, 1));
-				return false;
+				// Move the item down in priority
+				return DecreaseTopItem();
 			}
 
 			for (auto iter = range.first; iter != range.second; ++iter)
@@ -390,11 +395,10 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 			if (lowest == MAX_QUEUE_SIZE)
 			{
 				// There are no available buildings - construct more!
-				// Move the item down in priority
-				DecreaseTopItem();
 				// Add request for a barracks as top priority
 				mpTaskQ.push(new CBuildRequest(Q_SPACE_CENTRE, 1));
-				return false;
+				// Move the item down in priority
+				return DecreaseTopItem();
 			}
 			else if (lowest >= MAX_QUEUE_SIZE / 2)
 			{
@@ -417,11 +421,10 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 			// Check that at least one structure exists
 			if (range.first == mpStructuresMap.end())
 			{
-				// Move the item down in priority
-				DecreaseTopItem();
 				// Add request for a barracks as top priority
 				mpTaskQ.push(new CBuildRequest(Q_SPACE_CENTRE, 1));
-				return false;
+				// Move the item down in priority
+				return DecreaseTopItem();
 			}
 
 			for (auto iter = range.first; iter != range.second; ++iter)
@@ -439,11 +442,10 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 			if (lowest == MAX_QUEUE_SIZE)
 			{
 				// There are no available buildings - construct more!
-				// Move the item down in priority
-				DecreaseTopItem();
 				// Add request for a barracks as top priority
 				mpTaskQ.push(new CBuildRequest(Q_SPACE_CENTRE, 1));
-				return false;
+				// Move the item down in priority
+				return DecreaseTopItem();
 			}
 			else if (lowest >= MAX_QUEUE_SIZE / 2)
 			{
@@ -466,11 +468,10 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 			// Check that at least one structure exists
 			if (range.first == mpStructuresMap.end())
 			{
-				// Move the item down in priority
-				DecreaseTopItem();
 				// Add request for a barracks as top priority
 				mpTaskQ.push(new CBuildRequest(Q_SPACE_CENTRE, 1));
-				return false;
+				// Move the item down in priority
+				return DecreaseTopItem();
 			}
 
 			for (auto iter = range.first; iter != range.second; ++iter)
@@ -488,11 +489,10 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 			if (lowest == MAX_QUEUE_SIZE)
 			{
 				// There are no available buildings - construct more!
-				// Move the item down in priority
-				DecreaseTopItem();
 				// Add request for a barracks as top priority
 				mpTaskQ.push(new CBuildRequest(Q_SPACE_CENTRE, 1));
-				return false;
+				// Move the item down in priority
+				return DecreaseTopItem();
 			}
 			else if (lowest >= MAX_QUEUE_SIZE / 2)
 			{
@@ -516,8 +516,7 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 			if (range.first == mpStructuresMap.end())
 			{
 				// Move the item down in priority
-				DecreaseTopItem();
-				return false;
+				return DecreaseTopItem();
 			}
 
 			for (auto iter = range.first; iter != range.second; ++iter)
@@ -535,8 +534,7 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 			if (lowest == MAX_QUEUE_SIZE)
 			{
 				// Move the item down in priority
-				DecreaseTopItem();
-				return false;
+				return DecreaseTopItem();
 			}
 
 			// Index of the agent to be produced
@@ -553,11 +551,10 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 			// Check that at least one structure exists
 			if (range.first == mpStructuresMap.end())
 			{
-				// Move the item down in priority
-				DecreaseTopItem();
 				// Add request for a barracks as top priority
 				mpTaskQ.push(new CBuildRequest(Q_HELLIPAD, 1));
-				return false;
+				// Move the item down in priority
+				return DecreaseTopItem();
 			}
 
 			for (auto iter = range.first; iter != range.second; ++iter)
@@ -575,11 +572,10 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 			if (lowest == MAX_QUEUE_SIZE)
 			{
 				// There are no available buildings - construct more!
-				// Move the item down in priority
-				DecreaseTopItem();
 				// Add request for a barracks as top priority
 				mpTaskQ.push(new CBuildRequest(Q_HELLIPAD, 1));
-				return false;
+				// Move the item down in priority
+				return DecreaseTopItem();
 			}
 			else if (lowest >= MAX_QUEUE_SIZE / 2)
 			{
@@ -602,11 +598,10 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 			// Check that at least one structure exists
 			if (range.first == mpStructuresMap.end())
 			{
-				// Move the item down in priority
-				DecreaseTopItem();
 				// Add request for a barracks as top priority
 				mpTaskQ.push(new CBuildRequest(Q_HELLIPAD, 1));
-				return false;
+				// Move the item down in priority
+				return DecreaseTopItem();
 			}
 
 			for (auto iter = range.first; iter != range.second; ++iter)
@@ -624,11 +619,10 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 			if (lowest == MAX_QUEUE_SIZE)
 			{
 				// There are no available buildings - construct more!
-				// Move the item down in priority
-				DecreaseTopItem();
 				// Add request for a barracks as top priority
 				mpTaskQ.push(new CBuildRequest(Q_HELLIPAD, 1));
-				return false;
+				// Move the item down in priority
+				return DecreaseTopItem();
 			}
 			else if (lowest >= MAX_QUEUE_SIZE / 2)
 			{
@@ -732,13 +726,13 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 			for (miterSelectedAgents = mpSelectedAgents.begin(); miterSelectedAgents != mpSelectedAgents.end(); miterSelectedAgents++)
 			{
 				// Check to see if the unit picked is a worker unit which is busy harvesting
-				if (miterUnitsMap->second->GetAgentData()->mAgentType == GAV_WORKER)
+				if ((*miterSelectedAgents)->GetAgentData()->mAgentType == GAV_WORKER)
 				{
 					CWorker* pWorker = static_cast<CWorker*>(miterUnitsMap->second);
 					if (!pWorker->GetMineral())
 					{
 						// There is no mineral as a target - safe to move. WILL LATER CHECK FOR OTHER THINGS THE WORKER COULD BE DOING
-						(*miterSelectedAgents)->SetPathTarget(newPos);
+						pWorker->SetPathTarget(newPos);
 					}
 				}
 				else
@@ -813,27 +807,33 @@ void CRTSAIPlayer::AssessSituation()
 			// FUTURE: Calculate relationship between all unit types to determine which to get?
 			// not enough minerals - choose an option that does not reqiure funds
 			task = mpRandomiser->GetRandomInt(static_cast<int>(Q_MOVE_UNIT), static_cast<int>(Q_CHANGE_TACTIC));
-			priority = mpRandomiser->GetRandomInt(2, 50);
+			priority = mpRandomiser->GetRandomInt(10, 50);
 			mpTaskQ.push(new CBuildRequest(static_cast<EQueueObjectType>(task), priority));
 		}
 		else
 		{
 			// Get a random request
 			task = mpRandomiser->GetRandomInt(static_cast<int>(Q_FIGHTER), static_cast<int>(Q_CHANGE_TACTIC));
-			priority = mpRandomiser->GetRandomInt(2, 40);
+			priority = mpRandomiser->GetRandomInt(10, 40);
 			mpTaskQ.push(new CBuildRequest(static_cast<EQueueObjectType>(task), priority));
 		}
+	}
+
+	if (gpEngine->KeyHeld(Key_X))
+	{
+		int i = 0;
 	}
 
 	// Assess all worker units
 	AssessWorkers();
 }
 
-void CRTSAIPlayer::DecreaseTopItem()
+bool CRTSAIPlayer::DecreaseTopItem()
 {
 	// Cannot change data already in a map - have to remove it, change it, then add it back in
 	CBuildRequest* pRequest = mpTaskQ.top();
 	mpTaskQ.pop();
 	pRequest->DecreasePriority();
 	mpTaskQ.push(pRequest);
+	return pRequest->GetRejections() > 1;
 }

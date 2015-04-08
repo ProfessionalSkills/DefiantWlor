@@ -58,7 +58,7 @@ private:
 
 	// As you cannot adjust values within a priority queue wthout removing, editing, then pushing back on again, this function
 	// deals with that process for the top() element of the priority queue
-	void DecreaseTopItem();
+	bool DecreaseTopItem();
 
 	// Function to determine when to request additional units
 	void AssessSituation();

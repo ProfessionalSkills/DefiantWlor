@@ -36,12 +36,18 @@ public:
 		return mPriority;
 	}
 
+	inline int GetRejections()
+	{
+		return mNumRejections;
+	}
+
 
 	// MUTATORS
 	//---------------------------
 	inline void DecreasePriority()
 	{
 		mPriority += 5;
+		mNumRejections++;
 	}
 
 
@@ -54,6 +60,7 @@ private:
 	//---------------------------
 	EQueueObjectType mQueueObj;
 	int mPriority;
+	int mNumRejections = 0;
 };
 
 
