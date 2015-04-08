@@ -33,6 +33,9 @@ CRTSAIPlayer::CRTSAIPlayer(EFactions playerFaction, int startingResources, int d
 		mpTaskQ.push(new CBuildRequest(Q_WORKER, 1));
 		mpTaskQ.push(new CBuildRequest(Q_WORKER, 20));
 		mpTaskQ.push(new CBuildRequest(Q_WORKER, 40));
+
+		// Set the minimum amount of cash needed before the player attempts to do construction
+		MIN_CASH_FOR_UPDATE = 2000;
 		break;
 	case 1:				// Medium
 		// Initialise update time
@@ -50,6 +53,9 @@ CRTSAIPlayer::CRTSAIPlayer(EFactions playerFaction, int startingResources, int d
 		mpTaskQ.push(new CBuildRequest(Q_WORKER, 1));
 		mpTaskQ.push(new CBuildRequest(Q_WORKER, 10));
 		mpTaskQ.push(new CBuildRequest(Q_WORKER, 15));
+
+		// Set the minimum amount of cash needed before the player attempts to do construction
+		MIN_CASH_FOR_UPDATE = 1750;
 		break;
 	case 2:				// Difficult
 		// Initialise update time
@@ -69,6 +75,9 @@ CRTSAIPlayer::CRTSAIPlayer(EFactions playerFaction, int startingResources, int d
 		mpTaskQ.push(new CBuildRequest(Q_WORKER, 1));
 		mpTaskQ.push(new CBuildRequest(Q_CHANGE_TACTIC, 10));
 		mpTaskQ.push(new CBuildRequest(Q_INFANTRY, 15));
+
+		// Set the minimum amount of cash needed before the player attempts to do construction
+		MIN_CASH_FOR_UPDATE = 1500;
 		break;
 	case 3:				// Insane
 		// Initialise update time
@@ -91,6 +100,9 @@ CRTSAIPlayer::CRTSAIPlayer(EFactions playerFaction, int startingResources, int d
 		mpTaskQ.push(new CBuildRequest(Q_FIGHTER, 4));
 		mpTaskQ.push(new CBuildRequest(Q_SPACE_FIGHTER, 60));
 		mpTaskQ.push(new CBuildRequest(Q_MOTHERSHIP, 80));
+
+		// Set the minimum amount of cash needed before the player attempts to do construction
+		MIN_CASH_FOR_UPDATE = 1000;
 		break;
 	}
 
@@ -802,7 +814,7 @@ void CRTSAIPlayer::AssessSituation()
 	for (int i = 0; i < numRepeat; i++)
 	{
 		// First check if the economy is at a reasonable level
-		if (mNumMinerals < 1500 || mPopLimit <= mCurPop)
+		if (mNumMinerals < MIN_CASH_FOR_UPDATE || mPopLimit <= mCurPop)
 		{
 			// FUTURE: Calculate relationship between all unit types to determine which to get?
 			// not enough minerals - choose an option that does not reqiure funds
@@ -819,11 +831,6 @@ void CRTSAIPlayer::AssessSituation()
 		}
 	}
 
-	if (gpEngine->KeyHeld(Key_X))
-	{
-		int i = 0;
-	}
-
 	// Assess all worker units
 	AssessWorkers();
 }
@@ -835,5 +842,5 @@ bool CRTSAIPlayer::DecreaseTopItem()
 	mpTaskQ.pop();
 	pRequest->DecreasePriority();
 	mpTaskQ.push(pRequest);
-	return pRequest->GetRejections() > 1;
+	return pRequest->GetRejections() > 2;
 }

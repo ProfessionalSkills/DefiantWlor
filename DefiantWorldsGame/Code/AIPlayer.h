@@ -72,6 +72,8 @@ private:
 	int MIN_NEW_ITEMS;
 	int MAX_NEW_ITEMS;
 
+	int MIN_CASH_FOR_UPDATE;
+
 
 	// CONTAINERS
 	//---------------------------
