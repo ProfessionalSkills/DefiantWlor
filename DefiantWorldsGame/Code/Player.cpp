@@ -379,6 +379,18 @@ void CRTSPlayer::Update()
 		{
 			// The current unit has been destroyed
 			CGameAgent* tmp = miterUnitsMap->second;
+
+			// Before deleting, check if the agent is a worker unit
+			if (tmp->GetAgentData()->mAgentType == GAV_WORKER)
+			{
+				// Check if the worker is responsible for any mineral deposits
+				CWorker* pWorker = static_cast<CWorker*>(tmp);
+				if (pWorker->GetMineral())
+				{
+					pWorker->GetMineral()->SetUsage(false);
+				}
+			}
+
 			SafeDelete(tmp);
 			mpUnitsMap.erase(miterUnitsMap);
 			break;
