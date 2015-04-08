@@ -25,6 +25,7 @@ protected:
 	//---------------------------
 	float mHitChance;
 	float mUnitSpacing;
+	float mCargoValue;
 	IModel* mpTempShield;
 	IModel* mpTempLazer;
 	const float mChargeTimeMax;//max time a laser should charge for
@@ -83,6 +84,11 @@ public:
 	inline bool GetChargiingLazer()
 	{
 		return mCharged;
+	}
+
+	inline int GetCargoValue()
+	{
+		return mCargoValue;
 	}
 	void UnloadLazer();
 };
