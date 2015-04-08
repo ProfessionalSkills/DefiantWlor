@@ -29,7 +29,7 @@ CRTSAIPlayer::CRTSAIPlayer(EFactions playerFaction, int startingResources, int d
 		MIN_NEW_ITEMS = 0;
 		MAX_NEW_ITEMS = 3;
 
-		// Initialise first 3 tasks of AI player
+		// Initialise first few tasks of AI player
 		mpTaskQ.push(new CBuildRequest(Q_WORKER, 1));
 		mpTaskQ.push(new CBuildRequest(Q_WORKER, 20));
 		mpTaskQ.push(new CBuildRequest(Q_WORKER, 40));
@@ -46,7 +46,7 @@ CRTSAIPlayer::CRTSAIPlayer(EFactions playerFaction, int startingResources, int d
 		MIN_NEW_ITEMS = 1;
 		MAX_NEW_ITEMS = 4;
 
-		// Initialise first 3 tasks of AI player
+		// Initialise first 4 tasks of AI player
 		mpTaskQ.push(new CBuildRequest(Q_WORKER, 1));
 		mpTaskQ.push(new CBuildRequest(Q_WORKER, 10));
 		mpTaskQ.push(new CBuildRequest(Q_WORKER, 15));
@@ -63,7 +63,7 @@ CRTSAIPlayer::CRTSAIPlayer(EFactions playerFaction, int startingResources, int d
 		MIN_NEW_ITEMS = 2;
 		MAX_NEW_ITEMS = 5;
 
-		// Initialise first 5 tasks of AI player
+		// Initialise first 6 tasks of AI player
 		mpTaskQ.push(new CBuildRequest(Q_WORKER, 1));
 		mpTaskQ.push(new CBuildRequest(Q_WORKER, 1));
 		mpTaskQ.push(new CBuildRequest(Q_WORKER, 1));
@@ -82,7 +82,7 @@ CRTSAIPlayer::CRTSAIPlayer(EFactions playerFaction, int startingResources, int d
 		MIN_NEW_ITEMS = 3;
 		MAX_NEW_ITEMS = 6;
 
-		// Initialise first 10 tasks of AI player
+		// Initialise first 11 tasks of AI player
 		mpTaskQ.push(new CBuildRequest(Q_WORKER, 1));
 		mpTaskQ.push(new CBuildRequest(Q_WORKER, 1));
 		mpTaskQ.push(new CBuildRequest(Q_WORKER, 1));
@@ -148,6 +148,40 @@ void CRTSAIPlayer::Update()
 	else
 	{
 		mWaitTime -= gFrameTime;
+	}
+}
+
+void CRTSAIPlayer::AssessWorkers()
+{
+	// Get a list of worker units
+	auto range = mpUnitsMap.equal_range(GAV_WORKER);
+
+	// Check that some structures exist
+	if (range.first != mpUnitsMap.end())
+	{
+		// Loop through each worker unit & increment the counter
+		for (auto iter = range.first; iter != range.second; ++iter)
+		{
+			// Check if the worker unit has no active mineral
+			// Cast into a worker unit poiner
+			CWorker* pWorker = static_cast<CWorker*>(iter->second);
+			if (!pWorker->GetMineral())
+			{
+				// Identify a mineral it can harvest
+				for (miterMineralsList = mpMineralsList.begin(); miterMineralsList != mpMineralsList.end(); miterMineralsList++)
+				{
+					// If the mineral is not in use, harvest from it with the currently selected worker
+					if (!(*miterMineralsList)->IsBeingUsed())
+					{
+						// Mineral not being used, so harvest from it
+						pWorker->SetMineral((*miterMineralsList));
+						(*miterMineralsList)->SetUsage(true);
+						pWorker->SetPathTarget((*miterMineralsList)->GetWorldPos());
+						break;
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -636,6 +670,17 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 			miterUnitsMap = mpUnitsMap.begin();
 			std::advance(miterUnitsMap, unitNum);
 
+			// Check to see if the unit picked is a worker unit which is busy harvesting
+			if (miterUnitsMap->second->GetAgentData()->mAgentType == GAV_WORKER)
+			{
+				CWorker* pWorker = static_cast<CWorker*>(miterUnitsMap->second);
+				if (pWorker->GetMineral())
+				{
+					// There is a mineral as a target - leave
+					return true;
+				}
+			}
+
 			// Pick a random location to move the unit to
 			DX::XMFLOAT3 newPos;
 
@@ -686,7 +731,21 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 			// Loop through the selected agents and set their new position
 			for (miterSelectedAgents = mpSelectedAgents.begin(); miterSelectedAgents != mpSelectedAgents.end(); miterSelectedAgents++)
 			{
-				(*miterSelectedAgents)->SetPathTarget(newPos);
+				// Check to see if the unit picked is a worker unit which is busy harvesting
+				if (miterUnitsMap->second->GetAgentData()->mAgentType == GAV_WORKER)
+				{
+					CWorker* pWorker = static_cast<CWorker*>(miterUnitsMap->second);
+					if (!pWorker->GetMineral())
+					{
+						// There is no mineral as a target - safe to move. WILL LATER CHECK FOR OTHER THINGS THE WORKER COULD BE DOING
+						(*miterSelectedAgents)->SetPathTarget(newPos);
+					}
+				}
+				else
+				{
+					// Every other unit just move - WILL CHANGE LATER FOR COMBAT PURPOSES
+					(*miterSelectedAgents)->SetPathTarget(newPos);
+				}
 			}
 
 			// Clear the selected agents list
@@ -749,22 +808,25 @@ void CRTSAIPlayer::AssessSituation()
 	for (int i = 0; i < numRepeat; i++)
 	{
 		// First check if the economy is at a reasonable level
-		if (mNumMinerals < 2000 || mPopLimit <= mCurPop)
+		if (mNumMinerals < 1500 || mPopLimit <= mCurPop)
 		{
 			// FUTURE: Calculate relationship between all unit types to determine which to get?
 			// not enough minerals - choose an option that does not reqiure funds
 			task = mpRandomiser->GetRandomInt(static_cast<int>(Q_MOVE_UNIT), static_cast<int>(Q_CHANGE_TACTIC));
-			priority = mpRandomiser->GetRandomInt(5, 100);
+			priority = mpRandomiser->GetRandomInt(2, 50);
 			mpTaskQ.push(new CBuildRequest(static_cast<EQueueObjectType>(task), priority));
 		}
 		else
 		{
 			// Get a random request
 			task = mpRandomiser->GetRandomInt(static_cast<int>(Q_FIGHTER), static_cast<int>(Q_CHANGE_TACTIC));
-			priority = mpRandomiser->GetRandomInt(5, 40);
+			priority = mpRandomiser->GetRandomInt(2, 40);
 			mpTaskQ.push(new CBuildRequest(static_cast<EQueueObjectType>(task), priority));
 		}
 	}
+
+	// Assess all worker units
+	AssessWorkers();
 }
 
 void CRTSAIPlayer::DecreaseTopItem()

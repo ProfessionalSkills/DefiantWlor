@@ -54,6 +54,7 @@ private:
 	// the AI player's priority queue of things to do. Returns success of
 	// implementing the item (i.e. enough funds, chose a successful position, etc.)
 	bool ResolveItem(EQueueObjectType qObject);
+	void AssessWorkers();
 
 	// As you cannot adjust values within a priority queue wthout removing, editing, then pushing back on again, this function
 	// deals with that process for the top() element of the priority queue

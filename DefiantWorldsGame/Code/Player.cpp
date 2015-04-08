@@ -27,8 +27,6 @@ CRTSPlayer::CRTSPlayer(EFactions playerFaction, int startingResources) : MINERAL
 	mTimeToMineralUpdate = MINERAL_UPDATE_TIME;
 	mpPlayerGrid = nullptr;
 	mpRandomiser = new CRandomiser();
-
-	//AddShips();
 }
 
 CRTSPlayer::~CRTSPlayer()
