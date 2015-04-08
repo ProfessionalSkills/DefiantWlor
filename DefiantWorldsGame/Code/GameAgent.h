@@ -70,6 +70,8 @@ protected:
 
 
 	eFleetPos mFleetPosition;
+
+
 public:
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------

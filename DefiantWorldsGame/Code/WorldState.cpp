@@ -309,6 +309,17 @@ void CWorldState::CheckKeyPresses()
 			CGameAgent* pTargetGameAgent = nullptr;
 			CMinerals* pTargetMinerals = nullptr;
 
+			// If the current unit is a worker, ensure it is no longer targeting any minerals
+			if (mpCurSelectedAgent->GetAgentData()->mAgentType == GAV_WORKER)
+			{
+				// Cast into a worker pointer to access methods
+				CWorker* pWorker = static_cast<CWorker*>(mpCurSelectedAgent);
+				pTargetMinerals = pWorker->GetMineral();
+				if (pTargetMinerals) pTargetMinerals->SetUsage(false);
+				pTargetMinerals = nullptr;
+				pWorker->SetMineral(nullptr);
+			}
+
 			mpHumanPlayer->CheckGameObjectSelection(pTargetStructure, pTargetGameAgent, pTargetMinerals, mMouseOrigin, mMouseDirection);
 			if (pTargetStructure != nullptr)
 			{
@@ -329,10 +340,24 @@ void CWorldState::CheckKeyPresses()
 				// Check if the currently selected unit is a worker
 				if (mpCurSelectedAgent->GetAgentData()->mAgentType == GAV_WORKER)
 				{
-					// Send the worker unit to the resource pile position
-					mpCurSelectedAgent->SetPathTarget(pTargetMinerals->GetWorldPos());
-					// Let the user know the worker is going to go mine
-					gpNewsTicker->AddNewElement("Worker unit going to mine.", false);
+					// Check if the mineral is in use
+					if (pTargetMinerals->IsBeingUsed())
+					{
+						// Alert the user that the minerals are already being harvested
+						gpNewsTicker->AddNewElement("Minerals already being harvested by another worker!", true);
+					}
+					else
+					{
+						// Cast into a worker pointer to access methods
+						CWorker* pWorker = static_cast<CWorker*>(mpCurSelectedAgent);
+						// Send the worker unit to the resource pile position
+						pWorker->SetPathTarget(pTargetMinerals->GetWorldPos());
+						// Set the target mineral to be used and store in worker
+						pWorker->SetMineral(pTargetMinerals);
+						pTargetMinerals->SetUsage(true);
+						// Let the user know the worker is going to go mine
+						gpNewsTicker->AddNewElement("Worker unit going to mine.", false);
+					}
 				}
 				else
 				{

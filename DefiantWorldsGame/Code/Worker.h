@@ -10,6 +10,7 @@
 // INCLUDES
 //-----------------------------------------------------
 #include "GroundUnit.h"
+#include "Minerals.h"
 
 
 //-----------------------------------------------------
@@ -20,6 +21,7 @@ class CWorker : public CGroundUnit
 private:
 	// DATA
 	//---------------------------
+	CMinerals* mpActiveMineral = nullptr;			// Stores a pointer to the mineral which is being harvested by this worker unit
 
 
 public:
@@ -34,18 +36,23 @@ public:
 
 	// ACCESSORS
 	//---------------------------
-
+	inline CMinerals* GetMineral()
+	{
+		return mpActiveMineral;
+	}
 
 
 	// MUTATORS
 	//---------------------------
-
+	inline void SetMineral(CMinerals* pMineral)
+	{
+		mpActiveMineral = pMineral;
+	}
 
 
 	// METHODS
 	//---------------------------
 	//bool RepairBuilding(CStructure* structure);
-	//bool CollectResources(CResources* resource);
 	bool RepairUnit(CGroundUnit* unit);
 	void UnloadIModel();
 	void LoadIModel();

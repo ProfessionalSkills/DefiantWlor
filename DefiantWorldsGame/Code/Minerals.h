@@ -9,7 +9,7 @@
 //-----------------------------------------------------
 // INCLUDES
 //-----------------------------------------------------
-#include "Worker.h"
+#include "GameObject.h"
 #include "Grid.h"
 
 
@@ -24,7 +24,7 @@ private:
 	int mAmount;
 	float mHeight = 9.0f;					// Used for bounding box creation
 	SBoundingCube mBoundingBox;				// Axis aligned bounding box for this structure
-	CWorker* mpUsedBy = nullptr;			// Stores a pointer to the worker who is using this resource
+	bool mIsUsed = false;
 
 	SPointData mStructureBL;				// Amount of grid squares relative to the centre to find the bottom left grid square
 	SPointData mStructureTR;				// Same as above, but for top right grid square
@@ -49,15 +49,15 @@ public:
 
 	inline bool IsBeingUsed()
 	{
-		return mpUsedBy;
+		return mIsUsed;
 	}
 
 
 	// MUTATORS
 	//---------------------------
-	inline void SetUsage(CWorker* pUser)
+	inline void SetUsage(bool usage)
 	{
-		mpUsedBy = pUser;
+		mIsUsed = usage;
 	}
 
 
