@@ -34,7 +34,7 @@ CWorker::CWorker()
 	mState = OBJ_CONSTRUCTING;
 	//mDestGridSq;
 	mIsMoving = false;
-	mScale = 1.5f;
+	mScale = 1.0f;
 	mBuildCost = 50;
 	mPopCost = 5;
 }
@@ -49,10 +49,35 @@ CWorker::~CWorker()
 // WORKER CLASS METHODS
 //-----------------------------------------------------
 //bool RepairBuilding(CStructure* structure)
+bool CWorker::IsHarvestingMineral()
+{
+	// Check if there is a mineral object attached to this worker
+	if (mpActiveMineral && mpObjModel)
+	{
+		// Check to see if the worker is close enough to the active mineral
+		float threshold = 10.0f;
+		float distance = 100.0f;
 
-//bool CollectResources(CResources* resource)
+		// Get the local Z axis of the worker unit
+		DX::XMFLOAT4X4 objMatrix;
+		mpObjModel->GetMatrix(&objMatrix.m[0][0]);
+		DX::XMFLOAT3 localZ{ objMatrix.m[2][0], objMatrix.m[2][1], objMatrix.m[2][2] };
 
-bool RepairUnit(CGroundUnit* unit)
+		mpActiveMineral->RayCollision(mWorldPos, localZ, distance);
+
+		// Check the distance is less than the threshold
+		if (distance <= threshold)
+		{
+			return true;
+		}
+		return false;
+	}
+
+	// No active mineral attached
+	return false;
+}
+
+bool CWorker::RepairUnit(CGroundUnit* unit)
 {
 	return false;
 }

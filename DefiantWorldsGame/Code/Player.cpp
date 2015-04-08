@@ -332,9 +332,6 @@ void CRTSPlayer::Update()
 		mTimeToMineralUpdate = MINERAL_UPDATE_TIME;
 		int numWorkers = 0;
 
-		// Add base amount
-		MineralTransaction(mMineralBaseAddition);
-
 		// Count how many workers the player has
 		auto range = mpUnitsMap.equal_range(GAV_WORKER);
 
@@ -345,11 +342,17 @@ void CRTSPlayer::Update()
 			for (auto iter = range.first; iter != range.second; ++iter)
 			{
 				numWorkers++;
+
+				// Check if this worker is currently harvesting minerals
+				// Cast into a CWorker pointer
+				CWorker* pWorker = static_cast<CWorker*>(iter->second);
+				if (pWorker->IsHarvestingMineral())
+				{
+					// Increment minerals by 100
+					MineralTransaction(mMineralBaseAddition);
+				}
 			}
 		}
-
-		// use the number of workers to determine bonus
-		MineralTransaction(static_cast<float>(numWorkers * mMineralBaseAddition));
 	}
 	else
 	{

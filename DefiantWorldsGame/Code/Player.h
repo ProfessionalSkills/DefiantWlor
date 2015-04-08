@@ -54,6 +54,7 @@ protected:
 
 	int mNumMinerals;
 	int mMineralBaseAddition;
+	int mMineralBonus = 10;
 	int mPopLimit;
 	int mCurPop;
 

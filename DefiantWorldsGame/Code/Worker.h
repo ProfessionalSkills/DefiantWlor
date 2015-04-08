@@ -53,6 +53,7 @@ public:
 	// METHODS
 	//---------------------------
 	//bool RepairBuilding(CStructure* structure);
+	bool IsHarvestingMineral();
 	bool RepairUnit(CGroundUnit* unit);
 	void UnloadIModel();
 	void LoadIModel();
