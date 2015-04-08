@@ -305,35 +305,47 @@ void CWorldState::CheckKeyPresses()
 	{
 		if (mpCurSelectedAgent)
 		{
-			if (!mpCurTile->IsTileUsed())
+			CStructure* pTargetStructure = nullptr;
+			CGameAgent* pTargetGameAgent = nullptr;
+			CMinerals* pTargetMinerals = nullptr;
+
+			mpHumanPlayer->CheckGameObjectSelection(pTargetStructure, pTargetGameAgent, pTargetMinerals, mMouseOrigin, mMouseDirection);
+			if (pTargetStructure != nullptr)
+			{
+				if (pTargetStructure->GetFaction() == FAC_EARTH_DEFENSE_FORCE)
+				{
+					mpCurSelectedAgent->SetAttackTarget(pTargetStructure);
+				}
+			}
+			else if (pTargetGameAgent != nullptr)
+			{
+				if (pTargetGameAgent->GetFaction() == FAC_EARTH_DEFENSE_FORCE)
+				{
+					mpCurSelectedAgent->SetAttackTarget(pTargetGameAgent);
+				}
+			}
+			else if (pTargetMinerals)
+			{
+				// Check if the currently selected unit is a worker
+				if (mpCurSelectedAgent->GetAgentData()->mAgentType == GAV_WORKER)
+				{
+					// Send the worker unit to the resource pile position
+					mpCurSelectedAgent->SetPathTarget(pTargetMinerals->GetWorldPos());
+					// Let the user know the worker is going to go mine
+					gpNewsTicker->AddNewElement("Worker unit going to mine.", false);
+				}
+				else
+				{
+					// Show an error message saying only worker units can interact with resource piles
+					gpNewsTicker->AddNewElement("Only worker units can interact with mineral deposits!", true);
+				}
+			}
+			else if (!mpCurTile->IsTileUsed())
 			{
 				mpCurSelectedAgent->SetPathTarget(mMouseWorldPos);
-				mRMouseClicked = false;
 			}
-			else
-			{
-				CStructure* pTargetStructure = nullptr;
-				CGameAgent* pTargetGameAgent = nullptr;
-				CMinerals* pTargetMinerals = nullptr;
-
-				mpHumanPlayer->CheckGameObjectSelection(pTargetStructure, pTargetGameAgent, pTargetMinerals, mMouseOrigin, mMouseDirection);
-				if (pTargetStructure != nullptr)
-				{
-					if (pTargetStructure->GetFaction() == FAC_EARTH_DEFENSE_FORCE)
-					{
-						mpCurSelectedAgent->SetAttackTarget(pTargetStructure);
-					}
-				}
-				else if (pTargetGameAgent != nullptr)
-				{
-					if (pTargetGameAgent->GetFaction() == FAC_EARTH_DEFENSE_FORCE)
-					{
-						mpCurSelectedAgent->SetAttackTarget(pTargetGameAgent);
-					}
-				}
 				
-				mRMouseClicked = false;
-			}
+			mRMouseClicked = false;
 		}
 		else if (mpUnitSelectionList.size() > 0)
 		{
@@ -369,6 +381,11 @@ void CWorldState::CheckKeyPresses()
 					{
 						(*miterUnitSelectionList)->SetAttackTarget(pTargetStructure);
 					}
+				}
+				else if (pTargetMinerals)
+				{
+					// Show an error as you can only send one worker unit to a resource
+					gpNewsTicker->AddNewElement("A mineral deposit can only have a single unit!", true);
 				}
 
 				mRMouseClicked = false;

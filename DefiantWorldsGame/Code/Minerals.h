@@ -22,7 +22,7 @@ private:
 	// DATA
 	//---------------------------
 	int mAmount;
-	float mHeight = 10.0f;					// Used for bounding box creation
+	float mHeight = 9.0f;					// Used for bounding box creation
 	SBoundingCube mBoundingBox;				// Axis aligned bounding box for this structure
 	CWorker* mpUsedBy = nullptr;			// Stores a pointer to the worker who is using this resource
 
@@ -55,6 +55,11 @@ public:
 
 	// MUTATORS
 	//---------------------------
+	inline void SetUsage(CWorker* pUser)
+	{
+		mpUsedBy = pUser;
+	}
+
 
 
 	// METHODS
