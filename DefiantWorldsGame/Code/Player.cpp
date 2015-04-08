@@ -211,12 +211,26 @@ void CRTSPlayer::LaunchAttack()
 }
 
 void CRTSPlayer::CheckGameObjectSelection(CStructure*& pStructure, CGameAgent*& pGameAgent,
-	DX::XMFLOAT3 origin, DX::XMFLOAT3 direction)
+	CMinerals*& pMinerals, DX::XMFLOAT3 origin, DX::XMFLOAT3 direction)
 {
 	float curDist = 99999.0f;
 	float newDist = 0;
 	
-	// FIRST CHECK UNITS
+	// FIRST CHECK MINERALS
+	pMinerals = nullptr;
+
+	for (miterMineralsList = mpMineralsList.begin(); miterMineralsList != mpMineralsList.end(); miterMineralsList++)
+	{
+		// If there is a collision, return the pointer to that object
+		if ((*miterMineralsList)->RayCollision(origin, direction, newDist) && newDist < curDist)
+		{
+			pMinerals = (*miterMineralsList);
+			curDist = newDist;
+		}
+	}
+
+
+	// SECONDLY CHECK UNITS
 	pGameAgent = nullptr;
 
 	// Loop through all Units

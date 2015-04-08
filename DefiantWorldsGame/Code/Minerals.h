@@ -9,7 +9,7 @@
 //-----------------------------------------------------
 // INCLUDES
 //-----------------------------------------------------
-#include "GameObject.h"
+#include "Worker.h"
 #include "Grid.h"
 
 
@@ -22,6 +22,12 @@ private:
 	// DATA
 	//---------------------------
 	int mAmount;
+	float mHeight = 10.0f;					// Used for bounding box creation
+	SBoundingCube mBoundingBox;				// Axis aligned bounding box for this structure
+	CWorker* mpUsedBy = nullptr;			// Stores a pointer to the worker who is using this resource
+
+	SPointData mStructureBL;				// Amount of grid squares relative to the centre to find the bottom left grid square
+	SPointData mStructureTR;				// Same as above, but for top right grid square
 
 
 public:
@@ -41,6 +47,11 @@ public:
 		return mAmount;
 	}
 
+	inline bool IsBeingUsed()
+	{
+		return mpUsedBy;
+	}
+
 
 	// MUTATORS
 	//---------------------------
@@ -49,6 +60,8 @@ public:
 	// METHODS
 	//---------------------------
 	void CreateResource(CGrid* pGrid, SPointData gridPos);
+	bool RayCollision(DX::XMFLOAT3 origin, DX::XMFLOAT3 direction, float& distance);
+	void CalculateBoundingBox();
 	void LoadIModel();
 	void UnloadIModel();
 };

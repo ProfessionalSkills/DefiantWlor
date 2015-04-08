@@ -20,6 +20,9 @@ CMinerals::CMinerals()
 	mBuildCost = 0.0f;
 	mPopCost = 0.0f;
 	mpObjModel = nullptr;
+
+	mStructureBL = SPointData(0, 0);
+	mStructureTR = SPointData(0, 0);
 }
 
 CMinerals::~CMinerals()
@@ -40,6 +43,24 @@ void CMinerals::CreateResource(CGrid* pGrid, SPointData gridPos)
 	mpObjModel->RotateX(mOrientation);
 	mpObjModel->Scale(mScale);
 	mpObjModel->ScaleY(3.0f);
+
+	CalculateBoundingBox();
+}
+
+bool CMinerals::RayCollision(DX::XMFLOAT3 origin, DX::XMFLOAT3 direction, float& distance)
+{
+	return mBoundingBox.GetCollisionDistance(DX::XMLoadFloat3(&origin),
+		DX::XMLoadFloat3(&direction), distance);
+}
+
+void CMinerals::CalculateBoundingBox()
+{
+	// Calculate bounding box
+	float top = mWorldPos.z + ((float)mStructureTR.mPosY * GRID_TILE_SIZE) + (GRID_TILE_SIZE / 2.0f);
+	float bottom = mWorldPos.z + ((float)mStructureBL.mPosY * GRID_TILE_SIZE) - (GRID_TILE_SIZE / 2.0f);
+	float right = mWorldPos.x + ((float)mStructureTR.mPosX * GRID_TILE_SIZE) + (GRID_TILE_SIZE / 2.0f);
+	float left = mWorldPos.x + ((float)mStructureBL.mPosX * GRID_TILE_SIZE) - (GRID_TILE_SIZE / 2.0f);
+	mBoundingBox = SBoundingCube(DX::XMFLOAT3(left, 0.0f, bottom), DX::XMFLOAT3(right, mHeight, top));
 }
 
 void CMinerals::LoadIModel()

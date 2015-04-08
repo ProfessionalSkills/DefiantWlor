@@ -270,19 +270,20 @@ void CWorldState::CheckKeyPresses()
 		{
 			// Not placing a structure - find out where they are clicking
 			CStructure* pNewSelectedStructure = nullptr;
+			CMinerals* pNewSelectedMineral = nullptr;
 			switch (mMouseState)
 			{
 			case MS_OUT_OF_GRID:
 			case MS_EARTH_GRID:
 				mpHumanPlayer->CheckGameObjectSelection(pNewSelectedStructure, mpCurSelectedAgent,
-					mMouseOrigin, mMouseDirection);
+					pNewSelectedMineral, mMouseOrigin, mMouseDirection);
 				OnStructureSelectChange(pNewSelectedStructure);
 				OnUnitSelectChange(mpCurSelectedAgent);
 				break;
 
 			case MS_MARS_GRID:
 				mpAIPlayer->CheckGameObjectSelection(pNewSelectedStructure, mpCurSelectedAgent,
-					mMouseOrigin, mMouseDirection);
+					pNewSelectedMineral, mMouseOrigin, mMouseDirection);
 				OnStructureSelectChange(pNewSelectedStructure);
 				OnUnitSelectChange(mpCurSelectedAgent);
 				break;
@@ -313,7 +314,9 @@ void CWorldState::CheckKeyPresses()
 			{
 				CStructure* pTargetStructure = nullptr;
 				CGameAgent* pTargetGameAgent = nullptr;
-				mpHumanPlayer->CheckGameObjectSelection(pTargetStructure, pTargetGameAgent, mMouseOrigin, mMouseDirection);
+				CMinerals* pTargetMinerals = nullptr;
+
+				mpHumanPlayer->CheckGameObjectSelection(pTargetStructure, pTargetGameAgent, pTargetMinerals, mMouseOrigin, mMouseDirection);
 				if (pTargetStructure != nullptr)
 				{
 					if (pTargetStructure->GetFaction() == FAC_EARTH_DEFENSE_FORCE)
@@ -347,7 +350,9 @@ void CWorldState::CheckKeyPresses()
 			{
 				CStructure* pTargetStructure = nullptr;
 				CGameAgent* pTargetGameAgent = nullptr;
-				mpHumanPlayer->CheckGameObjectSelection(pTargetStructure, pTargetGameAgent, mMouseOrigin, mMouseDirection);
+				CMinerals* pTargetMinerals = nullptr;
+
+				mpHumanPlayer->CheckGameObjectSelection(pTargetStructure, pTargetGameAgent, pTargetMinerals, mMouseOrigin, mMouseDirection);
 				if (pTargetStructure != nullptr)
 				{
 					if (pTargetStructure->GetFaction() == FAC_EARTH_DEFENSE_FORCE)
