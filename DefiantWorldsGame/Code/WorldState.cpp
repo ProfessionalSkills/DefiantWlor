@@ -1829,16 +1829,6 @@ void CWorldState::OnPlacingStructureChange(CStructure* selStructure)
 
 void CWorldState::OnStructureSelectChange(CStructure* pSelStructure)
 {
-	// Check if no structure is selected
-	if (pSelStructure == nullptr)
-	{
-		// Check if there is something already selected and set it back to default skin before deselecting
-		if (mpCurSelectedStructure)
-		{
-			mpCurSelectedStructure->SetDeselectedTexture();
-		}
-	}
-
 	// If there is a different building selected, do the same as above
 	if (pSelStructure != mpCurSelectedStructure && mpCurSelectedStructure)
 	{
