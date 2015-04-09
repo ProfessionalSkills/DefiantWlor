@@ -73,7 +73,7 @@ bool CAirUnit::Update()
 					mpProjectiles.erase(iter);
 					break;
 				}
-				else if (BoxCollision(position, mAttackTarget->GetWorldPos(), 3.0f)) //Point to Box collision between the projectile and the attack target
+				else if (mAttackTarget->SphereCollision(projectile->mCollisionSphere)) //Point to Box collision between the projectile and the attack target
 				{
 					mAttackTarget->TakeDamage(mDamage);
 					mpAttackExplosions.push_back(new CExplosion(projectile->mModel, 50));
