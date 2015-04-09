@@ -83,7 +83,7 @@ bool CGroundUnit::Update()
 			{
 				if (LookingAt(mAttackTarget->GetWorldPos())) //Rotate the unit to face the target
 				{
-					Attack(mAttackTarget, 100, mDamage);
+					
 				}
 			}
 		}
@@ -108,22 +108,29 @@ bool CGroundUnit::Update()
 
 	if (mpProjectiles.size() > 0)
 	{
-		for (auto projectile : mpProjectiles) //For each projectile that unit has fired
+		for (auto iter = mpProjectiles.begin(); iter != mpProjectiles.end(); iter++) //For each projectile that unit has fired
 		{
-			projectile->mModel->MoveLocalZ(projectile->mSpeed * gFrameTime); //Move the projectile 
+			SProjectile* projectile = (*iter);
+			projectile->Update();
 			DX::XMFLOAT3 position = { projectile->mModel->GetX(), projectile->mModel->GetY(), projectile->mModel->GetZ() }; //projectile's new position stored for collision detection
 
 			if (projectile == mpProjectiles.front()) //As all projectiles move at the same speed, the only projectile that will collide is the one fired first  
 			{
-				if ((mAttackTarget == nullptr) || (BoxCollision(position, mAttackTarget->GetWorldPos(), 3.0f))) //Point to Box collision between the projectile and the attack target
+				// Check to see if the attack target has been lost or it has been destroyed
+				if (mAttackTarget == nullptr)
 				{
-					if (mAttackTarget != nullptr)
-					{
-						mAttackTarget->TakeDamage(mDamage);
-					}
+					SProjectile* tmp = projectile;
+					SafeDelete(tmp);
+					mpProjectiles.erase(iter);
+					break;
+				}
+				else if (mAttackTarget->SphereCollision(projectile->mCollisionSphere)) //Point to Box collision between the projectile and the attack target
+				{
+					mAttackTarget->TakeDamage(mDamage);
 					mpAttackExplosions.push_back(new CExplosion(projectile->mModel, 50));
-					SafeDelete(projectile);
-					mpProjectiles.erase(mpProjectiles.begin());
+					SProjectile* tmp = projectile;
+					SafeDelete(tmp);
+					mpProjectiles.erase(iter);
 					break; //Breaks out of the loop as the vector size has been changed, comprimising the iterator loop
 				}
 			}
@@ -134,6 +141,8 @@ bool CGroundUnit::Update()
 }
 bool CGroundUnit::LookingAt(DX::XMFLOAT3 target)
 {
+	return false;
+	
 	if ((mAttackTarget != nullptr) && !mHasPathTarget && (mTurretNode != 0))
 	{
 		DX::XMFLOAT3 vectorZ = { (target.x - mpObjModel->GetNode(mTurretNode)->GetX()), (target.y - mpObjModel->GetNode(mTurretNode)->GetY()), (target.z - mpObjModel->GetNode(mTurretNode)->GetZ()) };
@@ -143,7 +152,11 @@ bool CGroundUnit::LookingAt(DX::XMFLOAT3 target)
 		DX::XMFLOAT3 facingVector = { matrix[8], matrix[9], matrix[10] };
 		const DX::XMFLOAT3 kYAxis(0.0f, 1.0f, 0.0f);
 
-		float dotProduct = Dot(vectorZ, Cross(kYAxis, facingVector));
+		// Normalise this local axis
+		DX::XMVECTOR vecNormal = DX::XMVector4Normalize(DX::XMLoadFloat3(&facingVector));
+		DX::XMStoreFloat3(&facingVector, vecNormal);
+
+		float dotProduct = Dot(vectorZ, facingVector);
 
 		if (dotProduct > 0.1f)
 		{
@@ -234,10 +247,15 @@ void CGroundUnit::Move()
 		}
 		else
 		{
-			//if (mAttackTarget->GetHealth() <= 0.0f)
-			//{
-			//	mAttackTarget = nullptr;
-			//}
+			if (mAttackTarget->GetHealth() <= 0.0f)
+			{
+				mAttackTarget = nullptr;
+			}
+
+			if (mAttackTarget)
+			{
+				Attack(mAttackTarget, 100, mDamage);
+			}
 		}
 	}
 }

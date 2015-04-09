@@ -98,13 +98,7 @@ bool CInfantry::Attack(CGameObject* target, float hitMod, float damageMod)
 		{
 			SProjectile* newProjectile = new SProjectile();
 			newProjectile->mModel = mspMshInfantryBullet->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
-			newProjectile->mModel->GetMatrix(projMatrix);
-			projMatrix[8] = objMatrix[8];
-			projMatrix[9] = objMatrix[9];
-			projMatrix[10] = objMatrix[10];
-
-			newProjectile->mModel->SetMatrix(projMatrix);
-			//newProjectile->mDirection = localZ;
+			newProjectile->mDirection = localZ;
 			newProjectile->mSpeed = 50.0f;
 
 			mpProjectiles.push_back(newProjectile);
@@ -115,6 +109,7 @@ bool CInfantry::Attack(CGameObject* target, float hitMod, float damageMod)
 	else
 	{
 		mAttackTimer += gFrameTime;
+		mpObjModel->GetNode(3)->RotateY(-50.0f * gFrameTime);
 	}
 	return false;
 }
