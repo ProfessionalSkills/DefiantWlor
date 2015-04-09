@@ -84,6 +84,12 @@ bool CGroundUnit::Update()
 			if (mAttackTarget != nullptr)
 			{
 				Attack(mAttackTarget, 100, mDamage);
+
+				// Check if target is dead
+				if (mAttackTarget->GetHealth() <= 0.0f)
+				{
+					mAttackTarget = nullptr;
+				}
 			}
 		}
 
@@ -209,13 +215,6 @@ void CGroundUnit::Move()
 			mWorldPos = DX::XMFLOAT3(mpObjModel->GetX(), mpObjModel->GetY(), mpObjModel->GetZ());
 			DX::XMFLOAT3 moveAmount = { matrix[8] * movement, matrix[9] * movement, matrix[10] * movement };
 			mBoundingSphere.MoveTo(mWorldPos);
-		}
-		else
-		{
-			if (mAttackTarget->GetHealth() <= 0.0f)
-			{
-				mAttackTarget = nullptr;
-			}
 		}
 	}
 }
