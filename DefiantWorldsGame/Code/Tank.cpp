@@ -77,27 +77,25 @@ void CTank::LoadIModel()
 //-----------------------------------------------------
 bool CTank::Attack(CGameObject* target, float hitMod, float damageMod)
 {
-	// Check to see if the unit is close enough to the target to be able to attack it
-	float xDist = mAttackTarget->GetWorldPos().x - mWorldPos.x;
-	float yDist = mAttackTarget->GetWorldPos().y - mWorldPos.y;
-	float zDist = mAttackTarget->GetWorldPos().z - mWorldPos.z;
+	// The RayCollision function calculates this value for us - so it needs no starting value. Only to be defined.
+	float distance;
 
-	float distance = ((xDist * xDist) + (yDist * yDist) + (zDist * zDist)); //Distance from the target to the unit
+	// Get the local Z axis of the turret
+	DX::XMFLOAT4X4 objMatrix;
+	DX::XMFLOAT4X4 turMatrix;
+	mpObjModel->GetMatrix(&objMatrix.m[0][0]);
+	mpObjModel->GetNode(mTurretNode)->GetMatrix(&turMatrix.m[0][0]);
 
-	// Get the local Z axis of the unit
-	float objMatrix[16];
-	float projMatrix[16];
-	mpObjModel->GetNode(mTurretNode)->GetMatrix(objMatrix);
-	DX::XMFLOAT3 localZ{ objMatrix[8], objMatrix[9], objMatrix[10] };
+	// As the matrix of the turret is RELATIVE to the base model matrix, you have to multiply them together to get the ACTUAL matrix for the turret
+	DX::XMFLOAT4X4 finalMatrix;
+	DX::XMMATRIX matMul = DX::XMMatrixMultiply(DX::XMLoadFloat4x4(&objMatrix), DX::XMLoadFloat4x4(&turMatrix));
+	DX::XMStoreFloat4x4(&finalMatrix, matMul);
+
+	DX::XMFLOAT3 localZ{ finalMatrix.m[2][0], finalMatrix.m[2][1], finalMatrix.m[2][2] };
 
 	// Normalise this local axis
 	DX::XMVECTOR vecNormal = DX::XMVector4Normalize(DX::XMLoadFloat3(&localZ));
 	DX::XMStoreFloat3(&localZ, vecNormal);
-
-	//Reverse the local z for the turret
-	localZ.x = -localZ.x;
-	localZ.y = -localZ.y;
-	localZ.z = -localZ.z;
 
 	// If the target is being looked at and is within range
 	if (mAttackTarget->RayCollision(mWorldPos, localZ, distance) && distance <= (mRange* mRange))
@@ -113,31 +111,31 @@ bool CTank::Attack(CGameObject* target, float hitMod, float damageMod)
 			mAttackTimer = 0.0f;
 		}
 	}
-	else
+
+	// Do this bit all the time so that if the target is moving, it follows it whilst still firing (for added effect)
+	DX::XMFLOAT3 vectorZ = { (target->GetWorldPos().x - mWorldPos.x), 0.0f, (target->GetWorldPos().z - mWorldPos.z) };
+	// Normalise vectorZ
+	vecNormal = DX::XMVector4Normalize(DX::XMLoadFloat3(&vectorZ));
+	DX::XMStoreFloat3(&vectorZ, vecNormal);
+
+	DX::XMFLOAT3 localX = { finalMatrix.m[0][0], finalMatrix.m[0][1], finalMatrix.m[0][2] };
+
+	// Normalise this local axis
+	vecNormal = DX::XMVector4Normalize(DX::XMLoadFloat3(&localX));
+	DX::XMStoreFloat3(&localX, vecNormal);
+
+	float dotProduct = Dot(localX, vectorZ);
+
+	if (dotProduct > 0.001f)
 	{
-		DX::XMFLOAT3 vectorZ = { (target->GetWorldPos().x - mpObjModel->GetNode(mTurretNode)->GetX()), (target->GetWorldPos().y - mpObjModel->GetNode(mTurretNode)->GetY()), (target->GetWorldPos().z - mpObjModel->GetNode(mTurretNode)->GetZ()) };
-		float matrix[16];
-		mpObjModel->GetNode(mTurretNode)->GetMatrix(matrix);
-
-		DX::XMFLOAT3 facingVector = { matrix[8], matrix[9], matrix[10] };
-		const DX::XMFLOAT3 kYAxis(0.0f, 1.0f, 0.0f);
-
-		// Normalise this local axis
-		DX::XMVECTOR vecNormal = DX::XMVector4Normalize(DX::XMLoadFloat3(&facingVector));
-		DX::XMStoreFloat3(&facingVector, vecNormal);
-
-		float dotProduct = Dot(vectorZ, facingVector);
-
-		if (dotProduct > 0.3f)
-		{
-			mpObjModel->GetNode(mTurretNode)->RotateY(150.0f * gFrameTime);
-		}
-		else if (dotProduct < -0.3f)
-		{
-			mpObjModel->GetNode(mTurretNode)->RotateY(-150.0f * gFrameTime);
-		}
-		// DO TURRET ROTATING HERE WITH DOT PRODUCT AND SHIZ - also remove the endless rotating loop below
+		mpObjModel->GetNode(mTurretNode)->RotateY(150.0f * gFrameTime);
 	}
+	else if (dotProduct < -0.001f)
+	{
+		mpObjModel->GetNode(mTurretNode)->RotateY(-150.0f * gFrameTime);
+	}
+
+	// Increment attack timer
 	mAttackTimer += gFrameTime;
 	return false;
 }
