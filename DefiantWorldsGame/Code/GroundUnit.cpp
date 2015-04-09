@@ -71,20 +71,19 @@ bool CGroundUnit::Update()
 
 	if (mState != OBJ_DEAD)
 	{
+		Move();
 		if (HasTarget()) //If there is a path target
 		{
-			Move(); //Move the unit towards the path target
+			//Move(); //Move the unit towards the path target
 			LookingAt(mPathTarget); //Rotates the unit to face the path target
 		}
-		else if (mAttackTarget != nullptr) //Else if there is an attack target
+		if (mAttackTarget != nullptr) //if there is an attack target
 		{
-			Move(); //Move in range of the target
+			//Move(); //Move in range of the target
+
 			if (mAttackTarget != nullptr)
 			{
-				if (LookingAt(mAttackTarget->GetWorldPos())) //Rotate the unit to face the target
-				{
-					
-				}
+				Attack(mAttackTarget, 100, mDamage);
 			}
 		}
 
@@ -140,71 +139,37 @@ bool CGroundUnit::Update()
 	return true;
 }
 bool CGroundUnit::LookingAt(DX::XMFLOAT3 target)
-{
-	return false;
-	
-	if ((mAttackTarget != nullptr) && !mHasPathTarget && (mTurretNode != 0))
+{	
+	DX::XMFLOAT3 targetPosition = target;
+	DX::XMFLOAT3 vectorZ = { (targetPosition.x - mpObjModel->GetX()), (targetPosition.y - mpObjModel->GetY()), (targetPosition.z - mpObjModel->GetZ()) };
+
+	float matrix[16];
+	mpObjModel->GetMatrix(matrix);
+
+	DX::XMFLOAT3 facingVector = { matrix[8], matrix[9], matrix[10] };
+	const DX::XMFLOAT3 kYAxis(0.0f, 1.0f, 0.0f);
+
+	float dotProduct = Dot(vectorZ, Cross(kYAxis, facingVector));
+
+	if (dotProduct > 0.2f)
 	{
-		DX::XMFLOAT3 vectorZ = { (target.x - mpObjModel->GetNode(mTurretNode)->GetX()), (target.y - mpObjModel->GetNode(mTurretNode)->GetY()), (target.z - mpObjModel->GetNode(mTurretNode)->GetZ()) };
-		float matrix[16];
-		mpObjModel->GetNode(mTurretNode)->GetMatrix(matrix);
-
-		DX::XMFLOAT3 facingVector = { matrix[8], matrix[9], matrix[10] };
-		const DX::XMFLOAT3 kYAxis(0.0f, 1.0f, 0.0f);
-
-		// Normalise this local axis
-		DX::XMVECTOR vecNormal = DX::XMVector4Normalize(DX::XMLoadFloat3(&facingVector));
-		DX::XMStoreFloat3(&facingVector, vecNormal);
-
-		float dotProduct = Dot(vectorZ, facingVector);
-
-		if (dotProduct > 0.1f)
-		{
-			mpObjModel->GetNode(mTurretNode)->RotateY(50.0f * gFrameTime);
-			return false;
-		}
-		else if (dotProduct < -0.1f)
-		{
-			mpObjModel->GetNode(mTurretNode)->RotateY(-50.0f * gFrameTime);
-			return false;
-		}
-		else
-		{
-			return true;
-		}
+		mpObjModel->RotateY(100.0f * gFrameTime);
+		return false;
+	}
+	else if (dotProduct < -0.2f)
+	{
+		mpObjModel->RotateY(-100.0f * gFrameTime);
+		return false;
 	}
 	else
 	{
-		DX::XMFLOAT3 targetPosition = target;
-		DX::XMFLOAT3 vectorZ = { (targetPosition.x - mpObjModel->GetX()), (targetPosition.y - mpObjModel->GetY()), (targetPosition.z - mpObjModel->GetZ()) };
-		float matrix[16];
-		mpObjModel->GetMatrix(matrix);
-
-		DX::XMFLOAT3 facingVector = { matrix[8], matrix[9], matrix[10] };
-		const DX::XMFLOAT3 kYAxis(0.0f, 1.0f, 0.0f);
-
-		float dotProduct = Dot(vectorZ, Cross(kYAxis, facingVector));
-
-		if (dotProduct > 0.1f)
-		{
-			mpObjModel->RotateY(50.0f * gFrameTime);
-			return false;
-		}
-		else if (dotProduct < -0.1f)
-		{
-			mpObjModel->RotateY(-50.0f * gFrameTime);
-			return false;
-		}
-		else
-		{
-			return true;
-		}
+		return true;
 	}
 }
 
 void CGroundUnit::Move()
 {
-	if (mHasPathTarget)
+	if (HasTarget())
 	{
 		int MaxX = mPathTarget.x + 1.0f;
 		int MinX = mPathTarget.x - 1.0f;
@@ -250,11 +215,6 @@ void CGroundUnit::Move()
 			if (mAttackTarget->GetHealth() <= 0.0f)
 			{
 				mAttackTarget = nullptr;
-			}
-
-			if (mAttackTarget)
-			{
-				Attack(mAttackTarget, 100, mDamage);
 			}
 		}
 	}
