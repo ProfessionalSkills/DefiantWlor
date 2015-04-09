@@ -33,7 +33,20 @@ bool CStaticStructure::Update(CRTSPlayer* pPlayer)
 
 void CStaticStructure::DisplayInfo(IFont* font)
 {
+	// Output selected building
+	switch (mStructureType)
+	{
+	case STR_HOUSE:
+		mStrDisplay << "House";
+		break;
 
+	case STR_WALL:
+		mStrDisplay << "Wall";
+		break;
+	}
+
+	font->Draw(mStrDisplay.str(), 470, 800, kWhite, kLeft, kTop);
+	mStrDisplay.str("");
 }
 
 EErrorTypes CStaticStructure::AddToQueue(size_t agentIndex, CRTSPlayer* pPlayer)
