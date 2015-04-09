@@ -93,6 +93,11 @@ bool CInfantry::Attack(CGameObject* target, float hitMod, float damageMod)
 		DX::XMVECTOR vecNormal = DX::XMVector4Normalize(DX::XMLoadFloat3(&localZ));
 		DX::XMStoreFloat3(&localZ, vecNormal);
 
+		// Reverse the local z for the turret
+		localZ.x = -localZ.x;
+		localZ.y = -localZ.y;
+		localZ.z = -localZ.z;
+
 		// If the target is being looked at and is within range
 		if (mAttackTarget->RayCollision(mWorldPos, localZ, distance) && distance <= mRange)
 		{
@@ -103,12 +108,17 @@ bool CInfantry::Attack(CGameObject* target, float hitMod, float damageMod)
 
 			mpProjectiles.push_back(newProjectile);
 		}
+		else
+		{
+			// DO TURRET ROTATING HERE WITH DOT PRODUCT AND SHIZ - also remove the endless rotating loop below
+		}
 
 		mAttackTimer = 0.0f;
 	}
 	else
 	{
 		mAttackTimer += gFrameTime;
+		//ENDLESS ROTATING LOOPZ
 		mpObjModel->GetNode(3)->RotateY(-50.0f * gFrameTime);
 	}
 	return false;
