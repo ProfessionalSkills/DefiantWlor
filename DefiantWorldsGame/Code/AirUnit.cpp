@@ -40,6 +40,8 @@ void CAirUnit::Spawn(CGrid* pGrid, SPointData pCentre)
 
 bool CAirUnit::Update()
 {
+	if (mState == OBJ_INSPACE) return true;
+
 	if (HasTarget()) //If there is a path target
 	{
 		if (LookingAt(mPathTarget)) //Rotates the unit to face the path target

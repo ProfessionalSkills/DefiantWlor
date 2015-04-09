@@ -513,13 +513,6 @@ void CWorldState::CheckKeyPresses()
 		mpHumanPlayer->GetFleet()->SetTactic(Rapid);
 	}
 
-
-	if (gpEngine->KeyHit(Key_K))
-	{
-		mpHumanPlayer->PutUnitsOnShips();
-	}
-
-
 	//-- DEBUG CONTROLS --//
 	//used to make the ai fleet win in testing
 	if (gpEngine->KeyHit(Key_J))
@@ -2258,12 +2251,22 @@ void CWorldState::DeleteStructure()
 	}
 	if (mpCurSelectedAgent)
 	{
-		// Set object to be deleted
-		mpCurSelectedAgent->SetState(OBJ_WARNING);
-		mpCurSelectedAgent->SetHealth(0.0f);
-		// pointer set to null
-		OnUnitSelectChange(nullptr);
-		mLMouseClicked = false;
+		if (mpHumanPlayer->PutUnitsOnShips(mpCurSelectedAgent))
+		{
+			/*
+			// Set object to be deleted
+			mpCurSelectedAgent->SetState(OBJ_WARNING);
+			mpCurSelectedAgent->SetHealth(0.0f);
+			// pointer set to null*/
+			gpNewsTicker->AddNewElement("Unit Boarded a Transport Ship.", false);
+
+			OnUnitSelectChange(nullptr);
+			mLMouseClicked = false;
+		}
+		else
+		{
+			gpNewsTicker->AddNewElement("No Transport Ships Have Open Space For This Unit.", false);
+		}
 	}
 }
 

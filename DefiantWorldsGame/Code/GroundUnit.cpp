@@ -45,6 +45,8 @@ void CGroundUnit::Spawn(CGrid* pGrid, SPointData pCentre)
 
 bool CGroundUnit::Update()
 {
+	if (mState == OBJ_INSPACE) return true;
+
 	if (mState = OBJ_BUILT)
 	{
 		if (((mHealth / mMaxHealth) * 100.0f) <= 66.6f)

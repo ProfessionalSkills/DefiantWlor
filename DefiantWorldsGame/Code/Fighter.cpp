@@ -136,7 +136,7 @@ IModel* CFighter::CreateModel(DX::XMFLOAT3 pos)
 
 bool CFighter::Update()
 {
+	if (mState == OBJ_INSPACE) return CAirUnit::Update();
 	mpObjModel->GetNode(4)->RotateY(mRotarSpeed * gFrameTime);
-
 	return CAirUnit::Update();
 }

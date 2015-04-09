@@ -107,29 +107,17 @@ public:
 		return mName;
 	}
 
-	inline bool PutUnitsOnShips(GA_MultiMap::iterator miterUnit)
+	inline bool PutUnitsOnShips(CGameAgent* tmp)
 	{
 		for (int i = 0; i < mpSpaceUnitsList.size(); i++)
 		{
+			//space uni that it will attempt to to store a unit on
 			CSpaceUnit* mpTemp = (CSpaceUnit*)(mpSpaceUnitsList[i]);
-			if (mpTemp->StoreUnits(miterUnitsMap->second))
+
+			if (mpTemp->StoreUnits(tmp))
 			{
-				miterUnitsMap->second->UnloadIModel();
-				CGameAgent* tmp = miterUnitsMap->second;
-
-				// Before deleting, check if the agent is a worker unit
-				if (tmp->GetAgentData()->mAgentType == GAV_WORKER)
-				{
-					// Check if the worker is responsible for any mineral deposits
-					CWorker* pWorker = static_cast<CWorker*>(tmp);
-					if (pWorker->GetMineral())
-					{
-						pWorker->GetMineral()->SetUsage(false);
-					}
-				}
-
-				SafeDelete(tmp);
-				mpUnitsMap.erase(miterUnitsMap);
+				tmp->SetState(OBJ_INSPACE);
+				tmp->UnloadIModel();
 				return true;
 			}
 		}
