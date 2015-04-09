@@ -107,35 +107,33 @@ public:
 		return mName;
 	}
 
-	inline void PutUnitsOnShips()
+	inline bool PutUnitsOnShips(GA_MultiMap::iterator miterUnit)
 	{
 		for (int i = 0; i < mpSpaceUnitsList.size(); i++)
 		{
-			for (miterUnitsMap = mpUnitsMap.begin(); miterUnitsMap != mpUnitsMap.end(); miterUnitsMap++)
+			CSpaceUnit* mpTemp = (CSpaceUnit*)(mpSpaceUnitsList[i]);
+			if (mpTemp->StoreUnits(miterUnitsMap->second))
 			{
-				CSpaceUnit* mpTemp = (CSpaceUnit*)(mpSpaceUnitsList[i]);
-				if (mpTemp->StoreUnits(miterUnitsMap->second))
+				miterUnitsMap->second->UnloadIModel();
+				CGameAgent* tmp = miterUnitsMap->second;
+
+				// Before deleting, check if the agent is a worker unit
+				if (tmp->GetAgentData()->mAgentType == GAV_WORKER)
 				{
-					miterUnitsMap->second->UnloadIModel();
-					CGameAgent* tmp = miterUnitsMap->second;
-
-					// Before deleting, check if the agent is a worker unit
-					if (tmp->GetAgentData()->mAgentType == GAV_WORKER)
+					// Check if the worker is responsible for any mineral deposits
+					CWorker* pWorker = static_cast<CWorker*>(tmp);
+					if (pWorker->GetMineral())
 					{
-						// Check if the worker is responsible for any mineral deposits
-						CWorker* pWorker = static_cast<CWorker*>(tmp);
-						if (pWorker->GetMineral())
-						{
-							pWorker->GetMineral()->SetUsage(false);
-						}
+						pWorker->GetMineral()->SetUsage(false);
 					}
-
-					SafeDelete(tmp);
-					mpUnitsMap.erase(miterUnitsMap);
-					break;
 				}
+
+				SafeDelete(tmp);
+				mpUnitsMap.erase(miterUnitsMap);
+				return true;
 			}
 		}
+		return false;
 	}
 
 	inline int GetMineralAmount()
