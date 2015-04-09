@@ -64,23 +64,29 @@ bool CGroundUnit::Update()
 
 		if (mpProjectiles.size() > 0)
 		{
-			for (auto projectile : mpProjectiles) //For each projectile that unit has fired
+			for (auto iter = mpProjectiles.begin(); iter != mpProjectiles.end(); iter++) //For each projectile that unit has fired
 			{
+				SProjectile* projectile = (*iter);
 				projectile->mModel->MoveLocalZ(projectile->mSpeed * gFrameTime); //Move the projectile 
 				DX::XMFLOAT3 position = { projectile->mModel->GetX(), projectile->mModel->GetY(), projectile->mModel->GetZ() }; //projectile's new position stored for collision detection
 
 				if (projectile == mpProjectiles.front()) //As all projectiles move at the same speed, the only projectile that will collide is the one fired first  
 				{
-					if ((mAttackTarget == nullptr)||(BoxCollision(position, mAttackTarget->GetWorldPos(), 3.0f))) //Point to Box collision between the projectile and the attack target
+					// Check to see if the attack target has been lost or it has been destroyed
+					if (mAttackTarget == nullptr)
 					{
-						if (mAttackTarget != nullptr)
-						{
-							mAttackTarget->TakeDamage(mDamage);
-						}
+						SProjectile* tmp = projectile;
+						SafeDelete(tmp);
+						mpProjectiles.erase(iter);
+						break;
+					}
+					else if (BoxCollision(position, mAttackTarget->GetWorldPos(), 3.0f)) //Point to Box collision between the projectile and the attack target
+					{
+						mAttackTarget->TakeDamage(mDamage);
 						mpAttackExplosions.push_back(new CExplosion(projectile->mModel, 50));
 						SProjectile* tmp = projectile;
 						SafeDelete(tmp);
-						mpProjectiles.erase(mpProjectiles.begin());
+						mpProjectiles.erase(iter);
 						break; //Breaks out of the loop as the vector size has been changed, comprimising the iterator loop
 					}
 				}

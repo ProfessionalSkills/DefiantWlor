@@ -130,6 +130,8 @@ bool CWorker::Attack(CGameObject* target, float hitMod, float damageMod)
 	}
 	return false;
 }
+
+
 bool CWorker::Destroy()
 {
 	UnloadIModel();

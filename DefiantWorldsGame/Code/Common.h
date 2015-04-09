@@ -221,8 +221,17 @@ struct SAABoundingBox		// Axis aligned bounding box
 
 struct SProjectile
 {
-	IModel* mModel;
+	IModel* mModel = nullptr;
 	float mSpeed;
+
+	~SProjectile()
+	{
+		if (mModel)
+		{
+			IMesh* pMesh = mModel->GetMesh();
+			pMesh->RemoveModel(mModel);
+		}
+	}
 };
 
 //-----------------------------------------------------
