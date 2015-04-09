@@ -137,6 +137,20 @@ bool CInfantry::Attack(CGameObject* target, float hitMod, float damageMod)
 		mpObjModel->GetNode(mTurretNode)->RotateY(-150.0f * gFrameTime);		
 	}
 
+	// Check for is the dot product is in the range of -0.001 and 0.001. The reason for this is to make sure
+	// that the target is IN FRONT of the turret and not behind it
+	if (dotProduct > -0.001f && dotProduct < 0.001f)
+	{
+		// Do another dot product, this time checking for it being in front
+		dotProduct = Dot(localZ, vectorZ);
+
+		// Check for behind
+		if (dotProduct < 0.0f)
+		{
+			mpObjModel->GetNode(mTurretNode)->RotateY(150.0f * gFrameTime);
+		}
+	}
+
 	// Increment attack timer
 	mAttackTimer += gFrameTime;
 	return false;
