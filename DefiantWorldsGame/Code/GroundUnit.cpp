@@ -76,13 +76,11 @@ bool CGroundUnit::Update()
 		Move();
 		if (HasTarget()) //If there is a path target
 		{
-			//Move(); //Move the unit towards the path target
+			 //Move the unit towards the path target
 			LookingAt(mPathTarget); //Rotates the unit to face the path target
 		}
 		if (mAttackTarget != nullptr) //if there is an attack target
 		{
-			//Move(); //Move in range of the target
-
 			if (mAttackTarget != nullptr)
 			{
 				Attack(mAttackTarget, 100, mDamage);
