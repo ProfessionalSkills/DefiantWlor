@@ -18,7 +18,7 @@ CTank::CTank()
 	mAgentInfo = SAgentData(GAV_TANK, "Tank");
 	mMaxHealth = 100.0f;
 	mHealth = 100.0f;
-	mSpeed = 1.0f;
+	mSpeed = 20.0f;
 	mProductionTime = 15.0f;
 	mProductionCost = 0.0f;
 	mCurProductionTimeLeft = mProductionTime;
@@ -83,9 +83,10 @@ bool CTank::Attack(CGameObject* target, float hitMod, float damageMod)
 		float distance = 100.0f;
 
 		// Get the local Z axis of the worker unit
-		DX::XMFLOAT4X4 objMatrix;
-		mpObjModel->GetMatrix(&objMatrix.m[0][0]);
-		DX::XMFLOAT3 localZ{ objMatrix.m[2][0], objMatrix.m[2][1], objMatrix.m[2][2] };
+		float objMatrix[16];
+		float projMatrix[16];
+		mpObjModel->GetNode(mTurretNode)->GetMatrix(objMatrix);
+		DX::XMFLOAT3 localZ{ objMatrix[8], objMatrix[9], objMatrix[10] };
 
 		// Normalise this local axis
 		DX::XMVECTOR vecNormal = DX::XMVector4Normalize(DX::XMLoadFloat3(&localZ));
@@ -96,10 +97,13 @@ bool CTank::Attack(CGameObject* target, float hitMod, float damageMod)
 		{
 			SProjectile* newProjectile = new SProjectile();
 			newProjectile->mModel = mspMshTankShell->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
-			//newProjectile->mModel->LookAt(mAttackTarget->GetModel());
-			newProjectile->mDirection = localZ;
-			newProjectile->mSpeed = 50.0f;
+			newProjectile->mModel->GetMatrix(projMatrix);
+			projMatrix[8] = objMatrix[8];
+			projMatrix[9] = objMatrix[9];
+			projMatrix[10] = objMatrix[10];
 
+			newProjectile->mModel->SetMatrix(projMatrix);
+			newProjectile->mSpeed = 50.0f;
 			mpProjectiles.push_back(newProjectile);
 		}
 

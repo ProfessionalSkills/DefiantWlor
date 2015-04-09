@@ -136,8 +136,7 @@ bool CGroundUnit::LookingAt(DX::XMFLOAT3 target)
 {
 	if ((mAttackTarget != nullptr) && !mHasPathTarget && (mTurretNode != 0))
 	{
-		DX::XMFLOAT3 targetPosition = target;
-		DX::XMFLOAT3 vectorZ = { (targetPosition.x - mpObjModel->GetNode(mTurretNode)->GetX()), (targetPosition.y - mpObjModel->GetNode(mTurretNode)->GetY()), (targetPosition.z - mpObjModel->GetNode(mTurretNode)->GetZ()) };
+		DX::XMFLOAT3 vectorZ = { (target.x - mpObjModel->GetNode(mTurretNode)->GetX()), (target.y - mpObjModel->GetNode(mTurretNode)->GetY()), (target.z - mpObjModel->GetNode(mTurretNode)->GetZ()) };
 		float matrix[16];
 		mpObjModel->GetNode(mTurretNode)->GetMatrix(matrix);
 
@@ -208,11 +207,11 @@ void CGroundUnit::Move()
 		{
 			float matrix[16];
 			mpObjModel->GetMatrix(matrix);
-			float movement = 10.0f * gFrameTime;
+			float movement = mSpeed * gFrameTime;
 			mpObjModel->MoveLocalZ(movement);
 			mWorldPos = DX::XMFLOAT3(mpObjModel->GetX(), mpObjModel->GetY(), mpObjModel->GetZ());
 			DX::XMFLOAT3 moveAmount = { matrix[8] * movement, matrix[9] * movement, matrix[10] * movement };
-			mBoundingSphere.Move(mWorldPos);
+			mBoundingSphere.MoveTo(mWorldPos);
 		}
 	}
 	else if (mAttackTarget != nullptr)
@@ -227,18 +226,18 @@ void CGroundUnit::Move()
 		{
 			float matrix[16];
 			mpObjModel->GetMatrix(matrix);
-			float movement = 20.0f * gFrameTime;
+			float movement = mSpeed * gFrameTime;
 			mpObjModel->MoveLocalZ(movement);
 			mWorldPos = DX::XMFLOAT3(mpObjModel->GetX(), mpObjModel->GetY(), mpObjModel->GetZ());
 			DX::XMFLOAT3 moveAmount = { matrix[8] * movement, matrix[9] * movement, matrix[10] * movement };
-			mBoundingSphere.Move(mWorldPos);
+			mBoundingSphere.MoveTo(mWorldPos);
 		}
 		else
 		{
-			if (mAttackTarget->GetHealth() <= 0.0f)
-			{
-				mAttackTarget = nullptr;
-			}
+			//if (mAttackTarget->GetHealth() <= 0.0f)
+			//{
+			//	mAttackTarget = nullptr;
+			//}
 		}
 	}
 }
