@@ -109,12 +109,31 @@ public:
 
 	inline void PutUnitsOnShips()
 	{
-		for (miterUnitsMap = mpUnitsMap.begin(); miterUnitsMap != mpUnitsMap.end(); miterUnitsMap++)
+		for (int i = 0; i < mpSpaceUnitsList.size(); i++)
 		{
-			for (int i = 0; i < mpSpaceUnitsList.size(); i++)
+			for (miterUnitsMap = mpUnitsMap.begin(); miterUnitsMap != mpUnitsMap.end(); miterUnitsMap++)
 			{
 				CSpaceUnit* mpTemp = (CSpaceUnit*)(mpSpaceUnitsList[i]);
-				if (!mpTemp->StoreUnits(miterUnitsMap->second)) break;
+				if (mpTemp->StoreUnits(miterUnitsMap->second))
+				{
+					miterUnitsMap->second->UnloadIModel();
+					CGameAgent* tmp = miterUnitsMap->second;
+
+					// Before deleting, check if the agent is a worker unit
+					if (tmp->GetAgentData()->mAgentType == GAV_WORKER)
+					{
+						// Check if the worker is responsible for any mineral deposits
+						CWorker* pWorker = static_cast<CWorker*>(tmp);
+						if (pWorker->GetMineral())
+						{
+							pWorker->GetMineral()->SetUsage(false);
+						}
+					}
+
+					SafeDelete(tmp);
+					mpUnitsMap.erase(miterUnitsMap);
+					break;
+				}
 			}
 		}
 	}

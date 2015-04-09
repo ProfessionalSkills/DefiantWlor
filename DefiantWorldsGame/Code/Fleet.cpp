@@ -152,11 +152,12 @@ void CFleet::UpdateCondition()
 				break;
 			}
 
-			CGameAgent*temp = mpFleet[i];
-			mUnitsLostValue+= temp->GetPopValue();
+			
+			CSpaceUnit* mpTemp = (CSpaceUnit*)(mpFleet[i]);
+			mUnitsLostValue += mpTemp->GetPopValue()+mpTemp->GetCargoValue();
 			mpFleet[i] = mpFleet[mSize - 1];
 			mpFleet.pop_back();
-			delete temp;
+			delete mpTemp;
 			mSize--;
 		}
 	}

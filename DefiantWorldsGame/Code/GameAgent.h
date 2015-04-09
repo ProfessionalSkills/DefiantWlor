@@ -49,8 +49,8 @@ protected:
 	std::stringstream mStrDisplay;
 	SBoundingSphere mBoundingSphere;
 
-	CGameObject* mAttackTarget;
-	float mRange;
+	CGameObject* mAttackTarget = nullptr;
+	float mRange = 100.0f;
 	float mFireRate;
 	float mAttackTimer;
 	vector<SProjectile*>mpProjectiles;
@@ -60,10 +60,7 @@ protected:
 	float mProductionCost;
 	float mCurProductionTimeLeft;				// Countdown for time remaining until construction complete
 	float mDamage;
-	//CParticleEmitter* mAttackParticleFX;
-	//CParticleEmitter* mDestroyParticleFX;
 	EObjectStates mState;
-	//CTile* mDestGridSq;
 	bool mIsMoving;
 	bool mHasPathTarget;
 	float mUnitSpacing;
@@ -129,7 +126,6 @@ public:
 	inline void SetPathTarget(DX::XMFLOAT3 pathTile)
 	{
 		mPathTarget = pathTile;
-		//mAttackTarget = nullptr;
 		mHasPathTarget = true;
 	}
 
@@ -186,6 +182,7 @@ public:
 	virtual bool Attack(CGameObject* target, float hitMod, float damageMod) = 0;
 	virtual void Spawn(CGrid* pGrid, SPointData pCentre) = 0; //Spawns the Unit into the game 
 	bool RayCollision(DX::XMFLOAT3 origin, DX::XMFLOAT3 direction, float& distance);
+	bool SphereCollision(SBoundingSphere& sphere);
 	bool DragBoxCollision(DX::BoundingBox& box);
 	void DisplayInfo(IFont* font);
 	//virtual void MoveTo(CTile* dest) = 0;

@@ -55,6 +55,7 @@ public:
 		{
 			mNumUnitsHeld++;
 			mpSpaceUnitsList.push_back(newUnit);
+			mCargoValue += newUnit->GetPopValue();
 			return true;
 		}
 		return false;

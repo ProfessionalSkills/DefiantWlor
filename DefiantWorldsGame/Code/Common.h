@@ -169,12 +169,17 @@ struct SBoundingSphere
 		return mSphere.Intersects(origin, direction, distance);
 	}
 
-	bool CollidingWithBox(DX::BoundingBox& box)
+	bool CollidingWith(DX::BoundingBox& pBox)
 	{
-		return mSphere.Intersects(box);
+		return mSphere.Intersects(pBox);
 	}
 
-	void Move(DX::XMFLOAT3 pos)
+	bool CollidingWith(DX::BoundingSphere& sphere)
+	{
+		return mSphere.Intersects(sphere);
+	}
+
+	void MoveTo(DX::XMFLOAT3 pos)
 	{
 		float scale = 1.0f;
 		DX::XMFLOAT3 rotation = { 0.0f, 0.0f, 0.0f };
@@ -221,12 +226,29 @@ struct SAABoundingBox		// Axis aligned bounding box
 
 struct SProjectile
 {
-	IModel* mModel;
+	IModel* mModel = nullptr;
+	DX::XMFLOAT3 mPos;
+	DX::XMFLOAT3 mDirection;
 	float mSpeed;
+	SBoundingSphere mCollisionSphere;
 
-	void UnloadIModel()
+	void Update()
 	{
-		CParticle::mspMshParticle->RemoveModel(mModel);
+		if (mModel)
+		{
+			mModel->Move(mDirection.x * mSpeed * gFrameTime, mDirection.y * mSpeed * gFrameTime, mDirection.z * mSpeed * gFrameTime);
+			mPos = { mModel->GetX(), mModel->GetY(), mModel->GetZ() };
+			mCollisionSphere.MoveTo(mPos);
+		}
+	}
+
+	~SProjectile()
+	{
+		if (mModel)
+		{
+			IMesh* pMesh = mModel->GetMesh();
+			pMesh->RemoveModel(mModel);
+		}
 	}
 };
 
