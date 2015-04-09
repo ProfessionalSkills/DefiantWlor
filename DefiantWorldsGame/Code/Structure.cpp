@@ -207,6 +207,11 @@ bool CStructure::TestStructureArea(CGrid* pGrid, CTile* pTile)
 	return true;
 }
 
+bool CStructure::SphereCollision(SBoundingSphere& sphere)
+{
+	return sphere.CollidingWith(mBoundingBox.mBox);
+}
+
 bool CStructure::RayCollision(DX::XMFLOAT3 origin, DX::XMFLOAT3 direction, float& distance)
 {
 	return mBoundingBox.GetCollisionDistance(DX::XMLoadFloat3(&origin),

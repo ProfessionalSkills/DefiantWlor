@@ -178,7 +178,7 @@ void CAirUnit::Move()
 			mpObjModel->MoveLocalZ(movement);
 			mWorldPos = DX::XMFLOAT3(mpObjModel->GetX(), mpObjModel->GetY(), mpObjModel->GetZ());
 			DX::XMFLOAT3 moveAmount = { matrix[8] * movement, matrix[9] * movement, matrix[10] * movement };
-			mBoundingSphere.Move(mWorldPos);
+			mBoundingSphere.MoveTo(mWorldPos);
 		}
 	}
 	else if (mAttackTarget != nullptr)
@@ -197,7 +197,7 @@ void CAirUnit::Move()
 			mpObjModel->MoveLocalZ(movement);
 			mWorldPos = DX::XMFLOAT3(mpObjModel->GetX(), mpObjModel->GetY(), mpObjModel->GetZ());
 			DX::XMFLOAT3 moveAmount = { matrix[8] * movement, matrix[9] * movement, matrix[10] * movement };
-			mBoundingSphere.Move(mWorldPos);
+			mBoundingSphere.MoveTo(mWorldPos);
 		}
 		else
 		{

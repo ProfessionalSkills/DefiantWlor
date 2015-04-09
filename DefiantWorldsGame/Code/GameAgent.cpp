@@ -51,9 +51,14 @@ bool CGameAgent::RayCollision(DX::XMFLOAT3 origin, DX::XMFLOAT3 direction, float
 		DX::XMLoadFloat3(&direction), distance);
 }
 
+bool CGameAgent::SphereCollision(SBoundingSphere& sphere)
+{
+	return sphere.CollidingWith(mBoundingSphere.mSphere);
+}
+
 bool CGameAgent::DragBoxCollision(DX::BoundingBox& box)
 {
-	return mBoundingSphere.CollidingWithBox(box);
+	return mBoundingSphere.CollidingWith(box);
 }
 
 void CGameAgent::DisplayInfo(IFont* font)

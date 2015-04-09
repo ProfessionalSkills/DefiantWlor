@@ -180,6 +180,7 @@ public:
 	void CreateStructure(CGrid* pGrid);
 	bool TestStructureArea(CGrid* pGrid, CTile* pTile);
 	bool RayCollision(DX::XMFLOAT3 origin, DX::XMFLOAT3 direction, float& distance);
+	bool SphereCollision(SBoundingSphere& sphere);
 	void SetGridData(CGrid* pGrid);
 	void CalculateBoundingBox();
 	void Destroy();

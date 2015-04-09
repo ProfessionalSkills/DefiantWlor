@@ -182,6 +182,7 @@ public:
 	virtual bool Attack(CGameObject* target, float hitMod, float damageMod) = 0;
 	virtual void Spawn(CGrid* pGrid, SPointData pCentre) = 0; //Spawns the Unit into the game 
 	bool RayCollision(DX::XMFLOAT3 origin, DX::XMFLOAT3 direction, float& distance);
+	bool SphereCollision(SBoundingSphere& sphere);
 	bool DragBoxCollision(DX::BoundingBox& box);
 	void DisplayInfo(IFont* font);
 	//virtual void MoveTo(CTile* dest) = 0;

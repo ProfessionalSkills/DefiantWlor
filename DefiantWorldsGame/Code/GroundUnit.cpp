@@ -67,7 +67,7 @@ bool CGroundUnit::Update()
 			for (auto iter = mpProjectiles.begin(); iter != mpProjectiles.end(); iter++) //For each projectile that unit has fired
 			{
 				SProjectile* projectile = (*iter);
-				projectile->mModel->MoveLocalZ(projectile->mSpeed * gFrameTime); //Move the projectile 
+				projectile->Update(); //Move the projectile 
 				DX::XMFLOAT3 position = { projectile->mModel->GetX(), projectile->mModel->GetY(), projectile->mModel->GetZ() }; //projectile's new position stored for collision detection
 
 				if (projectile == mpProjectiles.front()) //As all projectiles move at the same speed, the only projectile that will collide is the one fired first  
@@ -80,7 +80,7 @@ bool CGroundUnit::Update()
 						mpProjectiles.erase(iter);
 						break;
 					}
-					else if (BoxCollision(position, mAttackTarget->GetWorldPos(), 3.0f)) //Point to Box collision between the projectile and the attack target
+					else if (mAttackTarget->SphereCollision(projectile->mCollisionSphere)) //Point to Box collision between the projectile and the attack target
 					{
 						mAttackTarget->TakeDamage(mDamage);
 						mpAttackExplosions.push_back(new CExplosion(projectile->mModel, 50));
@@ -170,7 +170,7 @@ void CGroundUnit::Move()
 			mpObjModel->MoveLocalZ(movement);
 			mWorldPos = DX::XMFLOAT3(mpObjModel->GetX(), mpObjModel->GetY(), mpObjModel->GetZ());
 			DX::XMFLOAT3 moveAmount = { matrix[8] * movement, matrix[9] * movement, matrix[10] * movement };
-			mBoundingSphere.Move(mWorldPos);
+			mBoundingSphere.MoveTo(mWorldPos);
 		}
 	}
 	else if (mAttackTarget != nullptr)
@@ -189,7 +189,7 @@ void CGroundUnit::Move()
 			mpObjModel->MoveLocalZ(movement);
 			mWorldPos = DX::XMFLOAT3(mpObjModel->GetX(), mpObjModel->GetY(), mpObjModel->GetZ());
 			DX::XMFLOAT3 moveAmount = { matrix[8] * movement, matrix[9] * movement, matrix[10] * movement };
-			mBoundingSphere.Move(mWorldPos);
+			mBoundingSphere.MoveTo(mWorldPos);
 		}
 		else
 		{

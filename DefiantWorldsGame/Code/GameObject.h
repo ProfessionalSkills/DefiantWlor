@@ -134,6 +134,16 @@ public:
 	void SetOrientation(float orientation);
 	void ChangeRelativeOrientation(float amount);
 
+	virtual bool RayCollision(DX::XMFLOAT3 origin, DX::XMFLOAT3 direction, float& distance)
+	{
+		return false;
+	}
+
+	virtual bool SphereCollision(SBoundingSphere& sphere)
+	{
+		return false;
+	}
+
 
 	// METHODS
 	//---------------------------
