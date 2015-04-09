@@ -38,7 +38,6 @@ float CGameAgent::GetUnitSpacing()
 //-----------------------------------------------------
 // GAME AGENT CLASS MUTATORS
 //-----------------------------------------------------
-
 bool CGameAgent::Heal(float amount)
 {
 	mHealth += amount;
