@@ -1847,10 +1847,7 @@ void CWorldState::OnStructureSelectChange(CStructure* pSelStructure)
 			mpButtonSpaceCentre->Hide();
 
 			// Hide structure buttons - correct button list will be displayed later
-			mpBarracksButtons->Hide();
-			mpHellipadButtons->Hide();
-			mpComCentreButtons->Hide();
-			mpSpaceCentreButtons->Hide();
+			
 
 			// Show specific structure buttons
 			mpButtonDelete->Show();
@@ -1858,20 +1855,52 @@ void CWorldState::OnStructureSelectChange(CStructure* pSelStructure)
 			switch (pSelStructure->GetStructureType())
 			{
 			case STR_BARRACKS:
+				// Hide other structure buttons
+				mpHellipadButtons->Hide();
+				mpComCentreButtons->Hide();
+				mpSpaceCentreButtons->Hide();
+				// Show this structures buttons
 				mpBarracksButtons->Show();
 				break;
 			case STR_COM_CENTRE:
+				// Hide other structure buttons
+				mpBarracksButtons->Hide();
+				mpHellipadButtons->Hide();
+				mpSpaceCentreButtons->Hide();
+				// Show this structures buttons
 				mpComCentreButtons->Show();
 				break;
 			case STR_HELLIPAD:
+				// Hide other structure buttons
+				mpBarracksButtons->Hide();
+				mpComCentreButtons->Hide();
+				mpSpaceCentreButtons->Hide();
+				// Show this structures buttons
 				mpHellipadButtons->Show();
 				break;
 			case STR_HOUSE:
+				// Hide other structure buttons
+				mpBarracksButtons->Hide();
+				mpHellipadButtons->Hide();
+				mpComCentreButtons->Hide();
+				mpSpaceCentreButtons->Hide();
+				// This structure has no buttons
 				break;
 			case STR_SPACE_CENTRE:
+				// Hide other structure buttons
+				mpBarracksButtons->Hide();
+				mpHellipadButtons->Hide();
+				mpComCentreButtons->Hide();
+				// Show this structures buttons
 				mpSpaceCentreButtons->Show();
 				break;
 			case STR_WALL:
+				// Hide other structure buttons
+				mpBarracksButtons->Hide();
+				mpHellipadButtons->Hide();
+				mpComCentreButtons->Hide();
+				mpSpaceCentreButtons->Hide();
+				// This structure has no buttons
 				break;
 			}
 		}
