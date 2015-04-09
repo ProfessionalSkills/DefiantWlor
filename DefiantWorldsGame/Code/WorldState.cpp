@@ -1985,6 +1985,12 @@ void CWorldState::OnUnitSelectChange(CGameAgent* pSelAgent)
 		mpButtonBarracks->Hide();
 		mpButtonHellipad->Hide();
 		mpButtonSpaceCentre->Hide();
+
+		// Hide unit construction buttons
+		mpBarracksButtons->Hide();
+		mpHellipadButtons->Hide();
+		mpSpaceCentreButtons->Hide();
+		mpComCentreButtons->Hide();
 	}
 	// If no building is selected, show the other buttons
 	else if (!mpCurSelectedStructure)
