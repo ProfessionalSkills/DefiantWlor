@@ -71,6 +71,17 @@ public:
 		return temp;
 	}
 
+	inline void UnloadUnits()
+	{
+		for (int i = 0; i < mpSpaceUnitsList.size(); i++)
+		{
+			mpSpaceUnitsList[i]->SetState(OBJ_BUILT);
+			mpSpaceUnitsList[i]->LoadModel(0, 0, 0);
+
+		}
+		mpSpaceUnitsList.clear();
+	}
+
 	// OVERRIDE METHODS
 	//---------------------------
 	bool Attack(CGameObject* target, float hitMod, float damageMod);

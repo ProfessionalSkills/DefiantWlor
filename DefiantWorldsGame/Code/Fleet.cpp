@@ -369,6 +369,11 @@ void CFleet::ReturnFleet(CRTSPlayer* Player)
 {
 	for (int i = mSize-1; i >= 0; i--)
 	{
+		if (mpFleet[i]->GetAgentData()->mAgentType == GAV_TRANSPORT)
+		{
+			CTransport* mpTemp = (CTransport*)(mpFleet[i]);
+			mpTemp->UnloadUnits();
+		}
 		mpFleet[i]->UnloadIModel();
 		Player->GetSpaceUnitList()->push_back(mpFleet[i]);
 		mpFleet.pop_back();

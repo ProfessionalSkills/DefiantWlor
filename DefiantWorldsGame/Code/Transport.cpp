@@ -141,6 +141,14 @@ void CTransport::LoadModel(float x, float y, float z)
 
 void CTransport::UnloadIModel()
 {
+	for (int i = 0; i < mpSpaceUnitsList.size(); i++)
+	{
+		mpSpaceUnitsList[i]->SetState(OBJ_WARNING);
+		mpSpaceUnitsList[i]->SetHealth(0.0f);
+
+	}
+	mpSpaceUnitsList.clear();
+	mpSpaceUnitsList.clear();
 	if (mpObjModel != 0)
 	{
 		mspMshTransport->RemoveModel(mpObjModel);
