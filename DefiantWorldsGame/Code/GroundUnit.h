@@ -17,7 +17,8 @@
 //-----------------------------------------------------
 class CGroundUnit : public CGameAgent
 {
-private:
+protected:
+	int mTurretNode;
 	// DATA
 	//---------------------------
 

@@ -35,6 +35,7 @@ CTank::CTank()
 	mScale = 1.5f;
 	mBuildCost = 300;
 	mPopCost = 3;
+	mTurretNode = 4;
 }
 
 CTank::~CTank()

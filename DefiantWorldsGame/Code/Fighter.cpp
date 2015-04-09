@@ -23,7 +23,7 @@ CFighter::CFighter()
 	mProductionTime = 15.0f;
 	mProductionCost = 0.0f;
 	mCurProductionTimeLeft = mProductionTime;
-	mDamage = 1.0f;
+	mDamage = 100.0f;
 	mFireRate = 4.0f;
 	mAttackTimer = 1.0f / mFireRate;
 	//mAttackParticleFX;

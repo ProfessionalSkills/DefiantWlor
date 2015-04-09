@@ -36,6 +36,7 @@ CInfantry::CInfantry()
 	mScale = 1.5f;
 	mBuildCost = 100;
 	mPopCost = 2;
+	mTurretNode = 3;
 }
 
 CInfantry::~CInfantry()

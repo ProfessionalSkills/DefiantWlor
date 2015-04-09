@@ -37,6 +37,7 @@ CWorker::CWorker()
 	mScale = 1.0f;
 	mBuildCost = 50;
 	mPopCost = 5;
+	mTurretNode = 0;
 }
 
 CWorker::~CWorker()

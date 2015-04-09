@@ -277,7 +277,7 @@ bool CProductionStructure::Update(CRTSPlayer* pPlayer)
 			if ((mHealth <= 0.0f))
 			{
 				if (mDestructionExplosion == nullptr)
-				{
+				{	
 					mDestructionExplosion = new CExplosion(mpObjModel, 200);
 					Destroy();
 				}

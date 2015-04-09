@@ -223,6 +223,11 @@ struct SProjectile
 {
 	IModel* mModel;
 	float mSpeed;
+
+	void UnloadIModel()
+	{
+		CParticle::mspMshParticle->RemoveModel(mModel);
+	}
 };
 
 //-----------------------------------------------------

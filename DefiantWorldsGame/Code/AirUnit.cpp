@@ -40,60 +40,64 @@ void CAirUnit::Spawn(CGrid* pGrid, SPointData pCentre)
 
 bool CAirUnit::Update()
 {
-	if (HasTarget()) //If there is a path target
+	if (mState != OBJ_DEAD)
 	{
-		if (LookingAt(mPathTarget)) //Rotates the unit to face the path target
+		if (HasTarget()) //If there is a path target
 		{
 			Move(); //Move the unit towards the path target
+			LookingAt(mPathTarget); //Rotates the unit to face the path target
 		}
-	}
-	else if (mAttackTarget != nullptr) //Else if there is an attack target
-	{
-		if (LookingAt(mAttackTarget->GetWorldPos())) //Rotate the unit to face the target
+		else if (mAttackTarget != nullptr) //Else if there is an attack target
 		{
 			Move(); //Move in range of the target
-		}
-	}
-
-	if (mpProjectiles.size() > 0)
-	{
-		for (auto projectile : mpProjectiles) //For each projectile that unit has fired
-		{
-			projectile->mModel->MoveLocalZ(projectile->mSpeed * gFrameTime); //Move the projectile 
-			DX::XMFLOAT3 position = { projectile->mModel->GetX(), projectile->mModel->GetY(), projectile->mModel->GetZ() }; //projectile's new position stored for collision detection
-
-			if (projectile == mpProjectiles.front()) //As all projectiles move at the same speed, the only projectile that will collide is the one fired first  
+			if (mAttackTarget != nullptr)
 			{
-				if (BoxCollision(position, mAttackTarget->GetWorldPos(), 3.0f)) //Point to Box collision between the projectile and the attack target
+				if (LookingAt(mAttackTarget->GetWorldPos())) //Rotate the unit to face the target
 				{
-					SProjectile* tmp = projectile;
-					SafeDelete(tmp);
-					mpProjectiles.erase(mpProjectiles.begin());
-					mpAttackExplosions.push_back(new CExplosion(mAttackTarget->GetModel(), 50));
-					break; //Breaks out of the loop as the vector size has been changed, comprimising the iterator loop
+					Attack(mAttackTarget, 100, mDamage);
 				}
 			}
 		}
-	}
 
-	if (mpAttackExplosions.size() > 0)
-	{
-		for (auto explosions : mpAttackExplosions) //For each explosion resulting from a projectile colliding
+		if (mpProjectiles.size() > 0)
 		{
-			explosions->UpdateSystem(); //Update systems 
+			for (auto projectile : mpProjectiles) //For each projectile that unit has fired
+			{
+				projectile->mModel->MoveLocalZ(projectile->mSpeed * gFrameTime); //Move the projectile 
+				DX::XMFLOAT3 position = { projectile->mModel->GetX(), projectile->mModel->GetY(), projectile->mModel->GetZ() }; //projectile's new position stored for collision detection
+
+				if (projectile == mpProjectiles.front()) //As all projectiles move at the same speed, the only projectile that will collide is the one fired first  
+				{
+					if ((mAttackTarget == nullptr) || BoxCollision(position, mAttackTarget->GetWorldPos(), 3.0f)) //Point to Box collision between the projectile and the attack target
+					{
+						if (mAttackTarget != nullptr)
+						{
+							mAttackTarget->TakeDamage(mDamage);
+						}
+						mpAttackExplosions.push_back(new CExplosion(projectile->mModel, 50));
+						SProjectile* tmp = projectile;
+						SafeDelete(tmp);
+						mpProjectiles.erase(mpProjectiles.begin());
+						break; //Breaks out of the loop as the vector size has been changed, comprimising the iterator loop
+					}
+				}
+			}
+		}
+
+		if (mpAttackExplosions.size() > 0)
+		{
+			for (auto explosions : mpAttackExplosions) //For each explosion resulting from a projectile colliding
+			{
+				explosions->UpdateSystem(); //Update systems 
+			}
 		}
 	}
-
-	// Check if the model is still alive
-	if (mState == OBJ_DEAD)
+	else
 	{
 		Destroy();
 		return false;
 	}
-	else
-	{
-		return true;
-	}
+	return true;
 }
 
 bool CAirUnit::LookingAt(DX::XMFLOAT3 targetLocation)
@@ -117,6 +121,7 @@ bool CAirUnit::LookingAt(DX::XMFLOAT3 targetLocation)
 			mpObjModel->RotateLocalZ(mZRotate);
 			mYaw += mZRotate;
 		}
+		return false;
 	}
 	else if (dotProduct < -0.1f)
 	{
@@ -127,6 +132,7 @@ bool CAirUnit::LookingAt(DX::XMFLOAT3 targetLocation)
 			mpObjModel->RotateLocalZ(mZRotate);
 			mYaw += mZRotate;
 		}
+		return false;
 	}
 	else
 	{
@@ -142,8 +148,8 @@ bool CAirUnit::LookingAt(DX::XMFLOAT3 targetLocation)
 			mpObjModel->RotateLocalZ(mZRotate);
 			mYaw += mZRotate;
 		}
+		return true;
 	}
-	return true;
 }
 
 void CAirUnit::Move()
@@ -189,10 +195,14 @@ void CAirUnit::Move()
 			DX::XMFLOAT3 moveAmount = { matrix[8] * movement, matrix[9] * movement, matrix[10] * movement };
 			mBoundingSphere.Move(mWorldPos);
 		}
-		else
+		else 
 		{
-			Attack(mAttackTarget, 100, mDamage);
+			if (mAttackTarget->GetHealth() <= 0.0f)
+			{
+				mAttackTarget = nullptr;
+			}
 		}
+		
 	}
 }
 

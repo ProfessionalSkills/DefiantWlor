@@ -45,44 +45,45 @@ void CGroundUnit::Spawn(CGrid* pGrid, SPointData pCentre)
 
 bool CGroundUnit::Update()
 {
+	if (mState = OBJ_BUILT)
+	{
+		if (((mHealth / mMaxHealth) * 100.0f) <= 66.6f)
+		{
+			mState = OBJ_DAMAGED;
+		}
+	}
+	else if (mState = OBJ_DAMAGED)
+	{
+		if (((mHealth / mMaxHealth) * 100.0f) <= 33.3f)
+		{
+			mState = OBJ_WARNING;
+		}
+	}
+	else if (mState = OBJ_WARNING)
+	{
+		if (mHealth <= 0.0f)
+		{
+			mDestructionExplosion = new CExplosion(mpObjModel, 50);
+			UnloadIModel();
+			mState = OBJ_DEAD;
+		}
+	}
+
 	if (mState != OBJ_DEAD)
 	{
 		if (HasTarget()) //If there is a path target
 		{
-			if (LookingAt(mPathTarget)) //Rotates the unit to face the path target
-			{
-				Move(); //Move the unit towards the path target
-			}
+			Move(); //Move the unit towards the path target
+			LookingAt(mPathTarget); //Rotates the unit to face the path target
 		}
 		else if (mAttackTarget != nullptr) //Else if there is an attack target
 		{
-			if (LookingAt(mAttackTarget->GetWorldPos())) //Rotate the unit to face the target
+			Move(); //Move in range of the target
+			if (mAttackTarget != nullptr)
 			{
-				Move(); //Move in range of the target
-			}
-		}
-
-		if (mpProjectiles.size() > 0)
-		{
-			for (auto projectile : mpProjectiles) //For each projectile that unit has fired
-			{
-				projectile->mModel->MoveLocalZ(projectile->mSpeed * gFrameTime); //Move the projectile 
-				DX::XMFLOAT3 position = { projectile->mModel->GetX(), projectile->mModel->GetY(), projectile->mModel->GetZ() }; //projectile's new position stored for collision detection
-
-				if (projectile == mpProjectiles.front()) //As all projectiles move at the same speed, the only projectile that will collide is the one fired first  
+				if (LookingAt(mAttackTarget->GetWorldPos())) //Rotate the unit to face the target
 				{
-					if ((mAttackTarget == nullptr)||(BoxCollision(position, mAttackTarget->GetWorldPos(), 3.0f))) //Point to Box collision between the projectile and the attack target
-					{
-						if (mAttackTarget != nullptr)
-						{
-							mAttackTarget->TakeDamage(mDamage);
-						}
-						mpAttackExplosions.push_back(new CExplosion(projectile->mModel, 50));
-						SProjectile* tmp = projectile;
-						SafeDelete(tmp);
-						mpProjectiles.erase(mpProjectiles.begin());
-						break; //Breaks out of the loop as the vector size has been changed, comprimising the iterator loop
-					}
+					Attack(mAttackTarget, 100, mDamage);
 				}
 			}
 		}
@@ -98,47 +99,94 @@ bool CGroundUnit::Update()
 	// Check if the model is still alive
 	else
 	{
-		if (!mDestructionExplosion)
+		if (!mDestructionExplosion->UpdateSystem())
 		{
+			SafeDelete(mDestructionExplosion);
+			return false;
+		}
+	}
+
+	if (mpProjectiles.size() > 0)
+	{
+		for (auto projectile : mpProjectiles) //For each projectile that unit has fired
+		{
+			projectile->mModel->MoveLocalZ(projectile->mSpeed * gFrameTime); //Move the projectile 
+			DX::XMFLOAT3 position = { projectile->mModel->GetX(), projectile->mModel->GetY(), projectile->mModel->GetZ() }; //projectile's new position stored for collision detection
+
+			if (projectile == mpProjectiles.front()) //As all projectiles move at the same speed, the only projectile that will collide is the one fired first  
+			{
+				if ((mAttackTarget == nullptr) || (BoxCollision(position, mAttackTarget->GetWorldPos(), 3.0f))) //Point to Box collision between the projectile and the attack target
+				{
+					if (mAttackTarget != nullptr)
+					{
+						mAttackTarget->TakeDamage(mDamage);
+					}
+					mpAttackExplosions.push_back(new CExplosion(projectile->mModel, 50));
+					SafeDelete(projectile);
+					mpProjectiles.erase(mpProjectiles.begin());
+					break; //Breaks out of the loop as the vector size has been changed, comprimising the iterator loop
+				}
+			}
+		}
+	}
+
+	return true;
+}
+bool CGroundUnit::LookingAt(DX::XMFLOAT3 target)
+{
+	if ((mAttackTarget != nullptr) && !mHasPathTarget && (mTurretNode != 0))
+	{
+		DX::XMFLOAT3 targetPosition = target;
+		DX::XMFLOAT3 vectorZ = { (targetPosition.x - mpObjModel->GetNode(mTurretNode)->GetX()), (targetPosition.y - mpObjModel->GetNode(mTurretNode)->GetY()), (targetPosition.z - mpObjModel->GetNode(mTurretNode)->GetZ()) };
+		float matrix[16];
+		mpObjModel->GetNode(mTurretNode)->GetMatrix(matrix);
+
+		DX::XMFLOAT3 facingVector = { matrix[8], matrix[9], matrix[10] };
+		const DX::XMFLOAT3 kYAxis(0.0f, 1.0f, 0.0f);
+
+		float dotProduct = Dot(vectorZ, Cross(kYAxis, facingVector));
+
+		if (dotProduct > 0.1f)
+		{
+			mpObjModel->GetNode(mTurretNode)->RotateY(50.0f * gFrameTime);
+			return false;
+		}
+		else if (dotProduct < -0.1f)
+		{
+			mpObjModel->GetNode(mTurretNode)->RotateY(-50.0f * gFrameTime);
 			return false;
 		}
 		else
 		{
-			if (!mDestructionExplosion->UpdateSystem())
-			{
-				SafeDelete(mDestructionExplosion);
-			}
-			
+			return true;
 		}
-	}
-	return true;
-}
-
-bool CGroundUnit::LookingAt(DX::XMFLOAT3 target)
-{
-	DX::XMFLOAT3 targetPosition = target;
-	DX::XMFLOAT3 vectorZ = { (targetPosition.x - mpObjModel->GetX()), (targetPosition.y - mpObjModel->GetY()), (targetPosition.z - mpObjModel->GetZ()) };
-	float matrix[16];
-	mpObjModel->GetMatrix(matrix);
-
-	DX::XMFLOAT3 facingVector = { matrix[8], matrix[9], matrix[10] };
-	const DX::XMFLOAT3 kYAxis(0.0f, 1.0f, 0.0f);
-
-	float dotProduct = Dot(vectorZ, Cross(kYAxis, facingVector));
-
-	if (dotProduct > 0.1f)
-	{
-		mpObjModel->RotateY(50.0f * gFrameTime);
-		return true;
-	}
-	else if (dotProduct < -0.1f)
-	{
-		mpObjModel->RotateY(-50.0f * gFrameTime);
-		return true;
 	}
 	else
 	{
-		return true;
+		DX::XMFLOAT3 targetPosition = target;
+		DX::XMFLOAT3 vectorZ = { (targetPosition.x - mpObjModel->GetX()), (targetPosition.y - mpObjModel->GetY()), (targetPosition.z - mpObjModel->GetZ()) };
+		float matrix[16];
+		mpObjModel->GetMatrix(matrix);
+
+		DX::XMFLOAT3 facingVector = { matrix[8], matrix[9], matrix[10] };
+		const DX::XMFLOAT3 kYAxis(0.0f, 1.0f, 0.0f);
+
+		float dotProduct = Dot(vectorZ, Cross(kYAxis, facingVector));
+
+		if (dotProduct > 0.1f)
+		{
+			mpObjModel->RotateY(50.0f * gFrameTime);
+			return false;
+		}
+		else if (dotProduct < -0.1f)
+		{
+			mpObjModel->RotateY(-50.0f * gFrameTime);
+			return false;
+		}
+		else
+		{
+			return true;
+		}
 	}
 }
 
@@ -190,10 +238,6 @@ void CGroundUnit::Move()
 			if (mAttackTarget->GetHealth() <= 0.0f)
 			{
 				mAttackTarget = nullptr;
-			}
-			else
-			{
-				Attack(mAttackTarget, 100, mDamage);
 			}
 		}
 	}

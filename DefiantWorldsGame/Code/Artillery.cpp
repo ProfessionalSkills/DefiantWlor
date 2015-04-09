@@ -37,6 +37,7 @@ CArtillery::CArtillery()
 	mScale = 1.5f;
 	mBuildCost = 150;
 	mPopCost = 4;
+	mTurretNode = 0;
 }
 
 CArtillery::~CArtillery()
