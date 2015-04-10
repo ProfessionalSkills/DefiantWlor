@@ -76,8 +76,8 @@ public:
 		for (int i = 0; i < mpSpaceUnitsList.size(); i++)
 		{
 			mpSpaceUnitsList[i]->SetState(OBJ_BUILT);
-			mpSpaceUnitsList[i]->LoadModel(0, 0, 0);
-
+			DX::XMFLOAT3 Pos = { -2100.0f, 0.0f, 200.0f };
+			mpSpaceUnitsList[i]->SetWorldPos(Pos);
 		}
 		mpSpaceUnitsList.clear();
 	}
