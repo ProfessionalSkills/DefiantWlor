@@ -365,15 +365,16 @@ void CFleet::SetTactic(Tactics tactics)//changes the tactics the fleet will use 
 }
 
 //returns the fleet to the player
-void CFleet::ReturnFleet(CRTSPlayer* Player)
+void CFleet::ReturnFleet(CRTSPlayer* Player,bool victory)
 {
 	for (int i = mSize-1; i >= 0; i--)
 	{
 		if (mpFleet[i]->GetAgentData()->mAgentType == GAV_TRANSPORT)
 		{
 			CTransport* mpTemp = (CTransport*)(mpFleet[i]);
-			mpTemp->UnloadUnits();
+			mpTemp->UnloadUnits(victory);
 		}
+
 		mpFleet[i]->UnloadIModel();
 		Player->GetSpaceUnitList()->push_back(mpFleet[i]);
 		mpFleet.pop_back();

@@ -101,6 +101,8 @@ private:
 	float mTimeSinceUpdate;
 	float mTimeSinceEffectsUpdate = 0.0f;
 	CRandomiser mNewRandom;
+	bool PlayerOneVictory;
+	bool PlayerTwoVictory;
 
 public:
 	// CONSTRUCTORS & DESTRUCTOR
