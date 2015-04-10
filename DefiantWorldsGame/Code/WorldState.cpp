@@ -1521,8 +1521,8 @@ void CWorldState::StateUpdate()
 
 			// Deselect everything
 			OnPlacingStructureChange(nullptr);
-			OnStructureSelectChange(nullptr);
 			OnUnitSelectChange(nullptr);
+			OnStructureSelectChange(nullptr);
 			mpUnitSelectionList.clear();
 		}
 

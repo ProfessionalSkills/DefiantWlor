@@ -116,6 +116,7 @@ public:
 
 			// Set to transition in
 			mToTransitionIn = true;
+			mToTransitionOut = false;
 			mIsAtDestination = false;
 			mIsOffScreen = false;
 		}
@@ -138,6 +139,7 @@ public:
 
 			// Set to transition out
 			mToTransitionOut = true;
+			mToTransitionIn = false;
 			mIsAtDestination = false;
 			mIsOffScreen = false;
 		}
