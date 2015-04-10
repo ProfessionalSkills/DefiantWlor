@@ -107,7 +107,7 @@ public:
 	//---------------------------
 	void SetEnemy(CFleet* myEnemy);//sets the fleet that this one will attack
 	vector <CGameAgent*>* LaunchFleet(vector <CGameAgent*>* possibleShips);//gets ships a player has, then adds a number of them to the fleet to attack
-	void ReturnFleet(CRTSPlayer* Player);
+	void ReturnFleet(CRTSPlayer* Player,bool victory);
 	void SetTactic(Tactics tactics);
 	bool ManFleet(CGameAgent* UnitToLoad);
 };

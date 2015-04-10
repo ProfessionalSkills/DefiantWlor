@@ -71,14 +71,25 @@ public:
 		return temp;
 	}
 
-	inline void UnloadUnits()
+	inline void UnloadUnits(bool Victory)
 	{
+		DX::XMFLOAT3 Pos;
+		if (Victory) {
+			if (mWorldPos.x<0)Pos = { 4400.0f, 0.0f, 200.0f };
+			else Pos={ -2100.0f, 0.0f, 200.0f };
+		}
+		else 
+		{
+			if (mWorldPos.x<0)Pos = { -2100.0f, 0.0f, 200.0f };
+			else Pos = { 4400.0f, 0.0f, 200.0f };
+		}
+
 		for (int i = 0; i < mpSpaceUnitsList.size(); i++)
 		{
 			mpSpaceUnitsList[i]->SetState(OBJ_BUILT);
-			mpSpaceUnitsList[i]->LoadModel(0, 0, 0);
-
+			mpSpaceUnitsList[i]->SetWorldPos(Pos);
 		}
+
 		mpSpaceUnitsList.clear();
 	}
 

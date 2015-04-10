@@ -27,6 +27,7 @@ mDisplacement(30), mNumCamStates(4),CGameState()
 	mpMdlNeptune = 0;
 	mpMdlEarthAtmos = 0;
 
+	PlayerOneVictory = false;
 	mTimeSinceUpdate = 0.0f;
 
 	mpPlayerOneFleet = 0;
@@ -272,11 +273,26 @@ void CSpaceState::StateCleanup()
 
 	if (mpMdlEarthAtmos) mpMshAtmosphere->RemoveModel(mpMdlEarthAtmos);
 
-
+	//decide which player won, or if neither won
+	if (mpPlayerOneFleet->GetSize() == 0)
+	{
+		PlayerOneVictory = false;
+		PlayerTwoVictory = true;
+	}
+	else if (mpPlayerTwoFleet->GetSize() == 0)
+	{
+		PlayerOneVictory = true;
+		PlayerTwoVictory = false;
+	}
+	else
+	{
+		PlayerOneVictory = false;
+		PlayerTwoVictory = false;
+	}
 
 	//return fleets
-	if (mpPlayerOneFleet) mpPlayerOneFleet->ReturnFleet(mpHumanPlayer);
-	if (mpPlayerTwoFleet) mpPlayerTwoFleet->ReturnFleet(mpAIPlayer);
+	if (mpPlayerOneFleet) mpPlayerOneFleet->ReturnFleet(mpHumanPlayer,PlayerOneVictory);
+	if (mpPlayerTwoFleet) mpPlayerTwoFleet->ReturnFleet(mpAIPlayer,PlayerTwoVictory);
 
 	//reset camera
 	mCamZMovement = 0.0f;

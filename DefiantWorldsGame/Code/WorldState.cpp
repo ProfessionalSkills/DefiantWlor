@@ -942,7 +942,10 @@ void CWorldState::StateSetup()
 		SPointData(10, 783), DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::ChangeTacRapid);
 	mpGenericButtonList.push_back(mpSpaceTacRapidButton);
 
-	
+	mpButtonPutUnitIntoSpace = new CAdvancedButton<CWorldState, void>("DefRapidFireButton.png", "SelRapidFireButton.png",
+		SPointData(138, 783), DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::PutUnitIntoSpace);
+	mpGenericButtonList.push_back(mpButtonPutUnitIntoSpace);
+
 	// Health bar variables
 	mpSprHealth = nullptr;
 	mPrevHealth = 0;
@@ -2282,13 +2285,22 @@ void CWorldState::DeleteStructure()
 	}
 	if (mpCurSelectedAgent)
 	{
+		// Set object to be deleted
+		mpCurSelectedAgent->SetState(OBJ_WARNING);
+		mpCurSelectedAgent->SetHealth(0.0f);
+
+		// pointer set to null
+		OnUnitSelectChange(nullptr);
+		mLMouseClicked = false;
+	}
+}
+
+void CWorldState::PutUnitIntoSpace()
+{
+	if (mpCurSelectedAgent)
+	{
 		if (mpHumanPlayer->PutUnitsOnShips(mpCurSelectedAgent))
 		{
-			/*
-			// Set object to be deleted
-			mpCurSelectedAgent->SetState(OBJ_WARNING);
-			mpCurSelectedAgent->SetHealth(0.0f);
-			// pointer set to null*/
 			gpNewsTicker->AddNewElement("Unit Boarded a Transport Ship.", false);
 
 			OnUnitSelectChange(nullptr);
@@ -2298,6 +2310,10 @@ void CWorldState::DeleteStructure()
 		{
 			gpNewsTicker->AddNewElement("No Transport Ships Have Open Space For This Unit.", false);
 		}
+	}
+	else
+	{
+		gpNewsTicker->AddNewElement("No Unit Selected.", false);
 	}
 }
 
