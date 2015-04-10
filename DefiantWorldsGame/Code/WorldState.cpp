@@ -1519,11 +1519,16 @@ void CWorldState::StateUpdate()
 			// If it was clicked last frame & held threshold is reached, it's being held
 			mLMouseHeld = true;
 
-			// Deselect everything
+			// Remove list of selected units
+			mpUnitSelectionList.clear();
+		}
+
+		// Deselect everything if holding down is greater than a quart of a second
+		if (mHoldCount > 0.2f)
+		{
 			OnPlacingStructureChange(nullptr);
 			OnUnitSelectChange(nullptr);
 			OnStructureSelectChange(nullptr);
-			mpUnitSelectionList.clear();
 		}
 
 		if (!mLMouseHeld && mClickCoolDown < 0.0f)
