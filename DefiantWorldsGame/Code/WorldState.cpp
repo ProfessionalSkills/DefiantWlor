@@ -2282,22 +2282,28 @@ void CWorldState::DeleteStructure()
 	}
 	if (mpCurSelectedAgent)
 	{
-		if (mpHumanPlayer->PutUnitsOnShips(mpCurSelectedAgent))
-		{
-			/*
-			// Set object to be deleted
-			mpCurSelectedAgent->SetState(OBJ_WARNING);
-			mpCurSelectedAgent->SetHealth(0.0f);
-			// pointer set to null*/
-			gpNewsTicker->AddNewElement("Unit Boarded a Transport Ship.", false);
+		// Set object to be deleted
+		mpCurSelectedAgent->SetState(OBJ_WARNING);
+		mpCurSelectedAgent->SetHealth(0.0f);
 
-			OnUnitSelectChange(nullptr);
-			mLMouseClicked = false;
-		}
-		else
-		{
-			gpNewsTicker->AddNewElement("No Transport Ships Have Open Space For This Unit.", false);
-		}
+		// pointer set to null
+		OnUnitSelectChange(nullptr);
+		mLMouseClicked = false;
+	}
+}
+
+void CWorldState::PutUnitIntoSpace()
+{
+	if (mpHumanPlayer->PutUnitsOnShips(mpCurSelectedAgent))
+	{
+		gpNewsTicker->AddNewElement("Unit Boarded a Transport Ship.", false);
+
+		OnUnitSelectChange(nullptr);
+		mLMouseClicked = false;
+	}
+	else
+	{
+		gpNewsTicker->AddNewElement("No Transport Ships Have Open Space For This Unit.", false);
 	}
 }
 

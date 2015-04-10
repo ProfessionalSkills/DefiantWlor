@@ -227,6 +227,7 @@ public:
 	void ChangeTacNone();
 	void ChangeTacRapid();
 	void ChangeTacTargated();
+	void PutUnitIntoSpace();
 
 	// Paused menu buttons methods
 	void Continue();
