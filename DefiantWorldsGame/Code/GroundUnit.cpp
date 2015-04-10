@@ -25,9 +25,6 @@ CGroundUnit::~CGroundUnit()
 //-----------------------------------------------------
 // GROUND UNIT CLASS OVERRIDE METHODS
 //-----------------------------------------------------
-
-//CGroundUnit::void MoveTo(CTile* dest)
-
 void CGroundUnit::Spawn(CGrid* pGrid, SPointData pCentre)
 {					
 	//Sets the tile usage so vehicles cannot overlap and spawns the vehicle in

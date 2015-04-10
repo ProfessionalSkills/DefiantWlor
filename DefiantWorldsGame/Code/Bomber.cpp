@@ -21,11 +21,11 @@ CBomber::CBomber()
 	mMaxHealth = 100.0f;
 	mHealth = 100.0f;
 	mSpeed = 1.0f;
-	mProductionTime = 10.0f;
+	mProductionTime = 15.0f;
 	mProductionCost = 0.0f;
 	mCurProductionTimeLeft = mProductionTime;				
-	mDamage = 10.0f;
-	mFireRate = 0.5f;
+	mDamage = 100.0f;
+	mFireRate = 1.5f;
 	mAttackTimer = (1.0f / mFireRate);
 	mState = OBJ_CONSTRUCTING;
 	mIsMoving = false;
@@ -81,25 +81,29 @@ bool CBomber::Attack(CGameObject* target, float hitMod, float damageMod)
 	if (mAttackTimer >= (1.0f / mFireRate))
 	{
 		// Check to see if the worker is close enough to the target to be able to attack it
-		float distance = 100.0f;
+		float distance;
 
-		// Get the local Z axis of the worker unit
+		// Get the local Y axis of the bomber as it drops bombs downwards
 		DX::XMFLOAT4X4 objMatrix;
 		mpObjModel->GetMatrix(&objMatrix.m[0][0]);
-		DX::XMFLOAT3 localZ{ objMatrix.m[2][0], objMatrix.m[2][1], objMatrix.m[2][2] };
+		DX::XMFLOAT3 localY{ objMatrix.m[1][0], objMatrix.m[1][1], objMatrix.m[1][2] };
+
+		// Invert the local Y axis so it points down instead of up
+		localY.x = -localY.x;
+		localY.y = -localY.y;
+		localY.z = -localY.z;
 
 		// Normalise this local axis
-		DX::XMVECTOR vecNormal = DX::XMVector4Normalize(DX::XMLoadFloat3(&localZ));
-		DX::XMStoreFloat3(&localZ, vecNormal);
+		DX::XMVECTOR vecNormal = DX::XMVector4Normalize(DX::XMLoadFloat3(&localY));
+		DX::XMStoreFloat3(&localY, vecNormal);
 
 		// If the target is being looked at and is within range
-		if (mAttackTarget->RayCollision(mWorldPos, localZ, distance) && distance <= mRange)
+		if (mAttackTarget->RayCollision(mWorldPos, localY, distance) && distance <= mRange)
 		{
 			SProjectile* newProjectile = new SProjectile();
 			newProjectile->mModel = mspMshBomb->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
-			//newProjectile->mModel->LookAt(mAttackTarget->GetModel());
-			newProjectile->mDirection = localZ;
-			newProjectile->mSpeed = 50.0f;
+			newProjectile->mDirection = localY;
+			newProjectile->mSpeed = 20.0f;
 
 			mpProjectiles.push_back(newProjectile);
 		}
