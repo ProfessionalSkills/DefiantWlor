@@ -145,6 +145,11 @@ public:
 		return mPathTarget;
 	}
 
+	inline EGameAgentVariations GetUnitType()
+	{
+		return mAgentInfo.mAgentType;
+	}
+
 	inline bool HasTarget()
 	{
 		return mHasPathTarget;

@@ -31,7 +31,7 @@ protected:
 	float mHealth;
 
 	EFactions mFaction;
-
+	EQueueObjectType mObjectType;
 	// TLE OBJECT DATA
 	//---------------------------
 	IModel* mpObjModel = nullptr;
@@ -97,11 +97,16 @@ public:
 		return mFaction;
 	}
 
+	inline EQueueObjectType GetObjectType()
+	{
+		return mObjectType;
+	}
+
 	inline int GetBuildCost()
 	{
 		return mBuildCost;
 	}
-
+	
 	void TakeDamage(int amount)
 	{
 		mHealth -= amount;

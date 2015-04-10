@@ -33,6 +33,7 @@ CTank::CTank()
 	mBuildCost = 300;
 	mPopCost = 3;
 	mTurretNode = 4;
+	mObjectType = Q_TANK;
 }
 
 CTank::~CTank()

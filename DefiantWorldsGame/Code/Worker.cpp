@@ -35,6 +35,7 @@ CWorker::CWorker()
 	mBuildCost = 50;
 	mPopCost = 5;
 	mTurretNode = 0;
+	mObjectType = Q_WORKER;
 }
 
 CWorker::~CWorker()
