@@ -1519,7 +1519,10 @@ void CWorldState::StateUpdate()
 			// If it was clicked last frame & held threshold is reached, it's being held
 			mLMouseHeld = true;
 
-			// Clear unit selection
+			// Deselect everything
+			OnPlacingStructureChange(nullptr);
+			OnStructureSelectChange(nullptr);
+			OnUnitSelectChange(nullptr);
 			mpUnitSelectionList.clear();
 		}
 
@@ -1846,9 +1849,6 @@ void CWorldState::OnStructureSelectChange(CStructure* pSelStructure)
 			mpButtonHellipad->Hide();
 			mpButtonSpaceCentre->Hide();
 
-			// Hide structure buttons - correct button list will be displayed later
-			
-
 			// Show specific structure buttons
 			mpButtonDelete->Show();
 			// Identify type of building in order to display the correct buttons for it
@@ -2010,6 +2010,7 @@ void CWorldState::OnUnitSelectChange(CGameAgent* pSelAgent)
 		mpHellipadButtons->Hide();
 		mpSpaceCentreButtons->Hide();
 		mpComCentreButtons->Hide();
+		mpQueueButtons->UnloadSprites();
 	}
 	// If no building is selected, show the other buttons
 	else if (!mpCurSelectedStructure)
