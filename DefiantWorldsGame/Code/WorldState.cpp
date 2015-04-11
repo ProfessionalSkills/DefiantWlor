@@ -842,12 +842,15 @@ void CWorldState::StateSetup()
 	mpButtonSpaceCentre = pNewButton;
 	mpGenericButtonList.push_back(pNewButton);
 
-
 	pNewButton = new CAdvancedButton<CWorldState, void>("DefDeleteButton.png", "SelDeleteButton.png", SPointData(1465, 782),
 		DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::DeleteStructure, TR_LEFT, false, 0.2f);
 	pNewButton->Hide();
 	mpButtonDelete = pNewButton;
 	mpGenericButtonList.push_back(pNewButton);
+
+	mpButtonPutUnitIntoSpace = new CAdvancedButton<CWorldState, void>("DefRapidFireButton.png", "SelRapidFireButton.png",
+		SPointData(1465, 695), DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::PutUnitIntoSpace, TR_LEFT, false, 0.2f);
+	mpGenericButtonList.push_back(mpButtonPutUnitIntoSpace);
 
 	// Barracks units buttons
 	mpBarracksButtons = new SStructureButtons<CWorldState>(3);
@@ -941,10 +944,6 @@ void CWorldState::StateSetup()
 	mpSpaceTacRapidButton = new CAdvancedButton<CWorldState, void>("DefRapidFireButton.png", "SelRapidFireButton.png",
 		SPointData(10, 783), DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::ChangeTacRapid);
 	mpGenericButtonList.push_back(mpSpaceTacRapidButton);
-
-	mpButtonPutUnitIntoSpace = new CAdvancedButton<CWorldState, void>("DefRapidFireButton.png", "SelRapidFireButton.png",
-		SPointData(138, 783), DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::PutUnitIntoSpace);
-	mpGenericButtonList.push_back(mpButtonPutUnitIntoSpace);
 
 	// Health bar variables
 	mpSprHealth = nullptr;
@@ -1856,6 +1855,7 @@ void CWorldState::OnStructureSelectChange(CStructure* pSelStructure)
 			mpButtonBarracks->Hide();
 			mpButtonHellipad->Hide();
 			mpButtonSpaceCentre->Hide();
+			mpButtonPutUnitIntoSpace->Hide();
 
 			// Show specific structure buttons
 			mpButtonDelete->Show();
@@ -1986,6 +1986,7 @@ void CWorldState::OnStructureSelectChange(CStructure* pSelStructure)
 		mpSpaceCentreButtons->Hide();
 		mpHellipadButtons->Hide();
 		mpComCentreButtons->Hide();
+		mpButtonPutUnitIntoSpace->Hide();
 
 		// Show base buttons
 		mpButtonBarracks->Show();
@@ -2007,6 +2008,7 @@ void CWorldState::OnUnitSelectChange(CGameAgent* pSelAgent)
 	{
 		// Show the buttons specific to units
 		mpButtonDelete->Show();
+		mpButtonPutUnitIntoSpace->Show();
 
 		// Hide base buttons
 		mpButtonBarracks->Hide();
@@ -2025,6 +2027,7 @@ void CWorldState::OnUnitSelectChange(CGameAgent* pSelAgent)
 	{
 		// Nothing selected - hide buttons no longer required
 		mpButtonDelete->Hide();
+		mpButtonPutUnitIntoSpace->Hide();
 
 		// Show base buttons
 		mpButtonBarracks->Show();
