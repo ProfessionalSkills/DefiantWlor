@@ -1604,6 +1604,9 @@ void CWorldState::StateUpdate()
 				mspMshDrag->RemoveModel(mpMdlDragBox);
 				mpMdlDragBox = nullptr;
 			}
+
+			// Update buttons
+			OnUnitSelectChange(nullptr);
 		}
 		
 		// No button clicking
@@ -2040,6 +2043,25 @@ void CWorldState::OnUnitSelectChange(CGameAgent* pSelAgent)
 
 	// Check if something is selected
 	if (mpCurSelectedAgent)
+	{
+		// Show the buttons specific to units
+		mpButtonDelete->Show();
+		mpButtonPutUnitIntoSpace->Show();
+
+		// Hide base buttons
+		mpButtonBarracks->Hide();
+		mpButtonHellipad->Hide();
+		mpButtonSpaceCentre->Hide();
+
+		// Hide unit construction buttons
+		mpBarracksButtons->Hide();
+		mpHellipadButtons->Hide();
+		mpSpaceCentreButtons->Hide();
+		mpComCentreButtons->Hide();
+		mpQueueButtons->UnloadSprites();
+	}
+	// If there are no multi-units selected
+	else if (mpUnitSelectionList.size() != 0)
 	{
 		// Show the buttons specific to units
 		mpButtonDelete->Show();
