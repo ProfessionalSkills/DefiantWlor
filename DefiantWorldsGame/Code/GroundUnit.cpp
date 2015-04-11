@@ -56,18 +56,12 @@ bool CGroundUnit::Update()
 		{
 			mState = OBJ_DAMAGED;
 		}
-
-		// Object still alive, return true
-		return true;
 		break;
 	case OBJ_DAMAGED:
 		if (((mHealth / mMaxHealth) * 100.0f) <= 33.3f)
 		{
 			mState = OBJ_WARNING;
 		}
-
-		// Object still alive, return true
-		return true;
 		break;
 	case OBJ_WARNING:
 		if (mHealth <= 0.0f)
@@ -88,9 +82,6 @@ bool CGroundUnit::Update()
 				}
 			}
 		}
-
-		// Object still alive, return true
-		return true;
 		break;
 	case OBJ_DEAD:
 		// Object no longer alive
@@ -98,43 +89,32 @@ bool CGroundUnit::Update()
 		break;
 	}
 
-	if (mState != OBJ_DEAD)
+	// ALL THESE UPDATES OCCUR IF THE UNIT IS NOT DEAD OR IN SPACE
+	Move();
+	if (HasTarget()) //If there is a path target
 	{
-		Move();
-		if (HasTarget()) //If there is a path target
+			//Move the unit towards the path target
+		LookingAt(mPathTarget); //Rotates the unit to face the path target
+	}
+	if (mAttackTarget != nullptr) //if there is an attack target
+	{
+		if (mAttackTarget != nullptr)
 		{
-			 //Move the unit towards the path target
-			LookingAt(mPathTarget); //Rotates the unit to face the path target
-		}
-		if (mAttackTarget != nullptr) //if there is an attack target
-		{
-			if (mAttackTarget != nullptr)
-			{
-				Attack(mAttackTarget, 100, mDamage);
+			Attack(mAttackTarget, 100, mDamage);
 
-				// Check if target is dead
-				if (mAttackTarget->GetHealth() <= 0.0f)
-				{
-					mAttackTarget = nullptr;
-				}
-			}
-		}
-
-		if (mpAttackExplosions.size() > 0)
-		{
-			for (auto explosions : mpAttackExplosions) //For each explosion resulting from a projectile colliding
+			// Check if target is dead
+			if (mAttackTarget->GetHealth() <= 0.0f)
 			{
-				explosions->UpdateSystem(); //Update systems 
+				mAttackTarget = nullptr;
 			}
 		}
 	}
-	// Check if the model is still alive
-	else
+
+	if (mpAttackExplosions.size() > 0)
 	{
-		if (!mDestructionExplosion->UpdateSystem())
+		for (auto explosions : mpAttackExplosions) //For each explosion resulting from a projectile colliding
 		{
-			SafeDelete(mDestructionExplosion);
-			return false;
+			explosions->UpdateSystem(); //Update systems 
 		}
 	}
 
@@ -169,6 +149,7 @@ bool CGroundUnit::Update()
 		}
 	}
 
+	// Object is still alive, return true
 	return true;
 }
 bool CGroundUnit::LookingAt(DX::XMFLOAT3 target)
