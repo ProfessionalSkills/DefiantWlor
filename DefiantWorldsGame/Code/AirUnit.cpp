@@ -40,68 +40,79 @@ void CAirUnit::Spawn(CGrid* pGrid, SPointData pCentre)
 
 bool CAirUnit::Update()
 {
-	if (mState == OBJ_INSPACE) return true;
-
-	if (mState = OBJ_BUILT)
+	// Check which state the object is currently in
+	switch (mState)
 	{
+	case OBJ_CONSTRUCTING:
+		break;
+	case OBJ_INSPACE:
+		// Just return true as there needs to be no updating
+		return true;
+		break;
+	case OBJ_BUILT:
 		if (((mHealth / mMaxHealth) * 100.0f) <= 66.6f)
 		{
 			mState = OBJ_DAMAGED;
 		}
-	}
-	else if (mState = OBJ_DAMAGED)
-	{
+		break;
+	case OBJ_DAMAGED:
 		if (((mHealth / mMaxHealth) * 100.0f) <= 33.3f)
 		{
 			mState = OBJ_WARNING;
 		}
-	}
-	else if (mState = OBJ_WARNING)
-	{
+		break;
+	case OBJ_WARNING:
 		if (mHealth <= 0.0f)
 		{
-			mDestructionExplosion = new CExplosion(mpObjModel, 50);
-			UnloadIModel();
-			mState = OBJ_DEAD;
-		}
-	}
-	if (mState != OBJ_DEAD)
-	{
-		Move();
-		if (HasTarget()) //If there is a path target
-		{
-			//Move the unit towards the path target
-			LookingAt(mPathTarget); //Rotates the unit to face the path target
-		}
-		if (mAttackTarget != nullptr) //if there is an attack target
-		{
-			if (mAttackTarget != nullptr)
+			if (mDestructionExplosion == nullptr)
 			{
-				Attack(mAttackTarget, 100, mDamage);
-
-				// Check if target is dead
-				if (mAttackTarget->GetHealth() <= 0.0f)
+				mDestructionExplosion = new CExplosion(mpObjModel, 50);
+				Destroy();
+			}
+			else
+			{
+				// Check if the explosion system has finished
+				if (!mDestructionExplosion->UpdateSystem())
 				{
-					mAttackTarget = nullptr;
+					// particle system is finished
+					SafeDelete(mDestructionExplosion);
+					mState = OBJ_DEAD;
 				}
 			}
 		}
+		break;
+	case OBJ_DEAD:
+		// Object no longer alive
+		return false;
+		break;
+	}
 
-		if (mpAttackExplosions.size() > 0)
+	// ALL THESE UPDATES OCCUR IF THE UNIT IS NOT DEAD OR IN SPACE
+	Move();
+	if (HasTarget()) //If there is a path target
+	{
+		//Move the unit towards the path target
+		LookingAt(mPathTarget); //Rotates the unit to face the path target
+	}
+	if (mAttackTarget != nullptr) //if there is an attack target
+	{
+		if (mAttackTarget != nullptr)
 		{
-			for (auto explosions : mpAttackExplosions) //For each explosion resulting from a projectile colliding
+			Attack(mAttackTarget, 100, mDamage);
+
+			// Check if target is dead
+			if (mAttackTarget->GetHealth() <= 0.0f)
 			{
-				explosions->UpdateSystem(); //Update systems 
+				mAttackTarget = nullptr;
 			}
 		}
 	}
-	// Check if the model is still alive
-	else
+
+	if (mpAttackExplosions.size() > 0)
 	{
-		if (!mDestructionExplosion->UpdateSystem())
+		for (auto explosions : mpAttackExplosions) //For each explosion resulting from a projectile colliding
 		{
-			SafeDelete(mDestructionExplosion);
-			return false;
+			explosions->UpdateSystem(); //Update systems 
 		}
 	}
 
@@ -135,6 +146,8 @@ bool CAirUnit::Update()
 			}
 		}
 	}
+
+	// Object is still alive, return true
 	return true;
 }
 
