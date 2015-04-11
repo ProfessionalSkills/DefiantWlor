@@ -81,6 +81,9 @@ bool CGroundUnit::Update()
 					mState = OBJ_DEAD;
 				}
 			}
+
+			// Object is no longer alive, however its death animation is still playing. So return true
+			return true;
 		}
 		break;
 	case OBJ_DEAD:

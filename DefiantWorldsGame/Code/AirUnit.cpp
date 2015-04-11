@@ -66,7 +66,7 @@ bool CAirUnit::Update()
 		{
 			if (mDestructionExplosion == nullptr)
 			{
-				mDestructionExplosion = new CExplosion(mpObjModel, 50);
+				mDestructionExplosion = new CExplosion(mpObjModel, 100);
 				Destroy();
 			}
 			else
@@ -79,6 +79,9 @@ bool CAirUnit::Update()
 					mState = OBJ_DEAD;
 				}
 			}
+
+			// Object is no longer alive, however its death animation is still playing. So return true
+			return true;
 		}
 		break;
 	case OBJ_DEAD:
