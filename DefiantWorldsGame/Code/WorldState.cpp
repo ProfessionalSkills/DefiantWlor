@@ -817,7 +817,7 @@ void CWorldState::StateSetup()
 	// INITIALISE NULL TILE
 	//-----------------------------
 	mpNullTile = new CTile();
-	mpNullTile->SetWorldPos(DX::XMFLOAT3(-2000.0f, 0.0f, 0.0f));
+	mpNullTile->SetWorldPos(DX::XMFLOAT3(-5000.0f, 0.0f, 0.0f));
 
 
 	// INITIALISE USER INTERFACE
