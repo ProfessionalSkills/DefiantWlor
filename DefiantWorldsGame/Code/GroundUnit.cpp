@@ -42,30 +42,60 @@ void CGroundUnit::Spawn(CGrid* pGrid, SPointData pCentre)
 
 bool CGroundUnit::Update()
 {
-	if (mState == OBJ_INSPACE) return true;
-
-	if (mState = OBJ_BUILT)
+	// Check which state the object is currently in
+	switch (mState)
 	{
+	case OBJ_CONSTRUCTING:
+		break;
+	case OBJ_INSPACE:
+		// Just return true as there needs to be no updating
+		return true;
+		break;
+	case OBJ_BUILT:
 		if (((mHealth / mMaxHealth) * 100.0f) <= 66.6f)
 		{
 			mState = OBJ_DAMAGED;
 		}
-	}
-	else if (mState = OBJ_DAMAGED)
-	{
+
+		// Object still alive, return true
+		return true;
+		break;
+	case OBJ_DAMAGED:
 		if (((mHealth / mMaxHealth) * 100.0f) <= 33.3f)
 		{
 			mState = OBJ_WARNING;
 		}
-	}
-	else if (mState = OBJ_WARNING)
-	{
+
+		// Object still alive, return true
+		return true;
+		break;
+	case OBJ_WARNING:
 		if (mHealth <= 0.0f)
 		{
-			mDestructionExplosion = new CExplosion(mpObjModel, 50);
-			UnloadIModel();
-			mState = OBJ_DEAD;
+			if (mDestructionExplosion == nullptr)
+			{
+				mDestructionExplosion = new CExplosion(mpObjModel, 50);
+				Destroy();
+			}
+			else
+			{
+				// Check if the explosion system has finished
+				if (!mDestructionExplosion->UpdateSystem())
+				{
+					// particle system is finished
+					SafeDelete(mDestructionExplosion);
+					mState = OBJ_DEAD;
+				}
+			}
 		}
+
+		// Object still alive, return true
+		return true;
+		break;
+	case OBJ_DEAD:
+		// Object no longer alive
+		return false;
+		break;
 	}
 
 	if (mState != OBJ_DEAD)

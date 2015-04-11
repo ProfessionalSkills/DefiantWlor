@@ -187,8 +187,10 @@ void CGameAgent::Destroy()
 		mStrDisplay.str("");
 	}
 
+	// Do not allow the unit to be selected again by removing the bounding sphere
+	mBoundingSphere = SBoundingSphere();
+
 	// Remove the model
-	mDestructionExplosion = new CExplosion(mpObjModel, 100);
 	UnloadIModel();
 }
 
