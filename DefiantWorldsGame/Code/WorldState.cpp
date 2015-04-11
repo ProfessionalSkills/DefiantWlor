@@ -703,6 +703,40 @@ void CWorldState::DisplaySelectedAgentInfo()
 			newHealthAmount = mPrevHealth;
 		}
 	}
+	// Check if there is a group of units selected
+	else if (mpUnitSelectionList.size() != 0)
+	{
+		// UNIT DESTRUCTION
+		//------------------------------
+		if (gpEngine->KeyHit(Key_D))
+		{
+			DeleteStructure();
+			return;
+		}
+
+		// Get the front unit
+		CGameAgent* pFrontSelection = mpUnitSelectionList.front();
+
+		// Display the info of the front unit
+		pFrontSelection->DisplayInfo(mFntDebug);
+
+		// Calculate construction percentage
+		float healthLeft = pFrontSelection->GetHealth();
+		float maxHealth = pFrontSelection->GetMaxHealth();
+		int percentage = (int)((healthLeft / maxHealth) * 100.0f);
+
+		// Check if the completion percentage is a multiple of 5
+		if (percentage % 5 == 0)
+		{
+			// Percentage is a multiple of 5 - use its value as the new health bar amount
+			newHealthAmount = percentage;
+		}
+		else
+		{
+			// maintain previous value
+			newHealthAmount = mPrevHealth;
+		}
+	}
 	else
 	{
 		// If there is also no building or resource selected, set new health amount to default
@@ -753,7 +787,7 @@ void CWorldState::StateSetup()
 	// HEIGHT
 	difference = mWindowClip.bottom - mClientRect.bottom;
 	// Window bar at top is a different size to the smaller bar
-	// Usr the small bar size to find out the size of the large bar at the top
+	// Use the small bar size to find out the size of the large bar at the top
 	int largeBarSize = difference - smallBarSize;
 
 	// Shrink the rectangle to not include side bars and window bar
@@ -818,6 +852,7 @@ void CWorldState::StateSetup()
 	//-----------------------------
 	mpNullTile = new CTile();
 	mpNullTile->SetWorldPos(DX::XMFLOAT3(-5000.0f, 0.0f, 0.0f));
+	mpNullTile->SetTileUsage(true);
 
 
 	// INITIALISE USER INTERFACE
