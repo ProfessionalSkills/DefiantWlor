@@ -85,9 +85,16 @@ bool CInfantry::Attack(CGameObject* target, float hitMod, float damageMod)
 
 	// Get the local Z axis of the turret
 	DX::XMFLOAT4X4 objMatrix;
+	DX::XMFLOAT4X4 turMatrix;
 	mpObjModel->GetMatrix(&objMatrix.m[0][0]);
+	mpObjModel->GetNode(mTurretNode)->GetMatrix(&turMatrix.m[0][0]);
 
-	DX::XMFLOAT3 localZ{ objMatrix.m[2][0], objMatrix.m[2][1], objMatrix.m[2][2] };
+	// As the matrix of the turret is RELATIVE to the base model matrix, you have to multiply them together to get the ACTUAL matrix for the turret
+	DX::XMFLOAT4X4 finalMatrix;
+	DX::XMMATRIX matMul = DX::XMMatrixMultiply(DX::XMLoadFloat4x4(&objMatrix), DX::XMLoadFloat4x4(&turMatrix));
+	DX::XMStoreFloat4x4(&finalMatrix, matMul);
+
+	DX::XMFLOAT3 localZ{ finalMatrix.m[2][0], finalMatrix.m[2][1], finalMatrix.m[2][2] };
 
 	// Normalise this local axis
 	DX::XMVECTOR vecNormal = DX::XMVector4Normalize(DX::XMLoadFloat3(&localZ));
@@ -107,14 +114,14 @@ bool CInfantry::Attack(CGameObject* target, float hitMod, float damageMod)
 			mAttackTimer = 0.0f;
 		}
 	}
-		
+
 	// Do this bit all the time so that if the target is moving, it follows it whilst still firing (for added effect)
 	DX::XMFLOAT3 vectorZ = { (target->GetWorldPos().x - mWorldPos.x), 0.0f, (target->GetWorldPos().z - mWorldPos.z) };
 	// Normalise vectorZ
 	vecNormal = DX::XMVector4Normalize(DX::XMLoadFloat3(&vectorZ));
 	DX::XMStoreFloat3(&vectorZ, vecNormal);
 
-	DX::XMFLOAT3 localX = { objMatrix.m[0][0], objMatrix.m[0][1], objMatrix.m[0][2] };
+	DX::XMFLOAT3 localX = { finalMatrix.m[0][0], finalMatrix.m[0][1], finalMatrix.m[0][2] };
 
 	// Normalise this local axis
 	vecNormal = DX::XMVector4Normalize(DX::XMLoadFloat3(&localX));
@@ -124,11 +131,11 @@ bool CInfantry::Attack(CGameObject* target, float hitMod, float damageMod)
 
 	if (dotProduct > 0.001f)
 	{
-		mpObjModel->RotateY(150.0f * gFrameTime);
+		mpObjModel->GetNode(mTurretNode)->RotateY(150.0f * gFrameTime);
 	}
 	else if (dotProduct < -0.001f)
 	{
-		mpObjModel->RotateY(-150.0f * gFrameTime);		
+		mpObjModel->GetNode(mTurretNode)->RotateY(-150.0f * gFrameTime);
 	}
 
 	// Check for is the dot product is in the range of -0.001 and 0.001. The reason for this is to make sure
@@ -141,7 +148,7 @@ bool CInfantry::Attack(CGameObject* target, float hitMod, float damageMod)
 		// Check for behind
 		if (dotProduct < 0.0f)
 		{
-			mpObjModel->RotateY(150.0f * gFrameTime);
+			mpObjModel->GetNode(mTurretNode)->RotateY(150.0f * gFrameTime);
 		}
 	}
 

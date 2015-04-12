@@ -45,8 +45,6 @@ void CWorldState::UpdateMatrices()
 	DX::XMStoreFloat4x4(&mCamInvViewProj, invViewProj);
 }
 
-
-
 void CWorldState::UpdateHeldStructure()
 {
 	// Check if a structure is being held
@@ -279,6 +277,7 @@ void CWorldState::CheckKeyPresses()
 					pNewSelectedMineral, mMouseOrigin, mMouseDirection);
 				OnStructureSelectChange(pNewSelectedStructure);
 				OnUnitSelectChange(mpCurSelectedAgent);
+				mpUnitSelectionList.clear();
 				break;
 
 			case MS_MARS_GRID:
@@ -286,6 +285,7 @@ void CWorldState::CheckKeyPresses()
 					pNewSelectedMineral, mMouseOrigin, mMouseDirection);
 				OnStructureSelectChange(pNewSelectedStructure);
 				OnUnitSelectChange(mpCurSelectedAgent);
+				mpUnitSelectionList.clear();
 				break;
 
 			case MS_UI:
@@ -417,7 +417,14 @@ void CWorldState::CheckKeyPresses()
 			}
 		}
 	}
-	mLMouseClicked = false;
+
+	// If the flag for the lest mouse button is still raised
+	if (mLMouseClicked)
+	{
+		mLMouseClicked = false;
+		mpUnitSelectionList.clear();
+		OnUnitSelectChange(nullptr);
+	}
 
 	// Check if a building is currently selected
 	if (!mpCurSelectedStructure && !mpCurSelectedAgent)
@@ -551,7 +558,7 @@ void CWorldState::DisplaySelectedBuildingInfo()
 		//------------------------------
 		if (gpEngine->KeyHit(Key_Delete))
 		{
-			DeleteStructure();
+			DeleteSelection();
 			return;
 		}
 		
@@ -678,9 +685,9 @@ void CWorldState::DisplaySelectedAgentInfo()
 	{
 		// UNIT DESTRUCTION
 		//------------------------------
-		if (gpEngine->KeyHit(Key_D))
+		if (gpEngine->KeyHit(Key_Delete))
 		{
-			DeleteStructure();
+			DeleteSelection();
 			return;
 		}
 
@@ -708,9 +715,9 @@ void CWorldState::DisplaySelectedAgentInfo()
 	{
 		// UNIT DESTRUCTION
 		//------------------------------
-		if (gpEngine->KeyHit(Key_D))
+		if (gpEngine->KeyHit(Key_Delete))
 		{
-			DeleteStructure();
+			DeleteSelection();
 			return;
 		}
 
@@ -878,7 +885,7 @@ void CWorldState::StateSetup()
 	mpGenericButtonList.push_back(pNewButton);
 
 	pNewButton = new CAdvancedButton<CWorldState, void>("DefDeleteButton.png", "SelDeleteButton.png", SPointData(1465, 782),
-		DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::DeleteStructure, TR_LEFT, false, 0.2f);
+		DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::DeleteSelection, TR_LEFT, false, 0.2f);
 	pNewButton->Hide();
 	mpButtonDelete = pNewButton;
 	mpGenericButtonList.push_back(pNewButton);
@@ -1575,9 +1582,6 @@ void CWorldState::StateUpdate()
 
 			mDragStartPos = mMouseWorldPos;
 			mDragStartPos.y = -200.0f;
-
-			// Clear unit selection
-			mpUnitSelectionList.clear();
 		}
 
 		// Increment held counter
@@ -2332,24 +2336,41 @@ void CWorldState::CreateHouse()
 	mLMouseClicked = false;
 }
 
-void CWorldState::DeleteStructure()
+void CWorldState::DeleteSelection()
 {
+	// Check for a selected structure
 	if (mpCurSelectedStructure)
 	{
 		// Set object to be deleted
 		mpCurSelectedStructure->SetState(OBJ_WARNING);
-		mpCurSelectedStructure->SetHealth(0.0f);
+		mpCurSelectedStructure->SetHealth(-1.0f);
 		// pointer set to null
 		OnStructureSelectChange(nullptr);
 		mLMouseClicked = false;
 	}
+	// Check for a selected agent
 	if (mpCurSelectedAgent)
 	{
 		// Set object to be deleted
 		mpCurSelectedAgent->SetState(OBJ_WARNING);
-		mpCurSelectedAgent->SetHealth(0.0f);
+		mpCurSelectedAgent->SetHealth(-1.0f);
 
-		// pointer set to null
+		// Pointer set to null
+		OnUnitSelectChange(nullptr);
+		mLMouseClicked = false;
+	}
+	// Check for a list of selected units
+	if (mpUnitSelectionList.size() != 0)
+	{
+		// Loop through each one to delete it
+		for (miterUnitSelectionList = mpUnitSelectionList.begin(); miterUnitSelectionList != mpUnitSelectionList.end(); miterUnitSelectionList++)
+		{
+			(*miterUnitSelectionList)->SetState(OBJ_WARNING);
+			(*miterUnitSelectionList)->SetHealth(-1.0f);
+		}
+
+		// Clear the selection list
+		mpUnitSelectionList.clear();
 		OnUnitSelectChange(nullptr);
 		mLMouseClicked = false;
 	}

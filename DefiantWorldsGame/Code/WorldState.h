@@ -223,7 +223,7 @@ public:
 	void CreateHellipad();
 	void CreateSpaceCentre();
 	void CreateHouse();
-	void DeleteStructure();
+	void DeleteSelection();
 	void LaunchAttack();
 	void ChangeTacNone();
 	void ChangeTacRapid();
