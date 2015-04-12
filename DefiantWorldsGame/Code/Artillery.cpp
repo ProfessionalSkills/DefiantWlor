@@ -36,6 +36,7 @@ CArtillery::CArtillery()
 	mPopCost = 4;
 	mTurretNode = 0;
 	mObjectType = Q_ARTILLERY;
+	mRange = 100.0f;
 }
 
 CArtillery::~CArtillery()
@@ -94,15 +95,19 @@ bool CArtillery::Attack(CGameObject* target, float hitMod, float damageMod)
 		// Normalise this local axis
 		DX::XMVECTOR vecNormal = DX::XMVector4Normalize(DX::XMLoadFloat3(&localZ));
 		DX::XMStoreFloat3(&localZ, vecNormal);
-
+		DX::XMFLOAT3 worldPos = { mWorldPos.x, 30.0f, mWorldPos.z };
 		// If the target is being looked at and is within range
-		if (mAttackTarget->RayCollision(mWorldPos, localZ, distance) && distance <= (mRange* mRange))
+		if (mAttackTarget->RayCollision(worldPos, localZ, distance) && distance <= (mRange* mRange))
 		{
 			if (mAttackTimer >= (1.0f / mFireRate)) //Control rate of fire of the unit
 			{
 				SProjectile* newProjectile = new SProjectile();
 				newProjectile->mModel = mspMshArtilleryShell->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
-				newProjectile->mDirection = localZ;
+				newProjectile->mModel->LookAt(mAttackTarget->GetModel());
+				DX::XMFLOAT4X4 projectileMatrix;
+				newProjectile->mModel->GetMatrix(&projectileMatrix.m[0][0]);
+				DX::XMFLOAT3 projZ{ projectileMatrix.m[2][0], projectileMatrix.m[2][1], projectileMatrix.m[2][2] };
+				newProjectile->mDirection = projZ;
 				newProjectile->mSpeed = 50.0f;
 
 				mpProjectiles.push_back(newProjectile);
@@ -126,11 +131,11 @@ bool CArtillery::Attack(CGameObject* target, float hitMod, float damageMod)
 
 		if (dotProduct > 0.001f)
 		{
-			mpObjModel->RotateY(150.0f * gFrameTime);
+			mpObjModel->RotateY(100.0f * gFrameTime);
 		}
 		else if (dotProduct < -0.001f)
 		{
-			mpObjModel->RotateY(-150.0f * gFrameTime);
+			mpObjModel->RotateY(-100.0f * gFrameTime);
 		}
 
 		// Check for is the dot product is in the range of -0.001 and 0.001. The reason for this is to make sure

@@ -131,7 +131,10 @@ public:
 
 	inline void SetAttackTarget(CGameObject* target)
 	{
-		mAttackTarget = target;
+		if (target != this)
+		{
+			mAttackTarget = target;
+		}
 		//mHasPathTarget = false;
 	}
 
