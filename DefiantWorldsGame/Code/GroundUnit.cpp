@@ -132,7 +132,7 @@ bool CGroundUnit::Update()
 			if (projectile == mpProjectiles.front()) //As all projectiles move at the same speed, the only projectile that will collide is the one fired first  
 			{
 				// Check to see if the attack target has been lost or it has been destroyed
-				if (mAttackTarget == nullptr)
+				if (mAttackTarget == nullptr || projectile->mLifeTime <= 0.0f)
 				{
 					SProjectile* tmp = projectile;
 					SafeDelete(tmp);
@@ -170,12 +170,12 @@ bool CGroundUnit::LookingAt(DX::XMFLOAT3 target)
 
 	if (dotProduct > 0.2f)
 	{
-		mpObjModel->RotateY(100.0f * gFrameTime);
+		mpObjModel->RotateY(200.0f * gFrameTime);
 		return false;
 	}
 	else if (dotProduct < -0.2f)
 	{
-		mpObjModel->RotateY(-100.0f * gFrameTime);
+		mpObjModel->RotateY(-200.0f * gFrameTime);
 		return false;
 	}
 	else

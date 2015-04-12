@@ -230,6 +230,7 @@ struct SProjectile
 	DX::XMFLOAT3 mPos;
 	DX::XMFLOAT3 mDirection;
 	float mSpeed;
+	float mLifeTime;
 	SBoundingSphere mCollisionSphere;
 
 	void Update()
@@ -239,6 +240,7 @@ struct SProjectile
 			mModel->Move(mDirection.x * mSpeed * gFrameTime, mDirection.y * mSpeed * gFrameTime, mDirection.z * mSpeed * gFrameTime);
 			mPos = { mModel->GetX(), mModel->GetY(), mModel->GetZ() };
 			mCollisionSphere.MoveTo(mPos);
+			mLifeTime -= gFrameTime;
 		}
 	}
 
