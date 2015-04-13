@@ -56,6 +56,12 @@ void CMenuState::NewGame()
 		(*miterIntButtons)->Show();
 	}
 
+	// Show mineral deposit buttons
+	for (miterIntButtons = mpDepositsButtonList.begin(); miterIntButtons != mpDepositsButtonList.end(); miterIntButtons++)
+	{
+		(*miterIntButtons)->Show();
+	}
+
 	// Highlight already selected AI
 	CSettingsManager* pSettings = CStateControl::GetInstance()->GetSettingsManager();
 	mCurAIDifficulty = pSettings->GetAIDifficulty();
@@ -64,6 +70,10 @@ void CMenuState::NewGame()
 	// Highlight already selected starting resources
 	mCurStartingResources = pSettings->GetStartingResourcesIndex();
 	mpStartingResButtonList[mCurStartingResources]->SetNewButtonSkin("ChoSmallButton.png");
+
+	// Highlight already selected mineral deposits
+	mCurMineralDeposits = pSettings->GetMineralDepositsIndex();
+	mpDepositsButtonList[mCurMineralDeposits]->SetNewButtonSkin("ChoSmallButton.png");
 }
 
 void CMenuState::StartNewGame()
@@ -75,6 +85,7 @@ void CMenuState::StartNewGame()
 	CSettingsManager* pSettings = CStateControl::GetInstance()->GetSettingsManager();
 	pSettings->SetAIDifficulty(mCurAIDifficulty);
 	pSettings->SetStartingResources(mCurStartingResources);
+	pSettings->SetMineralDepositsIndex(mCurMineralDeposits);
 
 	// Unload any previous players & create new players
 	CPlayerManager* pPlayerManager = CStateControl::GetInstance()->GetPlayerManager();
@@ -210,6 +221,12 @@ void CMenuState::OnChooseCancel()
 		(*miterIntButtons)->Hide();
 	}
 
+	// Hide mineral deposit buttons
+	for (miterIntButtons = mpDepositsButtonList.begin(); miterIntButtons != mpDepositsButtonList.end(); miterIntButtons++)
+	{
+		(*miterIntButtons)->Hide();
+	}
+
 	// Show the main menu items
 	mpButtonList[0]->Show();
 	mpButtonList[1]->Show();
@@ -229,12 +246,22 @@ void CMenuState::SetAIDifficulty(int difficulty)
 
 void CMenuState::SetStartingResources(int amount)
 {
-	// Take the current AI difficulty button and reset its texture
+	// Take the current starting resources button and reset its texture
 	mpStartingResButtonList[mCurStartingResources]->SetNewButtonSkin("DefSmallButton.png");
 
-	// Store new difficulty and update that button's texture
+	// Store new starting resources value and update that button's texture
 	mCurStartingResources = amount;
 	mpStartingResButtonList[mCurStartingResources]->SetNewButtonSkin("ChoSmallButton.png");
+}
+
+void CMenuState::SetMineralDeposits(int amount)
+{
+	// Take the current mineral deposits button and reset its texture
+	mpDepositsButtonList[mCurMineralDeposits]->SetNewButtonSkin("DefSmallButton.png");
+
+	// Store new mineral deposits value and update that button's texture
+	mCurMineralDeposits = amount;
+	mpDepositsButtonList[mCurMineralDeposits]->SetNewButtonSkin("ChoSmallButton.png");
 }
 
 void CMenuState::SaveSettings()
@@ -417,6 +444,19 @@ void CMenuState::StateSetup()
 		DX::XMFLOAT2(100.0f, 50.0f), *this, &CMenuState::SetStartingResources, TR_LEFT, false);
 	mpStartingResButtonList.push_back(pNewIntButton);
 
+	// Mineral Deposits buttons
+	pNewIntButton = new CAdvancedButton<CMenuState, void, int>("DefSmallButton.png", "SelSmallButton.png", SPointData(825, 460),
+		DX::XMFLOAT2(100.0f, 50.0f), *this, &CMenuState::SetMineralDeposits, TR_LEFT, false);
+	mpDepositsButtonList.push_back(pNewIntButton);
+
+	pNewIntButton = new CAdvancedButton<CMenuState, void, int>("DefSmallButton.png", "SelSmallButton.png", SPointData(965, 460),
+		DX::XMFLOAT2(100.0f, 50.0f), *this, &CMenuState::SetMineralDeposits, TR_LEFT, false);
+	mpDepositsButtonList.push_back(pNewIntButton);
+
+	pNewIntButton = new CAdvancedButton<CMenuState, void, int>("DefSmallButton.png", "SelSmallButton.png", SPointData(1105, 460),
+		DX::XMFLOAT2(100.0f, 50.0f), *this, &CMenuState::SetMineralDeposits, TR_LEFT, false);
+	mpDepositsButtonList.push_back(pNewIntButton);
+
 	// Create a typebox
 	mpTypeBox = new CTypeBox(SPointData{ 770, 420 }, DX::XMFLOAT2{ 500.0f, 40.0f }, TR_LEFT, false);
 
@@ -492,6 +532,14 @@ void CMenuState::StateUpdate()
 			mpButtonFont->Draw("MINIMAL", 875, 355, kWhite, kCentre, kTop);
 			mpButtonFont->Draw("ENOUGH", 1015, 355, kWhite, kCentre, kTop);
 			mpButtonFont->Draw("PLENTIFUL", 1155, 355, kWhite, kCentre, kTop);
+		}
+
+		if (mpDepositsButtonList[0]->IsInPlace())
+		{
+			mpIncDecFont->Draw("MINERAL DEPOSITS", 1015, 420, kWhite, kCentre, kTop);
+			mpButtonFont->Draw("SCARCE", 875, 475, kWhite, kCentre, kTop);
+			mpButtonFont->Draw("AVERAGE", 1015, 475, kWhite, kCentre, kTop);
+			mpButtonFont->Draw("ABUNDANT", 1155, 475, kWhite, kCentre, kTop);
 		}
 		break;
 	case MENU_LOAD:
@@ -616,6 +664,36 @@ void CMenuState::StateUpdate()
 		counter++;
 	}
 
+	counter = 0;
+	for (miterIntButtons = mpDepositsButtonList.begin(); miterIntButtons != mpDepositsButtonList.end(); miterIntButtons++)
+	{
+		CAdvancedButton<CMenuState, void, int>* pButton = (*miterIntButtons);
+		// Check if the mouse is colliding with the object
+		if (pButton->GetBoundingBox().IsColliding(DX::XMFLOAT3(mMousePos.x, 0.0f, mMousePos.y)))
+		{
+			pButton->SetMouseOver(true);
+		}
+		else
+		{
+			pButton->SetMouseOver(false);
+		}
+
+		// Check for click 
+		if (pButton->GetMouseOver())
+		{
+			// Check if the mouse is over the button
+			if (leftClicked)
+			{
+				// Raise click flag
+				pButton->Execute(counter);
+			}
+		}
+
+		// Update the button
+		pButton->Update();
+		counter++;
+	}
+
 	// CHECK FOR SLIDER MOUSE OVER AND CLICKS
 	if (mpMusicSlider->GetBoundingBox().IsColliding(DX::XMFLOAT3(mMousePos.x, 0.0f, mMousePos.y)))
 	{
@@ -696,6 +774,19 @@ void CMenuState::StateCleanup()
 		}
 
 		mpStartingResButtonList.pop_back();
+	}
+
+	while (!mpDepositsButtonList.empty())
+	{
+		CAdvancedButton<CMenuState, void, int>* tmp;
+		tmp = mpDepositsButtonList.back();
+		if (tmp)
+		{
+			delete tmp;
+			tmp = nullptr;
+		}
+
+		mpDepositsButtonList.pop_back();
 	}
 
 	while (!mpAIDButtonList.empty())

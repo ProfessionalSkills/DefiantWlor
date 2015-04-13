@@ -79,19 +79,24 @@ public:
 		mAIDifficulty = difficulty;
 	}
 
-	void SetStartingResources(int amount)
+	inline void SetStartingResources(int amount)
 	{
 		mStartingResources = amount;
 	}
 
-	void SetIfLoadingGame(bool loading)
+	inline void SetIfLoadingGame(bool loading)
 	{
 		mLoadingGame = loading;
 	}
 
-	void SetLoadFile(std::string& loadFileName)
+	inline void SetLoadFile(std::string& loadFileName)
 	{
 		mLoadFileName = loadFileName;
+	}
+
+	inline void SetMineralDepositsIndex(int index)
+	{
+		mMineralDeposits = index;
 	}
 
 

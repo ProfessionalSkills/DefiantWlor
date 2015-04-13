@@ -62,6 +62,7 @@ private:
 
 	std::vector<CAdvancedButton<CMenuState, void, int>*> mpAIDButtonList;					// List of buttons for AI difficulty
 	std::vector<CAdvancedButton<CMenuState, void, int>*> mpStartingResButtonList;			// List of buttons for Starting Resources
+	std::vector<CAdvancedButton<CMenuState, void, int>*> mpDepositsButtonList;				// List of buttons for number of starting Mineral Deposits
 	std::vector<CAdvancedButton<CMenuState, void, int>*>::iterator miterIntButtons;
 
 	CTypeBox* mpTypeBox = nullptr;
@@ -81,6 +82,7 @@ private:
 	//--------------------------- 
 	int mCurAIDifficulty = 0;			// Current index for AI difficulty
 	int mCurStartingResources = 0;		// Current index for Starting Resources
+	int mCurMineralDeposits = 0;		// Current index for number of Mineral Deposits which are spawned
 	std::stringstream mStrStream;
 
 
@@ -117,6 +119,7 @@ public:
 
 	void SetAIDifficulty(int difficulty);
 	void SetStartingResources(int amount);
+	void SetMineralDeposits(int amount);
 	void OnChooseLoadGame();
 
 	void SaveSettings();
