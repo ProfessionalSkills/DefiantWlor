@@ -36,6 +36,7 @@ CWorker::CWorker()
 	mPopCost = 5;
 	mTurretNode = 0;
 	mObjectType = Q_WORKER;
+	mRange = 100.0f;
 }
 
 CWorker::~CWorker()

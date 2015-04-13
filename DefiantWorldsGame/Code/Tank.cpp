@@ -34,6 +34,7 @@ CTank::CTank()
 	mPopCost = 3;
 	mTurretNode = 4;
 	mObjectType = Q_TANK;
+	mRange = 100.0f;
 }
 
 CTank::~CTank()
@@ -99,7 +100,7 @@ bool CTank::Attack(CGameObject* target, float hitMod, float damageMod)
 	DX::XMStoreFloat3(&localZ, vecNormal);
 
 	// If the target is being looked at and is within range
-	if (mAttackTarget->RayCollision(mWorldPos, localZ, distance) && distance <= (mRange* mRange))
+	if (mAttackTarget->RayCollision(mWorldPos, localZ, distance) && distance <= mRange)
 	{
 		if (mAttackTimer >= (1.0f / mFireRate)) //Control rate of fire of the unit
 		{

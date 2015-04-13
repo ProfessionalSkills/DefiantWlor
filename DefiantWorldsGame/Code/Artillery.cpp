@@ -97,7 +97,7 @@ bool CArtillery::Attack(CGameObject* target, float hitMod, float damageMod)
 		DX::XMStoreFloat3(&localZ, vecNormal);
 		DX::XMFLOAT3 worldPos = { mWorldPos.x, 30.0f, mWorldPos.z };
 		// If the target is being looked at and is within range
-		if (mAttackTarget->RayCollision(worldPos, localZ, distance) && distance <= (mRange* mRange))
+		if (mAttackTarget->RayCollision(worldPos, localZ, distance) && distance <= mRange)
 		{
 			if (mAttackTimer >= (1.0f / mFireRate)) //Control rate of fire of the unit
 			{

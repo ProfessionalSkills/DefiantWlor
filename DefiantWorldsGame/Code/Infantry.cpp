@@ -34,7 +34,7 @@ CInfantry::CInfantry()
 	mBuildCost = 100;
 	mPopCost = 2;
 	mTurretNode = 3;
-	mRange = 150.0f;
+	mRange = 100.0f;
 	mObjectType = Q_INFANTRY;
 }
 
@@ -101,14 +101,14 @@ bool CInfantry::Attack(CGameObject* target, float hitMod, float damageMod)
 	DX::XMStoreFloat3(&localZ, vecNormal);
 
 	// If the target is being looked at and is within range
-	if (mAttackTarget->RayCollision(mWorldPos, localZ, distance) && distance <= (mRange* mRange))
+	if (mAttackTarget->RayCollision(mWorldPos, localZ, distance) && distance <= mRange)
 	{
 		if (mAttackTimer >= (1.0f / mFireRate)) //Control rate of fire of the unit
 		{
 			SProjectile* newProjectile = new SProjectile();
 			newProjectile->mModel = mspMshInfantryBullet->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
 			newProjectile->mDirection = localZ;
-			newProjectile->mSpeed = 50.0f;
+			newProjectile->mSpeed = 300.0f;
 			newProjectile->mLifeTime = 3.0f;
 
 			mpProjectiles.push_back(newProjectile);
@@ -132,11 +132,11 @@ bool CInfantry::Attack(CGameObject* target, float hitMod, float damageMod)
 
 	if (dotProduct > 0.001f)
 	{
-		mpObjModel->GetNode(mTurretNode)->RotateY(150.0f * gFrameTime);
+		mpObjModel->GetNode(mTurretNode)->RotateY(250.0f * gFrameTime);
 	}
 	else if (dotProduct < -0.001f)
 	{
-		mpObjModel->GetNode(mTurretNode)->RotateY(-150.0f * gFrameTime);
+		mpObjModel->GetNode(mTurretNode)->RotateY(-250.0f * gFrameTime);
 	}
 
 	// Check for is the dot product is in the range of -0.001 and 0.001. The reason for this is to make sure
@@ -149,7 +149,7 @@ bool CInfantry::Attack(CGameObject* target, float hitMod, float damageMod)
 		// Check for behind
 		if (dotProduct < 0.0f)
 		{
-			mpObjModel->GetNode(mTurretNode)->RotateY(150.0f * gFrameTime);
+			mpObjModel->GetNode(mTurretNode)->RotateY(250.0f * gFrameTime);
 		}
 	}
 
