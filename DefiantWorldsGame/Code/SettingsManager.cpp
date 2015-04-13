@@ -10,7 +10,9 @@
 //-----------------------------------------------------
 CSettingsManager::CSettingsManager()
 {
-
+	mMineralDepositsList[0] = 2;
+	mMineralDepositsList[1] = 4;
+	mMineralDepositsList[2] = 6;
 }
 
 CSettingsManager::~CSettingsManager()

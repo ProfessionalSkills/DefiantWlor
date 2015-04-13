@@ -409,7 +409,8 @@ void CRTSPlayer::CreateResourcePiles()
 	CMinerals* pNewMineral = nullptr;
 	
 	// Create 3 resource piles around the grid area for the player
-	for (int i = 0; i < 3; i++)
+	int numDeposits = CStateControl::GetInstance()->GetSettingsManager()->GetMineralDepositsValue();
+	for (int i = 0; i < numDeposits; i++)
 	{
 		// Until a free tile is found
 		while (tileUsed)

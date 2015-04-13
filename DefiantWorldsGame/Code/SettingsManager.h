@@ -49,6 +49,16 @@ public:
 		loadFileName = mLoadFileName;
 	}
 
+	inline int GetMineralDepositsIndex()
+	{
+		return mMineralDeposits;
+	}
+
+	inline int GetMineralDepositsValue()
+	{
+		return mMineralDepositsList[mMineralDeposits];
+	}
+
 	int GetStartingResourcesAmount();
 
 
@@ -102,6 +112,8 @@ private:
 
 	int mAIDifficulty = 1;
 	int mStartingResources = 1;
+	int mMineralDeposits = 1;				// The index of the chosen amount of mineral depositis to spawn
+	int mMineralDepositsList[3];			// The selectable values of the mineral deposits
 };
 
 
