@@ -108,7 +108,7 @@ bool CInfantry::Attack(CGameObject* target, float hitMod, float damageMod)
 			SProjectile* newProjectile = new SProjectile();
 			newProjectile->mModel = mspMshInfantryBullet->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
 			newProjectile->mDirection = localZ;
-			newProjectile->mSpeed = 300.0f;
+			newProjectile->mSpeed = 1000.0f;
 			newProjectile->mLifeTime = 3.0f;
 
 			mpProjectiles.push_back(newProjectile);

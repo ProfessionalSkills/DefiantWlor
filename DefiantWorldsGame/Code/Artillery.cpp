@@ -108,7 +108,7 @@ bool CArtillery::Attack(CGameObject* target, float hitMod, float damageMod)
 				newProjectile->mModel->GetMatrix(&projectileMatrix.m[0][0]);
 				DX::XMFLOAT3 projZ{ projectileMatrix.m[2][0], projectileMatrix.m[2][1], projectileMatrix.m[2][2] };
 				newProjectile->mDirection = projZ;
-				newProjectile->mSpeed = 50.0f;
+				newProjectile->mSpeed = 1000.0f;
 
 				mpProjectiles.push_back(newProjectile);
 				mAttackTimer = 0.0f;

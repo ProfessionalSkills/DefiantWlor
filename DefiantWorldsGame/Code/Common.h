@@ -279,6 +279,7 @@ float Clampf(float inMin, float inMax, float inVal);
 float ToRadians(float inDegrees);
 float ToDegrees(float inRadians);
 
+float distance(float x, float y, float z);
 float Dot(const DX::XMFLOAT3 v1, const DX::XMFLOAT3 v2);
 DX::XMFLOAT3 Cross(const  DX::XMFLOAT3 v1, const  DX::XMFLOAT3 v2);
 bool BoxCollision(const DX::XMFLOAT3 v1, const DX::XMFLOAT3 v2, float radius);

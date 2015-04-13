@@ -154,6 +154,11 @@ public:
 		return &mpUnitsMap;
 	}
 
+	inline GS_MultiMap* GetStructuresList()
+	{
+		return &mpStructuresMap;
+	}
+
 	inline int GetAmountOfStructures()
 	{
 		return mpStructuresMap.size();

@@ -62,6 +62,11 @@ DX::XMFLOAT3 Cross(const  DX::XMFLOAT3 v1, const  DX::XMFLOAT3 v2)
 	return  DX::XMFLOAT3(v1.y*v2.z - v1.z*v2.y, v1.z*v2.x - v1.x*v2.z, v1.x*v2.y - v1.y*v2.x);
 }
 
+float distance(float x, float y, float z)
+{
+	return ((x * x) + (y * y) + (z * z));
+}
+
 bool BoxCollision(const DX::XMFLOAT3 v1, const DX::XMFLOAT3 v2, float radius)
 {
 	if (v1.x > (v2.x + radius) || v1.x < (v2.x - radius))
