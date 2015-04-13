@@ -44,6 +44,9 @@ bool CAirUnit::Update()
 	switch (mState)
 	{
 	case OBJ_CONSTRUCTING:
+		// Objects should not be in this state when they get updated. If they are, change them to the BUILT state
+		mState = OBJ_BUILT;
+		return true;
 		break;
 	case OBJ_INSPACE:
 		// Just return true as there needs to be no updating
