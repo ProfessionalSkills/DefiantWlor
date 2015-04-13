@@ -409,8 +409,40 @@ void CWorldState::CheckKeyPresses()
 				}
 				else if (pTargetMinerals)
 				{
-					// Show an error as you can only send one worker unit to a resource
-					gpNewsTicker->AddNewElement("A mineral deposit can only have a single unit!", true);
+					// Check to see if there is just one unit in the selection & check that single unit is a worker unit
+					if (mpUnitSelectionList.size() == 1 && mpUnitSelectionList.front()->GetAgentData()->mAgentType == GAV_WORKER)
+					{
+						// Set the minerals target to null
+						// Cast into a worker pointer to access methods
+						CWorker* pWorker = static_cast<CWorker*>(mpUnitSelectionList.front());
+						CMinerals* pMinerals = pWorker->GetMineral();
+						if (pMinerals) pMinerals->SetUsage(false);
+						pMinerals = nullptr;
+						pWorker->SetMineral(nullptr);
+						
+						// Send the worker to go mine
+						// Check if the mineral is in use
+						if (pTargetMinerals->IsBeingUsed())
+						{
+							// Alert the user that the minerals are already being harvested
+							gpNewsTicker->AddNewElement("Minerals already being harvested by another worker!", true);
+						}
+						else
+						{
+							// Send the worker unit to the resource pile position
+							pWorker->SetPathTarget(pTargetMinerals->GetWorldPos());
+							// Set the target mineral to be used and store in worker
+							pWorker->SetMineral(pTargetMinerals);
+							pTargetMinerals->SetUsage(true);
+							// Let the user know the worker is going to go mine
+							gpNewsTicker->AddNewElement("Worker unit going to mine.", false);
+						}
+					}
+					else
+					{
+						// Show an error as you can only send one worker unit to a resource
+						gpNewsTicker->AddNewElement("A mineral deposit can only have a single unit!", true);
+					}
 				}
 
 				mRMouseClicked = false;
