@@ -461,8 +461,8 @@ void CMenuState::StateSetup()
 	mpTypeBox = new CTypeBox(SPointData{ 770, 420 }, DX::XMFLOAT2{ 500.0f, 40.0f }, TR_LEFT, false);
 
 	// Create sliders
-	mpMusicSlider = new CSliderTool(SPointData{ 760, 213 }, 100, 1, DX::XMFLOAT2{500.0f, 40.0f}, TR_LEFT, false);
-	mpEffectsSlider = new CSliderTool(SPointData{ 760, 323 }, 100, 1, DX::XMFLOAT2{500.0f, 40.0f}, TR_LEFT, false);
+	mpMusicSlider = new CSliderTool(SPointData{ 760, 213 }, 100, 1, DX::XMFLOAT2{ 500.0f, 40.0f }, TR_LEFT, false);
+	mpEffectsSlider = new CSliderTool(SPointData{ 760, 323 }, 100, 1, DX::XMFLOAT2{ 500.0f, 40.0f }, TR_LEFT, false);
 }
 
 void CMenuState::StateUpdate()

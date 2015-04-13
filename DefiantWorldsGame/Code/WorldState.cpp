@@ -1276,6 +1276,7 @@ void CWorldState::StateUpdate()
 	//------------------------------
 	// Remember previous mouse position
 	mpMousePrevScreenPos.mPosX = mpMouseScreenPos->mPosX;
+	mpMousePrevScreenPos.mPosY = mpMouseScreenPos->mPosY;
 
 	// Update mouse position
 	mpMouseScreenPos->mPosX = gpEngine->GetMouseX();
@@ -1555,6 +1556,21 @@ void CWorldState::StateUpdate()
 			else
 			{
 				mpCamCurrent->AdjustPhi(DX::XMConvertToRadians(CAM_MOVE_SPEED * 6.0f * gFrameTime));
+			}
+		}
+
+		// Check if there has been a change in mouse's y position
+		if (mpMousePrevScreenPos.mPosY != mpMouseScreenPos->mPosY)
+		{
+			// Determine if it is negative or positive
+			float change = mpMouseScreenPos->mPosY - mpMousePrevScreenPos.mPosY;
+			if (change < 0.0f)
+			{
+				mpCamCurrent->AdjustTheta(DX::XMConvertToRadians(-CAM_MOVE_SPEED * 6.0f * gFrameTime));
+			}
+			else
+			{
+				mpCamCurrent->AdjustTheta(DX::XMConvertToRadians(CAM_MOVE_SPEED * 6.0f * gFrameTime));
 			}
 		}
 	}
