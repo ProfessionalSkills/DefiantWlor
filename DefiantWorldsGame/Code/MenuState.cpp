@@ -520,26 +520,26 @@ void CMenuState::StateUpdate()
 		if (mpAIDButtonList[0]->IsInPlace())
 		{
 			mpIncDecFont->Draw("AI DIFFICULTY", 1015, 180, kWhite, kCentre, kTop);
-			mpButtonFont->Draw("EASY", 805, 235, kWhite, kCentre, kTop);
-			mpButtonFont->Draw("MEDIUM", 945, 235, kWhite, kCentre, kTop);
-			mpButtonFont->Draw("HARD", 1085, 235, kWhite, kCentre, kTop);
-			mpButtonFont->Draw("INSANE", 1225, 235, kWhite, kCentre, kTop);
+			mpButtonFont->Draw("EASY", 805, 237, kWhite, kCentre, kTop);
+			mpButtonFont->Draw("MEDIUM", 945, 237, kWhite, kCentre, kTop);
+			mpButtonFont->Draw("HARD", 1085, 237, kWhite, kCentre, kTop);
+			mpButtonFont->Draw("INSANE", 1225, 237, kWhite, kCentre, kTop);
 		}
 
 		if (mpStartingResButtonList[0]->IsInPlace())
 		{
 			mpIncDecFont->Draw("STARTING RESOURCES", 1015, 300, kWhite, kCentre, kTop);
-			mpButtonFont->Draw("MINIMAL", 875, 355, kWhite, kCentre, kTop);
-			mpButtonFont->Draw("ENOUGH", 1015, 355, kWhite, kCentre, kTop);
-			mpButtonFont->Draw("PLENTIFUL", 1155, 355, kWhite, kCentre, kTop);
+			mpButtonFont->Draw("MINIMAL", 875, 357, kWhite, kCentre, kTop);
+			mpButtonFont->Draw("ENOUGH", 1015, 357, kWhite, kCentre, kTop);
+			mpButtonFont->Draw("PLENTIFUL", 1155, 357, kWhite, kCentre, kTop);
 		}
 
 		if (mpDepositsButtonList[0]->IsInPlace())
 		{
 			mpIncDecFont->Draw("MINERAL DEPOSITS", 1015, 420, kWhite, kCentre, kTop);
-			mpButtonFont->Draw("SCARCE", 875, 475, kWhite, kCentre, kTop);
-			mpButtonFont->Draw("AVERAGE", 1015, 475, kWhite, kCentre, kTop);
-			mpButtonFont->Draw("ABUNDANT", 1155, 475, kWhite, kCentre, kTop);
+			mpButtonFont->Draw("SCARCE", 875, 477, kWhite, kCentre, kTop);
+			mpButtonFont->Draw("AVERAGE", 1015, 477, kWhite, kCentre, kTop);
+			mpButtonFont->Draw("ABUNDANT", 1155, 477, kWhite, kCentre, kTop);
 		}
 		break;
 	case MENU_LOAD:
