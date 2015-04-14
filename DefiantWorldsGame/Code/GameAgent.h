@@ -200,6 +200,16 @@ public:
 		mHealth = health;
 	}
 
+	inline void CancelPathTarget()
+	{
+		mHasPathTarget = false;
+	}
+
+	inline void UpdateBoundingSphere()
+	{
+		mBoundingSphere.MoveTo(mWorldPos);
+	}
+
 
 	// METHODS
 	//---------------------------

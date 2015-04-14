@@ -2475,24 +2475,49 @@ void CWorldState::DeleteSelection()
 
 void CWorldState::PutUnitIntoSpace()
 {
+	// Check for a single selected unit
 	if (mpCurSelectedAgent)
 	{
 		if (mpHumanPlayer->PutUnitsOnShips(mpCurSelectedAgent))
 		{
 			gpNewsTicker->AddNewElement("Unit Boarded a Transport Ship.", false);
 
+			// Change states of the agent (such as movement & target)
+			mpCurSelectedAgent->SetAttackTarget(nullptr);
+			mpCurSelectedAgent->CancelPathTarget();
+
+			// Set no units selected
 			OnUnitSelectChange(nullptr);
-			mLMouseClicked = false;
 		}
 		else
 		{
-			gpNewsTicker->AddNewElement("No Transport Ships Have Open Space For This Unit.", false);
+			gpNewsTicker->AddNewElement("No Transport Ships Have Open Space For This Unit.", true);
 		}
 	}
-	else
+	// Check for a selection of units
+	else if (mpUnitSelectionList.size() > 0)
 	{
-		gpNewsTicker->AddNewElement("No Unit Selected.", false);
+		// Loop through each unit in the list placing it on the ship
+		for (miterUnitSelectionList = mpUnitSelectionList.begin(); miterUnitSelectionList != mpUnitSelectionList.end(); miterUnitSelectionList++)
+		{
+			CGameAgent* pAgent = (*miterUnitSelectionList);
+
+			// Change states of the agent (such as movement & target)
+			pAgent->SetAttackTarget(nullptr);
+			pAgent->CancelPathTarget();
+
+			// Attempt to store unit on a ship
+			mpHumanPlayer->PutUnitsOnShips(pAgent);
+		}
+
+		//Display message
+		gpNewsTicker->AddNewElement("Unit selection sent to transport ships.", false);
+
+		// Clear group selection
+		mpUnitSelectionList.clear();
 	}
+
+	mLMouseClicked = false;
 }
 
 void CWorldState::LaunchAttack()

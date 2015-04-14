@@ -88,6 +88,7 @@ public:
 		{
 			mpSpaceUnitsList[i]->SetState(OBJ_BUILT);
 			mpSpaceUnitsList[i]->SetWorldPos(Pos);
+			mpSpaceUnitsList[i]->UpdateBoundingSphere();
 		}
 
 		mpSpaceUnitsList.clear();
