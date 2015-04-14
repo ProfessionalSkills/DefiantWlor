@@ -394,7 +394,11 @@ void CWorldState::CheckKeyPresses()
 		else if (mpUnitSelectionList.size() > 0)
 		{
 			// Update all the units in the list to the current path position if the tile is not in use
-			if (!mpCurTile->IsTileUsed())
+			if (!mpCurTile)
+			{
+
+			}
+			else if (!mpCurTile->IsTileUsed())
 			{
 				for (miterUnitSelectionList = mpUnitSelectionList.begin(); miterUnitSelectionList != mpUnitSelectionList.end(); miterUnitSelectionList++)
 				{
@@ -408,10 +412,25 @@ void CWorldState::CheckKeyPresses()
 				CGameAgent* pTargetGameAgent = nullptr;
 				CMinerals* pTargetMinerals = nullptr;
 
-				mpHumanPlayer->CheckGameObjectSelection(pTargetStructure, pTargetGameAgent, pTargetMinerals, mMouseOrigin, mMouseDirection, true);
+				// Check the position of the mouse
+				switch (mMouseState)
+				{
+				case MS_OUT_OF_GRID:
+				case MS_EARTH_GRID:
+					mpHumanPlayer->CheckGameObjectSelection(pTargetStructure, pTargetGameAgent, pTargetMinerals, mMouseOrigin, mMouseDirection, true);
+					break;
+
+				case MS_MARS_GRID:
+					mpAIPlayer->CheckGameObjectSelection(pTargetStructure, pTargetGameAgent, pTargetMinerals, mMouseOrigin, mMouseDirection, true);
+					break;
+
+				case MS_UI:
+					break;
+				}
+
 				if (pTargetStructure != nullptr)
 				{
-					if (pTargetStructure->GetFaction() == FAC_EARTH_DEFENSE_FORCE)
+					if (pTargetStructure->GetFaction() != FAC_EARTH_DEFENSE_FORCE)
 					{
 						for (miterUnitSelectionList = mpUnitSelectionList.begin(); miterUnitSelectionList != mpUnitSelectionList.end(); miterUnitSelectionList++)
 						{
@@ -421,9 +440,12 @@ void CWorldState::CheckKeyPresses()
 				}
 				else if (pTargetGameAgent != nullptr)
 				{
-					for (miterUnitSelectionList = mpUnitSelectionList.begin(); miterUnitSelectionList != mpUnitSelectionList.end(); miterUnitSelectionList++)
+					if (pTargetGameAgent->GetFaction() != FAC_EARTH_DEFENSE_FORCE)
 					{
-						(*miterUnitSelectionList)->SetAttackTarget(pTargetStructure);
+						for (miterUnitSelectionList = mpUnitSelectionList.begin(); miterUnitSelectionList != mpUnitSelectionList.end(); miterUnitSelectionList++)
+						{
+							(*miterUnitSelectionList)->SetAttackTarget(pTargetGameAgent);
+						}
 					}
 				}
 				else if (pTargetMinerals)
