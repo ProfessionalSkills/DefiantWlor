@@ -92,18 +92,22 @@ bool CBomber::Attack(CGameObject* target, float hitMod, float damageMod)
 		mpObjModel->GetMatrix(&objMatrix.m[0][0]);
 
 		DX::XMFLOAT3 localY{ objMatrix.m[1][0], objMatrix.m[1][1], objMatrix.m[1][2] };
+		DX::XMFLOAT3 localZ{ objMatrix.m[2][0], objMatrix.m[2][1], objMatrix.m[2][2] };
 
 		localY.x = -localY.x;
 		localY.y = -localY.y;
 		localY.z = -localY.z;
 
-
 		// Normalise this local axis
 		DX::XMVECTOR vecNormal = DX::XMVector4Normalize(DX::XMLoadFloat3(&localY));
 		DX::XMStoreFloat3(&localY, vecNormal);
-		DX::XMFLOAT3 worldPos = { mWorldPos.x, 0.0f, mWorldPos.z };
+
+		// Normalise this local axis
+		vecNormal = DX::XMVector4Normalize(DX::XMLoadFloat3(&localZ));
+		DX::XMStoreFloat3(&localZ, vecNormal);
+
 		// If the target is being looked at and is within range
-		bool successfulAttack = mAttackTarget->RayCollision(worldPos, localY, distance);
+		bool successfulAttack = mAttackTarget->RayCollision(mWorldPos, localY, distance);
 		if (successfulAttack)
 		{
 			if (mAttackTimer >= (1.0f / mFireRate)) //Control rate of fire of the unit
@@ -111,25 +115,22 @@ bool CBomber::Attack(CGameObject* target, float hitMod, float damageMod)
 				SProjectile* newProjectile = new SProjectile();
 				newProjectile->mModel = mspMshBomb->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
 				newProjectile->mModel->LookAt(mAttackTarget->GetModel());
-				DX::XMFLOAT4X4 projectileMatrix;
-				newProjectile->mModel->GetMatrix(&projectileMatrix.m[0][0]);
-				DX::XMFLOAT3 projZ{ projectileMatrix.m[2][0], projectileMatrix.m[2][1], projectileMatrix.m[2][2] };
-				newProjectile->mDirection = projZ;
+				newProjectile->mDirection = localY;
 				newProjectile->mSpeed = 50.0f;
 
 				mpProjectiles.push_back(newProjectile);
 				mAttackTimer = 0.0f;
 			}
+
+			// Set a point in front of the unit to give the effect of fly-bys
+			DX::XMFLOAT3 pathTarget = { localZ.x * 50.0f, localZ.y * 50.0f, localZ.z * 50.0f };
+			mPathTarget = { mWorldPos.x + pathTarget.x, 0.0f, mWorldPos.z + pathTarget.z };
+			mHasPathTarget = true;
 		}
 		// Check to see if the attack was unsuccessful & that the user has not given the unit a target
 		else if (!successfulAttack && !mHasPathTarget)
 		{
 			// Move towards the target
-			DX::XMFLOAT3 localZ{ objMatrix.m[2][0], objMatrix.m[2][1], objMatrix.m[2][2] };
-			// Normalise this local axis
-			vecNormal = DX::XMVector4Normalize(DX::XMLoadFloat3(&localZ));
-			DX::XMStoreFloat3(&localZ, vecNormal);
-
 			// Get the vector between the bomber and the target position (using the height of the bomber as the Y position)
 			DX::XMFLOAT3 vectorZ = { (target->GetWorldPos().x - mWorldPos.x), 0.0f, (target->GetWorldPos().z - mWorldPos.z) };
 			// Normalise vectorZ

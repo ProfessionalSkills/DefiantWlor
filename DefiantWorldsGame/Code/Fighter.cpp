@@ -86,84 +86,49 @@ bool CFighter::Attack(CGameObject* target, float hitMod, float damageMod)
 	DX::XMFLOAT4X4 objMatrix;
 	mpObjModel->GetMatrix(&objMatrix.m[0][0]);
 
-
 	DX::XMFLOAT3 localZ{ objMatrix.m[2][0], objMatrix.m[2][1], objMatrix.m[2][2] };
-	DX::XMFLOAT3 localY{ objMatrix.m[1][0], objMatrix.m[1][1], objMatrix.m[1][2] };
+
 	// Normalise this local axis
 	DX::XMVECTOR vecNormal = DX::XMVector4Normalize(DX::XMLoadFloat3(&localZ));
 	DX::XMStoreFloat3(&localZ, vecNormal);
-
-	vecNormal = DX::XMVector4Normalize(DX::XMLoadFloat3(&localY));
-	DX::XMStoreFloat3(&localY, vecNormal);
-
+	DX::XMFLOAT3 worldPos = { mWorldPos.x, 0.0f, mWorldPos.z };
 	// If the target is being looked at and is within range
-	if (mAttackTarget->RayCollision(mWorldPos, localZ, distance) && mAttackTarget->RayCollision(mWorldPos, localY, distance) && distance <= (mRange* mRange))
+	bool successfulAttack = mAttackTarget->RayCollision(worldPos, localZ, distance);
+	if (successfulAttack)
 	{
 		if (mAttackTimer >= (1.0f / mFireRate)) //Control rate of fire of the unit
 		{
 			SProjectile* newProjectile = new SProjectile();
-			newProjectile->mModel = mspMshFighterBullet->CreateModel(mWorldPos.x, mpObjModel->GetY(), mWorldPos.z);
-			newProjectile->mDirection = localZ;
-			newProjectile->mSpeed = 800.0f;
+			newProjectile->mModel = mspMshFighterBullet->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
+			newProjectile->mModel->LookAt(mAttackTarget->GetModel());
+			DX::XMFLOAT4X4 projectileMatrix;
+			newProjectile->mModel->GetMatrix(&projectileMatrix.m[0][0]);
+			DX::XMFLOAT3 projZ{ projectileMatrix.m[2][0], projectileMatrix.m[2][1], projectileMatrix.m[2][2] };
+			newProjectile->mDirection = projZ;
+			newProjectile->mSpeed = 50.0f;
 
 			mpProjectiles.push_back(newProjectile);
 			mAttackTimer = 0.0f;
 		}
 	}
-
-	// Do this bit all the time so that if the target is moving, it follows it whilst still firing (for added effect)
-	DX::XMFLOAT3 vectorZ = { (target->GetWorldPos().x - mWorldPos.x), 0.0f, (target->GetWorldPos().z - mWorldPos.z) };
-
-	// Normalise vectorZ
-	vecNormal = DX::XMVector4Normalize(DX::XMLoadFloat3(&vectorZ));
-	DX::XMStoreFloat3(&vectorZ, vecNormal);
-
-	//vecNormal = DX::XMVector4Normalize(DX::XMLoadFloat3(&vectorY));
-	//DX::XMStoreFloat3(&vectorY, vecNormal);
-
-	DX::XMFLOAT3 localX = { objMatrix.m[0][0], objMatrix.m[0][1], objMatrix.m[0][2] };
-	// Normalise this local axis
-	vecNormal = DX::XMVector4Normalize(DX::XMLoadFloat3(&localX));
-	DX::XMStoreFloat3(&localX, vecNormal);
-
-	vecNormal = DX::XMVector4Normalize(DX::XMLoadFloat3(&localZ));
-	DX::XMStoreFloat3(&localZ, vecNormal);
-
-	float dotProduct = Dot(localX, vectorZ);
-
-	if (dotProduct > 0.001f)
+	// Check to see if the attack was unsuccessful & that the user has not given the unit a target
+	else if (!successfulAttack && !mHasPathTarget)
 	{
-		mpObjModel->RotateY(150.0f * gFrameTime);
-	}
-	else if (dotProduct < -0.001f)
-	{
-		mpObjModel->RotateY(-150.0f * gFrameTime);
-	}
+		// Move towards the target
+		DX::XMFLOAT3 localZ{ objMatrix.m[2][0], objMatrix.m[2][1], objMatrix.m[2][2] };
+		// Normalise this local axis
+		vecNormal = DX::XMVector4Normalize(DX::XMLoadFloat3(&localZ));
+		DX::XMStoreFloat3(&localZ, vecNormal);
 
-	dotProduct = Dot(localZ, vectorZ);
+		// Get the vector between the bomber and the target position (using the height of the bomber as the Y position)
+		DX::XMFLOAT3 vectorZ = { (target->GetWorldPos().x - mWorldPos.x), 0.0f, (target->GetWorldPos().z - mWorldPos.z) };
+		// Normalise vectorZ
+		vecNormal = DX::XMVector4Normalize(DX::XMLoadFloat3(&vectorZ));
+		DX::XMStoreFloat3(&vectorZ, vecNormal);
 
-	if (dotProduct > 0.001f)
-	{
-		mpObjModel->RotateLocalX(150.0f * gFrameTime);
-	}
-	else if (dotProduct < -0.001f)
-	{
-		mpObjModel->RotateLocalX(-150.0f * gFrameTime);
-	}
-
-
-	// Check for is the dot product is in the range of -0.001 and 0.001. The reason for this is to make sure
-	// that the target is IN FRONT of the turret and not behind it
-	if (dotProduct > -0.001f && dotProduct < 0.001f)
-	{
-		// Do another dot product, this time checking for it being in front
-		dotProduct = Dot(localZ, vectorZ);
-
-		// Check for behind
-		if (dotProduct < 0.0f)
-		{
-			mpObjModel->RotateY(150.0f * gFrameTime);
-		}
+		// Do a dot product between the facing direction of the bomber and the vectorZ
+		LookingAt(mAttackTarget->GetWorldPos());
+		Move();
 	}
 
 	// Increment attack timer

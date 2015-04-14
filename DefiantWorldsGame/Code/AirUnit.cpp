@@ -93,6 +93,11 @@ bool CAirUnit::Update()
 		break;
 	}
 
+	if (gpEngine->KeyHit(Key_F))
+	{
+		int i = 5;
+	}
+
 	// ALL THESE UPDATES OCCUR IF THE UNIT IS NOT DEAD OR IN SPACE
 	if (HasTarget()) //If there is a path target
 	{
@@ -200,6 +205,15 @@ bool CAirUnit::LookingAt(DX::XMFLOAT3 targetLocation)
 			mpObjModel->RotateLocalZ(mZRotate);
 			mYaw += mZRotate;
 		}
+	}
+
+	// Do another dot product, this time checking for it being in front
+	dotProduct = Dot(facingVector, vectorZ);
+
+	// Check for behind
+	if (dotProduct < 0.0f)
+	{
+		mpObjModel->RotateY(-100.0f * gFrameTime);
 	}
 	return true;
 }
