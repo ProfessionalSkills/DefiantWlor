@@ -94,11 +94,11 @@ bool CAirUnit::Update()
 	}
 
 	// ALL THESE UPDATES OCCUR IF THE UNIT IS NOT DEAD OR IN SPACE
-	Move();
 	if (HasTarget()) //If there is a path target
 	{
 		//Move the unit towards the path target
-		//LookingAt(mPathTarget); //Rotates the unit to face the path target
+		Move();
+		LookingAt(mPathTarget);
 	}
 	if (mAttackTarget != nullptr) //if there is an attack target
 	{
@@ -206,51 +206,52 @@ bool CAirUnit::LookingAt(DX::XMFLOAT3 targetLocation)
 
 void CAirUnit::Move()
 {
-	//if (mHasPathTarget)
-	//{
-	//	float MaxX = mPathTarget.x + 1.0f;
-	//	float MinX = mPathTarget.x - 1.0f;
+	if (mHasPathTarget)
+	{
+		float MaxX = mPathTarget.x + 1.0f;
+		float MinX = mPathTarget.x - 1.0f;
 
-	//	float MaxZ = mPathTarget.z + 1.0f;
-	//	float MinZ = mPathTarget.z - 1.0f;
+		float MaxZ = mPathTarget.z + 1.0f;
+		float MinZ = mPathTarget.z - 1.0f;
 
-	//	if (mWorldPos.x > MinX && mWorldPos.x < MaxX && mWorldPos.z > MinZ && mWorldPos.z < MaxZ)
-	//	{
+		if (mWorldPos.x > MinX && mWorldPos.x < MaxX && mWorldPos.z > MinZ && mWorldPos.z < MaxZ)
+		{
+			// Set path target to null
+			mHasPathTarget = false;
+		}
+		else
+		{
+			float matrix[16];
+			mpObjModel->GetMatrix(matrix);
+			float movement = 20.0f * gFrameTime;
+			mpObjModel->MoveLocalZ(movement);
+			mWorldPos = DX::XMFLOAT3(mpObjModel->GetX(), mpObjModel->GetY(), mpObjModel->GetZ());
+			DX::XMFLOAT3 moveAmount = { matrix[8] * movement, matrix[9] * movement, matrix[10] * movement };
+			mBoundingSphere.MoveTo(mWorldPos);
+		}
+	}
+	else if (mAttackTarget != nullptr)
+	{
+		float xDist = mAttackTarget->GetWorldPos().x - mWorldPos.x;
+		float yDist = mAttackTarget->GetWorldPos().y - mWorldPos.y;
+		float zDist = mAttackTarget->GetWorldPos().z - mWorldPos.z;
 
-	//	}
-	//	else
-	//	{
-	//		float matrix[16];
-	//		mpObjModel->GetMatrix(matrix);
-	//		float movement = 20.0f * gFrameTime;
-	//		mpObjModel->MoveLocalZ(movement);
-	//		mWorldPos = DX::XMFLOAT3(mpObjModel->GetX(), mpObjModel->GetY(), mpObjModel->GetZ());
-	//		DX::XMFLOAT3 moveAmount = { matrix[8] * movement, matrix[9] * movement, matrix[10] * movement };
-	//		mBoundingSphere.MoveTo(mWorldPos);
-	//	}
-	//}
-	//else if (mAttackTarget != nullptr)
-	//{
-	//	float xDist = mAttackTarget->GetWorldPos().x - mWorldPos.x;
-	//	float yDist = mAttackTarget->GetWorldPos().y - mWorldPos.y;
-	//	float zDist = mAttackTarget->GetWorldPos().z - mWorldPos.z;
+		float Distance = ((xDist * xDist) + (yDist * yDist) + (zDist * zDist));
 
-	//	float Distance = ((xDist * xDist) + (yDist * yDist) + (zDist * zDist));
-
-	//	if (Distance > (mRange * mRange))
-	//	{
-	//		float matrix[16];
-	//		mpObjModel->GetMatrix(matrix);
-	//		float movement = 20.0f * gFrameTime;
-	//		mpObjModel->MoveLocalZ(movement);
-	//		mWorldPos = DX::XMFLOAT3(mpObjModel->GetX(), mpObjModel->GetY(), mpObjModel->GetZ());
-	//		DX::XMFLOAT3 moveAmount = { matrix[8] * movement, matrix[9] * movement, matrix[10] * movement };
-	//		mBoundingSphere.MoveTo(mWorldPos);
-	//	}
-	//	/*else
-	//	{
-	//		Attack(mAttackTarget, 100, mDamage);
-	//	}*/
-	//}
+		if (Distance > (mRange * mRange))
+		{
+			float matrix[16];
+			mpObjModel->GetMatrix(matrix);
+			float movement = 20.0f * gFrameTime;
+			mpObjModel->MoveLocalZ(movement);
+			mWorldPos = DX::XMFLOAT3(mpObjModel->GetX(), mpObjModel->GetY(), mpObjModel->GetZ());
+			DX::XMFLOAT3 moveAmount = { matrix[8] * movement, matrix[9] * movement, matrix[10] * movement };
+			mBoundingSphere.MoveTo(mWorldPos);
+		}
+		/*else
+		{
+			Attack(mAttackTarget, 100, mDamage);
+		}*/
+	}
 }
 

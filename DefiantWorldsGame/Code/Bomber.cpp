@@ -53,6 +53,8 @@ void CBomber::UnloadIModel()
 	{
 		mspMshBomber->RemoveModel(mpObjModel);
 		mpObjModel = nullptr;
+		mHasPathTarget = false;
+		mAttackTarget = nullptr;
 	}
 }
 
@@ -120,7 +122,7 @@ bool CBomber::Attack(CGameObject* target, float hitMod, float damageMod)
 			}
 		}
 		// Check to see if the attack was unsuccessful & that the user has not given the unit a target
-		else if (!successfulAttack)
+		else if (!successfulAttack && !mHasPathTarget)
 		{
 			// Move towards the target
 			DX::XMFLOAT3 localZ{ objMatrix.m[2][0], objMatrix.m[2][1], objMatrix.m[2][2] };
@@ -135,43 +137,8 @@ bool CBomber::Attack(CGameObject* target, float hitMod, float damageMod)
 			DX::XMStoreFloat3(&vectorZ, vecNormal);
 
 			// Do a dot product between the facing direction of the bomber and the vectorZ
-			float dotProduct = Dot(localZ, vectorZ);
-
-			if (dotProduct > 0.1f)
-			{
-				mpObjModel->RotateY(100.0f * gFrameTime);
-				if (mYaw >= -30.0f)
-				{
-					float mZRotate = -50.0f * gFrameTime;
-					mpObjModel->RotateLocalZ(mZRotate);
-					mYaw += mZRotate;
-				}
-			}
-			else if (dotProduct < -0.1f)
-			{
-				mpObjModel->RotateY(-100.0f * gFrameTime);
-				if (mYaw <= 30.0f)
-				{
-					float mZRotate = 50.0f * gFrameTime;
-					mpObjModel->RotateLocalZ(mZRotate);
-					mYaw += mZRotate;
-				}
-			}
-			else
-			{
-				if (mYaw >= 5.0f)
-				{
-					float mZRotate = -50.0f * gFrameTime;
-					mpObjModel->RotateLocalZ(mZRotate);
-					mYaw += mZRotate;
-				}
-				else if (mYaw <= -5.0f)
-				{
-					float mZRotate = 50.0f * gFrameTime;
-					mpObjModel->RotateLocalZ(mZRotate);
-					mYaw += mZRotate;
-				}
-			}
+			LookingAt(mAttackTarget->GetWorldPos());
+			Move();
 		}
 
 		// Increment attack timer

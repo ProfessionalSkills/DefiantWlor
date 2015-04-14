@@ -215,7 +215,6 @@ public:
 	bool SphereCollision(SBoundingSphere& sphere);
 	bool DragBoxCollision(DX::BoundingBox& box);
 	void DisplayInfo(IFont* font);
-	//virtual void MoveTo(CTile* dest) = 0;
 	virtual bool Update() = 0;
 	virtual void UnloadIModel() = 0;
 	virtual void LoadIModel() = 0;

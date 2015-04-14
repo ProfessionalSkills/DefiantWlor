@@ -227,28 +227,57 @@ public:
 	//Debugging function to add ships
 	inline void AddShips()
 	{
-		CSpaceFighter* Temp;
-		for (int i = 0; i <25; i++)
+		if (mPlayerFaction == FAC_EARTH_DEFENSE_FORCE)
 		{
-			Temp = new CSpaceFighter();
-			mCurPop += Temp->GetPopValue();
-			Temp->SetFaction(mPlayerFaction);
-			mpSpaceUnitsList.push_back(Temp);
-			mNumSpaceFighter++;
+			CSpaceFighter* Temp;
+			for (int i = 0; i < 25; i++)
+			{
+				Temp = new CSpaceFighter();
+				mCurPop += Temp->GetPopValue();
+				Temp->SetFaction(mPlayerFaction);
+				mpSpaceUnitsList.push_back(Temp);
+				mNumSpaceFighter++;
+			}
+			CTransport* temp;
+			for (int i = 0; i < 5; i++)
+			{
+				temp = new CTransport();
+				mCurPop += temp->GetPopValue();
+				temp->SetFaction(mPlayerFaction);
+				mpSpaceUnitsList.push_back(temp);
+				mNumTransport++;
+			}
+			mCurPop += 10;
+			mpSpaceUnitsList.push_back(new CMothership());
+			mpSpaceUnitsList.back()->SetFaction(mPlayerFaction);
+			mNumMothership++;
 		}
-		CTransport* temp;
-		for (int i = 0; i < 5; i++)
+		// Add less ships for AI
+		else
 		{
-			temp = new CTransport();
-			mCurPop += temp->GetPopValue();
-			temp->SetFaction(mPlayerFaction);
-			mpSpaceUnitsList.push_back(temp);
-			mNumTransport++;
+			CSpaceFighter* Temp;
+			for (int i = 0; i < 10; i++)
+			{
+				Temp = new CSpaceFighter();
+				mCurPop += Temp->GetPopValue();
+				Temp->SetFaction(mPlayerFaction);
+				mpSpaceUnitsList.push_back(Temp);
+				mNumSpaceFighter++;
+			}
+			CTransport* temp;
+			for (int i = 0; i < 2; i++)
+			{
+				temp = new CTransport();
+				mCurPop += temp->GetPopValue();
+				temp->SetFaction(mPlayerFaction);
+				mpSpaceUnitsList.push_back(temp);
+				mNumTransport++;
+			}
+			mCurPop += 10;
+			mpSpaceUnitsList.push_back(new CMothership());
+			mpSpaceUnitsList.back()->SetFaction(mPlayerFaction);
+			mNumMothership++;
 		}
-		mCurPop += 10;
-		mpSpaceUnitsList.push_back(new CMothership());
-		mpSpaceUnitsList.back()->SetFaction(mPlayerFaction);
-		mNumMothership++;
 	}
 
 	bool MineralTransaction(int amount);

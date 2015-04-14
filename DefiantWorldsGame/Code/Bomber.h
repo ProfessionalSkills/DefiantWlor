@@ -51,8 +51,6 @@ public:
 	// OVERRIDE METHODS
 	//---------------------------
 	bool Attack(CGameObject* target, float hitMod, float damageMod);
-	//virtual void MoveTo(CTile* dest);
-
 
 private:
 	IModel* CreateModel(DX::XMFLOAT3 pos) override;

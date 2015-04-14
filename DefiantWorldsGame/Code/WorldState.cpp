@@ -186,16 +186,16 @@ EMouseStates CWorldState::UpdateMouseState()
 	}
 	
 	// Check whether it is within earth boundary
-	if (mMouseWorldPos.x > mpEarthGrid->GetGridStartPos().x && mMouseWorldPos.x < mpEarthGrid->GetGridEndPos().x
-		&& mMouseWorldPos.z > mpEarthGrid->GetGridStartPos().z && mMouseWorldPos.z < mpEarthGrid->GetGridEndPos().z)
+	if (mMouseWorldPos.x > mpEarthGrid->GetGridStartPos().x -1000.0f && mMouseWorldPos.x < mpEarthGrid->GetGridEndPos().x + 1000.0f
+		&& mMouseWorldPos.z > mpEarthGrid->GetGridStartPos().z - 1000.0f && mMouseWorldPos.z < mpEarthGrid->GetGridEndPos().z + 1000.0f)
 	{
 		mCurGridPos = mpEarthGrid->GetGridStartPos();		// Bottom left position of grid
 		return MS_EARTH_GRID;
 	}
 	
 	// Check if in mars boundary
-	if (mMouseWorldPos.x > mpMarsGrid->GetGridStartPos().x && mMouseWorldPos.x < mpMarsGrid->GetGridEndPos().x
-		&& mMouseWorldPos.z > mpMarsGrid->GetGridStartPos().z && mMouseWorldPos.z < mpMarsGrid->GetGridEndPos().z)
+	if (mMouseWorldPos.x > mpMarsGrid->GetGridStartPos().x - 1000.0f && mMouseWorldPos.x < mpMarsGrid->GetGridEndPos().x + 1000.0f
+		&& mMouseWorldPos.z > mpMarsGrid->GetGridStartPos().z - 1000.0f && mMouseWorldPos.z < mpMarsGrid->GetGridEndPos().z + 1000.0f)
 	{
 		mCurGridPos = mpMarsGrid->GetGridStartPos();		// Bottom left position of grid
 		return MS_MARS_GRID;
@@ -281,7 +281,7 @@ void CWorldState::CheckKeyPresses()
 				break;
 
 			case MS_MARS_GRID:
-				mpAIPlayer->CheckGameObjectSelection(pNewSelectedStructure, mpCurSelectedAgent,
+				mpHumanPlayer->CheckGameObjectSelection(pNewSelectedStructure, mpCurSelectedAgent,
 					pNewSelectedMineral, mMouseOrigin, mMouseDirection, false);
 				OnStructureSelectChange(pNewSelectedStructure);
 				OnUnitSelectChange(mpCurSelectedAgent);
@@ -320,17 +320,32 @@ void CWorldState::CheckKeyPresses()
 				pWorker->SetMineral(nullptr);
 			}
 
-			mpHumanPlayer->CheckGameObjectSelection(pTargetStructure, pTargetGameAgent, pTargetMinerals, mMouseOrigin, mMouseDirection, true);
+			// Check the position of the mouse
+			switch (mMouseState)
+			{
+			case MS_OUT_OF_GRID:
+			case MS_EARTH_GRID:
+				mpHumanPlayer->CheckGameObjectSelection(pTargetStructure, pTargetGameAgent, pTargetMinerals, mMouseOrigin, mMouseDirection, true);
+				break;
+
+			case MS_MARS_GRID:
+				mpAIPlayer->CheckGameObjectSelection(pTargetStructure, pTargetGameAgent, pTargetMinerals, mMouseOrigin, mMouseDirection, true);
+				break;
+
+			case MS_UI:
+				break;
+			}
+
 			if (pTargetStructure != nullptr)
 			{
-				if (pTargetStructure->GetFaction() == FAC_EARTH_DEFENSE_FORCE)
+				if (pTargetStructure->GetFaction() != FAC_EARTH_DEFENSE_FORCE)
 				{
 					mpCurSelectedAgent->SetAttackTarget(pTargetStructure);
 				}
 			}
 			else if (pTargetGameAgent != nullptr)
 			{
-				if (pTargetGameAgent->GetFaction() == FAC_EARTH_DEFENSE_FORCE)
+				if (pTargetGameAgent->GetFaction() != FAC_EARTH_DEFENSE_FORCE)
 				{
 					mpCurSelectedAgent->SetAttackTarget(pTargetGameAgent);
 				}
@@ -369,7 +384,7 @@ void CWorldState::CheckKeyPresses()
 			{
 				mpCurSelectedAgent->SetPathTarget(mMouseWorldPos);
 			}
-				
+
 			mRMouseClicked = false;
 		}
 		else if (mpUnitSelectionList.size() > 0)
