@@ -79,6 +79,7 @@ private:
 	// USER INTERFACE
 	//---------------------------
 	IFont* mFntDebug;
+	ISprite* mpBarBottom;
 	ISprite* mpMainUI;
 	ISprite* mpSprQProg;
 	ISprite* mpSprHealth;
