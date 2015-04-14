@@ -17,7 +17,7 @@
 //-----------------------------------------------------
 class CAirUnit : public CGameAgent
 {
-private:
+protected:
 	// DATA
 	//---------------------------
 	float mYaw = 0.0f;

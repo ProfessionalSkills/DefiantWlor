@@ -143,7 +143,7 @@ void CTransport::UnloadIModel()
 {
 	for (int i = 0; i < mpSpaceUnitsList.size(); i++)
 	{
-		mpSpaceUnitsList[i]->SetState(OBJ_DEAD);
+		mpSpaceUnitsList[i]->SetState(OBJ_WARNING);
 		mpSpaceUnitsList[i]->SetHealth(0.0f);
 	}
 	mpSpaceUnitsList.clear();
