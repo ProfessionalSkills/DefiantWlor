@@ -939,6 +939,7 @@ void CWorldState::StateSetup()
 	//-----------------------------
 	mFntDebug = gpEngine->LoadFont("Calibri", 20U);
 	mpMainUI = gpEngine->CreateSprite("WorldUI.png", 0.0f, 0.0f, 0.9f);
+	//mpBarBottom = gpEngine->CreateSprite("UIBarBottom.png", 150.0f, 800.0f, 0.9f);
 	mpSprCursor = gpEngine->CreateSprite("BaseCursor.png", 5.0f, 50.0f, 0.0f);
 	CAdvancedButton<CWorldState, void>* pNewButton = nullptr;
 
@@ -946,6 +947,11 @@ void CWorldState::StateSetup()
 		DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::CreateBarracks, TR_UP, true, 0.2f);
 	mpButtonBarracks = pNewButton;
 	mpGenericButtonList.push_back(pNewButton);
+
+	//pNewButton = new CAdvancedButton<CWorldState, void>("DefBarracksButton2.png", "SelBarracksButton2.png", SPointData(1050, 765),
+	//	DX::XMFLOAT2(90.0f, 90.0f), *this, &CWorldState::CreateBarracks, TR_UP, true, 0.2f);
+	//mpButtonBarracks = pNewButton;
+	//mpGenericButtonList.push_back(pNewButton);
 
 	pNewButton = new CAdvancedButton<CWorldState, void>("DefHellipadButton.png", "SelHellipadButton.png", SPointData(1219, 782),
 		DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::CreateHellipad, TR_UP, true, 0.2f);
