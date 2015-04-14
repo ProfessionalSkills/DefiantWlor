@@ -118,8 +118,14 @@ void CSpaceState::StateSetup()
 
 void CSpaceState::StateUpdate()
 {
-	// Draw the scene
+	if (mpPlayerOneFleet->GetSize() == 0 || mpPlayerTwoFleet->GetSize() == 0)
+	{
+		gCurState = GS_WORLD;
+	}
+
 	gpEngine->DrawScene();
+
+	//Space Controls
 	if (gpEngine->KeyHit(Key_R))
 	{
 		gCurState = GS_WORLD;
@@ -190,8 +196,7 @@ void CSpaceState::StateUpdate()
 		mTimeSinceEffectsUpdate = 0.0f;
 	}
 
-	//moves fleet that has won 
-
+	//moves fleets
 	mpPlayerTwoFleet->MoveFleet();
 	mpPlayerOneFleet->MoveFleet();
 
@@ -289,6 +294,8 @@ void CSpaceState::StateCleanup()
 		PlayerOneVictory = false;
 		PlayerTwoVictory = false;
 	}
+	mpHumanPlayer->SetWonLastSpaceBattle(PlayerOneVictory);
+	mpAIPlayer->SetWonLastSpaceBattle(PlayerTwoVictory);
 
 	//return fleets
 	if (mpPlayerOneFleet) mpPlayerOneFleet->ReturnFleet(mpHumanPlayer,PlayerOneVictory);

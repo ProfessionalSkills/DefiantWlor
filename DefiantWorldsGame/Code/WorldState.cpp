@@ -1202,10 +1202,6 @@ void CWorldState::StateSetup()
 		// Create the walls for the players
 		mpHumanPlayer->ConstructWalls();
 		mpAIPlayer->ConstructWalls();
-
-		// Set camera to victor
-		// IFIFIF
-		//mpCamCurrent = mpCamMars;
 	}
 
 	// Load trees around earth
@@ -1293,6 +1289,14 @@ void CWorldState::StateSetup()
 	mMaxMarsPos.z += threshold;
 
 	mCurCamPrevPos = DX::XMFLOAT3(0.0f, mpCamEarth->GetCamera()->GetY(), 0.0f);
+
+
+	// Set camera to victor
+	if (mpHumanPlayer->GetWonLastSpaceBattle())
+	{
+		mpCamCurrent = mpCamMars;
+		mpHumanPlayer->SetWonLastSpaceBattle(false);
+	}
 
 
 	// FINALISE BUTTONS

@@ -71,7 +71,7 @@ public:
 		return temp;
 	}
 
-	inline void UnloadUnits(bool Victory)
+	inline void UnloadUnits(bool Victory, int StartX, int StartZ)
 	{
 		DX::XMFLOAT3 Pos;
 		for (int i = 0; i < mpSpaceUnitsList.size(); i++)
@@ -85,11 +85,11 @@ public:
 				// Check if it was a victory or not
 				if (Victory)
 				{
-					Pos = { 4400.0f, 0.0f, 200.0f };
+					Pos = { 4400.0f-(10*StartX), 0.0f, (100.0f*StartZ)+(7*i) };
 				}
 				else
 				{
-					Pos = { -2100.0f, 0.0f, 200.0f };
+					Pos = { -2100.0f - (10 * StartX), 0.0f, (100.0f*StartZ) + (7 * i) };
 				}
 			}
 			else
@@ -97,11 +97,11 @@ public:
 				// Check if it was a victory or not
 				if (Victory)
 				{
-					Pos = { -2100.0f, 0.0f, 200.0f };
+					Pos = { -2100.0f - (10 * StartX), 0.0f, (100.0f*StartZ) + (7 * i) };
 				}
 				else
 				{
-					Pos = { 4400.0f, 0.0f, 200.0f };
+					Pos = { 4400.0f - (10 * StartX), 0.0f, (100.0f*StartZ) + (7 * i) };
 				}
 			}
 

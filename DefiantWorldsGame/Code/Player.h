@@ -91,6 +91,7 @@ protected:
 	
 
 	CFleet* mpFleet;
+	bool mWonLastSpaceBattle;
 
 
 public:
@@ -122,6 +123,11 @@ public:
 			}
 		}
 		return false;
+	}
+
+	inline bool GetWonLastSpaceBattle()
+	{
+		return mWonLastSpaceBattle;
 	}
 
 	inline int GetMineralAmount()
@@ -198,6 +204,11 @@ public:
 	inline void SetPlayerName(std::string name)
 	{
 		mName = name;
+	}
+
+	inline void SetWonLastSpaceBattle(bool victory)
+	{
+		mWonLastSpaceBattle = victory;
 	}
 
 	inline void LosePop(int popLost)
