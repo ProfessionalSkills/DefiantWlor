@@ -380,6 +380,10 @@ void CWorldState::CheckKeyPresses()
 					gpNewsTicker->AddNewElement("Only worker units can interact with mineral deposits!", true);
 				}
 			}
+			else if (!mpCurTile)
+			{
+				mpCurSelectedAgent->SetPathTarget(mMouseWorldPos);
+			}
 			else if (!mpCurTile->IsTileUsed())
 			{
 				mpCurSelectedAgent->SetPathTarget(mMouseWorldPos);
@@ -1109,6 +1113,9 @@ void CWorldState::StateSetup()
 
 		// Initialise news ticker
 		gpNewsTicker = new CNewsTicker();
+
+		// Set game being loaded to false (as it has already loaded)
+		CStateControl::GetInstance()->GetSettingsManager()->SetIfLoadingGame(false);
 	}
 	// if players have already been initialised, this is not necessary
 	else if (!mpPlayerManager->ArePlayersInitialised())
