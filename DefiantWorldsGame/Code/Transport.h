@@ -105,6 +105,14 @@ public:
 				}
 			}
 
+			// Check to see if the unit is an air unit
+			EGameAgentVariations agentType = pAgent->GetAgentData()->mAgentType;
+			if (agentType == GAV_BOMBER || agentType == GAV_FIGHTER)
+			{
+				// Set the height
+				Pos.y = 30.0f;
+			}
+
 			// Set the unit to the new position
 			pAgent->SetState(OBJ_BUILT);
 			pAgent->SetWorldPos(Pos);

@@ -38,10 +38,7 @@ CTransport::CTransport()
 	mUnitSpacing = 0.1f*(10*mScale);
 	
 	//Misc
-	//mAttackParticleFX;
-	//mDestroyParticleFX;
 	mState = OBJ_CONSTRUCTING;
-	//mDestGridSq;
 	mIsMoving = false;
 	mHasPathTarget = false;
 	mAgentInfo = SAgentData(GAV_TRANSPORT, "Transport");
