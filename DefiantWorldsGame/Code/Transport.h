@@ -117,6 +117,7 @@ public:
 			pAgent->SetState(OBJ_BUILT);
 			pAgent->SetWorldPos(Pos);
 			pAgent->UpdateBoundingSphere();
+			pAgent->SetOrientation(90.0f);
 		}
 
 		mpSpaceUnitsList.clear();
