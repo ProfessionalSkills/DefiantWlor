@@ -107,7 +107,8 @@ bool CTank::Attack(CGameObject* target, float hitMod, float damageMod)
 			SProjectile* newProjectile = new SProjectile();
 			newProjectile->mModel = mspMshTankShell->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
 			newProjectile->mDirection = localZ;
-			newProjectile->mSpeed = 50.0f;
+			newProjectile->mSpeed = 1000.0f;
+			newProjectile->mLifeTime = 3.0f;
 
 			mpProjectiles.push_back(newProjectile);
 			mAttackTimer = 0.0f;
@@ -130,11 +131,11 @@ bool CTank::Attack(CGameObject* target, float hitMod, float damageMod)
 
 	if (dotProduct > 0.001f)
 	{
-		mpObjModel->GetNode(mTurretNode)->RotateY(150.0f * gFrameTime);
+		mpObjModel->GetNode(mTurretNode)->RotateY(250.0f * gFrameTime);
 	}
 	else if (dotProduct < -0.001f)
 	{
-		mpObjModel->GetNode(mTurretNode)->RotateY(-150.0f * gFrameTime);
+		mpObjModel->GetNode(mTurretNode)->RotateY(-250.0f * gFrameTime);
 	}
 
 	// Check for is the dot product is in the range of -0.001 and 0.001. The reason for this is to make sure
@@ -147,7 +148,7 @@ bool CTank::Attack(CGameObject* target, float hitMod, float damageMod)
 		// Check for behind
 		if (dotProduct < 0.0f)
 		{
-			mpObjModel->GetNode(mTurretNode)->RotateY(150.0f * gFrameTime);
+			mpObjModel->GetNode(mTurretNode)->RotateY(250.0f * gFrameTime);
 		}
 	}
 

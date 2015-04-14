@@ -15,6 +15,8 @@
 CGameAgent::CGameAgent()
 {
 	mPopCost = 0;
+	mTargettingTimer = gpRandomiser->GetRandomFloat(5.0f, 10.0f);
+	mAutoTargetting = 0.0f;
 }
 
 CGameAgent::~CGameAgent()

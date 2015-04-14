@@ -115,6 +115,16 @@ bool CGroundUnit::Update()
 			}
 		}
 	}
+	else
+	{
+		if (mAutoTargetting >= mTargettingTimer)
+		{
+			mAutoTargetting = 0.0f;
+			mTargettingTimer = gpRandomiser->GetRandomFloat(5.0f, 10.0f);
+
+		}
+		mAutoTargetting += gFrameTime;
+	}
 
 	if (mpAttackExplosions.size() > 0)
 	{

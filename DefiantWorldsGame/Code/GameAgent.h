@@ -53,6 +53,8 @@ protected:
 	float mRange = 100.0f;
 	float mFireRate;
 	float mAttackTimer;
+	float AutoTargettingTimer;
+	float mAutoTargetTime;
 	vector<SProjectile*>mpProjectiles;
 	vector<CExplosion*>mpAttackExplosions;
 	float mSpeed;
@@ -60,6 +62,8 @@ protected:
 	float mProductionCost;
 	float mCurProductionTimeLeft;				// Countdown for time remaining until construction complete
 	float mDamage;
+	float mTargettingTimer;
+	float mAutoTargetting;
 	EObjectStates mState;
 	bool mIsMoving;
 	bool mHasPathTarget;
@@ -156,6 +160,24 @@ public:
 	inline bool HasTarget()
 	{
 		return mHasPathTarget;
+	}
+
+	inline float GetAutoTimer()
+	{
+		return mAutoTargetting;
+	}
+	inline float GetAttackTimer()
+	{
+		return mAutoTargetTime;
+	}
+
+	inline void SetAttackTimer(float timer)
+	{
+		mAutoTargetTime = timer;
+	}
+	inline void SetAutoTimer(float timer)
+	{
+		mAutoTargetting = timer;
 	}
 
 	eFleetPos GetPosType();
