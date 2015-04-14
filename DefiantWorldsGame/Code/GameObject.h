@@ -37,6 +37,7 @@ protected:
 	IModel* mpObjModel = nullptr;
 
 	CExplosion* mDestructionExplosion;
+	CSmoke* mWarningSmoke;
 	// SOUND
 	//---------------------------
 	CSound* mGenSound;

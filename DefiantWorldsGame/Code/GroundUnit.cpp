@@ -63,14 +63,26 @@ bool CGroundUnit::Update()
 	case OBJ_DAMAGED:
 		if (((mHealth / mMaxHealth) * 100.0f) <= 33.3f)
 		{
+			if (mWarningSmoke == nullptr)
+			{
+				mWarningSmoke = new CSmoke(mpObjModel, 50);
+			}
 			mState = OBJ_WARNING;
 		}
 		break;
 	case OBJ_WARNING:
+
+		if (mWarningSmoke != nullptr)
+		{
+			mWarningSmoke->UpdateSystem();
+		}
+
 		if (mHealth <= 0.0f)
 		{
 			if (mDestructionExplosion == nullptr)
 			{
+				SafeDelete(mWarningSmoke);
+				mWarningSmoke = nullptr;
 				mDestructionExplosion = new CExplosion(mpObjModel, 20);
 				Destroy();
 			}
@@ -84,7 +96,6 @@ bool CGroundUnit::Update()
 					mState = OBJ_DEAD;
 				}
 			}
-
 			// Object is no longer alive, however its death animation is still playing. So return true
 			return true;
 		}

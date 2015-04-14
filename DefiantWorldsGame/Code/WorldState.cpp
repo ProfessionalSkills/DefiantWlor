@@ -338,14 +338,14 @@ void CWorldState::CheckKeyPresses()
 
 			if (pTargetStructure != nullptr)
 			{
-				if (pTargetStructure->GetFaction() != FAC_EARTH_DEFENSE_FORCE)
+				if (pTargetStructure->GetFaction() == FAC_EARTH_DEFENSE_FORCE)
 				{
 					mpCurSelectedAgent->SetAttackTarget(pTargetStructure);
 				}
 			}
 			else if (pTargetGameAgent != nullptr)
 			{
-				if (pTargetGameAgent->GetFaction() != FAC_EARTH_DEFENSE_FORCE)
+				if (pTargetGameAgent->GetFaction() == FAC_EARTH_DEFENSE_FORCE)
 				{
 					mpCurSelectedAgent->SetAttackTarget(pTargetGameAgent);
 				}

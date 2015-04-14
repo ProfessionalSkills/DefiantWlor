@@ -16,6 +16,7 @@ CGameObject::CGameObject()
 {
 	mpObjModel = nullptr;
 	mDestructionExplosion = nullptr;
+	mWarningSmoke = nullptr;
 	mPopCost = 1;
 }
 

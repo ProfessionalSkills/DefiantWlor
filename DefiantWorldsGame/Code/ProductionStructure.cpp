@@ -267,6 +267,10 @@ bool CProductionStructure::Update(CRTSPlayer* pPlayer)
 		case OBJ_DAMAGED:
 			if (((mHealth / mMaxHealth) * 100.0f) < 33.0f)
 			{
+				if (mWarningSmoke == nullptr)
+				{
+					mWarningSmoke = new CSmoke(mpObjModel, 100);
+				}
 				mState = OBJ_WARNING;
 			}
 			return true;
@@ -274,10 +278,15 @@ bool CProductionStructure::Update(CRTSPlayer* pPlayer)
 			break;
 
 		case OBJ_WARNING:
+			if (mWarningSmoke != nullptr)
+			{
+				mWarningSmoke->UpdateSystem();
+			}
 			if ((mHealth <= 0.0f))
 			{
 				if (mDestructionExplosion == nullptr)
 				{	
+					SafeDelete(mWarningSmoke);
 					mDestructionExplosion = new CExplosion(mpObjModel, 200);
 					Destroy();
 				}
