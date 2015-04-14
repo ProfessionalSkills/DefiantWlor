@@ -71,7 +71,7 @@ bool CGroundUnit::Update()
 		{
 			if (mDestructionExplosion == nullptr)
 			{
-				mDestructionExplosion = new CExplosion(mpObjModel, 50);
+				mDestructionExplosion = new CExplosion(mpObjModel, 20);
 				Destroy();
 			}
 			else
@@ -155,7 +155,7 @@ bool CGroundUnit::Update()
 				else if (mAttackTarget->SphereCollision(projectile->mCollisionSphere)) //Point to Box collision between the projectile and the attack target
 				{
 					mAttackTarget->TakeDamage(mDamage);
-					mpAttackExplosions.push_back(new CExplosion(projectile->mModel, 50));
+					mpAttackExplosions.push_back(new CExplosion(projectile->mModel, 20));
 					SProjectile* tmp = projectile;
 					SafeDelete(tmp);
 					mpProjectiles.erase(iter);

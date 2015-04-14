@@ -1202,6 +1202,10 @@ void CWorldState::StateSetup()
 		// Create the walls for the players
 		mpHumanPlayer->ConstructWalls();
 		mpAIPlayer->ConstructWalls();
+
+		// Set camera to victor
+		// IFIFIF
+		//mpCamCurrent = mpCamMars;
 	}
 
 	// Load trees around earth
