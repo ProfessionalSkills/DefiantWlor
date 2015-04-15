@@ -10,6 +10,7 @@
 // INCLUDES
 //-----------------------------------------------------
 #include "BaseGameState.h"
+#include "AdvancedButton.h"
 
 
 //-----------------------------------------------------
@@ -80,6 +81,14 @@ private:
 	std::stringstream strStream;
 
 	void DrawFontData();
+
+	// BUTTON
+	//---------------------------
+	std::vector<CAdvancedButton<CSpaceState, void>*> mpButtonList;
+	std::vector<CAdvancedButton<CSpaceState, void>*>::iterator miterButtons;
+	void ChangeTacNone();
+	void ChangeTacRapid();
+	void ChangeTacTargated();
 
 	// PLANET POSITIONS
 	//---------------------------

@@ -1048,17 +1048,17 @@ void CWorldState::StateSetup()
 		DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::LaunchAttack);
 	mpGenericButtonList.push_back(mpSpaceAtaackButtons);
 
-	mpSpaceTacNoneButton = new CAdvancedButton<CWorldState, void>("NoTactics.png", "NoTacticsMO.png", SPointData(138, 695),
-		DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::ChangeTacNone);
-	mpGenericButtonList.push_back(mpSpaceTacNoneButton);
-
-	mpSpaceTacTargetedButton = new CAdvancedButton<CWorldState, void>("TargetButton.png", "TargetButtonMO.png", SPointData(265, 695),
-		DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::ChangeTacTargated);
-	mpGenericButtonList.push_back(mpSpaceTacTargetedButton);
-
-	mpSpaceTacRapidButton = new CAdvancedButton<CWorldState, void>("DefRapidFireButton.png", "SelRapidFireButton.png",
-		SPointData(10, 783), DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::ChangeTacRapid);
-	mpGenericButtonList.push_back(mpSpaceTacRapidButton);
+	//mpSpaceTacNoneButton = new CAdvancedButton<CWorldState, void>("NoTactics.png", "NoTacticsMO.png", SPointData(138, 695),
+	//	DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::ChangeTacNone);
+	//mpGenericButtonList.push_back(mpSpaceTacNoneButton);
+	//
+	//mpSpaceTacTargetedButton = new CAdvancedButton<CWorldState, void>("TargetButton.png", "TargetButtonMO.png", SPointData(265, 695),
+	//	DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::ChangeTacTargated);
+	//mpGenericButtonList.push_back(mpSpaceTacTargetedButton);
+	//
+	//mpSpaceTacRapidButton = new CAdvancedButton<CWorldState, void>("DefRapidFireButton.png", "SelRapidFireButton.png",
+	//	SPointData(10, 783), DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::ChangeTacRapid);
+	//mpGenericButtonList.push_back(mpSpaceTacRapidButton);
 
 	// Health bar variables
 	mpSprHealth = nullptr;
@@ -2564,23 +2564,23 @@ void CWorldState::LaunchAttack()
 	gCurState = GS_SPACE;
 }
 
-void CWorldState::ChangeTacNone()
-{
-	mpHumanPlayer->GetFleet()->SetTactic(None);
-	gpNewsTicker->AddNewElement("No space tactic selected.", false);
-}
-
-void CWorldState::ChangeTacRapid()
-{
-	mpHumanPlayer->GetFleet()->SetTactic(Rapid);
-	gpNewsTicker->AddNewElement("Rapid space tactic selected.", false);
-}
-
-void CWorldState::ChangeTacTargated()
-{
-	mpHumanPlayer->GetFleet()->SetTactic(Targeted);
-	gpNewsTicker->AddNewElement("Targeted space tactic selected.", false);
-}
+//void CWorldState::ChangeTacNone()
+//{
+//	mpHumanPlayer->GetFleet()->SetTactic(None);
+//	gpNewsTicker->AddNewElement("No space tactic selected.", false);
+//}
+//
+//void CWorldState::ChangeTacRapid()
+//{
+//	mpHumanPlayer->GetFleet()->SetTactic(Rapid);
+//	gpNewsTicker->AddNewElement("Rapid space tactic selected.", false);
+//}
+//
+//void CWorldState::ChangeTacTargated()
+//{
+//	mpHumanPlayer->GetFleet()->SetTactic(Targeted);
+//	gpNewsTicker->AddNewElement("Targeted space tactic selected.", false);
+//}
 
 void CWorldState::Continue()
 {

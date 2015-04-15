@@ -115,6 +115,18 @@ void CSpaceState::StateSetup()
 	//------------------------------
 	mpSprCursor = gpEngine->CreateSprite("BaseCursor.png", 5.0f, 50.0f, 0.0f);
 
+	// ID NUMBERS 0-3 are main menu items
+	CAdvancedButton<CSpaceState, void>* pNewButton = new CAdvancedButton<CSpaceState, void>("NoTactics.png", "NoTacticsMO.png", SPointData(815, 350),
+		DX::XMFLOAT2(400.0f, 50.0f), *this, &CSpaceState::ChangeTacNone, TR_LEFT);
+	mpButtonList.push_back(pNewButton);
+
+	pNewButton = new CAdvancedButton<CSpaceState, void>("DefRapidFireButton.png", "SelRapidFireButton.png", SPointData(815, 420),
+		DX::XMFLOAT2(400.0f, 50.0f), *this, &CSpaceState::ChangeTacRapid, TR_LEFT);
+	mpButtonList.push_back(pNewButton);
+
+	pNewButton = new CAdvancedButton<CSpaceState, void>("TargetButton.png", "TargetButtonMO.png", SPointData(815, 490),
+		DX::XMFLOAT2(400.0f, 50.0f), *this, &CSpaceState::ChangeTacTargated, TR_LEFT);
+	mpButtonList.push_back(pNewButton);
 
 	// INITIALISE USER INTERFACE
 	//-----------------------------
@@ -406,4 +418,22 @@ void CSpaceState::LoadPlanets()
 	mpMdlNeptune = mpMshPlanet->CreateModel(mNeptunePos.x, mNeptunePos.y, mNeptunePos.z);
 	mpMdlNeptune->SetSkin("texture_neptune.jpg");
 	mpMdlNeptune->Scale(mNeptunePos.w);
+}
+
+void CSpaceState::ChangeTacTargated()
+{
+	mpHumanPlayer->GetFleet()->SetTactic(Targeted);
+	gpNewsTicker->AddNewElement("Targeted space tactic selected.", false);
+}
+
+void CSpaceState::ChangeTacNone()
+{
+	mpHumanPlayer->GetFleet()->SetTactic(None);
+	gpNewsTicker->AddNewElement("No space tactic selected.", false);
+}
+
+void CSpaceState::ChangeTacRapid()
+{
+	mpHumanPlayer->GetFleet()->SetTactic(Rapid);
+	gpNewsTicker->AddNewElement("Rapid space tactic selected.", false);
 }
