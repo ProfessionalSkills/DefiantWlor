@@ -116,16 +116,16 @@ void CSpaceState::StateSetup()
 	mpSprCursor = gpEngine->CreateSprite("BaseCursor.png", 5.0f, 50.0f, 0.0f);
 
 	// ID NUMBERS 0-3 are main menu items
-	CAdvancedButton<CSpaceState, void>* pNewButton = new CAdvancedButton<CSpaceState, void>("NoTactics.png", "NoTacticsMO.png", SPointData(815, 350),
-		DX::XMFLOAT2(400.0f, 50.0f), *this, &CSpaceState::ChangeTacNone, TR_LEFT);
+	CAdvancedButton<CSpaceState, void>* pNewButton = new CAdvancedButton<CSpaceState, void>("NoTactics.png", "NoTacticsMO.png", SPointData(900, 750),
+		DX::XMFLOAT2(400.0f, 50.0f), *this, &CSpaceState::ChangeTacNone, TR_UP, true, 1.2f);
 	mpButtonList.push_back(pNewButton);
 
-	pNewButton = new CAdvancedButton<CSpaceState, void>("DefRapidFireButton.png", "SelRapidFireButton.png", SPointData(815, 420),
-		DX::XMFLOAT2(400.0f, 50.0f), *this, &CSpaceState::ChangeTacRapid, TR_LEFT);
+	pNewButton = new CAdvancedButton<CSpaceState, void>("DefRapidFireButton.png", "SelRapidFireButton.png", SPointData(750, 750),
+		DX::XMFLOAT2(400.0f, 50.0f), *this, &CSpaceState::ChangeTacRapid, TR_UP, true, 1.2f);
 	mpButtonList.push_back(pNewButton);
 
-	pNewButton = new CAdvancedButton<CSpaceState, void>("TargetButton.png", "TargetButtonMO.png", SPointData(815, 490),
-		DX::XMFLOAT2(400.0f, 50.0f), *this, &CSpaceState::ChangeTacTargated, TR_LEFT);
+	pNewButton = new CAdvancedButton<CSpaceState, void>("TargetButton.png", "TargetButtonMO.png", SPointData(600, 750),
+		DX::XMFLOAT2(400.0f, 50.0f), *this, &CSpaceState::ChangeTacTargated, TR_UP, true, 1.2f);
 	mpButtonList.push_back(pNewButton);
 
 	// INITIALISE USER INTERFACE
@@ -161,6 +161,45 @@ void CSpaceState::StateUpdate()
 	if (gpEngine->KeyHit(Key_C))
 	{
 		mCamState = (mCamState + 1) % mNumCamStates;
+	}
+
+	bool leftClicked = false;
+	if (gpEngine->KeyHit(Mouse_LButton))
+	{
+		leftClicked = true;
+	}
+
+	mMousePos.x = (float)gpEngine->GetMouseX();
+	mMousePos.y = (float)gpEngine->GetMouseY();
+	for (miterButtons = mpButtonList.begin(); miterButtons != mpButtonList.end(); miterButtons++)
+	{
+		CAdvancedButton<CSpaceState, void>* pButton = (*miterButtons);
+		// Check if the mouse is colliding with the object
+		if (pButton->GetBoundingBox().IsColliding(DX::XMFLOAT3(mMousePos.x, 0.0f, mMousePos.y)))
+		{
+			pButton->SetMouseOver(true);
+		}
+		else
+		{
+			pButton->SetMouseOver(false);
+		}
+
+		// Check for click 
+		if (pButton->GetMouseOver())
+		{
+			// Check if the mouse is over the button
+			if (leftClicked)
+			{
+				// Raise click flag
+				pButton->Execute();
+				leftClicked = false;
+				// Remove self from for loop
+				break;
+			}
+		}
+
+		// Update the button
+		pButton->Update();
 	}
 
 	ChangeCameraPosition();
@@ -304,6 +343,14 @@ void CSpaceState::StateCleanup()
 	if (mpMdlNeptune) mpMshPlanet->RemoveModel(mpMdlNeptune);
 
 	if (mpMdlEarthAtmos) mpMshAtmosphere->RemoveModel(mpMdlEarthAtmos);
+
+	// Remove buttons
+	while (!mpButtonList.empty())
+	{
+		CAdvancedButton<CSpaceState, void>* tmp = mpButtonList.back();
+		SafeDelete(tmp);
+		mpButtonList.pop_back();
+	}
 
 	//decide which player won, or if neither won
 	if (mpPlayerOneFleet->GetSize() == 0)
