@@ -341,7 +341,7 @@ void CProductionStructure::DisplayInfo(IFont* font)
 		break;
 	}
 
-	font->Draw(mStrDisplay.str(), 470, 800, kWhite, kLeft, kTop);
+	font->Draw(mStrDisplay.str(), 610, 825, kWhite, kLeft, kTop);
 	mStrDisplay.str("");
 }
 

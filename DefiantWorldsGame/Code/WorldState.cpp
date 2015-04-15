@@ -701,7 +701,7 @@ void CWorldState::DisplaySelectedBuildingInfo()
 
 			// Draw amount to screen
 			strStream << healthLeft << " / " << maxHealth;
-			mFntDebug->Draw(strStream.str(), 1130, 800, kWhite, kRight, kTop);
+			mFntDebug->Draw(strStream.str(), 990, 825, kWhite, kRight, kTop);
 			strStream.str("");
 		}
 	}
@@ -1023,15 +1023,15 @@ void CWorldState::StateSetup()
 
 	// Queue buttons
 	mpQueueButtons = new SStructureButtons<CWorldState>(5);
-	mpQueueButtons->mpButtons[0] = new CAdvancedButton<CWorldState, void, int>(SPointData(5, 5), DX::XMFLOAT2(103.0f, 77.0f),
+	mpQueueButtons->mpButtons[0] = new CAdvancedButton<CWorldState, void, int>(SPointData(5, 5), DX::XMFLOAT2(90.0f, 90.0f),
 		*this, &CWorldState::UnqueueUnit, TR_DOWN, true, 0.2f);
-	mpQueueButtons->mpButtons[1] = new CAdvancedButton<CWorldState, void, int>(SPointData(118, 5), DX::XMFLOAT2(103.0f, 77.0f),
+	mpQueueButtons->mpButtons[1] = new CAdvancedButton<CWorldState, void, int>(SPointData(100, 5), DX::XMFLOAT2(90.0f, 90.0f),
 		*this, &CWorldState::UnqueueUnit, TR_DOWN, true, 0.2f);
-	mpQueueButtons->mpButtons[2] = new CAdvancedButton<CWorldState, void, int>(SPointData(231, 5), DX::XMFLOAT2(103.0f, 77.0f),
+	mpQueueButtons->mpButtons[2] = new CAdvancedButton<CWorldState, void, int>(SPointData(195, 5), DX::XMFLOAT2(90.0f, 90.0f),
 		*this, &CWorldState::UnqueueUnit, TR_DOWN, true, 0.2f);
-	mpQueueButtons->mpButtons[3] = new CAdvancedButton<CWorldState, void, int>(SPointData(344, 5), DX::XMFLOAT2(103.0f, 77.0f),
+	mpQueueButtons->mpButtons[3] = new CAdvancedButton<CWorldState, void, int>(SPointData(290, 5), DX::XMFLOAT2(90.0f, 90.0f),
 		*this, &CWorldState::UnqueueUnit, TR_DOWN, true, 0.2f);
-	mpQueueButtons->mpButtons[4] = new CAdvancedButton<CWorldState, void, int>(SPointData(457, 5), DX::XMFLOAT2(103.0f, 77.0f),
+	mpQueueButtons->mpButtons[4] = new CAdvancedButton<CWorldState, void, int>(SPointData(385, 5), DX::XMFLOAT2(90.0f, 90.0f),
 		*this, &CWorldState::UnqueueUnit, TR_DOWN, true, 0.2f);
 
 	for (int i = 0; i < mpQueueButtons->mNumButtons; i++)
@@ -1044,8 +1044,8 @@ void CWorldState::StateSetup()
 
 
 	// Space Buttons
-	mpSpaceAtaackButtons = new CAdvancedButton<CWorldState, void>("AttackButton.png", "AttackButtonMO.png", SPointData(10, 695),
-		DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::LaunchAttack);
+	mpSpaceAtaackButtons = new CAdvancedButton<CWorldState, void>("AttackButton.png", "AttackButtonMO.png", SPointData(165, 765),
+		DX::XMFLOAT2(90.0f, 90.0f), *this, &CWorldState::LaunchAttack);
 	mpGenericButtonList.push_back(mpSpaceAtaackButtons);
 
 	//mpSpaceTacNoneButton = new CAdvancedButton<CWorldState, void>("NoTactics.png", "NoTacticsMO.png", SPointData(138, 695),
