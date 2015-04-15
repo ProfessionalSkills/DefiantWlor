@@ -41,6 +41,7 @@ private:
 	// MODELS
 	//--------------------------- 
 	IModel* mpMdlSkybox;
+	ISprite* mpSprCursor;
 
 	//planets
 	IModel* mpMdlEarth;
@@ -103,6 +104,7 @@ private:
 	CRandomiser mNewRandom;
 	bool PlayerOneVictory;
 	bool PlayerTwoVictory;
+	DX::XMFLOAT2 mMousePos;
 
 public:
 	// CONSTRUCTORS & DESTRUCTOR

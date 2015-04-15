@@ -111,6 +111,11 @@ void CSpaceState::StateSetup()
 	mpPlayerTwoFleet->LoadShipModels(mDisplacement);
 	LoadPlanets();
 
+	// CREATE SPRITES, BUTTONS & FONTS
+	//------------------------------
+	mpSprCursor = gpEngine->CreateSprite("BaseCursor.png", 5.0f, 50.0f, 0.0f);
+
+
 	// INITIALISE USER INTERFACE
 	//-----------------------------
 	mFntDebug = gpEngine->LoadFont("Calibri", 20U);
@@ -205,6 +210,13 @@ void CSpaceState::StateUpdate()
 
 	mCamZMovement += mCameraMoveSpeed*gFrameTime;
 
+	// UPDATE CURSOR
+	//------------------------------
+	mMousePos.x = (float)gpEngine->GetMouseX();
+	mMousePos.y = (float)gpEngine->GetMouseY();
+
+	mpSprCursor->SetPosition(mMousePos.x, mMousePos.y);
+
 	DrawFontData();
 }
 
@@ -261,6 +273,9 @@ void CSpaceState::DrawFontData()
 
 void CSpaceState::StateCleanup()
 {
+	//remove sprites
+	gpEngine->RemoveSprite(mpSprCursor);
+
 	//stop sound
 	mMusic->StopSound();
 
