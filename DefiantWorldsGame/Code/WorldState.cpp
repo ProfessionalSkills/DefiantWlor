@@ -938,28 +938,22 @@ void CWorldState::StateSetup()
 	// INITIALISE USER INTERFACE
 	//-----------------------------
 	mFntDebug = gpEngine->LoadFont("Calibri", 20U);
-	mpMainUI = gpEngine->CreateSprite("WorldUI.png", 0.0f, 0.0f, 0.9f);
-	//mpBarBottom = gpEngine->CreateSprite("UIBarBottom.png", 150.0f, 800.0f, 0.9f);
+	mpBarBottom = gpEngine->CreateSprite("UIBarBottom.png", 150.0f, 800.0f, 0.9f);
 	mpSprCursor = gpEngine->CreateSprite("BaseCursor.png", 5.0f, 50.0f, 0.0f);
 	CAdvancedButton<CWorldState, void>* pNewButton = nullptr;
 
-	pNewButton = new CAdvancedButton<CWorldState, void>("DefBarracksButton.png", "SelBarracksButton.png", SPointData(1219, 695),
-		DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::CreateBarracks, TR_UP, true, 0.2f);
+	pNewButton = new CAdvancedButton<CWorldState, void>("DefBarracksButton2.png", "SelBarracksButton2.png", SPointData(1050, 765),
+		DX::XMFLOAT2(90.0f, 90.0f), *this, &CWorldState::CreateBarracks, TR_UP, true, 0.2f);
 	mpButtonBarracks = pNewButton;
 	mpGenericButtonList.push_back(pNewButton);
 
-	//pNewButton = new CAdvancedButton<CWorldState, void>("DefBarracksButton2.png", "SelBarracksButton2.png", SPointData(1050, 765),
-	//	DX::XMFLOAT2(90.0f, 90.0f), *this, &CWorldState::CreateBarracks, TR_UP, true, 0.2f);
-	//mpButtonBarracks = pNewButton;
-	//mpGenericButtonList.push_back(pNewButton);
-
-	pNewButton = new CAdvancedButton<CWorldState, void>("DefHellipadButton.png", "SelHellipadButton.png", SPointData(1219, 782),
-		DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::CreateHellipad, TR_UP, true, 0.2f);
+	pNewButton = new CAdvancedButton<CWorldState, void>("DefHellipadButton2.png", "SelHellipadButton2.png", SPointData(1145, 765),
+		DX::XMFLOAT2(90.0f, 90.0f), *this, &CWorldState::CreateHellipad, TR_UP, true, 0.2f);
 	mpButtonHellipad = pNewButton;
 	mpGenericButtonList.push_back(pNewButton);
 
-	pNewButton = new CAdvancedButton<CWorldState, void>("DefSpaceCentreButton.png", "SelSpaceCentreButton.png", SPointData(1342, 695),
-		DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::CreateSpaceCentre, TR_UP, true, 0.2f);
+	pNewButton = new CAdvancedButton<CWorldState, void>("DefSpaceCentreButton2.png", "SelSpaceCentreButton2.png", SPointData(1240, 765),
+		DX::XMFLOAT2(90.0f, 90.0f), *this, &CWorldState::CreateSpaceCentre, TR_UP, true, 0.2f);
 	mpButtonSpaceCentre = pNewButton;
 	mpGenericButtonList.push_back(pNewButton);
 
@@ -975,12 +969,12 @@ void CWorldState::StateSetup()
 
 	// Barracks units buttons
 	mpBarracksButtons = new SStructureButtons<CWorldState>(3);
-	mpBarracksButtons->mpButtons[0] = new CAdvancedButton<CWorldState, void, int>("DefInfantryButton.png", "SelInfantryButton.png", SPointData(1219, 695),
-		DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::QueueUnit, TR_UP, false, 0.2f);
-	mpBarracksButtons->mpButtons[1] = new CAdvancedButton<CWorldState, void, int>("DefArtilleryButton.png", "SelArtilleryButton.png", SPointData(1219, 782),
-		DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::QueueUnit, TR_UP, false, 0.2f);
-	mpBarracksButtons->mpButtons[2] = new CAdvancedButton<CWorldState, void, int>("DefTankButton.png", "SelTankButton.png", SPointData(1342, 695),
-		DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::QueueUnit, TR_UP, false, 0.2f);
+	mpBarracksButtons->mpButtons[0] = new CAdvancedButton<CWorldState, void, int>("DefInfantryButton2.png", "SelInfantryButton2.png", SPointData(1050, 765),
+		DX::XMFLOAT2(90.0f, 90.0f), *this, &CWorldState::QueueUnit, TR_UP, false, 0.2f);
+	mpBarracksButtons->mpButtons[1] = new CAdvancedButton<CWorldState, void, int>("DefArtilleryButton2.png", "SelArtilleryButton2.png", SPointData(1145, 765),
+		DX::XMFLOAT2(90.0f, 90.0f), *this, &CWorldState::QueueUnit, TR_UP, false, 0.2f);
+	mpBarracksButtons->mpButtons[2] = new CAdvancedButton<CWorldState, void, int>("DefTankButton2.png", "SelTankButton2.png", SPointData(1240, 765),
+		DX::XMFLOAT2(90.0f, 90.0f), *this, &CWorldState::QueueUnit, TR_UP, false, 0.2f);
 	mpBarracksButtons->Hide();
 
 	for (int i = 0; i < mpBarracksButtons->mNumButtons; i++)
@@ -990,10 +984,10 @@ void CWorldState::StateSetup()
 	
 	// hellipad units buttons
 	mpHellipadButtons = new SStructureButtons<CWorldState>(2);
-	mpHellipadButtons->mpButtons[0] = new CAdvancedButton<CWorldState, void, int>("DefFighterButton.png", "SelFighterButton.png", SPointData(1219, 695),
-		DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::QueueUnit, TR_UP, false, 0.2f);
-	mpHellipadButtons->mpButtons[1] = new CAdvancedButton<CWorldState, void, int>("DefBomberButton.png", "SelBomberButton.png", SPointData(1219, 782),
-		DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::QueueUnit, TR_UP, false, 0.2f);
+	mpHellipadButtons->mpButtons[0] = new CAdvancedButton<CWorldState, void, int>("DefFighterButton2.png", "SelFighterButton2.png", SPointData(1050, 765),
+		DX::XMFLOAT2(90.0f, 90.0f), *this, &CWorldState::QueueUnit, TR_UP, false, 0.2f);
+	mpHellipadButtons->mpButtons[1] = new CAdvancedButton<CWorldState, void, int>("DefBomberButton2.png", "SelBomberButton2.png", SPointData(1145, 765),
+		DX::XMFLOAT2(90.0f, 90.0f), *this, &CWorldState::QueueUnit, TR_UP, false, 0.2f);
 
 	for (int i = 0; i < mpHellipadButtons->mNumButtons; i++)
 	{
@@ -1002,12 +996,12 @@ void CWorldState::StateSetup()
 
 	// Space centre units buttons
 	mpSpaceCentreButtons = new SStructureButtons<CWorldState>(3);
-	mpSpaceCentreButtons->mpButtons[0] = new CAdvancedButton<CWorldState, void, int>("DefSpaceFighterButton.png", "SelSpaceFighterButton.png", SPointData(1219, 695),
-		DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::QueueUnit, TR_UP, false, 0.2f);
-	mpSpaceCentreButtons->mpButtons[1] = new CAdvancedButton<CWorldState, void, int>("DefTransportButton.png", "SelTransportButton.png", SPointData(1219, 782),
-		DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::QueueUnit, TR_UP, false, 0.2f);
-	mpSpaceCentreButtons->mpButtons[2] = new CAdvancedButton<CWorldState, void, int>("DefMothershipButton.png", "SelMothershipButton.png", SPointData(1342, 695),
-		DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::QueueUnit, TR_UP, false, 0.2f);
+	mpSpaceCentreButtons->mpButtons[0] = new CAdvancedButton<CWorldState, void, int>("DefSpaceFighterButton2.png", "SelSpaceFighterButton2.png", SPointData(1050, 765),
+		DX::XMFLOAT2(90.0f, 90.0f), *this, &CWorldState::QueueUnit, TR_UP, false, 0.2f);
+	mpSpaceCentreButtons->mpButtons[1] = new CAdvancedButton<CWorldState, void, int>("DefTransportButton2.png", "SelTransportButton2.png", SPointData(1145, 765),
+		DX::XMFLOAT2(90.0f, 90.0f), *this, &CWorldState::QueueUnit, TR_UP, false, 0.2f);
+	mpSpaceCentreButtons->mpButtons[2] = new CAdvancedButton<CWorldState, void, int>("DefMothershipButton2.png", "SelMothershipButton2.png", SPointData(1240, 765),
+		DX::XMFLOAT2(90.0f, 90.0f), *this, &CWorldState::QueueUnit, TR_UP, false, 0.2f);
 	mpSpaceCentreButtons->Hide();
 
 	for (int i = 0; i < mpSpaceCentreButtons->mNumButtons; i++)
@@ -1017,8 +1011,8 @@ void CWorldState::StateSetup()
 
 	// Command centre units buttons
 	mpComCentreButtons = new SStructureButtons<CWorldState>(1);
-	mpComCentreButtons->mpButtons[0] = new CAdvancedButton<CWorldState, void, int>("DefWorkerButton.png", "SelWorkerButton.png", SPointData(1219, 695),
-		DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::QueueUnit, TR_UP, false, 0.2f);
+	mpComCentreButtons->mpButtons[0] = new CAdvancedButton<CWorldState, void, int>("DefWorkerButton2.png", "SelWorkerButton2.png", SPointData(1050, 765),
+		DX::XMFLOAT2(90.0f, 90.0f), *this, &CWorldState::QueueUnit, TR_UP, false, 0.2f);
 	mpComCentreButtons->Hide();
 
 	for (int i = 0; i < mpComCentreButtons->mNumButtons; i++)
@@ -1915,7 +1909,7 @@ void CWorldState::StateCleanup()
 	mpHumanPlayer->UnloadPlayerGridModels();
 	mpAIPlayer->UnloadPlayerGridModels();
 
-	gpEngine->RemoveSprite(mpMainUI);
+	gpEngine->RemoveSprite(mpBarBottom);
 	gpEngine->RemoveMesh(mpMshSkybox);
 	
 	SafeDelete(mpCamEarth);
@@ -2116,39 +2110,39 @@ void CWorldState::OnStructureSelectChange(CStructure* pSelStructure)
 				switch ((*iterQ)->GetAgentData()->mAgentType)
 				{
 				case GAV_ARTILLERY:
-					mpQueueButtons->mpButtons[i]->LoadButtons("DefArtilleryButton.png", "SelArtilleryButton.png");
+					mpQueueButtons->mpButtons[i]->LoadButtons("DefArtilleryButton2.png", "SelArtilleryButton2.png");
 					break;
 
 				case GAV_BOMBER:
-					mpQueueButtons->mpButtons[i]->LoadButtons("DefBomberButton.png", "SelBomberButton.png");
+					mpQueueButtons->mpButtons[i]->LoadButtons("DefBomberButton2.png", "SelBomberButton2.png");
 					break;
 
 				case GAV_FIGHTER:
-					mpQueueButtons->mpButtons[i]->LoadButtons("DefFighterButton.png", "SelFighterButton.png");
+					mpQueueButtons->mpButtons[i]->LoadButtons("DefFighterButton2.png", "SelFighterButton2.png");
 					break;
 
 				case GAV_INFANTRY:
-					mpQueueButtons->mpButtons[i]->LoadButtons("DefInfantryButton.png", "SelInfantryButton.png");
+					mpQueueButtons->mpButtons[i]->LoadButtons("DefInfantryButton2.png", "SelInfantryButton2.png");
 					break;
 
 				case GAV_MOTHERSHIP:
-					mpQueueButtons->mpButtons[i]->LoadButtons("DefMothershipButton.png", "SelmothershipButton.png");
+					mpQueueButtons->mpButtons[i]->LoadButtons("DefMothershipButton2.png", "SelmothershipButton2.png");
 					break;
 
 				case GAV_SPACE_FIGHTER:
-					mpQueueButtons->mpButtons[i]->LoadButtons("DefSpaceFighterButton.png", "SelSpaceFighterButton.png");
+					mpQueueButtons->mpButtons[i]->LoadButtons("DefSpaceFighterButton2.png", "SelSpaceFighterButton2.png");
 					break;
 
 				case GAV_TANK:
-					mpQueueButtons->mpButtons[i]->LoadButtons("DefTankButton.png", "SelTankButton.png");
+					mpQueueButtons->mpButtons[i]->LoadButtons("DefTankButton2.png", "SelTankButton2.png");
 					break;
 
 				case GAV_TRANSPORT:
-					mpQueueButtons->mpButtons[i]->LoadButtons("DefTransportButton.png", "SelTransportButton.png");
+					mpQueueButtons->mpButtons[i]->LoadButtons("DefTransportButton2.png", "SelTransportButton2.png");
 					break;
 
 				case GAV_WORKER:
-					mpQueueButtons->mpButtons[i]->LoadButtons("DefWorkerButton.png", "SelWorkerButton.png");
+					mpQueueButtons->mpButtons[i]->LoadButtons("DefWorkerButton2.png", "SelWorkerButton2.png");
 					break;
 				}
 
@@ -2291,7 +2285,7 @@ void CWorldState::OnItemHealthChange()
 	}
 
 	// Create new sprite & clear string stream
-	mpSprHealth = gpEngine->CreateSprite(strStream.str(), 450.0f, 780.0f, 0.5f);
+	//mpSprHealth = gpEngine->CreateSprite(strStream.str(), 450.0f, 780.0f, 0.5f);
 	strStream.str("");
 }
 
