@@ -104,12 +104,12 @@ void CGameAgent::DisplayInfo(IFont* font)
 		break;
 	}
 
-	font->Draw(mStrDisplay.str(), 610, 825, kWhite, kLeft, kTop);
+	font->Draw(mStrDisplay.str(), 610, 825, 0xff002930, kLeft, kTop);
 	mStrDisplay.str("");
 
 	// Display health
 	mStrDisplay << (int)mHealth << " \\ " << (int)mMaxHealth;
-	font->Draw(mStrDisplay.str(), 990, 825, kWhite, kRight, kTop);
+	font->Draw(mStrDisplay.str(), 990, 825, 0xff002930, kRight, kTop);
 	mStrDisplay.str("");
 }
 

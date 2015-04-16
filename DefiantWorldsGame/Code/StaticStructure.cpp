@@ -45,7 +45,7 @@ void CStaticStructure::DisplayInfo(IFont* font)
 		break;
 	}
 
-	font->Draw(mStrDisplay.str(), 610, 825, kWhite, kLeft, kTop);
+	font->Draw(mStrDisplay.str(), 610, 825, 0xff002930, kLeft, kTop);
 	mStrDisplay.str("");
 }
 

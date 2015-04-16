@@ -677,7 +677,7 @@ void CWorldState::DisplaySelectedBuildingInfo()
 
 			// Draw amount to screen
 			strStream << percentage << "%";
-			mFntDebug->Draw(strStream.str(), 990, 825, kWhite, kRight, kTop);
+			mFntDebug->Draw(strStream.str(), 990, 825, 0xff002930, kRight, kTop);
 			strStream.str(""); 
 		}
 		else
@@ -701,7 +701,7 @@ void CWorldState::DisplaySelectedBuildingInfo()
 
 			// Draw amount to screen
 			strStream << healthLeft << " / " << maxHealth;
-			mFntDebug->Draw(strStream.str(), 990, 825, kWhite, kRight, kTop);
+			mFntDebug->Draw(strStream.str(), 990, 825, 0xff002930, kRight, kTop);
 			strStream.str("");
 		}
 	}
