@@ -79,6 +79,7 @@ private:
 	//---------------------------
 	IFont* mFntDebug;
 	std::stringstream strStream;
+	bool mTacticChoosen;
 
 	void DrawFontData();
 

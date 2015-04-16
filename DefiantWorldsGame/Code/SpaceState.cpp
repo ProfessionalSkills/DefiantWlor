@@ -28,6 +28,7 @@ mDisplacement(30), mNumCamStates(4),CGameState()
 	mpMdlEarthAtmos = 0;
 
 	PlayerOneVictory = false;
+	mTacticChoosen = false;
 	mTimeSinceUpdate = 0.0f;
 
 	mpPlayerOneFleet = 0;
@@ -171,96 +172,101 @@ void CSpaceState::StateUpdate()
 
 	mMousePos.x = (float)gpEngine->GetMouseX();
 	mMousePos.y = (float)gpEngine->GetMouseY();
-	for (miterButtons = mpButtonList.begin(); miterButtons != mpButtonList.end(); miterButtons++)
+	if (!mTacticChoosen)
 	{
-		CAdvancedButton<CSpaceState, void>* pButton = (*miterButtons);
-		// Check if the mouse is colliding with the object
-		if (pButton->GetBoundingBox().IsColliding(DX::XMFLOAT3(mMousePos.x, 0.0f, mMousePos.y)))
+		for (miterButtons = mpButtonList.begin(); miterButtons != mpButtonList.end(); miterButtons++)
 		{
-			pButton->SetMouseOver(true);
-		}
-		else
-		{
-			pButton->SetMouseOver(false);
-		}
-
-		// Check for click 
-		if (pButton->GetMouseOver())
-		{
-			// Check if the mouse is over the button
-			if (leftClicked)
+			CAdvancedButton<CSpaceState, void>* pButton = (*miterButtons);
+			// Check if the mouse is colliding with the object
+			if (pButton->GetBoundingBox().IsColliding(DX::XMFLOAT3(mMousePos.x, 0.0f, mMousePos.y)))
 			{
-				// Raise click flag
-				pButton->Execute();
-				leftClicked = false;
-				// Remove self from for loop
-				break;
+				pButton->SetMouseOver(true);
 			}
+			else
+			{
+				pButton->SetMouseOver(false);
+			}
+
+			// Check for click 
+			if (pButton->GetMouseOver())
+			{
+				// Check if the mouse is over the button
+				if (leftClicked)
+				{
+					// Raise click flag
+					pButton->Execute();
+					leftClicked = false;
+					// Remove self from for loop
+					break;
+				}
+			}
+
+			// Update the button
+			pButton->Update();
+		}
+	}
+	else
+	{
+		//update time, used to slow down the speed of the fight
+
+		mTimeSinceUpdate += gFrameTime;
+		mpPlayerOneFleet->ChargeFleetLazers();
+		mpPlayerTwoFleet->ChargeFleetLazers();
+
+		if (mTimeSinceUpdate >= mTimeToUpdate)
+		{
+			//randomizes the order of fleet attack->update
+			if (mNewRandom.GetRandomInt(1, 2) == 1)
+			{
+				mpPlayerOneFleet->Fight();
+				mpPlayerTwoFleet->Fight();
+			}
+			else
+			{
+				//finds and removes dead ships
+				mpPlayerTwoFleet->Fight();
+				mpPlayerOneFleet->Fight();
+			}
+
+
+			//reset timer
+			mTimeSinceUpdate = 0.0f;
+			mTimeSinceEffectsUpdate = mTimeToUpdateEffects;
 		}
 
-		// Update the button
-		pButton->Update();
-	}
+		//update effects time
+		mTimeSinceEffectsUpdate -= gFrameTime;
 
+
+
+		if (mTimeSinceEffectsUpdate <= 0.0f)
+		{
+			//unload the shield models
+			mpPlayerOneFleet->UnloadShieldModels();
+			mpPlayerTwoFleet->UnloadShieldModels();
+
+			//unload the lazer models
+			mpPlayerOneFleet->UnloadLazers();
+			mpPlayerTwoFleet->UnloadLazers();
+
+			//update fleet status
+			mpPlayerOneFleet->UpdateCondition();
+			mpPlayerTwoFleet->UpdateCondition();
+
+			//reset timer
+			mTimeSinceEffectsUpdate = 0.0f;
+		}
+
+		//moves fleets
+		mpPlayerTwoFleet->MoveFleet();
+		mpPlayerOneFleet->MoveFleet();
+
+		mpPlayerOneFleet->IdleFleet();
+		mpPlayerTwoFleet->IdleFleet();
+
+		mCamZMovement += mCameraMoveSpeed*gFrameTime;
+	}
 	ChangeCameraPosition();
-	//update time, used to slow down the speed of the fight
-	mTimeSinceUpdate += gFrameTime;
-	mpPlayerOneFleet->ChargeFleetLazers();
-	mpPlayerTwoFleet->ChargeFleetLazers();
-
-	if (mTimeSinceUpdate >= mTimeToUpdate)
-	{
-		//randomizes the order of fleet attack->update
-		if (mNewRandom.GetRandomInt(1, 2) == 1)
-		{
-			mpPlayerOneFleet->Fight();
-			mpPlayerTwoFleet->Fight();
-		}
-		else 
-		{
-			//finds and removes dead ships
-			mpPlayerTwoFleet->Fight();
-			mpPlayerOneFleet->Fight();
-		}
-
-		
-		//reset timer
-		mTimeSinceUpdate = 0.0f;
-		mTimeSinceEffectsUpdate = mTimeToUpdateEffects;
-	}
-
-	//update effects time
-	mTimeSinceEffectsUpdate -= gFrameTime;
-
-
-
-	if (mTimeSinceEffectsUpdate <= 0.0f)
-	{
-		//unload the shield models
-		mpPlayerOneFleet->UnloadShieldModels();
-		mpPlayerTwoFleet->UnloadShieldModels();
-
-		//unload the lazer models
-		mpPlayerOneFleet->UnloadLazers();
-		mpPlayerTwoFleet->UnloadLazers();
-
-		//update fleet status
-		mpPlayerOneFleet->UpdateCondition();
-		mpPlayerTwoFleet->UpdateCondition();
-
-		//reset timer
-		mTimeSinceEffectsUpdate = 0.0f;
-	}
-
-	//moves fleets
-	mpPlayerTwoFleet->MoveFleet();
-	mpPlayerOneFleet->MoveFleet();
-
-	mpPlayerOneFleet->IdleFleet();
-	mpPlayerTwoFleet->IdleFleet();
-
-	mCamZMovement += mCameraMoveSpeed*gFrameTime;
-
 	// UPDATE CURSOR
 	//------------------------------
 	mMousePos.x = (float)gpEngine->GetMouseX();
@@ -351,7 +357,7 @@ void CSpaceState::StateCleanup()
 		SafeDelete(tmp);
 		mpButtonList.pop_back();
 	}
-
+	mTacticChoosen = false;
 	//decide which player won, or if neither won
 	if (mpPlayerOneFleet->GetSize() == 0)
 	{
@@ -471,16 +477,19 @@ void CSpaceState::ChangeTacTargated()
 {
 	mpHumanPlayer->GetFleet()->SetTactic(Targeted);
 	gpNewsTicker->AddNewElement("Targeted space tactic selected.", false);
+	mTacticChoosen = true;
 }
 
 void CSpaceState::ChangeTacNone()
 {
 	mpHumanPlayer->GetFleet()->SetTactic(None);
 	gpNewsTicker->AddNewElement("No space tactic selected.", false);
+	mTacticChoosen = true;
 }
 
 void CSpaceState::ChangeTacRapid()
 {
 	mpHumanPlayer->GetFleet()->SetTactic(Rapid);
 	gpNewsTicker->AddNewElement("Rapid space tactic selected.", false);
+	mTacticChoosen = true;
 }
