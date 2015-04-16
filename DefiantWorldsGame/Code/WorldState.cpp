@@ -986,8 +986,8 @@ void CWorldState::StateSetup()
 	mpButtonSpaceCentre = pNewButton;
 	mpGenericButtonList.push_back(pNewButton);
 
-	pNewButton = new CAdvancedButton<CWorldState, void>("DefDeleteButton.png", "SelDeleteButton.png", SPointData(1465, 782),
-		DX::XMFLOAT2(90.0f, 90.0f), *this, &CWorldState::DeleteSelection, TR_LEFT, false, 0.2f);
+	pNewButton = new CAdvancedButton<CWorldState, void>("DefDeleteButton.png", "SelDeleteButton.png", SPointData(450, 765),
+		DX::XMFLOAT2(90.0f, 90.0f), *this, &CWorldState::DeleteSelection, TR_UP, false, 0.2f);
 	pNewButton->Hide();
 	mpButtonDelete = pNewButton;
 	mpGenericButtonList.push_back(pNewButton);
