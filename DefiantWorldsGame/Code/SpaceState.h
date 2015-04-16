@@ -90,6 +90,7 @@ private:
 	void ChangeTacNone();
 	void ChangeTacRapid();
 	void ChangeTacTargated();
+	void RemoveButtonsTactics();
 
 	// PLANET POSITIONS
 	//---------------------------

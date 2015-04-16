@@ -351,12 +351,7 @@ void CSpaceState::StateCleanup()
 	if (mpMdlEarthAtmos) mpMshAtmosphere->RemoveModel(mpMdlEarthAtmos);
 
 	// Remove buttons
-	while (!mpButtonList.empty())
-	{
-		CAdvancedButton<CSpaceState, void>* tmp = mpButtonList.back();
-		SafeDelete(tmp);
-		mpButtonList.pop_back();
-	}
+	RemoveButtonsTactics();
 	mTacticChoosen = false;
 	//decide which player won, or if neither won
 	if (mpPlayerOneFleet->GetSize() == 0)
@@ -478,6 +473,7 @@ void CSpaceState::ChangeTacTargated()
 	mpHumanPlayer->GetFleet()->SetTactic(Targeted);
 	gpNewsTicker->AddNewElement("Targeted space tactic selected.", false);
 	mTacticChoosen = true;
+	RemoveButtonsTactics();
 }
 
 void CSpaceState::ChangeTacNone()
@@ -485,6 +481,7 @@ void CSpaceState::ChangeTacNone()
 	mpHumanPlayer->GetFleet()->SetTactic(None);
 	gpNewsTicker->AddNewElement("No space tactic selected.", false);
 	mTacticChoosen = true;
+	RemoveButtonsTactics();
 }
 
 void CSpaceState::ChangeTacRapid()
@@ -492,4 +489,15 @@ void CSpaceState::ChangeTacRapid()
 	mpHumanPlayer->GetFleet()->SetTactic(Rapid);
 	gpNewsTicker->AddNewElement("Rapid space tactic selected.", false);
 	mTacticChoosen = true;
+	RemoveButtonsTactics();
+}
+
+void CSpaceState::RemoveButtonsTactics()
+{
+	while (!mpButtonList.empty())
+	{
+		CAdvancedButton<CSpaceState, void>* tmp = mpButtonList.back();
+		SafeDelete(tmp);
+		mpButtonList.pop_back();
+	}
 }
