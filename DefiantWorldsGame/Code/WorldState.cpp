@@ -403,7 +403,7 @@ void CWorldState::CheckKeyPresses()
 					gpNewsTicker->AddNewElement("Only worker units can interact with mineral deposits!", true);
 				}
 			}
-			else if (!mpCurTile)
+			else if (mpCurTile == mpNullTile || !mpCurTile)
 			{
 				mpCurSelectedAgent->SetPathTarget(mMouseWorldPos);
 			}
@@ -417,9 +417,13 @@ void CWorldState::CheckKeyPresses()
 		else if (mpUnitSelectionList.size() > 0)
 		{
 			// Update all the units in the list to the current path position if the tile is not in use
-			if (!mpCurTile)
+			if (mpCurTile == mpNullTile || !mpCurTile)
 			{
-
+				for (miterUnitSelectionList = mpUnitSelectionList.begin(); miterUnitSelectionList != mpUnitSelectionList.end(); miterUnitSelectionList++)
+				{
+					(*miterUnitSelectionList)->SetPathTarget(mMouseWorldPos);
+				}
+				mRMouseClicked = false;
 			}
 			else if (!mpCurTile->IsTileUsed())
 			{
