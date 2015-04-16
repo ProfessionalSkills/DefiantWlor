@@ -267,7 +267,7 @@ public:
 		else
 		{
 			CSpaceFighter* Temp;
-			for (int i = 0; i < 1; i++)
+			for (int i = 0; i < 10; i++)
 			{
 				Temp = new CSpaceFighter();
 				mCurPop += Temp->GetPopValue();

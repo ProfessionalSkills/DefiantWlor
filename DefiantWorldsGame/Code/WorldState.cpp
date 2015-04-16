@@ -159,7 +159,9 @@ void CWorldState::DrawFontData()
 		mpCurTile = mpMarsGrid->GetTileData(mMouseGridPos);
 		strStream << "Mars";
 		break;
-	case MS_OUT_OF_GRID: 
+	case MS_NO_AREA:
+	case MS_EARTH_EDGE:
+	case MS_MARS_EDGE:
 		mpCurTile = mpNullTile;
 		strStream << "None";
 		break;
@@ -180,28 +182,45 @@ void CWorldState::DrawFontData()
 EMouseStates CWorldState::UpdateMouseState()
 {
 	// Check if on UI
-	if (mpMouseScreenPos->mPosY > 685)
+	if (mpMouseScreenPos->mPosY > 750)
 	{
 		return MS_UI;
 	}
 	
 	// Check whether it is within earth boundary
-	if (mMouseWorldPos.x > mpEarthGrid->GetGridStartPos().x -1000.0f && mMouseWorldPos.x < mpEarthGrid->GetGridEndPos().x + 1000.0f
-		&& mMouseWorldPos.z > mpEarthGrid->GetGridStartPos().z - 1000.0f && mMouseWorldPos.z < mpEarthGrid->GetGridEndPos().z + 1000.0f)
+	if (mMouseWorldPos.x > mpEarthGrid->GetGridStartPos().x && mMouseWorldPos.x < mpEarthGrid->GetGridEndPos().x
+		&& mMouseWorldPos.z > mpEarthGrid->GetGridStartPos().z && mMouseWorldPos.z < mpEarthGrid->GetGridEndPos().z)
 	{
 		mCurGridPos = mpEarthGrid->GetGridStartPos();		// Bottom left position of grid
 		return MS_EARTH_GRID;
 	}
 	
 	// Check if in mars boundary
-	if (mMouseWorldPos.x > mpMarsGrid->GetGridStartPos().x - 1000.0f && mMouseWorldPos.x < mpMarsGrid->GetGridEndPos().x + 1000.0f
-		&& mMouseWorldPos.z > mpMarsGrid->GetGridStartPos().z - 1000.0f && mMouseWorldPos.z < mpMarsGrid->GetGridEndPos().z + 1000.0f)
+	if (mMouseWorldPos.x > mpMarsGrid->GetGridStartPos().x && mMouseWorldPos.x < mpMarsGrid->GetGridEndPos().x
+		&& mMouseWorldPos.z > mpMarsGrid->GetGridStartPos().z && mMouseWorldPos.z < mpMarsGrid->GetGridEndPos().z)
 	{
 		mCurGridPos = mpMarsGrid->GetGridStartPos();		// Bottom left position of grid
 		return MS_MARS_GRID;
 	}
 
-	return MS_OUT_OF_GRID;
+	// Check if in earth boundary, but outside of the actual grid area
+	if (mMouseWorldPos.x > mpEarthGrid->GetGridStartPos().x - 1000.0f && mMouseWorldPos.x < mpEarthGrid->GetGridEndPos().x + 1000.0f
+		&& mMouseWorldPos.z > mpEarthGrid->GetGridStartPos().z - 1000.0f && mMouseWorldPos.z < mpEarthGrid->GetGridEndPos().z + 1000.0f)
+	{
+		mCurGridPos = mpEarthGrid->GetGridStartPos();		// Bottom left position of grid
+		return MS_EARTH_EDGE;
+	}
+
+	// Check if in mars boundary, but outside of the actual grid area
+	if (mMouseWorldPos.x > mpMarsGrid->GetGridStartPos().x - 1000.0f && mMouseWorldPos.x < mpMarsGrid->GetGridEndPos().x + 1000.0f
+		&& mMouseWorldPos.z > mpMarsGrid->GetGridStartPos().z - 1000.0f && mMouseWorldPos.z < mpMarsGrid->GetGridEndPos().z + 1000.0f)
+	{
+		mCurGridPos = mpMarsGrid->GetGridStartPos();		// Bottom left position of grid
+		return MS_MARS_EDGE;
+	}
+
+	// Must be outside of all grid and edge areas
+	return MS_NO_AREA;
 }
 
 void CWorldState::CheckKeyPresses()
@@ -271,7 +290,8 @@ void CWorldState::CheckKeyPresses()
 			CMinerals* pNewSelectedMineral = nullptr;
 			switch (mMouseState)
 			{
-			case MS_OUT_OF_GRID:
+			case MS_NO_AREA:
+			case MS_EARTH_EDGE:
 			case MS_EARTH_GRID:
 				mpHumanPlayer->CheckGameObjectSelection(pNewSelectedStructure, mpCurSelectedAgent,
 					pNewSelectedMineral, mMouseOrigin, mMouseDirection, false);
@@ -280,6 +300,7 @@ void CWorldState::CheckKeyPresses()
 				mpUnitSelectionList.clear();
 				break;
 
+			case MS_MARS_EDGE:
 			case MS_MARS_GRID:
 				mpHumanPlayer->CheckGameObjectSelection(pNewSelectedStructure, mpCurSelectedAgent,
 					pNewSelectedMineral, mMouseOrigin, mMouseDirection, false);
@@ -323,11 +344,13 @@ void CWorldState::CheckKeyPresses()
 			// Check the position of the mouse
 			switch (mMouseState)
 			{
-			case MS_OUT_OF_GRID:
+			case MS_NO_AREA:
+			case MS_EARTH_EDGE:
 			case MS_EARTH_GRID:
 				mpHumanPlayer->CheckGameObjectSelection(pTargetStructure, pTargetGameAgent, pTargetMinerals, mMouseOrigin, mMouseDirection, true);
 				break;
 
+			case MS_MARS_EDGE:
 			case MS_MARS_GRID:
 				mpAIPlayer->CheckGameObjectSelection(pTargetStructure, pTargetGameAgent, pTargetMinerals, mMouseOrigin, mMouseDirection, true);
 				break;
@@ -380,7 +403,7 @@ void CWorldState::CheckKeyPresses()
 					gpNewsTicker->AddNewElement("Only worker units can interact with mineral deposits!", true);
 				}
 			}
-			else if (!mpCurTile)
+			else if (mpCurTile == mpNullTile || !mpCurTile)
 			{
 				mpCurSelectedAgent->SetPathTarget(mMouseWorldPos);
 			}
@@ -394,9 +417,13 @@ void CWorldState::CheckKeyPresses()
 		else if (mpUnitSelectionList.size() > 0)
 		{
 			// Update all the units in the list to the current path position if the tile is not in use
-			if (!mpCurTile)
+			if (mpCurTile == mpNullTile || !mpCurTile)
 			{
-
+				for (miterUnitSelectionList = mpUnitSelectionList.begin(); miterUnitSelectionList != mpUnitSelectionList.end(); miterUnitSelectionList++)
+				{
+					(*miterUnitSelectionList)->SetPathTarget(mMouseWorldPos);
+				}
+				mRMouseClicked = false;
 			}
 			else if (!mpCurTile->IsTileUsed())
 			{
@@ -415,11 +442,13 @@ void CWorldState::CheckKeyPresses()
 				// Check the position of the mouse
 				switch (mMouseState)
 				{
-				case MS_OUT_OF_GRID:
+				case MS_NO_AREA:
+				case MS_EARTH_EDGE:
 				case MS_EARTH_GRID:
 					mpHumanPlayer->CheckGameObjectSelection(pTargetStructure, pTargetGameAgent, pTargetMinerals, mMouseOrigin, mMouseDirection, true);
 					break;
 
+				case MS_MARS_EDGE:
 				case MS_MARS_GRID:
 					mpAIPlayer->CheckGameObjectSelection(pTargetStructure, pTargetGameAgent, pTargetMinerals, mMouseOrigin, mMouseDirection, true);
 					break;
@@ -677,7 +706,7 @@ void CWorldState::DisplaySelectedBuildingInfo()
 
 			// Draw amount to screen
 			strStream << percentage << "%";
-			mFntDebug->Draw(strStream.str(), 1130, 800, kWhite, kRight, kTop);
+			mFntDebug->Draw(strStream.str(), 990, 825, 0xff002930, kRight, kTop);
 			strStream.str(""); 
 		}
 		else
@@ -701,7 +730,7 @@ void CWorldState::DisplaySelectedBuildingInfo()
 
 			// Draw amount to screen
 			strStream << healthLeft << " / " << maxHealth;
-			mFntDebug->Draw(strStream.str(), 1130, 800, kWhite, kRight, kTop);
+			mFntDebug->Draw(strStream.str(), 990, 825, 0xff002930, kRight, kTop);
 			strStream.str("");
 		}
 	}
@@ -938,49 +967,43 @@ void CWorldState::StateSetup()
 	// INITIALISE USER INTERFACE
 	//-----------------------------
 	mFntDebug = gpEngine->LoadFont("Calibri", 20U);
-	mpMainUI = gpEngine->CreateSprite("WorldUI.png", 0.0f, 0.0f, 0.9f);
-	//mpBarBottom = gpEngine->CreateSprite("UIBarBottom.png", 150.0f, 800.0f, 0.9f);
+	mpBarBottom = gpEngine->CreateSprite("UIBarBottom.png", 150.0f, 800.0f, 0.9f);
 	mpSprCursor = gpEngine->CreateSprite("BaseCursor.png", 5.0f, 50.0f, 0.0f);
 	CAdvancedButton<CWorldState, void>* pNewButton = nullptr;
 
-	pNewButton = new CAdvancedButton<CWorldState, void>("DefBarracksButton.png", "SelBarracksButton.png", SPointData(1219, 695),
-		DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::CreateBarracks, TR_UP, true, 0.2f);
+	pNewButton = new CAdvancedButton<CWorldState, void>("DefBarracksButton2.png", "SelBarracksButton2.png", SPointData(1050, 765),
+		DX::XMFLOAT2(90.0f, 90.0f), *this, &CWorldState::CreateBarracks, TR_UP, true, 0.2f);
 	mpButtonBarracks = pNewButton;
 	mpGenericButtonList.push_back(pNewButton);
 
-	//pNewButton = new CAdvancedButton<CWorldState, void>("DefBarracksButton2.png", "SelBarracksButton2.png", SPointData(1050, 765),
-	//	DX::XMFLOAT2(90.0f, 90.0f), *this, &CWorldState::CreateBarracks, TR_UP, true, 0.2f);
-	//mpButtonBarracks = pNewButton;
-	//mpGenericButtonList.push_back(pNewButton);
-
-	pNewButton = new CAdvancedButton<CWorldState, void>("DefHellipadButton.png", "SelHellipadButton.png", SPointData(1219, 782),
-		DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::CreateHellipad, TR_UP, true, 0.2f);
+	pNewButton = new CAdvancedButton<CWorldState, void>("DefHellipadButton2.png", "SelHellipadButton2.png", SPointData(1145, 765),
+		DX::XMFLOAT2(90.0f, 90.0f), *this, &CWorldState::CreateHellipad, TR_UP, true, 0.2f);
 	mpButtonHellipad = pNewButton;
 	mpGenericButtonList.push_back(pNewButton);
 
-	pNewButton = new CAdvancedButton<CWorldState, void>("DefSpaceCentreButton.png", "SelSpaceCentreButton.png", SPointData(1342, 695),
-		DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::CreateSpaceCentre, TR_UP, true, 0.2f);
+	pNewButton = new CAdvancedButton<CWorldState, void>("DefSpaceCentreButton2.png", "SelSpaceCentreButton2.png", SPointData(1240, 765),
+		DX::XMFLOAT2(90.0f, 90.0f), *this, &CWorldState::CreateSpaceCentre, TR_UP, true, 0.2f);
 	mpButtonSpaceCentre = pNewButton;
 	mpGenericButtonList.push_back(pNewButton);
 
-	pNewButton = new CAdvancedButton<CWorldState, void>("DefDeleteButton.png", "SelDeleteButton.png", SPointData(1465, 782),
-		DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::DeleteSelection, TR_LEFT, false, 0.2f);
+	pNewButton = new CAdvancedButton<CWorldState, void>("DefDeleteButton.png", "SelDeleteButton.png", SPointData(450, 765),
+		DX::XMFLOAT2(90.0f, 90.0f), *this, &CWorldState::DeleteSelection, TR_UP, false, 0.2f);
 	pNewButton->Hide();
 	mpButtonDelete = pNewButton;
 	mpGenericButtonList.push_back(pNewButton);
 
-	mpButtonPutUnitIntoSpace = new CAdvancedButton<CWorldState, void>("DefRapidFireButton.png", "SelRapidFireButton.png",
-		SPointData(1465, 695), DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::PutUnitIntoSpace, TR_LEFT, false, 0.2f);
+	mpButtonPutUnitIntoSpace = new CAdvancedButton<CWorldState, void>("DefBeamUpButton.png", "SelBeamUpButton.png",
+		SPointData(260, 765), DX::XMFLOAT2(90.0f, 90.0f), *this, &CWorldState::PutUnitIntoSpace, TR_UP, false, 0.2f);
 	mpGenericButtonList.push_back(mpButtonPutUnitIntoSpace);
 
 	// Barracks units buttons
 	mpBarracksButtons = new SStructureButtons<CWorldState>(3);
-	mpBarracksButtons->mpButtons[0] = new CAdvancedButton<CWorldState, void, int>("DefInfantryButton.png", "SelInfantryButton.png", SPointData(1219, 695),
-		DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::QueueUnit, TR_UP, false, 0.2f);
-	mpBarracksButtons->mpButtons[1] = new CAdvancedButton<CWorldState, void, int>("DefArtilleryButton.png", "SelArtilleryButton.png", SPointData(1219, 782),
-		DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::QueueUnit, TR_UP, false, 0.2f);
-	mpBarracksButtons->mpButtons[2] = new CAdvancedButton<CWorldState, void, int>("DefTankButton.png", "SelTankButton.png", SPointData(1342, 695),
-		DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::QueueUnit, TR_UP, false, 0.2f);
+	mpBarracksButtons->mpButtons[0] = new CAdvancedButton<CWorldState, void, int>("DefInfantryButton2.png", "SelInfantryButton2.png", SPointData(1050, 765),
+		DX::XMFLOAT2(90.0f, 90.0f), *this, &CWorldState::QueueUnit, TR_UP, false, 0.2f);
+	mpBarracksButtons->mpButtons[1] = new CAdvancedButton<CWorldState, void, int>("DefArtilleryButton2.png", "SelArtilleryButton2.png", SPointData(1145, 765),
+		DX::XMFLOAT2(90.0f, 90.0f), *this, &CWorldState::QueueUnit, TR_UP, false, 0.2f);
+	mpBarracksButtons->mpButtons[2] = new CAdvancedButton<CWorldState, void, int>("DefTankButton2.png", "SelTankButton2.png", SPointData(1240, 765),
+		DX::XMFLOAT2(90.0f, 90.0f), *this, &CWorldState::QueueUnit, TR_UP, false, 0.2f);
 	mpBarracksButtons->Hide();
 
 	for (int i = 0; i < mpBarracksButtons->mNumButtons; i++)
@@ -990,10 +1013,10 @@ void CWorldState::StateSetup()
 	
 	// hellipad units buttons
 	mpHellipadButtons = new SStructureButtons<CWorldState>(2);
-	mpHellipadButtons->mpButtons[0] = new CAdvancedButton<CWorldState, void, int>("DefFighterButton.png", "SelFighterButton.png", SPointData(1219, 695),
-		DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::QueueUnit, TR_UP, false, 0.2f);
-	mpHellipadButtons->mpButtons[1] = new CAdvancedButton<CWorldState, void, int>("DefBomberButton.png", "SelBomberButton.png", SPointData(1219, 782),
-		DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::QueueUnit, TR_UP, false, 0.2f);
+	mpHellipadButtons->mpButtons[0] = new CAdvancedButton<CWorldState, void, int>("DefFighterButton2.png", "SelFighterButton2.png", SPointData(1050, 765),
+		DX::XMFLOAT2(90.0f, 90.0f), *this, &CWorldState::QueueUnit, TR_UP, false, 0.2f);
+	mpHellipadButtons->mpButtons[1] = new CAdvancedButton<CWorldState, void, int>("DefBomberButton2.png", "SelBomberButton2.png", SPointData(1145, 765),
+		DX::XMFLOAT2(90.0f, 90.0f), *this, &CWorldState::QueueUnit, TR_UP, false, 0.2f);
 
 	for (int i = 0; i < mpHellipadButtons->mNumButtons; i++)
 	{
@@ -1002,12 +1025,12 @@ void CWorldState::StateSetup()
 
 	// Space centre units buttons
 	mpSpaceCentreButtons = new SStructureButtons<CWorldState>(3);
-	mpSpaceCentreButtons->mpButtons[0] = new CAdvancedButton<CWorldState, void, int>("DefSpaceFighterButton.png", "SelSpaceFighterButton.png", SPointData(1219, 695),
-		DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::QueueUnit, TR_UP, false, 0.2f);
-	mpSpaceCentreButtons->mpButtons[1] = new CAdvancedButton<CWorldState, void, int>("DefTransportButton.png", "SelTransportButton.png", SPointData(1219, 782),
-		DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::QueueUnit, TR_UP, false, 0.2f);
-	mpSpaceCentreButtons->mpButtons[2] = new CAdvancedButton<CWorldState, void, int>("DefMothershipButton.png", "SelMothershipButton.png", SPointData(1342, 695),
-		DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::QueueUnit, TR_UP, false, 0.2f);
+	mpSpaceCentreButtons->mpButtons[0] = new CAdvancedButton<CWorldState, void, int>("DefSpaceFighterButton2.png", "SelSpaceFighterButton2.png", SPointData(1050, 765),
+		DX::XMFLOAT2(90.0f, 90.0f), *this, &CWorldState::QueueUnit, TR_UP, false, 0.2f);
+	mpSpaceCentreButtons->mpButtons[1] = new CAdvancedButton<CWorldState, void, int>("DefTransportButton2.png", "SelTransportButton2.png", SPointData(1145, 765),
+		DX::XMFLOAT2(90.0f, 90.0f), *this, &CWorldState::QueueUnit, TR_UP, false, 0.2f);
+	mpSpaceCentreButtons->mpButtons[2] = new CAdvancedButton<CWorldState, void, int>("DefMothershipButton2.png", "SelMothershipButton2.png", SPointData(1240, 765),
+		DX::XMFLOAT2(90.0f, 90.0f), *this, &CWorldState::QueueUnit, TR_UP, false, 0.2f);
 	mpSpaceCentreButtons->Hide();
 
 	for (int i = 0; i < mpSpaceCentreButtons->mNumButtons; i++)
@@ -1017,8 +1040,8 @@ void CWorldState::StateSetup()
 
 	// Command centre units buttons
 	mpComCentreButtons = new SStructureButtons<CWorldState>(1);
-	mpComCentreButtons->mpButtons[0] = new CAdvancedButton<CWorldState, void, int>("DefWorkerButton.png", "SelWorkerButton.png", SPointData(1219, 695),
-		DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::QueueUnit, TR_UP, false, 0.2f);
+	mpComCentreButtons->mpButtons[0] = new CAdvancedButton<CWorldState, void, int>("DefWorkerButton2.png", "SelWorkerButton2.png", SPointData(1050, 765),
+		DX::XMFLOAT2(90.0f, 90.0f), *this, &CWorldState::QueueUnit, TR_UP, false, 0.2f);
 	mpComCentreButtons->Hide();
 
 	for (int i = 0; i < mpComCentreButtons->mNumButtons; i++)
@@ -1029,15 +1052,15 @@ void CWorldState::StateSetup()
 
 	// Queue buttons
 	mpQueueButtons = new SStructureButtons<CWorldState>(5);
-	mpQueueButtons->mpButtons[0] = new CAdvancedButton<CWorldState, void, int>(SPointData(5, 5), DX::XMFLOAT2(103.0f, 77.0f),
+	mpQueueButtons->mpButtons[0] = new CAdvancedButton<CWorldState, void, int>(SPointData(5, 5), DX::XMFLOAT2(90.0f, 90.0f),
 		*this, &CWorldState::UnqueueUnit, TR_DOWN, true, 0.2f);
-	mpQueueButtons->mpButtons[1] = new CAdvancedButton<CWorldState, void, int>(SPointData(118, 5), DX::XMFLOAT2(103.0f, 77.0f),
+	mpQueueButtons->mpButtons[1] = new CAdvancedButton<CWorldState, void, int>(SPointData(100, 5), DX::XMFLOAT2(90.0f, 90.0f),
 		*this, &CWorldState::UnqueueUnit, TR_DOWN, true, 0.2f);
-	mpQueueButtons->mpButtons[2] = new CAdvancedButton<CWorldState, void, int>(SPointData(231, 5), DX::XMFLOAT2(103.0f, 77.0f),
+	mpQueueButtons->mpButtons[2] = new CAdvancedButton<CWorldState, void, int>(SPointData(195, 5), DX::XMFLOAT2(90.0f, 90.0f),
 		*this, &CWorldState::UnqueueUnit, TR_DOWN, true, 0.2f);
-	mpQueueButtons->mpButtons[3] = new CAdvancedButton<CWorldState, void, int>(SPointData(344, 5), DX::XMFLOAT2(103.0f, 77.0f),
+	mpQueueButtons->mpButtons[3] = new CAdvancedButton<CWorldState, void, int>(SPointData(290, 5), DX::XMFLOAT2(90.0f, 90.0f),
 		*this, &CWorldState::UnqueueUnit, TR_DOWN, true, 0.2f);
-	mpQueueButtons->mpButtons[4] = new CAdvancedButton<CWorldState, void, int>(SPointData(457, 5), DX::XMFLOAT2(103.0f, 77.0f),
+	mpQueueButtons->mpButtons[4] = new CAdvancedButton<CWorldState, void, int>(SPointData(385, 5), DX::XMFLOAT2(90.0f, 90.0f),
 		*this, &CWorldState::UnqueueUnit, TR_DOWN, true, 0.2f);
 
 	for (int i = 0; i < mpQueueButtons->mNumButtons; i++)
@@ -1050,21 +1073,9 @@ void CWorldState::StateSetup()
 
 
 	// Space Buttons
-	mpSpaceAtaackButtons = new CAdvancedButton<CWorldState, void>("AttackButton.png", "AttackButtonMO.png", SPointData(10, 695),
-		DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::LaunchAttack);
+	mpSpaceAtaackButtons = new CAdvancedButton<CWorldState, void>("AttackButton.png", "AttackButtonMO.png", SPointData(165, 765),
+		DX::XMFLOAT2(90.0f, 90.0f), *this, &CWorldState::LaunchAttack);
 	mpGenericButtonList.push_back(mpSpaceAtaackButtons);
-
-	mpSpaceTacNoneButton = new CAdvancedButton<CWorldState, void>("NoTactics.png", "NoTacticsMO.png", SPointData(138, 695),
-		DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::ChangeTacNone);
-	mpGenericButtonList.push_back(mpSpaceTacNoneButton);
-
-	mpSpaceTacTargetedButton = new CAdvancedButton<CWorldState, void>("TargetButton.png", "TargetButtonMO.png", SPointData(265, 695),
-		DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::ChangeTacTargated);
-	mpGenericButtonList.push_back(mpSpaceTacTargetedButton);
-
-	mpSpaceTacRapidButton = new CAdvancedButton<CWorldState, void>("DefRapidFireButton.png", "SelRapidFireButton.png",
-		SPointData(10, 783), DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::ChangeTacRapid);
-	mpGenericButtonList.push_back(mpSpaceTacRapidButton);
 
 	// Health bar variables
 	mpSprHealth = nullptr;
@@ -1915,7 +1926,7 @@ void CWorldState::StateCleanup()
 	mpHumanPlayer->UnloadPlayerGridModels();
 	mpAIPlayer->UnloadPlayerGridModels();
 
-	gpEngine->RemoveSprite(mpMainUI);
+	gpEngine->RemoveSprite(mpBarBottom);
 	gpEngine->RemoveMesh(mpMshSkybox);
 	
 	SafeDelete(mpCamEarth);
@@ -2116,39 +2127,39 @@ void CWorldState::OnStructureSelectChange(CStructure* pSelStructure)
 				switch ((*iterQ)->GetAgentData()->mAgentType)
 				{
 				case GAV_ARTILLERY:
-					mpQueueButtons->mpButtons[i]->LoadButtons("DefArtilleryButton.png", "SelArtilleryButton.png");
+					mpQueueButtons->mpButtons[i]->LoadButtons("DefArtilleryButton2.png", "SelArtilleryButton2.png");
 					break;
 
 				case GAV_BOMBER:
-					mpQueueButtons->mpButtons[i]->LoadButtons("DefBomberButton.png", "SelBomberButton.png");
+					mpQueueButtons->mpButtons[i]->LoadButtons("DefBomberButton2.png", "SelBomberButton2.png");
 					break;
 
 				case GAV_FIGHTER:
-					mpQueueButtons->mpButtons[i]->LoadButtons("DefFighterButton.png", "SelFighterButton.png");
+					mpQueueButtons->mpButtons[i]->LoadButtons("DefFighterButton2.png", "SelFighterButton2.png");
 					break;
 
 				case GAV_INFANTRY:
-					mpQueueButtons->mpButtons[i]->LoadButtons("DefInfantryButton.png", "SelInfantryButton.png");
+					mpQueueButtons->mpButtons[i]->LoadButtons("DefInfantryButton2.png", "SelInfantryButton2.png");
 					break;
 
 				case GAV_MOTHERSHIP:
-					mpQueueButtons->mpButtons[i]->LoadButtons("DefMothershipButton.png", "SelmothershipButton.png");
+					mpQueueButtons->mpButtons[i]->LoadButtons("DefMothershipButton2.png", "SelmothershipButton2.png");
 					break;
 
 				case GAV_SPACE_FIGHTER:
-					mpQueueButtons->mpButtons[i]->LoadButtons("DefSpaceFighterButton.png", "SelSpaceFighterButton.png");
+					mpQueueButtons->mpButtons[i]->LoadButtons("DefSpaceFighterButton2.png", "SelSpaceFighterButton2.png");
 					break;
 
 				case GAV_TANK:
-					mpQueueButtons->mpButtons[i]->LoadButtons("DefTankButton.png", "SelTankButton.png");
+					mpQueueButtons->mpButtons[i]->LoadButtons("DefTankButton2.png", "SelTankButton2.png");
 					break;
 
 				case GAV_TRANSPORT:
-					mpQueueButtons->mpButtons[i]->LoadButtons("DefTransportButton.png", "SelTransportButton.png");
+					mpQueueButtons->mpButtons[i]->LoadButtons("DefTransportButton2.png", "SelTransportButton2.png");
 					break;
 
 				case GAV_WORKER:
-					mpQueueButtons->mpButtons[i]->LoadButtons("DefWorkerButton.png", "SelWorkerButton.png");
+					mpQueueButtons->mpButtons[i]->LoadButtons("DefWorkerButton2.png", "SelWorkerButton2.png");
 					break;
 				}
 
@@ -2291,7 +2302,7 @@ void CWorldState::OnItemHealthChange()
 	}
 
 	// Create new sprite & clear string stream
-	mpSprHealth = gpEngine->CreateSprite(strStream.str(), 450.0f, 780.0f, 0.5f);
+	mpSprHealth = gpEngine->CreateSprite(strStream.str(), 553.0f, 800.0f, 0.5f);
 	strStream.str("");
 }
 
@@ -2570,23 +2581,23 @@ void CWorldState::LaunchAttack()
 	gCurState = GS_SPACE;
 }
 
-void CWorldState::ChangeTacNone()
-{
-	mpHumanPlayer->GetFleet()->SetTactic(None);
-	gpNewsTicker->AddNewElement("No space tactic selected.", false);
-}
-
-void CWorldState::ChangeTacRapid()
-{
-	mpHumanPlayer->GetFleet()->SetTactic(Rapid);
-	gpNewsTicker->AddNewElement("Rapid space tactic selected.", false);
-}
-
-void CWorldState::ChangeTacTargated()
-{
-	mpHumanPlayer->GetFleet()->SetTactic(Targeted);
-	gpNewsTicker->AddNewElement("Targeted space tactic selected.", false);
-}
+//void CWorldState::ChangeTacNone()
+//{
+//	mpHumanPlayer->GetFleet()->SetTactic(None);
+//	gpNewsTicker->AddNewElement("No space tactic selected.", false);
+//}
+//
+//void CWorldState::ChangeTacRapid()
+//{
+//	mpHumanPlayer->GetFleet()->SetTactic(Rapid);
+//	gpNewsTicker->AddNewElement("Rapid space tactic selected.", false);
+//}
+//
+//void CWorldState::ChangeTacTargated()
+//{
+//	mpHumanPlayer->GetFleet()->SetTactic(Targeted);
+//	gpNewsTicker->AddNewElement("Targeted space tactic selected.", false);
+//}
 
 void CWorldState::Continue()
 {

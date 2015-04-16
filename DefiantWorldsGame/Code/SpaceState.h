@@ -10,6 +10,7 @@
 // INCLUDES
 //-----------------------------------------------------
 #include "BaseGameState.h"
+#include "AdvancedButton.h"
 
 
 //-----------------------------------------------------
@@ -41,6 +42,7 @@ private:
 	// MODELS
 	//--------------------------- 
 	IModel* mpMdlSkybox;
+	ISprite* mpSprCursor;
 
 	//planets
 	IModel* mpMdlEarth;
@@ -62,7 +64,8 @@ private:
 	CFleet* mpPlayerOneFleet;
 	CFleet* mpPlayerTwoFleet;
 	const float mDisplacement;//distance from the centre of the screen. used when loading the ship models
-
+	float mSpecialAttackCooldownTimer;
+	const float mSpecialAttackCooldownTime;
 	// SOUND
 	//---------------------------
 	CSound* mMusic;
@@ -77,8 +80,18 @@ private:
 	//---------------------------
 	IFont* mFntDebug;
 	std::stringstream strStream;
+	bool mTacticChoosen;
 
 	void DrawFontData();
+
+	// BUTTON
+	//---------------------------
+	std::vector<CAdvancedButton<CSpaceState, void>*> mpButtonList;
+	std::vector<CAdvancedButton<CSpaceState, void>*>::iterator miterButtons;
+	void ChangeTacNone();
+	void ChangeTacRapid();
+	void ChangeTacTargated();
+	void RemoveButtonsTactics();
 
 	// PLANET POSITIONS
 	//---------------------------
@@ -103,6 +116,7 @@ private:
 	CRandomiser mNewRandom;
 	bool PlayerOneVictory;
 	bool PlayerTwoVictory;
+	DX::XMFLOAT2 mMousePos;
 
 public:
 	// CONSTRUCTORS & DESTRUCTOR

@@ -80,7 +80,6 @@ private:
 	//---------------------------
 	IFont* mFntDebug;
 	ISprite* mpBarBottom;
-	ISprite* mpMainUI;
 	ISprite* mpSprQProg;
 	ISprite* mpSprHealth;
 	ISprite* mpSprCursor;
@@ -226,16 +225,15 @@ public:
 	void CreateHouse();
 	void DeleteSelection();
 	void LaunchAttack();
-	void ChangeTacNone();
-	void ChangeTacRapid();
-	void ChangeTacTargated();
+	//void ChangeTacNone();
+	//void ChangeTacRapid();
+	//void ChangeTacTargated();
 	void PutUnitIntoSpace();
 
 	// Paused menu buttons methods
 	void Continue();
 	void SaveGame();
 	void QuitGame();
-
 
 	// OVERRIDE METHODS
 	//---------------------------

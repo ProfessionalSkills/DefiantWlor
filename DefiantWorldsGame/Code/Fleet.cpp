@@ -240,6 +240,26 @@ void CFleet::UnloadLazers()
 		mpTemp->UnloadLazer();
 	}
 }
+
+bool CFleet::SpecialAttackLazerBarrage()
+{
+	for (int i = 0; i < mSize; i++)
+	{
+		if (mpFleet[i]->GetAgentData()->mAgentType == GAV_MOTHERSHIP)
+		{
+			int target = 0;
+			for (int j = 0 ; j < 10 ; j++)
+			{
+				target = mTarget->GetRandomInt(0, mpEnemyFleet->GetSize() - 1);
+				if (mpFleet[i]->Attack(mpEnemyFleet->GetShip(target), mHitMod, mDamegMod)) mHits++;
+				mShotsFired++;
+			}
+			return true;
+		}
+	}
+	return false;
+}
+
 //-----------------------------------------------------
 // FLEET CLASS ACCESSORS
 //-----------------------------------------------------

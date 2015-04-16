@@ -14,7 +14,7 @@
 // SPACE STATE CLASS CONSTRUCTORS & DESTRUCTOR
 //-----------------------------------------------------
 CSpaceState::CSpaceState() :mTimeToUpdate(1.0f), mTimeToUpdateEffects(0.1f), mCamRotSpeed(0.7), mCamZAdjust(-10.4f), mBaseCamZ(-188.0f), mCameraMoveSpeed(4.0f),
-mDisplacement(30), mNumCamStates(4),CGameState()
+mDisplacement(30), mNumCamStates(4),mSpecialAttackCooldownTime(5), CGameState()
 {
 	mpMdlSkybox = 0;
 	mpMdlEarth = 0;
@@ -28,10 +28,12 @@ mDisplacement(30), mNumCamStates(4),CGameState()
 	mpMdlEarthAtmos = 0;
 
 	PlayerOneVictory = false;
+	mTacticChoosen = false;
 	mTimeSinceUpdate = 0.0f;
 
 	mpPlayerOneFleet = 0;
 	mpPlayerTwoFleet = 0;
+	mSpecialAttackCooldownTimer = 0;
 
 	//Set Camera Values
 	mCamZ = 0.0f;
@@ -111,6 +113,23 @@ void CSpaceState::StateSetup()
 	mpPlayerTwoFleet->LoadShipModels(mDisplacement);
 	LoadPlanets();
 
+	// CREATE SPRITES, BUTTONS & FONTS
+	//------------------------------
+	mpSprCursor = gpEngine->CreateSprite("BaseCursor.png", 5.0f, 50.0f, 0.0f);
+
+	// ID NUMBERS 0-3 are main menu items
+	CAdvancedButton<CSpaceState, void>* pNewButton = new CAdvancedButton<CSpaceState, void>("NoTactics.png", "NoTacticsMO.png", SPointData(900, 750),
+		DX::XMFLOAT2(400.0f, 50.0f), *this, &CSpaceState::ChangeTacNone, TR_UP, true, 1.2f);
+	mpButtonList.push_back(pNewButton);
+
+	pNewButton = new CAdvancedButton<CSpaceState, void>("DefRapidFireButton.png", "SelRapidFireButton.png", SPointData(750, 750),
+		DX::XMFLOAT2(400.0f, 50.0f), *this, &CSpaceState::ChangeTacRapid, TR_UP, true, 1.2f);
+	mpButtonList.push_back(pNewButton);
+
+	pNewButton = new CAdvancedButton<CSpaceState, void>("TargetButton.png", "TargetButtonMO.png", SPointData(600, 750),
+		DX::XMFLOAT2(400.0f, 50.0f), *this, &CSpaceState::ChangeTacTargated, TR_UP, true, 1.2f);
+	mpButtonList.push_back(pNewButton);
+
 	// INITIALISE USER INTERFACE
 	//-----------------------------
 	mFntDebug = gpEngine->LoadFont("Calibri", 20U);
@@ -125,7 +144,7 @@ void CSpaceState::StateUpdate()
 
 	gpEngine->DrawScene();
 
-	//Space Controls
+	//Space Controls -Genral Controls
 	if (gpEngine->KeyHit(Key_R))
 	{
 		gCurState = GS_WORLD;
@@ -146,65 +165,131 @@ void CSpaceState::StateUpdate()
 		mCamState = (mCamState + 1) % mNumCamStates;
 	}
 
+	bool leftClicked = false;
+	if (gpEngine->KeyHit(Mouse_LButton))
+	{
+		leftClicked = true;
+	}
+
+	mMousePos.x = (float)gpEngine->GetMouseX();
+	mMousePos.y = (float)gpEngine->GetMouseY();
+	if (!mTacticChoosen)
+	{
+		for (miterButtons = mpButtonList.begin(); miterButtons != mpButtonList.end(); miterButtons++)
+		{
+			CAdvancedButton<CSpaceState, void>* pButton = (*miterButtons);
+			// Check if the mouse is colliding with the object
+			if (pButton->GetBoundingBox().IsColliding(DX::XMFLOAT3(mMousePos.x, 0.0f, mMousePos.y)))
+			{
+				pButton->SetMouseOver(true);
+			}
+			else
+			{
+				pButton->SetMouseOver(false);
+			}
+
+			// Check for click 
+			if (pButton->GetMouseOver())
+			{
+				// Check if the mouse is over the button
+				if (leftClicked)
+				{
+					// Raise click flag
+					pButton->Execute();
+					leftClicked = false;
+					// Remove self from for loop
+					break;
+				}
+			}
+
+			// Update the button
+			pButton->Update();
+		}
+	}
+	else
+	{
+		//update time, used to slow down the speed of the fight
+		//Space Controls -Combat Controls
+		if (gpEngine->KeyHit(Key_B))
+		{
+			if (mSpecialAttackCooldownTimer <= 0)
+			{
+				mpPlayerOneFleet->SpecialAttackLazerBarrage();
+				gpNewsTicker->AddNewElement("Mothership Fired a Lazer Barrage", false);
+				mSpecialAttackCooldownTimer = mSpecialAttackCooldownTime;
+			}
+			else
+			{
+				gpNewsTicker->AddNewElement("Special Attacks are on Cooldown", false);
+			}
+		}
+
+		mTimeSinceUpdate += gFrameTime;
+		if (mSpecialAttackCooldownTimer >= 0)mSpecialAttackCooldownTimer -= gFrameTime;
+		mpPlayerOneFleet->ChargeFleetLazers();
+		mpPlayerTwoFleet->ChargeFleetLazers();
+
+		if (mTimeSinceUpdate >= mTimeToUpdate)
+		{
+			//randomizes the order of fleet attack->update
+			if (mNewRandom.GetRandomInt(1, 2) == 1)
+			{
+				mpPlayerOneFleet->Fight();
+				mpPlayerTwoFleet->Fight();
+			}
+			else
+			{
+				//finds and removes dead ships
+				mpPlayerTwoFleet->Fight();
+				mpPlayerOneFleet->Fight();
+			}
+
+
+			//reset timer
+			mTimeSinceUpdate = 0.0f;
+			mTimeSinceEffectsUpdate = mTimeToUpdateEffects;
+		}
+
+		//update effects time
+		mTimeSinceEffectsUpdate -= gFrameTime;
+
+
+
+		if (mTimeSinceEffectsUpdate <= 0.0f)
+		{
+			//unload the shield models
+			mpPlayerOneFleet->UnloadShieldModels();
+			mpPlayerTwoFleet->UnloadShieldModels();
+
+			//unload the lazer models
+			mpPlayerOneFleet->UnloadLazers();
+			mpPlayerTwoFleet->UnloadLazers();
+
+			//update fleet status
+			mpPlayerOneFleet->UpdateCondition();
+			mpPlayerTwoFleet->UpdateCondition();
+
+			//reset timer
+			mTimeSinceEffectsUpdate = 0.0f;
+		}
+
+		//moves fleets
+		mpPlayerTwoFleet->MoveFleet();
+		mpPlayerOneFleet->MoveFleet();
+
+		mpPlayerOneFleet->IdleFleet();
+		mpPlayerTwoFleet->IdleFleet();
+
+		mCamZMovement += mCameraMoveSpeed*gFrameTime;
+	}
 	ChangeCameraPosition();
-	//update time, used to slow down the speed of the fight
-	mTimeSinceUpdate += gFrameTime;
-	mpPlayerOneFleet->ChargeFleetLazers();
-	mpPlayerTwoFleet->ChargeFleetLazers();
+	// UPDATE CURSOR
+	//------------------------------
+	mMousePos.x = (float)gpEngine->GetMouseX();
+	mMousePos.y = (float)gpEngine->GetMouseY();
 
-	if (mTimeSinceUpdate >= mTimeToUpdate)
-	{
-		//randomizes the order of fleet attack->update
-		if (mNewRandom.GetRandomInt(1, 2) == 1)
-		{
-			mpPlayerOneFleet->Fight();
-			mpPlayerTwoFleet->Fight();
-		}
-		else 
-		{
-			//finds and removes dead ships
-			mpPlayerTwoFleet->Fight();
-			mpPlayerOneFleet->Fight();
-		}
-
-		
-		//reset timer
-		mTimeSinceUpdate = 0.0f;
-		mTimeSinceEffectsUpdate = mTimeToUpdateEffects;
-	}
-
-	//update effects time
-	mTimeSinceEffectsUpdate -= gFrameTime;
-
-
-
-	if (mTimeSinceEffectsUpdate <= 0.0f)
-	{
-		//unload the shield models
-		mpPlayerOneFleet->UnloadShieldModels();
-		mpPlayerTwoFleet->UnloadShieldModels();
-
-		//unload the lazer models
-		mpPlayerOneFleet->UnloadLazers();
-		mpPlayerTwoFleet->UnloadLazers();
-
-		//update fleet status
-		mpPlayerOneFleet->UpdateCondition();
-		mpPlayerTwoFleet->UpdateCondition();
-
-		//reset timer
-		mTimeSinceEffectsUpdate = 0.0f;
-	}
-
-	//moves fleets
-	mpPlayerTwoFleet->MoveFleet();
-	mpPlayerOneFleet->MoveFleet();
-
-	mpPlayerOneFleet->IdleFleet();
-	mpPlayerTwoFleet->IdleFleet();
-
-	mCamZMovement += mCameraMoveSpeed*gFrameTime;
-
+	mpSprCursor->SetPosition(mMousePos.x, mMousePos.y);
+	gpNewsTicker->Display();
 	DrawFontData();
 }
 
@@ -261,6 +346,9 @@ void CSpaceState::DrawFontData()
 
 void CSpaceState::StateCleanup()
 {
+	//remove sprites
+	gpEngine->RemoveSprite(mpSprCursor);
+
 	//stop sound
 	mMusic->StopSound();
 
@@ -278,6 +366,9 @@ void CSpaceState::StateCleanup()
 
 	if (mpMdlEarthAtmos) mpMshAtmosphere->RemoveModel(mpMdlEarthAtmos);
 
+	// Remove buttons
+	RemoveButtonsTactics();
+	mTacticChoosen = false;
 	//decide which player won, or if neither won
 	if (mpPlayerOneFleet->GetSize() == 0)
 	{
@@ -391,4 +482,38 @@ void CSpaceState::LoadPlanets()
 	mpMdlNeptune = mpMshPlanet->CreateModel(mNeptunePos.x, mNeptunePos.y, mNeptunePos.z);
 	mpMdlNeptune->SetSkin("texture_neptune.jpg");
 	mpMdlNeptune->Scale(mNeptunePos.w);
+}
+
+void CSpaceState::ChangeTacTargated()
+{
+	mpHumanPlayer->GetFleet()->SetTactic(Targeted);
+	gpNewsTicker->AddNewElement("Targeted space tactic selected.", false);
+	mTacticChoosen = true;
+	RemoveButtonsTactics();
+}
+
+void CSpaceState::ChangeTacNone()
+{
+	mpHumanPlayer->GetFleet()->SetTactic(None);
+	gpNewsTicker->AddNewElement("No space tactic selected.", false);
+	mTacticChoosen = true;
+	RemoveButtonsTactics();
+}
+
+void CSpaceState::ChangeTacRapid()
+{
+	mpHumanPlayer->GetFleet()->SetTactic(Rapid);
+	gpNewsTicker->AddNewElement("Rapid space tactic selected.", false);
+	mTacticChoosen = true;
+	RemoveButtonsTactics();
+}
+
+void CSpaceState::RemoveButtonsTactics()
+{
+	while (!mpButtonList.empty())
+	{
+		CAdvancedButton<CSpaceState, void>* tmp = mpButtonList.back();
+		SafeDelete(tmp);
+		mpButtonList.pop_back();
+	}
 }

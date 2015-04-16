@@ -16,10 +16,10 @@
 
 #include <string>
 #include <sstream>
+#include <iostream>
 #include "SoundObject.h"
 #include "Particles.h"
 #include "NewsTicker.h"
-#include <iostream>
 
 
 //-----------------------------------------------------
@@ -32,7 +32,7 @@ enum EGameStates
 
 enum EMouseStates
 {
-	MS_OUT_OF_GRID, MS_EARTH_GRID, MS_MARS_GRID, MS_UI
+	MS_NO_AREA, MS_EARTH_GRID, MS_EARTH_EDGE, MS_MARS_GRID, MS_MARS_EDGE, MS_UI
 };
 
 enum EObjectStates
