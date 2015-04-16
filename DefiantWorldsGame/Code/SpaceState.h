@@ -64,7 +64,7 @@ private:
 	CFleet* mpPlayerOneFleet;
 	CFleet* mpPlayerTwoFleet;
 	const float mDisplacement;//distance from the centre of the screen. used when loading the ship models
-
+	
 	// SOUND
 	//---------------------------
 	CSound* mMusic;

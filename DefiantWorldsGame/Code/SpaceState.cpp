@@ -143,7 +143,7 @@ void CSpaceState::StateUpdate()
 
 	gpEngine->DrawScene();
 
-	//Space Controls
+	//Space Controls -Genral Controls
 	if (gpEngine->KeyHit(Key_R))
 	{
 		gCurState = GS_WORLD;
@@ -208,6 +208,11 @@ void CSpaceState::StateUpdate()
 	else
 	{
 		//update time, used to slow down the speed of the fight
+		//Space Controls -Combat Controls
+		if (gpEngine->KeyHit(Key_B))
+		{
+			mpPlayerOneFleet->SpecialAttackLazerBarrage();
+		}
 
 		mTimeSinceUpdate += gFrameTime;
 		mpPlayerOneFleet->ChargeFleetLazers();
