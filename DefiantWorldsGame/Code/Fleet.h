@@ -76,6 +76,7 @@ public:
 	void MoveFleet();
 	void IdleFleet();//makes the shapes move slightly, to make the sceene more animated
 	void ChargeFleetLazers();
+	bool SpecialAttackLazerBarrage();
 
 
 
