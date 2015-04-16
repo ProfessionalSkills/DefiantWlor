@@ -677,7 +677,7 @@ void CWorldState::DisplaySelectedBuildingInfo()
 
 			// Draw amount to screen
 			strStream << percentage << "%";
-			mFntDebug->Draw(strStream.str(), 1130, 800, kWhite, kRight, kTop);
+			mFntDebug->Draw(strStream.str(), 990, 825, kWhite, kRight, kTop);
 			strStream.str(""); 
 		}
 		else
