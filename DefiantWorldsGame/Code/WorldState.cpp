@@ -2273,7 +2273,7 @@ void CWorldState::OnItemHealthChange()
 	}
 
 	// Create new sprite & clear string stream
-	//mpSprHealth = gpEngine->CreateSprite(strStream.str(), 450.0f, 780.0f, 0.5f);
+	mpSprHealth = gpEngine->CreateSprite(strStream.str(), 553.0f, 800.0f, 0.5f);
 	strStream.str("");
 }
 
