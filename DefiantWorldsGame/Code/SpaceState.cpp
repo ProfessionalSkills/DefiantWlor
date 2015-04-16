@@ -14,7 +14,7 @@
 // SPACE STATE CLASS CONSTRUCTORS & DESTRUCTOR
 //-----------------------------------------------------
 CSpaceState::CSpaceState() :mTimeToUpdate(1.0f), mTimeToUpdateEffects(0.1f), mCamRotSpeed(0.7), mCamZAdjust(-10.4f), mBaseCamZ(-188.0f), mCameraMoveSpeed(4.0f),
-mDisplacement(30), mNumCamStates(4),CGameState()
+mDisplacement(30), mNumCamStates(4),mSpecialAttackCooldownTime(5), CGameState()
 {
 	mpMdlSkybox = 0;
 	mpMdlEarth = 0;
@@ -33,6 +33,7 @@ mDisplacement(30), mNumCamStates(4),CGameState()
 
 	mpPlayerOneFleet = 0;
 	mpPlayerTwoFleet = 0;
+	mSpecialAttackCooldownTimer = 0;
 
 	//Set Camera Values
 	mCamZ = 0.0f;
@@ -211,10 +212,20 @@ void CSpaceState::StateUpdate()
 		//Space Controls -Combat Controls
 		if (gpEngine->KeyHit(Key_B))
 		{
-			mpPlayerOneFleet->SpecialAttackLazerBarrage();
+			if (mSpecialAttackCooldownTimer <= 0)
+			{
+				mpPlayerOneFleet->SpecialAttackLazerBarrage();
+				gpNewsTicker->AddNewElement("Mothership Fired a Lazer Barrage", false);
+				mSpecialAttackCooldownTimer = mSpecialAttackCooldownTime;
+			}
+			else
+			{
+				gpNewsTicker->AddNewElement("Special Attacks are on Cooldown", false);
+			}
 		}
 
 		mTimeSinceUpdate += gFrameTime;
+		if (mSpecialAttackCooldownTimer >= 0)mSpecialAttackCooldownTimer -= gFrameTime;
 		mpPlayerOneFleet->ChargeFleetLazers();
 		mpPlayerTwoFleet->ChargeFleetLazers();
 
@@ -278,7 +289,7 @@ void CSpaceState::StateUpdate()
 	mMousePos.y = (float)gpEngine->GetMouseY();
 
 	mpSprCursor->SetPosition(mMousePos.x, mMousePos.y);
-
+	gpNewsTicker->Display();
 	DrawFontData();
 }
 
