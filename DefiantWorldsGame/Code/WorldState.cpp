@@ -987,13 +987,13 @@ void CWorldState::StateSetup()
 	mpGenericButtonList.push_back(pNewButton);
 
 	pNewButton = new CAdvancedButton<CWorldState, void>("DefDeleteButton.png", "SelDeleteButton.png", SPointData(1465, 782),
-		DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::DeleteSelection, TR_LEFT, false, 0.2f);
+		DX::XMFLOAT2(90.0f, 90.0f), *this, &CWorldState::DeleteSelection, TR_LEFT, false, 0.2f);
 	pNewButton->Hide();
 	mpButtonDelete = pNewButton;
 	mpGenericButtonList.push_back(pNewButton);
 
-	mpButtonPutUnitIntoSpace = new CAdvancedButton<CWorldState, void>("DefRapidFireButton.png", "SelRapidFireButton.png",
-		SPointData(1465, 695), DX::XMFLOAT2(103.0f, 77.0f), *this, &CWorldState::PutUnitIntoSpace, TR_LEFT, false, 0.2f);
+	mpButtonPutUnitIntoSpace = new CAdvancedButton<CWorldState, void>("DefBeamUpButton.png", "SelBeamUpButton.png",
+		SPointData(260, 765), DX::XMFLOAT2(90.0f, 90.0f), *this, &CWorldState::PutUnitIntoSpace, TR_UP, false, 0.2f);
 	mpGenericButtonList.push_back(mpButtonPutUnitIntoSpace);
 
 	// Barracks units buttons
