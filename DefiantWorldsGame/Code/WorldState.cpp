@@ -159,7 +159,9 @@ void CWorldState::DrawFontData()
 		mpCurTile = mpMarsGrid->GetTileData(mMouseGridPos);
 		strStream << "Mars";
 		break;
-	case MS_OUT_OF_GRID: 
+	case MS_NO_AREA:
+	case MS_EARTH_EDGE:
+	case MS_MARS_EDGE:
 		mpCurTile = mpNullTile;
 		strStream << "None";
 		break;
@@ -180,28 +182,45 @@ void CWorldState::DrawFontData()
 EMouseStates CWorldState::UpdateMouseState()
 {
 	// Check if on UI
-	if (mpMouseScreenPos->mPosY > 685)
+	if (mpMouseScreenPos->mPosY > 750)
 	{
 		return MS_UI;
 	}
 	
 	// Check whether it is within earth boundary
-	if (mMouseWorldPos.x > mpEarthGrid->GetGridStartPos().x -1000.0f && mMouseWorldPos.x < mpEarthGrid->GetGridEndPos().x + 1000.0f
-		&& mMouseWorldPos.z > mpEarthGrid->GetGridStartPos().z - 1000.0f && mMouseWorldPos.z < mpEarthGrid->GetGridEndPos().z + 1000.0f)
+	if (mMouseWorldPos.x > mpEarthGrid->GetGridStartPos().x && mMouseWorldPos.x < mpEarthGrid->GetGridEndPos().x
+		&& mMouseWorldPos.z > mpEarthGrid->GetGridStartPos().z && mMouseWorldPos.z < mpEarthGrid->GetGridEndPos().z)
 	{
 		mCurGridPos = mpEarthGrid->GetGridStartPos();		// Bottom left position of grid
 		return MS_EARTH_GRID;
 	}
 	
 	// Check if in mars boundary
-	if (mMouseWorldPos.x > mpMarsGrid->GetGridStartPos().x - 1000.0f && mMouseWorldPos.x < mpMarsGrid->GetGridEndPos().x + 1000.0f
-		&& mMouseWorldPos.z > mpMarsGrid->GetGridStartPos().z - 1000.0f && mMouseWorldPos.z < mpMarsGrid->GetGridEndPos().z + 1000.0f)
+	if (mMouseWorldPos.x > mpMarsGrid->GetGridStartPos().x && mMouseWorldPos.x < mpMarsGrid->GetGridEndPos().x
+		&& mMouseWorldPos.z > mpMarsGrid->GetGridStartPos().z && mMouseWorldPos.z < mpMarsGrid->GetGridEndPos().z)
 	{
 		mCurGridPos = mpMarsGrid->GetGridStartPos();		// Bottom left position of grid
 		return MS_MARS_GRID;
 	}
 
-	return MS_OUT_OF_GRID;
+	// Check if in earth boundary, but outside of the actual grid area
+	if (mMouseWorldPos.x > mpEarthGrid->GetGridStartPos().x - 1000.0f && mMouseWorldPos.x < mpEarthGrid->GetGridEndPos().x + 1000.0f
+		&& mMouseWorldPos.z > mpEarthGrid->GetGridStartPos().z - 1000.0f && mMouseWorldPos.z < mpEarthGrid->GetGridEndPos().z + 1000.0f)
+	{
+		mCurGridPos = mpEarthGrid->GetGridStartPos();		// Bottom left position of grid
+		return MS_EARTH_EDGE;
+	}
+
+	// Check if in mars boundary, but outside of the actual grid area
+	if (mMouseWorldPos.x > mpMarsGrid->GetGridStartPos().x - 1000.0f && mMouseWorldPos.x < mpMarsGrid->GetGridEndPos().x + 1000.0f
+		&& mMouseWorldPos.z > mpMarsGrid->GetGridStartPos().z - 1000.0f && mMouseWorldPos.z < mpMarsGrid->GetGridEndPos().z + 1000.0f)
+	{
+		mCurGridPos = mpMarsGrid->GetGridStartPos();		// Bottom left position of grid
+		return MS_MARS_EDGE;
+	}
+
+	// Must be outside of all grid and edge areas
+	return MS_NO_AREA;
 }
 
 void CWorldState::CheckKeyPresses()
@@ -271,7 +290,8 @@ void CWorldState::CheckKeyPresses()
 			CMinerals* pNewSelectedMineral = nullptr;
 			switch (mMouseState)
 			{
-			case MS_OUT_OF_GRID:
+			case MS_NO_AREA:
+			case MS_EARTH_EDGE:
 			case MS_EARTH_GRID:
 				mpHumanPlayer->CheckGameObjectSelection(pNewSelectedStructure, mpCurSelectedAgent,
 					pNewSelectedMineral, mMouseOrigin, mMouseDirection, false);
@@ -280,6 +300,7 @@ void CWorldState::CheckKeyPresses()
 				mpUnitSelectionList.clear();
 				break;
 
+			case MS_MARS_EDGE:
 			case MS_MARS_GRID:
 				mpHumanPlayer->CheckGameObjectSelection(pNewSelectedStructure, mpCurSelectedAgent,
 					pNewSelectedMineral, mMouseOrigin, mMouseDirection, false);
@@ -323,11 +344,13 @@ void CWorldState::CheckKeyPresses()
 			// Check the position of the mouse
 			switch (mMouseState)
 			{
-			case MS_OUT_OF_GRID:
+			case MS_NO_AREA:
+			case MS_EARTH_EDGE:
 			case MS_EARTH_GRID:
 				mpHumanPlayer->CheckGameObjectSelection(pTargetStructure, pTargetGameAgent, pTargetMinerals, mMouseOrigin, mMouseDirection, true);
 				break;
 
+			case MS_MARS_EDGE:
 			case MS_MARS_GRID:
 				mpAIPlayer->CheckGameObjectSelection(pTargetStructure, pTargetGameAgent, pTargetMinerals, mMouseOrigin, mMouseDirection, true);
 				break;
@@ -380,7 +403,7 @@ void CWorldState::CheckKeyPresses()
 					gpNewsTicker->AddNewElement("Only worker units can interact with mineral deposits!", true);
 				}
 			}
-			else if (!mpCurTile)
+			else if (mpCurTile == mpNullTile || !mpCurTile)
 			{
 				mpCurSelectedAgent->SetPathTarget(mMouseWorldPos);
 			}
@@ -394,9 +417,13 @@ void CWorldState::CheckKeyPresses()
 		else if (mpUnitSelectionList.size() > 0)
 		{
 			// Update all the units in the list to the current path position if the tile is not in use
-			if (!mpCurTile)
+			if (mpCurTile == mpNullTile || !mpCurTile)
 			{
-
+				for (miterUnitSelectionList = mpUnitSelectionList.begin(); miterUnitSelectionList != mpUnitSelectionList.end(); miterUnitSelectionList++)
+				{
+					(*miterUnitSelectionList)->SetPathTarget(mMouseWorldPos);
+				}
+				mRMouseClicked = false;
 			}
 			else if (!mpCurTile->IsTileUsed())
 			{
@@ -415,11 +442,13 @@ void CWorldState::CheckKeyPresses()
 				// Check the position of the mouse
 				switch (mMouseState)
 				{
-				case MS_OUT_OF_GRID:
+				case MS_NO_AREA:
+				case MS_EARTH_EDGE:
 				case MS_EARTH_GRID:
 					mpHumanPlayer->CheckGameObjectSelection(pTargetStructure, pTargetGameAgent, pTargetMinerals, mMouseOrigin, mMouseDirection, true);
 					break;
 
+				case MS_MARS_EDGE:
 				case MS_MARS_GRID:
 					mpAIPlayer->CheckGameObjectSelection(pTargetStructure, pTargetGameAgent, pTargetMinerals, mMouseOrigin, mMouseDirection, true);
 					break;
