@@ -28,6 +28,7 @@ mDisplacement(30), mNumCamStates(4),mSpecialAttackCooldownTime(5), CGameState()
 	mpMdlEarthAtmos = 0;
 
 	PlayerOneVictory = false;
+	PlayerTwoVictory = false;
 	mTacticChoosen = false;
 	mPaused = false;
 	mTimeSinceUpdate = 0.0f;
@@ -149,6 +150,9 @@ void CSpaceState::StateSetup()
 		DX::XMFLOAT2(400.0f, 50.0f), *this, &CSpaceState::ReturnToEarth, TR_RIGHT, false, 0.001f);
 	mpButtonListPause.push_back(pNewButton);
 	mpButtonListAll.push_back(pNewButton);
+	mpButtonListDefeat.push_back(pNewButton);
+	mpButtonListVictory.push_back(pNewButton);
+
 
 	// INITIALISE USER INTERFACE
 	//-----------------------------
@@ -159,11 +163,6 @@ void CSpaceState::StateSetup()
 
 void CSpaceState::StateUpdate()
 {
-	if (mpPlayerOneFleet->GetSize() == 0 || mpPlayerTwoFleet->GetSize() == 0)
-	{
-		gCurState = GS_WORLD;
-	}
-
 	gpEngine->DrawScene();
 
 	// Controls
@@ -206,7 +205,8 @@ void CSpaceState::StateUpdate()
 	mMousePos.x = (float)gpEngine->GetMouseX();
 	mMousePos.y = (float)gpEngine->GetMouseY();
 	UpdateButtons();
-	if (!mPaused)
+
+	if (!mPaused&&!PlayerOneVictory&&!PlayerTwoVictory)
 	{
 		if (mTacticChoosen)
 		{
@@ -285,7 +285,13 @@ void CSpaceState::StateUpdate()
 			mCamZMovement += mCameraMoveSpeed*gFrameTime;
 		}
 	}
+	else if (PlayerOneVictory||PlayerTwoVictory)
+	{
+		ShowButtonsVictory();
+	}
+
 	ChangeCameraPosition();
+
 	// UPDATE CURSOR
 	//------------------------------
 	mMousePos.x = (float)gpEngine->GetMouseX();
@@ -294,6 +300,10 @@ void CSpaceState::StateUpdate()
 	mpSprCursor->SetPosition(mMousePos.x, mMousePos.y);
 	gpNewsTicker->Display();
 	DrawFontData();
+
+	// UPDATE VICTORY STATE
+	//------------------------------
+	CheckForVictory();
 }
 
 void CSpaceState::DrawFontData()
@@ -353,6 +363,11 @@ void CSpaceState::DrawFontData()
 		mpButtonFont->Draw("Main Menu", 800, 485, kCyan, kCentre, kTop);
 		mpButtonFont->Draw("Return To Earth", 800, 535, kCyan, kCentre, kTop);
 	}
+	if (PlayerOneVictory)
+	{
+		mpTitleFont->Draw("Victory", 800, 90, kCyan, kCentre, kTop);
+		mpButtonFont->Draw("Land On Mars", 800, 535, kCyan, kCentre, kTop);
+	}
 }
 
 void CSpaceState::StateCleanup()
@@ -382,21 +397,8 @@ void CSpaceState::StateCleanup()
 	if (mpMdlEarthAtmos) mpMshAtmosphere->RemoveModel(mpMdlEarthAtmos);
 
 	//decide which player won, or if neither won
-	if (mpPlayerOneFleet->GetSize() == 0)
-	{
-		PlayerOneVictory = false;
-		PlayerTwoVictory = true;
-	}
-	else if (mpPlayerTwoFleet->GetSize() == 0)
-	{
-		PlayerOneVictory = true;
-		PlayerTwoVictory = false;
-	}
-	else
-	{
-		PlayerOneVictory = false;
-		PlayerTwoVictory = false;
-	}
+	CheckForVictory();
+
 	mpHumanPlayer->SetWonLastSpaceBattle(PlayerOneVictory);
 	mpAIPlayer->SetWonLastSpaceBattle(PlayerTwoVictory);
 
