@@ -114,7 +114,6 @@ bool CBomber::Attack(CGameObject* target, float hitMod, float damageMod)
 			{
 				SProjectile* newProjectile = new SProjectile();
 				newProjectile->mModel = mspMshBomb->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
-				newProjectile->mModel->LookAt(mAttackTarget->GetModel());
 				newProjectile->mDirection = localY;
 				newProjectile->mSpeed = 50.0f;
 
