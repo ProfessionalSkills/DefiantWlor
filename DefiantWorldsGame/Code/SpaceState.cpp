@@ -140,6 +140,16 @@ void CSpaceState::StateSetup()
 	mpButtonListPause.push_back(pNewButton);
 	mpButtonListAll.push_back(pNewButton);
 
+	pNewButton = new CAdvancedButton<CSpaceState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(600, 470),
+		DX::XMFLOAT2(400.0f, 50.0f), *this, &CSpaceState::GoToMainMenu, TR_RIGHT, false, 0.001f);
+	mpButtonListPause.push_back(pNewButton);
+	mpButtonListAll.push_back(pNewButton);
+
+	pNewButton = new CAdvancedButton<CSpaceState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(600, 520),
+		DX::XMFLOAT2(400.0f, 50.0f), *this, &CSpaceState::ReturnToEarth, TR_RIGHT, false, 0.001f);
+	mpButtonListPause.push_back(pNewButton);
+	mpButtonListAll.push_back(pNewButton);
+
 	// INITIALISE USER INTERFACE
 	//-----------------------------
 	mFntDebug = gpEngine->LoadFont("Calibri", 20U);
@@ -515,6 +525,11 @@ void CSpaceState::RemoveButtons()
 		SafeDelete(tmp);
 		mpButtonListAll.pop_back();
 	}
+
+	mpButtonListPause.clear();
+	mpButtonListTactics.clear();
+	mpButtonListDefeat.clear();
+	mpButtonListVictory.clear();
 }
 
 //Menu Button Functions
