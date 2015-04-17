@@ -29,6 +29,7 @@ mDisplacement(30), mNumCamStates(4),mSpecialAttackCooldownTime(5), CGameState()
 
 	PlayerOneVictory = false;
 	mTacticChoosen = false;
+	mPaused = false;
 	mTimeSinceUpdate = 0.0f;
 
 	mpPlayerOneFleet = 0;
@@ -117,18 +118,27 @@ void CSpaceState::StateSetup()
 	//------------------------------
 	mpSprCursor = gpEngine->CreateSprite("BaseCursor.png", 5.0f, 50.0f, 0.0f);
 
-	// ID NUMBERS 0-3 are main menu items
+	// Tactics Buttons
 	CAdvancedButton<CSpaceState, void>* pNewButton = new CAdvancedButton<CSpaceState, void>("NoTactics.png", "NoTacticsMO.png", SPointData(900, 750),
-		DX::XMFLOAT2(400.0f, 50.0f), *this, &CSpaceState::ChangeTacNone, TR_UP, true, 1.2f);
+		DX::XMFLOAT2(50.0f, 50.0f), *this, &CSpaceState::ChangeTacNone, TR_UP, true, 1.2f);
 	mpButtonListTactics.push_back(pNewButton);
+	mpButtonListAll.push_back(pNewButton);
 
 	pNewButton = new CAdvancedButton<CSpaceState, void>("DefRapidFireButton.png", "SelRapidFireButton.png", SPointData(750, 750),
-		DX::XMFLOAT2(400.0f, 50.0f), *this, &CSpaceState::ChangeTacRapid, TR_UP, true, 1.2f);
+		DX::XMFLOAT2(50.0f, 50.0f), *this, &CSpaceState::ChangeTacRapid, TR_UP, true, 1.2f);
 	mpButtonListTactics.push_back(pNewButton);
+	mpButtonListAll.push_back(pNewButton);
 
 	pNewButton = new CAdvancedButton<CSpaceState, void>("TargetButton.png", "TargetButtonMO.png", SPointData(600, 750),
-		DX::XMFLOAT2(400.0f, 50.0f), *this, &CSpaceState::ChangeTacTargated, TR_UP, true, 1.2f);
+		DX::XMFLOAT2(50.0f, 50.0f), *this, &CSpaceState::ChangeTacTargated, TR_UP, true, 1.2f);
 	mpButtonListTactics.push_back(pNewButton);
+	mpButtonListAll.push_back(pNewButton);
+
+	// Pause Buttons
+	pNewButton = new CAdvancedButton<CSpaceState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(750, 420),
+		DX::XMFLOAT2(400.0f, 50.0f), *this, &CSpaceState::Resume, TR_RIGHT, false,50.0f);
+	mpButtonListPause.push_back(pNewButton);
+	mpButtonListAll.push_back(pNewButton);
 
 	// INITIALISE USER INTERFACE
 	//-----------------------------
@@ -158,7 +168,7 @@ void CSpaceState::StateUpdate()
 
 	if (gpEngine->KeyHit(Key_Escape))
 	{
-		gCurState = GS_WORLD;
+		mPaused=true;
 	}
 
 	if (gpEngine->KeyHit(Key_C))
@@ -166,7 +176,7 @@ void CSpaceState::StateUpdate()
 		mCamState = (mCamState + 1) % mNumCamStates;
 	}
 
-	bool leftClicked = false;
+	leftClicked = false;
 	if (gpEngine->KeyHit(Mouse_LButton))
 	{
 		leftClicked = true;
@@ -174,40 +184,8 @@ void CSpaceState::StateUpdate()
 
 	mMousePos.x = (float)gpEngine->GetMouseX();
 	mMousePos.y = (float)gpEngine->GetMouseY();
-	if (!mTacticChoosen)
-	{
-		for (miterButtons = mpButtonListTactics.begin(); miterButtons != mpButtonListTactics.end(); miterButtons++)
-		{
-			CAdvancedButton<CSpaceState, void>* pButton = (*miterButtons);
-			// Check if the mouse is colliding with the object
-			if (pButton->GetBoundingBox().IsColliding(DX::XMFLOAT3(mMousePos.x, 0.0f, mMousePos.y)))
-			{
-				pButton->SetMouseOver(true);
-			}
-			else
-			{
-				pButton->SetMouseOver(false);
-			}
-
-			// Check for click 
-			if (pButton->GetMouseOver())
-			{
-				// Check if the mouse is over the button
-				if (leftClicked)
-				{
-					// Raise click flag
-					pButton->Execute();
-					leftClicked = false;
-					// Remove self from for loop
-					break;
-				}
-			}
-
-			// Update the button
-			pButton->Update();
-		}
-	}
-	else
+	UpdateButtons();
+	if (mTacticChoosen)
 	{
 		//update time, used to slow down the speed of the fight
 		//Space Controls -Combat Controls
@@ -350,6 +328,10 @@ void CSpaceState::StateCleanup()
 	//remove sprites
 	gpEngine->RemoveSprite(mpSprCursor);
 
+	//remove buttons
+	RemoveButtons();
+	mTacticChoosen = false;
+
 	//stop sound
 	mMusic->StopSound();
 
@@ -367,9 +349,6 @@ void CSpaceState::StateCleanup()
 
 	if (mpMdlEarthAtmos) mpMshAtmosphere->RemoveModel(mpMdlEarthAtmos);
 
-	// Remove buttons
-	RemoveButtonsTactics();
-	mTacticChoosen = false;
 	//decide which player won, or if neither won
 	if (mpPlayerOneFleet->GetSize() == 0)
 	{
@@ -496,7 +475,7 @@ void CSpaceState::ChangeTacTargated()
 	mpHumanPlayer->GetFleet()->SetTactic(Targeted);
 	gpNewsTicker->AddNewElement("Targeted space tactic selected.", false);
 	mTacticChoosen = true;
-	RemoveButtonsTactics();
+	HideButtonsTactics();
 }
 
 void CSpaceState::ChangeTacNone()
@@ -504,7 +483,7 @@ void CSpaceState::ChangeTacNone()
 	mpHumanPlayer->GetFleet()->SetTactic(None);
 	gpNewsTicker->AddNewElement("No space tactic selected.", false);
 	mTacticChoosen = true;
-	RemoveButtonsTactics();
+	HideButtonsTactics();
 }
 
 void CSpaceState::ChangeTacRapid()
@@ -512,16 +491,17 @@ void CSpaceState::ChangeTacRapid()
 	mpHumanPlayer->GetFleet()->SetTactic(Rapid);
 	gpNewsTicker->AddNewElement("Rapid space tactic selected.", false);
 	mTacticChoosen = true;
-	RemoveButtonsTactics();
+	HideButtonsTactics();
 }
 
-void CSpaceState::RemoveButtonsTactics()
+//cleanup buttons
+void CSpaceState::RemoveButtons()
 {
-	while (!mpButtonListTactics.empty())
+	while (!mpButtonListAll.empty())
 	{
-		CAdvancedButton<CSpaceState, void>* tmp = mpButtonListTactics.back();
+		CAdvancedButton<CSpaceState, void>* tmp = mpButtonListAll.back();
 		SafeDelete(tmp);
-		mpButtonListTactics.pop_back();
+		mpButtonListAll.pop_back();
 	}
 }
 

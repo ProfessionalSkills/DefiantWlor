@@ -80,13 +80,16 @@ private:
 	// USER INTERFACE
 	//---------------------------
 	IFont* mFntDebug;
+	IFont* mpButtonFont = nullptr;
+	IFont* mpTitleFont = nullptr;
 	std::stringstream strStream;
 	bool mTacticChoosen;
-
+	bool leftClicked;
 	void DrawFontData();
 
 	// BUTTON
 	//---------------------------
+	std::vector<CAdvancedButton<CSpaceState, void>*> mpButtonListAll;
 	std::vector<CAdvancedButton<CSpaceState, void>*> mpButtonListTactics;
 	std::vector<CAdvancedButton<CSpaceState, void>*> mpButtonListPause;
 	std::vector<CAdvancedButton<CSpaceState, void>*> mpButtonListVictory;
@@ -104,7 +107,105 @@ private:
 	void Resume();
 
 
-	void RemoveButtonsTactics();
+	void RemoveButtons();
+
+	inline void UpdateButtons()
+	{
+
+		for (miterButtons = mpButtonListAll.begin(); miterButtons != mpButtonListAll.end(); miterButtons++)
+		{
+			CAdvancedButton<CSpaceState, void>* pButton = (*miterButtons);
+			// Check if the mouse is colliding with the object
+			if (pButton->GetBoundingBox().IsColliding(DX::XMFLOAT3(mMousePos.x, 0.0f, mMousePos.y)))
+			{
+				pButton->SetMouseOver(true);
+			}
+			else
+			{
+				pButton->SetMouseOver(false);
+			}
+
+			// Check for click 
+			if (pButton->GetMouseOver())
+			{
+				// Check if the mouse is over the button
+				if (leftClicked)
+				{
+					// Raise click flag
+					pButton->Execute();
+					leftClicked = false;
+					// Remove self from for loop
+					break;
+				}
+			}
+
+			// Update the button
+			pButton->Update();
+		}
+	/*
+		else 
+		{
+			HideButtonsPaused();
+		}
+		if (!mTacticChoosen)
+		{
+			for (miterButtons = mpButtonListTactics.begin(); miterButtons != mpButtonListTactics.end(); miterButtons++)
+			{
+				CAdvancedButton<CSpaceState, void>* pButton = (*miterButtons);
+				// Check if the mouse is colliding with the object
+				if (pButton->GetBoundingBox().IsColliding(DX::XMFLOAT3(mMousePos.x, 0.0f, mMousePos.y)))
+				{
+					pButton->SetMouseOver(true);
+				}
+				else
+				{
+					pButton->SetMouseOver(false);
+				}
+
+				// Check for click 
+				if (pButton->GetMouseOver())
+				{
+					// Check if the mouse is over the button
+					if (leftClicked)
+					{
+						// Raise click flag
+						pButton->Execute();
+						leftClicked = false;
+						// Remove self from for loop
+						break;
+					}
+				}
+
+				// Update the button
+				pButton->Update();
+			}
+		}*/
+	}
+
+	inline void HideButtonsTactics()
+	{
+		for (miterButtons = mpButtonListTactics.begin(); miterButtons != mpButtonListTactics.end(); miterButtons++)
+		{
+			CAdvancedButton<CSpaceState, void>* pButton = (*miterButtons);
+			if (pButton)
+			{
+				pButton->Hide();
+			}
+		}
+	}
+
+	inline void HideButtonsPaused()
+	{
+		for (miterButtons = mpButtonListPause.begin(); miterButtons != mpButtonListPause.end(); miterButtons++)
+		{
+			CAdvancedButton<CSpaceState, void>* pButton = (*miterButtons);
+			if (pButton)
+			{
+				pButton->Hide();
+				pButton->Update();
+			}
+		}
+	}
 
 	// PLANET POSITIONS
 	//---------------------------
