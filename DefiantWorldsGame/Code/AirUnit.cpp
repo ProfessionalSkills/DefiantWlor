@@ -93,11 +93,6 @@ bool CAirUnit::Update()
 		break;
 	}
 
-	if (gpEngine->KeyHit(Key_F))
-	{
-		int i = 5;
-	}
-
 	// ALL THESE UPDATES OCCUR IF THE UNIT IS NOT DEAD OR IN SPACE
 	if (HasTarget()) //If there is a path target
 	{
@@ -107,12 +102,14 @@ bool CAirUnit::Update()
 	}
 	else if (mAttackTarget != nullptr) //if there is an attack target
 	{
-		Attack(mAttackTarget, 100, mDamage);
-
 		// Check if target is dead
 		if (mAttackTarget->GetHealth() <= 0.0f)
 		{
 			mAttackTarget = nullptr;
+		}
+		else
+		{
+			Attack(mAttackTarget, 100, mDamage);
 		}
 	}
 	else
