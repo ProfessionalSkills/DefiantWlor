@@ -105,7 +105,7 @@ bool CAirUnit::Update()
 		LookingAt(mPathTarget);
 		Move();
 	}
-	if (mAttackTarget != nullptr) //if there is an attack target
+	else if (mAttackTarget != nullptr) //if there is an attack target
 	{
 		Attack(mAttackTarget, 100, mDamage);
 
@@ -113,6 +113,28 @@ bool CAirUnit::Update()
 		if (mAttackTarget->GetHealth() <= 0.0f)
 		{
 			mAttackTarget = nullptr;
+		}
+	}
+	else
+	{
+		// Correct any yaw issues
+		if (mYaw >= 0.3f)
+		{
+			float rotateAmount = -50.0f * gFrameTime;
+			mYaw += rotateAmount;
+			mpObjModel->RotateLocalZ(rotateAmount);
+		}
+		else if (mYaw <= -0.3f)
+		{
+			float rotateAmount = 50.0f * gFrameTime;
+			mYaw += rotateAmount;
+			mpObjModel->RotateLocalZ(rotateAmount);
+		}
+		else
+		{
+			// Straighten the aircraft by the remaining amount
+			mYaw = 0.0f;
+			mpObjModel->RotateLocalZ(mYaw);
 		}
 	}
 
