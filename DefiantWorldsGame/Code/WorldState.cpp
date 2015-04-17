@@ -2164,21 +2164,24 @@ void CWorldState::OnStructureSelectChange(CStructure* pSelStructure)
 				}
 
 				i++;
-
-				// Unload health bar
-				mPrevHealth = -5;
-				OnItemHealthChange();
-
-				// Get health amount
-				float healthLeft = mpCurSelectedStructure->GetHealth();
-				float maxHealth = mpCurSelectedStructure->GetMaxHealth();
-				int percentage = (int)((healthLeft / maxHealth) * 100.0f);
-				mPrevHealth = percentage;
-
-				// Update health bar
-				OnItemHealthChange();
 			}
 		}
+
+		// Unload health bar
+		mPrevHealth = -5;
+		OnItemHealthChange();
+
+		// Get health amount
+		float healthLeft = pSelStructure->GetHealth();
+		float maxHealth = pSelStructure->GetMaxHealth();
+		int percentage = (int)((healthLeft / maxHealth) * 100.0f);
+
+		// Get the remainder of dividing by 5 (health only shows these increments)
+		int remainder = percentage % 5;
+		mPrevHealth = percentage - remainder;
+
+		// Update health bar
+		OnItemHealthChange();
 	}
 	// If no unit is selected, display the other required buttons
 	else if (!mpCurSelectedAgent)
@@ -2236,7 +2239,10 @@ void CWorldState::OnUnitSelectChange(CGameAgent* pSelAgent)
 		float healthLeft = mpCurSelectedAgent->GetHealth();
 		float maxHealth = mpCurSelectedAgent->GetMaxHealth();
 		int percentage = (int)((healthLeft / maxHealth) * 100.0f);
-		mPrevHealth = percentage;
+
+		// Get the remainder of dividing by 5 (health only shows these increments)
+		int remainder = percentage % 5;
+		mPrevHealth = percentage - remainder;
 
 		// Update health bar
 		OnItemHealthChange();
@@ -2268,7 +2274,10 @@ void CWorldState::OnUnitSelectChange(CGameAgent* pSelAgent)
 		float healthLeft = mpUnitSelectionList.front()->GetHealth();
 		float maxHealth = mpUnitSelectionList.front()->GetMaxHealth();
 		int percentage = (int)((healthLeft / maxHealth) * 100.0f);
-		mPrevHealth = percentage;
+
+		// Get the remainder of dividing by 5 (health only shows these increments)
+		int remainder = percentage % 5;
+		mPrevHealth = percentage - remainder;
 
 		// Update health bar
 		OnItemHealthChange();
