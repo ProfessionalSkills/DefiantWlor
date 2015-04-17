@@ -120,15 +120,15 @@ void CSpaceState::StateSetup()
 	// ID NUMBERS 0-3 are main menu items
 	CAdvancedButton<CSpaceState, void>* pNewButton = new CAdvancedButton<CSpaceState, void>("NoTactics.png", "NoTacticsMO.png", SPointData(900, 750),
 		DX::XMFLOAT2(400.0f, 50.0f), *this, &CSpaceState::ChangeTacNone, TR_UP, true, 1.2f);
-	mpButtonList.push_back(pNewButton);
+	mpButtonListTactics.push_back(pNewButton);
 
 	pNewButton = new CAdvancedButton<CSpaceState, void>("DefRapidFireButton.png", "SelRapidFireButton.png", SPointData(750, 750),
 		DX::XMFLOAT2(400.0f, 50.0f), *this, &CSpaceState::ChangeTacRapid, TR_UP, true, 1.2f);
-	mpButtonList.push_back(pNewButton);
+	mpButtonListTactics.push_back(pNewButton);
 
 	pNewButton = new CAdvancedButton<CSpaceState, void>("TargetButton.png", "TargetButtonMO.png", SPointData(600, 750),
 		DX::XMFLOAT2(400.0f, 50.0f), *this, &CSpaceState::ChangeTacTargated, TR_UP, true, 1.2f);
-	mpButtonList.push_back(pNewButton);
+	mpButtonListTactics.push_back(pNewButton);
 
 	// INITIALISE USER INTERFACE
 	//-----------------------------
@@ -144,7 +144,8 @@ void CSpaceState::StateUpdate()
 
 	gpEngine->DrawScene();
 
-	//Space Controls -Genral Controls
+	// Controls
+	//-----------------------------
 	if (gpEngine->KeyHit(Key_R))
 	{
 		gCurState = GS_WORLD;
@@ -175,7 +176,7 @@ void CSpaceState::StateUpdate()
 	mMousePos.y = (float)gpEngine->GetMouseY();
 	if (!mTacticChoosen)
 	{
-		for (miterButtons = mpButtonList.begin(); miterButtons != mpButtonList.end(); miterButtons++)
+		for (miterButtons = mpButtonListTactics.begin(); miterButtons != mpButtonListTactics.end(); miterButtons++)
 		{
 			CAdvancedButton<CSpaceState, void>* pButton = (*miterButtons);
 			// Check if the mouse is colliding with the object
@@ -400,6 +401,8 @@ void CSpaceState::StateCleanup()
 	mpPlayerTwoFleet = nullptr;
 }
 
+// Camera Control
+//-----------------------------
 void CSpaceState::ChangeCameraPosition()
 {
 	switch (mCamState)
@@ -484,6 +487,10 @@ void CSpaceState::LoadPlanets()
 	mpMdlNeptune->Scale(mNeptunePos.w);
 }
 
+// Button Functions
+//-----------------------------
+
+//Tactics Buttons
 void CSpaceState::ChangeTacTargated()
 {
 	mpHumanPlayer->GetFleet()->SetTactic(Targeted);
@@ -510,10 +517,26 @@ void CSpaceState::ChangeTacRapid()
 
 void CSpaceState::RemoveButtonsTactics()
 {
-	while (!mpButtonList.empty())
+	while (!mpButtonListTactics.empty())
 	{
-		CAdvancedButton<CSpaceState, void>* tmp = mpButtonList.back();
+		CAdvancedButton<CSpaceState, void>* tmp = mpButtonListTactics.back();
 		SafeDelete(tmp);
-		mpButtonList.pop_back();
+		mpButtonListTactics.pop_back();
 	}
+}
+
+//Menu Button Functions
+void CSpaceState::GoToMainMenu()
+{
+	gCurState = GS_MAIN_MENU;
+}
+
+void CSpaceState::ReturnToEarth()
+{
+	gCurState = GS_WORLD;
+}
+
+void CSpaceState::Resume()
+{
+	mPaused = false;
 }

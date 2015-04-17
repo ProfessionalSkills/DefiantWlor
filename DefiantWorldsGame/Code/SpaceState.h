@@ -66,6 +66,7 @@ private:
 	const float mDisplacement;//distance from the centre of the screen. used when loading the ship models
 	float mSpecialAttackCooldownTimer;
 	const float mSpecialAttackCooldownTime;
+
 	// SOUND
 	//---------------------------
 	CSound* mMusic;
@@ -86,11 +87,23 @@ private:
 
 	// BUTTON
 	//---------------------------
-	std::vector<CAdvancedButton<CSpaceState, void>*> mpButtonList;
+	std::vector<CAdvancedButton<CSpaceState, void>*> mpButtonListTactics;
+	std::vector<CAdvancedButton<CSpaceState, void>*> mpButtonListPause;
+	std::vector<CAdvancedButton<CSpaceState, void>*> mpButtonListVictory;
+	std::vector<CAdvancedButton<CSpaceState, void>*> mpButtonListDefeat;
 	std::vector<CAdvancedButton<CSpaceState, void>*>::iterator miterButtons;
+
+	//tactic button functions
 	void ChangeTacNone();
 	void ChangeTacRapid();
 	void ChangeTacTargated();
+
+	//other button functions
+	void GoToMainMenu();
+	void ReturnToEarth();
+	void Resume();
+
+
 	void RemoveButtonsTactics();
 
 	// PLANET POSITIONS
@@ -116,6 +129,7 @@ private:
 	CRandomiser mNewRandom;
 	bool PlayerOneVictory;
 	bool PlayerTwoVictory;
+	bool mPaused;
 	DX::XMFLOAT2 mMousePos;
 
 public:
