@@ -42,7 +42,6 @@ protected:
 	float mRepairSpeed;
 	float mCurBuildTimeLeft;			// Time left until structure is built
 	float mHeight;
-	//CParticleEmitter* mDestroyParticleFX;
 
 	EObjectStates mState;
 	EGameStructureTypes mStructureType;

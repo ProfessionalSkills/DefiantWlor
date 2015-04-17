@@ -12,6 +12,7 @@ class CSmoke : public CParticleEmitter
 {
 protected:
 	float mEmitterCountdown;
+
 public:
 	CSmoke(IModel* emitter, int particleNumber);
 	~CSmoke();
