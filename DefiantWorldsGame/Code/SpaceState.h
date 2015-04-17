@@ -182,6 +182,20 @@ private:
 		}
 	}
 
+
+	inline void ShowButtonsVictory()
+	{
+		for (miterButtons = mpButtonListVictory.begin(); miterButtons != mpButtonListVictory.end(); miterButtons++)
+		{
+			CAdvancedButton<CSpaceState, void>* pButton = (*miterButtons);
+			if (pButton)
+			{
+				pButton->Show();
+				pButton->Update();
+			}
+		}
+	}
+
 	// PLANET POSITIONS
 	//---------------------------
 	DirectX::XMFLOAT4 mEarthPos;
@@ -207,6 +221,26 @@ private:
 	bool PlayerTwoVictory;
 	bool mPaused;
 	DX::XMFLOAT2 mMousePos;
+
+	inline void CheckForVictory()
+	{
+		//decide which player won, or if neither won
+		if (mpPlayerOneFleet->GetSize() == 0)
+		{
+			PlayerOneVictory = false;
+			PlayerTwoVictory = true;
+		}
+		else if (mpPlayerTwoFleet->GetSize() == 0)
+		{
+			PlayerOneVictory = true;
+			PlayerTwoVictory = false;
+		}
+		else
+		{
+			PlayerOneVictory = false;
+			PlayerTwoVictory = false;
+		}
+	}
 
 public:
 	// CONSTRUCTORS & DESTRUCTOR
