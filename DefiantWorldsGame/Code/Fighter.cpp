@@ -23,10 +23,10 @@ CFighter::CFighter()
 	mProductionTime = 15.0f;
 	mProductionCost = 0.0f;
 	mCurProductionTimeLeft = mProductionTime;
-	mDamage = 100.0f;
-	mFireRate = 4.0f;
+	mDamage = 5.0f;
+	mFireRate = 12.0f;
 	mAttackTimer = 1.0f / mFireRate;
-	mRange = 150.0f;
+	mRange = 15.0f;
 	mState = OBJ_CONSTRUCTING;
 	mIsMoving = false;
 	mHasPathTarget = false;
@@ -91,9 +91,9 @@ bool CFighter::Attack(CGameObject* target, float hitMod, float damageMod)
 	// Normalise this local axis
 	DX::XMVECTOR vecNormal = DX::XMVector4Normalize(DX::XMLoadFloat3(&localZ));
 	DX::XMStoreFloat3(&localZ, vecNormal);
-	DX::XMFLOAT3 worldPos = { mWorldPos.x, 0.0f, mWorldPos.z };
+
 	// If the target is being looked at and is within range
-	bool successfulAttack = mAttackTarget->RayCollision(worldPos, localZ, distance);
+	bool successfulAttack = mAttackTarget->RayCollision(mWorldPos, localZ, distance);
 	if (successfulAttack)
 	{
 		if (mAttackTimer >= (1.0f / mFireRate)) //Control rate of fire of the unit

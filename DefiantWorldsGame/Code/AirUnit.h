@@ -21,6 +21,7 @@ protected:
 	// DATA
 	//---------------------------
 	float mYaw = 0.0f;
+	float mPitch = 0.0f;
 
 public:
 	// CONSTRUCTORS & DESTRUCTOR

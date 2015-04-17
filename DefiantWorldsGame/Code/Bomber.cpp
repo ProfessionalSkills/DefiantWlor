@@ -25,7 +25,7 @@ CBomber::CBomber()
 	mProductionCost = 0.0f;
 	mCurProductionTimeLeft = mProductionTime;				
 	mDamage = 100.0f;
-	mFireRate = 1.5f;
+	mFireRate = 0.8f;
 	mAttackTimer = (1.0f / mFireRate);
 	mState = OBJ_CONSTRUCTING;
 	mIsMoving = false;
