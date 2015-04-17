@@ -102,8 +102,8 @@ bool CAirUnit::Update()
 	if (HasTarget()) //If there is a path target
 	{
 		//Move the unit towards the path target
-		Move();
 		LookingAt(mPathTarget);
+		Move();
 	}
 	if (mAttackTarget != nullptr) //if there is an attack target
 	{
@@ -161,60 +161,97 @@ bool CAirUnit::Update()
 
 bool CAirUnit::LookingAt(DX::XMFLOAT3 targetLocation)
 {
-	DX::XMFLOAT3 targetPosition = { targetLocation.x, 30.0f, targetLocation.z };
-	DX::XMFLOAT3 vectorZ = { (targetPosition.x - mpObjModel->GetX()), (targetPosition.y - mpObjModel->GetY()), (targetPosition.z - mpObjModel->GetZ()) };
-	float matrix[16];
-	mpObjModel->GetMatrix(matrix);
+	// Get position of the target
+	DX::XMFLOAT3 targetDirection{ targetLocation.x - mpObjModel->GetX(), 0.0f, targetLocation.z - mpObjModel->GetZ() };
+	
+	// Get the local X and Z axis of the aircraft
+	DX::XMFLOAT4X4 matrix;
+	mpObjModel->GetMatrix(&matrix.m[0][0]);
+	DX::XMFLOAT3 localX{ matrix.m[0][0], matrix.m[0][1], matrix.m[0][2] };
+	DX::XMFLOAT3 localZ{ matrix.m[2][0], matrix.m[2][1], matrix.m[2][2] };
 
-	DX::XMFLOAT3 facingVector = { matrix[8], matrix[9], matrix[10] };
-	const DX::XMFLOAT3 kYAxis(0.0f, 1.0f, 0.0f);
+	// Normalise local x & z axis
+	DX::XMVECTOR vecNormal = DX::XMVector4Normalize(DX::XMLoadFloat3(&localX));
+	DX::XMStoreFloat3(&localX, vecNormal);
+	vecNormal = DX::XMVector4Normalize(DX::XMLoadFloat3(&localZ));
+	DX::XMStoreFloat3(&localZ, vecNormal);
 
-	float dotProduct = Dot(vectorZ, Cross(kYAxis, facingVector));
+	// Normalise direction
+	vecNormal = DX::XMVector4Normalize(DX::XMLoadFloat3(&targetDirection));
+	DX::XMStoreFloat3(&targetDirection, vecNormal);
 
-	if (dotProduct > 0.1f)
+	// Get dot product between target and localX axis
+	float dotProduct = Dot(targetDirection, localX);
+	bool left = false;
+	bool right = false;
+
+	// Check which direction the target is in
+	if (dotProduct > 0.01f)
 	{
+		right = true;
 		mpObjModel->RotateY(100.0f * gFrameTime);
-		if (mYaw >= -30.0f)
-		{
-			float mZRotate = -50.0f * gFrameTime;
-			mpObjModel->RotateLocalZ(mZRotate);
-			mYaw += mZRotate;
-		}
 	}
-	else if (dotProduct < -0.1f)
+	else if (dotProduct < -0.01f)
 	{
+		left = true;
 		mpObjModel->RotateY(-100.0f * gFrameTime);
-		if (mYaw <= 30.0f)
-		{
-			float mZRotate = 50.0f * gFrameTime;
-			mpObjModel->RotateLocalZ(mZRotate);
-			mYaw += mZRotate;
-		}
 	}
 	else
 	{
-		if (mYaw >= 5.0f)
+		// Do another dot product, this time checking for it being in front
+		dotProduct = Dot(targetDirection, localZ);
+
+		// Check for behind
+		if (dotProduct < 0.0f)
 		{
-			float mZRotate = -50.0f * gFrameTime;
-			mpObjModel->RotateLocalZ(mZRotate);
-			mYaw += mZRotate;
-		}
-		else if (mYaw <= -5.0f)
-		{
-			float mZRotate = 50.0f * gFrameTime;
-			mpObjModel->RotateLocalZ(mZRotate);
-			mYaw += mZRotate;
+			// Rotate a litte so target is no longer directly behind
+			mpObjModel->RotateY(-20.0f * gFrameTime);
 		}
 	}
 
-	// Do another dot product, this time checking for it being in front
-	dotProduct = Dot(facingVector, vectorZ);
-
-	// Check for behind
-	if (dotProduct < 0.0f)
+	// Turn the aircraft - check which direction to turn
+	if (left)
 	{
-		mpObjModel->RotateY(-100.0f * gFrameTime);
+		// Check if the yaw is already at max
+		if (mYaw >= 30.0f) return true;
+
+		float rotateAmount = 50.0f * gFrameTime;
+		mYaw += rotateAmount;
+		mpObjModel->RotateLocalZ(rotateAmount);
 	}
+	else if (right)
+	{
+		// Check if the yaw is already at max
+		if (mYaw <= -30.0f) return true;
+		
+		float rotateAmount = -50.0f * gFrameTime;
+		mYaw += rotateAmount;
+		mpObjModel->RotateLocalZ(rotateAmount);
+	}
+	else
+	{
+		// Target is ahead - straighten up
+		// Determine if yaw is positive or negative
+		if (mYaw >= 0.3f)
+		{
+			float rotateAmount = -50.0f * gFrameTime;
+			mYaw += rotateAmount;
+			mpObjModel->RotateLocalZ(rotateAmount);
+		}
+		else if (mYaw >= 0.3f)
+		{
+			float rotateAmount = 50.0f * gFrameTime;
+			mYaw += rotateAmount;
+			mpObjModel->RotateLocalZ(rotateAmount);
+		}
+		else
+		{
+			// Straighten the aircraft by the remaining amount
+			mYaw = 0.0f;
+			mpObjModel->RotateLocalZ(mYaw);
+		}
+	}
+
 	return true;
 }
 
@@ -222,11 +259,11 @@ void CAirUnit::Move()
 {
 	if (mHasPathTarget)
 	{
-		float MaxX = mPathTarget.x + 1.0f;
-		float MinX = mPathTarget.x - 1.0f;
+		float MaxX = mPathTarget.x + 3.0f;
+		float MinX = mPathTarget.x - 3.0f;
 
-		float MaxZ = mPathTarget.z + 1.0f;
-		float MinZ = mPathTarget.z - 1.0f;
+		float MaxZ = mPathTarget.z + 3.0f;
+		float MinZ = mPathTarget.z - 3.0f;
 
 		if (mWorldPos.x > MinX && mWorldPos.x < MaxX && mWorldPos.z > MinZ && mWorldPos.z < MaxZ)
 		{
