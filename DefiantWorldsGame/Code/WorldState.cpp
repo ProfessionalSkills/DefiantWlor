@@ -2170,11 +2170,23 @@ void CWorldState::OnStructureSelectChange(CStructure* pSelStructure)
 		// Unload health bar
 		mPrevHealth = -5;
 		OnItemHealthChange();
+		int percentage = 0;
 
-		// Get health amount
-		float healthLeft = pSelStructure->GetHealth();
-		float maxHealth = pSelStructure->GetMaxHealth();
-		int percentage = (int)((healthLeft / maxHealth) * 100.0f);
+		// Determine whether or not selected building is under construction
+		if (pSelStructure->GetState() == OBJ_CONSTRUCTING)
+		{
+			float timeLeft = pSelStructure->GetBuildTimeLeft();
+			float maxTime = pSelStructure->GetBuildTime();
+			float timeTaken = maxTime - timeLeft;
+			percentage = (int)((timeTaken / maxTime) * 100.0f);
+		}
+		else
+		{
+			// Get health amount
+			float healthLeft = pSelStructure->GetHealth();
+			float maxHealth = pSelStructure->GetMaxHealth();
+			percentage = (int)((healthLeft / maxHealth) * 100.0f);
+		}
 
 		// Get the remainder of dividing by 5 (health only shows these increments)
 		int remainder = percentage % 5;
