@@ -20,7 +20,7 @@ CBomber::CBomber()
 	mAgentInfo = SAgentData(GAV_BOMBER, "Bomber");
 	mMaxHealth = 100.0f;
 	mHealth = 100.0f;
-	mSpeed = 1.0f;
+	mSpeed = 25.0f;
 	mProductionTime = 15.0f;
 	mProductionCost = 0.0f;
 	mCurProductionTimeLeft = mProductionTime;				

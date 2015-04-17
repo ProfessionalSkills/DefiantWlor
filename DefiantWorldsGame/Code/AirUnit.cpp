@@ -238,7 +238,7 @@ bool CAirUnit::LookingAt(DX::XMFLOAT3 targetLocation)
 			mYaw += rotateAmount;
 			mpObjModel->RotateLocalZ(rotateAmount);
 		}
-		else if (mYaw >= 0.3f)
+		else if (mYaw <= -0.3f)
 		{
 			float rotateAmount = 50.0f * gFrameTime;
 			mYaw += rotateAmount;
@@ -274,7 +274,7 @@ void CAirUnit::Move()
 		{
 			float matrix[16];
 			mpObjModel->GetMatrix(matrix);
-			float movement = 20.0f * gFrameTime;
+			float movement = mSpeed * gFrameTime;
 			mpObjModel->MoveLocalZ(movement);
 			mWorldPos = DX::XMFLOAT3(mpObjModel->GetX(), mpObjModel->GetY(), mpObjModel->GetZ());
 			DX::XMFLOAT3 moveAmount = { matrix[8] * movement, matrix[9] * movement, matrix[10] * movement };
@@ -293,16 +293,12 @@ void CAirUnit::Move()
 		{
 			float matrix[16];
 			mpObjModel->GetMatrix(matrix);
-			float movement = 20.0f * gFrameTime;
+			float movement = mSpeed * gFrameTime;
 			mpObjModel->MoveLocalZ(movement);
 			mWorldPos = DX::XMFLOAT3(mpObjModel->GetX(), mpObjModel->GetY(), mpObjModel->GetZ());
 			DX::XMFLOAT3 moveAmount = { matrix[8] * movement, matrix[9] * movement, matrix[10] * movement };
 			mBoundingSphere.MoveTo(mWorldPos);
 		}
-		/*else
-		{
-			Attack(mAttackTarget, 100, mDamage);
-		}*/
 	}
 }
 
