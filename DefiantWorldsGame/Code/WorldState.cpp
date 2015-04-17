@@ -2164,6 +2164,19 @@ void CWorldState::OnStructureSelectChange(CStructure* pSelStructure)
 				}
 
 				i++;
+
+				// Unload health bar
+				mPrevHealth = -5;
+				OnItemHealthChange();
+
+				// Get health amount
+				float healthLeft = mpCurSelectedStructure->GetHealth();
+				float maxHealth = mpCurSelectedStructure->GetMaxHealth();
+				int percentage = (int)((healthLeft / maxHealth) * 100.0f);
+				mPrevHealth = percentage;
+
+				// Update health bar
+				OnItemHealthChange();
 			}
 		}
 	}
@@ -2214,6 +2227,19 @@ void CWorldState::OnUnitSelectChange(CGameAgent* pSelAgent)
 		mpSpaceCentreButtons->Hide();
 		mpComCentreButtons->Hide();
 		mpQueueButtons->UnloadSprites();
+
+		// Unload health bar
+		mPrevHealth = -5;
+		OnItemHealthChange();
+
+		// Get health amount
+		float healthLeft = mpCurSelectedAgent->GetHealth();
+		float maxHealth = mpCurSelectedAgent->GetMaxHealth();
+		int percentage = (int)((healthLeft / maxHealth) * 100.0f);
+		mPrevHealth = percentage;
+
+		// Update health bar
+		OnItemHealthChange();
 	}
 	// If there are no multi-units selected
 	else if (mpUnitSelectionList.size() != 0)
@@ -2233,6 +2259,19 @@ void CWorldState::OnUnitSelectChange(CGameAgent* pSelAgent)
 		mpSpaceCentreButtons->Hide();
 		mpComCentreButtons->Hide();
 		mpQueueButtons->UnloadSprites();
+
+		// Unload health bar
+		mPrevHealth = -5;
+		OnItemHealthChange();
+
+		// Get health amount of front unit
+		float healthLeft = mpUnitSelectionList.front()->GetHealth();
+		float maxHealth = mpUnitSelectionList.front()->GetMaxHealth();
+		int percentage = (int)((healthLeft / maxHealth) * 100.0f);
+		mPrevHealth = percentage;
+
+		// Update health bar
+		OnItemHealthChange();
 	}
 	// If no building is selected, show the other buttons
 	else if (!mpCurSelectedStructure)
