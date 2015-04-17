@@ -272,12 +272,9 @@ void CAirUnit::Move()
 		}
 		else
 		{
-			float matrix[16];
-			mpObjModel->GetMatrix(matrix);
 			float movement = mSpeed * gFrameTime;
 			mpObjModel->MoveLocalZ(movement);
 			mWorldPos = DX::XMFLOAT3(mpObjModel->GetX(), mpObjModel->GetY(), mpObjModel->GetZ());
-			DX::XMFLOAT3 moveAmount = { matrix[8] * movement, matrix[9] * movement, matrix[10] * movement };
 			mBoundingSphere.MoveTo(mWorldPos);
 		}
 	}
@@ -291,12 +288,9 @@ void CAirUnit::Move()
 
 		if (Distance > (mRange * mRange))
 		{
-			float matrix[16];
-			mpObjModel->GetMatrix(matrix);
 			float movement = mSpeed * gFrameTime;
 			mpObjModel->MoveLocalZ(movement);
 			mWorldPos = DX::XMFLOAT3(mpObjModel->GetX(), mpObjModel->GetY(), mpObjModel->GetZ());
-			DX::XMFLOAT3 moveAmount = { matrix[8] * movement, matrix[9] * movement, matrix[10] * movement };
 			mBoundingSphere.MoveTo(mWorldPos);
 		}
 	}

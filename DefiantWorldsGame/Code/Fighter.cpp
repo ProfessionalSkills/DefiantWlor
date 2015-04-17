@@ -19,7 +19,7 @@ CFighter::CFighter()
 	mAgentInfo = SAgentData(GAV_FIGHTER, "Fighter");
 	mMaxHealth = 100.0f;
 	mHealth = 100.0f;
-	mSpeed = 1.0f;
+	mSpeed = 35.0f;
 	mProductionTime = 15.0f;
 	mProductionCost = 0.0f;
 	mCurProductionTimeLeft = mProductionTime;
