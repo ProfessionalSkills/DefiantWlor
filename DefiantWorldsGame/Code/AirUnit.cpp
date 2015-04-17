@@ -93,6 +93,15 @@ bool CAirUnit::Update()
 		break;
 	}
 
+	// Always check to see if the attack target is still alive
+	if (mAttackTarget != nullptr)
+	{
+		if (mAttackTarget->GetHealth() <= 0.0f)
+		{
+			mAttackTarget = nullptr;
+		}
+	}
+
 	// ALL THESE UPDATES OCCUR IF THE UNIT IS NOT DEAD OR IN SPACE
 	if (HasTarget()) //If there is a path target
 	{
@@ -102,15 +111,7 @@ bool CAirUnit::Update()
 	}
 	else if (mAttackTarget != nullptr) //if there is an attack target
 	{
-		// Check if target is dead
-		if (mAttackTarget->GetHealth() <= 0.0f)
-		{
-			mAttackTarget = nullptr;
-		}
-		else
-		{
-			Attack(mAttackTarget, 100, mDamage);
-		}
+		Attack(mAttackTarget, 100, mDamage);
 	}
 	else
 	{
@@ -151,25 +152,22 @@ bool CAirUnit::Update()
 			projectile->Update();
 			DX::XMFLOAT3 position = { projectile->mModel->GetX(), projectile->mModel->GetY(), projectile->mModel->GetZ() }; //projectile's new position stored for collision detection
 
-			if (projectile == mpProjectiles.front()) //As all projectiles move at the same speed, the only projectile that will collide is the one fired first  
+			// Check to see if the attack target has been lost or it has been destroyed
+			if (mAttackTarget == nullptr)
 			{
-				// Check to see if the attack target has been lost or it has been destroyed
-				if (mAttackTarget == nullptr)
-				{
-					SProjectile* tmp = projectile;
-					SafeDelete(tmp);
-					mpProjectiles.erase(iter);
-					break;
-				}
-				else if (mAttackTarget->SphereCollision(projectile->mCollisionSphere)) //Point to Box collision between the projectile and the attack target
-				{
-					mAttackTarget->TakeDamage(mDamage);
-					mpAttackExplosions.push_back(new CExplosion(projectile->mModel, 20));
-					SProjectile* tmp = projectile;
-					SafeDelete(tmp);
-					mpProjectiles.erase(iter);
-					break; //Breaks out of the loop as the vector size has been changed, comprimising the iterator loop
-				}
+				SProjectile* tmp = projectile;
+				SafeDelete(tmp);
+				mpProjectiles.erase(iter);
+				break;
+			}
+			else if (mAttackTarget->SphereCollision(projectile->mCollisionSphere)) //Point to Box collision between the projectile and the attack target
+			{
+				mAttackTarget->TakeDamage(mDamage);
+				mpAttackExplosions.push_back(new CExplosion(projectile->mModel, 20));
+				SProjectile* tmp = projectile;
+				SafeDelete(tmp);
+				mpProjectiles.erase(iter);
+				break; //Breaks out of the loop as the vector size has been changed, comprimising the iterator loop
 			}
 		}
 	}
