@@ -135,8 +135,8 @@ void CSpaceState::StateSetup()
 	mpButtonListAll.push_back(pNewButton);
 
 	// Pause Buttons
-	pNewButton = new CAdvancedButton<CSpaceState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(750, 420),
-		DX::XMFLOAT2(400.0f, 50.0f), *this, &CSpaceState::Resume, TR_RIGHT, false,50.0f);
+	pNewButton = new CAdvancedButton<CSpaceState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(600, 420),
+		DX::XMFLOAT2(400.0f, 50.0f), *this, &CSpaceState::Resume, TR_RIGHT, false,0.001f);
 	mpButtonListPause.push_back(pNewButton);
 	mpButtonListAll.push_back(pNewButton);
 
@@ -168,7 +168,16 @@ void CSpaceState::StateUpdate()
 
 	if (gpEngine->KeyHit(Key_Escape))
 	{
-		mPaused=true;
+		if (!mPaused)
+		{
+			mPaused = true;
+			ShowButtonsPaused();
+		}
+		else
+		{
+			mPaused = false;
+			HideButtonsPaused();
+		}
 	}
 
 	if (gpEngine->KeyHit(Key_C))
@@ -185,81 +194,84 @@ void CSpaceState::StateUpdate()
 	mMousePos.x = (float)gpEngine->GetMouseX();
 	mMousePos.y = (float)gpEngine->GetMouseY();
 	UpdateButtons();
-	if (mTacticChoosen)
+	if (!mPaused)
 	{
-		//update time, used to slow down the speed of the fight
-		//Space Controls -Combat Controls
-		if (gpEngine->KeyHit(Key_B))
+		if (mTacticChoosen)
 		{
-			if (mSpecialAttackCooldownTimer <= 0)
+			//update time, used to slow down the speed of the fight
+			//Space Controls -Combat Controls
+			if (gpEngine->KeyHit(Key_B))
 			{
-				mpPlayerOneFleet->SpecialAttackLazerBarrage();
-				gpNewsTicker->AddNewElement("Mothership Fired a Lazer Barrage", false);
-				mSpecialAttackCooldownTimer = mSpecialAttackCooldownTime;
+				if (mSpecialAttackCooldownTimer <= 0)
+				{
+					mpPlayerOneFleet->SpecialAttackLazerBarrage();
+					gpNewsTicker->AddNewElement("Mothership Fired a Lazer Barrage", false);
+					mSpecialAttackCooldownTimer = mSpecialAttackCooldownTime;
+				}
+				else
+				{
+					gpNewsTicker->AddNewElement("Special Attacks are on Cooldown", false);
+				}
 			}
-			else
+
+			mTimeSinceUpdate += gFrameTime;
+			if (mSpecialAttackCooldownTimer >= 0)mSpecialAttackCooldownTimer -= gFrameTime;
+			mpPlayerOneFleet->ChargeFleetLazers();
+			mpPlayerTwoFleet->ChargeFleetLazers();
+
+			if (mTimeSinceUpdate >= mTimeToUpdate)
 			{
-				gpNewsTicker->AddNewElement("Special Attacks are on Cooldown", false);
+				//randomizes the order of fleet attack->update
+				if (mNewRandom.GetRandomInt(1, 2) == 1)
+				{
+					mpPlayerOneFleet->Fight();
+					mpPlayerTwoFleet->Fight();
+				}
+				else
+				{
+					//finds and removes dead ships
+					mpPlayerTwoFleet->Fight();
+					mpPlayerOneFleet->Fight();
+				}
+
+
+				//reset timer
+				mTimeSinceUpdate = 0.0f;
+				mTimeSinceEffectsUpdate = mTimeToUpdateEffects;
 			}
+
+			//update effects time
+			mTimeSinceEffectsUpdate -= gFrameTime;
+
+
+
+			if (mTimeSinceEffectsUpdate <= 0.0f)
+			{
+				//unload the shield models
+				mpPlayerOneFleet->UnloadShieldModels();
+				mpPlayerTwoFleet->UnloadShieldModels();
+
+				//unload the lazer models
+				mpPlayerOneFleet->UnloadLazers();
+				mpPlayerTwoFleet->UnloadLazers();
+
+				//update fleet status
+				mpPlayerOneFleet->UpdateCondition();
+				mpPlayerTwoFleet->UpdateCondition();
+
+				//reset timer
+				mTimeSinceEffectsUpdate = 0.0f;
+			}
+
+			//moves fleets
+			mpPlayerTwoFleet->MoveFleet();
+			mpPlayerOneFleet->MoveFleet();
+
+			mpPlayerOneFleet->IdleFleet();
+			mpPlayerTwoFleet->IdleFleet();
+
+			mCamZMovement += mCameraMoveSpeed*gFrameTime;
 		}
-
-		mTimeSinceUpdate += gFrameTime;
-		if (mSpecialAttackCooldownTimer >= 0)mSpecialAttackCooldownTimer -= gFrameTime;
-		mpPlayerOneFleet->ChargeFleetLazers();
-		mpPlayerTwoFleet->ChargeFleetLazers();
-
-		if (mTimeSinceUpdate >= mTimeToUpdate)
-		{
-			//randomizes the order of fleet attack->update
-			if (mNewRandom.GetRandomInt(1, 2) == 1)
-			{
-				mpPlayerOneFleet->Fight();
-				mpPlayerTwoFleet->Fight();
-			}
-			else
-			{
-				//finds and removes dead ships
-				mpPlayerTwoFleet->Fight();
-				mpPlayerOneFleet->Fight();
-			}
-
-
-			//reset timer
-			mTimeSinceUpdate = 0.0f;
-			mTimeSinceEffectsUpdate = mTimeToUpdateEffects;
-		}
-
-		//update effects time
-		mTimeSinceEffectsUpdate -= gFrameTime;
-
-
-
-		if (mTimeSinceEffectsUpdate <= 0.0f)
-		{
-			//unload the shield models
-			mpPlayerOneFleet->UnloadShieldModels();
-			mpPlayerTwoFleet->UnloadShieldModels();
-
-			//unload the lazer models
-			mpPlayerOneFleet->UnloadLazers();
-			mpPlayerTwoFleet->UnloadLazers();
-
-			//update fleet status
-			mpPlayerOneFleet->UpdateCondition();
-			mpPlayerTwoFleet->UpdateCondition();
-
-			//reset timer
-			mTimeSinceEffectsUpdate = 0.0f;
-		}
-
-		//moves fleets
-		mpPlayerTwoFleet->MoveFleet();
-		mpPlayerOneFleet->MoveFleet();
-
-		mpPlayerOneFleet->IdleFleet();
-		mpPlayerTwoFleet->IdleFleet();
-
-		mCamZMovement += mCameraMoveSpeed*gFrameTime;
 	}
 	ChangeCameraPosition();
 	// UPDATE CURSOR
@@ -519,4 +531,5 @@ void CSpaceState::ReturnToEarth()
 void CSpaceState::Resume()
 {
 	mPaused = false;
+	HideButtonsPaused();
 }
