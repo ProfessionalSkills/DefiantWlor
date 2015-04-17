@@ -153,6 +153,8 @@ void CSpaceState::StateSetup()
 	// INITIALISE USER INTERFACE
 	//-----------------------------
 	mFntDebug = gpEngine->LoadFont("Calibri", 20U);
+	mpButtonFont = gpEngine->LoadFont("font2.bmp", 15U);
+	mpTitleFont = gpEngine->LoadFont("font2.bmp", 35U);
 } 
 
 void CSpaceState::StateUpdate()
@@ -343,6 +345,14 @@ void CSpaceState::DrawFontData()
 	strStream << "  player two fleet avarage accuracy: " << mpPlayerTwoFleet->GetHitPercentage() << "%";
 	mFntDebug->Draw(strStream.str(), playerTwoTextX, 775, kWhite, kRight, kTop);
 	strStream.str("");
+
+	if (mPaused)
+	{
+		mpTitleFont->Draw("Game Paused", 800, 90, kCyan, kCentre, kTop);
+		mpButtonFont->Draw("Reume Game", 800, 435, kCyan, kCentre, kTop);
+		mpButtonFont->Draw("Main Menu", 800, 485, kCyan, kCentre, kTop);
+		mpButtonFont->Draw("Return To Earth", 800, 535, kCyan, kCentre, kTop);
+	}
 }
 
 void CSpaceState::StateCleanup()
