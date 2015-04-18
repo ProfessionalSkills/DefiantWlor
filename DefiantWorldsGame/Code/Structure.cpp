@@ -266,6 +266,9 @@ void CStructure::Destroy()
 		}
 	}
 
+	// Unload warning smoke
+	if (mWarningSmoke) SafeDelete(mWarningSmoke);
+
 	// Also set spawning grid tile to unused
 	gridPoint.mPosX = mGridSpawnLoc.mPosX;
 	gridPoint.mPosY = mGridSpawnLoc.mPosY;

@@ -28,7 +28,9 @@ mDisplacement(30), mNumCamStates(4),mSpecialAttackCooldownTime(5), CGameState()
 	mpMdlEarthAtmos = 0;
 
 	PlayerOneVictory = false;
+	PlayerTwoVictory = false;
 	mTacticChoosen = false;
+	mPaused = false;
 	mTimeSinceUpdate = 0.0f;
 
 	mpPlayerOneFleet = 0;
@@ -117,34 +119,54 @@ void CSpaceState::StateSetup()
 	//------------------------------
 	mpSprCursor = gpEngine->CreateSprite("BaseCursor.png", 5.0f, 50.0f, 0.0f);
 
-	// ID NUMBERS 0-3 are main menu items
+	// Tactics Buttons
 	CAdvancedButton<CSpaceState, void>* pNewButton = new CAdvancedButton<CSpaceState, void>("NoTactics.png", "NoTacticsMO.png", SPointData(900, 750),
-		DX::XMFLOAT2(400.0f, 50.0f), *this, &CSpaceState::ChangeTacNone, TR_UP, true, 1.2f);
-	mpButtonList.push_back(pNewButton);
+		DX::XMFLOAT2(50.0f, 50.0f), *this, &CSpaceState::ChangeTacNone, TR_UP, true, 1.2f);
+	mpButtonListTactics.push_back(pNewButton);
+	mpButtonListAll.push_back(pNewButton);
 
 	pNewButton = new CAdvancedButton<CSpaceState, void>("DefRapidFireButton.png", "SelRapidFireButton.png", SPointData(750, 750),
-		DX::XMFLOAT2(400.0f, 50.0f), *this, &CSpaceState::ChangeTacRapid, TR_UP, true, 1.2f);
-	mpButtonList.push_back(pNewButton);
+		DX::XMFLOAT2(50.0f, 50.0f), *this, &CSpaceState::ChangeTacRapid, TR_UP, true, 1.2f);
+	mpButtonListTactics.push_back(pNewButton);
+	mpButtonListAll.push_back(pNewButton);
 
 	pNewButton = new CAdvancedButton<CSpaceState, void>("TargetButton.png", "TargetButtonMO.png", SPointData(600, 750),
-		DX::XMFLOAT2(400.0f, 50.0f), *this, &CSpaceState::ChangeTacTargated, TR_UP, true, 1.2f);
-	mpButtonList.push_back(pNewButton);
+		DX::XMFLOAT2(50.0f, 50.0f), *this, &CSpaceState::ChangeTacTargated, TR_UP, true, 1.2f);
+	mpButtonListTactics.push_back(pNewButton);
+	mpButtonListAll.push_back(pNewButton);
+
+	// Pause Buttons
+	pNewButton = new CAdvancedButton<CSpaceState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(600, 420),
+		DX::XMFLOAT2(400.0f, 50.0f), *this, &CSpaceState::Resume, TR_RIGHT, false,0.001f);
+	mpButtonListPause.push_back(pNewButton);
+	mpButtonListAll.push_back(pNewButton);
+
+	pNewButton = new CAdvancedButton<CSpaceState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(600, 470),
+		DX::XMFLOAT2(400.0f, 50.0f), *this, &CSpaceState::GoToMainMenu, TR_RIGHT, false, 0.001f);
+	mpButtonListPause.push_back(pNewButton);
+	mpButtonListAll.push_back(pNewButton);
+
+	pNewButton = new CAdvancedButton<CSpaceState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(600, 520),
+		DX::XMFLOAT2(400.0f, 50.0f), *this, &CSpaceState::ReturnToEarth, TR_RIGHT, false, 0.001f);
+	mpButtonListPause.push_back(pNewButton);
+	mpButtonListAll.push_back(pNewButton);
+	mpButtonListDefeat.push_back(pNewButton);
+	mpButtonListVictory.push_back(pNewButton);
+
 
 	// INITIALISE USER INTERFACE
 	//-----------------------------
 	mFntDebug = gpEngine->LoadFont("Calibri", 20U);
+	mpButtonFont = gpEngine->LoadFont("font2.bmp", 15U);
+	mpTitleFont = gpEngine->LoadFont("font2.bmp", 35U);
 } 
 
 void CSpaceState::StateUpdate()
 {
-	if (mpPlayerOneFleet->GetSize() == 0 || mpPlayerTwoFleet->GetSize() == 0)
-	{
-		gCurState = GS_WORLD;
-	}
-
 	gpEngine->DrawScene();
 
-	//Space Controls -Genral Controls
+	// Controls
+	//-----------------------------
 	if (gpEngine->KeyHit(Key_R))
 	{
 		gCurState = GS_WORLD;
@@ -157,7 +179,16 @@ void CSpaceState::StateUpdate()
 
 	if (gpEngine->KeyHit(Key_Escape))
 	{
-		gCurState = GS_WORLD;
+		if (!mPaused)
+		{
+			mPaused = true;
+			ShowButtonsPaused();
+		}
+		else
+		{
+			mPaused = false;
+			HideButtonsPaused();
+		}
 	}
 
 	if (gpEngine->KeyHit(Key_C))
@@ -165,7 +196,7 @@ void CSpaceState::StateUpdate()
 		mCamState = (mCamState + 1) % mNumCamStates;
 	}
 
-	bool leftClicked = false;
+	leftClicked = false;
 	if (gpEngine->KeyHit(Mouse_LButton))
 	{
 		leftClicked = true;
@@ -173,116 +204,94 @@ void CSpaceState::StateUpdate()
 
 	mMousePos.x = (float)gpEngine->GetMouseX();
 	mMousePos.y = (float)gpEngine->GetMouseY();
-	if (!mTacticChoosen)
-	{
-		for (miterButtons = mpButtonList.begin(); miterButtons != mpButtonList.end(); miterButtons++)
-		{
-			CAdvancedButton<CSpaceState, void>* pButton = (*miterButtons);
-			// Check if the mouse is colliding with the object
-			if (pButton->GetBoundingBox().IsColliding(DX::XMFLOAT3(mMousePos.x, 0.0f, mMousePos.y)))
-			{
-				pButton->SetMouseOver(true);
-			}
-			else
-			{
-				pButton->SetMouseOver(false);
-			}
+	UpdateButtons();
 
-			// Check for click 
-			if (pButton->GetMouseOver())
+	if (!mPaused&&!PlayerOneVictory&&!PlayerTwoVictory)
+	{
+		if (mTacticChoosen)
+		{
+			//update time, used to slow down the speed of the fight
+			//Space Controls -Combat Controls
+			if (gpEngine->KeyHit(Key_B))
 			{
-				// Check if the mouse is over the button
-				if (leftClicked)
+				if (mSpecialAttackCooldownTimer <= 0)
 				{
-					// Raise click flag
-					pButton->Execute();
-					leftClicked = false;
-					// Remove self from for loop
-					break;
+					mpPlayerOneFleet->SpecialAttackLazerBarrage();
+					gpNewsTicker->AddNewElement("Mothership Fired a Lazer Barrage", false);
+					mSpecialAttackCooldownTimer = mSpecialAttackCooldownTime;
+				}
+				else
+				{
+					gpNewsTicker->AddNewElement("Special Attacks are on Cooldown", false);
 				}
 			}
 
-			// Update the button
-			pButton->Update();
+			mTimeSinceUpdate += gFrameTime;
+			if (mSpecialAttackCooldownTimer >= 0)mSpecialAttackCooldownTimer -= gFrameTime;
+			mpPlayerOneFleet->ChargeFleetLazers();
+			mpPlayerTwoFleet->ChargeFleetLazers();
+
+			if (mTimeSinceUpdate >= mTimeToUpdate)
+			{
+				//randomizes the order of fleet attack->update
+				if (mNewRandom.GetRandomInt(1, 2) == 1)
+				{
+					mpPlayerOneFleet->Fight();
+					mpPlayerTwoFleet->Fight();
+				}
+				else
+				{
+					//finds and removes dead ships
+					mpPlayerTwoFleet->Fight();
+					mpPlayerOneFleet->Fight();
+				}
+
+
+				//reset timer
+				mTimeSinceUpdate = 0.0f;
+				mTimeSinceEffectsUpdate = mTimeToUpdateEffects;
+			}
+
+			//update effects time
+			mTimeSinceEffectsUpdate -= gFrameTime;
+
+
+
+			if (mTimeSinceEffectsUpdate <= 0.0f)
+			{
+				//unload the shield models
+				mpPlayerOneFleet->UnloadShieldModels();
+				mpPlayerTwoFleet->UnloadShieldModels();
+
+				//unload the lazer models
+				mpPlayerOneFleet->UnloadLazers();
+				mpPlayerTwoFleet->UnloadLazers();
+
+				//update fleet status
+				mpPlayerOneFleet->UpdateCondition();
+				mpPlayerTwoFleet->UpdateCondition();
+
+				//reset timer
+				mTimeSinceEffectsUpdate = 0.0f;
+			}
+
+			//moves fleets
+			mpPlayerTwoFleet->MoveFleet();
+			mpPlayerOneFleet->MoveFleet();
+
+			mpPlayerOneFleet->IdleFleet();
+			mpPlayerTwoFleet->IdleFleet();
+
+			mCamZMovement += mCameraMoveSpeed*gFrameTime;
 		}
 	}
-	else
+	else if (PlayerOneVictory||PlayerTwoVictory)
 	{
-		//update time, used to slow down the speed of the fight
-		//Space Controls -Combat Controls
-		if (gpEngine->KeyHit(Key_B))
-		{
-			if (mSpecialAttackCooldownTimer <= 0)
-			{
-				mpPlayerOneFleet->SpecialAttackLazerBarrage();
-				gpNewsTicker->AddNewElement("Mothership Fired a Lazer Barrage", false);
-				mSpecialAttackCooldownTimer = mSpecialAttackCooldownTime;
-			}
-			else
-			{
-				gpNewsTicker->AddNewElement("Special Attacks are on Cooldown", false);
-			}
-		}
-
-		mTimeSinceUpdate += gFrameTime;
-		if (mSpecialAttackCooldownTimer >= 0)mSpecialAttackCooldownTimer -= gFrameTime;
-		mpPlayerOneFleet->ChargeFleetLazers();
-		mpPlayerTwoFleet->ChargeFleetLazers();
-
-		if (mTimeSinceUpdate >= mTimeToUpdate)
-		{
-			//randomizes the order of fleet attack->update
-			if (mNewRandom.GetRandomInt(1, 2) == 1)
-			{
-				mpPlayerOneFleet->Fight();
-				mpPlayerTwoFleet->Fight();
-			}
-			else
-			{
-				//finds and removes dead ships
-				mpPlayerTwoFleet->Fight();
-				mpPlayerOneFleet->Fight();
-			}
-
-
-			//reset timer
-			mTimeSinceUpdate = 0.0f;
-			mTimeSinceEffectsUpdate = mTimeToUpdateEffects;
-		}
-
-		//update effects time
-		mTimeSinceEffectsUpdate -= gFrameTime;
-
-
-
-		if (mTimeSinceEffectsUpdate <= 0.0f)
-		{
-			//unload the shield models
-			mpPlayerOneFleet->UnloadShieldModels();
-			mpPlayerTwoFleet->UnloadShieldModels();
-
-			//unload the lazer models
-			mpPlayerOneFleet->UnloadLazers();
-			mpPlayerTwoFleet->UnloadLazers();
-
-			//update fleet status
-			mpPlayerOneFleet->UpdateCondition();
-			mpPlayerTwoFleet->UpdateCondition();
-
-			//reset timer
-			mTimeSinceEffectsUpdate = 0.0f;
-		}
-
-		//moves fleets
-		mpPlayerTwoFleet->MoveFleet();
-		mpPlayerOneFleet->MoveFleet();
-
-		mpPlayerOneFleet->IdleFleet();
-		mpPlayerTwoFleet->IdleFleet();
-
-		mCamZMovement += mCameraMoveSpeed*gFrameTime;
+		ShowButtonsVictory();
 	}
+
 	ChangeCameraPosition();
+
 	// UPDATE CURSOR
 	//------------------------------
 	mMousePos.x = (float)gpEngine->GetMouseX();
@@ -291,6 +300,10 @@ void CSpaceState::StateUpdate()
 	mpSprCursor->SetPosition(mMousePos.x, mMousePos.y);
 	gpNewsTicker->Display();
 	DrawFontData();
+
+	// UPDATE VICTORY STATE
+	//------------------------------
+	CheckForVictory();
 }
 
 void CSpaceState::DrawFontData()
@@ -342,12 +355,29 @@ void CSpaceState::DrawFontData()
 	strStream << "  player two fleet avarage accuracy: " << mpPlayerTwoFleet->GetHitPercentage() << "%";
 	mFntDebug->Draw(strStream.str(), playerTwoTextX, 775, kWhite, kRight, kTop);
 	strStream.str("");
+
+	if (mPaused)
+	{
+		mpTitleFont->Draw("Game Paused", 800, 90, kCyan, kCentre, kTop);
+		mpButtonFont->Draw("Reume Game", 800, 435, kCyan, kCentre, kTop);
+		mpButtonFont->Draw("Main Menu", 800, 485, kCyan, kCentre, kTop);
+		mpButtonFont->Draw("Return To Earth", 800, 535, kCyan, kCentre, kTop);
+	}
+	if (PlayerOneVictory)
+	{
+		mpTitleFont->Draw("Victory", 800, 90, kCyan, kCentre, kTop);
+		mpButtonFont->Draw("Land On Mars", 800, 535, kCyan, kCentre, kTop);
+	}
 }
 
 void CSpaceState::StateCleanup()
 {
 	//remove sprites
 	gpEngine->RemoveSprite(mpSprCursor);
+
+	//remove buttons
+	RemoveButtons();
+	mTacticChoosen = false;
 
 	//stop sound
 	mMusic->StopSound();
@@ -366,25 +396,9 @@ void CSpaceState::StateCleanup()
 
 	if (mpMdlEarthAtmos) mpMshAtmosphere->RemoveModel(mpMdlEarthAtmos);
 
-	// Remove buttons
-	RemoveButtonsTactics();
-	mTacticChoosen = false;
 	//decide which player won, or if neither won
-	if (mpPlayerOneFleet->GetSize() == 0)
-	{
-		PlayerOneVictory = false;
-		PlayerTwoVictory = true;
-	}
-	else if (mpPlayerTwoFleet->GetSize() == 0)
-	{
-		PlayerOneVictory = true;
-		PlayerTwoVictory = false;
-	}
-	else
-	{
-		PlayerOneVictory = false;
-		PlayerTwoVictory = false;
-	}
+	CheckForVictory();
+
 	mpHumanPlayer->SetWonLastSpaceBattle(PlayerOneVictory);
 	mpAIPlayer->SetWonLastSpaceBattle(PlayerTwoVictory);
 
@@ -400,6 +414,8 @@ void CSpaceState::StateCleanup()
 	mpPlayerTwoFleet = nullptr;
 }
 
+// Camera Control
+//-----------------------------
 void CSpaceState::ChangeCameraPosition()
 {
 	switch (mCamState)
@@ -484,12 +500,16 @@ void CSpaceState::LoadPlanets()
 	mpMdlNeptune->Scale(mNeptunePos.w);
 }
 
+// Button Functions
+//-----------------------------
+
+//Tactics Buttons
 void CSpaceState::ChangeTacTargated()
 {
 	mpHumanPlayer->GetFleet()->SetTactic(Targeted);
 	gpNewsTicker->AddNewElement("Targeted space tactic selected.", false);
 	mTacticChoosen = true;
-	RemoveButtonsTactics();
+	HideButtonsTactics();
 }
 
 void CSpaceState::ChangeTacNone()
@@ -497,7 +517,7 @@ void CSpaceState::ChangeTacNone()
 	mpHumanPlayer->GetFleet()->SetTactic(None);
 	gpNewsTicker->AddNewElement("No space tactic selected.", false);
 	mTacticChoosen = true;
-	RemoveButtonsTactics();
+	HideButtonsTactics();
 }
 
 void CSpaceState::ChangeTacRapid()
@@ -505,15 +525,38 @@ void CSpaceState::ChangeTacRapid()
 	mpHumanPlayer->GetFleet()->SetTactic(Rapid);
 	gpNewsTicker->AddNewElement("Rapid space tactic selected.", false);
 	mTacticChoosen = true;
-	RemoveButtonsTactics();
+	HideButtonsTactics();
 }
 
-void CSpaceState::RemoveButtonsTactics()
+//cleanup buttons
+void CSpaceState::RemoveButtons()
 {
-	while (!mpButtonList.empty())
+	while (!mpButtonListAll.empty())
 	{
-		CAdvancedButton<CSpaceState, void>* tmp = mpButtonList.back();
+		CAdvancedButton<CSpaceState, void>* tmp = mpButtonListAll.back();
 		SafeDelete(tmp);
-		mpButtonList.pop_back();
+		mpButtonListAll.pop_back();
 	}
+
+	mpButtonListPause.clear();
+	mpButtonListTactics.clear();
+	mpButtonListDefeat.clear();
+	mpButtonListVictory.clear();
+}
+
+//Menu Button Functions
+void CSpaceState::GoToMainMenu()
+{
+	gCurState = GS_MAIN_MENU;
+}
+
+void CSpaceState::ReturnToEarth()
+{
+	gCurState = GS_WORLD;
+}
+
+void CSpaceState::Resume()
+{
+	mPaused = false;
+	HideButtonsPaused();
 }

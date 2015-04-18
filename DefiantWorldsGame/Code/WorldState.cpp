@@ -459,7 +459,7 @@ void CWorldState::CheckKeyPresses()
 
 				if (pTargetStructure != nullptr)
 				{
-					if (pTargetStructure->GetFaction() != FAC_EARTH_DEFENSE_FORCE)
+					if (pTargetStructure->GetFaction() == FAC_EARTH_DEFENSE_FORCE)
 					{
 						for (miterUnitSelectionList = mpUnitSelectionList.begin(); miterUnitSelectionList != mpUnitSelectionList.end(); miterUnitSelectionList++)
 						{
@@ -469,7 +469,7 @@ void CWorldState::CheckKeyPresses()
 				}
 				else if (pTargetGameAgent != nullptr)
 				{
-					if (pTargetGameAgent->GetFaction() != FAC_EARTH_DEFENSE_FORCE)
+					if (pTargetGameAgent->GetFaction() == FAC_EARTH_DEFENSE_FORCE)
 					{
 						for (miterUnitSelectionList = mpUnitSelectionList.begin(); miterUnitSelectionList != mpUnitSelectionList.end(); miterUnitSelectionList++)
 						{
@@ -2166,6 +2166,30 @@ void CWorldState::OnStructureSelectChange(CStructure* pSelStructure)
 				i++;
 			}
 		}
+
+		// Determine whether or not selected building is under construction
+		int percentage = 0;
+		if (pSelStructure->GetState() == OBJ_CONSTRUCTING)
+		{
+			float timeLeft = pSelStructure->GetBuildTimeLeft();
+			float maxTime = pSelStructure->GetBuildTime();
+			float timeTaken = maxTime - timeLeft;
+			percentage = (int)((timeTaken / maxTime) * 100.0f);
+		}
+		else
+		{
+			// Get health amount
+			float healthLeft = pSelStructure->GetHealth();
+			float maxHealth = pSelStructure->GetMaxHealth();
+			percentage = (int)((healthLeft / maxHealth) * 100.0f);
+		}
+
+		// Get the remainder of dividing by 5 (health only shows these increments)
+		int remainder = percentage % 5;
+		mPrevHealth = percentage - remainder;
+
+		// Update health bar
+		OnItemHealthChange();
 	}
 	// If no unit is selected, display the other required buttons
 	else if (!mpCurSelectedAgent)
@@ -2214,6 +2238,18 @@ void CWorldState::OnUnitSelectChange(CGameAgent* pSelAgent)
 		mpSpaceCentreButtons->Hide();
 		mpComCentreButtons->Hide();
 		mpQueueButtons->UnloadSprites();
+
+		// Get health amount
+		float healthLeft = mpCurSelectedAgent->GetHealth();
+		float maxHealth = mpCurSelectedAgent->GetMaxHealth();
+		int percentage = (int)((healthLeft / maxHealth) * 100.0f);
+
+		// Get the remainder of dividing by 5 (health only shows these increments)
+		int remainder = percentage % 5;
+		mPrevHealth = percentage - remainder;
+
+		// Update health bar
+		OnItemHealthChange();
 	}
 	// If there are no multi-units selected
 	else if (mpUnitSelectionList.size() != 0)
@@ -2233,6 +2269,18 @@ void CWorldState::OnUnitSelectChange(CGameAgent* pSelAgent)
 		mpSpaceCentreButtons->Hide();
 		mpComCentreButtons->Hide();
 		mpQueueButtons->UnloadSprites();
+
+		// Get health amount of front unit
+		float healthLeft = mpUnitSelectionList.front()->GetHealth();
+		float maxHealth = mpUnitSelectionList.front()->GetMaxHealth();
+		int percentage = (int)((healthLeft / maxHealth) * 100.0f);
+
+		// Get the remainder of dividing by 5 (health only shows these increments)
+		int remainder = percentage % 5;
+		mPrevHealth = percentage - remainder;
+
+		// Update health bar
+		OnItemHealthChange();
 	}
 	// If no building is selected, show the other buttons
 	else if (!mpCurSelectedStructure)

@@ -19,7 +19,13 @@ CSmoke::CSmoke(IModel* emitter, int particleNumber, EQueueObjectType objectType)
 
 CSmoke::~CSmoke()
 {
-
+	// Remove all particles
+	while (mParticles.size() > 0)
+	{
+		CParticle* pParticle = mParticles.back();
+		if (pParticle) SafeDelete(pParticle);
+		mParticles.pop_back();
+	}
 }
 
 void CSmoke::SetEmitPosition(float x, float y, float z)

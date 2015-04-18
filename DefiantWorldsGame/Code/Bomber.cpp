@@ -20,12 +20,12 @@ CBomber::CBomber()
 	mAgentInfo = SAgentData(GAV_BOMBER, "Bomber");
 	mMaxHealth = 100.0f;
 	mHealth = 100.0f;
-	mSpeed = 1.0f;
+	mSpeed = 30.0f;
 	mProductionTime = 15.0f;
 	mProductionCost = 0.0f;
 	mCurProductionTimeLeft = mProductionTime;				
 	mDamage = 100.0f;
-	mFireRate = 1.5f;
+	mFireRate = 0.8f;
 	mAttackTimer = (1.0f / mFireRate);
 	mState = OBJ_CONSTRUCTING;
 	mIsMoving = false;
@@ -114,7 +114,6 @@ bool CBomber::Attack(CGameObject* target, float hitMod, float damageMod)
 			{
 				SProjectile* newProjectile = new SProjectile();
 				newProjectile->mModel = mspMshBomb->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
-				newProjectile->mModel->LookAt(mAttackTarget->GetModel());
 				newProjectile->mDirection = localY;
 				newProjectile->mSpeed = 50.0f;
 

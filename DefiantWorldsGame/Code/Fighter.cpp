@@ -19,14 +19,14 @@ CFighter::CFighter()
 	mAgentInfo = SAgentData(GAV_FIGHTER, "Fighter");
 	mMaxHealth = 100.0f;
 	mHealth = 100.0f;
-	mSpeed = 1.0f;
+	mSpeed = 35.0f;
 	mProductionTime = 15.0f;
 	mProductionCost = 0.0f;
 	mCurProductionTimeLeft = mProductionTime;
-	mDamage = 100.0f;
-	mFireRate = 4.0f;
+	mDamage = 5.0f;
+	mFireRate = 12.0f;
 	mAttackTimer = 1.0f / mFireRate;
-	mRange = 150.0f;
+	mRange = 40.0f;
 	mState = OBJ_CONSTRUCTING;
 	mIsMoving = false;
 	mHasPathTarget = false;
@@ -80,7 +80,8 @@ void CFighter::LoadIModel()
 bool CFighter::Attack(CGameObject* target, float hitMod, float damageMod)
 {
 	// The RayCollision function calculates this value for us - so it needs no starting value. Only to be defined.
-	float distance;
+	float grndDistance;
+	float airDistance;
 
 	// Get the local Z axis of the turret
 	DX::XMFLOAT4X4 objMatrix;
@@ -91,42 +92,34 @@ bool CFighter::Attack(CGameObject* target, float hitMod, float damageMod)
 	// Normalise this local axis
 	DX::XMVECTOR vecNormal = DX::XMVector4Normalize(DX::XMLoadFloat3(&localZ));
 	DX::XMStoreFloat3(&localZ, vecNormal);
-	DX::XMFLOAT3 worldPos = { mWorldPos.x, 0.0f, mWorldPos.z };
+
 	// If the target is being looked at and is within range
-	bool successfulAttack = mAttackTarget->RayCollision(worldPos, localZ, distance);
-	if (successfulAttack)
+	bool groundRayCollision = mAttackTarget->RayCollision({ mWorldPos.x, 0.0f, mWorldPos.z }, localZ, grndDistance);
+	bool airRayCollision = mAttackTarget->RayCollision(mWorldPos, localZ, airDistance);
+	if ((groundRayCollision && grndDistance <= mRange) || (airRayCollision && airDistance <= mRange))
 	{
+		// Calculate direction vector from the aircraft to the target
+		DX::XMFLOAT3 target = mAttackTarget->GetWorldPos();
+		DX::XMFLOAT3 dir{ target.x - mWorldPos.x, target.y - mWorldPos.y, target.z - mWorldPos.z };
+
+		// Normalise direction vector
+		DX::XMVECTOR vecNormal = DX::XMVector4Normalize(DX::XMLoadFloat3(&dir));
+		DX::XMStoreFloat3(&dir, vecNormal);
+		
 		if (mAttackTimer >= (1.0f / mFireRate)) //Control rate of fire of the unit
 		{
 			SProjectile* newProjectile = new SProjectile();
 			newProjectile->mModel = mspMshFighterBullet->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
-			newProjectile->mModel->LookAt(mAttackTarget->GetModel());
-			DX::XMFLOAT4X4 projectileMatrix;
-			newProjectile->mModel->GetMatrix(&projectileMatrix.m[0][0]);
-			DX::XMFLOAT3 projZ{ projectileMatrix.m[2][0], projectileMatrix.m[2][1], projectileMatrix.m[2][2] };
-			newProjectile->mDirection = projZ;
-			newProjectile->mSpeed = 50.0f;
+			newProjectile->mDirection = dir;
+			newProjectile->mSpeed = 150.0f;
 
 			mpProjectiles.push_back(newProjectile);
 			mAttackTimer = 0.0f;
 		}
 	}
 	// Check to see if the attack was unsuccessful & that the user has not given the unit a target
-	else if (!successfulAttack && !mHasPathTarget)
+	else if (!mHasPathTarget)
 	{
-		// Move towards the target
-		DX::XMFLOAT3 localZ{ objMatrix.m[2][0], objMatrix.m[2][1], objMatrix.m[2][2] };
-		// Normalise this local axis
-		vecNormal = DX::XMVector4Normalize(DX::XMLoadFloat3(&localZ));
-		DX::XMStoreFloat3(&localZ, vecNormal);
-
-		// Get the vector between the bomber and the target position (using the height of the bomber as the Y position)
-		DX::XMFLOAT3 vectorZ = { (target->GetWorldPos().x - mWorldPos.x), 0.0f, (target->GetWorldPos().z - mWorldPos.z) };
-		// Normalise vectorZ
-		vecNormal = DX::XMVector4Normalize(DX::XMLoadFloat3(&vectorZ));
-		DX::XMStoreFloat3(&vectorZ, vecNormal);
-
-		// Do a dot product between the facing direction of the bomber and the vectorZ
 		LookingAt(mAttackTarget->GetWorldPos());
 		Move();
 	}
