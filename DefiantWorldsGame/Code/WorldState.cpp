@@ -2167,12 +2167,8 @@ void CWorldState::OnStructureSelectChange(CStructure* pSelStructure)
 			}
 		}
 
-		// Unload health bar
-		mPrevHealth = -5;
-		OnItemHealthChange();
-		int percentage = 0;
-
 		// Determine whether or not selected building is under construction
+		int percentage = 0;
 		if (pSelStructure->GetState() == OBJ_CONSTRUCTING)
 		{
 			float timeLeft = pSelStructure->GetBuildTimeLeft();
@@ -2243,10 +2239,6 @@ void CWorldState::OnUnitSelectChange(CGameAgent* pSelAgent)
 		mpComCentreButtons->Hide();
 		mpQueueButtons->UnloadSprites();
 
-		// Unload health bar
-		mPrevHealth = -5;
-		OnItemHealthChange();
-
 		// Get health amount
 		float healthLeft = mpCurSelectedAgent->GetHealth();
 		float maxHealth = mpCurSelectedAgent->GetMaxHealth();
@@ -2277,10 +2269,6 @@ void CWorldState::OnUnitSelectChange(CGameAgent* pSelAgent)
 		mpSpaceCentreButtons->Hide();
 		mpComCentreButtons->Hide();
 		mpQueueButtons->UnloadSprites();
-
-		// Unload health bar
-		mPrevHealth = -5;
-		OnItemHealthChange();
 
 		// Get health amount of front unit
 		float healthLeft = mpUnitSelectionList.front()->GetHealth();
