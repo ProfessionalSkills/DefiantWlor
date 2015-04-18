@@ -219,7 +219,8 @@ void SetupEngine()
 	CArtillery::mspMshArtillery = gpEngine->LoadMesh("marsAA.x");
 	CArtillery::mspMshArtilleryShell = gpEngine->LoadMesh("bullet.x");
 	//Particle Mesh
-	CParticle::mspMshParticle = gpEngine->LoadMesh("particle.x");
+	CParticle::mspMshExplosionParticle = gpEngine->LoadMesh("ExplosionParticle.x");
+	CParticle::mspMshSmokeParticle = gpEngine->LoadMesh("SmokeParticle.x");
 }
 
 void CleanupEngine()

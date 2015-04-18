@@ -1,11 +1,19 @@
 #include "Smoke.h"
 
-CSmoke::CSmoke(IModel* emitter, int particleNumber)
+CSmoke::CSmoke(IModel* emitter, int particleNumber, EQueueObjectType objectType)
 {
 	mEmitter = emitter;
-	SetEmitPosition();
+	if (objectType == Q_BARRACKS || objectType == Q_HELLIPAD || objectType == Q_SPACE_CENTRE)
+	{
+		SetEmitPosition(emitter->GetX(), emitter->GetY() + 20.0f, emitter->GetZ());
+		mScale = 1.0f;
+	}
+	else
+	{
+		SetEmitPosition(emitter->GetX(), emitter->GetY(), emitter->GetZ());
+		mScale = 0.5f;
+	}
 	mEmitterCountdown = kEmitTime;
-	EmitParticle();
 	mParticleNumber = particleNumber;
 }
 
@@ -14,20 +22,27 @@ CSmoke::~CSmoke()
 
 }
 
-void CSmoke::SetEmitPosition()
+void CSmoke::SetEmitPosition(float x, float y, float z)
 {
-	mParticleOrigen = { mEmitter->GetX(), mEmitter->GetY() + 20.0f , mEmitter->GetZ() };
+	mParticleOrigen = { x, y, z };
 }
 
 void CSmoke::EmitParticle()
 {
-	SetEmitPosition();
+	if (mScale == 1.0f)
+	{
+		SetEmitPosition(mEmitter->GetX(), mEmitter->GetY() + 20.0f, mEmitter->GetZ());
+	}
+	else if (mScale == 0.5f)
+	{
+		SetEmitPosition(mEmitter->GetX(), mEmitter->GetY(), mEmitter->GetZ());
+	}
 	CParticle* mNewParticle = new CParticle();
 	float mPosX = gpRandomiser->GetRandomFloat(mParticleOrigen.x - 3.0f, mParticleOrigen.x + 3.0f);
 	float mPosZ = gpRandomiser->GetRandomFloat(mParticleOrigen.z - 3.0f, mParticleOrigen.z + 3.0f);
 
-	mNewParticle->mModel = mNewParticle->mspMshParticle->CreateModel(mPosX, mParticleOrigen.y, mPosZ);
-	mNewParticle->SetScale(1.0f);
+	mNewParticle->mModel = mNewParticle->mspMshSmokeParticle->CreateModel(mPosX, mParticleOrigen.y, mPosZ);
+	mNewParticle->SetScale(mScale);
 
 	mNewParticle->SetVector(gpRandomiser->GetRandomFloat(-kVelocity.x, kVelocity.x), kVelocity.y, gpRandomiser->GetRandomFloat(-kVelocity.z, kVelocity.z));
 
@@ -61,6 +76,7 @@ bool CSmoke::UpdateSystem()
 
 		if ((*itParticle)->GetLifeTime() <= 0.0f)
 		{
+			(*itParticle)->mspMshSmokeParticle->RemoveModel((*itParticle)->mModel); 
 			(*itParticle)->~CParticle();
 			itParticle = mParticles.erase(itParticle);
 		}

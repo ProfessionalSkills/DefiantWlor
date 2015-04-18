@@ -26,12 +26,11 @@ void CExplosion::EmitParticle()
 {
 	CParticle* mNewParticle = new CParticle();
 
-	mNewParticle->mModel = mNewParticle->mspMshParticle->CreateModel(mParticleOrigen.x, mParticleOrigen.y, mParticleOrigen.z);
+	mNewParticle->mModel = mNewParticle->mspMshExplosionParticle->CreateModel(mParticleOrigen.x, mParticleOrigen.y, mParticleOrigen.z);
 	mNewParticle->mModel->Scale(0.1f);
 	mNewParticle->SetLifeTime(3.0f);
-	//mNewParticle->mModel->SetSkin("Smoke1_tlxmul.jpg");
 	mNewParticle->SetVector(gpRandomiser->GetRandomFloat(-kExplosionVelocity, kExplosionVelocity),
-		gpRandomiser->GetRandomFloat(-kExplosionVelocity, kExplosionVelocity), gpRandomiser->GetRandomFloat(-kExplosionVelocity, kExplosionVelocity));
+	gpRandomiser->GetRandomFloat(-kExplosionVelocity, kExplosionVelocity), gpRandomiser->GetRandomFloat(-kExplosionVelocity, kExplosionVelocity));
 
 	mNewParticle->SetPosition(mParticleOrigen);
 	mNewParticle->SetLifeTime(kExplosionLifeTime);
@@ -62,7 +61,7 @@ bool CExplosion::UpdateSystem()
 
 		if ((*itParticle)->GetLifeTime() <= 0.0f)
 		{
-			//(*itParticle)->~CParticle();
+			(*itParticle)->mspMshExplosionParticle->RemoveModel((*itParticle)->mModel);
 			SafeDelete((*itParticle));
 			itParticle = mParticles.erase(itParticle);
 		}

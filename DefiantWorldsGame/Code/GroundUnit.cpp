@@ -65,7 +65,7 @@ bool CGroundUnit::Update()
 		{
 			if (mWarningSmoke == nullptr)
 			{
-				mWarningSmoke = new CSmoke(mpObjModel, 50);
+				mWarningSmoke = new CSmoke(mpObjModel, 50, mObjectType);
 			}
 			mState = OBJ_WARNING;
 		}

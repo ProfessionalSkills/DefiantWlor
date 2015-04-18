@@ -44,8 +44,8 @@ public:
 
 	// PARTICLE STATIC MESH
 	//---------------------------
-	static IMesh* mspMshParticle;
-
+	static IMesh* mspMshExplosionParticle;
+	static IMesh* mspMshSmokeParticle;
 	inline void SetPosition(DX::XMFLOAT3 position)
 	{
 		mPosition = position;
@@ -88,7 +88,5 @@ public:
 	// PARTICLE DATA (ACCESSED BY PARTICLE SYSTEMS)
 	//---------------------------
 };
-
-//IMesh* CParticle::mMesh = gpEngine->LoadMesh("particle.x");
 
 #endif

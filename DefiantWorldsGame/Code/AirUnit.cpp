@@ -59,16 +59,27 @@ bool CAirUnit::Update()
 		}
 		break;
 	case OBJ_DAMAGED:
+
 		if (((mHealth / mMaxHealth) * 100.0f) <= 33.3f)
 		{
+			if (mWarningSmoke == nullptr)
+			{
+				mWarningSmoke = new CSmoke(mpObjModel, 50, mObjectType);
+			}
 			mState = OBJ_WARNING;
 		}
 		break;
 	case OBJ_WARNING:
+		if (mWarningSmoke != nullptr)
+		{
+			mWarningSmoke->UpdateSystem();
+		}
 		if (mHealth <= 0.0f)
 		{
 			if (mDestructionExplosion == nullptr)
 			{
+				SafeDelete(mWarningSmoke);
+				mWarningSmoke = nullptr;
 				mDestructionExplosion = new CExplosion(mpObjModel, 100);
 				Destroy();
 			}

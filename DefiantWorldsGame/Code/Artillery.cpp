@@ -24,7 +24,7 @@ CArtillery::CArtillery()
 	mProductionTime = 15.0f;
 	mProductionCost = 0.0f;
 	mCurProductionTimeLeft = mProductionTime;
-	mDamage = 20.0f;
+	mDamage = 70.0f;
 	mFireRate = 0.333333f;
 	mAttackTimer = 1.0f / mFireRate;
 	mState = OBJ_CONSTRUCTING;
@@ -36,7 +36,7 @@ CArtillery::CArtillery()
 	mPopCost = 4;
 	mTurretNode = 0;
 	mObjectType = Q_ARTILLERY;
-	mRange = 100.0f;
+	mRange = 150.0f;
 }
 
 CArtillery::~CArtillery()
@@ -108,7 +108,8 @@ bool CArtillery::Attack(CGameObject* target, float hitMod, float damageMod)
 				newProjectile->mModel->GetMatrix(&projectileMatrix.m[0][0]);
 				DX::XMFLOAT3 projZ{ projectileMatrix.m[2][0], projectileMatrix.m[2][1], projectileMatrix.m[2][2] };
 				newProjectile->mDirection = projZ;
-				newProjectile->mSpeed = 1000.0f;
+				newProjectile->mSpeed = 2000.0f;
+				newProjectile->mLifeTime = 3.0f;
 
 				mpProjectiles.push_back(newProjectile);
 				mAttackTimer = 0.0f;
@@ -131,11 +132,11 @@ bool CArtillery::Attack(CGameObject* target, float hitMod, float damageMod)
 
 		if (dotProduct > 0.001f)
 		{
-			mpObjModel->RotateY(100.0f * gFrameTime);
+			mpObjModel->RotateY(250.0f * gFrameTime);
 		}
 		else if (dotProduct < -0.001f)
 		{
-			mpObjModel->RotateY(-100.0f * gFrameTime);
+			mpObjModel->RotateY(-250.0f * gFrameTime);
 		}
 
 		// Check for is the dot product is in the range of -0.001 and 0.001. The reason for this is to make sure
@@ -151,7 +152,6 @@ bool CArtillery::Attack(CGameObject* target, float hitMod, float damageMod)
 				mpObjModel->RotateY(150.0f * gFrameTime);
 			}
 		}
-
 		// Increment attack timer
 		mAttackTimer += gFrameTime;
 	}
