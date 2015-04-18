@@ -81,7 +81,7 @@ bool CFighter::Attack(CGameObject* target, float hitMod, float damageMod)
 {
 	// The RayCollision function calculates this value for us - so it needs no starting value. Only to be defined.
 	float grndDistance;
-	float planeDistance;
+	float airDistance;
 
 	// Get the local Z axis of the turret
 	DX::XMFLOAT4X4 objMatrix;
@@ -95,14 +95,22 @@ bool CFighter::Attack(CGameObject* target, float hitMod, float damageMod)
 
 	// If the target is being looked at and is within range
 	bool groundRayCollision = mAttackTarget->RayCollision({ mWorldPos.x, 0.0f, mWorldPos.z }, localZ, grndDistance);
-	bool planeRayCollision = mAttackTarget->RayCollision(mWorldPos, localZ, planeDistance);
-	if (planeRayCollision && grndDistance <= mRange)
+	bool airRayCollision = mAttackTarget->RayCollision(mWorldPos, localZ, airDistance);
+	if ((groundRayCollision && grndDistance <= mRange) || (airRayCollision && airDistance <= mRange))
 	{
+		// Calculate direction vector from the aircraft to the target
+		DX::XMFLOAT3 target = mAttackTarget->GetWorldPos();
+		DX::XMFLOAT3 dir{ target.x - mWorldPos.x, target.y - mWorldPos.y, target.z - mWorldPos.z };
+
+		// Normalise direction vector
+		DX::XMVECTOR vecNormal = DX::XMVector4Normalize(DX::XMLoadFloat3(&dir));
+		DX::XMStoreFloat3(&dir, vecNormal);
+		
 		if (mAttackTimer >= (1.0f / mFireRate)) //Control rate of fire of the unit
 		{
 			SProjectile* newProjectile = new SProjectile();
 			newProjectile->mModel = mspMshFighterBullet->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
-			newProjectile->mDirection = localZ;
+			newProjectile->mDirection = dir;
 			newProjectile->mSpeed = 150.0f;
 
 			mpProjectiles.push_back(newProjectile);
@@ -112,45 +120,8 @@ bool CFighter::Attack(CGameObject* target, float hitMod, float damageMod)
 	// Check to see if the attack was unsuccessful & that the user has not given the unit a target
 	else if (!mHasPathTarget)
 	{
-		// If above is achieved, check the plane's ray collision
-		if (groundRayCollision && grndDistance <= mRange)
-		{
-			// Change the pitch to make the helicopter face down
-			// Check the yaw
-			if (mYaw != 0.0f)
-			{
-				// Correct any yaw issues
-				if (mYaw >= 0.2f)
-				{
-					float rotateAmount = -100.0f * gFrameTime;
-					mYaw += rotateAmount;
-					mpObjModel->RotateLocalZ(rotateAmount);
-				}
-				else if (mYaw <= -0.2f)
-				{
-					float rotateAmount = 100.0f * gFrameTime;
-					mYaw += rotateAmount;
-					mpObjModel->RotateLocalZ(rotateAmount);
-				}
-				else
-				{
-					// Straighten the aircraft by the remaining amount
-					mYaw = 0.0f;
-					mpObjModel->RotateLocalZ(mYaw);
-				}
-			}
-			else
-			{
-				float pitch = 200.0f * gFrameTime;
-				mPitch += pitch;
-				mpObjModel->RotateLocalX(pitch);
-			}
-		}
-		else
-		{
-			LookingAt(mAttackTarget->GetWorldPos());
-			Move();
-		}
+		LookingAt(mAttackTarget->GetWorldPos());
+		Move();
 	}
 
 	// Increment attack timer

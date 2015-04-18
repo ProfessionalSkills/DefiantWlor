@@ -274,22 +274,6 @@ bool CAirUnit::LookingAt(DX::XMFLOAT3 targetLocation)
 
 void CAirUnit::Move()
 {
-	// Check pitch
-	if (mPitch != 0.0f)
-	{
-		if (mPitch >= 0.2f)
-		{
-			float pitch = -200.0f * gFrameTime;
-			mPitch += pitch;
-			mpObjModel->RotateLocalX(pitch);
-		}
-		else
-		{
-			mpObjModel->RotateLocalX(mPitch);
-			mPitch = 0.0f;
-		}
-	}
-	
 	if (mHasPathTarget)
 	{
 		float MaxX = mPathTarget.x + 3.0f;
