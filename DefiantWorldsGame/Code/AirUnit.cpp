@@ -53,34 +53,22 @@ bool CAirUnit::Update()
 		return true;
 		break;
 	case OBJ_BUILT:
-		if (((mHealth / mMaxHealth) * 100.0f) <= 66.6f)
-		{
-			mState = OBJ_DAMAGED;
-		}
-		break;
-	case OBJ_DAMAGED:
-
-		if (((mHealth / mMaxHealth) * 100.0f) <= 33.3f)
+		// Check how much health is left for smoke creation
+		if (mHealth > 0.0f && ((mHealth / mMaxHealth) * 100.0f) <= 50.0f)
 		{
 			if (mWarningSmoke == nullptr)
 			{
 				mWarningSmoke = new CSmoke(mpObjModel, 20, 0.0f, 0.5f);
 			}
-			mState = OBJ_WARNING;
 		}
-		break;
-	case OBJ_WARNING:
-		if (mWarningSmoke != nullptr)
-		{
-			mWarningSmoke->UpdateSystem();
-		}
+
+		// If there is no health left
 		if (mHealth <= 0.0f)
 		{
 			if (mDestructionExplosion == nullptr)
 			{
 				SafeDelete(mWarningSmoke);
-				mWarningSmoke = nullptr;
-				mDestructionExplosion = new CExplosion(mpObjModel, 100);
+				mDestructionExplosion = new CExplosion(mpObjModel, 20);
 				Destroy();
 			}
 			else
@@ -102,6 +90,12 @@ bool CAirUnit::Update()
 		// Object no longer alive
 		return false;
 		break;
+	}
+
+	// Update smoke system
+	if (mWarningSmoke != nullptr)
+	{
+		mWarningSmoke->UpdateSystem();
 	}
 
 	// Always check to see if the attack target is still alive

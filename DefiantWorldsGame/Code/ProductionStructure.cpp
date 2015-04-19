@@ -254,40 +254,27 @@ bool CProductionStructure::Update(CRTSPlayer* pPlayer)
 				}
 			}
 
-			if (((mHealth / mMaxHealth) * 100.0f) < 66.0f)
-			{
-				mState = OBJ_DAMAGED;
-			}
-			
-			// Object still alive
-			return true;
-
-			break;
-
-		case OBJ_DAMAGED:
-			if (((mHealth / mMaxHealth) * 100.0f) < 33.0f)
+			// Check if health below 50% for smoke system creation
+			if (mHealth > 0.0f && ((mHealth / mMaxHealth) * 100.0f) <= 50.0f)
 			{
 				if (mWarningSmoke == nullptr)
 				{
 					mWarningSmoke = new CSmoke(mpObjModel, 30, 20.0f, 1.3f);
 				}
-				mState = OBJ_WARNING;
+				else
+				{
+					// Update smoke system
+					mWarningSmoke->UpdateSystem();
+				}
 			}
-			return true;
 
-			break;
-
-		case OBJ_WARNING:
-			if (mWarningSmoke != nullptr)
-			{
-				mWarningSmoke->UpdateSystem();
-			}
+			// Check if no health left
 			if ((mHealth <= 0.0f))
 			{
 				if (mDestructionExplosion == nullptr)
 				{	
 					SafeDelete(mWarningSmoke);
-					mDestructionExplosion = new CExplosion(mpObjModel, 200);
+					mDestructionExplosion = new CExplosion(mpObjModel, 50);
 					Destroy();
 				}
 				else

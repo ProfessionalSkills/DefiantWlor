@@ -64,9 +64,6 @@ void CSpaceUnit::Spawn(CGrid* pGrid, SPointData pCentre)
 
 }
 
-//CSpaceUnit::void MoveTo(CTile* dest)
-
-
 void CSpaceUnit::Move()
 {
 	mpObjModel->MoveZ(mSpeed*gFrameTime);

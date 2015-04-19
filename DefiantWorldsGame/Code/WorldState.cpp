@@ -2541,7 +2541,6 @@ void CWorldState::DeleteSelection()
 	if (mpCurSelectedStructure)
 	{
 		// Set object to be deleted
-		mpCurSelectedStructure->SetState(OBJ_WARNING);
 		mpCurSelectedStructure->SetHealth(-1.0f);
 		// pointer set to null
 		OnStructureSelectChange(nullptr);
@@ -2551,7 +2550,6 @@ void CWorldState::DeleteSelection()
 	if (mpCurSelectedAgent)
 	{
 		// Set object to be deleted
-		mpCurSelectedAgent->SetState(OBJ_WARNING);
 		mpCurSelectedAgent->SetHealth(-1.0f);
 
 		// Pointer set to null
@@ -2564,7 +2562,6 @@ void CWorldState::DeleteSelection()
 		// Loop through each one to delete it
 		for (miterUnitSelectionList = mpUnitSelectionList.begin(); miterUnitSelectionList != mpUnitSelectionList.end(); miterUnitSelectionList++)
 		{
-			(*miterUnitSelectionList)->SetState(OBJ_WARNING);
 			(*miterUnitSelectionList)->SetHealth(-1.0f);
 		}
 
