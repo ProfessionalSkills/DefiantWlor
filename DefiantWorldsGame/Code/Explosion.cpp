@@ -36,7 +36,7 @@ void CExplosion::EmitParticle()
 
 	mNewParticle->mModel = mNewParticle->mspMshExplosionParticle->CreateModel(mParticleOrigen.x, mParticleOrigen.y, mParticleOrigen.z);
 	mNewParticle->mModel->Scale(0.1f);
-	mNewParticle->SetLifeTime(gpRandomiser->GetRandomFloat(1.5f, 4.5f));
+	mNewParticle->SetLifeTime(gpRandomiser->GetRandomFloat(1.5f, 3.0f));
 	mNewParticle->SetVector(gpRandomiser->GetRandomFloat(-kExplosionVelocity, kExplosionVelocity),
 	gpRandomiser->GetRandomFloat(-kExplosionVelocity, kExplosionVelocity), gpRandomiser->GetRandomFloat(-kExplosionVelocity, kExplosionVelocity));
 
@@ -50,26 +50,34 @@ bool CExplosion::UpdateSystem()
 	{
 		return false;
 	}
+
 	vector<CParticle*>::iterator itParticle = mParticles.begin();
 	while (itParticle != mParticles.end())
 	{
-		if ((*itParticle)->GetPosition().y <= 5.0f)
-		{
-			(*itParticle)->SetVector((*itParticle)->GetMoveVector().x, ((*itParticle)->GetMoveVector().y * -0.9f), (*itParticle)->GetMoveVector().z);
-		}
-		(*itParticle)->SetVector((*itParticle)->GetMoveVector().x, ((*itParticle)->GetMoveVector().y - (10.0f * gFrameTime)), (*itParticle)->GetMoveVector().z);
-		float lifeTime = (*itParticle)->GetLifeTime();
-		lifeTime -= gFrameTime;
-		(*itParticle)->SetLifeTime(lifeTime);
-		(*itParticle)->mModel->MoveX((*itParticle)->GetMoveVector().x * gFrameTime);
-		(*itParticle)->mModel->MoveY((*itParticle)->GetMoveVector().y * gFrameTime);
-		(*itParticle)->mModel->MoveZ((*itParticle)->GetMoveVector().z * gFrameTime);
-		(*itParticle)->SetLifeTime((*itParticle)->GetLifeTime() - gFrameTime);
+		// Get pointer to the particle instead of dereferencing for each access of the particle (more efficient - derefence is an extra step)
+		CParticle* pParticle = (*itParticle);
 
-		if ((*itParticle)->GetLifeTime() <= 0.0f)
+		// What is this bit doing? xD
+		if (pParticle->GetPosition().y <= 5.0f)
 		{
-			(*itParticle)->mspMshExplosionParticle->RemoveModel((*itParticle)->mModel);
-			SafeDelete((*itParticle));
+			pParticle->SetVector(pParticle->GetMoveVector().x, (pParticle->GetMoveVector().y * -0.9f), pParticle->GetMoveVector().z);
+		}
+		else
+		{
+			pParticle->SetVector(pParticle->GetMoveVector().x, (pParticle->GetMoveVector().y - (10.0f * gFrameTime)), pParticle->GetMoveVector().z);
+		}
+
+		float lifeTime = pParticle->GetLifeTime();
+		lifeTime -= gFrameTime;
+		pParticle->SetLifeTime(lifeTime);
+
+		DX::XMFLOAT3 movement = pParticle->GetMoveVector();
+		pParticle->mModel->Move(movement.x * gFrameTime, movement.y * gFrameTime, movement.z * gFrameTime);
+
+		if (lifeTime <= 0.0f)
+		{
+			pParticle->mspMshExplosionParticle->RemoveModel(pParticle->mModel);
+			SafeDelete(pParticle);
 			itParticle = mParticles.erase(itParticle);
 		}
 		else
