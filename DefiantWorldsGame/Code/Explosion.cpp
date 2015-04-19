@@ -13,7 +13,15 @@ CExplosion::CExplosion(IModel* emitter, float particleNumber)
 
 CExplosion::~CExplosion()
 {
-
+	// Remove all particles
+	while (mParticles.size() > 0)
+	{
+		CParticle* pParticle = mParticles.back();
+		IMesh* pMesh = pParticle->mModel->GetMesh();
+		pMesh->RemoveModel(pParticle->mModel);
+		SafeDelete(pParticle);
+		mParticles.pop_back();
+	}
 }
 
 void CExplosion::SetEmitPosition()
@@ -28,7 +36,7 @@ void CExplosion::EmitParticle()
 
 	mNewParticle->mModel = mNewParticle->mspMshExplosionParticle->CreateModel(mParticleOrigen.x, mParticleOrigen.y, mParticleOrigen.z);
 	mNewParticle->mModel->Scale(0.1f);
-	mNewParticle->SetLifeTime(3.0f);
+	mNewParticle->SetLifeTime(gpRandomiser->GetRandomFloat(1.5f, 4.5f));
 	mNewParticle->SetVector(gpRandomiser->GetRandomFloat(-kExplosionVelocity, kExplosionVelocity),
 	gpRandomiser->GetRandomFloat(-kExplosionVelocity, kExplosionVelocity), gpRandomiser->GetRandomFloat(-kExplosionVelocity, kExplosionVelocity));
 
