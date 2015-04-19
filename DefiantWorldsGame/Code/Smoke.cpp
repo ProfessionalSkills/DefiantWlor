@@ -75,20 +75,23 @@ bool CSmoke::UpdateSystem()
 
 	while (itParticle != mParticles.end())
 	{
-		float lifeTime = (*itParticle)->GetLifeTime() - gFrameTime;
-		(*itParticle)->mModel->MoveX((*itParticle)->GetMoveVector().x * gFrameTime);
-		(*itParticle)->mModel->MoveY((*itParticle)->GetMoveVector().y * gFrameTime);
-		(*itParticle)->mModel->MoveZ((*itParticle)->GetMoveVector().z * gFrameTime);
+		// Store particle pointer to avoid dereferencing everywhere
+		CParticle* pParticle = (*itParticle);
 
-		(*itParticle)->SetLifeTime(lifeTime);
+		float lifeTime = pParticle->GetLifeTime() - gFrameTime;
+		DX::XMFLOAT3 movement = pParticle->GetMoveVector();
 
-		if ((*itParticle)->GetLifeTime() <= 0.0f)
+		// Changed to one function call instead of 3
+		pParticle->mModel->Move(movement.x * gFrameTime, movement.y * gFrameTime, movement.z * gFrameTime);
+
+		pParticle->SetLifeTime(lifeTime);
+
+		if (lifeTime <= 0.0f)
 		{
-			(*itParticle)->mspMshSmokeParticle->RemoveModel((*itParticle)->mModel); 
-			(*itParticle)->~CParticle();
+			pParticle->mspMshSmokeParticle->RemoveModel(pParticle->mModel);
+			SafeDelete(pParticle);
 			itParticle = mParticles.erase(itParticle);
 		}
-
 		else
 		{
 			itParticle++;
