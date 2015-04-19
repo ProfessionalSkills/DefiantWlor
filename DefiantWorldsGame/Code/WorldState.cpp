@@ -1858,40 +1858,49 @@ void CWorldState::StateUpdate()
 		mMousePrevGridPos = mMouseGridPos;
 	}
 
-	//if (mpCurSelectedAgent)
-	//{
-	//	if (mpCurSelectedAgent->GetAttackTarget() == nullptr)
-	//	{
-	//		mpCurSelectedAgent->SetAutoTimer(mpCurSelectedAgent->GetAutoTimer() + gFrameTime);
-	//		if (mpCurSelectedAgent->GetAutoTimer() >= mpCurSelectedAgent->GetAttackTimer())
-	//		{
-	//			float shortestDistance;
-	//			CGameObject* newTarget;
-	//			GA_MultiMap* enemyUnits = mpHumanPlayer->GetWorldUnitList();
-	//			GS_MultiMap* enemyStructures = mpHumanPlayer->GetStructuresList();
-	//			GA_MultiMap::iterator miterEnemyUnits;
-	//			GS_MultiMap::iterator miterEnemyStructures;
+	if (mpCurSelectedAgent)
+	{
+		if (mpCurSelectedAgent->GetAttackTarget() == nullptr)
+		{
+			mpCurSelectedAgent->SetAutoTimer(mpCurSelectedAgent->GetAutoTimer() + gFrameTime);
+			if (mpCurSelectedAgent->GetAutoTimer() >= mpCurSelectedAgent->GetAttackTimer())
+			{
+				float shortestDistance = 9999.0f;
+				CGameObject* newTarget;
+				GA_MultiMap* enemyUnits = mpHumanPlayer->GetWorldUnitList();
+				GS_MultiMap* enemyStructures = mpHumanPlayer->GetStructuresList();
+				GA_MultiMap::iterator miterEnemyUnits;
+				GS_MultiMap::iterator miterEnemyStructures;
 
-	//			for (miterEnemyUnits = enemyUnits->begin(); miterEnemyUnits != enemyUnits->end(); miterEnemyUnits++)
-	//			{
-	//				if (distance((miterEnemyUnits->second->GetWorldXPos() - mpCurSelectedAgent->GetWorldXPos), 0.0f, (miterEnemyUnits->second->GetWorldXPos() - mpCurSelectedAgent->GetWorldXPos)) < shortestDistance)
-	//				{
-	//					newTarget = miterEnemyUnits->second;
-	//				}
-	//			}
-	//			for (miterEnemyStructures = enemyStructures->begin(); miterEnemyStructures != enemyStructures->end(); miterEnemyStructures++)
-	//			{
-	//				if (distance((miterEnemyStructures->second->GetWorldXPos() - mpCurSelectedAgent->GetWorldXPos), 0.0f, (miterEnemyStructures->second->GetWorldXPos() - mpCurSelectedAgent->GetWorldXPos)) < shortestDistance)
-	//				{
-	//					newTarget = miterEnemyStructures->second;
-	//				}
-	//			}
-	//			mpCurSelectedAgent->SetAutoTimer(0.0f);
-	//			mpCurSelectedAgent->SetAttackTimer(gpRandomiser->GetRandomFloat(5.0f, 10.0f));
-	//			
-	//		}
-	//	}
-	//}
+				for (miterEnemyUnits = enemyUnits->begin(); miterEnemyUnits != enemyUnits->end(); miterEnemyUnits++)
+				{
+					if (miterEnemyUnits->second != mpCurSelectedAgent)
+					{
+						float dist = distance((miterEnemyUnits->second->GetWorldXPos() - mpCurSelectedAgent->GetWorldXPos()), 0.0f, (miterEnemyUnits->second->GetWorldXPos() - mpCurSelectedAgent->GetWorldXPos()));
+						if (dist < shortestDistance)
+						{
+							shortestDistance = dist;
+							newTarget = miterEnemyUnits->second;
+						}
+					}
+					
+				}
+				for (miterEnemyStructures = enemyStructures->begin(); miterEnemyStructures != enemyStructures->end(); miterEnemyStructures++)
+				{
+					float dist = distance((miterEnemyStructures->second->GetWorldXPos() - mpCurSelectedAgent->GetWorldXPos()), 0.0f, (miterEnemyStructures->second->GetWorldXPos() - mpCurSelectedAgent->GetWorldXPos()));
+					if ( dist < shortestDistance)
+					{
+						shortestDistance = dist;
+						newTarget = miterEnemyStructures->second;
+					}
+				}
+				mpCurSelectedAgent->SetAttackTarget(newTarget);
+				mpCurSelectedAgent->SetAutoTimer(0.0f);
+				mpCurSelectedAgent->SetAttackTimer(gpRandomiser->GetRandomFloat(5.0f, 10.0f));
+				
+			}
+		}
+	}
 
 	// UPDATE PLAYERS
 	//------------------------------
