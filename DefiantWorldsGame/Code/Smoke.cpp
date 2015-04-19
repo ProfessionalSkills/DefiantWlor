@@ -1,18 +1,13 @@
 #include "Smoke.h"
 
-CSmoke::CSmoke(IModel* emitter, int particleNumber, EQueueObjectType objectType)
+CSmoke::CSmoke(IModel* emitter, int particleNumber, float relativeHeight, float scale)
 {
 	mEmitter = emitter;
-	if (objectType == Q_BARRACKS || objectType == Q_HELLIPAD || objectType == Q_SPACE_CENTRE)
-	{
-		SetEmitPosition(emitter->GetX(), emitter->GetY() + 20.0f, emitter->GetZ());
-		mScale = 1.0f;
-	}
-	else
-	{
-		SetEmitPosition(emitter->GetX(), emitter->GetY(), emitter->GetZ());
-		mScale = 0.5f;
-	}
+
+	SetEmitPosition(emitter->GetX(), emitter->GetY() + relativeHeight, emitter->GetZ());
+	mScale = scale;
+	mRelativeHeight = relativeHeight;
+
 	mEmitterCountdown = kEmitTime;
 	mParticleNumber = particleNumber;
 }
@@ -25,7 +20,7 @@ CSmoke::~CSmoke()
 		CParticle* pParticle = mParticles.back();
 		IMesh* pMesh = pParticle->mModel->GetMesh();
 		pMesh->RemoveModel(pParticle->mModel);
-		if (pParticle) SafeDelete(pParticle);
+		SafeDelete(pParticle);
 		mParticles.pop_back();
 	}
 }
@@ -37,14 +32,6 @@ void CSmoke::SetEmitPosition(float x, float y, float z)
 
 void CSmoke::EmitParticle()
 {
-	if (mScale == 1.0f)
-	{
-		SetEmitPosition(mEmitter->GetX(), mEmitter->GetY() + 20.0f, mEmitter->GetZ());
-	}
-	else if (mScale == 0.5f)
-	{
-		SetEmitPosition(mEmitter->GetX(), mEmitter->GetY(), mEmitter->GetZ());
-	}
 	CParticle* mNewParticle = new CParticle();
 	float mPosX = gpRandomiser->GetRandomFloat(mParticleOrigen.x - 3.0f, mParticleOrigen.x + 3.0f);
 	float mPosZ = gpRandomiser->GetRandomFloat(mParticleOrigen.z - 3.0f, mParticleOrigen.z + 3.0f);
@@ -61,7 +48,9 @@ void CSmoke::EmitParticle()
 
 bool CSmoke::UpdateSystem()
 {
-
+	// Update emitter position
+	SetEmitPosition(mEmitter->GetX(), mEmitter->GetY() + mRelativeHeight, mEmitter->GetZ());
+	
 	if (mEmitterCountdown <= 0.0f)
 	{
 		if (mParticles.size() <= mParticleNumber)

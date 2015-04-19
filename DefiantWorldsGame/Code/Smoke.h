@@ -13,8 +13,9 @@ class CSmoke : public CParticleEmitter
 protected:
 	float mEmitterCountdown;
 	float mScale;
+	float mRelativeHeight;			// Additional height on top of the current emitter height
 public:
-	CSmoke(IModel* emitter, int particleNumber, EQueueObjectType objectType);
+	CSmoke(IModel* emitter, int particleNumber, float relativeHeight, float scale);
 	~CSmoke();
 
 	void EmitParticle();
