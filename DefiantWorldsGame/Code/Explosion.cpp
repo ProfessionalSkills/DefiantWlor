@@ -57,7 +57,7 @@ bool CExplosion::UpdateSystem()
 		// Get pointer to the particle instead of dereferencing for each access of the particle (more efficient - derefence is an extra step)
 		CParticle* pParticle = (*itParticle);
 
-		// What is this bit doing? xD
+		// Making the particles bounce is pretty cool :P
 		if (pParticle->GetPosition().y <= 5.0f)
 		{
 			pParticle->SetVector(pParticle->GetMoveVector().x, (pParticle->GetMoveVector().y * -0.9f), pParticle->GetMoveVector().z);
