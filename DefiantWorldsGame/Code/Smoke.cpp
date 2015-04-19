@@ -23,6 +23,8 @@ CSmoke::~CSmoke()
 	while (mParticles.size() > 0)
 	{
 		CParticle* pParticle = mParticles.back();
+		IMesh* pMesh = pParticle->mModel->GetMesh();
+		pMesh->RemoveModel(pParticle->mModel);
 		if (pParticle) SafeDelete(pParticle);
 		mParticles.pop_back();
 	}
