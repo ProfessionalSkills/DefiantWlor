@@ -41,7 +41,6 @@ void CExplosion::EmitParticle()
 	gpRandomiser->GetRandomFloat(-kExplosionVelocity, kExplosionVelocity), gpRandomiser->GetRandomFloat(-kExplosionVelocity, kExplosionVelocity));
 
 	mNewParticle->SetPosition(mParticleOrigen);
-	mNewParticle->SetLifeTime(kExplosionLifeTime);
 	mParticles.push_back(mNewParticle);
 }
 
