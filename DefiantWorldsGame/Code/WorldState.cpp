@@ -588,6 +588,9 @@ void CWorldState::CheckKeyPresses()
 			mpCamCurrent = mpCamEarth;
 		}
 
+		// Ensure global pointer holds correct camera
+		gpCurWorldCamera = mpCamCurrent->GetCamera();
+
 		// Ensure no buildings can be brought over
 		OnPlacingStructureChange(nullptr);
 		OnUnitSelectChange(nullptr);
@@ -1288,6 +1291,9 @@ void CWorldState::StateSetup()
 	mpCamMars->Update();
 
 	mpCamCurrent = mpCamEarth;
+
+	// Ensure global pointer holds correct camera
+	gpCurWorldCamera = mpCamCurrent->GetCamera();
 
 	// Camera limitations
 	float threshold = 50.0f;

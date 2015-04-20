@@ -110,6 +110,9 @@ extern CNewsTicker* gpNewsTicker;
 extern float gFrameTime;
 extern float gMouseWheelDelta;
 
+// Global pointer to the current camera - for lookat functions when doing particles and other various things
+extern ICamera* gpCurWorldCamera;
+
 
 //-----------------------------------------------------
 // STRUCTURES
