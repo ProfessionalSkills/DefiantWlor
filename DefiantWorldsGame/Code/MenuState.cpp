@@ -738,6 +738,14 @@ void CMenuState::StateUpdate()
 
 void CMenuState::StateCleanup()
 {
+	// DISPLAY LOADING SCREEN
+	ISprite* pLoading = gpEngine->CreateSprite("Loading.png");
+	gpEngine->DrawScene();
+	
+	// Remove loading screen sprite
+	gpEngine->RemoveSprite(pLoading);
+
+	// Unload entities
 	mpMshAtmosphere->RemoveModel(mpMdlAtmosphere);
 	mpMshPlanet->RemoveModel(mpMdlMars);
 	mpMshPlanet->RemoveModel(mpMdlEarth);
