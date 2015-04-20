@@ -202,22 +202,22 @@ void SetupEngine()
 	//Ground Unit Meshes
 	//Bomber
 	CBomber::mspMshBomber = gpEngine->LoadMesh("HeliScout.x");
-	CBomber::mspMshBomb = gpEngine->LoadMesh("bullet.x");
+	CBomber::mspMshBomb = gpEngine->LoadMesh("WorldLazer.x");
 	//Fighter
 	CFighter::mspMshFighter = gpEngine->LoadMesh("Helicopter.x");
-	CFighter::mspMshFighterBullet = gpEngine->LoadMesh("bullet.x");
+	CFighter::mspMshFighterBullet = gpEngine->LoadMesh("WorldLazer.x");
 	//Worker
 	CWorker::mspMshWorker = gpEngine->LoadMesh("transportTruck_german.x");
 	CWorker::mspMshWorkerBullet = gpEngine->LoadMesh("bullet.x");
 	//Tank
 	CTank::mspMshTank = gpEngine->LoadMesh("HoverTank01.x");
-	CTank::mspMshTankShell = gpEngine->LoadMesh("bullet.x");
+	CTank::mspMshTankShell = gpEngine->LoadMesh("WorldLazer.x");
 	//Infantry
 	CInfantry::mspMshInfantry = gpEngine->LoadMesh("tigerAusfH.x");
-	CInfantry::mspMshInfantryBullet = gpEngine->LoadMesh("bullet.x");
+	CInfantry::mspMshInfantryBullet = gpEngine->LoadMesh("WorldLazer.x");
 	//Artillery
 	CArtillery::mspMshArtillery = gpEngine->LoadMesh("marsAA.x");
-	CArtillery::mspMshArtilleryShell = gpEngine->LoadMesh("bullet.x");
+	CArtillery::mspMshArtilleryShell = gpEngine->LoadMesh("WorldLazer.x");
 	//Particle Mesh
 	CParticle::mspMshExplosionParticle = gpEngine->LoadMesh("ExplosionParticle.x");
 	CParticle::mspMshSmokeParticle = gpEngine->LoadMesh("SmokeParticle.x");
