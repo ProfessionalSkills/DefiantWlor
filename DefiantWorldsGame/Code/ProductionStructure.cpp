@@ -259,7 +259,7 @@ bool CProductionStructure::Update(CRTSPlayer* pPlayer)
 			{
 				if (mWarningSmoke == nullptr)
 				{
-					mWarningSmoke = new CSmoke(mpObjModel, 30, 20.0f, 1.3f);
+					mWarningSmoke = new CSmoke(mpObjModel, 30, 20.0f, 0.8f);
 				}
 				else
 				{
