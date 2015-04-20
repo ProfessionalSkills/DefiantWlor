@@ -1921,7 +1921,7 @@ void CWorldState::StateCleanup()
 {
 	// DISPLAY LOADING SCREEN
 	ISprite* pLoading = gpEngine->CreateSprite("Loading.png");
-	gpEngine->DrawScene();
+	gpEngine->DrawScene(gpCurWorldCamera);
 
 	// Remove loading screen sprite
 	gpEngine->RemoveSprite(pLoading);
