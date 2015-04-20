@@ -28,6 +28,7 @@ protected:
 	float mParticleNumber;
 	//EMITTER MODEL SOURCE
 	IModel* mEmitter;
+
 public:
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------

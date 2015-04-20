@@ -11,6 +11,17 @@ CExplosion::CExplosion(IModel* emitter, float particleNumber)
 	}
 }
 
+CExplosion::CExplosion(DX::XMFLOAT3 emitterPos, float particleNumber)
+{
+	mParticleNumber = particleNumber;
+	mParticleOrigen = emitterPos;
+
+	for (int i = 0; i < mParticleNumber; i++)
+	{
+		EmitParticle();
+	}
+}
+
 CExplosion::~CExplosion()
 {
 	// Remove all particles

@@ -6,6 +6,7 @@
 const int kParticleNumber = 100;
 const float kExplosionLifeTime = 1.5f;
 const float kExplosionVelocity = 10.0f;
+
 class CExplosion : public CParticleEmitter
 {
 protected:
@@ -13,7 +14,8 @@ protected:
 public:
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
-	CExplosion(IModel* emitter,float particleNumber);
+	CExplosion(IModel* emitter, float particleNumber);
+	CExplosion(DX::XMFLOAT3 emitterPos, float particleNumber);
 	~CExplosion();
 
 	//METHODS
