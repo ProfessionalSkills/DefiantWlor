@@ -108,17 +108,11 @@ bool CAirUnit::Update()
 	}
 
 	// ALL THESE UPDATES OCCUR IF THE UNIT IS NOT DEAD OR IN SPACE
-	if (HasTarget()) //If there is a path target
-	{
-		//Move the unit towards the path target
-		LookingAt(mPathTarget);
-		Move();
-	}
-	else if (mAttackTarget != nullptr) //if there is an attack target
+	if (!mHasPathTarget && mAttackTarget != nullptr) //if there is an attack target
 	{
 		Attack(mAttackTarget, 100, mDamage);
 	}
-	else
+	else if (!mHasPathTarget)
 	{
 		// Correct any yaw issues
 		if (mYaw >= 0.3f)
@@ -206,6 +200,7 @@ bool CAirUnit::LookingAt(DX::XMFLOAT3 targetLocation)
 	float dotProduct = Dot(targetDirection, localX);
 	bool left = false;
 	bool right = false;
+	bool inFront = false;
 
 	// Check which direction the target is in
 	if (dotProduct > 0.01f)
@@ -220,6 +215,9 @@ bool CAirUnit::LookingAt(DX::XMFLOAT3 targetLocation)
 	}
 	else
 	{
+		// Currently, it can be assumed target is ahead
+		inFront = true;
+		
 		// Do another dot product, this time checking for it being in front
 		dotProduct = Dot(targetDirection, localZ);
 
@@ -228,6 +226,9 @@ bool CAirUnit::LookingAt(DX::XMFLOAT3 targetLocation)
 		{
 			// Rotate a litte so target is no longer directly behind
 			mpObjModel->RotateY(-20.0f * gFrameTime);
+
+			// Target is actually behind
+			inFront = false;
 		}
 	}
 
@@ -235,7 +236,7 @@ bool CAirUnit::LookingAt(DX::XMFLOAT3 targetLocation)
 	if (left)
 	{
 		// Check if the yaw is already at max
-		if (mYaw >= 30.0f) return true;
+		if (mYaw >= 30.0f) return inFront;
 
 		float rotateAmount = 50.0f * gFrameTime;
 		mYaw += rotateAmount;
@@ -244,7 +245,7 @@ bool CAirUnit::LookingAt(DX::XMFLOAT3 targetLocation)
 	else if (right)
 	{
 		// Check if the yaw is already at max
-		if (mYaw <= -30.0f) return true;
+		if (mYaw <= -30.0f) return inFront;
 		
 		float rotateAmount = -50.0f * gFrameTime;
 		mYaw += rotateAmount;
@@ -274,7 +275,7 @@ bool CAirUnit::LookingAt(DX::XMFLOAT3 targetLocation)
 		}
 	}
 
-	return true;
+	return inFront;
 }
 
 void CAirUnit::Move()

@@ -46,7 +46,6 @@ CFighter::~CFighter()
 //-----------------------------------------------------
 // FIGHTER CLASS METHODS
 //-----------------------------------------------------
-
 void CFighter::UnloadIModel()
 {
 	if (mpObjModel != 0)
@@ -120,8 +119,10 @@ bool CFighter::Attack(CGameObject* target, float hitMod, float damageMod)
 	// Check to see if the attack was unsuccessful & that the user has not given the unit a target
 	else if (!mHasPathTarget)
 	{
-		LookingAt(mAttackTarget->GetWorldPos());
-		Move();
+		if (LookingAt(mAttackTarget->GetWorldPos()))
+		{
+			Move();
+		}
 	}
 
 	// Increment attack timer
@@ -157,6 +158,16 @@ bool CFighter::Update()
 
 	// Check if object exists before rotating blades 
 	if (mpObjModel) mpObjModel->GetNode(4)->RotateY(mRotarSpeed * gFrameTime);
+
+	// Check if there is a target
+	if (HasTarget()) //If there is a path target
+	{
+		//Move the unit towards the path target
+		if (LookingAt(mPathTarget))
+		{
+			Move();
+		}
+	}
 
 	return CAirUnit::Update();
 }

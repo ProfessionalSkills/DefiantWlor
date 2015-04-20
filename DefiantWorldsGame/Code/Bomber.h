@@ -51,6 +51,7 @@ public:
 	// OVERRIDE METHODS
 	//---------------------------
 	bool Attack(CGameObject* target, float hitMod, float damageMod);
+	bool Update();
 
 private:
 	IModel* CreateModel(DX::XMFLOAT3 pos) override;

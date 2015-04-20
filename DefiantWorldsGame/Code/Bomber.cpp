@@ -46,7 +46,6 @@ CBomber::~CBomber()
 //-----------------------------------------------------
 // BOMBER CLASS METHODS
 //-----------------------------------------------------
-
 void CBomber::UnloadIModel()
 {
 	if (mpObjModel != nullptr)
@@ -161,4 +160,18 @@ IModel* CBomber::CreateModel(DX::XMFLOAT3 pos)
 	}
 
 	return pModel;
+}
+
+bool CBomber::Update()
+{
+	// Check if it has a target
+	if (mHasPathTarget) //If there is a path target
+	{
+		//Move the unit towards the path target
+		LookingAt(mPathTarget);
+		Move();
+	}
+
+	// Call parent's update function
+	return CAirUnit::Update();
 }
