@@ -164,6 +164,8 @@ IModel* CBomber::CreateModel(DX::XMFLOAT3 pos)
 
 bool CBomber::Update()
 {
+	if (mHealth <= 0.0f) return CAirUnit::Update();
+	
 	// Check if it has a target
 	if (mHasPathTarget) //If there is a path target
 	{
