@@ -163,6 +163,7 @@ IModel* CBomber::CreateModel(DX::XMFLOAT3 pos)
 
 bool CBomber::Update()
 {
+	if (mState == OBJ_INSPACE) return CAirUnit::Update();
 	if (mHealth <= 0.0f) return CAirUnit::Update();
 	
 	// Check if it has a target

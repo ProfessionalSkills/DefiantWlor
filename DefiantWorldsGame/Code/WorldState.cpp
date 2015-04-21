@@ -1919,6 +1919,12 @@ void CWorldState::StateUpdate()
 
 void CWorldState::StateCleanup()
 {
+	// Unload fonts
+	if (mpTitleFont) gpEngine->RemoveFont(mpTitleFont);
+	if (mpButtonFont) gpEngine->RemoveFont(mpButtonFont);
+	mpTitleFont = nullptr;
+	mpButtonFont = nullptr;
+	
 	// DISPLAY LOADING SCREEN
 	ISprite* pLoading = gpEngine->CreateSprite("Loading.png");
 	gpEngine->DrawScene(gpCurWorldCamera);

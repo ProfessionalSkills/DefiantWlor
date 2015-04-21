@@ -372,6 +372,10 @@ void CSpaceState::DrawFontData()
 
 void CSpaceState::StateCleanup()
 {
+	// Unload fonts
+	gpEngine->RemoveFont(mpTitleFont);
+	gpEngine->RemoveFont(mpButtonFont);
+	
 	// DISPLAY LOADING SCREEN
 	ISprite* pLoading = gpEngine->CreateSprite("Loading.png");
 	gpEngine->DrawScene();

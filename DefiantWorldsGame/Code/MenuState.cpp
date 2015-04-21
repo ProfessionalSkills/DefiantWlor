@@ -738,13 +738,18 @@ void CMenuState::StateUpdate()
 
 void CMenuState::StateCleanup()
 {
+	// Remove font
+	gpEngine->RemoveFont(mpButtonFont);
+	gpEngine->RemoveFont(mpTitleFont);
+	gpEngine->RemoveFont(mpIncDecFont);
+
 	// DISPLAY LOADING SCREEN
 	ISprite* pLoading = gpEngine->CreateSprite("Loading.png");
 	gpEngine->DrawScene();
-	
+
 	// Remove loading screen sprite
 	gpEngine->RemoveSprite(pLoading);
-
+	
 	// Unload entities
 	mpMshAtmosphere->RemoveModel(mpMdlAtmosphere);
 	mpMshPlanet->RemoveModel(mpMdlMars);
@@ -758,10 +763,6 @@ void CMenuState::StateCleanup()
 	gpEngine->RemoveSprite(mpSprBackground);
 	gpEngine->RemoveSprite(mpSprLogo);
 	gpEngine->RemoveSprite(mpSprCursor);
-
-	gpEngine->RemoveFont(mpButtonFont);
-	gpEngine->RemoveFont(mpTitleFont);
-	gpEngine->RemoveFont(mpIncDecFont);
 
 	// Remove buttons
 	while (!mpButtonList.empty())
