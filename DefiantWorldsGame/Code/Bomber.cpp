@@ -142,6 +142,11 @@ bool CBomber::Attack(CGameObject* target, float hitMod, float damageMod)
 		// Increment attack timer
 		mAttackTimer += gFrameTime;
 	}
+	else
+	{
+		// WRong type of target selected
+		mAttackTarget = nullptr;
+	}
 	return false;
 }
 

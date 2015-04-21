@@ -15,7 +15,7 @@ IMesh* CTank::mspMshTankShell = nullptr;
 //-----------------------------------------------------
 CTank::CTank()
 {
-	mAgentInfo = SAgentData(GAV_TANK, "Tank");
+	mAgentInfo = SAgentData(GAV_TANK, "Heavy Tank");
 	mMaxHealth = 2000.0f;
 	mHealth = 2000.0f;
 	mSpeed = 4.0f;

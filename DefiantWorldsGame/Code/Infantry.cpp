@@ -16,7 +16,7 @@ IMesh* CInfantry::mspMshInfantryBullet = nullptr;
 //-----------------------------------------------------
 CInfantry::CInfantry()
 {
-	mAgentInfo = SAgentData(GAV_INFANTRY, "Infantry");
+	mAgentInfo = SAgentData(GAV_INFANTRY, "Light Tank");
 	mMaxHealth = 250.0f;
 	mHealth = 250.0f;
 	mSpeed = 18.0f;

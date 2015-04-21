@@ -66,45 +66,7 @@ bool CGameAgent::DragBoxCollision(DX::BoundingBox& box)
 void CGameAgent::DisplayInfo(IFont* font)
 {
 	// Output selected agent
-	switch (mAgentInfo.mAgentType)
-	{
-	case GAV_ARTILLERY:
-		mStrDisplay << "Artilery";
-		break;
-
-	case GAV_BOMBER:
-		mStrDisplay << "Bomber";
-		break;
-
-	case GAV_FIGHTER:
-		mStrDisplay << "Fighter";
-		break;
-
-	case GAV_INFANTRY:
-		mStrDisplay << "Infantry";
-		break;
-
-	case GAV_MOTHERSHIP:
-		mStrDisplay << "Mothership";
-		break;
-
-	case GAV_SPACE_FIGHTER:
-		mStrDisplay << "Space Fighter";
-		break;
-
-	case GAV_TANK:
-		mStrDisplay << "Tank";
-		break;
-
-	case GAV_TRANSPORT:
-		mStrDisplay << "Transport";
-		break;
-	
-	case GAV_WORKER:
-		mStrDisplay << "Worker";
-		break;
-	}
-
+	mStrDisplay << mAgentInfo.mAgentName;
 	font->Draw(mStrDisplay.str(), 610, 825, 0xff002930, kLeft, kTop);
 	mStrDisplay.str("");
 
