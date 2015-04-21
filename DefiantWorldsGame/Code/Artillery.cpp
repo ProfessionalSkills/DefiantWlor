@@ -17,7 +17,7 @@ IMesh* CArtillery::mspMshArtilleryShell = nullptr;
 //-----------------------------------------------------
 CArtillery::CArtillery()
 {
-	mAgentInfo = SAgentData(GAV_ARTILLERY, "Artillery");
+	mAgentInfo = SAgentData(GAV_ARTILLERY, "Anti-Air");
 	mMaxHealth = 300.0f;
 	mHealth = 300.0f;
 	mSpeed = 20.0f;
@@ -86,6 +86,7 @@ bool CArtillery::Attack(CGameObject* target, float hitMod, float damageMod)
 		float distance;
 
 		// Get the local Z axis of the turret
+		DX::XMFLOAT3 target = mAttackTarget->GetWorldPos();
 		DX::XMFLOAT4X4 objMatrix;
 		mpObjModel->GetMatrix(&objMatrix.m[0][0]);
 
@@ -98,61 +99,38 @@ bool CArtillery::Attack(CGameObject* target, float hitMod, float damageMod)
 		// If the target is being looked at and is within range
 		if (mAttackTarget->RayCollision(worldPos, localZ, distance) && distance <= mRange)
 		{
+			// Calculate direction vector from the aircraft to the target
+			DX::XMFLOAT3 dir{ target.x - mWorldPos.x, target.y - mWorldPos.y, target.z - mWorldPos.z };
+
+			// Normalise direction vector
+			DX::XMVECTOR vecNormal = DX::XMVector4Normalize(DX::XMLoadFloat3(&dir));
+			DX::XMStoreFloat3(&dir, vecNormal);
+
 			if (mAttackTimer >= (1.0f / mFireRate)) //Control rate of fire of the unit
 			{
 				SProjectile* newProjectile = new SProjectile();
 				newProjectile->mModel = mspMshArtilleryShell->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
-				newProjectile->mModel->LookAt(mAttackTarget->GetModel());
-				DX::XMFLOAT4X4 projectileMatrix;
-				newProjectile->mModel->GetMatrix(&projectileMatrix.m[0][0]);
-				DX::XMFLOAT3 projZ{ projectileMatrix.m[2][0], projectileMatrix.m[2][1], projectileMatrix.m[2][2] };
-				newProjectile->mDirection = projZ;
-				newProjectile->mSpeed = 2000.0f;
-				newProjectile->mLifeTime = 3.0f;
+				newProjectile->mDirection = dir;
+				newProjectile->mSpeed = 500.0f;
+				newProjectile->mLifeTime = 10.0f;
 
 				mpProjectiles.push_back(newProjectile);
 				mAttackTimer = 0.0f;
 			}
 		}
-
-		// Do this bit all the time so that if the target is moving, it follows it whilst still firing (for added effect)
-		DX::XMFLOAT3 vectorZ = { (target->GetWorldPos().x - mWorldPos.x), 0.0f, (target->GetWorldPos().z - mWorldPos.z) };
-		// Normalise vectorZ
-		vecNormal = DX::XMVector4Normalize(DX::XMLoadFloat3(&vectorZ));
-		DX::XMStoreFloat3(&vectorZ, vecNormal);
-
-		DX::XMFLOAT3 localX = { objMatrix.m[0][0], objMatrix.m[0][1], objMatrix.m[0][2] };
-
-		// Normalise this local axis
-		vecNormal = DX::XMVector4Normalize(DX::XMLoadFloat3(&localX));
-		DX::XMStoreFloat3(&localX, vecNormal);
-
-		float dotProduct = Dot(localX, vectorZ);
-
-		if (dotProduct > 0.001f)
+		else
 		{
-			mpObjModel->RotateY(250.0f * gFrameTime);
-		}
-		else if (dotProduct < -0.001f)
-		{
-			mpObjModel->RotateY(-250.0f * gFrameTime);
-		}
-
-		// Check for is the dot product is in the range of -0.001 and 0.001. The reason for this is to make sure
-		// that the target is IN FRONT of the turret and not behind it
-		if (dotProduct > -0.001f && dotProduct < 0.001f)
-		{
-			// Do another dot product, this time checking for it being in front
-			dotProduct = Dot(localZ, vectorZ);
-
-			// Check for behind
-			if (dotProduct < 0.0f)
-			{
-				mpObjModel->RotateY(150.0f * gFrameTime);
-			}
+			// Move the unit toward the target
+			LookingAt(target);
+			Move();
 		}
 		// Increment attack timer
 		mAttackTimer += gFrameTime;
+	}
+	else
+	{
+		// Wrong target has been selected
+		mAttackTarget = nullptr;
 	}
 	return false;
 }

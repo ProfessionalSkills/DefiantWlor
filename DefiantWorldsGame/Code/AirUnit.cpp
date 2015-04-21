@@ -78,8 +78,8 @@ bool CAirUnit::Update()
 			else if (mpObjModel->GetY() > 0.0f)
 			{
 				// Make the model lose control
-				mpObjModel->RotateLocalZ(gpRandomiser->GetRandomFloat(0.0f, 60.0f) * 10.0f * gFrameTime);
-				mpObjModel->RotateLocalY(gpRandomiser->GetRandomFloat(0.0f, 60.0f) * 10.0f * gFrameTime);
+				mpObjModel->RotateZ(gpRandomiser->GetRandomFloat(0.0f, 60.0f) * 10.0f * gFrameTime);
+				mpObjModel->RotateLocalY(gpRandomiser->GetRandomFloat(0.0f, 100.0f) * 10.0f * gFrameTime);
 
 				// Move down
 				mpObjModel->MoveY(-20.0f * gFrameTime);

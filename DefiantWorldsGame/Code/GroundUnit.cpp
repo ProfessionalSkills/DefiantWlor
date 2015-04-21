@@ -101,23 +101,23 @@ bool CGroundUnit::Update()
 	}
 
 	// ALL THESE UPDATES OCCUR IF THE UNIT IS NOT DEAD OR IN SPACE
-	Move();
 	if (HasTarget()) //If there is a path target
 	{
-			//Move the unit towards the path target
+		//Move the unit towards the path target
 		LookingAt(mPathTarget); //Rotates the unit to face the path target
+		Move();
 	}
-	if (mAttackTarget != nullptr) //if there is an attack target
+	else if (mAttackTarget != nullptr) //if there is an attack target
 	{
+		// Check if target is dead
+		if (mAttackTarget->GetHealth() <= 0.0f)
+		{
+			mAttackTarget = nullptr;
+		}
+
 		if (mAttackTarget != nullptr)
 		{
 			Attack(mAttackTarget, 100, mDamage);
-
-			// Check if target is dead
-			if (mAttackTarget->GetHealth() <= 0.0f)
-			{
-				mAttackTarget = nullptr;
-			}
 		}
 	}
 	else
@@ -147,8 +147,6 @@ bool CGroundUnit::Update()
 			projectile->Update();
 			DX::XMFLOAT3 position = { projectile->mModel->GetX(), projectile->mModel->GetY(), projectile->mModel->GetZ() }; //projectile's new position stored for collision detection
 
-			if (projectile == mpProjectiles.front()) //As all projectiles move at the same speed, the only projectile that will collide is the one fired first  
-			{
 				// Check to see if the attack target has been lost or it has been destroyed
 				if (mAttackTarget == nullptr || projectile->mLifeTime <= 0.0f)
 				{
@@ -166,7 +164,6 @@ bool CGroundUnit::Update()
 					mpProjectiles.erase(iter);
 					break; //Breaks out of the loop as the vector size has been changed, comprimising the iterator loop
 				}
-			}
 		}
 	}
 
@@ -214,7 +211,7 @@ void CGroundUnit::Move()
 
 		if (mWorldPos.x > MinX && mWorldPos.x < MaxX && mWorldPos.z > MinZ && mWorldPos.z < MaxZ)
 		{
-
+			mHasPathTarget = false;
 		}
 		else
 		{
