@@ -107,14 +107,34 @@ bool CInfantry::Attack(CGameObject* target, float hitMod, float damageMod)
 			SProjectile* newProjectile = new SProjectile();
 			newProjectile->mModel = mspMshInfantryBullet->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
 			newProjectile->mDirection = localZ;
-			newProjectile->mSpeed = 1000.0f;
+			newProjectile->mSpeed = 800.0f;
 			newProjectile->mLifeTime = 3.0f;
 
 			mpProjectiles.push_back(newProjectile);
 			mAttackTimer = 0.0f;
 		}
 	}
+	else
+	{
+		// The attack was unsuccessful - most likely reason is the target is too far away
+		// Get the direction vector from the tank to the target
+		DX::XMFLOAT3 target = mAttackTarget->GetWorldPos();
+		DX::XMFLOAT3 length{ target.x - mWorldPos.x, target.y - mWorldPos.y, target.z - mWorldPos.z };
 
+		// Find out the distance to the target
+		DX::XMVECTOR vecLength = DX::XMVector3LengthSq(DX::XMLoadFloat3(&length));
+		DX::XMStoreFloat3(&length, vecLength);
+
+		// Varify the distance
+		if (length.x > mRange)
+		{
+			// Move the unit
+			LookingAt(target);
+			Move();
+		}
+	}
+
+	// TURRET ROTATING
 	// Do this bit all the time so that if the target is moving, it follows it whilst still firing (for added effect)
 	DX::XMFLOAT3 vectorZ = { (target->GetWorldPos().x - mWorldPos.x), 0.0f, (target->GetWorldPos().z - mWorldPos.z) };
 	// Normalise vectorZ

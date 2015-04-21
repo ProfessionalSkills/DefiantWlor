@@ -101,7 +101,7 @@ bool CGroundUnit::Update()
 	}
 
 	// ALL THESE UPDATES OCCUR IF THE UNIT IS NOT DEAD OR IN SPACE
-	if (HasTarget()) //If there is a path target
+	if (HasTarget() && !mAttackTarget) //If there is a path target
 	{
 		//Move the unit towards the path target
 		LookingAt(mPathTarget); //Rotates the unit to face the path target
