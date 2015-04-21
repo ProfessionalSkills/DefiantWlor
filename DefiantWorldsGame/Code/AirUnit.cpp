@@ -167,8 +167,7 @@ bool CAirUnit::Update()
 			// Check to see if the attack target has been lost or it has been destroyed
 			if (mAttackTarget == nullptr)
 			{
-				SProjectile* tmp = projectile;
-				SafeDelete(tmp);
+				SafeDelete(projectile);
 				mpProjectiles.erase(iter);
 				break;
 			}
@@ -176,8 +175,7 @@ bool CAirUnit::Update()
 			{
 				mAttackTarget->TakeDamage(mDamage);
 				mpAttackExplosions.push_back(new CExplosion(projectile->mModel, 5));
-				SProjectile* tmp = projectile;
-				SafeDelete(tmp);
+				SafeDelete(projectile);
 				mpProjectiles.erase(iter);
 				break; //Breaks out of the loop as the vector size has been changed, comprimising the iterator loop
 			}
