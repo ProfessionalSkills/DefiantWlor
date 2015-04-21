@@ -37,15 +37,12 @@ class CStructure : public CGameObject
 protected:
 	// DATA
 	//---------------------------
-	//float mHealth;
 	float mBuildTime;
 	float mRepairSpeed;
 	float mCurBuildTimeLeft;			// Time left until structure is built
 	float mHeight;
 
-	EObjectStates mState;
 	EGameStructureTypes mStructureType;
-
 	CGrid* mpGrid;
 
 	SPointData mBuildLoc;			// Grid position of the placement of building

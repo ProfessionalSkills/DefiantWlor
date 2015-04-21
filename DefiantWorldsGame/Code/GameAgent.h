@@ -63,7 +63,6 @@ protected:
 	float mDamage;
 	float mTargettingTimer;
 	float mAutoTargetting;
-	EObjectStates mState;
 	bool mIsMoving;
 	bool mHasPathTarget;
 	float mUnitSpacing;

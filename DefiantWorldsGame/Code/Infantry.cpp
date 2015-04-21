@@ -22,7 +22,7 @@ CInfantry::CInfantry()
 	mSpeed = 18.0f;
 	mProductionTime = 12.0f;
 	mCurProductionTimeLeft = mProductionTime;
-	mDamage = 25.0f;
+	mDamage = 15.0f;
 	mFireRate = 2.0f;
 	mAttackTimer = 1.0f / mFireRate;
 	mHasPathTarget = false;

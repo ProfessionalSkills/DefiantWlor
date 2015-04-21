@@ -23,6 +23,7 @@ protected:
 	//---------------------------
 	DX::XMFLOAT3 mWorldPos;
 	SPointData mGridPos;
+
 	float mOrientation;
 	float mScale;
 	int mBuildCost;
@@ -30,14 +31,19 @@ protected:
 	float mMaxHealth;
 	float mHealth;
 
+	EObjectStates mState;
 	EFactions mFaction;
 	EQueueObjectType mObjectType;
+
+
 	// TLE OBJECT DATA
 	//---------------------------
 	IModel* mpObjModel = nullptr;
 
 	CExplosion* mDestructionExplosion;
 	CSmoke* mWarningSmoke;
+
+
 	// SOUND
 	//---------------------------
 	CSound* mGenSound;
@@ -108,9 +114,12 @@ public:
 		return mBuildCost;
 	}
 	
-	void TakeDamage(int amount)
+	inline void TakeDamage(int amount)
 	{
-		mHealth -= amount;
+		if (mState != OBJ_CONSTRUCTING)
+		{
+			mHealth -= amount;
+		}
 	}
 
 	inline float GetHealth()

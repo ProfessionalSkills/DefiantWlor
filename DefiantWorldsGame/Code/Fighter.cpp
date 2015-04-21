@@ -22,7 +22,7 @@ CFighter::CFighter()
 	mSpeed = 35.0f;
 	mProductionTime = 15.0f;
 	mCurProductionTimeLeft = mProductionTime;
-	mDamage = 2.0f;
+	mDamage = 1.0f;
 	mFireRate = 12.0f;
 	mAttackTimer = 1.0f / mFireRate;
 	mRange = 20.0f;

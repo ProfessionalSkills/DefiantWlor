@@ -30,13 +30,13 @@ int CSettingsManager::GetStartingResourcesAmount()
 	switch (mStartingResources)
 	{
 	case 0:
-		return 2000;
+		return 500;
 		break;
 	case 1:
-		return 4000;
+		return 1000;
 		break;
 	case 2:
-		return 8000;
+		return 2500;
 		break;
 	}
 }
