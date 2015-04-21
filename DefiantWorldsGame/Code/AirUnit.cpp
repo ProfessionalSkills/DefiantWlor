@@ -26,7 +26,6 @@ CAirUnit::~CAirUnit()
 //-----------------------------------------------------
 // AIR UNIT CLASS OVERRIDE METHODS
 //-----------------------------------------------------
-
 void CAirUnit::Spawn(CGrid* pGrid, SPointData pCentre)
 {
 	mpObjModel = CreateModel(DX::XMFLOAT3(pGrid->GetTileData(pCentre)->GetWorldPos().x, 30.0f, (pGrid->GetTileData(pCentre)->GetWorldPos().z)));
@@ -78,12 +77,11 @@ bool CAirUnit::Update()
 			else if (mpObjModel->GetY() > 0.0f)
 			{
 				// Make the model lose control
-				mpObjModel->RotateZ(gpRandomiser->GetRandomFloat(0.0f, 60.0f) * 10.0f * gFrameTime);
+				mpObjModel->RotateLocalZ(gpRandomiser->GetRandomFloat(0.0f, 60.0f) * 10.0f * gFrameTime);
 				mpObjModel->RotateLocalY(gpRandomiser->GetRandomFloat(0.0f, 100.0f) * 10.0f * gFrameTime);
 
 				// Move down
 				mpObjModel->MoveY(-20.0f * gFrameTime);
-				Move();
 			}
 			else
 			{

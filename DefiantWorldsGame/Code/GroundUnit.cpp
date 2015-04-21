@@ -170,7 +170,7 @@ bool CGroundUnit::Update()
 bool CGroundUnit::LookingAt(DX::XMFLOAT3 target)
 {	
 	DX::XMFLOAT3 targetPosition = target;
-	DX::XMFLOAT3 vectorZ = { (targetPosition.x - mpObjModel->GetX()), (targetPosition.y - mpObjModel->GetY()), (targetPosition.z - mpObjModel->GetZ()) };
+	DX::XMFLOAT3 vectorZ = { (targetPosition.x - mpObjModel->GetX()), 0.0f, (targetPosition.z - mpObjModel->GetZ()) };
 
 	float matrix[16];
 	mpObjModel->GetMatrix(matrix);
@@ -180,14 +180,14 @@ bool CGroundUnit::LookingAt(DX::XMFLOAT3 target)
 
 	float dotProduct = Dot(vectorZ, Cross(kYAxis, facingVector));
 
-	if (dotProduct > 0.2f)
+	if (dotProduct > 0.01f)
 	{
-		mpObjModel->RotateY(200.0f * gFrameTime);
+		mpObjModel->RotateY(100.0f * gFrameTime);
 		return false;
 	}
-	else if (dotProduct < -0.2f)
+	else if (dotProduct < -0.01f)
 	{
-		mpObjModel->RotateY(-200.0f * gFrameTime);
+		mpObjModel->RotateY(-100.0f * gFrameTime);
 		return false;
 	}
 	else
