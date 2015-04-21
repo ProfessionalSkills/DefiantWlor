@@ -16,25 +16,24 @@ IMesh* CTank::mspMshTankShell = nullptr;
 CTank::CTank()
 {
 	mAgentInfo = SAgentData(GAV_TANK, "Tank");
-	mMaxHealth = 100.0f;
-	mHealth = 100.0f;
-	mSpeed = 20.0f;
-	mProductionTime = 15.0f;
-	mProductionCost = 0.0f;
+	mMaxHealth = 2000.0f;
+	mHealth = 2000.0f;
+	mSpeed = 4.0f;
+	mProductionTime = 25.0f;
 	mCurProductionTimeLeft = mProductionTime;
-	mDamage = 1.0f;
-	mFireRate = 0.5f;
+	mDamage = 400.0f;
+	mFireRate = 0.2f;
 	mAttackTimer = 1.0f / mFireRate;
 	mHasPathTarget = false;
 	mAttackTarget = nullptr;
 	mState = OBJ_CONSTRUCTING;
 	mIsMoving = false;
 	mScale = 1.5f;
-	mBuildCost = 300;
+	mBuildCost = 3000;
 	mPopCost = 3;
 	mTurretNode = 4;
 	mObjectType = Q_TANK;
-	mRange = 100.0f;
+	mRange = 20.0f;
 }
 
 CTank::~CTank()

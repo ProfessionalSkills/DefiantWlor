@@ -17,13 +17,12 @@ IMesh* CInfantry::mspMshInfantryBullet = nullptr;
 CInfantry::CInfantry()
 {
 	mAgentInfo = SAgentData(GAV_INFANTRY, "Infantry");
-	mMaxHealth = 100.0f;
-	mHealth = 100.0f;
-	mSpeed = 20.0f;
-	mProductionTime = 10.0f;
-	mProductionCost = 0.0f;
+	mMaxHealth = 250.0f;
+	mHealth = 250.0f;
+	mSpeed = 18.0f;
+	mProductionTime = 12.0f;
 	mCurProductionTimeLeft = mProductionTime;
-	mDamage = 10.0f;
+	mDamage = 25.0f;
 	mFireRate = 2.0f;
 	mAttackTimer = 1.0f / mFireRate;
 	mHasPathTarget = false;
@@ -31,10 +30,10 @@ CInfantry::CInfantry()
 	mState = OBJ_CONSTRUCTING;
 	mIsMoving = false;
 	mScale = 1.5f;
-	mBuildCost = 100;
+	mBuildCost = 300;
 	mPopCost = 2;
 	mTurretNode = 3;
-	mRange = 100.0f;
+	mRange = 50.0f;
 	mObjectType = Q_INFANTRY;
 }
 

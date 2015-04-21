@@ -31,7 +31,6 @@ CSpaceFighter::CSpaceFighter()
 
 	//Production Values
 	mProductionTime = 15.0f;
-	mProductionCost = 0.0f;
 	mCurProductionTimeLeft = mProductionTime;
 
 	//Model Values

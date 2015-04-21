@@ -21,9 +21,9 @@ CSpaceCentre::CSpaceCentre()
 	mScale = 0.6f;
 	mOrientation = 0.0f;
 
-	mHealth = 1000.0f;
-	mMaxHealth = 1000.0f;
-	mBuildTime = 5.0f;
+	mHealth = 4000.0f;
+	mMaxHealth = 4000.0f;
+	mBuildTime = 25.0f;
 	mRepairSpeed = 1.0f;
 	mCurBuildTimeLeft = mBuildTime;
 	mBuildCost = 2000;

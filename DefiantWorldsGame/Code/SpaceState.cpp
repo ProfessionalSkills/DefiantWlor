@@ -385,7 +385,7 @@ void CSpaceState::StateCleanup()
 	//remove buttons
 	RemoveButtons();
 	mTacticChoosen = false;
-
+	mPaused = false;
 	//stop sound
 	mMusic->StopSound();
 
@@ -419,6 +419,10 @@ void CSpaceState::StateCleanup()
 	//set pointers to null
 	mpPlayerOneFleet = nullptr;
 	mpPlayerTwoFleet = nullptr;
+
+	//reset victory
+	PlayerOneVictory = false;
+	PlayerTwoVictory = false;
 }
 
 // Camera Control

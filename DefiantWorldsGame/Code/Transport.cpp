@@ -29,7 +29,6 @@ CTransport::CTransport()
 
 	//Production Values
 	mProductionTime = 15.5f;
-	mProductionCost = 0.0f;
 	mCurProductionTimeLeft = mProductionTime;
 	
 	//Model Values
@@ -42,8 +41,6 @@ CTransport::CTransport()
 	mIsMoving = false;
 	mHasPathTarget = false;
 	mAgentInfo = SAgentData(GAV_TRANSPORT, "Transport");
-
-
 }
 
 CTransport::~CTransport()

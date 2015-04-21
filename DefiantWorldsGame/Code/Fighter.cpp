@@ -17,22 +17,21 @@ IMesh* CFighter::mspMshFighterBullet = nullptr;
 CFighter::CFighter()
 {
 	mAgentInfo = SAgentData(GAV_FIGHTER, "Fighter");
-	mMaxHealth = 100.0f;
-	mHealth = 100.0f;
+	mMaxHealth = 200.0f;
+	mHealth = 200.0f;
 	mSpeed = 35.0f;
 	mProductionTime = 15.0f;
-	mProductionCost = 0.0f;
 	mCurProductionTimeLeft = mProductionTime;
-	mDamage = 5.0f;
+	mDamage = 2.0f;
 	mFireRate = 12.0f;
 	mAttackTimer = 1.0f / mFireRate;
-	mRange = 40.0f;
+	mRange = 20.0f;
 	mState = OBJ_CONSTRUCTING;
 	mIsMoving = false;
 	mHasPathTarget = false;
 	mAttackTarget = nullptr;
 	mScale = 2.0f;
-	mBuildCost = 600;
+	mBuildCost = 400;
 	mRotarSpeed = 2000.0f;
 	mPopCost = 3;
 	mObjectType = Q_FIGHTER;

@@ -20,23 +20,22 @@ CWorker::CWorker()
 	mAgentInfo = SAgentData(GAV_WORKER, "Worker");
 	mMaxHealth = 100.0f;
 	mHealth = 100.0f;
-	mSpeed = 20.0f;
-	mProductionTime = 5.0f;
-	mProductionCost = 0.0f;
+	mSpeed = 12.0f;
+	mProductionTime = 7.5f;
 	mCurProductionTimeLeft = mProductionTime;
-	mDamage = 1.0f;
-	mFireRate = 1.0f;
+	mDamage = 0.0f;
+	mFireRate = 0.1f;
 	mAttackTimer = 1.0f / mFireRate;
 	mHasPathTarget = false;
 	mAttackTarget = nullptr;
 	mState = OBJ_CONSTRUCTING;
 	mIsMoving = false;
 	mScale = 1.0f;
-	mBuildCost = 50;
+	mBuildCost = 150;
 	mPopCost = 5;
 	mTurretNode = 0;
 	mObjectType = Q_WORKER;
-	mRange = 100.0f;
+	mRange = 10.0f;
 }
 
 CWorker::~CWorker()

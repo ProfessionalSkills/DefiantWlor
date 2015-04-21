@@ -18,25 +18,24 @@ IMesh* CArtillery::mspMshArtilleryShell = nullptr;
 CArtillery::CArtillery()
 {
 	mAgentInfo = SAgentData(GAV_ARTILLERY, "Artillery");
-	mMaxHealth = 100.0f;
-	mHealth = 100.0f;
-	mSpeed = 15.0f;
+	mMaxHealth = 300.0f;
+	mHealth = 300.0f;
+	mSpeed = 20.0f;
 	mProductionTime = 15.0f;
-	mProductionCost = 0.0f;
 	mCurProductionTimeLeft = mProductionTime;
-	mDamage = 70.0f;
-	mFireRate = 0.333333f;
+	mDamage = 50.0f;
+	mFireRate = 0.8f;
 	mAttackTimer = 1.0f / mFireRate;
 	mState = OBJ_CONSTRUCTING;
 	mIsMoving = false;
 	mHasPathTarget = false;
 	mAttackTarget = nullptr;
 	mScale = 1.5f;
-	mBuildCost = 150;
+	mBuildCost = 500;
 	mPopCost = 4;
 	mTurretNode = 0;
 	mObjectType = Q_ARTILLERY;
-	mRange = 150.0f;
+	mRange = 60.0f;
 }
 
 CArtillery::~CArtillery()

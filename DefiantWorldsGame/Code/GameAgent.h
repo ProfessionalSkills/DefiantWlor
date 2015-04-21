@@ -59,7 +59,6 @@ protected:
 	vector<CExplosion*>mpAttackExplosions;
 	float mSpeed;
 	float mProductionTime;
-	float mProductionCost;
 	float mCurProductionTimeLeft;				// Countdown for time remaining until construction complete
 	float mDamage;
 	float mTargettingTimer;
@@ -95,11 +94,6 @@ public:
 	inline float GetProductionTime()
 	{
 		return mProductionTime;
-	}
-
-	inline float GetProductionCost()
-	{
-		return mProductionCost;
 	}
 
 	inline float GetCurProductionTimeLeft()

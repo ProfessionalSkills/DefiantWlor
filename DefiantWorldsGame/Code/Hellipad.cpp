@@ -21,12 +21,12 @@ CHellipad::CHellipad()
 	mScale = 0.6f;
 	mOrientation = 0.0f;
 
-	mHealth = 1000.0f;
-	mMaxHealth = 1000.0f;
-	mBuildTime = 10.0f;
+	mHealth = 3000.0f;
+	mMaxHealth = 3000.0f;
+	mBuildTime = 20.0f;
 	mRepairSpeed = 1.0f;
 	mCurBuildTimeLeft = mBuildTime;
-	mBuildCost = 1000;
+	mBuildCost = 1500;
 
 	mState = OBJ_CONSTRUCTING;
 	mStructureType = STR_HELLIPAD;

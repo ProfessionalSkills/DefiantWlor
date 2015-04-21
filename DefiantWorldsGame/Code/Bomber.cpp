@@ -18,21 +18,20 @@ CBomber::CBomber()
 {
 	//Set Initial Values to member variables 
 	mAgentInfo = SAgentData(GAV_BOMBER, "Bomber");
-	mMaxHealth = 100.0f;
-	mHealth = 100.0f;
+	mMaxHealth = 400.0f;
+	mHealth = 400.0f;
 	mSpeed = 30.0f;
-	mProductionTime = 15.0f;
-	mProductionCost = 0.0f;
+	mProductionTime = 18.0f;
 	mCurProductionTimeLeft = mProductionTime;				
-	mDamage = 100.0f;
-	mFireRate = 0.8f;
+	mDamage = 80.0f;
+	mFireRate = 0.6f;
 	mAttackTimer = (1.0f / mFireRate);
 	mState = OBJ_CONSTRUCTING;
 	mIsMoving = false;
 	mHasPathTarget = false;
 	mAttackTarget = nullptr;
 	mScale = 1.5f;
-	mBuildCost = 900;
+	mBuildCost = 600;
 	mPopCost = 3;
 	mObjectType = Q_BOMBER;
 	mRange = 10.0f;
