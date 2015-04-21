@@ -65,20 +65,33 @@ bool CAirUnit::Update()
 		// If there is no health left
 		if (mHealth <= 0.0f)
 		{
-			if (mDestructionExplosion == nullptr)
+			// Check the height of the model has hit the floor
+			if (!mpObjModel)
 			{
-				SafeDelete(mWarningSmoke);
-				mDestructionExplosion = new CExplosion(mpObjModel, 20);
-				Destroy();
-			}
-			else
-			{
-				// Check if the explosion system has finished
 				if (!mDestructionExplosion->UpdateSystem())
 				{
 					// particle system is finished
 					SafeDelete(mDestructionExplosion);
 					mState = OBJ_DEAD;
+				}
+			}
+			else if (mpObjModel->GetY() > 0.0f)
+			{
+				// Make the model lose control
+				mpObjModel->RotateLocalZ(gpRandomiser->GetRandomFloat(0.0f, 60.0f) * 10.0f * gFrameTime);
+				mpObjModel->RotateLocalY(gpRandomiser->GetRandomFloat(0.0f, 60.0f) * 10.0f * gFrameTime);
+
+				// Move down
+				mpObjModel->MoveY(-20.0f * gFrameTime);
+				Move();
+			}
+			else
+			{
+				if (mDestructionExplosion == nullptr)
+				{
+					SafeDelete(mWarningSmoke);
+					mDestructionExplosion = new CExplosion(mpObjModel, 20);
+					Destroy();
 				}
 			}
 
