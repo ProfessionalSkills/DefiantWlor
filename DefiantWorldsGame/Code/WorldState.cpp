@@ -1701,10 +1701,6 @@ void CWorldState::StateUpdate()
 
 			mDragStartPos = mMouseWorldPos;
 			mDragStartPos.y = -200.0f;
-
-			// Remove list of selected units
-			mpUnitSelectionList.clear();
-			OnUnitSelectChange(nullptr);
 		}
 
 		// Increment held counter
@@ -1850,6 +1846,14 @@ void CWorldState::StateUpdate()
 				}
 			}
 		}
+	}
+
+	// If after checking for button presses and there is still the left mouse button unsolved, remove any selected units
+	if (mLMouseClicked)
+	{
+		// Remove list of selected units
+		mpUnitSelectionList.clear();
+		OnUnitSelectChange(nullptr);
 	}
 
 	// Loop through key presses
