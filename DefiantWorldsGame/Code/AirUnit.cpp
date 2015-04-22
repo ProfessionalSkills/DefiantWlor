@@ -53,11 +53,12 @@ bool CAirUnit::Update()
 		break;
 	case OBJ_BUILT:
 		// Check how much health is left for smoke creation
-		if (mHealth > 0.0f && ((mHealth / mMaxHealth) * 100.0f) <= 50.0f)
+		if (((mHealth / mMaxHealth) * 100.0f) <= 50.0f)
 		{
 			if (mWarningSmoke == nullptr)
 			{
-				mWarningSmoke = new CSmoke(mpObjModel, 20, 0.0f, 0.5f);
+				if (mpObjModel)
+					mWarningSmoke = new CSmoke(mpObjModel, 20, 0.0f, 0.5f);
 			}
 		}
 
@@ -85,11 +86,10 @@ bool CAirUnit::Update()
 				if (!mDestructionExplosion->UpdateSystem())
 				{
 					// particle system is finished
-					SafeDelete(mDestructionExplosion);
 					mState = OBJ_DEAD;
 				}
 			}
-			else if (mpObjModel->GetY() > 0.0f)
+			else if (mpObjModel->GetY() > 1.0f)
 			{
 				// Make the model lose control
 				mpObjModel->RotateLocalZ(gpRandomiser->GetRandomFloat(0.0f, 60.0f) * 10.0f * gFrameTime);

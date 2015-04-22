@@ -46,13 +46,31 @@ CArtillery::~CArtillery()
 //-----------------------------------------------------
 // ARTILLERY CLASS METHODS
 //-----------------------------------------------------
-
 void CArtillery::UnloadIModel()
 {
 	if (mpObjModel != 0)
 	{
 		mspMshArtillery->RemoveModel(mpObjModel);
 		mpObjModel = nullptr;
+		mHasPathTarget = false;
+		mAttackTarget = nullptr;
+	}
+
+	// Delete any particle effects attached to this model
+	if (mWarningSmoke) SafeDelete(mWarningSmoke);
+
+	while (mpProjectiles.size() > 0)
+	{
+		SProjectile* pProjectile = mpProjectiles.back();
+		SafeDelete(pProjectile);
+		mpProjectiles.pop_back();
+	}
+
+	while (mpAttackExplosions.size() > 0)
+	{
+		CExplosion* pExplosion = mpAttackExplosions.back();
+		SafeDelete(pExplosion);
+		mpAttackExplosions.pop_back();
 	}
 }
 

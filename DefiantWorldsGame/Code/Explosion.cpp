@@ -101,7 +101,7 @@ bool CExplosion::UpdateSystem()
 		mpMdlExplosionBall->Scale(mExplosionBallSize);
 
 		// Check max size
-		if (mExplosionBallSize > 2500.0f)
+		if (mExplosionBallSize > 500.0f)
 		{
 			// Remove the exploding ball if there is one
 			if (mpMdlExplosionBall)

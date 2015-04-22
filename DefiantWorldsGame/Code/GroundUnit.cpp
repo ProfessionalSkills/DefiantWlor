@@ -56,11 +56,12 @@ bool CGroundUnit::Update()
 		break;
 	case OBJ_BUILT:
 		// Check if health is below half
-		if (mHealth > 0.0f && ((mHealth / mMaxHealth) * 100.0f) <= 50.0f)
+		if (((mHealth / mMaxHealth) * 100.0f) <= 50.0f)
 		{
 			if (mWarningSmoke == nullptr)
 			{
-				mWarningSmoke = new CSmoke(mpObjModel, 20, 0.0f, 0.5f);
+				if (mpObjModel)
+					mWarningSmoke = new CSmoke(mpObjModel, 20, 0.0f, 0.5f);
 			}
 		}
 
@@ -70,7 +71,6 @@ bool CGroundUnit::Update()
 			if (mDestructionExplosion == nullptr)
 			{
 				SafeDelete(mWarningSmoke);
-				mWarningSmoke = nullptr;
 				mDestructionExplosion = new CExplosion(mpObjModel, 20, false);
 				Destroy();
 			}
@@ -80,7 +80,6 @@ bool CGroundUnit::Update()
 				if (!mDestructionExplosion->UpdateSystem())
 				{
 					// particle system is finished
-					SafeDelete(mDestructionExplosion);
 					mState = OBJ_DEAD;
 				}
 			}

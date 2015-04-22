@@ -22,7 +22,22 @@ CGameAgent::CGameAgent()
 
 CGameAgent::~CGameAgent()
 {
+	// Delete any particle effects attached to this model
+	if (mWarningSmoke) SafeDelete(mWarningSmoke);
 
+	while (mpProjectiles.size() > 0)
+	{
+		SProjectile* pProjectile = mpProjectiles.back();
+		SafeDelete(pProjectile);
+		mpProjectiles.pop_back();
+	}
+
+	while (mpAttackExplosions.size() > 0)
+	{
+		CExplosion* pExplosion = mpAttackExplosions.back();
+		SafeDelete(pExplosion);
+		mpAttackExplosions.pop_back();
+	}
 }
 
 //-----------------------------------------------------
@@ -150,23 +165,6 @@ void CGameAgent::Destroy()
 		mStrDisplay << " has been destroyed!";
 		gpNewsTicker->AddNewElement(mStrDisplay.str(), true);
 		mStrDisplay.str("");
-	}
-
-	// Delete any particle effects attached to this model
-	if (mWarningSmoke) SafeDelete(mWarningSmoke);
-
-	while (mpProjectiles.size() > 0)
-	{
-		SProjectile* pProjectile = mpProjectiles.back();
-		SafeDelete(pProjectile);
-		mpProjectiles.pop_back();
-	}
-
-	while (mpAttackExplosions.size() > 0)
-	{
-		CExplosion* pExplosion = mpAttackExplosions.back();
-		SafeDelete(pExplosion);
-		mpAttackExplosions.pop_back();
 	}
 
 	// Do not allow the unit to be selected again by removing the bounding sphere
