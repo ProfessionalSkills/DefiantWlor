@@ -1,5 +1,8 @@
 #include "Explosion.h"
-CExplosion::CExplosion(IModel* emitter, float particleNumber)
+
+IMesh* CExplosion::mspMshExplosionBall = nullptr;
+
+CExplosion::CExplosion(IModel* emitter, float particleNumber, bool ball)
 {
 	mEmitter = emitter;
 	mParticleNumber = particleNumber;
@@ -9,9 +12,20 @@ CExplosion::CExplosion(IModel* emitter, float particleNumber)
 	{
 		EmitParticle();
 	}
+
+	// If there is an exploding ball, create one
+	if (ball)
+	{
+		mHasExplodingBall = true;
+		mpMdlExplosionBall = mspMshExplosionBall->CreateModel(mParticleOrigen.x, 0.0f, mParticleOrigen.z);
+
+		// Change the scale
+		mpMdlExplosionBall->Scale(1.0f);
+		mExplosionBallSize = 1.0f;
+	}
 }
 
-CExplosion::CExplosion(DX::XMFLOAT3 emitterPos, float particleNumber)
+CExplosion::CExplosion(DX::XMFLOAT3 emitterPos, float particleNumber, bool ball)
 {
 	mParticleNumber = particleNumber;
 	mParticleOrigen = emitterPos;
@@ -19,6 +33,17 @@ CExplosion::CExplosion(DX::XMFLOAT3 emitterPos, float particleNumber)
 	for (int i = 0; i < mParticleNumber; i++)
 	{
 		EmitParticle();
+	}
+
+	// If there is an exploding ball, create one
+	if (ball)
+	{
+		mHasExplodingBall = true;
+		mpMdlExplosionBall = mspMshExplosionBall->CreateModel(mParticleOrigen.x, 0.0f, mParticleOrigen.z);
+
+		// Change the scale
+		mpMdlExplosionBall->Scale(1.0f);
+		mExplosionBallSize = 1.0f;
 	}
 }
 
@@ -32,6 +57,12 @@ CExplosion::~CExplosion()
 		pMesh->RemoveModel(pParticle->mModel);
 		SafeDelete(pParticle);
 		mParticles.pop_back();
+	}
+
+	// Remove the exploding ball if there is one
+	if (mpMdlExplosionBall)
+	{
+		mspMshExplosionBall->RemoveModel(mpMdlExplosionBall);
 	}
 }
 
@@ -60,6 +91,26 @@ bool CExplosion::UpdateSystem()
 	if (mParticles.size() <= 0)
 	{
 		return false;
+	}
+
+	if (mHasExplodingBall)
+	{
+		// Increase size of the explosion ball
+		mExplosionBallSize += gFrameTime * 3000.0f;
+		mpMdlExplosionBall->ResetScale();
+		mpMdlExplosionBall->Scale(mExplosionBallSize);
+
+		// Check max size
+		if (mExplosionBallSize > 2500.0f)
+		{
+			// Remove the exploding ball if there is one
+			if (mpMdlExplosionBall)
+			{
+				mspMshExplosionBall->RemoveModel(mpMdlExplosionBall);
+				mpMdlExplosionBall = nullptr;
+			}
+			mHasExplodingBall = false;
+		}
 	}
 
 	vector<CParticle*>::iterator itParticle = mParticles.begin();

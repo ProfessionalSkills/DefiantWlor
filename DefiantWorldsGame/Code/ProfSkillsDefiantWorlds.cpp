@@ -221,6 +221,7 @@ void SetupEngine()
 	//Particle Mesh
 	CParticle::mspMshExplosionParticle = gpEngine->LoadMesh("ExplosionParticle.x");
 	CParticle::mspMshSmokeParticle = gpEngine->LoadMesh("SmokeParticle.x");
+	CExplosion::mspMshExplosionBall = gpEngine->LoadMesh("ExplosionBall.x");
 }
 
 void CleanupEngine()

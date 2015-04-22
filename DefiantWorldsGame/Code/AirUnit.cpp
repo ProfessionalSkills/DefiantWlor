@@ -103,7 +103,7 @@ bool CAirUnit::Update()
 				if (mDestructionExplosion == nullptr)
 				{
 					SafeDelete(mWarningSmoke);
-					mDestructionExplosion = new CExplosion(mpObjModel, 20);
+					mDestructionExplosion = new CExplosion(mpObjModel, 20, false);
 					Destroy();
 				}
 			}
