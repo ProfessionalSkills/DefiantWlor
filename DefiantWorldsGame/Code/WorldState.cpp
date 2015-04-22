@@ -592,10 +592,10 @@ void CWorldState::CheckKeyPresses()
 		gpCurWorldCamera = mpCamCurrent->GetCamera();
 
 		// Ensure no buildings can be brought over
+		mpUnitSelectionList.clear();
 		OnPlacingStructureChange(nullptr);
 		OnUnitSelectChange(nullptr);
 		OnStructureSelectChange(nullptr);
-		mpUnitSelectionList.clear();
 	}
 
 
@@ -1690,7 +1690,7 @@ void CWorldState::StateUpdate()
 			mpUnitSelectionList.clear();
 		}
 
-		// Deselect everything if holding down is greater than a quart of a second
+		// Deselect everything if holding down is greater than a quarter of a second
 		if (mHoldCount > 0.2f)
 		{
 			OnPlacingStructureChange(nullptr);
@@ -1705,6 +1705,10 @@ void CWorldState::StateUpdate()
 
 			mDragStartPos = mMouseWorldPos;
 			mDragStartPos.y = -200.0f;
+
+			// Remove list of selected units
+			mpUnitSelectionList.clear();
+			OnUnitSelectChange(nullptr);
 		}
 
 		// Increment held counter
