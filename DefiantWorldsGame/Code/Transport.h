@@ -110,7 +110,7 @@ public:
 			if (agentType == GAV_BOMBER || agentType == GAV_FIGHTER)
 			{
 				// Set the height
-				Pos.y = 30.0f;
+				Pos.y = 50.0f;
 			}
 
 			// Set the unit to the new position

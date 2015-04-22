@@ -95,7 +95,7 @@ bool CArtillery::Attack(CGameObject* target, float hitMod, float damageMod)
 		// Normalise this local axis
 		DX::XMVECTOR vecNormal = DX::XMVector4Normalize(DX::XMLoadFloat3(&localZ));
 		DX::XMStoreFloat3(&localZ, vecNormal);
-		DX::XMFLOAT3 worldPos = { mWorldPos.x, 30.0f, mWorldPos.z };
+		DX::XMFLOAT3 worldPos = { mWorldPos.x, 50.0f, mWorldPos.z };
 		// If the target is being looked at and is within range
 		if (mAttackTarget->RayCollision(worldPos, localZ, distance) && distance <= mRange)
 		{

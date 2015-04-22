@@ -28,7 +28,7 @@ CAirUnit::~CAirUnit()
 //-----------------------------------------------------
 void CAirUnit::Spawn(CGrid* pGrid, SPointData pCentre)
 {
-	mpObjModel = CreateModel(DX::XMFLOAT3(pGrid->GetTileData(pCentre)->GetWorldPos().x, 30.0f, (pGrid->GetTileData(pCentre)->GetWorldPos().z)));
+	mpObjModel = CreateModel(DX::XMFLOAT3(pGrid->GetTileData(pCentre)->GetWorldPos().x, 50.0f, (pGrid->GetTileData(pCentre)->GetWorldPos().z)));
 	mWorldPos.x = pGrid->GetTileData(pCentre)->GetWorldPos().x;
 	mWorldPos.y = 1.0f;
 	mWorldPos.z = pGrid->GetTileData(pCentre)->GetWorldPos().z;
