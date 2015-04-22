@@ -417,7 +417,86 @@ void CWorldState::CheckKeyPresses()
 		else if (mpUnitSelectionList.size() > 0)
 		{
 			// Update all the units in the list to the current path position if the tile is not in use
-			if (mpCurTile == mpNullTile || !mpCurTile)
+			CStructure* pTargetStructure = nullptr;
+			CGameAgent* pTargetGameAgent = nullptr;
+			CMinerals* pTargetMinerals = nullptr;
+
+			// Check the position of the mouse
+			switch (mMouseState)
+			{
+			case MS_NO_AREA:
+			case MS_EARTH_EDGE:
+			case MS_EARTH_GRID:
+				mpHumanPlayer->CheckGameObjectSelection(pTargetStructure, pTargetGameAgent, pTargetMinerals, mMouseOrigin, mMouseDirection, true);
+				break;
+
+			case MS_MARS_EDGE:
+			case MS_MARS_GRID:
+				mpAIPlayer->CheckGameObjectSelection(pTargetStructure, pTargetGameAgent, pTargetMinerals, mMouseOrigin, mMouseDirection, true);
+				break;
+
+			case MS_UI:
+				break;
+			}
+
+			if (pTargetStructure != nullptr)
+			{
+				if (pTargetStructure->GetFaction() == FAC_EARTH_DEFENSE_FORCE)
+				{
+					for (miterUnitSelectionList = mpUnitSelectionList.begin(); miterUnitSelectionList != mpUnitSelectionList.end(); miterUnitSelectionList++)
+					{
+						(*miterUnitSelectionList)->SetAttackTarget(pTargetStructure);
+					}
+				}
+			}
+			else if (pTargetGameAgent != nullptr)
+			{
+				if (pTargetGameAgent->GetFaction() == FAC_EARTH_DEFENSE_FORCE)
+				{
+					for (miterUnitSelectionList = mpUnitSelectionList.begin(); miterUnitSelectionList != mpUnitSelectionList.end(); miterUnitSelectionList++)
+					{
+						(*miterUnitSelectionList)->SetAttackTarget(pTargetGameAgent);
+					}
+				}
+			}
+			else if (pTargetMinerals)
+			{
+				// Check to see if there is just one unit in the selection & check that single unit is a worker unit
+				if (mpUnitSelectionList.size() == 1 && mpUnitSelectionList.front()->GetAgentData()->mAgentType == GAV_WORKER)
+				{
+					// Set the minerals target to null
+					// Cast into a worker pointer to access methods
+					CWorker* pWorker = static_cast<CWorker*>(mpUnitSelectionList.front());
+					CMinerals* pMinerals = pWorker->GetMineral();
+					if (pMinerals) pMinerals->SetUsage(false);
+					pMinerals = nullptr;
+					pWorker->SetMineral(nullptr);
+						
+					// Send the worker to go mine
+					// Check if the mineral is in use
+					if (pTargetMinerals->IsBeingUsed())
+					{
+						// Alert the user that the minerals are already being harvested
+						gpNewsTicker->AddNewElement("Minerals already being harvested by another worker!", true);
+					}
+					else
+					{
+						// Send the worker unit to the resource pile position
+						pWorker->SetPathTarget(pTargetMinerals->GetWorldPos());
+						// Set the target mineral to be used and store in worker
+						pWorker->SetMineral(pTargetMinerals);
+						pTargetMinerals->SetUsage(true);
+						// Let the user know the worker is going to go mine
+						gpNewsTicker->AddNewElement("Worker unit going to mine.", false);
+					}
+				}
+				else
+				{
+					// Show an error as you can only send one worker unit to a resource
+					gpNewsTicker->AddNewElement("A mineral deposit can only have a single unit!", true);
+				}
+			}
+			else if (mpCurTile == mpNullTile || !mpCurTile)
 			{
 				for (miterUnitSelectionList = mpUnitSelectionList.begin(); miterUnitSelectionList != mpUnitSelectionList.end(); miterUnitSelectionList++)
 				{
@@ -433,90 +512,8 @@ void CWorldState::CheckKeyPresses()
 				}
 				mRMouseClicked = false;
 			}
-			else
-			{
-				CStructure* pTargetStructure = nullptr;
-				CGameAgent* pTargetGameAgent = nullptr;
-				CMinerals* pTargetMinerals = nullptr;
 
-				// Check the position of the mouse
-				switch (mMouseState)
-				{
-				case MS_NO_AREA:
-				case MS_EARTH_EDGE:
-				case MS_EARTH_GRID:
-					mpHumanPlayer->CheckGameObjectSelection(pTargetStructure, pTargetGameAgent, pTargetMinerals, mMouseOrigin, mMouseDirection, true);
-					break;
-
-				case MS_MARS_EDGE:
-				case MS_MARS_GRID:
-					mpAIPlayer->CheckGameObjectSelection(pTargetStructure, pTargetGameAgent, pTargetMinerals, mMouseOrigin, mMouseDirection, true);
-					break;
-
-				case MS_UI:
-					break;
-				}
-
-				if (pTargetStructure != nullptr)
-				{
-					if (pTargetStructure->GetFaction() == FAC_EARTH_DEFENSE_FORCE)
-					{
-						for (miterUnitSelectionList = mpUnitSelectionList.begin(); miterUnitSelectionList != mpUnitSelectionList.end(); miterUnitSelectionList++)
-						{
-							(*miterUnitSelectionList)->SetAttackTarget(pTargetStructure);
-						}
-					}
-				}
-				else if (pTargetGameAgent != nullptr)
-				{
-					if (pTargetGameAgent->GetFaction() == FAC_EARTH_DEFENSE_FORCE)
-					{
-						for (miterUnitSelectionList = mpUnitSelectionList.begin(); miterUnitSelectionList != mpUnitSelectionList.end(); miterUnitSelectionList++)
-						{
-							(*miterUnitSelectionList)->SetAttackTarget(pTargetGameAgent);
-						}
-					}
-				}
-				else if (pTargetMinerals)
-				{
-					// Check to see if there is just one unit in the selection & check that single unit is a worker unit
-					if (mpUnitSelectionList.size() == 1 && mpUnitSelectionList.front()->GetAgentData()->mAgentType == GAV_WORKER)
-					{
-						// Set the minerals target to null
-						// Cast into a worker pointer to access methods
-						CWorker* pWorker = static_cast<CWorker*>(mpUnitSelectionList.front());
-						CMinerals* pMinerals = pWorker->GetMineral();
-						if (pMinerals) pMinerals->SetUsage(false);
-						pMinerals = nullptr;
-						pWorker->SetMineral(nullptr);
-						
-						// Send the worker to go mine
-						// Check if the mineral is in use
-						if (pTargetMinerals->IsBeingUsed())
-						{
-							// Alert the user that the minerals are already being harvested
-							gpNewsTicker->AddNewElement("Minerals already being harvested by another worker!", true);
-						}
-						else
-						{
-							// Send the worker unit to the resource pile position
-							pWorker->SetPathTarget(pTargetMinerals->GetWorldPos());
-							// Set the target mineral to be used and store in worker
-							pWorker->SetMineral(pTargetMinerals);
-							pTargetMinerals->SetUsage(true);
-							// Let the user know the worker is going to go mine
-							gpNewsTicker->AddNewElement("Worker unit going to mine.", false);
-						}
-					}
-					else
-					{
-						// Show an error as you can only send one worker unit to a resource
-						gpNewsTicker->AddNewElement("A mineral deposit can only have a single unit!", true);
-					}
-				}
-
-				mRMouseClicked = false;
-			}
+			mRMouseClicked = false;
 		}
 	}
 
@@ -601,7 +598,6 @@ void CWorldState::CheckKeyPresses()
 
 	// SHORTCUT FUNCTIONS FOR TACTICS
 	//--------------------------------
-
 	//temporary, just used to test the transfering of ships to the fleet
 	if (gpEngine->KeyHit(Key_L))
 	{
