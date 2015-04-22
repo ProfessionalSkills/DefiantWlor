@@ -61,6 +61,21 @@ bool CAirUnit::Update()
 			}
 		}
 
+		// Update smoke system
+		if (mWarningSmoke != nullptr)
+		{
+			mWarningSmoke->UpdateSystem();
+		}
+
+		// Update explosions
+		if (mpAttackExplosions.size() > 0)
+		{
+			for (auto explosions : mpAttackExplosions) //For each explosion resulting from a projectile colliding
+			{
+				explosions->UpdateSystem(); //Update systems 
+			}
+		}
+
 		// If there is no health left
 		if (mHealth <= 0.0f)
 		{
@@ -103,12 +118,6 @@ bool CAirUnit::Update()
 		break;
 	}
 
-	// Update smoke system
-	if (mWarningSmoke != nullptr)
-	{
-		mWarningSmoke->UpdateSystem();
-	}
-
 	// Always check to see if the attack target is still alive
 	if (mAttackTarget != nullptr)
 	{
@@ -143,40 +152,6 @@ bool CAirUnit::Update()
 			// Straighten the aircraft by the remaining amount
 			mpObjModel->RotateLocalZ(mYaw);
 			mYaw = 0.0f;
-		}
-	}
-
-	if (mpAttackExplosions.size() > 0)
-	{
-		for (auto explosions : mpAttackExplosions) //For each explosion resulting from a projectile colliding
-		{
-			explosions->UpdateSystem(); //Update systems 
-		}
-	}
-
-	if (mpProjectiles.size() > 0)
-	{
-		for (auto iter = mpProjectiles.begin(); iter != mpProjectiles.end(); iter++) //For each projectile that unit has fired
-		{
-			SProjectile* projectile = (*iter);
-			projectile->Update();
-			DX::XMFLOAT3 position = { projectile->mModel->GetX(), projectile->mModel->GetY(), projectile->mModel->GetZ() }; //projectile's new position stored for collision detection
-
-			// Check to see if the attack target has been lost or it has been destroyed
-			if (mAttackTarget == nullptr)
-			{
-				SafeDelete(projectile);
-				mpProjectiles.erase(iter);
-				break;
-			}
-			else if (mAttackTarget->SphereCollision(projectile->mCollisionSphere)) //Point to Box collision between the projectile and the attack target
-			{
-				mAttackTarget->TakeDamage(mDamage);
-				mpAttackExplosions.push_back(new CExplosion(projectile->mModel, 5));
-				SafeDelete(projectile);
-				mpProjectiles.erase(iter);
-				break; //Breaks out of the loop as the vector size has been changed, comprimising the iterator loop
-			}
 		}
 	}
 

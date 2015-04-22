@@ -154,6 +154,35 @@ IModel* CFighter::CreateModel(DX::XMFLOAT3 pos)
 bool CFighter::Update()
 {
 	if (mState == OBJ_INSPACE) return CAirUnit::Update();
+
+	// Moved projectile updating to here so that explosions can be altered based on the unit type i.e. the bomber's bomb
+	// should make a bigger explosion than that of bullets from a fighter.
+	if (mpProjectiles.size() > 0)
+	{
+		for (auto iter = mpProjectiles.begin(); iter != mpProjectiles.end(); iter++) //For each projectile that unit has fired
+		{
+			SProjectile* projectile = (*iter);
+			projectile->Update();
+			DX::XMFLOAT3 position = { projectile->mModel->GetX(), projectile->mModel->GetY(), projectile->mModel->GetZ() }; //projectile's new position stored for collision detection
+
+			// Check to see if the attack target has been lost or it has been destroyed
+			if (mAttackTarget == nullptr)
+			{
+				SafeDelete(projectile);
+				mpProjectiles.erase(iter);
+				break;
+			}
+			else if (mAttackTarget->SphereCollision(projectile->mCollisionSphere)) //Point to Box collision between the projectile and the attack target
+			{
+				mAttackTarget->TakeDamage(mDamage);
+				mpAttackExplosions.push_back(new CExplosion(projectile->mModel, 1));
+				SafeDelete(projectile);
+				mpProjectiles.erase(iter);
+				break; //Breaks out of the loop as the vector size has been changed, comprimising the iterator loop
+			}
+		}
+	}
+
 	if (mHealth <= 0.0f) return CAirUnit::Update();
 
 	// Check if object exists before rotating blades 
