@@ -63,6 +63,31 @@ void CPlayerManager::RemovePlayers()
 
 int CPlayerManager::UpdatePlayers()
 {
+	// Update rebels
+	// Check how much time has passed since the game has begun - currently checking for 40 seconds into the game
+	if (mTimeSinceGameStart > 40.0f)
+	{
+		// Check to see if it is time to invade earth or mars
+		if (mTimeToEarthInvasion < 0.0f)
+		{
+			// Let the player know an invasion is coming
+			gpNewsTicker->AddNewElement("Incoming rebels!", true);
+			InvadeEarth();
+		}
+		else
+		{
+			mTimeToEarthInvasion -= gFrameTime;
+		}
+		if (mTimeToMarsInvasion < 0.0f)
+		{
+			InvadeMars();
+		}
+		else
+		{
+			mTimeToMarsInvasion -= gFrameTime;
+		}
+	}
+	
 	// Update human
 	mpHuman->Update();
 
@@ -92,31 +117,6 @@ int CPlayerManager::UpdatePlayers()
 		// Player death - return 1 to symbolise this
 		return 1;
 	}
-
-	// Update rebels
-	// Check how much time has passed since the game has begun - currently checking for 40 seconds into the game
-	if (mTimeSinceGameStart > 40.0f)
-	{
-		// Check to see if it is time to invade earth or mars
-		if (mTimeToEarthInvasion < 0.0f)
-		{
-			// Let the player know an invasion is coming
-			gpNewsTicker->AddNewElement("Incoming rebels!", true);
-			mTimeToEarthInvasion = gpRandomiser->GetRandomFloat(20.0f, 60.0f);
-		}
-		else
-		{
-			mTimeToEarthInvasion -= gFrameTime;
-		}
-		if (mTimeToMarsInvasion < 0.0f)
-		{
-			mTimeToMarsInvasion = gpRandomiser->GetRandomFloat(20.0f, 60.0f);
-		}
-		else
-		{
-			mTimeToMarsInvasion -= gFrameTime;
-		}
-	}
 }
 
 void CPlayerManager::SavePlayers(std::ofstream& outFile)
@@ -145,10 +145,10 @@ void CPlayerManager::LoadPlayers(std::ifstream& inFile)
 
 void CPlayerManager::InvadeEarth()
 {
-
+	mTimeToEarthInvasion = gpRandomiser->GetRandomFloat(20.0f, 60.0f);
 }
 
 void CPlayerManager::InvadeMars()
 {
-
+	mTimeToMarsInvasion = gpRandomiser->GetRandomFloat(20.0f, 60.0f);
 }

@@ -1868,7 +1868,7 @@ void CWorldState::StateUpdate()
 		mMousePrevGridPos = mMouseGridPos;
 	}
 
-	if (mpCurSelectedAgent)
+	/*if (mpCurSelectedAgent)
 	{
 		if (mpCurSelectedAgent->GetAttackTarget() == nullptr)
 		{
@@ -1910,7 +1910,7 @@ void CWorldState::StateUpdate()
 				
 			}
 		}
-	}
+	}*/
 
 	// UPDATE PLAYERS
 	//------------------------------

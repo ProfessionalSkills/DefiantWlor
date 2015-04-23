@@ -116,10 +116,7 @@ public:
 	
 	inline void TakeDamage(int amount)
 	{
-		if (mState != OBJ_CONSTRUCTING)
-		{
-			mHealth -= amount;
-		}
+		mHealth -= amount;
 	}
 
 	inline float GetHealth()
