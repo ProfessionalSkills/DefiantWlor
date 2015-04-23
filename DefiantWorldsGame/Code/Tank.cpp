@@ -213,11 +213,11 @@ IModel* CTank::CreateModel(DX::XMFLOAT3 pos)
 	}
 	else if (mFaction == FAC_THE_CRIMSON_LEGION)
 	{
-		mpObjModel->SetSkin("Hovertank01Mars.jpg");
+		pModel->SetSkin("Hovertank01Mars.jpg");
 	}
 	else
 	{
-		mpObjModel->SetSkin("Hovertank01Rebel.jpg");
+		pModel->SetSkin("Hovertank01Rebel.jpg");
 	}
 
 	return pModel;

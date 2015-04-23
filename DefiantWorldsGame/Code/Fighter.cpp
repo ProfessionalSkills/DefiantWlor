@@ -168,11 +168,11 @@ IModel* CFighter::CreateModel(DX::XMFLOAT3 pos)
 	}
 	else if (mFaction == FAC_THE_CRIMSON_LEGION)
 	{
-		mpObjModel->SetSkin("machineMars.jpg");
+		pModel->SetSkin("machineMars.jpg");
 	}
 	else
 	{
-		mpObjModel->SetSkin("machineRebel.jpg");
+		pModel->SetSkin("machineRebel.jpg");
 	}
 
 	return pModel;

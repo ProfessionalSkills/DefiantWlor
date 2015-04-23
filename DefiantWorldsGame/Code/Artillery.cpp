@@ -173,11 +173,11 @@ IModel* CArtillery::CreateModel(DX::XMFLOAT3 pos)
 	}
 	else if (mFaction == FAC_THE_CRIMSON_LEGION)
 	{
-		mpObjModel->SetSkin("marsAAMars.jpg");
+		pModel->SetSkin("marsAAMars.jpg");
 	}
 	else
 	{
-		mpObjModel->SetSkin("marsAARebel.jpg");
+		pModel->SetSkin("marsAARebel.jpg");
 	}
 
 	return pModel;

@@ -165,7 +165,90 @@ void CPlayerManager::InvadeEarth()
 	// Check how many units have already been produced
 	if (mpRebelEarthList.size() < mEarthUnits)
 	{
+		// Get a random unit to spawn
+		EGameAgentVariations unit = static_cast<EGameAgentVariations>(gpRandomiser->GetRandomInt(GAV_FIGHTER, GAV_ARTILLERY));
+		CGameAgent* pNewAgent = nullptr;
 
+		// create a unit based on the unit chosen
+		switch (unit)
+		{
+		case GAV_MOTHERSHIP:
+		case GAV_ARTILLERY:
+		case GAV_BOMBER:
+			// Create a new bomber agent
+			pNewAgent = new CBomber();
+
+			// Target a random structure
+			pNewAgent->SetAttackTarget(mpHuman->GetRandomStructure());
+
+			// Set attributes for the new agent
+			pNewAgent->SetWorldPos({0.0f, 50.0f, 0.0f});
+			pNewAgent->SetFaction(FAC_REBELS);
+			pNewAgent->SetState(OBJ_BUILT);
+
+			// Spawn the unit & store
+			pNewAgent->LoadIModel();
+			mpRebelEarthList.push_back(pNewAgent);
+			break;
+
+		case GAV_TRANSPORT:
+		case GAV_SPACE_FIGHTER:
+		case GAV_FIGHTER:
+			// Create a new fighter agent
+			pNewAgent = new CFighter();
+
+			// Target a random agent
+			pNewAgent->SetAttackTarget(mpHuman->GetRandomAgent());
+
+			// Check if there is no agents available to target
+			if (!pNewAgent)
+			{
+				// target a structure instead
+				pNewAgent->SetAttackTarget(mpHuman->GetRandomStructure());
+			}
+
+			// Set attributes for the new agent
+			pNewAgent->SetWorldPos({ 0.0f, 1.0f, 0.0f });
+			pNewAgent->SetFaction(FAC_REBELS);
+			pNewAgent->SetState(OBJ_BUILT);
+
+			// Spawn the unit & store
+			pNewAgent->LoadIModel();
+			mpRebelEarthList.push_back(pNewAgent);
+			break;
+		case GAV_WORKER:
+		case GAV_INFANTRY:
+		case GAV_TANK:
+			// Create a new infantry agent
+			pNewAgent = new CInfantry();
+
+			// Target a random agent & store the type
+			pNewAgent->SetAttackTarget(mpHuman->GetRandomAgent());
+			EGameAgentVariations targetType = pNewAgent->GetAgentData()->mAgentType;
+
+			// Check if there is no agents available to target
+			if (!pNewAgent)
+			{
+				// target a structure instead
+				pNewAgent->SetAttackTarget(mpHuman->GetRandomStructure());
+			}
+			// Also check to see if the agent selected is not an air unit as infantry cannot shoot them
+			else if (targetType == GAV_FIGHTER || targetType == GAV_BOMBER)
+			{
+				// target a structure instead
+				pNewAgent->SetAttackTarget(mpHuman->GetRandomStructure());
+			}
+
+			// Set attributes for the new agent
+			pNewAgent->SetWorldPos({ 0.0f, 1.0f, 0.0f });
+			pNewAgent->SetFaction(FAC_REBELS);
+			pNewAgent->SetState(OBJ_BUILT);
+
+			// Spawn the unit & store
+			pNewAgent->LoadIModel();
+			mpRebelEarthList.push_back(pNewAgent);
+			break;
+		}
 	}
 	else
 	{

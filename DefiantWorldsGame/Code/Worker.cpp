@@ -156,11 +156,11 @@ IModel* CWorker::CreateModel(DX::XMFLOAT3 pos)
 	}
 	else if (mFaction == FAC_THE_CRIMSON_LEGION)
 	{
-		mpObjModel->SetSkin("ttruckGermanMars.jpg");
+		pModel->SetSkin("ttruckGermanMars.jpg");
 	}
 	else
 	{
-		mpObjModel->SetSkin("ttruckGermanRebel.jpg");
+		pModel->SetSkin("ttruckGermanRebel.jpg");
 	}
 
 	return pModel;

@@ -181,11 +181,11 @@ IModel* CBomber::CreateModel(DX::XMFLOAT3 pos)
 	}
 	else if (mFaction == FAC_THE_CRIMSON_LEGION)
 	{
-		mpObjModel->SetSkin("heliMars.jpg");
+		pModel->SetSkin("heliMars.jpg");
 	}
 	else
 	{
-		mpObjModel->SetSkin("heliRebel.jpg");
+		pModel->SetSkin("heliRebel.jpg");
 	}
 
 	return pModel;

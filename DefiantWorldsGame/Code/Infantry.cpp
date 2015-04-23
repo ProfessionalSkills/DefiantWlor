@@ -215,11 +215,11 @@ IModel* CInfantry::CreateModel(DX::XMFLOAT3 pos)
 	}
 	else if (mFaction == FAC_THE_CRIMSON_LEGION)
 	{
-		mpObjModel->SetSkin("tigerMars.jpg");
+		pModel->SetSkin("tigerMars.jpg");
 	}
 	else
 	{
-		mpObjModel->SetSkin("tigerRebel.jpg");
+		pModel->SetSkin("tigerRebel.jpg");
 	}
 
 	return pModel;
