@@ -198,6 +198,10 @@ public:
 	// Function to determine whether or not the player's command centre is still standing
 	bool IsAlive();
 
+	// Get a random ground unit from the player
+	CGameAgent* GetRandomAgent();
+	CStructure* GetRandomStructure();
+
 
 	// MUTATORS
 	//---------------------------

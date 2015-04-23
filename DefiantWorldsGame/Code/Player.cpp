@@ -93,6 +93,44 @@ bool CRTSPlayer::IsAlive()
 	return true;
 }
 
+CGameAgent* CRTSPlayer::GetRandomAgent()
+{
+	// Get the number of agents the player has
+	int numAgents = mpUnitsMap.size();
+
+	// If there are no units, return nullptr
+	if (numAgents == 0) return nullptr;
+
+	// Get a random index
+	int index = gpRandomiser->GetRandomInt(0, numAgents - 1);
+
+	// Advance the iterator by the index amount
+	miterUnitsMap = mpUnitsMap.begin();
+	std::advance(miterUnitsMap, index);
+
+	// Return the pointer based on the index
+	return miterUnitsMap->second;
+}
+
+CStructure* CRTSPlayer::GetRandomStructure()
+{
+	// Get the number of agents the player has
+	int numStructures = mpStructuresMap.size();
+
+	// If there are no units, return nullptr
+	if (numStructures == 0) return nullptr;
+
+	// Get a random index
+	int index = gpRandomiser->GetRandomInt(0, numStructures - 1);
+
+	// Advance the iterator by the index amount
+	miterStructuresMap = mpStructuresMap.begin();
+	std::advance(miterStructuresMap, index);
+
+	// Return the pointer based on the index
+	return miterStructuresMap->second;
+}
+
 
 //-----------------------------------------------------
 // PLAYER CLASS METHODS

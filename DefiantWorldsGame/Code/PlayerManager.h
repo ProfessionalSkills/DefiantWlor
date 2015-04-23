@@ -77,7 +77,11 @@ private:
 	float mTimeSinceGameStart = 0.0f;
 	float mTimeToEarthInvasion = 0.0f;
 	float mTimeToMarsInvasion = 0.0f;
-	std::vector<CGameAgent*> mpRebelsList;
+
+	int mEarthUnits = 0;
+	int mMarsUnits = 0;
+	std::vector<CGameAgent*> mpRebelEarthList;
+	std::vector<CGameAgent*> mpRebelMarsList;
 };
 
 

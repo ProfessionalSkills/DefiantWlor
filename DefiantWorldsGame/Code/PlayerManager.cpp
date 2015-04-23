@@ -25,7 +25,9 @@ CPlayerManager::CPlayerManager()
 
 	mPlayerDataInitialised = false;
 
-	// Get random invasion times
+	// Get random invasion times & unit numbers
+	mEarthUnits = gpRandomiser->GetRandomInt(3, 7);
+	mMarsUnits = gpRandomiser->GetRandomInt(3, 7);
 	mTimeToEarthInvasion = gpRandomiser->GetRandomFloat(20.0f, 60.0f);
 	mTimeToMarsInvasion = gpRandomiser->GetRandomFloat(20.0f, 60.0f);
 }
@@ -59,6 +61,21 @@ void CPlayerManager::RemovePlayers()
 	SafeDelete(mpAI[0]);
 
 	mPlayerDataInitialised = false;
+
+	// Remove rebel units
+	while (!mpRebelEarthList.empty())
+	{
+		CGameAgent* pAgent = mpRebelEarthList.back();
+		SafeDelete(pAgent);
+		mpRebelEarthList.pop_back();
+	}
+
+	while (!mpRebelMarsList.empty())
+	{
+		CGameAgent* pAgent = mpRebelMarsList.back();
+		SafeDelete(pAgent);
+		mpRebelMarsList.pop_back();
+	}
 }
 
 int CPlayerManager::UpdatePlayers()
@@ -71,7 +88,7 @@ int CPlayerManager::UpdatePlayers()
 		if (mTimeToEarthInvasion < 0.0f)
 		{
 			// Let the player know an invasion is coming
-			gpNewsTicker->AddNewElement("Incoming rebels!", true);
+			gpNewsTicker->AddNewElement("A rebel faction is attacking!", true);
 			InvadeEarth();
 		}
 		else
@@ -145,10 +162,30 @@ void CPlayerManager::LoadPlayers(std::ifstream& inFile)
 
 void CPlayerManager::InvadeEarth()
 {
-	mTimeToEarthInvasion = gpRandomiser->GetRandomFloat(20.0f, 60.0f);
+	// Check how many units have already been produced
+	if (mpRebelEarthList.size() < mEarthUnits)
+	{
+
+	}
+	else
+	{
+		// Reset units amount and time to invasion
+		mEarthUnits = gpRandomiser->GetRandomInt(3, 7);
+		mTimeToEarthInvasion = gpRandomiser->GetRandomFloat(20.0f, 60.0f);
+	}
 }
 
 void CPlayerManager::InvadeMars()
 {
-	mTimeToMarsInvasion = gpRandomiser->GetRandomFloat(20.0f, 60.0f);
+	// Check how many units have already been produced
+	if (mpRebelMarsList.size() < mMarsUnits)
+	{
+
+	}
+	else
+	{
+		// Reset units amount and time to invasion
+		mMarsUnits = gpRandomiser->GetRandomInt(3, 7);
+		mTimeToMarsInvasion = gpRandomiser->GetRandomFloat(20.0f, 60.0f);
+	}
 }
