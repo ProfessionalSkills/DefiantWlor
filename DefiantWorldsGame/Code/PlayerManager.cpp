@@ -24,6 +24,10 @@ CPlayerManager::CPlayerManager()
 	}
 
 	mPlayerDataInitialised = false;
+
+	// Get random invasion times
+	mTimeToEarthInvasion = gpRandomiser->GetRandomFloat(20.0f, 60.0f);
+	mTimeToMarsInvasion = gpRandomiser->GetRandomFloat(20.0f, 60.0f);
 }
 
 CPlayerManager::~CPlayerManager()
@@ -98,10 +102,19 @@ int CPlayerManager::UpdatePlayers()
 		{
 			// Let the player know an invasion is coming
 			gpNewsTicker->AddNewElement("Incoming rebels!", true);
+			mTimeToEarthInvasion = gpRandomiser->GetRandomFloat(20.0f, 60.0f);
+		}
+		else
+		{
+			mTimeToEarthInvasion -= gFrameTime;
 		}
 		if (mTimeToMarsInvasion < 0.0f)
 		{
-
+			mTimeToMarsInvasion = gpRandomiser->GetRandomFloat(20.0f, 60.0f);
+		}
+		else
+		{
+			mTimeToMarsInvasion -= gFrameTime;
 		}
 	}
 }
