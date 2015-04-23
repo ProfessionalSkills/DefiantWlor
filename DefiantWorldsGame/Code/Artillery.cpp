@@ -85,9 +85,13 @@ void CArtillery::LoadIModel()
 		{
 			mpObjModel->SetSkin("marsAA.jpg");
 		}
-		else
+		else if (mFaction == FAC_THE_CRIMSON_LEGION)
 		{
 			mpObjModel->SetSkin("marsAAMars.jpg");
+		}
+		else
+		{
+			mpObjModel->SetSkin("marsAARebel.jpg");
 		}
 	}
 }
@@ -167,9 +171,13 @@ IModel* CArtillery::CreateModel(DX::XMFLOAT3 pos)
 	{
 		pModel->SetSkin("marsAA.jpg");
 	}
+	else if (mFaction == FAC_THE_CRIMSON_LEGION)
+	{
+		mpObjModel->SetSkin("marsAAMars.jpg");
+	}
 	else
 	{
-		pModel->SetSkin("marsAAMars.jpg");
+		mpObjModel->SetSkin("marsAARebel.jpg");
 	}
 
 	return pModel;

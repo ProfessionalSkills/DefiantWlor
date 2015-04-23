@@ -84,9 +84,13 @@ void CInfantry::LoadIModel()
 		{
 			mpObjModel->SetSkin("tiger.jpg");
 		}
-		else
+		else if (mFaction == FAC_THE_CRIMSON_LEGION)
 		{
 			mpObjModel->SetSkin("tigerMars.jpg");
+		}
+		else
+		{
+			mpObjModel->SetSkin("tigerRebel.jpg");
 		}
 	}
 }
@@ -209,9 +213,13 @@ IModel* CInfantry::CreateModel(DX::XMFLOAT3 pos)
 	{
 		pModel->SetSkin("tiger.jpg");
 	}
+	else if (mFaction == FAC_THE_CRIMSON_LEGION)
+	{
+		mpObjModel->SetSkin("tigerMars.jpg");
+	}
 	else
 	{
-		pModel->SetSkin("tigerMars.jpg");
+		mpObjModel->SetSkin("tigerRebel.jpg");
 	}
 
 	return pModel;

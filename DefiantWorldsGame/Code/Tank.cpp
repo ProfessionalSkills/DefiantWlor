@@ -83,9 +83,13 @@ void CTank::LoadIModel()
 		{
 			mpObjModel->SetSkin("Hovertank01.jpg");
 		}
-		else
+		else if (mFaction == FAC_THE_CRIMSON_LEGION)
 		{
 			mpObjModel->SetSkin("Hovertank01Mars.jpg");
+		}
+		else
+		{
+			mpObjModel->SetSkin("Hovertank01Rebel.jpg");
 		}
 	}
 }
@@ -207,9 +211,13 @@ IModel* CTank::CreateModel(DX::XMFLOAT3 pos)
 	{
 		pModel->SetSkin("Hovertank01.jpg");
 	}
+	else if (mFaction == FAC_THE_CRIMSON_LEGION)
+	{
+		mpObjModel->SetSkin("Hovertank01Mars.jpg");
+	}
 	else
 	{
-		pModel->SetSkin("Hovertank01Mars.jpg");
+		mpObjModel->SetSkin("Hovertank01Rebel.jpg");
 	}
 
 	return pModel;

@@ -118,9 +118,13 @@ void CWorker::LoadIModel()
 		{
 			mpObjModel->SetSkin("ttruckGerman.jpg");
 		}
-		else
+		else if (mFaction == FAC_THE_CRIMSON_LEGION)
 		{
 			mpObjModel->SetSkin("ttruckGermanMars.jpg");
+		}
+		else
+		{
+			mpObjModel->SetSkin("ttruckGermanRebel.jpg");
 		}
 	}
 }
@@ -150,9 +154,13 @@ IModel* CWorker::CreateModel(DX::XMFLOAT3 pos)
 	{
 		pModel->SetSkin("ttruckGerman.jpg");
 	}
+	else if (mFaction == FAC_THE_CRIMSON_LEGION)
+	{
+		mpObjModel->SetSkin("ttruckGermanMars.jpg");
+	}
 	else
 	{
-		pModel->SetSkin("ttruckGermanMars.jpg");
+		mpObjModel->SetSkin("ttruckGermanRebel.jpg");
 	}
 
 	return pModel;

@@ -84,9 +84,13 @@ void CBomber::LoadIModel()
 		{
 			mpObjModel->SetSkin("heli.jpg");
 		}
-		else
+		else if (mFaction == FAC_THE_CRIMSON_LEGION)
 		{
 			mpObjModel->SetSkin("heliMars.jpg");
+		}
+		else
+		{
+			mpObjModel->SetSkin("heliRebel.jpg");
 		}
 	}
 }
@@ -175,9 +179,13 @@ IModel* CBomber::CreateModel(DX::XMFLOAT3 pos)
 	{
 		pModel->SetSkin("heli.jpg");
 	}
+	else if (mFaction == FAC_THE_CRIMSON_LEGION)
+	{
+		mpObjModel->SetSkin("heliMars.jpg");
+	}
 	else
 	{
-		pModel->SetSkin("heliMars.jpg");
+		mpObjModel->SetSkin("heliRebel.jpg");
 	}
 
 	return pModel;
