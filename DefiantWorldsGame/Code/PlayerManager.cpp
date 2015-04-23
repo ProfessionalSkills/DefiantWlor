@@ -237,7 +237,7 @@ void CPlayerManager::InvadeEarth()
 			}
 
 			// Set attributes for the new agent
-			pNewAgent->SetWorldPos({ -2000.0f, 1.0f, 0.0f });
+			pNewAgent->SetWorldPos({ -2000.0f, 50.0f, 0.0f });
 			pNewAgent->SetFaction(FAC_REBELS);
 			pNewAgent->SetState(OBJ_BUILT);
 
