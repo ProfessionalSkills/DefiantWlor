@@ -104,6 +104,34 @@ int CPlayerManager::UpdatePlayers()
 			mTimeToMarsInvasion -= gFrameTime;
 		}
 	}
+
+	// Update rebel earth units
+	for (auto iter = mpRebelEarthList.begin(); iter != mpRebelEarthList.end(); iter++)
+	{
+		// Call update function for this structure
+		if (!(*iter)->Update())
+		{
+			// The current structure has been destroyed
+			CGameAgent* tmp = (*iter);
+			SafeDelete(tmp);
+			mpRebelEarthList.erase(iter);
+			break;
+		}
+	}
+
+	// Update rebel mars units
+	for (auto iter = mpRebelMarsList.begin(); iter != mpRebelMarsList.end(); iter++)
+	{
+		// Call update function for this structure
+		if (!(*iter)->Update())
+		{
+			// The current structure has been destroyed
+			CGameAgent* tmp = (*iter);
+			SafeDelete(tmp);
+			mpRebelMarsList.erase(iter);
+			break;
+		}
+	}
 	
 	// Update human
 	mpHuman->Update();
@@ -182,7 +210,7 @@ void CPlayerManager::InvadeEarth()
 			pNewAgent->SetAttackTarget(mpHuman->GetRandomStructure());
 
 			// Set attributes for the new agent
-			pNewAgent->SetWorldPos({0.0f, 50.0f, 0.0f});
+			pNewAgent->SetWorldPos({ -2000.0f, 50.0f, 0.0f });
 			pNewAgent->SetFaction(FAC_REBELS);
 			pNewAgent->SetState(OBJ_BUILT);
 
@@ -208,7 +236,7 @@ void CPlayerManager::InvadeEarth()
 			}
 
 			// Set attributes for the new agent
-			pNewAgent->SetWorldPos({ 0.0f, 1.0f, 0.0f });
+			pNewAgent->SetWorldPos({ -2000.0f, 1.0f, 0.0f });
 			pNewAgent->SetFaction(FAC_REBELS);
 			pNewAgent->SetState(OBJ_BUILT);
 
@@ -240,7 +268,7 @@ void CPlayerManager::InvadeEarth()
 			}
 
 			// Set attributes for the new agent
-			pNewAgent->SetWorldPos({ 0.0f, 1.0f, 0.0f });
+			pNewAgent->SetWorldPos({ -2000.0f, 1.0f, 0.0f });
 			pNewAgent->SetFaction(FAC_REBELS);
 			pNewAgent->SetState(OBJ_BUILT);
 
@@ -254,7 +282,7 @@ void CPlayerManager::InvadeEarth()
 	{
 		// Reset units amount and time to invasion
 		mEarthUnits = gpRandomiser->GetRandomInt(3, 7);
-		mTimeToEarthInvasion = gpRandomiser->GetRandomFloat(20.0f, 60.0f);
+		mTimeToEarthInvasion = gpRandomiser->GetRandomFloat(40.0f, 80.0f);
 	}
 }
 

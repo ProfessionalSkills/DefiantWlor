@@ -368,7 +368,7 @@ void CWorldState::CheckKeyPresses()
 			}
 			else if (pTargetGameAgent != nullptr)
 			{
-				if (pTargetGameAgent->GetFaction() == FAC_EARTH_DEFENSE_FORCE)
+				if (pTargetGameAgent->GetFaction() != FAC_EARTH_DEFENSE_FORCE)
 				{
 					mpCurSelectedAgent->SetAttackTarget(pTargetGameAgent);
 				}
@@ -451,7 +451,7 @@ void CWorldState::CheckKeyPresses()
 			}
 			else if (pTargetGameAgent != nullptr)
 			{
-				if (pTargetGameAgent->GetFaction() == FAC_EARTH_DEFENSE_FORCE)
+				if (pTargetGameAgent->GetFaction() != FAC_EARTH_DEFENSE_FORCE)
 				{
 					for (miterUnitSelectionList = mpUnitSelectionList.begin(); miterUnitSelectionList != mpUnitSelectionList.end(); miterUnitSelectionList++)
 					{
