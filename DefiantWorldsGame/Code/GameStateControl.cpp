@@ -114,6 +114,13 @@ void CStateControl::Update()
 		// Update polymorphic pointer
 		SetCurrentState(gCurState);
 	}
+
+	// Increment time since game has started
+	if (mCurState == GS_WORLD)
+	{
+		mTimeSinceGameStart += gFrameTime;
+		mpPlayerManager->SetGameTime(mTimeSinceGameStart);
+	}
 }
 
 void CStateControl::OnStateChange()

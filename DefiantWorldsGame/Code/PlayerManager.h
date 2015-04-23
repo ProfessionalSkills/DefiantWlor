@@ -31,6 +31,16 @@ public:
 	int UpdatePlayers();
 	void SavePlayers(std::ofstream& outFile);
 	void LoadPlayers(std::ifstream& inFile);
+	void InvadeEarth();
+	void InvadeMars();
+
+
+	// MUTATORS
+	//---------------------------
+	inline void SetGameTime(float time)
+	{
+		mTimeSinceGameStart = time;
+	}
 
 
 	// ACCESSORS
@@ -60,6 +70,14 @@ private:
 	int mNumAI;
 
 	bool mPlayerDataInitialised;
+
+
+	// REBEL PLAYER DATA
+	//---------------------------
+	float mTimeSinceGameStart = 0.0f;
+	float mTimeToEarthInvasion = 0.0f;
+	float mTimeToMarsInvasion = 0.0f;
+	std::vector<CGameAgent*> mpRebelsList;
 };
 
 

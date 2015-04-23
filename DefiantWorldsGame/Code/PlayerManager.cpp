@@ -88,6 +88,22 @@ int CPlayerManager::UpdatePlayers()
 		// Player death - return 1 to symbolise this
 		return 1;
 	}
+
+	// Update rebels
+	// Check how much time has passed since the game has begun - currently checking for 40 seconds into the game
+	if (mTimeSinceGameStart > 40.0f)
+	{
+		// Check to see if it is time to invade earth or mars
+		if (mTimeToEarthInvasion < 0.0f)
+		{
+			// Let the player know an invasion is coming
+			gpNewsTicker->AddNewElement("Incoming rebels!", true);
+		}
+		if (mTimeToMarsInvasion < 0.0f)
+		{
+
+		}
+	}
 }
 
 void CPlayerManager::SavePlayers(std::ofstream& outFile)
@@ -112,4 +128,14 @@ void CPlayerManager::LoadPlayers(std::ifstream& inFile)
 	{
 		mpAI[i]->LoadPlayerData(inFile);
 	}
+}
+
+void CPlayerManager::InvadeEarth()
+{
+
+}
+
+void CPlayerManager::InvadeMars()
+{
+
 }

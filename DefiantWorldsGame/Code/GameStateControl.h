@@ -41,6 +41,8 @@ private:
 
 	EGameStates mCurState;				// A match to the current global state in Common Header. Used to identify changes in states, and what state to change to.
 
+	float mTimeSinceGameStart = 0.0f;	// Time that has passed since the game started
+
 
 	// PLAYER MANAGER
 	//---------------------------
@@ -91,6 +93,11 @@ public:
 	inline CSettingsManager* GetSettingsManager()
 	{
 		return mpSettingsManager;
+	}
+
+	inline float GetTimeSinceStart()
+	{
+		return mTimeSinceGameStart;
 	}
 
 
