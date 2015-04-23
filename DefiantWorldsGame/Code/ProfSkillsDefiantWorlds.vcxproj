@@ -118,7 +118,7 @@ copy "C:\Program Files (x86)\OpenAL 1.1 SDK\freealut-1.1.0-bin\lib\alut.dll"</Co
       </DataExecutionPrevention>
       <OutputFile>$(SolutionDir)$(TargetName)$(TargetExt)</OutputFile>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>"OpenAL32.lib";"alut.lib";"TL-Engine2013.lib";"OpenAL32.lib";"alut.lib";%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>"TL-Engine2013.lib";"OpenAL32.lib";"alut.lib";%(AdditionalDependencies)</AdditionalDependencies>
       <PerUserRedirection>true</PerUserRedirection>
     </Link>
     <PostBuildEvent>

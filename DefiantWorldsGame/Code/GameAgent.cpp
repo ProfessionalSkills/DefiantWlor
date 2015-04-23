@@ -23,8 +23,6 @@ CGameAgent::CGameAgent()
 CGameAgent::~CGameAgent()
 {
 	// Delete any particle effects attached to this model
-	if (mWarningSmoke) SafeDelete(mWarningSmoke);
-
 	while (mpProjectiles.size() > 0)
 	{
 		SProjectile* pProjectile = mpProjectiles.back();

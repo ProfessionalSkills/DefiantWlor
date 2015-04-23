@@ -22,7 +22,7 @@ CGameObject::CGameObject()
 
 CGameObject::~CGameObject()
 {
-
+	if (mWarningSmoke) SafeDelete(mWarningSmoke);
 }
 
 

@@ -274,7 +274,10 @@ bool CProductionStructure::Update(CRTSPlayer* pPlayer)
 				if (mDestructionExplosion == nullptr)
 				{	
 					SafeDelete(mWarningSmoke);
-					mDestructionExplosion = new CExplosion({mWorldPos.x, mWorldPos.y + 20.0f, mWorldPos.z}, 150, true);
+					if (mStructureType == STR_COM_CENTRE)
+						mDestructionExplosion = new CExplosion({mWorldPos.x, mWorldPos.y + 20.0f, mWorldPos.z}, 150, true);
+					else
+						mDestructionExplosion = new CExplosion({ mWorldPos.x, mWorldPos.y + 20.0f, mWorldPos.z }, 150, false);
 					Destroy();
 				}
 				else
