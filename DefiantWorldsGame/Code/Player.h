@@ -297,7 +297,7 @@ public:
 	//---------------------------
 	EErrorTypes PurchaseStructure(CStructure* pStructure, CGrid* pGrid, CTile* pTile);
 	void CheckGameObjectSelection(CStructure*& pStructure, CGameAgent*& pGameAgent,
-		CMinerals*& pMinerals, DX::XMFLOAT3 origin, DX::XMFLOAT3 direction, bool toCheckMinerals);
+		CMinerals*& pMinerals, DX::XMFLOAT3 origin, DX::XMFLOAT3 direction, float& curDist, bool toCheckMinerals);
 	bool CheckDragSelection(DX::BoundingBox& box, std::vector<CGameAgent*>& selectedAgents);
 	bool QueueUnit(CStructure* structure, CGameAgent* unit);
 	void LaunchAttack();

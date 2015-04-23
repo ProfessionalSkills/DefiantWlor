@@ -248,14 +248,11 @@ void CRTSPlayer::LaunchAttack()
 }
 
 void CRTSPlayer::CheckGameObjectSelection(CStructure*& pStructure, CGameAgent*& pGameAgent,
-	CMinerals*& pMinerals, DX::XMFLOAT3 origin, DX::XMFLOAT3 direction, bool toCheckMinerals)
+	CMinerals*& pMinerals, DX::XMFLOAT3 origin, DX::XMFLOAT3 direction, float& curDist, bool toCheckMinerals)
 {
-	float curDist = 99999.0f;
 	float newDist = 0;
 	
 	// First check for a selection of minerals, if it has been requested
-	pMinerals = nullptr;
-
 	if (toCheckMinerals)
 	{
 		for (miterMineralsList = mpMineralsList.begin(); miterMineralsList != mpMineralsList.end(); miterMineralsList++)
@@ -265,13 +262,13 @@ void CRTSPlayer::CheckGameObjectSelection(CStructure*& pStructure, CGameAgent*& 
 			{
 				pMinerals = (*miterMineralsList);
 				curDist = newDist;
+
+				// Set all other pointers to null
+				pStructure = nullptr;
+				pGameAgent = nullptr;
 			}
 		}
 	}
-
-
-	// SECONDLY CHECK UNITS
-	pGameAgent = nullptr;
 
 	// Loop through all Units
 	for (miterUnitsMap = mpUnitsMap.begin(); miterUnitsMap != mpUnitsMap.end(); miterUnitsMap++)
@@ -281,12 +278,12 @@ void CRTSPlayer::CheckGameObjectSelection(CStructure*& pStructure, CGameAgent*& 
 		{
 			pGameAgent = miterUnitsMap->second;
 			curDist = newDist;
+
+			// Set all other pointers to null
+			pMinerals = nullptr;
+			pStructure = nullptr;
 		}
 	}
-
-
-	// THEN CHECK BUILDINGS
-	pStructure = nullptr;
 
 	// Loop through all structures
 	for (miterStructuresMap = mpStructuresMap.begin(); miterStructuresMap != mpStructuresMap.end(); miterStructuresMap++)
@@ -330,15 +327,14 @@ void CRTSPlayer::CheckGameObjectSelection(CStructure*& pStructure, CGameAgent*& 
 																											// .cpp file ONLY otherwise you'll get cyclic redundancy
 				pStructure->SetSelectSound(new CSound(mMusicFile, mSourcePos, mSourceVel, false, volume, listenerPos, listenerVel));
 			}
+
 			pStructure->GetSelectSound()->PlaySound();
 			curDist = newDist;
-		}
-	}
 
-	// If structure is pointing at something, game agent cannot
-	if (pStructure)
-	{
-		pGameAgent = nullptr;
+			// Set all other pointers to null
+			pMinerals = nullptr;
+			pGameAgent = nullptr;
+		}
 	}
 }
 

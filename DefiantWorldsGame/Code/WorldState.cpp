@@ -285,37 +285,36 @@ void CWorldState::CheckKeyPresses()
 		}
 		else
 		{
+			// track the distance between each selection function call to determine the absolute closest unit/structure
+			float tmpDistance = 9999.0f;
+			
 			// Not placing a structure - find out where they are clicking
 			CStructure* pNewSelectedStructure = nullptr;
+			CGameAgent* pNewSelectedAgent = nullptr;
 			CMinerals* pNewSelectedMineral = nullptr;
+
 			switch (mMouseState)
 			{
 			case MS_NO_AREA:
 			case MS_EARTH_EDGE:
 			case MS_EARTH_GRID:
-				mpHumanPlayer->CheckGameObjectSelection(pNewSelectedStructure, mpCurSelectedAgent,
-					pNewSelectedMineral, mMouseOrigin, mMouseDirection, false);
-				OnStructureSelectChange(pNewSelectedStructure);
-				OnUnitSelectChange(mpCurSelectedAgent);
-				mpUnitSelectionList.clear();
-				break;
-
 			case MS_MARS_EDGE:
 			case MS_MARS_GRID:
-				mpHumanPlayer->CheckGameObjectSelection(pNewSelectedStructure, mpCurSelectedAgent,
-					pNewSelectedMineral, mMouseOrigin, mMouseDirection, false);
+				mpHumanPlayer->CheckGameObjectSelection(pNewSelectedStructure, pNewSelectedAgent,
+					pNewSelectedMineral, mMouseOrigin, mMouseDirection, tmpDistance, false);
 				OnStructureSelectChange(pNewSelectedStructure);
-				OnUnitSelectChange(mpCurSelectedAgent);
+				OnUnitSelectChange(pNewSelectedAgent);
 				mpUnitSelectionList.clear();
 				break;
 
 			case MS_UI:
 				OnStructureSelectChange(pNewSelectedStructure);
-				OnUnitSelectChange(mpCurSelectedAgent);
+				mpUnitSelectionList.clear();
+				OnUnitSelectChange(pNewSelectedAgent);
 				break;
 			}
 
-			if (mpCurSelectedStructure || mpCurSelectedAgent)
+			if (pNewSelectedStructure || pNewSelectedAgent)
 			{
 				mLMouseClicked = false;
 			}
@@ -341,18 +340,20 @@ void CWorldState::CheckKeyPresses()
 				pWorker->SetMineral(nullptr);
 			}
 
+			// track the distance between each selection function call to determine the absolute closest unit/structure
+			float tmpDistance = 9999.0f;
+
 			// Check the position of the mouse
 			switch (mMouseState)
 			{
 			case MS_NO_AREA:
 			case MS_EARTH_EDGE:
 			case MS_EARTH_GRID:
-				mpHumanPlayer->CheckGameObjectSelection(pTargetStructure, pTargetGameAgent, pTargetMinerals, mMouseOrigin, mMouseDirection, true);
-				break;
-
 			case MS_MARS_EDGE:
 			case MS_MARS_GRID:
-				mpAIPlayer->CheckGameObjectSelection(pTargetStructure, pTargetGameAgent, pTargetMinerals, mMouseOrigin, mMouseDirection, true);
+				mpHumanPlayer->CheckGameObjectSelection(pTargetStructure, pTargetGameAgent, pTargetMinerals, mMouseOrigin, mMouseDirection, tmpDistance, true);
+				mpAIPlayer->CheckGameObjectSelection(pTargetStructure, pTargetGameAgent, pTargetMinerals, mMouseOrigin, mMouseDirection, tmpDistance, true);
+				mpPlayerManager->CheckRebelSelection(pTargetStructure, pTargetGameAgent, pTargetMinerals, mMouseOrigin, mMouseDirection, tmpDistance);
 				break;
 
 			case MS_UI:
@@ -416,6 +417,9 @@ void CWorldState::CheckKeyPresses()
 		}
 		else if (mpUnitSelectionList.size() > 0)
 		{
+			// track the distance between each selection function call to determine the absolute closest unit/structure
+			float tmpDistance = 9999.0f;
+			
 			// Update all the units in the list to the current path position if the tile is not in use
 			CStructure* pTargetStructure = nullptr;
 			CGameAgent* pTargetGameAgent = nullptr;
@@ -427,12 +431,12 @@ void CWorldState::CheckKeyPresses()
 			case MS_NO_AREA:
 			case MS_EARTH_EDGE:
 			case MS_EARTH_GRID:
-				mpHumanPlayer->CheckGameObjectSelection(pTargetStructure, pTargetGameAgent, pTargetMinerals, mMouseOrigin, mMouseDirection, true);
+				mpHumanPlayer->CheckGameObjectSelection(pTargetStructure, pTargetGameAgent, pTargetMinerals, mMouseOrigin, mMouseDirection, tmpDistance, true);
 				break;
 
 			case MS_MARS_EDGE:
 			case MS_MARS_GRID:
-				mpAIPlayer->CheckGameObjectSelection(pTargetStructure, pTargetGameAgent, pTargetMinerals, mMouseOrigin, mMouseDirection, true);
+				mpAIPlayer->CheckGameObjectSelection(pTargetStructure, pTargetGameAgent, pTargetMinerals, mMouseOrigin, mMouseDirection, tmpDistance, true);
 				break;
 
 			case MS_UI:

@@ -34,6 +34,10 @@ public:
 	void InvadeEarth();
 	void InvadeMars();
 
+	// Check clicking/selection of rebel units
+	void CheckRebelSelection(CStructure*& pStructure, CGameAgent*& pGameAgent, CMinerals*& pMinerals,
+		DX::XMFLOAT3 origin, DX::XMFLOAT3 direction, float& curDist);
+
 
 	// MUTATORS
 	//---------------------------

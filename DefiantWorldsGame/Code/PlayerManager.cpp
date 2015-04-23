@@ -216,6 +216,7 @@ void CPlayerManager::InvadeEarth()
 
 			// Spawn the unit & store
 			pNewAgent->LoadIModel();
+			pNewAgent->CalculateBoundingSphere();
 			mpRebelEarthList.push_back(pNewAgent);
 			break;
 
@@ -242,6 +243,7 @@ void CPlayerManager::InvadeEarth()
 
 			// Spawn the unit & store
 			pNewAgent->LoadIModel();
+			pNewAgent->CalculateBoundingSphere();
 			mpRebelEarthList.push_back(pNewAgent);
 			break;
 		case GAV_WORKER:
@@ -274,6 +276,7 @@ void CPlayerManager::InvadeEarth()
 
 			// Spawn the unit & store
 			pNewAgent->LoadIModel();
+			pNewAgent->CalculateBoundingSphere();
 			mpRebelEarthList.push_back(pNewAgent);
 			break;
 		}
@@ -298,5 +301,41 @@ void CPlayerManager::InvadeMars()
 		// Reset units amount and time to invasion
 		mMarsUnits = gpRandomiser->GetRandomInt(3, 7);
 		mTimeToMarsInvasion = gpRandomiser->GetRandomFloat(20.0f, 60.0f);
+	}
+}
+
+void CPlayerManager::CheckRebelSelection(CStructure*& pStructure, CGameAgent*& pGameAgent, CMinerals*& pMinerals,
+	DX::XMFLOAT3 origin, DX::XMFLOAT3 direction, float& curDist)
+{
+	float newDist = 0.0f;
+	
+	// Loop through all earth rebel Units
+	for (auto iter = mpRebelEarthList.begin(); iter != mpRebelEarthList.end(); iter++)
+	{
+		// If there is a collision, return the pointer to that object
+		if ((*iter)->RayCollision(origin, direction, newDist) && newDist < curDist)
+		{
+			pGameAgent = (*iter);
+			curDist = newDist;
+
+			// Set all other pointers to null
+			pMinerals = nullptr;
+			pStructure = nullptr;
+		}
+	}
+
+	// Loop through all mars rebel Units
+	for (auto iter = mpRebelMarsList.begin(); iter != mpRebelMarsList.end(); iter++)
+	{
+		// If there is a collision, return the pointer to that object
+		if ((*iter)->RayCollision(origin, direction, newDist) && newDist < curDist)
+		{
+			pGameAgent = (*iter);
+			curDist = newDist;
+
+			// Set all other pointers to null
+			pMinerals = nullptr;
+			pStructure = nullptr;
+		}
 	}
 }
