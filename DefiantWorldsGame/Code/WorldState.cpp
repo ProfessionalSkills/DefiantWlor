@@ -609,21 +609,6 @@ void CWorldState::CheckKeyPresses()
 		mpAIPlayer->LaunchAttack();
 		gCurState = GS_SPACE;
 	}
-	
-	if (gpEngine->KeyHit(Key_N))
-	{
-		mpHumanPlayer->GetFleet()->SetTactic(None);
-	}
-
-	if (gpEngine->KeyHit(Key_T))
-	{
-		mpHumanPlayer->GetFleet()->SetTactic(Targeted);
-	}
-
-	if (gpEngine->KeyHit(Key_R))
-	{
-		mpHumanPlayer->GetFleet()->SetTactic(Rapid);
-	}
 
 	//-- DEBUG CONTROLS --//
 	//used to make the ai fleet win in testing
