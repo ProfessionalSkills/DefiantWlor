@@ -28,7 +28,67 @@ CStaticStructure::~CStaticStructure()
 //-----------------------------------------------------
 bool CStaticStructure::Update(CRTSPlayer* pPlayer)
 {
-	return true;
+	// Determine state of the structure
+	switch (mState)
+	{
+	case OBJ_CONSTRUCTING:
+		// Change status of the building to 'built'
+		mState = OBJ_BUILT;
+
+		// Object still alive
+		return true;
+
+		break;
+
+	case OBJ_BUILT:
+		// Check if health below 50% for smoke system creation
+		if (mHealth > 0.0f && ((mHealth / mMaxHealth) * 100.0f) <= 50.0f)
+		{
+			if (mWarningSmoke == nullptr)
+			{
+				mWarningSmoke = new CSmoke(mpObjModel, 30, 20.0f, 0.8f);
+			}
+			else
+			{
+				// Update smoke system
+				mWarningSmoke->UpdateSystem();
+			}
+		}
+
+		// Check if no health left
+		if ((mHealth <= 0.0f))
+		{
+			if (mDestructionExplosion == nullptr)
+			{
+				SafeDelete(mWarningSmoke);
+				if (mStructureType == STR_COM_CENTRE || mStructureType == STR_WALL)
+					mDestructionExplosion = new CExplosion({ mWorldPos.x, mWorldPos.y + 20.0f, mWorldPos.z }, 150, true);
+				else
+					mDestructionExplosion = new CExplosion({ mWorldPos.x, mWorldPos.y + 20.0f, mWorldPos.z }, 150, false);
+				Destroy();
+			}
+			else
+			{
+				// Check if the explosion system has finished
+				if (!mDestructionExplosion->UpdateSystem())
+				{
+					// particle system is finished
+					SafeDelete(mDestructionExplosion);
+					mState = OBJ_DEAD;
+				}
+			}
+		}
+		return true;
+
+		break;
+
+	case OBJ_DEAD:
+
+		// Object no longer alive
+		return false;
+
+		break;
+	}
 }
 
 void CStaticStructure::DisplayInfo(IFont* font)

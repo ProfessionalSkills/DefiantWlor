@@ -223,7 +223,7 @@ void CStructure::Destroy()
 	// Alert news ticker if structure belongs to the player
 	if (mFaction == FAC_EARTH_DEFENSE_FORCE)
 	{
-		switch (GetStructureType())
+		switch (mStructureType)
 		{
 		case STR_BARRACKS:
 			mStrDisplay << "A Barracks";
@@ -240,40 +240,47 @@ void CStructure::Destroy()
 		case STR_SPACE_CENTRE:
 			mStrDisplay << "A Space Centre";
 			break;
+
+		case STR_WALL:
+			mStrDisplay << "A Defensive Wall";
+			break;
 		}
 		mStrDisplay << " has been destroyed!";
 		gpNewsTicker->AddNewElement(mStrDisplay.str(), true);
 		mStrDisplay.str("");
 	}
 	
-	// Mark the building's grid area as in use
-	CTile* pNextTile;
-	SPointData gridPoint;
-
-	// Loop through structure size
-	for (int x = mGridPos.mPosX + mStructureBL.mPosX; x <= mGridPos.mPosX + mStructureTR.mPosX; x++)
+	if (mStructureType != STR_WALL)
 	{
-		for (int y = mGridPos.mPosY + mStructureBL.mPosY; y <= mGridPos.mPosY + mStructureTR.mPosY; y++)
+		// Mark the building's grid area as in use
+		CTile* pNextTile;
+		SPointData gridPoint;
+
+		// Loop through structure size
+		for (int x = mGridPos.mPosX + mStructureBL.mPosX; x <= mGridPos.mPosX + mStructureTR.mPosX; x++)
 		{
-			gridPoint.mPosX = x;
-			gridPoint.mPosY = y;
+			for (int y = mGridPos.mPosY + mStructureBL.mPosY; y <= mGridPos.mPosY + mStructureTR.mPosY; y++)
+			{
+				gridPoint.mPosX = x;
+				gridPoint.mPosY = y;
 
-			// Get current tile data
-			pNextTile = mpGrid->GetTileData(gridPoint);
+				// Get current tile data
+				pNextTile = mpGrid->GetTileData(gridPoint);
 
-			// Set state of tile
-			pNextTile->SetTileUsage(false);
+				// Set state of tile
+				pNextTile->SetTileUsage(false);
+			}
 		}
+
+		// Also set spawning grid tile to unused
+		gridPoint.mPosX = mGridSpawnLoc.mPosX;
+		gridPoint.mPosY = mGridSpawnLoc.mPosY;
+		pNextTile = mpGrid->GetTileData(gridPoint);
+		pNextTile->SetTileUsage(false);
 	}
 
 	// Unload warning smoke
 	if (mWarningSmoke) SafeDelete(mWarningSmoke);
-
-	// Also set spawning grid tile to unused
-	gridPoint.mPosX = mGridSpawnLoc.mPosX;
-	gridPoint.mPosY = mGridSpawnLoc.mPosY;
-	pNextTile = mpGrid->GetTileData(gridPoint);
-	pNextTile->SetTileUsage(false);
 
 	// Do not allow the building to be selected again by removing the bounding box
 	mBoundingBox = SBoundingCube();

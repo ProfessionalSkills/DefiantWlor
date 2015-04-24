@@ -302,11 +302,6 @@ bool CProductionStructure::Update(CRTSPlayer* pPlayer)
 			return false;
 
 			break;
-
-		default:
-			return true;
-
-			break;
 	}
 }
 

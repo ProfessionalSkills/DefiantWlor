@@ -23,7 +23,6 @@ TO DO:
 	- Make shadow of unit glow when that unit is selected
 	- Use lasers for workers when they are mining minerals
 	- Ability to heal/repair
-	- Stop helicopters from leaning to one side when they turn - causes too many bugs
 	- Red beam from sky when unit is sent to transport ship
 	- Model around building being constructed for a more interesting constructing appearance
 	- Retune AI to do attacking
@@ -37,12 +36,13 @@ TO DO:
 	- Units collide with one another
 	- Units require a slightly bigger hit box
 	- If time, decorate surrounding area
-	- Create a model save to load so that on demo day people are not bored whilst units are constructed etc.
+	- Create a saved game to load so that on demo day people are not bored whilst units are constructed etc.
 	- Fix game loading bugs
 	- Add houses??
 	- Update population costs of units
 	- Change the way smoke is produced so it is not concentrated in one position for buildings &
 		remove smoke limit - simply create a smoke particle every so often
+	- Add UI for button mouse over descriptions
 */
 
 
