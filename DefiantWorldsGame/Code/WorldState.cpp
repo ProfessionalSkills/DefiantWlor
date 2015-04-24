@@ -729,7 +729,7 @@ void CWorldState::DisplaySelectedBuildingInfo()
 		newProgressAmount = 0;
 
 		// If there is also no unit or resource selected, set new health amount to default
-		if (mpCurSelectedAgent)
+		if (mpCurSelectedAgent || mpUnitSelectionList.size() != 0)
 		{
 			// If there is a selection, maintain current value
 			newHealthAmount = mPrevHealth;
@@ -1638,6 +1638,23 @@ void CWorldState::StateUpdate()
 
 	// Update cameras
 	mpCamCurrent->Update();
+
+
+	// CHECK LIST OF UNITS
+	//------------------------------
+	if (mpUnitSelectionList.size())
+	{
+		// If there are units selected in a list, check to see if any of them have no health left
+		// so that they can be removed from the list - avoids crashes
+		for (miterUnitSelectionList = mpUnitSelectionList.begin(); miterUnitSelectionList != mpUnitSelectionList.end(); miterUnitSelectionList++)
+		{
+			if ((*miterUnitSelectionList)->GetHealth() <= 0.0f)
+			{
+				mpUnitSelectionList.erase(miterUnitSelectionList);
+				break;
+			}
+		}
+	}
 
 
 	// METHODS
