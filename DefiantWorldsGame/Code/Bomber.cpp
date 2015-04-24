@@ -110,30 +110,22 @@ bool CBomber::Attack(CGameObject* target, float hitMod, float damageMod)
 		DX::XMFLOAT4X4 objMatrix;
 		mpObjModel->GetMatrix(&objMatrix.m[0][0]);
 
-		DX::XMFLOAT3 localY{ objMatrix.m[1][0], objMatrix.m[1][1], objMatrix.m[1][2] };
+		DX::XMFLOAT3 globalY{ 0.0f, -1.0f, 0.0f };
 		DX::XMFLOAT3 localZ{ objMatrix.m[2][0], objMatrix.m[2][1], objMatrix.m[2][2] };
 
-		localY.x = -localY.x;
-		localY.y = -localY.y;
-		localY.z = -localY.z;
-
 		// Normalise this local axis
-		DX::XMVECTOR vecNormal = DX::XMVector4Normalize(DX::XMLoadFloat3(&localY));
-		DX::XMStoreFloat3(&localY, vecNormal);
-
-		// Normalise this local axis
-		vecNormal = DX::XMVector4Normalize(DX::XMLoadFloat3(&localZ));
+		DX::XMVECTOR vecNormal = DX::XMVector4Normalize(DX::XMLoadFloat3(&localZ));
 		DX::XMStoreFloat3(&localZ, vecNormal);
 
 		// If the target is being looked at and is within range
-		bool successfulAttack = mAttackTarget->RayCollision(mWorldPos, localY, distance);
+		bool successfulAttack = mAttackTarget->RayCollision(mWorldPos, globalY, distance);
 		if (successfulAttack)
 		{
 			if (mAttackTimer >= (1.0f / mFireRate)) //Control rate of fire of the unit
 			{
 				SProjectile* newProjectile = new SProjectile();
 				newProjectile->mModel = mspMshBomb->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
-				newProjectile->mDirection = localY;
+				newProjectile->mDirection = globalY;
 				newProjectile->mSpeed = 30.0f;
 
 				mpProjectiles.push_back(newProjectile);
