@@ -133,7 +133,7 @@ bool CBomber::Attack(CGameObject* target, float hitMod, float damageMod)
 			}
 
 			// Set a point in front of the unit to give the effect of fly-bys
-			DX::XMFLOAT3 pathTarget = { localZ.x * 50.0f, localZ.y * 50.0f, localZ.z * 50.0f };
+			DX::XMFLOAT3 pathTarget = { localZ.x * 60.0f, localZ.y * 60.0f, localZ.z * 60.0f };
 			mPathTarget = { mWorldPos.x + pathTarget.x, 0.0f, mWorldPos.z + pathTarget.z };
 			mHasPathTarget = true;
 		}

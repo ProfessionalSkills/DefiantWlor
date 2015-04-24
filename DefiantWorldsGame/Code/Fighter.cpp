@@ -25,7 +25,7 @@ CFighter::CFighter()
 	mDamage = 1.0f;
 	mFireRate = 12.0f;
 	mAttackTimer = 1.0f / mFireRate;
-	mRange = 20.0f;
+	mRange = 60.0f;
 	mState = OBJ_CONSTRUCTING;
 	mIsMoving = false;
 	mHasPathTarget = false;

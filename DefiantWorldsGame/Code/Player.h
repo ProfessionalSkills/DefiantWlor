@@ -90,11 +90,23 @@ protected:
 	std::vector<CMinerals*>::iterator miterMineralsList;
 	
 
+	// FLEET DATA
+	//---------------------------
 	CFleet* mpFleet;
 	bool mWonLastSpaceBattle;
 
 
+	// MISC
+	//---------------------------
+	IModel* mpPillars[8];
+
+
 public:
+	// PILLAR MESH
+	//---------------------------
+	static IMesh* mspMshPillar;
+
+
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
 	CRTSPlayer(EFactions playerFaction, int startingResources);
@@ -303,6 +315,8 @@ public:
 	void LaunchAttack();
 	virtual void Update();
 	void CreateResourcePiles();
+	void CreatePillars();
+	void RemovePillars();
 	void LoadPlayerGridModels();
 	void UnloadPlayerGridModels();
 	bool PopLimitReached(int popValue);

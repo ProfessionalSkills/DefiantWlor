@@ -7,7 +7,6 @@ PROJECT NAME:
 ProfSkillsDefiantWorlds
 
 TO DO:
-	- Wall destruction
 	- Towers on corners of wall
 	- Anti-aircraft turret structures on top of corner towers
 	- UI for space buttons
@@ -178,6 +177,7 @@ void SetupEngine()
 	CSpaceCentre::mspMshStructurePlacing = gpEngine->LoadMesh("SpaceCentrePlacing.x");
 	// Wall
 	CWall::mspMshStructure = gpEngine->LoadMesh("wall_A1_01.x");
+	CRTSPlayer::mspMshPillar = gpEngine->LoadMesh("Pillar.x");
 
 	
 	//Spaceship Meshes

@@ -54,7 +54,7 @@ bool CAirUnit::Update()
 		break;
 	case OBJ_BUILT:
 		// If the height of the unit is below 50, increase it
-		if (mWorldPos.y < 50.0f && mpObjModel)
+		if (mWorldPos.y < 75.0f && mpObjModel)
 		{
 			mpObjModel->MoveY(30.0f * gFrameTime);
 			mWorldPos.y = mpObjModel->GetY();
