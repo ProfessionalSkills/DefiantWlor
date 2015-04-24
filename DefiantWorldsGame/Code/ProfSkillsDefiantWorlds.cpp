@@ -23,7 +23,6 @@ TO DO:
 	- Make shadow of unit glow when that unit is selected
 	- Use lasers for workers when they are mining minerals
 	- Ability to heal/repair
-	- Air units start on platform of helipad and lift up before moving
 	- Stop helicopters from leaning to one side when they turn - causes too many bugs
 	- Red beam from sky when unit is sent to transport ship
 	- Model around building being constructed for a more interesting constructing appearance
@@ -42,6 +41,8 @@ TO DO:
 	- Fix game loading bugs
 	- Add houses??
 	- Update population costs of units
+	- Change the way smoke is produced so it is not concentrated in one position for buildings &
+		remove smoke limit - simply create a smoke particle every so often
 */
 
 

@@ -29,9 +29,9 @@ CAirUnit::~CAirUnit()
 //-----------------------------------------------------
 void CAirUnit::Spawn(CGrid* pGrid, SPointData pCentre)
 {
-	mpObjModel = CreateModel(DX::XMFLOAT3(pGrid->GetTileData(pCentre)->GetWorldPos().x, 50.0f, (pGrid->GetTileData(pCentre)->GetWorldPos().z)));
+	mpObjModel = CreateModel(DX::XMFLOAT3(pGrid->GetTileData(pCentre)->GetWorldPos().x, 20.0f, (pGrid->GetTileData(pCentre)->GetWorldPos().z)));
 	mWorldPos.x = pGrid->GetTileData(pCentre)->GetWorldPos().x;
-	mWorldPos.y = 1.0f;
+	mWorldPos.y = 20.0f;
 	mWorldPos.z = pGrid->GetTileData(pCentre)->GetWorldPos().z;
 	mpObjModel->Scale(mScale);
 
@@ -53,6 +53,14 @@ bool CAirUnit::Update()
 		return true;
 		break;
 	case OBJ_BUILT:
+		// If the height of the unit is below 50, increase it
+		if (mWorldPos.y < 50.0f && mpObjModel)
+		{
+			mpObjModel->MoveY(30.0f * gFrameTime);
+			mWorldPos.y = mpObjModel->GetY();
+			mBoundingSphere.MoveTo(mWorldPos);
+		}
+
 		// Check how much health is left for smoke creation
 		if (((mHealth / mMaxHealth) * 100.0f) <= 50.0f)
 		{
@@ -175,13 +183,13 @@ bool CAirUnit::Update()
 	else if (!mHasPathTarget)
 	{
 		// Correct any yaw issues
-		if (mYaw >= 0.3f)
+		if (mYaw >= 0.01f)
 		{
 			float rotateAmount = -50.0f * gFrameTime;
 			mYaw += rotateAmount;
 			mpObjModel->RotateLocalZ(rotateAmount);
 		}
-		else if (mYaw <= -0.3f)
+		else if (mYaw <= -0.01f)
 		{
 			float rotateAmount = 50.0f * gFrameTime;
 			mYaw += rotateAmount;
@@ -279,13 +287,13 @@ bool CAirUnit::LookingAt(DX::XMFLOAT3 targetLocation)
 	{
 		// Target is ahead - straighten up
 		// Determine if yaw is positive or negative
-		if (mYaw >= 0.3f)
+		if (mYaw >= 0.01f)
 		{
 			float rotateAmount = -50.0f * gFrameTime;
 			mYaw += rotateAmount;
 			mpObjModel->RotateLocalZ(rotateAmount);
 		}
-		else if (mYaw <= -0.3f)
+		else if (mYaw <= -0.01f)
 		{
 			float rotateAmount = 50.0f * gFrameTime;
 			mYaw += rotateAmount;
