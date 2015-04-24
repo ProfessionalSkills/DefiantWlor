@@ -39,6 +39,7 @@ protected:
 	// TLE OBJECT DATA
 	//---------------------------
 	IModel* mpObjModel = nullptr;
+	IModel* mpObjShadow = nullptr;
 
 	CExplosion* mDestructionExplosion;
 	CSmoke* mWarningSmoke;

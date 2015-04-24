@@ -7,7 +7,6 @@ PROJECT NAME:
 ProfSkillsDefiantWorlds
 
 TO DO:
-	- Towers on corners of wall
 	- Anti-aircraft turret structures on top of corner towers
 	- UI for space buttons
 	- STOP button for units
@@ -16,8 +15,8 @@ TO DO:
 	- Change how units are saved - instead of just their position, save their entire matrix
 	- Complete UI for info at top of screen
 	- Complete UI for news ticker
+	- Remove debug information
 	- Reposition news ticker
-	- Shadows beneath units
 	- Model arrow to show where unit is attempting to travel to
 	- Make shadow of unit glow when that unit is selected
 	- Use lasers for workers when they are mining minerals
@@ -160,6 +159,7 @@ void SetupEngine()
 	// Load static meshes
 	CTile::mspMshTile = gpEngine->LoadMesh("Tile.x");
 	CWorldState::mspMshDrag = gpEngine->LoadMesh("DragSelection.x");
+	CWorldState::mspMshUnitShadow = gpEngine->LoadMesh("UnitShadow.x");
 	CMinerals::mspMshMineral = gpEngine->LoadMesh("Mineral2.x");
 
 	//Structure Meshes

@@ -7,6 +7,7 @@
 // INCLUDES
 //-----------------------------------------------------
 #include "Worker.h"
+#include "WorldState.h"
 
 IMesh* CWorker::mspMshWorker = nullptr;
 IMesh* CWorker::mspMshWorkerBullet = nullptr;
@@ -106,6 +107,13 @@ void CWorker::UnloadIModel()
 		SafeDelete(pExplosion);
 		mpAttackExplosions.pop_back();
 	}
+
+	// Remove shadow
+	if (mpObjShadow)
+	{
+		CWorldState::mspMshUnitShadow->RemoveModel(mpObjShadow);
+		mpObjShadow = nullptr;
+	}
 }
 
 void CWorker::LoadIModel()
@@ -127,6 +135,9 @@ void CWorker::LoadIModel()
 			mpObjModel->SetSkin("ttruckGermanRebel.jpg");
 		}
 	}
+
+	// Create shadow
+	mpObjShadow = CWorldState::mspMshUnitShadow->CreateModel(mWorldPos.x, 0.4f, mWorldPos.z);
 }
 
 

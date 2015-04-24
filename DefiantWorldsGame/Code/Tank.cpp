@@ -7,9 +7,12 @@
 // INCLUDES
 //-----------------------------------------------------
 #include "Tank.h"
+#include "WorldState.h"
 
 IMesh* CTank::mspMshTank = nullptr;
 IMesh* CTank::mspMshTankShell = nullptr;
+
+
 //-----------------------------------------------------
 // TANK CLASS CONSTRUCTORS & DESTRUCTOR
 //-----------------------------------------------------
@@ -70,6 +73,13 @@ void CTank::UnloadIModel()
 		SafeDelete(pExplosion);
 		mpAttackExplosions.pop_back();
 	}
+
+	// Remove shadow
+	if (mpObjShadow)
+	{
+		CWorldState::mspMshUnitShadow->RemoveModel(mpObjShadow);
+		mpObjShadow = nullptr;
+	}
 }
 
 void CTank::LoadIModel()
@@ -92,6 +102,9 @@ void CTank::LoadIModel()
 			mpObjModel->SetSkin("Hovertank01Rebel.jpg");
 		}
 	}
+
+	// Create shadow
+	mpObjShadow = CWorldState::mspMshUnitShadow->CreateModel(mWorldPos.x, 0.4f, mWorldPos.z);
 }
 
 

@@ -12,6 +12,7 @@
 
 
 IMesh* CWorldState::mspMshDrag = nullptr;
+IMesh* CWorldState::mspMshUnitShadow = nullptr;
 
 
 //-----------------------------------------------------

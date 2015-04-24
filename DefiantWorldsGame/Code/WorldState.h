@@ -192,6 +192,7 @@ public:
 	//---------------------------
 	// Drag box
 	static IMesh* mspMshDrag;
+	static IMesh* mspMshUnitShadow;
 
 
 	// CONSTRUCTORS & DESTRUCTOR

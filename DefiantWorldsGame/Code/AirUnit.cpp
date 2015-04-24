@@ -8,6 +8,7 @@
 //-----------------------------------------------------
 #include "AirUnit.h"
 #include "PlayerManager.h"
+#include "WorldState.h"
 
 
 //-----------------------------------------------------
@@ -35,6 +36,9 @@ void CAirUnit::Spawn(CGrid* pGrid, SPointData pCentre)
 	mWorldPos.z = pGrid->GetTileData(pCentre)->GetWorldPos().z;
 	mpObjModel->Scale(mScale);
 
+	// Create shadow
+	mpObjShadow = CWorldState::mspMshUnitShadow->CreateModel(mWorldPos.x, 0.4f, mWorldPos.z);
+
 	CalculateBoundingSphere();
 }
 
@@ -53,6 +57,12 @@ bool CAirUnit::Update()
 		return true;
 		break;
 	case OBJ_BUILT:
+		// Update position of shadow
+		if (mpObjShadow)
+		{
+			mpObjShadow->SetPosition(mWorldPos.x, 0.5f, mWorldPos.z);
+		}
+
 		// If the height of the unit is below 50, increase it
 		if (mWorldPos.y < 75.0f && mpObjModel)
 		{

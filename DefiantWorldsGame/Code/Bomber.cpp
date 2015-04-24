@@ -7,6 +7,7 @@
 // INCLUDES
 //-----------------------------------------------------
 #include "Bomber.h"
+#include "WorldState.h"
 
 IMesh* CBomber::mspMshBomber = nullptr;
 IMesh* CBomber::mspMshBomb = nullptr;
@@ -71,6 +72,13 @@ void CBomber::UnloadIModel()
 		SafeDelete(pExplosion);
 		mpAttackExplosions.pop_back();
 	}
+
+	// Remove shadow
+	if (mpObjShadow)
+	{
+		CWorldState::mspMshUnitShadow->RemoveModel(mpObjShadow);
+		mpObjShadow = nullptr;
+	}
 }
 
 void CBomber::LoadIModel()
@@ -93,6 +101,9 @@ void CBomber::LoadIModel()
 			mpObjModel->SetSkin("heliRebel.jpg");
 		}
 	}
+
+	// Create shadow
+	mpObjShadow = CWorldState::mspMshUnitShadow->CreateModel(mWorldPos.x, 0.4f, mWorldPos.z);
 }
 
 

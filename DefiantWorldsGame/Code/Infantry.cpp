@@ -7,9 +7,11 @@
 // INCLUDES
 //-----------------------------------------------------
 #include "Infantry.h"
+#include "WorldState.h"
 
 IMesh* CInfantry::mspMshInfantry = nullptr;
 IMesh* CInfantry::mspMshInfantryBullet = nullptr;
+
 
 //-----------------------------------------------------
 // INFANTRY CLASS CONSTRUCTORS & DESTRUCTOR
@@ -71,6 +73,13 @@ void CInfantry::UnloadIModel()
 		SafeDelete(pExplosion);
 		mpAttackExplosions.pop_back();
 	}
+
+	// Remove shadow
+	if (mpObjShadow)
+	{
+		CWorldState::mspMshUnitShadow->RemoveModel(mpObjShadow);
+		mpObjShadow = nullptr;
+	}
 }
 
 void CInfantry::LoadIModel()
@@ -93,6 +102,9 @@ void CInfantry::LoadIModel()
 			mpObjModel->SetSkin("tigerRebel.jpg");
 		}
 	}
+
+	// Create shadow
+	mpObjShadow = CWorldState::mspMshUnitShadow->CreateModel(mWorldPos.x, 0.4f, mWorldPos.z);
 }
 
 

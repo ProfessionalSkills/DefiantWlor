@@ -7,6 +7,7 @@
 // INCLUDES
 //-----------------------------------------------------
 #include "Artillery.h"
+#include "WorldState.h"
 
 IMesh* CArtillery::mspMshArtillery = nullptr;
 IMesh* CArtillery::mspMshArtilleryShell = nullptr;
@@ -72,6 +73,13 @@ void CArtillery::UnloadIModel()
 		SafeDelete(pExplosion);
 		mpAttackExplosions.pop_back();
 	}
+
+	// Remove shadow
+	if (mpObjShadow)
+	{
+		CWorldState::mspMshUnitShadow->RemoveModel(mpObjShadow);
+		mpObjShadow = nullptr;
+	}
 }
 
 void CArtillery::LoadIModel()
@@ -94,6 +102,9 @@ void CArtillery::LoadIModel()
 			mpObjModel->SetSkin("marsAARebel.jpg");
 		}
 	}
+
+	// Create shadow
+	mpObjShadow = CWorldState::mspMshUnitShadow->CreateModel(mWorldPos.x, 0.4f, mWorldPos.z);
 }
 
 

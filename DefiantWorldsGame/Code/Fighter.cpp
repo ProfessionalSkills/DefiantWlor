@@ -7,6 +7,7 @@
 // INCLUDES
 //-----------------------------------------------------
 #include "Fighter.h"
+#include "WorldState.h"
 
 IMesh* CFighter::mspMshFighter = nullptr;
 IMesh* CFighter::mspMshFighterBullet = nullptr;
@@ -71,6 +72,13 @@ void CFighter::UnloadIModel()
 		SafeDelete(pExplosion);
 		mpAttackExplosions.pop_back();
 	}
+
+	// Remove shadow
+	if (mpObjShadow)
+	{
+		CWorldState::mspMshUnitShadow->RemoveModel(mpObjShadow);
+		mpObjShadow = nullptr;
+	}
 }
 
 void CFighter::LoadIModel()
@@ -92,6 +100,9 @@ void CFighter::LoadIModel()
 			mpObjModel->SetSkin("machineRebel.jpg");
 		}
 	}
+
+	// Create shadow
+	mpObjShadow = CWorldState::mspMshUnitShadow->CreateModel(mWorldPos.x, 0.4f, mWorldPos.z);
 }
 
 

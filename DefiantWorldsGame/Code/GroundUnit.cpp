@@ -8,6 +8,7 @@
 //-----------------------------------------------------
 #include "GroundUnit.h"
 #include "PlayerManager.h"
+#include "WorldState.h"
 
 
 //-----------------------------------------------------
@@ -38,6 +39,9 @@ void CGroundUnit::Spawn(CGrid* pGrid, SPointData pCentre)
 	mWorldPos.z = pGrid->GetTileData(pCentre)->GetWorldPos().z;
 	mpObjModel->Scale(mScale);
 
+	// Create shadow
+	mpObjShadow = CWorldState::mspMshUnitShadow->CreateModel(mWorldPos.x, 0.4f, mWorldPos.z);
+
 	CalculateBoundingSphere();
 }
 
@@ -57,6 +61,12 @@ bool CGroundUnit::Update()
 		return true;
 		break;
 	case OBJ_BUILT:
+		// Update position of shadow
+		if (mpObjShadow)
+		{
+			mpObjShadow->SetPosition(mWorldPos.x, 0.5f, mWorldPos.z);
+		}
+
 		// Check if health is below half
 		if (((mHealth / mMaxHealth) * 100.0f) <= 50.0f)
 		{
