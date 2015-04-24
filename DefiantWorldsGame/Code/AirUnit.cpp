@@ -125,6 +125,27 @@ bool CAirUnit::Update()
 		{
 			mAttackTarget = nullptr;
 		}
+		// Check which faction the unit is from
+		else if (mFaction == FAC_EARTH_DEFENSE_FORCE)
+		{
+			// Check if the rebels have fled
+			if (mAttackTarget->GetWorldXPos() < -2500.0f)
+			{
+				mAttackTarget = nullptr;
+			}
+		}
+		else
+		{
+			// Check if the rebels have fled
+			if (mAttackTarget->GetWorldZPos() > 4500.0f)
+			{
+				mAttackTarget = nullptr;
+			}
+		}
+	}
+	else
+	{
+		// Check if the unit is out of the grid boundaries to make it return to where it should be *TO DO*
 	}
 
 	// ALL THESE UPDATES OCCUR IF THE UNIT IS NOT DEAD OR IN SPACE

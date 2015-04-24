@@ -87,8 +87,7 @@ int CPlayerManager::UpdatePlayers()
 		// Check to see if it is time to invade earth or mars
 		if (mTimeToEarthInvasion < 0.0f)
 		{
-			// Let the player know an invasion is coming
-			gpNewsTicker->AddNewElement("A rebel faction is attacking!", true);
+			// Run the course of an earth invasion
 			InvadeEarth();
 		}
 		else
@@ -108,14 +107,66 @@ int CPlayerManager::UpdatePlayers()
 	// Update rebel earth units
 	for (auto iter = mpRebelEarthList.begin(); iter != mpRebelEarthList.end(); iter++)
 	{
+		// Derference pointer to avoid numerous derefrencing
+		CGameAgent* pAgent = (*iter);
+		
 		// Call update function for this structure
-		if (!(*iter)->Update())
+		if (!pAgent->Update())
 		{
-			// The current structure has been destroyed
-			CGameAgent* tmp = (*iter);
-			SafeDelete(tmp);
+			// The current unit has been destroyed
+			SafeDelete(pAgent);
 			mpRebelEarthList.erase(iter);
 			break;
+		}
+		// Check if they have successfully fled
+		else if (pAgent->GetWorldXPos() < -3050.0f)
+		{
+			// The unit has gone beyond the boundaries - remove it
+			SafeDelete(pAgent);
+			mpRebelEarthList.erase(iter);
+			break;
+		}
+		else
+		{
+			// Check if their target is dead & roll dice to see if the unit should retreat or pick another target
+			if (!pAgent->GetAttackTarget())
+			{
+				// Currently chance of retreating is 60%
+				float diceRoll = gpRandomiser->GetRandomFloat(0.0, 100.0);
+				if (diceRoll > 40.0f)
+				{
+					// Set it's target position offscreen
+					pAgent->SetPathTarget({-4000.0f, 0.0f, 300.0f});
+				}
+				else
+				{
+					// Pick another target
+					// If it's a bomber, go for another building
+					EGameAgentVariations unitType = pAgent->GetAgentData()->mAgentType;
+					if (unitType == GAV_BOMBER)
+					{
+						pAgent->SetAttackTarget(mpHuman->GetRandomStructure());
+					}
+					else if (unitType == GAV_FIGHTER)
+					{
+						// Give fighters a new unit to attack
+						pAgent->SetAttackTarget(mpHuman->GetRandomAgent());
+					}
+					else
+					{
+						// Give thr infantry a random choice
+						int choice = gpRandomiser->GetRandomInt(1, 2);
+						if (choice == 1)
+						{
+							pAgent->SetAttackTarget(mpHuman->GetRandomStructure());
+						}
+						else
+						{
+							pAgent->SetAttackTarget(mpHuman->GetRandomAgent());
+						}
+					}
+				}
+			}
 		}
 	}
 
@@ -286,6 +337,9 @@ void CPlayerManager::InvadeEarth()
 		// Reset units amount and time to invasion
 		mEarthUnits = gpRandomiser->GetRandomInt(3, 7);
 		mTimeToEarthInvasion = gpRandomiser->GetRandomFloat(40.0f, 80.0f);
+
+		// Let the player know an invasion is coming
+		gpNewsTicker->AddNewElement("A rebel faction is attacking!", true);
 	}
 }
 
@@ -300,7 +354,7 @@ void CPlayerManager::InvadeMars()
 	{
 		// Reset units amount and time to invasion
 		mMarsUnits = gpRandomiser->GetRandomInt(3, 7);
-		mTimeToMarsInvasion = gpRandomiser->GetRandomFloat(20.0f, 60.0f);
+		mTimeToMarsInvasion = gpRandomiser->GetRandomFloat(60.0f, 120.0f);
 	}
 }
 

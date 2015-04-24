@@ -113,7 +113,25 @@ bool CGroundUnit::Update()
 		{
 			mAttackTarget = nullptr;
 		}
+		// Check which faction the unit is from
+		else if (mFaction == FAC_EARTH_DEFENSE_FORCE)
+		{
+			// Check if the rebels have fled
+			if (mAttackTarget->GetWorldXPos() < -2500.0f)
+			{
+				mAttackTarget = nullptr;
+			}
+		}
+		else
+		{
+			// Check if the rebels have fled
+			if (mAttackTarget->GetWorldZPos() > 4500.0f)
+			{
+				mAttackTarget = nullptr;
+			}
+		}
 
+		// If there is still a target, attack it
 		if (mAttackTarget != nullptr)
 		{
 			Attack(mAttackTarget, 100, mDamage);
