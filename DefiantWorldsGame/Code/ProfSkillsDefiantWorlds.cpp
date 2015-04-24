@@ -6,48 +6,39 @@
 PROJECT NAME:
 ProfSkillsDefiantWorlds
 
-
-TODO:
-	- Create Space 'fight' area
-	- Get high res & open source texture of Earth. Currently just a high res placeholder.
-	- Get the queue working for each building type.
-	- Particle effects need to be fully implemented.
-	- More sounds.
-	- Implement first prototype of space warfare
-	- Unit movement
-
-DONE:
-	- Main menu objects.
-	- main menu UI
-	- Earth grid creation.
-	- Mars grid creation
-	- Covert mouse from 2D to 3D coordinates.
-	- Get mouse's grid co-ordinate.
-	- Know which grid (earth or mars) the mouse is in.
-	- Know when the mouse is not pointing at any grid.
-	- Building selection for placement.
-	- Building placement.
-	- Building picking after placement.
-	- Each building takes a set amount of time to be built after being placed.
-	- Background music for main menu and in the world state.
-	- Particle effects written.
-	- Units can be built
-
-BUGS:
-	//----------------
-	- Desc:					
-	- Possible File:
-	- Possible Location:
-	//-----------------
-
-NOTES:
-	- Entity interface class
-		- Derived classes for units and buildings
-		- Further derived classes for units and buildings
-	- 2D grid for buildable areas on Earth / Mars
-	- 3D grid for space battle
-	- Space battle outcome calculated in real-time rather than pre-determined
-	- Handling Player classes during state changes
+TO DO:
+	- Wall destruction
+	- Towers on corners of wall
+	- Anti-aircraft turret structures on top of corner towers
+	- UI for space buttons
+	- STOP button for units
+	- Fix bug where human units spawning in Mars would attempt to make their way back home as they are 'out of their boundary'
+	- Change the save log so that Rebel units get saved
+	- Change how units are saved - instead of just their position, save their entire matrix
+	- Complete UI for info at top of screen
+	- Complete UI for news ticker
+	- Reposition news ticker
+	- Shadows beneath units
+	- Model arrow to show where unit is attempting to travel to
+	- Make shadow of unit glow when that unit is selected
+	- Use lasers for workers when they are mining minerals
+	- Ability to heal/repair
+	- Air units start on platform of helipad and lift up before moving
+	- Stop helicopters from leaning to one side when they turn - causes too many bugs
+	- Red beam from sky when unit is sent to transport ship
+	- Model around building being constructed for a more interesting constructing appearance
+	- Retune AI to do attacking
+	- AI to load units to ships
+	- AI to launch fleet
+	- Have a timer for when a fleet attempts to travel across space
+	- Launch button glows red and a timer appears when the enemy is launching their fleet
+	- Walls have a lower/raise ability
+	- Ground units cannot move through walls
+	- Units collide with one another
+	- Units require a slightly bigger hit box
+	- If time, decorate surrounding area
+	- Create a model save to load so that on demo day people are not bored whilst units are constructed etc.
+	- Fix game loading bugs
 */
 
 
