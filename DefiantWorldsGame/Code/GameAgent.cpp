@@ -95,7 +95,7 @@ void CGameAgent::DisplayInfo(IFont* font)
 void CGameAgent::CalculateBoundingSphere()
 {
 	DX::XMFLOAT3 centre = { mpObjModel->GetX(), mpObjModel->GetY(), mpObjModel->GetZ() };
-	float radius = 5.0f;
+	float radius = 7.2f;
 
 	mBoundingSphere = SBoundingSphere(centre, radius);
 }

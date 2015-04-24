@@ -32,7 +32,6 @@ TO DO:
 	- Walls have a lower/raise ability
 	- Ground units cannot move through walls
 	- Units collide with one another
-	- Units require a slightly bigger hit box
 	- If time, decorate surrounding area
 	- Create a saved game to load so that on demo day people are not bored whilst units are constructed etc.
 	- Fix game loading bugs
