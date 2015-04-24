@@ -327,19 +327,10 @@ void CAirUnit::Move()
 	}
 	else if (mAttackTarget != nullptr)
 	{
-		float xDist = mAttackTarget->GetWorldPos().x - mWorldPos.x;
-		float yDist = mAttackTarget->GetWorldPos().y - mWorldPos.y;
-		float zDist = mAttackTarget->GetWorldPos().z - mWorldPos.z;
-
-		float Distance = ((xDist * xDist) + (yDist * yDist) + (zDist * zDist));
-
-		if (Distance > (mRange * mRange))
-		{
-			float movement = mSpeed * gFrameTime;
-			mpObjModel->MoveLocalZ(movement);
-			mWorldPos = DX::XMFLOAT3(mpObjModel->GetX(), mpObjModel->GetY(), mpObjModel->GetZ());
-			mBoundingSphere.MoveTo(mWorldPos);
-		}
+		float movement = mSpeed * gFrameTime;
+		mpObjModel->MoveLocalZ(movement);
+		mWorldPos = DX::XMFLOAT3(mpObjModel->GetX(), mpObjModel->GetY(), mpObjModel->GetZ());
+		mBoundingSphere.MoveTo(mWorldPos);
 	}
 }
 

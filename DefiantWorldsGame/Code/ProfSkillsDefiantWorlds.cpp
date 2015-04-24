@@ -30,6 +30,7 @@ TO DO:
 	- Retune AI to do attacking
 	- AI to load units to ships
 	- AI to launch fleet
+	- AI to attack enemies when they are near
 	- Have a timer for when a fleet attempts to travel across space
 	- Launch button glows red and a timer appears when the enemy is launching their fleet
 	- Walls have a lower/raise ability
@@ -39,6 +40,8 @@ TO DO:
 	- If time, decorate surrounding area
 	- Create a model save to load so that on demo day people are not bored whilst units are constructed etc.
 	- Fix game loading bugs
+	- Add houses??
+	- Update population costs of units
 */
 
 
