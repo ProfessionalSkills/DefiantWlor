@@ -39,6 +39,8 @@ struct SAgentData
 //-----------------------------------------------------
 // GAME AGENT CLASS - CHILD OF GAME OBJECT
 //-----------------------------------------------------
+class CRTSPlayer;
+
 class CGameAgent : public CGameObject
 {
 protected:
@@ -66,7 +68,7 @@ protected:
 	bool mIsMoving;
 	bool mHasPathTarget;
 	float mUnitSpacing;
-
+	CRTSPlayer* mpOwner = nullptr;
 
 	eFleetPos mFleetPosition;
 
@@ -120,6 +122,11 @@ public:
 		return &mAgentInfo;
 	}
 
+	inline CRTSPlayer* Getowner()
+	{
+		return mpOwner;
+	}
+
 	inline void SetPathTarget(DX::XMFLOAT3 pathTile)
 	{
 		mPathTarget = pathTile;
@@ -132,7 +139,6 @@ public:
 		{
 			mAttackTarget = target;
 		}
-		//mHasPathTarget = false;
 	}
 
 	inline CGameObject* GetAttackTarget()
@@ -171,6 +177,11 @@ public:
 	inline void SetAutoTimer(float timer)
 	{
 		mAutoTargetting = timer;
+	}
+
+	inline void SetOwner(CRTSPlayer* pPlayer)
+	{
+		mpOwner = pPlayer;
 	}
 
 	eFleetPos GetPosType();

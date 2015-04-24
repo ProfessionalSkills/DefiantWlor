@@ -7,6 +7,7 @@
 // INCLUDES
 //-----------------------------------------------------
 #include "AirUnit.h"
+#include "PlayerManager.h"
 
 
 //-----------------------------------------------------
@@ -146,6 +147,24 @@ bool CAirUnit::Update()
 	else
 	{
 		// Check if the unit is out of the grid boundaries to make it return to where it should be *TO DO*
+		if (mpOwner && !mHasPathTarget)
+		{
+			DX::XMFLOAT3 bottomLeft = mpOwner->GetPlayerGrid()->GetGridStartPos();
+			DX::XMFLOAT3 topRight = mpOwner->GetPlayerGrid()->GetGridEndPos();
+
+			// Check if the unit is out of the area bounds
+			if (mWorldPos.x < bottomLeft.x || mWorldPos.x > topRight.x || mWorldPos.z < bottomLeft.z || mWorldPos.z > topRight.z)
+			{
+				// Out of the area - send unit back inside the walls
+				// Choose random point inside the walls
+				float targetX = gpRandomiser->GetRandomFloat(bottomLeft.x, topRight.x);
+				float targetZ = gpRandomiser->GetRandomFloat(bottomLeft.z, topRight.z);
+
+				// Move unit to the new target area
+				mPathTarget = {targetX, 0.0f, targetZ};
+				mHasPathTarget = true;
+			}
+		}
 	}
 
 	// ALL THESE UPDATES OCCUR IF THE UNIT IS NOT DEAD OR IN SPACE

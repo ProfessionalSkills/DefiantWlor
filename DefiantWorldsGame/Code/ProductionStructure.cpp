@@ -134,16 +134,17 @@ void CProductionStructure::RemoveFromQueue(size_t agentIndex,CRTSPlayer* pPlayer
 	mpProductionQueue.erase(miterProdQ);
 }
 
-bool CProductionStructure::SpawnFront()
+bool CProductionStructure::SpawnFront(CRTSPlayer* pPlayer)
 {
 	CGameAgent* tmp = mpProductionQueue.front();
 	tmp->Spawn(mpGrid, GetGridSpawnLocation());
+	tmp->SetOwner(pPlayer);
 
 	// Display data on news ticker if this concerns the player
 	if (mFaction == FAC_EARTH_DEFENSE_FORCE)
 	{
-		mStrDisplay << "A new " << mpProductionQueue.front()->GetAgentData()->mAgentName
-			<< " unit is ready for your orders.";
+		mStrDisplay << "A " << mpProductionQueue.front()->GetAgentData()->mAgentName
+			<< " unit is ready for orders.";
 		gpNewsTicker->AddNewElement(mStrDisplay.str(), false);
 		mStrDisplay.str("");
 	}
@@ -250,7 +251,7 @@ bool CProductionStructure::Update(CRTSPlayer* pPlayer)
 						pPlayer->GetWorldUnitList()->insert(GA_MultiMap::value_type(agentVar, mpProductionQueue.front()));
 					}
 					// Spawn the unit
-					SpawnFront();
+					SpawnFront(pPlayer);
 				}
 			}
 

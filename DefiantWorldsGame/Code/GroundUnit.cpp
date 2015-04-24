@@ -7,6 +7,8 @@
 // INCLUDES
 //-----------------------------------------------------
 #include "GroundUnit.h"
+#include "PlayerManager.h"
+
 
 //-----------------------------------------------------
 // GROUND UNIT CLASS CONSTRUCTORS & DESTRUCTOR
@@ -137,6 +139,25 @@ bool CGroundUnit::Update()
 			Attack(mAttackTarget, 100, mDamage);
 		}
 	}
+	// Check if the unit is out of the grid boundaries to make it return to where it should be *TO DO*
+	else if (mpOwner && !mHasPathTarget)
+	{
+		DX::XMFLOAT3 bottomLeft = mpOwner->GetPlayerGrid()->GetGridStartPos();
+		DX::XMFLOAT3 topRight = mpOwner->GetPlayerGrid()->GetGridEndPos();
+
+		// Check if the unit is out of the area bounds
+		if (mWorldPos.x < bottomLeft.x || mWorldPos.x > topRight.x || mWorldPos.z < bottomLeft.z || mWorldPos.z > topRight.z)
+		{
+			// Out of the area - send unit back inside the walls
+			// Choose random point inside the walls
+			float targetX = gpRandomiser->GetRandomFloat(bottomLeft.x, topRight.x);
+			float targetZ = gpRandomiser->GetRandomFloat(bottomLeft.z, topRight.z);
+
+			// Move unit to the new target area
+			mPathTarget = { targetX, 0.0f, targetZ };
+			mHasPathTarget = true;
+		}
+	}
 	else
 	{
 		if (mAutoTargetting >= mTargettingTimer)
@@ -184,6 +205,7 @@ bool CGroundUnit::Update()
 	// Object is still alive, return true
 	return true;
 }
+
 bool CGroundUnit::LookingAt(DX::XMFLOAT3 target)
 {	
 	DX::XMFLOAT3 targetPosition = target;

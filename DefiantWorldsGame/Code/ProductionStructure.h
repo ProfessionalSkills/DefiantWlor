@@ -59,7 +59,7 @@ public:
 	EErrorTypes AddToQueue(size_t agentIndex, CRTSPlayer* pPlayer);
 	void RemoveFromQueue(size_t agentIndex, CRTSPlayer* pPlayer);
 	std::deque<CGameAgent*>* GetQueue();
-	bool SpawnFront();
+	bool SpawnFront(CRTSPlayer* pPlayer);
 	bool UpdateProduction();
 	CGameAgent* CreateAgent();		// Called when agent at front of production queue is finished
 
