@@ -143,7 +143,7 @@ bool CFighter::Attack(CGameObject* target, float hitMod, float damageMod)
 			SProjectile* newProjectile = new SProjectile();
 			newProjectile->mModel = mspMshFighterBullet->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
 			newProjectile->mDirection = dir;
-			newProjectile->mSpeed = 150.0f;
+			newProjectile->mSpeed = 400.0f;
 
 			mpProjectiles.push_back(newProjectile);
 			mAttackTimer = 0.0f;
