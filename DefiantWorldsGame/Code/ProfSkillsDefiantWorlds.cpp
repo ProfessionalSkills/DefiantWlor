@@ -6,41 +6,41 @@
 PROJECT NAME:
 ProfSkillsDefiantWorlds
 
-TO DO:
+TO DO: * = essential
 	- Anti-aircraft turret structures on top of corner towers
-	- UI for space buttons
-	- STOP button for units
+	*- UI for space buttons
+	*- STOP button for units
 	- Fix bug where human units spawning in Mars would attempt to make their way back home as they are 'out of their boundary'
 	- Change the save log so that Rebel units get saved
 	- Change how units are saved - instead of just their position, save their entire matrix
-	- Complete UI for info at top of screen
-	- Complete UI for news ticker
-	- Remove debug information
-	- Reposition news ticker
+	*- Complete UI for info at top of screen
+	*- Complete UI for news ticker
+	*- Remove debug information
+	*- Reposition news ticker
 	- Model arrow to show where unit is attempting to travel to
 	- Use lasers for workers when they are mining minerals
 	- Ability to heal/repair with worker units
-	- Fix issue where loaded units have no owner pointer
-	- Red beam from sky when unit is sent to transport ship
+	*- Fix issue where loaded units have no owner pointer
+	*- Red beam from sky when unit is sent to transport ship
 	- Model around building being constructed for a more interesting constructing appearance
-	- Retune AI to do attacking
-	- AI to load units to ships
-	- AI to launch fleet
-	- AI to attack enemies when they are near
-	- Have a timer for when a fleet attempts to travel across space
-	- Launch button glows red and a timer appears when the enemy is launching their fleet
+	*- Retune AI to do attacking
+	*- AI to load units to ships
+	*- AI to launch fleet
+	*- AI to attack enemies when they are near
+	*- Have a timer for when a fleet attempts to travel across space
+	*- Launch button glows red and a timer appears when the enemy is launching their fleet
 	- Walls have a lower/raise ability
 	- Ground units cannot move through walls
 	- Units collide with one another
 	- If time, decorate surrounding area
-	- Create a saved game to load so that on demo day people are not bored whilst units are constructed etc.
-	- Fix game loading bugs
+	*- Create a saved game to load so that on demo day people are not bored whilst units are constructed etc.
+	*- Fix game loading bugs
 	- Add houses??
-	- Update population costs of units
+	*- Update population costs of units
 	- Change the way smoke is produced so it is not concentrated in one position for buildings &
 		remove smoke limit - simply create a smoke particle every so often
-	- Add UI for button mouse over descriptions
-	- LIMITS - no more than ONE mothership per player at any given point
+	*- Add UI for button mouse over descriptions
+	*- LIMITS - no more than ONE mothership per player at any given point
 	- Add cost to buttons if applicable
 */
 
