@@ -64,6 +64,198 @@ private:
 	CFleet* mpPlayerOneFleet;
 	CFleet* mpPlayerTwoFleet;
 	const float mDisplacement;//distance from the centre of the screen. used when loading the ship models
+	int FleetHealthPercentagePlayerOne();
+	int FleetHealthPercentagePlayerTwo();
+	inline void UpdateHealthbars()
+	{
+		switch (FleetHealthPercentagePlayerOne())
+		{
+			case 0:
+				if (mpSprHealth1)
+				{
+					gpEngine->RemoveSprite(mpSprHealth1);
+					mpSprHealth1 = nullptr;
+				}
+				mpSprHealth1 = gpEngine->CreateSprite("HealthBar0.png", 50.0f, 765.0f, 0.0f);
+				break;
+			case 1:
+				if (mpSprHealth1)
+				{
+					gpEngine->RemoveSprite(mpSprHealth1);
+					mpSprHealth1 = nullptr;
+				}
+				mpSprHealth1 = gpEngine->CreateSprite("HealthBar10.png", 50.0f, 765.0f, 0.0f);
+				break;
+			case 2:
+				if (mpSprHealth1)
+				{
+					gpEngine->RemoveSprite(mpSprHealth1);
+					mpSprHealth1 = nullptr;
+				}
+				mpSprHealth1 = gpEngine->CreateSprite("HealthBar20.png", 50.0f, 765.0f, 0.0f);
+				break;
+			case 3:
+				if (mpSprHealth1)
+				{
+					gpEngine->RemoveSprite(mpSprHealth1);
+					mpSprHealth1 = nullptr;
+				}
+				mpSprHealth1 = gpEngine->CreateSprite("HealthBar30.png", 50.0f, 765.0f, 0.0f);
+				break;
+			case 4:
+				if (mpSprHealth1)
+				{
+					gpEngine->RemoveSprite(mpSprHealth1);
+					mpSprHealth1 = nullptr;
+				}
+				mpSprHealth1 = gpEngine->CreateSprite("HealthBar40.png", 50.0f, 765.0f, 0.0f);
+				break;
+			case 5:
+				if (mpSprHealth1)
+				{
+					gpEngine->RemoveSprite(mpSprHealth1);
+					mpSprHealth1 = nullptr;
+				}
+				mpSprHealth1 = gpEngine->CreateSprite("HealthBar50.png", 50.0f, 765.0f, 0.0f);
+				break;
+			case 6:
+				if (mpSprHealth1)
+				{
+					gpEngine->RemoveSprite(mpSprHealth1);
+					mpSprHealth1 = nullptr;
+				}
+				mpSprHealth1 = gpEngine->CreateSprite("HealthBar60.png", 50.0f, 765.0f, 0.0f);
+				break;
+			case 7:
+				if (mpSprHealth1)
+				{
+					gpEngine->RemoveSprite(mpSprHealth1);
+					mpSprHealth1 = nullptr;
+				}
+				mpSprHealth1 = gpEngine->CreateSprite("HealthBar70.png", 50.0f, 765.0f, 0.0f);
+				break;
+			case 8:
+				if (mpSprHealth1)
+				{
+					gpEngine->RemoveSprite(mpSprHealth1);
+					mpSprHealth1 = nullptr;
+				}
+				mpSprHealth1 = gpEngine->CreateSprite("HealthBar80.png", 50.0f, 765.0f, 0.0f);
+				break;
+			case 9:
+				if (mpSprHealth1)
+				{
+					gpEngine->RemoveSprite(mpSprHealth1);
+					mpSprHealth1 = nullptr;
+				}
+				mpSprHealth1 = gpEngine->CreateSprite("HealthBar90.png", 50.0f, 765.0f, 0.0f);
+				break;
+			case 10:
+				if (mpSprHealth1)
+				{
+					gpEngine->RemoveSprite(mpSprHealth1);
+					mpSprHealth1 = nullptr;
+				}
+				mpSprHealth1 = gpEngine->CreateSprite("HealthBar100.png", 50.0f, 765.0f, 0.0f);
+				break;
+			default:
+				break;
+		}
+
+		switch (FleetHealthPercentagePlayerTwo())
+		{
+		case 0:
+			if (mpSprHealth2)
+			{
+				gpEngine->RemoveSprite(mpSprHealth2);
+				mpSprHealth2 = nullptr;
+			}
+			mpSprHealth2 = gpEngine->CreateSprite("HealthBar0.png", 1050.0f, 765.0f, 0.0f);
+			break;
+		case 1:
+			if (mpSprHealth2)
+			{
+				gpEngine->RemoveSprite(mpSprHealth2);
+				mpSprHealth2 = nullptr;
+			}
+			mpSprHealth2 = gpEngine->CreateSprite("HealthBar10.png", 1050.0f, 765.0f, 0.0f);
+			break;
+		case 2:
+			if (mpSprHealth2)
+			{
+				gpEngine->RemoveSprite(mpSprHealth2);
+				mpSprHealth2 = nullptr;
+			}
+			mpSprHealth2 = gpEngine->CreateSprite("HealthBar20.png", 1050.0f, 765.0f, 0.0f);
+			break;
+		case 3:
+			if (mpSprHealth2)
+			{
+				gpEngine->RemoveSprite(mpSprHealth2);
+				mpSprHealth2 = nullptr;
+			}
+			mpSprHealth2 = gpEngine->CreateSprite("HealthBar30.png", 1050.0f, 765.0f, 0.0f);
+			break;
+		case 4:
+			if (mpSprHealth2)
+			{
+				gpEngine->RemoveSprite(mpSprHealth2);
+				mpSprHealth2 = nullptr;
+			}
+			mpSprHealth2 = gpEngine->CreateSprite("HealthBar40.png", 1050.0f, 765.0f, 0.0f);
+			break;
+		case 5:
+			if (mpSprHealth2)
+			{
+				gpEngine->RemoveSprite(mpSprHealth2);
+				mpSprHealth2 = nullptr;
+			}
+			mpSprHealth2 = gpEngine->CreateSprite("HealthBar50.png", 1050.0f, 765.0f, 0.0f);
+			break;
+		case 6:
+			if (mpSprHealth2)
+			{
+				gpEngine->RemoveSprite(mpSprHealth2);
+				mpSprHealth2 = nullptr;
+			}
+			mpSprHealth2 = gpEngine->CreateSprite("HealthBar60.png", 1050.0f, 765.0f, 0.0f);
+			break;
+		case 7:
+			if (mpSprHealth2)
+			{
+				gpEngine->RemoveSprite(mpSprHealth2);
+				mpSprHealth2 = nullptr;
+			}
+			mpSprHealth2 = gpEngine->CreateSprite("HealthBar70.png", 1050.0f, 765.0f, 0.0f);
+			break;
+		case 8:
+			if (mpSprHealth2)
+			{
+				gpEngine->RemoveSprite(mpSprHealth2);
+				mpSprHealth2 = nullptr;
+			}
+			mpSprHealth2 = gpEngine->CreateSprite("HealthBar80.png", 1050.0f, 765.0f, 0.0f);
+			break;
+		case 9:
+			if (mpSprHealth2)
+			{
+				gpEngine->RemoveSprite(mpSprHealth2);
+				mpSprHealth2 = nullptr;
+			}
+			mpSprHealth2 = gpEngine->CreateSprite("HealthBar90.png", 1050.0f, 765.0f, 0.0f);
+			break;
+		case 10:
+			if (mpSprHealth2)
+			{
+				gpEngine->RemoveSprite(mpSprHealth2);
+				mpSprHealth2 = nullptr;
+			}
+			mpSprHealth2 = gpEngine->CreateSprite("HealthBar100.png", 1050.0f, 765.0f, 0.0f);
+			break;
+		default:
+			break;
+		}
+	}
 
 	// SOUND
 	//---------------------------
@@ -84,7 +276,8 @@ private:
 	bool mTacticChoosen;
 	bool leftClicked;
 	void DrawFontData();
-
+	ISprite* mpSprHealth1;
+	ISprite* mpSprHealth2;
 	// BUTTON
 	//---------------------------
 	std::vector<CAdvancedButton<CSpaceState, void>*> mpButtonListAll;

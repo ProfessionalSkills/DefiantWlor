@@ -117,6 +117,8 @@ void CSpaceState::StateSetup()
 	// CREATE SPRITES, BUTTONS & FONTS
 	//------------------------------
 	mpSprCursor = gpEngine->CreateSprite("BaseCursor.png", 5.0f, 50.0f, 0.0f);
+	mpSprHealth1 = gpEngine->CreateSprite("HealthBar100.png", 50.0f, 765.0f, 0.0f);
+	mpSprHealth2 = gpEngine->CreateSprite("HealthBar100.png", 1050.0f, 765.0f, 0.0f);
 
 	// Tactics Buttons
 	CAdvancedButton<CSpaceState, void>* pNewButton = new CAdvancedButton<CSpaceState, void>("NoTactics.png", "NoTacticsMO.png", SPointData(900, 750),
@@ -173,7 +175,7 @@ void CSpaceState::StateSetup()
 void CSpaceState::StateUpdate()
 {
 	gpEngine->DrawScene();
-
+	FleetHealthPercentagePlayerOne();
 	// Controls
 	//-----------------------------
 	if (gpEngine->KeyHit(Key_R))
@@ -266,6 +268,9 @@ void CSpaceState::StateUpdate()
 				//update fleet status
 				mpPlayerOneFleet->UpdateCondition();
 				mpPlayerTwoFleet->UpdateCondition();
+
+				//update health bars
+				UpdateHealthbars();
 
 				//reset timer
 				mTimeSinceEffectsUpdate = 0.0f;
@@ -381,7 +386,21 @@ void CSpaceState::StateCleanup()
 	gpEngine->RemoveSprite(pLoading);
 	
 	//remove sprites
-	gpEngine->RemoveSprite(mpSprCursor);
+	if (mpSprCursor!=0)
+	{
+		gpEngine->RemoveSprite(mpSprCursor);
+		mpSprCursor = 0;
+	}
+	if (mpSprHealth1 != 0)
+	{
+		gpEngine->RemoveSprite(mpSprHealth1);
+		mpSprHealth1 = 0;
+	}
+	if (mpSprHealth2 != 0)
+	{
+		gpEngine->RemoveSprite(mpSprHealth2);
+		mpSprHealth2 = 0;
+	}
 
 	//remove buttons
 	RemoveButtons();
@@ -510,6 +529,18 @@ void CSpaceState::LoadPlanets()
 	mpMdlNeptune = mpMshPlanet->CreateModel(mNeptunePos.x, mNeptunePos.y, mNeptunePos.z);
 	mpMdlNeptune->SetSkin("texture_neptune.jpg");
 	mpMdlNeptune->Scale(mNeptunePos.w);
+}
+
+int CSpaceState::FleetHealthPercentagePlayerOne()
+{
+	int health = (mpPlayerOneFleet->GetFleetTotalHealth() / mpPlayerOneFleet->GetFleetMaxHealth()) * 10;
+	return health;
+}
+
+int CSpaceState::FleetHealthPercentagePlayerTwo()
+{
+	int health = (mpPlayerTwoFleet->GetFleetTotalHealth() / mpPlayerTwoFleet->GetFleetMaxHealth()) * 10;
+	return health;
 }
 
 // Button Functions
