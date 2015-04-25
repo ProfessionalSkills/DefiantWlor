@@ -68,6 +68,7 @@ protected:
 	bool mIsMoving;
 	bool mHasPathTarget;
 	float mUnitSpacing;
+
 	CRTSPlayer* mpOwner = nullptr;
 
 	eFleetPos mFleetPosition;

@@ -7,6 +7,7 @@
 // INCLUDES
 //-----------------------------------------------------
 #include "GameAgent.h"
+#include "PlayerManager.h"
 
 
 //-----------------------------------------------------
@@ -35,6 +36,12 @@ CGameAgent::~CGameAgent()
 		CExplosion* pExplosion = mpAttackExplosions.back();
 		SafeDelete(pExplosion);
 		mpAttackExplosions.pop_back();
+	}
+
+	// Give the player the population resources back
+	if (mpOwner)
+	{
+		mpOwner->IncreasePopValue(-mPopCost);
 	}
 }
 

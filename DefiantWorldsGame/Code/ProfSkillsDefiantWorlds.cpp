@@ -19,7 +19,6 @@ TO DO:
 	- Reposition news ticker
 	- Model arrow to show where unit is attempting to travel to
 	- Fix issue where if a worker is destroyed, the minerals it was mining remains used
-	- Fix issue where population limit is not given back when a unit dies
 	- Use lasers for workers when they are mining minerals
 	- Ability to heal/repair
 	- Fix issue where loaded units have no owner pointer

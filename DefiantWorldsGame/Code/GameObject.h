@@ -27,7 +27,7 @@ protected:
 	float mOrientation;
 	float mScale;
 	int mBuildCost;
-	int mPopCost;
+	int mPopCost = 0;
 	float mMaxHealth;
 	float mHealth;
 
