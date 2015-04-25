@@ -23,6 +23,7 @@ struct SNewsItem
 	std::string mNewsText;
 	float mLifetime;
 	bool mError;
+	ISprite* mpSprBG = nullptr;
 };
 
 
