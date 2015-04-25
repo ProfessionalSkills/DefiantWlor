@@ -153,13 +153,13 @@ void CSpaceState::StateSetup()
 	mpButtonListVictory.push_back(pNewButton);
 
 	//special attack buttons
-	pNewButton = new CAdvancedButton<CSpaceState, void>("NoTactics.png", "NoTacticsMO.png", SPointData(800, 750),
-		DX::XMFLOAT2(50.0f, 50.0f), *this, &CSpaceState::SALazerBarrage, TR_UP, true, 1.2f);
+	pNewButton = new CAdvancedButton<CSpaceState, void>("NoTactics.png", "NoTacticsMO.png", SPointData(650, 750),
+		DX::XMFLOAT2(50.0f, 50.0f), *this, &CSpaceState::SALazerBarrage, TR_UP, false, 0.2f);
 	mpButtonListAttacks.push_back(pNewButton);
 	mpButtonListAll.push_back(pNewButton);
 
-	pNewButton = new CAdvancedButton<CSpaceState, void>("NoTactics.png", "NoTacticsMO.png", SPointData(900, 750),
-		DX::XMFLOAT2(50.0f, 50.0f), *this, &CSpaceState::SAMassHeal, TR_UP, true, 1.2f);
+	pNewButton = new CAdvancedButton<CSpaceState, void>("NoTactics.png", "NoTacticsMO.png", SPointData(850, 750),
+		DX::XMFLOAT2(50.0f, 50.0f), *this, &CSpaceState::SAMassHeal, TR_UP, false, 0.2f);
 	mpButtonListAttacks.push_back(pNewButton);
 	mpButtonListAll.push_back(pNewButton);
 
@@ -371,7 +371,8 @@ void CSpaceState::StateCleanup()
 	// Unload fonts
 	gpEngine->RemoveFont(mpTitleFont);
 	gpEngine->RemoveFont(mpButtonFont);
-	
+	gpEngine->RemoveFont(mFntDebug);
+
 	// DISPLAY LOADING SCREEN
 	ISprite* pLoading = gpEngine->CreateSprite("Loading.png");
 	gpEngine->DrawScene();
@@ -521,6 +522,7 @@ void CSpaceState::ChangeTacTargated()
 	gpNewsTicker->AddNewElement("Targeted space tactic selected.", false);
 	mTacticChoosen = true;
 	HideButtonsTactics();
+	ShowButtonsAttack();
 }
 
 void CSpaceState::ChangeTacNone()
@@ -529,6 +531,7 @@ void CSpaceState::ChangeTacNone()
 	gpNewsTicker->AddNewElement("No space tactic selected.", false);
 	mTacticChoosen = true;
 	HideButtonsTactics();
+	ShowButtonsAttack();
 }
 
 void CSpaceState::ChangeTacRapid()
@@ -537,6 +540,7 @@ void CSpaceState::ChangeTacRapid()
 	gpNewsTicker->AddNewElement("Rapid space tactic selected.", false);
 	mTacticChoosen = true;
 	HideButtonsTactics();
+	ShowButtonsAttack();
 }
 
 //cleanup buttons
