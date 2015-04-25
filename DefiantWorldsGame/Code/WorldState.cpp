@@ -1730,7 +1730,8 @@ void CWorldState::StateUpdate()
 			}
 
 			// Update buttons
-			OnUnitSelectChange(nullptr, true);
+			if (mpUnitSelectionList.size()) OnUnitSelectChange(nullptr, true);
+			else OnUnitSelectChange(nullptr, false);
 		}
 		
 		// No button clicking
