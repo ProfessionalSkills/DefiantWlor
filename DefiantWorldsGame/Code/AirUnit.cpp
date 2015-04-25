@@ -142,7 +142,7 @@ bool CAirUnit::Update()
 	{
 		if (mAttackTarget->GetHealth() <= 0.0f)
 		{
-			mAttackTarget->SetNormalTexture();
+			if (mUnitSelected) mAttackTarget->SetNormalTexture();
 			mAttackTarget = nullptr;
 		}
 		// Check which faction the unit is from
@@ -151,7 +151,7 @@ bool CAirUnit::Update()
 			// Check if the rebels have fled
 			if (mAttackTarget->GetWorldXPos() < -2500.0f)
 			{
-				mAttackTarget->SetNormalTexture();
+				if (mUnitSelected) mAttackTarget->SetNormalTexture();
 				mAttackTarget = nullptr;
 			}
 		}
@@ -160,7 +160,7 @@ bool CAirUnit::Update()
 			// Check if the rebels have fled
 			if (mAttackTarget->GetWorldZPos() > 4500.0f)
 			{
-				mAttackTarget->SetNormalTexture();
+				if (mUnitSelected) mAttackTarget->SetNormalTexture();
 				mAttackTarget = nullptr;
 			}
 		}
