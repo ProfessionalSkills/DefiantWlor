@@ -363,8 +363,6 @@ void CWorldState::CheckKeyPresses()
 					{
 						// Cast into a worker pointer to access methods
 						CWorker* pWorker = static_cast<CWorker*>(mpCurSelectedAgent);
-						// Send the worker unit to the resource pile position
-						pWorker->SetPathTarget(pTargetMinerals->GetWorldPos());
 						// Set the target mineral to be used and store in worker
 						pWorker->SetMineral(pTargetMinerals);
 						pTargetMinerals->SetUsage(true);
@@ -459,8 +457,6 @@ void CWorldState::CheckKeyPresses()
 					}
 					else
 					{
-						// Send the worker unit to the resource pile position
-						pWorker->SetPathTarget(pTargetMinerals->GetWorldPos());
 						// Set the target mineral to be used and store in worker
 						pWorker->SetMineral(pTargetMinerals);
 						pTargetMinerals->SetUsage(true);

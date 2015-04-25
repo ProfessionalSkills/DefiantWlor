@@ -10,7 +10,7 @@
 #include "WorldState.h"
 
 IMesh* CWorker::mspMshWorker = nullptr;
-IMesh* CWorker::mspMshWorkerBullet = nullptr;
+IMesh* CWorker::mspMshWorkerLaser = nullptr;
 
 
 //-----------------------------------------------------
@@ -57,23 +57,7 @@ bool CWorker::IsHarvestingMineral()
 	// Check if there is a mineral object attached to this worker
 	if (mpActiveMineral && mpObjModel)
 	{
-		// Check to see if the worker is close enough to the active mineral
-		float threshold = 10.0f;
-		float distance;
-
-		// Get the local Z axis of the worker unit
-		DX::XMFLOAT4X4 objMatrix;
-		mpObjModel->GetMatrix(&objMatrix.m[0][0]);
-		DX::XMFLOAT3 localZ{ objMatrix.m[2][0], objMatrix.m[2][1], objMatrix.m[2][2] };
-
-		bool rayCollision = mpActiveMineral->RayCollision(mWorldPos, localZ, distance);
-
-		// Check the distance is less than the threshold
-		if (distance <= threshold && rayCollision)
-		{
-			return true;
-		}
-		return false;
+		return mHarvesting;
 	}
 
 	// No active mineral attached
@@ -211,7 +195,39 @@ bool CWorker::Update()
 {
 	if (mState == OBJ_INSPACE) return CGroundUnit::Update();
 
+	// If it has a path target
+	if (mHasPathTarget)
+	{
+		// Remove it if the worker already has a mineral target
+		if (mpActiveMineral) mHasPathTarget = false;
+	}
 
+	// Check if the worker has an active material (and is still alive)
+	if (mpActiveMineral && mpObjModel)
+	{
+		// Check to see if the worker is close enough to the active mineral
+		float threshold = 5.0f;
+		float distance;
+
+		// Get the local Z axis of the worker unit
+		DX::XMFLOAT4X4 objMatrix;
+		mpObjModel->GetMatrix(&objMatrix.m[0][0]);
+		DX::XMFLOAT3 localZ{ objMatrix.m[2][0], objMatrix.m[2][1], objMatrix.m[2][2] };
+
+		bool rayCollision = mpActiveMineral->RayCollision(mWorldPos, localZ, distance);
+
+		// Check the distance is less than the threshold
+		if (distance <= threshold && rayCollision)
+		{
+			mHarvesting = true;
+		}
+		else
+		{
+			mHarvesting = false;
+			LookingAt(mpActiveMineral->GetWorldPos());
+			Move();
+		}
+	}
 
 	return CGroundUnit::Update();
 }

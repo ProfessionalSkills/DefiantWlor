@@ -244,7 +244,7 @@ void CGroundUnit::Move()
 			mBoundingSphere.MoveTo(mWorldPos);
 		}
 	}
-	else if (mAttackTarget != nullptr)
+	else
 	{
 		float movement = mSpeed * gFrameTime;
 		mpObjModel->MoveLocalZ(movement);

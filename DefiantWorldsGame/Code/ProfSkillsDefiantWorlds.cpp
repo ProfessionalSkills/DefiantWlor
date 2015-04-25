@@ -204,7 +204,7 @@ void SetupEngine()
 	CFighter::mspMshFighterBullet = gpEngine->LoadMesh("WorldLazer.x");
 	//Worker
 	CWorker::mspMshWorker = gpEngine->LoadMesh("transportTruck_german.x");
-	CWorker::mspMshWorkerBullet = gpEngine->LoadMesh("bullet.x");
+	CWorker::mspMshWorkerLaser = gpEngine->LoadMesh("Lazer.x");
 	//Tank
 	CTank::mspMshTank = gpEngine->LoadMesh("HoverTank01.x");
 	CTank::mspMshTankShell = gpEngine->LoadMesh("WorldLazer.x");

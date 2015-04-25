@@ -21,12 +21,13 @@ class CWorker : public CGroundUnit
 private:
 	// DATA
 	//---------------------------
+	bool mHarvesting = false;
 	CMinerals* mpActiveMineral = nullptr;			// Stores a pointer to the mineral which is being harvested by this worker unit
 
 
 public:
 	static IMesh* mspMshWorker;
-	static IMesh* mspMshWorkerBullet;
+	static IMesh* mspMshWorkerLaser;
 
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
