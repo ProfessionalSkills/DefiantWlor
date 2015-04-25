@@ -35,6 +35,10 @@ private:
 	float mDamegMod;//modifys the ships damage acording to the chosen tactics
 	float mHitMod;//modifys the ships hit chance according to the choosen tactics
 
+	// FLEET STATUS VALUES
+	float mFleetCurrentHealth;
+	float mFleetMaxHealth;
+
 	// TACTICS
 	//---------------------------
 	Tactics mFleetTactics;
@@ -94,7 +98,7 @@ public:
 
 	float GetFleetTotalHealth();
 	float GetFleetAvargeHealth();
-
+	float GetFleetMaxHealth();
 	inline int GetShotsFired()
 	{
 		return mShotsFired;

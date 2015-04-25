@@ -337,6 +337,11 @@ float CFleet::GetFleetAvargeHealth()
 	else return 0;
 }
 
+float CFleet::GetFleetMaxHealth()
+{
+	return mFleetMaxHealth;
+}
+
 //-----------------------------------------------------
 // FLEET CLASS MUTATORS
 //-----------------------------------------------------
@@ -383,6 +388,7 @@ vector <CGameAgent*>* CFleet::LaunchFleet(vector <CGameAgent*>* possibleShips)
 			mSize++;
 		}
 	}
+	mFleetCurrentHealth = mFleetMaxHealth = GetFleetTotalHealth();
 	return possibleShips;
 }
 
@@ -445,5 +451,7 @@ void CFleet::ReturnFleet(CRTSPlayer* Player,bool victory)
 	mShotsFired = 0;
 	mHits = 0;
 	mSpecialAttackCooldownTimer = 0.0f;
+	mFleetMaxHealth = 0.0f;
+	mFleetCurrentHealth = 0.0f;
 }
 
