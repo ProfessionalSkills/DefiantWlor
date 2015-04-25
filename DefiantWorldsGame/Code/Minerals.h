@@ -69,6 +69,17 @@ public:
 	void CalculateBoundingBox();
 	void LoadIModel();
 	void UnloadIModel();
+
+	void SetTargetTexture()
+	{
+		// Do nothing for minerals
+	}
+
+	virtual void SetNormalTexture()
+	{
+		// Do nothing for minerals
+	}
+
 };
 
 #endif /* _MINERALS_H_ */

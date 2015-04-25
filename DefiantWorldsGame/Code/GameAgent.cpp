@@ -212,10 +212,40 @@ void CGameAgent::SetSelectedTexture()
 {
 	// Change the shadow texture to the selected one
 	mpObjShadow->SetSkin("tlxmul_unitShadowSelected.tga");
+
+	// If there is a selected target, set its texture to targeted
+	if (mAttackTarget)
+	{
+		mAttackTarget->SetTargetTexture();
+	}
+
+	// If there is a path target, place an arrow there
+	if (mHasPathTarget)
+	{
+		// * TO DO *
+	}
+
+	// Raise selected flag
+	mUnitSelected = true;
 }
 
 void CGameAgent::SetDeselectedTexture()
 {
 	// Set the shadow texture back to the default
 	mpObjShadow->SetSkin("tlxmul_unitShadow.tga");
+
+	// If there is a selected target, set it back to its normal texture
+	if (mAttackTarget)
+	{
+		mAttackTarget->SetNormalTexture();
+	}
+
+	// If there is a path target, remove the waypoint arrow
+	if (mHasPathTarget)
+	{
+		// * TO DO *
+	}
+
+	// Lower selected flag
+	mUnitSelected = false;
 }

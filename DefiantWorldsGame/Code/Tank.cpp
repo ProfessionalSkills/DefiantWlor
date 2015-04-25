@@ -235,3 +235,27 @@ IModel* CTank::CreateModel(DX::XMFLOAT3 pos)
 
 	return pModel;
 }
+
+void CTank::SetTargetTexture()
+{
+	if (mpObjModel) mpObjModel->SetSkin("Hovertank01Target.jpg");
+}
+
+void CTank::SetNormalTexture()
+{
+	if (mpObjModel)
+	{
+		if (mFaction == FAC_EARTH_DEFENSE_FORCE)
+		{
+			mpObjModel->SetSkin("Hovertank01.jpg");
+		}
+		else if (mFaction == FAC_THE_CRIMSON_LEGION)
+		{
+			mpObjModel->SetSkin("Hovertank01Mars.jpg");
+		}
+		else
+		{
+			mpObjModel->SetSkin("Hovertank01Rebel.jpg");
+		}
+	}
+}

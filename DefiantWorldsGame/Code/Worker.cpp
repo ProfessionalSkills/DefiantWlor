@@ -180,3 +180,27 @@ IModel* CWorker::CreateModel(DX::XMFLOAT3 pos)
 
 	return pModel;
 }
+
+void CWorker::SetTargetTexture()
+{
+	if (mpObjModel) mpObjModel->SetSkin("ttruckGermanTarget.jpg");
+}
+
+void CWorker::SetNormalTexture()
+{
+	if (mpObjModel)
+	{
+		if (mFaction == FAC_EARTH_DEFENSE_FORCE)
+		{
+			mpObjModel->SetSkin("ttruckGerman.jpg");
+		}
+		else if (mFaction == FAC_THE_CRIMSON_LEGION)
+		{
+			mpObjModel->SetSkin("ttruckGermanMars.jpg");
+		}
+		else
+		{
+			mpObjModel->SetSkin("ttruckGermanRebel.jpg");
+		}
+	}
+}

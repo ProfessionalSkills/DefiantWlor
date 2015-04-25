@@ -238,3 +238,27 @@ bool CFighter::Update()
 
 	return CAirUnit::Update();
 }
+
+void CFighter::SetTargetTexture()
+{
+	if (mpObjModel) mpObjModel->SetSkin("machineTarget.jpg");
+}
+
+void CFighter::SetNormalTexture()
+{
+	if (mpObjModel)
+	{
+		if (mFaction == FAC_EARTH_DEFENSE_FORCE)
+		{
+			mpObjModel->SetSkin("machine.jpg");
+		}
+		else if (mFaction == FAC_THE_CRIMSON_LEGION)
+		{
+			mpObjModel->SetSkin("machineMars.jpg");
+		}
+		else
+		{
+			mpObjModel->SetSkin("machineRebel.jpg");
+		}
+	}
+}

@@ -53,6 +53,10 @@ public:
 	// OVERRIDE METHODS
 	//---------------------------
 	bool Attack(CGameObject* target, float hitMod, float damageMod);
+	void SetTargetTexture();
+	void SetNormalTexture();
+
+
 private:
 	virtual bool Destroy();
 	IModel* CreateModel(DX::XMFLOAT3 pos) override;

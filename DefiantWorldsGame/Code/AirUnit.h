@@ -44,6 +44,16 @@ public:
 
 	}
 
+	virtual void SetTargetTexture()
+	{
+
+	}
+
+	virtual void SetNormalTexture()
+	{
+
+	}
+
 	void Spawn(CGrid* pGrid, SPointData pCentre);
 
 private:

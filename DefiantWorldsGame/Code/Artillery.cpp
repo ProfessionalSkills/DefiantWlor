@@ -193,3 +193,27 @@ IModel* CArtillery::CreateModel(DX::XMFLOAT3 pos)
 
 	return pModel;
 }
+
+void CArtillery::SetTargetTexture()
+{
+	if (mpObjModel) mpObjModel->SetSkin("marsAATarget.jpg");
+}
+
+void CArtillery::SetNormalTexture()
+{
+	if (mpObjModel)
+	{
+		if (mFaction == FAC_EARTH_DEFENSE_FORCE)
+		{
+			mpObjModel->SetSkin("marsAA.jpg");
+		}
+		else if (mFaction == FAC_THE_CRIMSON_LEGION)
+		{
+			mpObjModel->SetSkin("marsAAMars.jpg");
+		}
+		else
+		{
+			mpObjModel->SetSkin("marsAARebel.jpg");
+		}
+	}
+}

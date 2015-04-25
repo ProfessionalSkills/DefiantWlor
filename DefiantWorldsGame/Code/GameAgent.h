@@ -69,6 +69,8 @@ protected:
 	bool mHasPathTarget;
 	float mUnitSpacing;
 
+	bool mUnitSelected = false;
+
 	CRTSPlayer* mpOwner = nullptr;
 
 	eFleetPos mFleetPosition;
@@ -132,13 +134,25 @@ public:
 	{
 		mPathTarget = pathTile;
 		mHasPathTarget = true;
+
+		// Place a waypoint at the target if it is selected
+		if (mUnitSelected)
+		{
+			// *TO DO *
+		}
 	}
 
 	inline void SetAttackTarget(CGameObject* target)
 	{
+		// If there is already a target selected, and this unit is selected, change the target's texture back to normal
+		if (mAttackTarget) mAttackTarget->SetNormalTexture();
+		
 		if (target != this)
 		{
 			mAttackTarget = target;
+
+			// If the target is selected, highlight the target by giving it a red texture
+			if (mUnitSelected) mAttackTarget->SetTargetTexture();
 		}
 	}
 
@@ -243,6 +257,16 @@ public:
 	// Save the data for this unit
 	virtual void SaveAgent(std::ofstream& outFile);
 	virtual void LoadAgent(std::ifstream& inFile);
+
+	virtual void SetTargetTexture()
+	{
+
+	}
+
+	virtual void SetNormalTexture()
+	{
+
+	}
 
 
 private:

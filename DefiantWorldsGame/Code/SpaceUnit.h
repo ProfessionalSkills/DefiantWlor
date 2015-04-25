@@ -91,6 +91,16 @@ public:
 		return mCargoValue;
 	}
 	void UnloadLazer();
+
+	void SetTargetTexture()
+	{
+		// Do nothing for space units
+	}
+
+	void SetNormalTexture()
+	{
+		// Do nothing for space units
+	}
 };
 
 #endif /* _SPACE_UNIT_H_ */

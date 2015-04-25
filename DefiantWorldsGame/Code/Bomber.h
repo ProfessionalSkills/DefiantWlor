@@ -53,6 +53,10 @@ public:
 	bool Attack(CGameObject* target, float hitMod, float damageMod);
 	bool Update();
 
+	void SetTargetTexture();
+	void SetNormalTexture();
+
+
 private:
 	IModel* CreateModel(DX::XMFLOAT3 pos) override;
 };

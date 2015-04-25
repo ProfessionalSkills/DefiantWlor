@@ -239,3 +239,27 @@ bool CBomber::Update()
 	// Call parent's update function
 	return CAirUnit::Update();
 }
+
+void CBomber::SetTargetTexture()
+{
+	if (mpObjModel) mpObjModel->SetSkin("heliTarget.jpg");
+}
+
+void CBomber::SetNormalTexture()
+{
+	if (mpObjModel)
+	{
+		if (mFaction == FAC_EARTH_DEFENSE_FORCE)
+		{
+			mpObjModel->SetSkin("heli.jpg");
+		}
+		else if (mFaction == FAC_THE_CRIMSON_LEGION)
+		{
+			mpObjModel->SetSkin("heliMars.jpg");
+		}
+		else
+		{
+			mpObjModel->SetSkin("heliRebel.jpg");
+		}
+	}
+}

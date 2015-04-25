@@ -236,3 +236,27 @@ IModel* CInfantry::CreateModel(DX::XMFLOAT3 pos)
 
 	return pModel;
 }
+
+void CInfantry::SetTargetTexture()
+{
+	if (mpObjModel) mpObjModel->SetSkin("tigerTarget.jpg");
+}
+
+void CInfantry::SetNormalTexture()
+{
+	if (mpObjModel)
+	{
+		if (mFaction == FAC_EARTH_DEFENSE_FORCE)
+		{
+			mpObjModel->SetSkin("tiger.jpg");
+		}
+		else if (mFaction == FAC_THE_CRIMSON_LEGION)
+		{
+			mpObjModel->SetSkin("tigerMars.jpg");
+		}
+		else
+		{
+			mpObjModel->SetSkin("tigerRebel.jpg");
+		}
+	}
+}

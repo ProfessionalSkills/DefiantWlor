@@ -288,3 +288,14 @@ void CStructure::Destroy()
 	// Remove the model
 	UnloadIModel();
 }
+
+void CStructure::SetTargetTexture()
+{
+	if (mpObjModel && mState != OBJ_CONSTRUCTING) mpObjModel->SetSkin("bld-mt-target.jpg");
+}
+
+void CStructure::SetNormalTexture()
+{
+	// Call a different function to handle this
+	SetDeselectedTexture();
+}

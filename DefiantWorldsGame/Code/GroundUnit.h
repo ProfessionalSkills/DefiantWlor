@@ -55,6 +55,17 @@ public:
 	{
 
 	}
+
+	virtual void SetTargetTexture()
+	{
+
+	}
+
+	virtual void SetNormalTexture()
+	{
+
+	}
+
 	void Spawn(CGrid* pGrid, SPointData pCentre);
 	bool LookingAt(DX::XMFLOAT3 targetPosition);
 	virtual void Move();

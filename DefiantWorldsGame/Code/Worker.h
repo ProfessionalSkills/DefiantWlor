@@ -61,6 +61,9 @@ public:
 	// OVERRIDE METHODS
 	//---------------------------
 	virtual bool Attack(CGameObject* target, float hitMod, float damageMod);
+	void SetTargetTexture();
+	void SetNormalTexture();
+
 
 private:
 	virtual bool Destroy();

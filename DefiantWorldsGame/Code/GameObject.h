@@ -135,6 +135,7 @@ public:
 		return mpObjModel;
 	}
 
+
 	// MUTATORS
 	//---------------------------
 	inline void SetFaction(EFactions faction)
@@ -147,6 +148,9 @@ public:
 	void SetOrientation(float orientation);
 	void ChangeRelativeOrientation(float amount);
 
+
+	// METHODS
+	//---------------------------
 	virtual bool RayCollision(DX::XMFLOAT3 origin, DX::XMFLOAT3 direction, float& distance)
 	{
 		return false;
@@ -157,9 +161,8 @@ public:
 		return false;
 	}
 
-
-	// METHODS
-	//---------------------------
+	virtual void SetTargetTexture() = 0;
+	virtual void SetNormalTexture() = 0;
 };
 
 

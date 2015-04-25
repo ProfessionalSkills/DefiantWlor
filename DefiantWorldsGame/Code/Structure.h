@@ -181,6 +181,10 @@ public:
 	void CalculateBoundingBox();
 	void Destroy();
 
+	// Change the texture of the building if the building is a target
+	void SetTargetTexture();
+	void SetNormalTexture();
+
 
 	// VIRTUAL METHODS
 	//---------------------------
