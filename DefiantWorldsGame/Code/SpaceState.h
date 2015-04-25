@@ -172,9 +172,35 @@ private:
 		}
 	}
 
+	inline void HideButtonsAttack()
+	{
+		for (miterButtons = mpButtonListAttacks.begin(); miterButtons != mpButtonListAttacks.end(); miterButtons++)
+		{
+			CAdvancedButton<CSpaceState, void>* pButton = (*miterButtons);
+			if (pButton)
+			{
+				pButton->Hide();
+				pButton->Update();
+			}
+		}
+	}
+
 	inline void ShowButtonsPaused()
 	{
 		for (miterButtons = mpButtonListPause.begin(); miterButtons != mpButtonListPause.end(); miterButtons++)
+		{
+			CAdvancedButton<CSpaceState, void>* pButton = (*miterButtons);
+			if (pButton)
+			{
+				pButton->Show();
+				pButton->Update();
+			}
+		}
+	}
+
+	inline void ShowButtonsAttack()
+	{
+		for (miterButtons = mpButtonListAttacks.begin(); miterButtons != mpButtonListAttacks.end(); miterButtons++)
 		{
 			CAdvancedButton<CSpaceState, void>* pButton = (*miterButtons);
 			if (pButton)

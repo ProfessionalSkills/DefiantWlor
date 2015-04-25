@@ -273,10 +273,16 @@ bool CFleet::SpecialAttackLazerBarrage()
 
 bool CFleet::SpecialAttackMassHeal()
 {
-	for (int i = 0; i < mSize; i++)
+	if (mSpecialAttackCooldownTimer <= 0)
 	{
-		mpFleet[i]->Heal(10.0f);
+		for (int i = 0; i < mSize; i++)
+		{
+			mpFleet[i]->Heal(10.0f);
+		}
+		mSpecialAttackCooldownTimer = mSpecialAttackCooldownTime;
+		return true;
 	}
+	return false;
 }
 
 //-----------------------------------------------------

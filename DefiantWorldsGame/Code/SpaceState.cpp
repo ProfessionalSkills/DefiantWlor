@@ -152,6 +152,16 @@ void CSpaceState::StateSetup()
 	mpButtonListDefeat.push_back(pNewButton);
 	mpButtonListVictory.push_back(pNewButton);
 
+	//special attack buttons
+	pNewButton = new CAdvancedButton<CSpaceState, void>("NoTactics.png", "NoTacticsMO.png", SPointData(800, 750),
+		DX::XMFLOAT2(50.0f, 50.0f), *this, &CSpaceState::SALazerBarrage, TR_UP, true, 1.2f);
+	mpButtonListAttacks.push_back(pNewButton);
+	mpButtonListAll.push_back(pNewButton);
+
+	pNewButton = new CAdvancedButton<CSpaceState, void>("NoTactics.png", "NoTacticsMO.png", SPointData(900, 750),
+		DX::XMFLOAT2(50.0f, 50.0f), *this, &CSpaceState::SAMassHeal, TR_UP, true, 1.2f);
+	mpButtonListAttacks.push_back(pNewButton);
+	mpButtonListAll.push_back(pNewButton);
 
 	// INITIALISE USER INTERFACE
 	//-----------------------------
@@ -235,7 +245,6 @@ void CSpaceState::StateUpdate()
 					mpPlayerOneFleet->Fight();
 				}
 
-
 				//reset timer
 				mTimeSinceUpdate = 0.0f;
 				mTimeSinceEffectsUpdate = mTimeToUpdateEffects;
@@ -243,8 +252,6 @@ void CSpaceState::StateUpdate()
 
 			//update effects time
 			mTimeSinceEffectsUpdate -= gFrameTime;
-
-
 
 			if (mTimeSinceEffectsUpdate <= 0.0f)
 			{
@@ -546,6 +553,7 @@ void CSpaceState::RemoveButtons()
 	mpButtonListTactics.clear();
 	mpButtonListDefeat.clear();
 	mpButtonListVictory.clear();
+	mpButtonListAttacks.clear();
 }
 
 //Menu Button Functions
@@ -580,7 +588,7 @@ void CSpaceState::SALazerBarrage()
 
 void CSpaceState::SAMassHeal()
 {
-	if (mpPlayerOneFleet->SpecialAttackMassHeal();)
+	if (mpPlayerOneFleet->SpecialAttackMassHeal())
 	{
 		gpNewsTicker->AddNewElement("Mothership Healed Fleet", false);
 	}
