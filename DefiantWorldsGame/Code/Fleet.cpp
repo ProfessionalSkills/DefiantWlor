@@ -273,14 +273,17 @@ bool CFleet::SpecialAttackLazerBarrage()
 
 bool CFleet::SpecialAttackMassHeal()
 {
-	if (mSpecialAttackCooldownTimer <= 0)
+	if (mNumMothership != 0)
 	{
-		for (int i = 0; i < mSize; i++)
+		if (mSpecialAttackCooldownTimer <= 0)
 		{
-			mpFleet[i]->Heal(10.0f);
+			for (int i = 0; i < mSize; i++)
+			{
+				mpFleet[i]->Heal(10.0f);
+			}
+			mSpecialAttackCooldownTimer = mSpecialAttackCooldownTime;
+			return true;
 		}
-		mSpecialAttackCooldownTimer = mSpecialAttackCooldownTime;
-		return true;
 	}
 	return false;
 }
@@ -441,5 +444,6 @@ void CFleet::ReturnFleet(CRTSPlayer* Player,bool victory)
 	mNumTransport = 0;
 	mShotsFired = 0;
 	mHits = 0;
+	mSpecialAttackCooldownTimer = 0.0f;
 }
 
