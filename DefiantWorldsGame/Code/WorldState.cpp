@@ -304,14 +304,13 @@ void CWorldState::CheckKeyPresses()
 				mpHumanPlayer->CheckGameObjectSelection(pNewSelectedStructure, pNewSelectedAgent,
 					pNewSelectedMineral, mMouseOrigin, mMouseDirection, tmpDistance, false);
 				OnStructureSelectChange(pNewSelectedStructure);
-				OnUnitSelectChange(pNewSelectedAgent);
+				OnUnitSelectChange(pNewSelectedAgent, false);
 				mpUnitSelectionList.clear();
 				break;
 
 			case MS_UI:
 				OnStructureSelectChange(pNewSelectedStructure);
-				mpUnitSelectionList.clear();
-				OnUnitSelectChange(pNewSelectedAgent);
+				OnUnitSelectChange(pNewSelectedAgent, false);
 				break;
 			}
 
@@ -526,8 +525,7 @@ void CWorldState::CheckKeyPresses()
 	if (mLMouseClicked)
 	{
 		mLMouseClicked = false;
-		mpUnitSelectionList.clear();
-		OnUnitSelectChange(nullptr);
+		OnUnitSelectChange(nullptr, false);
 	}
 
 	// Check if a building is currently selected
@@ -594,9 +592,8 @@ void CWorldState::CheckKeyPresses()
 		gpCurWorldCamera = mpCamCurrent->GetCamera();
 
 		// Ensure no buildings can be brought over
-		mpUnitSelectionList.clear();
 		OnPlacingStructureChange(nullptr);
-		OnUnitSelectChange(nullptr);
+		OnUnitSelectChange(nullptr, false);
 		OnStructureSelectChange(nullptr);
 	}
 
@@ -767,7 +764,7 @@ void CWorldState::DisplaySelectedAgentInfo()
 		if (mpCurSelectedAgent->GetHealth() <= 0.0f)
 		{
 			// Select nothing
-			OnUnitSelectChange(nullptr);
+			OnUnitSelectChange(nullptr, false);
 		}
 	}
 
@@ -1311,7 +1308,7 @@ void CWorldState::StateSetup()
 	// FINALISE BUTTONS
 	//-----------------------------
 	OnStructureSelectChange(nullptr);
-	OnUnitSelectChange(nullptr);
+	OnUnitSelectChange(nullptr, false);
 
 
 	// INITIALISE MUSIC
@@ -1688,16 +1685,13 @@ void CWorldState::StateUpdate()
 		{
 			// If it was clicked last frame & held threshold is reached, it's being held
 			mLMouseHeld = true;
-
-			// Remove list of selected units
-			mpUnitSelectionList.clear();
 		}
 
 		// Deselect everything if holding down is greater than a quarter of a second
 		if (mHoldCount > 0.2f)
 		{
 			OnPlacingStructureChange(nullptr);
-			OnUnitSelectChange(nullptr);
+			OnUnitSelectChange(nullptr, false);
 			OnStructureSelectChange(nullptr);
 		}
 
@@ -1736,7 +1730,7 @@ void CWorldState::StateUpdate()
 			}
 
 			// Update buttons
-			OnUnitSelectChange(nullptr);
+			OnUnitSelectChange(nullptr, true);
 		}
 		
 		// No button clicking
@@ -1858,9 +1852,7 @@ void CWorldState::StateUpdate()
 	// If after checking for button presses and there is still the left mouse button unsolved, remove any selected units
 	if (mLMouseClicked)
 	{
-		// Remove list of selected units
-		mpUnitSelectionList.clear();
-		OnUnitSelectChange(nullptr);
+		OnUnitSelectChange(nullptr, false);
 	}
 
 	// Loop through key presses
@@ -2254,8 +2246,11 @@ void CWorldState::OnStructureSelectChange(CStructure* pSelStructure)
 	mpCurSelectedStructure = pSelStructure;
 }
 
-void CWorldState::OnUnitSelectChange(CGameAgent* pSelAgent)
+void CWorldState::OnUnitSelectChange(CGameAgent* pSelAgent, bool listSelection)
 {
+	// If there was a previously selected unit, set it's selected texture back
+	if (mpCurSelectedAgent) mpCurSelectedAgent->SetDeselectedTexture();
+	
 	// Set the currently selected agent to the parameter passed in
 	mpCurSelectedAgent = pSelAgent;
 
@@ -2289,9 +2284,11 @@ void CWorldState::OnUnitSelectChange(CGameAgent* pSelAgent)
 
 		// Update health bar
 		OnItemHealthChange();
+
+		// Set the selected texture
+		mpCurSelectedAgent->SetSelectedTexture();
 	}
-	// If there are no multi-units selected
-	else if (mpUnitSelectionList.size() != 0)
+	else if (listSelection)
 	{
 		// Show the buttons specific to units
 		mpButtonDelete->Show();
@@ -2320,6 +2317,28 @@ void CWorldState::OnUnitSelectChange(CGameAgent* pSelAgent)
 
 		// Update health bar
 		OnItemHealthChange();
+
+		// Set the selected texture for each unit
+		for (miterUnitSelectionList = mpUnitSelectionList.begin(); miterUnitSelectionList != mpUnitSelectionList.end(); miterUnitSelectionList++)
+		{
+			(*miterUnitSelectionList)->SetSelectedTexture();
+		}
+	}
+	// If there are no multi-units selected
+	else if (!listSelection)
+	{
+		// Check if there was previously a list
+		if (mpUnitSelectionList.size())
+		{
+			// Set the deselected texture for each unit
+			for (miterUnitSelectionList = mpUnitSelectionList.begin(); miterUnitSelectionList != mpUnitSelectionList.end(); miterUnitSelectionList++)
+			{
+				(*miterUnitSelectionList)->SetDeselectedTexture();
+			}
+
+			// Clear the selection
+			mpUnitSelectionList.clear();
+		}
 	}
 	// If no building is selected, show the other buttons
 	else if (!mpCurSelectedStructure)
@@ -2592,7 +2611,7 @@ void CWorldState::DeleteSelection()
 		mpCurSelectedAgent->SetHealth(-1.0f);
 
 		// Pointer set to null
-		OnUnitSelectChange(nullptr);
+		OnUnitSelectChange(nullptr, false);
 		mLMouseClicked = false;
 	}
 	// Check for a list of selected units
@@ -2604,9 +2623,7 @@ void CWorldState::DeleteSelection()
 			(*miterUnitSelectionList)->SetHealth(-1.0f);
 		}
 
-		// Clear the selection list
-		mpUnitSelectionList.clear();
-		OnUnitSelectChange(nullptr);
+		OnUnitSelectChange(nullptr, false);
 		mLMouseClicked = false;
 	}
 }
@@ -2624,8 +2641,7 @@ void CWorldState::PutUnitIntoSpace()
 			mpCurSelectedAgent->SetAttackTarget(nullptr);
 			mpCurSelectedAgent->CancelPathTarget();
 
-			// Set no units selected
-			OnUnitSelectChange(nullptr);
+			OnUnitSelectChange(nullptr, false);
 		}
 		else
 		{
@@ -2651,8 +2667,7 @@ void CWorldState::PutUnitIntoSpace()
 		//Display message
 		gpNewsTicker->AddNewElement("Unit selection sent to transport ships.", false);
 
-		// Clear group selection
-		mpUnitSelectionList.clear();
+		OnUnitSelectChange(nullptr, false);
 	}
 
 	mLMouseClicked = false;
@@ -2664,24 +2679,6 @@ void CWorldState::LaunchAttack()
 	mpAIPlayer->LaunchAttack();
 	gCurState = GS_SPACE;
 }
-
-//void CWorldState::ChangeTacNone()
-//{
-//	mpHumanPlayer->GetFleet()->SetTactic(None);
-//	gpNewsTicker->AddNewElement("No space tactic selected.", false);
-//}
-//
-//void CWorldState::ChangeTacRapid()
-//{
-//	mpHumanPlayer->GetFleet()->SetTactic(Rapid);
-//	gpNewsTicker->AddNewElement("Rapid space tactic selected.", false);
-//}
-//
-//void CWorldState::ChangeTacTargated()
-//{
-//	mpHumanPlayer->GetFleet()->SetTactic(Targeted);
-//	gpNewsTicker->AddNewElement("Targeted space tactic selected.", false);
-//}
 
 void CWorldState::Continue()
 {

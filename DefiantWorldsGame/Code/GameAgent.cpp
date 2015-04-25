@@ -200,3 +200,15 @@ void CGameAgent::LoadAgent(std::ifstream& inFile)
 	// Calculate the bounding sphere
 	CalculateBoundingSphere();
 }
+
+void CGameAgent::SetSelectedTexture()
+{
+	// Change the shadow texture to the selected one
+	mpObjShadow->SetSkin("tlxmul_unitShadowSelected.tga");
+}
+
+void CGameAgent::SetDeselectedTexture()
+{
+	// Set the shadow texture back to the default
+	mpObjShadow->SetSkin("tlxmul_unitShadow.tga");
+}

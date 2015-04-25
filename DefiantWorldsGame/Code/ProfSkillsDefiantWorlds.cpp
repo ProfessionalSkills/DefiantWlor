@@ -18,7 +18,8 @@ TO DO:
 	- Remove debug information
 	- Reposition news ticker
 	- Model arrow to show where unit is attempting to travel to
-	- Make shadow of unit glow when that unit is selected
+	- Fix issue where if a worker is destroyed, the minerals it was mining remains used
+	- Fix issue where population limit is not given back when a unit dies
 	- Use lasers for workers when they are mining minerals
 	- Ability to heal/repair
 	- Red beam from sky when unit is sent to transport ship

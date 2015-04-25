@@ -235,6 +235,10 @@ public:
 	virtual void LoadModel(float x, float y, float z) = 0;
 	virtual void Move()=0;
 
+	// Set the selected or deselected texture
+	void SetSelectedTexture();
+	void SetDeselectedTexture();
+
 	// Save the data for this unit
 	virtual void SaveAgent(std::ofstream& outFile);
 	virtual void LoadAgent(std::ifstream& inFile);

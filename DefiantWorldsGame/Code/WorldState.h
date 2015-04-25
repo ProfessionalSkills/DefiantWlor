@@ -248,7 +248,7 @@ private:
 	//---------------------------
 	void OnPlacingStructureChange(CStructure* selStructure);
 	void OnStructureSelectChange(CStructure* pSelStructure);
-	void OnUnitSelectChange(CGameAgent* pSelAgent);
+	void OnUnitSelectChange(CGameAgent* pSelAgent, bool listSelection);
 	void OnStructureQueueProgressChange();
 	void OnItemHealthChange();
 	void OnPause();
