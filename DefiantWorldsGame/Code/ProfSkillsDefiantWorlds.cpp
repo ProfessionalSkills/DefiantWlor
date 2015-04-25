@@ -217,6 +217,11 @@ void SetupEngine()
 	CParticle::mspMshExplosionParticle = gpEngine->LoadMesh("ExplosionParticle.x");
 	CParticle::mspMshSmokeParticle = gpEngine->LoadMesh("SmokeParticle.x");
 	CExplosion::mspMshExplosionBall = gpEngine->LoadMesh("ExplosionBall.x");
+
+	//Base Turret Meshes
+	//Anti Air Turret
+	CTurretStructure::mspMshTurret = gpEngine->LoadMesh("anti-aircraft.x");
+	CTurretStructure::mspMshTurretShell = gpEngine->LoadMesh("WorldLazer.x");
 }
 
 void CleanupEngine()

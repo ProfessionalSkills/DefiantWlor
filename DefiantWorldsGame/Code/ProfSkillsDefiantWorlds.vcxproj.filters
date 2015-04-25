@@ -136,6 +136,9 @@
     <Filter Include="Managers">
       <UniqueIdentifier>{1a0b2568-9e20-4e9d-b8af-919b97c555b1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Entities\Game Objects\Child\Structure\Child\Turret">
+      <UniqueIdentifier>{167e6f96-c600-4dcf-97ee-ecfba80b236b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ProfSkillsDefiantWorlds.cpp">
@@ -294,6 +297,9 @@
     <ClCompile Include="MovingUI.cpp">
       <Filter>Utilities\User Interface</Filter>
     </ClCompile>
+    <ClCompile Include="AATurret.cpp">
+      <Filter>Entities\Game Objects\Child\Structure\Child\Turret</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common.h">
@@ -451,6 +457,9 @@
     </ClInclude>
     <ClInclude Include="MovingUI.h">
       <Filter>Utilities\User Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="AATurret.h">
+      <Filter>Entities\Game Objects\Child\Structure\Child\Turret</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

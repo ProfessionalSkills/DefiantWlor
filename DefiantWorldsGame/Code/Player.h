@@ -30,6 +30,8 @@
 #include "House.h"				// Static structure
 #include "Wall.h"				// Static structure
 
+#include "AATurret.h"		    // Anti Air Turret
+
 #include "Barracks.h"			// Production structure
 #include "ComCentre.h"			// Production structure
 #include "Hellipad.h"			// Production structure
