@@ -40,6 +40,8 @@ TO DO:
 	- Change the way smoke is produced so it is not concentrated in one position for buildings &
 		remove smoke limit - simply create a smoke particle every so often
 	- Add UI for button mouse over descriptions
+	- LIMITS - no more than ONE mothership per player at any given point
+	- Add cost to buttons if applicable
 */
 
 
