@@ -260,6 +260,14 @@ bool CFleet::SpecialAttackLazerBarrage()
 	return false;
 }
 
+bool CFleet::SpecialAttackMassHeal()
+{
+	for (int i = 0; i < mSize; i++)
+	{
+		mpFleet[i]->Heal(10.0f);
+	}
+}
+
 //-----------------------------------------------------
 // FLEET CLASS ACCESSORS
 //-----------------------------------------------------

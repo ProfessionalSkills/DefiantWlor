@@ -94,12 +94,17 @@ private:
 	std::vector<CAdvancedButton<CSpaceState, void>*> mpButtonListPause;
 	std::vector<CAdvancedButton<CSpaceState, void>*> mpButtonListVictory;
 	std::vector<CAdvancedButton<CSpaceState, void>*> mpButtonListDefeat;
+	std::vector<CAdvancedButton<CSpaceState, void>*> mpButtonListAttacks;
 	std::vector<CAdvancedButton<CSpaceState, void>*>::iterator miterButtons;
 
 	//tactic button functions
 	void ChangeTacNone();
 	void ChangeTacRapid();
 	void ChangeTacTargated();
+
+	//Special Attack Buttons
+	void SALazerBarrage();
+	void SAMassHeal();
 
 	//other button functions
 	void GoToMainMenu();

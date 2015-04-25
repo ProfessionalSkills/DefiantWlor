@@ -214,16 +214,7 @@ void CSpaceState::StateUpdate()
 			//Space Controls -Combat Controls
 			if (gpEngine->KeyHit(Key_B))
 			{
-				if (mSpecialAttackCooldownTimer <= 0)
-				{
-					mpPlayerOneFleet->SpecialAttackLazerBarrage();
-					gpNewsTicker->AddNewElement("Mothership Fired a Lazer Barrage", false);
-					mSpecialAttackCooldownTimer = mSpecialAttackCooldownTime;
-				}
-				else
-				{
-					gpNewsTicker->AddNewElement("Special Attacks are on Cooldown", false);
-				}
+				SALazerBarrage();
 			}
 
 			mTimeSinceUpdate += gFrameTime;
@@ -574,4 +565,24 @@ void CSpaceState::Resume()
 {
 	mPaused = false;
 	HideButtonsPaused();
+}
+
+//Special Attack Buttons
+void CSpaceState::SALazerBarrage()
+{
+	if (mSpecialAttackCooldownTimer <= 0)
+	{
+		mpPlayerOneFleet->SpecialAttackLazerBarrage();
+		gpNewsTicker->AddNewElement("Mothership Fired a Lazer Barrage", false);
+		mSpecialAttackCooldownTimer = mSpecialAttackCooldownTime;
+	}
+	else
+	{
+		gpNewsTicker->AddNewElement("Special Attacks are on Cooldown", false);
+	}
+}
+
+void CSpaceState::SAMassHeal()
+{
+
 }
