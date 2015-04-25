@@ -189,32 +189,6 @@ bool CGroundUnit::Update()
 		}
 	}
 
-	if (mpProjectiles.size() > 0)
-	{
-		for (auto iter = mpProjectiles.begin(); iter != mpProjectiles.end(); iter++) //For each projectile that unit has fired
-		{
-			SProjectile* projectile = (*iter);
-			projectile->Update();
-			DX::XMFLOAT3 position = { projectile->mModel->GetX(), projectile->mModel->GetY(), projectile->mModel->GetZ() }; //projectile's new position stored for collision detection
-
-				// Check to see if the attack target has been lost or it has been destroyed
-				if (mAttackTarget == nullptr || projectile->mLifeTime <= 0.0f)
-				{
-					SafeDelete(projectile);
-					mpProjectiles.erase(iter);
-					break;
-				}
-				else if (mAttackTarget->SphereCollision(projectile->mCollisionSphere)) //Point to Box collision between the projectile and the attack target
-				{
-					mAttackTarget->TakeDamage(mDamage);
-					mpAttackExplosions.push_back(new CExplosion(projectile->mModel, 5, false));
-					SafeDelete(projectile);
-					mpProjectiles.erase(iter);
-					break; //Breaks out of the loop as the vector size has been changed, comprimising the iterator loop
-				}
-		}
-	}
-
 	// Object is still alive, return true
 	return true;
 }

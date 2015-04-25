@@ -59,17 +59,17 @@ bool CWorker::IsHarvestingMineral()
 	{
 		// Check to see if the worker is close enough to the active mineral
 		float threshold = 10.0f;
-		float distance = 100.0f;
+		float distance;
 
 		// Get the local Z axis of the worker unit
 		DX::XMFLOAT4X4 objMatrix;
 		mpObjModel->GetMatrix(&objMatrix.m[0][0]);
 		DX::XMFLOAT3 localZ{ objMatrix.m[2][0], objMatrix.m[2][1], objMatrix.m[2][2] };
 
-		mpActiveMineral->RayCollision(mWorldPos, localZ, distance);
+		bool rayCollision = mpActiveMineral->RayCollision(mWorldPos, localZ, distance);
 
 		// Check the distance is less than the threshold
-		if (distance <= threshold)
+		if (distance <= threshold && rayCollision)
 		{
 			return true;
 		}
@@ -205,4 +205,13 @@ void CWorker::SetNormalTexture()
 			mpObjModel->SetSkin("ttruckGermanRebel.jpg");
 		}
 	}
+}
+
+bool CWorker::Update()
+{
+	if (mState == OBJ_INSPACE) return CGroundUnit::Update();
+
+
+
+	return CGroundUnit::Update();
 }

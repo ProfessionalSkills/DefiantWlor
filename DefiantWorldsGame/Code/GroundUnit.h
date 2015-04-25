@@ -48,7 +48,7 @@ public:
 	//---------------------------
 	virtual bool Attack(CGameObject* target, float hitMod, float damageMod) = 0;
 	//virtual void MoveTo(CTile* dest);
-	bool Update();
+	virtual bool Update();
 	virtual void UnloadIModel()=0;
 	virtual void LoadIModel() = 0;
 	void LoadModel(float x, float y, float z)

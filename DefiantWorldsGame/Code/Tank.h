@@ -55,6 +55,7 @@ public:
 	bool Attack(CGameObject* target, float hitMod, float damageMod);
 	void SetTargetTexture();
 	void SetNormalTexture();
+	bool Update();
 
 
 private:
