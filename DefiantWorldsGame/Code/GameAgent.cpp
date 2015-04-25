@@ -243,7 +243,7 @@ void CGameAgent::SetSelectedTexture()
 void CGameAgent::SetDeselectedTexture()
 {
 	// Set the shadow texture back to the default
-	mpObjShadow->SetSkin("tlxmul_unitShadow.tga");
+	if (mpObjShadow) mpObjShadow->SetSkin("tlxmul_unitShadow.tga");
 
 	// If there is a selected target, set it back to its normal texture
 	if (mAttackTarget)
