@@ -954,6 +954,7 @@ void CWorldState::StateSetup()
 	//-----------------------------
 	mFntDebug = gpEngine->LoadFont("Calibri", 20U);
 	mpBarBottom = gpEngine->CreateSprite("UIBarBottom.png", 150.0f, 800.0f, 0.9f);
+	mpBarTop = gpEngine->CreateSprite("UIBarTop.png", 490.0f, 0.0f, 0.9f);
 	mpSprCursor = gpEngine->CreateSprite("BaseCursor.png", 5.0f, 50.0f, 0.0f);
 	CAdvancedButton<CWorldState, void>* pNewButton = nullptr;
 
@@ -1959,6 +1960,7 @@ void CWorldState::StateCleanup()
 	mpAIPlayer->UnloadPlayerGridModels();
 
 	gpEngine->RemoveSprite(mpBarBottom);
+	gpEngine->RemoveSprite(mpBarTop);
 	gpEngine->RemoveMesh(mpMshSkybox);
 	
 	SafeDelete(mpCamEarth);

@@ -13,7 +13,6 @@ TO DO: * = essential
 	- Fix bug where human units spawning in Mars would attempt to make their way back home as they are 'out of their boundary'
 	- Change the save log so that Rebel units get saved
 	- Change how units are saved - instead of just their position, save their entire matrix
-	*- Complete UI for info at top of screen
 	*- Complete UI for news ticker
 	*- Remove debug information
 	*- Reposition news ticker
@@ -29,7 +28,7 @@ TO DO: * = essential
 	*- Have a timer for when a fleet attempts to travel across space
 	*- Launch button glows red and a timer appears when the enemy is launching their fleet
 	- Walls have a lower/raise ability
-	- Ground units cannot move through walls
+	*- Ground units cannot move through walls
 	- Units collide with one another
 	- If time, decorate surrounding area
 	*- Create a saved game to load so that on demo day people are not bored whilst units are constructed etc.

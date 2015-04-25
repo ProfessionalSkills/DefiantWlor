@@ -80,6 +80,7 @@ private:
 	//---------------------------
 	IFont* mFntDebug;
 	ISprite* mpBarBottom;
+	ISprite* mpBarTop;
 	ISprite* mpSprQProg;
 	ISprite* mpSprHealth;
 	ISprite* mpSprCursor;
