@@ -41,7 +41,11 @@ CWorker::CWorker()
 
 CWorker::~CWorker()
 {
-
+	// Set the mineral the worker is working with to not being used
+	if (mpActiveMineral)
+	{
+		mpActiveMineral->SetUsage(false);
+	}
 }
 
 
