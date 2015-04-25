@@ -22,6 +22,7 @@ TO DO:
 	- Fix issue where population limit is not given back when a unit dies
 	- Use lasers for workers when they are mining minerals
 	- Ability to heal/repair
+	- Fix issue where loaded units have no owner pointer
 	- Red beam from sky when unit is sent to transport ship
 	- Model around building being constructed for a more interesting constructing appearance
 	- Retune AI to do attacking
