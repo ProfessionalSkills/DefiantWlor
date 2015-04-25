@@ -7,6 +7,7 @@
 // INCLUDES
 //-----------------------------------------------------
 #include "GameAgent.h"
+#include "GameStateControl.h"
 #include "PlayerManager.h"
 
 
@@ -200,6 +201,16 @@ void CGameAgent::LoadAgent(std::ifstream& inFile)
 	// Convert required values to enums
 	mFaction = static_cast<EFactions>(faction);
 	mState = static_cast<EObjectStates>(state);
+
+	// Load a pointer to the player based on the faction
+	if (mFaction == FAC_EARTH_DEFENSE_FORCE)
+	{
+		mpOwner = CStateControl::GetInstance()->GetPlayerManager()->GetHumanPlayer();
+	}
+	else if (mFaction == FAC_THE_CRIMSON_LEGION)
+	{
+		mpOwner = CStateControl::GetInstance()->GetPlayerManager()->GetAIPlayer(0);
+	}
 
 	// Load the model
 	LoadIModel();

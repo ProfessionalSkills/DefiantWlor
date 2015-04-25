@@ -20,7 +20,6 @@ TO DO: * = essential
 	- Model arrow to show where unit is attempting to travel to
 	- Use lasers for workers when they are mining minerals
 	- Ability to heal/repair with worker units
-	*- Fix issue where loaded units have no owner pointer
 	*- Red beam from sky when unit is sent to transport ship
 	- Model around building being constructed for a more interesting constructing appearance
 	*- Retune AI to do attacking
