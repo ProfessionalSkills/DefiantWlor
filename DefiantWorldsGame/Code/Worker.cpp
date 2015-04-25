@@ -46,6 +46,13 @@ CWorker::~CWorker()
 	{
 		mpActiveMineral->SetUsage(false);
 	}
+
+	// Check if a harvesting model exists
+	if (mpMdlHarvest)
+	{
+		mspMshWorkerLaser->RemoveModel(mpMdlHarvest);
+		mpMdlHarvest = nullptr;
+	}
 }
 
 
@@ -102,6 +109,14 @@ void CWorker::UnloadIModel()
 	{
 		CWorldState::mspMshUnitShadow->RemoveModel(mpObjShadow);
 		mpObjShadow = nullptr;
+	}
+
+	// Remove laser
+	if (mpMdlHarvest)
+	{
+		mspMshWorkerLaser->RemoveModel(mpMdlHarvest);
+		mpMdlHarvest = nullptr;
+		mHarvesting = false;
 	}
 }
 
@@ -198,8 +213,13 @@ bool CWorker::Update()
 	// If it has a path target
 	if (mHasPathTarget)
 	{
-		// Remove it if the worker already has a mineral target
-		if (mpActiveMineral) mHasPathTarget = false;
+		// Cannot have a path target and a mineral target
+		if (mpActiveMineral)
+		{
+			mpActiveMineral->SetUsage(false);
+			mpActiveMineral = nullptr;
+			mHarvesting = false;
+		}
 	}
 
 	// Check if the worker has an active material (and is still alive)
@@ -226,6 +246,38 @@ bool CWorker::Update()
 			mHarvesting = false;
 			LookingAt(mpActiveMineral->GetWorldPos());
 			Move();
+		}
+	}
+
+	// Check if the unit is harvesting in order to create beams of energy for mining animations
+	if (mHarvesting)
+	{
+		// Check if a harvesting model already exists
+		if (!mpMdlHarvest)
+		{
+			// Create a harvest model from the position of the player to the mineral pile
+			mpMdlHarvest = mspMshWorkerLaser->CreateModel(mWorldPos.x, mWorldPos.y + 2.0f, mWorldPos.z);
+			mpMdlHarvest->LookAt(mpActiveMineral->GetModel());
+
+			// Scale the harvesting model & rotate a little bit
+			mpMdlHarvest->ScaleZ(10.0f);
+			mpMdlHarvest->ScaleX(0.25f);
+			mpMdlHarvest->ScaleY(0.25f);
+			mpMdlHarvest->SetSkin("tlxadd_lazer - red.tga");
+		}
+		else
+		{
+			// Simple animation of making the model rotate
+			mpMdlHarvest->RotateLocalZ(50.0f * gFrameTime);
+		}
+	}
+	else
+	{
+		// Check if a harvesting model exists
+		if (mpMdlHarvest)
+		{
+			mspMshWorkerLaser->RemoveModel(mpMdlHarvest);
+			mpMdlHarvest = nullptr;
 		}
 	}
 
