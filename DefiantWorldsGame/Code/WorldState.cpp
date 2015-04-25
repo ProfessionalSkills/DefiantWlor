@@ -127,57 +127,14 @@ void CWorldState::DrawFontData()
 	strStream.str("");
 
 	// Draw mouse grid co-ordinates
-	strStream << "Current pop " << mpHumanPlayer->GetCurrentPop() << "/" << mpHumanPlayer->GetCurrentPopLimit();
-	mFntDebug->Draw(strStream.str(), 1580, 600, kWhite, kRight, kTop);
-	strStream.str("");
-
-
-	//////////////temp
-	//Current Tactics
-	strStream << "Current Tactic: " << mpHumanPlayer->GetFleet()->GetTacticsName();
-	mFntDebug->Draw(strStream.str(), 1225, 0, kWhite, kLeft, kTop);
+	strStream << mpHumanPlayer->GetCurrentPop() << " / " << mpHumanPlayer->GetCurrentPopLimit();
+	mFntDebug->Draw(strStream.str(), 920, 14, kWhite, kLeft, kTop);
 	strStream.str("");
 
 	// Minerals
-	strStream << "Minerals: " << mpHumanPlayer->GetMineralAmount();
-	mFntDebug->Draw(strStream.str(), 1225, 15, kWhite, kLeft, kTop);
+	strStream << mpHumanPlayer->GetMineralAmount();
+	mFntDebug->Draw(strStream.str(), 622, 14, kWhite, kLeft, kTop);
 	strStream.str("");
-
-
-	// Draw mouse state - and get current grid data
-	strStream << "GRID: ";
-	switch (mMouseState)
-	{
-	case MS_EARTH_GRID:
-		mpCurTile = mpEarthGrid->GetTileData(mMouseGridPos);
-		strStream << "Earth";
-		break;
-	case MS_MARS_GRID:
-		strStream << "Minerals: " << mpAIPlayer->GetMineralAmount();
-		mFntDebug->Draw(strStream.str(), 1225, 30, kWhite, kLeft, kTop);
-		strStream.str("");
-
-		mpCurTile = mpMarsGrid->GetTileData(mMouseGridPos);
-		strStream << "Mars";
-		break;
-	case MS_NO_AREA:
-	case MS_EARTH_EDGE:
-	case MS_MARS_EDGE:
-		mpCurTile = mpNullTile;
-		strStream << "None";
-		break;
-	case MS_UI:
-		mpCurTile = mpNullTile;
-		strStream << "UI";
-		break;
-	}
-
-	if (mpCurTile)
-	{
-		strStream << "  USED: " << mpCurTile->IsTileUsed();
-		mFntDebug->Draw(strStream.str(), 1580, 645, kWhite, kRight, kTop);
-		strStream.str("");
-	}
 }
 
 EMouseStates CWorldState::UpdateMouseState()
