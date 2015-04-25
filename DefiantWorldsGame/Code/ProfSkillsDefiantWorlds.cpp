@@ -19,7 +19,6 @@ TO DO: * = essential
 	- Ability to heal/repair with worker units
 	- Model around building being constructed for a more interesting constructing appearance
 	*- Retune AI to do attacking
-	*- Make required changes to the Rebels (currently they are too difficult and do not attack the AI's base)
 	*- AI to load units to ships
 	*- AI to launch fleet
 	*- AI to attack enemies when they are near

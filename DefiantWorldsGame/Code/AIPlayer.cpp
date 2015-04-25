@@ -193,13 +193,15 @@ void CRTSAIPlayer::AssessWorkers()
 				// Identify a mineral it can harvest
 				for (miterMineralsList = mpMineralsList.begin(); miterMineralsList != mpMineralsList.end(); miterMineralsList++)
 				{
+					// Cache mineral
+					CMinerals* pMineral = (*miterMineralsList);
+					
 					// If the mineral is not in use, harvest from it with the currently selected worker
-					if (!(*miterMineralsList)->IsBeingUsed())
+					if (!pMineral->IsBeingUsed())
 					{
 						// Mineral not being used, so harvest from it
-						pWorker->SetMineral((*miterMineralsList));
-						(*miterMineralsList)->SetUsage(true);
-						pWorker->SetPathTarget((*miterMineralsList)->GetWorldPos());
+						pWorker->SetMineral(pMineral);
+						pMineral->SetUsage(true);
 						break;
 					}
 				}
