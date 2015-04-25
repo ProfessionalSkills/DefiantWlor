@@ -260,3 +260,62 @@ void CGameAgent::SetDeselectedTexture()
 	// Lower selected flag
 	mUnitSelected = false;
 }
+
+void CGameAgent::SetAttackTarget(CGameObject* target)
+{
+	// If there is already a target selected, and this unit is selected, change the target's texture back to normal
+	if (mAttackTarget && mUnitSelected) mAttackTarget->SetNormalTexture();
+
+	if (target != this)
+	{
+		// Apply target
+		mAttackTarget = target;
+		
+		// Check if a target exists
+		if (mAttackTarget)
+		{
+			// Go through units applying limits on what they can target
+			switch (mAgentInfo.mAgentType)
+			{
+			case GAV_ARTILLERY:
+				// If the target is not airborn, target cannot be applied
+				if (mAttackTarget->IsGroundType())
+				{
+					mAttackTarget = nullptr;
+				}
+				break;
+			case GAV_BOMBER:
+				// If the target is airborn, target cannot be applied
+				if (!mAttackTarget->IsGroundType())
+				{
+					mAttackTarget = nullptr;
+				}
+				break;
+			case GAV_FIGHTER:
+				// No limitations
+				break;
+			case GAV_INFANTRY:
+				// If the target is airborn, target cannot be applied
+				if (!mAttackTarget->IsGroundType())
+				{
+					mAttackTarget = nullptr;
+				}
+				break;
+			case GAV_TANK:
+				// If the target is airborn, target cannot be applied
+				if (!mAttackTarget->IsGroundType())
+				{
+					mAttackTarget = nullptr;
+				}
+				break;
+			case GAV_WORKER:
+				// Worker cannot have an attack target
+				mAttackTarget = nullptr;
+				break;
+			}
+		}
+
+		// If the target is selected, highlight the target by giving it a red texture
+		if (mUnitSelected && mAttackTarget) mAttackTarget->SetTargetTexture();
+	}
+}

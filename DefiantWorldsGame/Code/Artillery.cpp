@@ -112,61 +112,52 @@ void CArtillery::LoadIModel()
 //-----------------------------------------------------
 // ARTILLERY CLASS OVERRIDE METHODS
 //-----------------------------------------------------
-bool CArtillery::Attack(CGameObject* target, float hitMod, float damageMod)
+bool CArtillery::Attack(CGameObject* pTarget, float hitMod, float damageMod)
 {
-	if (mAttackTarget->GetObjectType() == Q_BOMBER || mAttackTarget->GetObjectType() == Q_FIGHTER)
+	// The RayCollision function calculates this value for us - so it needs no starting value. Only to be defined.
+	float distance;
+
+	// Get the local Z axis of the turret
+	DX::XMFLOAT3 target = mAttackTarget->GetWorldPos();
+	DX::XMFLOAT4X4 objMatrix;
+	mpObjModel->GetMatrix(&objMatrix.m[0][0]);
+
+	DX::XMFLOAT3 localZ{ objMatrix.m[2][0], objMatrix.m[2][1], objMatrix.m[2][2] };
+
+	// Normalise this local axis
+	DX::XMVECTOR vecNormal = DX::XMVector4Normalize(DX::XMLoadFloat3(&localZ));
+	DX::XMStoreFloat3(&localZ, vecNormal);
+	DX::XMFLOAT3 worldPos = { mWorldPos.x, 75.0f, mWorldPos.z };
+	// If the target is being looked at and is within range
+	if (mAttackTarget->RayCollision(worldPos, localZ, distance) && distance <= mRange)
 	{
-		// The RayCollision function calculates this value for us - so it needs no starting value. Only to be defined.
-		float distance;
+		// Calculate direction vector from the aircraft to the target
+		DX::XMFLOAT3 dir{ target.x - mWorldPos.x, target.y - mWorldPos.y, target.z - mWorldPos.z };
 
-		// Get the local Z axis of the turret
-		DX::XMFLOAT3 target = mAttackTarget->GetWorldPos();
-		DX::XMFLOAT4X4 objMatrix;
-		mpObjModel->GetMatrix(&objMatrix.m[0][0]);
+		// Normalise direction vector
+		DX::XMVECTOR vecNormal = DX::XMVector4Normalize(DX::XMLoadFloat3(&dir));
+		DX::XMStoreFloat3(&dir, vecNormal);
 
-		DX::XMFLOAT3 localZ{ objMatrix.m[2][0], objMatrix.m[2][1], objMatrix.m[2][2] };
-
-		// Normalise this local axis
-		DX::XMVECTOR vecNormal = DX::XMVector4Normalize(DX::XMLoadFloat3(&localZ));
-		DX::XMStoreFloat3(&localZ, vecNormal);
-		DX::XMFLOAT3 worldPos = { mWorldPos.x, 75.0f, mWorldPos.z };
-		// If the target is being looked at and is within range
-		if (mAttackTarget->RayCollision(worldPos, localZ, distance) && distance <= mRange)
+		if (mAttackTimer >= (1.0f / mFireRate)) //Control rate of fire of the unit
 		{
-			// Calculate direction vector from the aircraft to the target
-			DX::XMFLOAT3 dir{ target.x - mWorldPos.x, target.y - mWorldPos.y, target.z - mWorldPos.z };
+			SProjectile* newProjectile = new SProjectile();
+			newProjectile->mModel = mspMshArtilleryShell->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
+			newProjectile->mDirection = dir;
+			newProjectile->mSpeed = 500.0f;
+			newProjectile->mLifeTime = 10.0f;
 
-			// Normalise direction vector
-			DX::XMVECTOR vecNormal = DX::XMVector4Normalize(DX::XMLoadFloat3(&dir));
-			DX::XMStoreFloat3(&dir, vecNormal);
-
-			if (mAttackTimer >= (1.0f / mFireRate)) //Control rate of fire of the unit
-			{
-				SProjectile* newProjectile = new SProjectile();
-				newProjectile->mModel = mspMshArtilleryShell->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
-				newProjectile->mDirection = dir;
-				newProjectile->mSpeed = 500.0f;
-				newProjectile->mLifeTime = 10.0f;
-
-				mpProjectiles.push_back(newProjectile);
-				mAttackTimer = 0.0f;
-			}
+			mpProjectiles.push_back(newProjectile);
+			mAttackTimer = 0.0f;
 		}
-		else
-		{
-			// Move the unit toward the target
-			LookingAt(target);
-			Move();
-		}
-		// Increment attack timer
-		mAttackTimer += gFrameTime;
 	}
 	else
 	{
-		// Wrong target has been selected
-		mAttackTarget->SetNormalTexture();
-		mAttackTarget = nullptr;
+		// Move the unit toward the target
+		LookingAt(target);
+		Move();
 	}
+	// Increment attack timer
+	mAttackTimer += gFrameTime;
 	return false;
 }
 

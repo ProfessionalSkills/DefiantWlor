@@ -16,7 +16,8 @@
 //-----------------------------------------------------
 CAirUnit::CAirUnit()
 {
-
+	// Set air unit type flag
+	mIsGroundType = false;
 }
 
 CAirUnit::~CAirUnit()

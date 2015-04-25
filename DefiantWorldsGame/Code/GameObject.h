@@ -32,6 +32,9 @@ protected:
 	float mMaxHealth;
 	float mHealth;
 
+	// Store whether or not this entity is of ground or air type
+	bool mIsGroundType = true;
+
 	EObjectStates mState;
 	EFactions mFaction;
 	EQueueObjectType mObjectType;
@@ -134,6 +137,11 @@ public:
 	inline IModel* GetModel()
 	{
 		return mpObjModel;
+	}
+
+	inline bool IsGroundType()
+	{
+		return mIsGroundType;
 	}
 
 

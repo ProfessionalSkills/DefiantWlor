@@ -110,7 +110,7 @@ void CFighter::LoadIModel()
 //-----------------------------------------------------
 // FIGHTER CLASS OVERRIDE METHODS
 //-----------------------------------------------------
-bool CFighter::Attack(CGameObject* target, float hitMod, float damageMod)
+bool CFighter::Attack(CGameObject* pTarget, float hitMod, float damageMod)
 {
 	// The RayCollision function calculates this value for us - so it needs no starting value. Only to be defined.
 	float grndDistance;
@@ -126,13 +126,14 @@ bool CFighter::Attack(CGameObject* target, float hitMod, float damageMod)
 	DX::XMVECTOR vecNormal = DX::XMVector4Normalize(DX::XMLoadFloat3(&localZ));
 	DX::XMStoreFloat3(&localZ, vecNormal);
 
+	DX::XMFLOAT3 target = mAttackTarget->GetWorldPos();
+
 	// If the target is being looked at and is within range
 	bool groundRayCollision = mAttackTarget->RayCollision({ mWorldPos.x, 0.0f, mWorldPos.z }, localZ, grndDistance);
 	bool airRayCollision = mAttackTarget->RayCollision(mWorldPos, localZ, airDistance);
 	if ((groundRayCollision && grndDistance <= mRange) || (airRayCollision && airDistance <= mRange))
 	{
 		// Calculate direction vector from the aircraft to the target
-		DX::XMFLOAT3 target = mAttackTarget->GetWorldPos();
 		DX::XMFLOAT3 dir{ target.x - mWorldPos.x, target.y - mWorldPos.y, target.z - mWorldPos.z };
 
 		// Normalise direction vector
@@ -153,7 +154,7 @@ bool CFighter::Attack(CGameObject* target, float hitMod, float damageMod)
 	// Check to see if the attack was unsuccessful & that the user has not given the unit a target
 	else if (!mHasPathTarget)
 	{
-		if (LookingAt(mAttackTarget->GetWorldPos()))
+		if (LookingAt(target))
 		{
 			Move();
 		}
