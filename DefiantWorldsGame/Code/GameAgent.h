@@ -74,6 +74,7 @@ protected:
 	CRTSPlayer* mpOwner = nullptr;
 
 	eFleetPos mFleetPosition;
+	EAirspaces mAirspace;						// Stores which airspace this unit is currently flying in
 
 
 public:
@@ -188,6 +189,11 @@ public:
 	inline void RemoveBoundingSphere()
 	{
 		mBoundingSphere = SBoundingSphere();
+	}
+
+	inline EAirspaces GetAirspacePosition()
+	{
+		return mAirspace;
 	}
 
 	eFleetPos GetPosType();

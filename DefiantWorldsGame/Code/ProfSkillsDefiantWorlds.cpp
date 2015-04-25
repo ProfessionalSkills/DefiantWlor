@@ -16,7 +16,7 @@ TO DO: * = essential
 	- Change how units are saved - instead of just their position, save their entire matrix
 	*- Remove debug information
 	- Model arrow to show where unit is attempting to travel to
-	- Ability to heal/repair with worker units
+	*- Ability to heal/repair with worker units
 	- Model around building being constructed for a more interesting constructing appearance
 	*- Retune AI to do attacking
 	*- AI to load units to ships

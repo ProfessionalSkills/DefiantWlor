@@ -7,7 +7,7 @@
 // INCLUDES
 //-----------------------------------------------------
 #include "GroundUnit.h"
-#include "PlayerManager.h"
+#include "GameStateControl.h"
 #include "WorldState.h"
 
 
@@ -105,6 +105,9 @@ bool CGroundUnit::Update()
 		break;
 	}
 
+	// First check which airspace this unit is currently in
+	DetermineAirspace();
+
 	// Update smoke system
 	if (mWarningSmoke != nullptr)
 	{
@@ -153,22 +156,55 @@ bool CGroundUnit::Update()
 		}
 	}
 	// Check if the unit is out of the grid boundaries to make it return to where it should be *TO DO*
-	else if (mpOwner && !mHasPathTarget)
+	else if (!mHasPathTarget)
 	{
-		DX::XMFLOAT3 bottomLeft = mpOwner->GetPlayerGrid()->GetGridStartPos();
-		DX::XMFLOAT3 topRight = mpOwner->GetPlayerGrid()->GetGridEndPos();
+		// Pointer to the player whose airspace is being invaded
+		CRTSPlayer* pPlayerAirspace = nullptr;
 
-		// Check if the unit is out of the area bounds
-		if (mWorldPos.x < bottomLeft.x || mWorldPos.x > topRight.x || mWorldPos.z < bottomLeft.z || mWorldPos.z > topRight.z)
+		// Get player manager
+		CPlayerManager* pPManager = CStateControl::GetInstance()->GetPlayerManager();
+
+		// Determine airspace
+		if (mAirspace == AS_EARTH) pPlayerAirspace = pPManager->GetHumanPlayer();
+		else if (mAirspace == AS_MARS) pPlayerAirspace = pPManager->GetAIPlayer(0);
+
+		if (pPlayerAirspace)
 		{
-			// Out of the area - send unit back inside the walls
-			// Choose random point inside the walls
-			float targetX = gpRandomiser->GetRandomFloat(bottomLeft.x, topRight.x);
-			float targetZ = gpRandomiser->GetRandomFloat(bottomLeft.z, topRight.z);
+			DX::XMFLOAT3 bottomLeft = pPlayerAirspace->GetPlayerGrid()->GetGridStartPos();
+			DX::XMFLOAT3 topRight = pPlayerAirspace->GetPlayerGrid()->GetGridEndPos();
 
-			// Move unit to the new target area
-			mPathTarget = { targetX, 0.0f, targetZ };
-			mHasPathTarget = true;
+			// Check if the unit is out of the area bounds
+			if (mWorldPos.x < bottomLeft.x || mWorldPos.x > topRight.x || mWorldPos.z < bottomLeft.z || mWorldPos.z > topRight.z)
+			{
+				// Out of the area - send unit back inside the walls
+				// Choose random point inside the walls
+				float targetX = gpRandomiser->GetRandomFloat(bottomLeft.x, topRight.x);
+				float targetZ = gpRandomiser->GetRandomFloat(bottomLeft.z, topRight.z);
+
+				// Move unit to the new target area
+				mPathTarget = { targetX, 0.0f, targetZ };
+				mHasPathTarget = true;
+			}
+		}
+		// Case for if the airspace is none and this unit has an owner
+		else if (mAirspace == AS_NONE && mpOwner)
+		{
+			// Move based on owner's walls
+			DX::XMFLOAT3 bottomLeft = mpOwner->GetPlayerGrid()->GetGridStartPos();
+			DX::XMFLOAT3 topRight = mpOwner->GetPlayerGrid()->GetGridEndPos();
+
+			// Check if the unit is out of the area bounds
+			if (mWorldPos.x < bottomLeft.x || mWorldPos.x > topRight.x || mWorldPos.z < bottomLeft.z || mWorldPos.z > topRight.z)
+			{
+				// Out of the area - send unit back inside the walls
+				// Choose random point inside the walls
+				float targetX = gpRandomiser->GetRandomFloat(bottomLeft.x, topRight.x);
+				float targetZ = gpRandomiser->GetRandomFloat(bottomLeft.z, topRight.z);
+
+				// Move unit to the new target area
+				mPathTarget = { targetX, 0.0f, targetZ };
+				mHasPathTarget = true;
+			}
 		}
 	}
 	else
@@ -251,4 +287,38 @@ void CGroundUnit::Move()
 		mWorldPos = DX::XMFLOAT3(mpObjModel->GetX(), mpObjModel->GetY(), mpObjModel->GetZ());
 		mBoundingSphere.MoveTo(mWorldPos);
 	}
+}
+
+void CGroundUnit::DetermineAirspace()
+{
+	// Calculate which airspace this unit is currently in
+	// Get player manager
+	CPlayerManager* pPManager = CStateControl::GetInstance()->GetPlayerManager();
+
+	// Pointers to both players
+	CRTSPlayer* pHuman = pPManager->GetHumanPlayer();
+	CRTSPlayer* pAI = pPManager->GetAIPlayer(0);
+
+	// Check AI player's airspace
+	DX::XMFLOAT3 bottomLeft = pAI->GetPlayerGrid()->GetGridStartPos();
+	DX::XMFLOAT3 topRight = pAI->GetPlayerGrid()->GetGridEndPos();
+	if (mWorldPos.x > bottomLeft.x - 500.0f && mWorldPos.x < topRight.x + 500.0f && mWorldPos.z > bottomLeft.z - 500.0f && mWorldPos.z < topRight.z + 500.0f)
+	{
+		// Unit is in mars airspace
+		mAirspace = AS_MARS;
+		return;
+	}
+
+	// Check Human player's airspace
+	bottomLeft = pHuman->GetPlayerGrid()->GetGridStartPos();
+	topRight = pHuman->GetPlayerGrid()->GetGridEndPos();
+	if (mWorldPos.x < bottomLeft.x || mWorldPos.x > topRight.x || mWorldPos.z < bottomLeft.z || mWorldPos.z > topRight.z)
+	{
+		// Unit is in mars airspace
+		mAirspace = AS_EARTH;
+		return;
+	}
+
+	// Unit is in no one's airspace
+	AS_NONE;
 }

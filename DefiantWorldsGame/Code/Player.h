@@ -83,13 +83,14 @@ protected:
 	GS_MultiMap::iterator miterStructuresMap;
 	GA_MultiMap::iterator miterUnitsMap;
 
-
-
 	std::vector<CGameAgent*> mpSpaceUnitsList;
 	std::vector<CGameAgent*>::iterator mpiterSpaceUnits;
 
 	std::vector<CMinerals*> mpMineralsList;
 	std::vector<CMinerals*>::iterator miterMineralsList;
+
+	// List of units (not owned by this AI player) who are in its airspace
+	std::vector<CGameAgent*> mpAirspaceAgents;
 	
 
 	// FLEET DATA

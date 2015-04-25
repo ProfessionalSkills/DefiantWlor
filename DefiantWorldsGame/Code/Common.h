@@ -71,6 +71,11 @@ enum EErrorTypes
 	ERR_INCORRECT_INDEX, ERR_POP_LIMIT,
 };
 
+enum EAirspaces
+{
+	AS_NONE, AS_EARTH, AS_MARS
+};
+
 
 //-----------------------------------------------------
 // GLOBAL VARIABLES
