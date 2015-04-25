@@ -300,6 +300,9 @@
     <ClCompile Include="AATurret.cpp">
       <Filter>Entities\Game Objects\Child\Structure\Child\Turret</Filter>
     </ClCompile>
+    <ClCompile Include="TransportBeam.cpp">
+      <Filter>Utilities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common.h">
