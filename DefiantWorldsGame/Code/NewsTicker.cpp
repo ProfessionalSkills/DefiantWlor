@@ -42,19 +42,26 @@ void CNewsTicker::Display()
 	// Variables for deciding where to draw next element
 	int drawHeight = 10;
 	int leftPos = 1580;
-	int textSize = mpFont->MeasureTextHeight("T") + 1.0f;
+	int textSize = 30.0f;
 
 	// Loop through news items & draw their text
 	for (mriterNews = mNews.rbegin(); mriterNews != mNews.rend(); mriterNews++)
 	{
+		// Cache news item
+		SNewsItem* pNews = (*mriterNews);
+		
+		// Set position of the sprite
+		pNews->mpSprBG->SetX(1150.0f);
+		pNews->mpSprBG->SetY(drawHeight);
+
 		// If it's an error, draw it red. Otherwise draw it blue
-		if ((*mriterNews)->mError)
+		if (pNews->mError)
 		{
-			mpFont->Draw((*mriterNews)->mNewsText, leftPos, drawHeight, 0xCCCC0000, kRight, kTop);
+			mpFont->Draw(pNews->mNewsText, leftPos, drawHeight + 4, 0xCCCC0000, kRight, kTop);
 		}
 		else
 		{
-			mpFont->Draw((*mriterNews)->mNewsText, leftPos, drawHeight, kCyan, kRight, kTop);
+			mpFont->Draw(pNews->mNewsText, leftPos, drawHeight + 4, kCyan, kRight, kTop);
 		}
 
 		// Decrement draw height by text size amount
@@ -67,10 +74,14 @@ void CNewsTicker::UpdateTimers()
 	// Loop through news items and decrement their lifetime
 	for (miterNews = mNews.begin(); miterNews != mNews.end(); miterNews++)
 	{
-		(*miterNews)->mLifetime -= gFrameTime;
-		if ((*miterNews)->mLifetime <= 0.0f)
+		// Cache pointer instead of working it out all the time
+		SNewsItem* pNews = (*miterNews);
+		pNews->mLifetime -= gFrameTime;
+		if (pNews->mLifetime <= 0.0f)
 		{
-			delete (*miterNews);
+			// Unload sprite & delete news item
+			gpEngine->RemoveSprite(pNews->mpSprBG);
+			delete pNews;
 			mNews.erase(miterNews);
 			break;
 		}
@@ -88,6 +99,7 @@ void CNewsTicker::AddNewElement(std::string elementText, bool error)
 		// Remove the oldest element
 		miterNews = mNews.begin();
 		SNewsItem* pTmp = mNews.front();
+		gpEngine->RemoveSprite(pTmp->mpSprBG);
 		SafeDelete(pTmp);
 		mNews.erase(miterNews);
 	}
@@ -97,6 +109,16 @@ void CNewsTicker::AddNewElement(std::string elementText, bool error)
 	pNewItem->mNewsText = elementText;
 	pNewItem->mLifetime = mStartLifetime;
 	pNewItem->mError = error;
+
+	// Check whether it is an erro
+	if (error)
+	{
+		pNewItem->mpSprBG = gpEngine->CreateSprite("NewsTickerUIError.png");
+	}
+	else
+	{
+		pNewItem->mpSprBG = gpEngine->CreateSprite("NewsTickerUI.png");
+	}
 
 	mNews.push_back(pNewItem);
 }
