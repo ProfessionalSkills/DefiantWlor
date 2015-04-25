@@ -9,6 +9,7 @@ ProfSkillsDefiantWorlds
 TO DO: * = essential
 	- Anti-aircraft turret structures on top of corner towers
 	*- UI for space buttons
+	*- UI for space
 	*- STOP button for units
 	- Fix bug where human units spawning in Mars would attempt to make their way back home as they are 'out of their boundary'
 	- Change the save log so that Rebel units get saved
@@ -22,6 +23,7 @@ TO DO: * = essential
 	*- Red beam from sky when unit is sent to transport ship
 	- Model around building being constructed for a more interesting constructing appearance
 	*- Retune AI to do attacking
+	*- Make required changes to the Rebels (currently they are too difficult and do not attack the AI's base)
 	*- AI to load units to ships
 	*- AI to launch fleet
 	*- AI to attack enemies when they are near

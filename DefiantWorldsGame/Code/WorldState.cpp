@@ -135,6 +135,23 @@ void CWorldState::DrawFontData()
 	strStream << mpHumanPlayer->GetMineralAmount();
 	mFntDebug->Draw(strStream.str(), 622, 14, kWhite, kLeft, kTop);
 	strStream.str("");
+
+	// Set the current tile for building placement
+	switch (mMouseState)
+	{
+	case MS_EARTH_GRID:
+		mpCurTile = mpEarthGrid->GetTileData(mMouseGridPos);
+		break;
+	case MS_MARS_GRID:
+		mpCurTile = mpMarsGrid->GetTileData(mMouseGridPos);
+		break;
+	case MS_EARTH_EDGE:
+	case MS_MARS_EDGE:
+	case MS_UI:
+	case MS_NO_AREA:
+		mpCurTile = mpNullTile;
+		break;
+	}
 }
 
 EMouseStates CWorldState::UpdateMouseState()
