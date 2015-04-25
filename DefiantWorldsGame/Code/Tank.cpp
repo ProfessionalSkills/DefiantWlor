@@ -54,6 +54,7 @@ void CTank::UnloadIModel()
 		mspMshTank->RemoveModel(mpObjModel);
 		mpObjModel = nullptr;
 		mHasPathTarget = false;
+		if (mAttackTarget) mAttackTarget->SetNormalTexture();
 		mAttackTarget = nullptr;
 	}
 

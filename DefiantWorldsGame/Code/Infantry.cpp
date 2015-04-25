@@ -54,6 +54,7 @@ void CInfantry::UnloadIModel()
 		mspMshInfantry->RemoveModel(mpObjModel);
 		mpObjModel = nullptr;
 		mHasPathTarget = false;
+		if (mAttackTarget) mAttackTarget->SetNormalTexture();
 		mAttackTarget = nullptr;
 	}
 

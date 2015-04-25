@@ -54,6 +54,7 @@ void CArtillery::UnloadIModel()
 		mspMshArtillery->RemoveModel(mpObjModel);
 		mpObjModel = nullptr;
 		mHasPathTarget = false;
+		if (mAttackTarget) mAttackTarget->SetNormalTexture();
 		mAttackTarget = nullptr;
 	}
 
@@ -163,6 +164,7 @@ bool CArtillery::Attack(CGameObject* target, float hitMod, float damageMod)
 	else
 	{
 		// Wrong target has been selected
+		mAttackTarget->SetNormalTexture();
 		mAttackTarget = nullptr;
 	}
 	return false;

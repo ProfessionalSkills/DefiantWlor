@@ -92,6 +92,7 @@ void CWorker::UnloadIModel()
 		mspMshWorker->RemoveModel(mpObjModel);
 		mpObjModel = nullptr;
 		mHasPathTarget = false;
+		if (mAttackTarget) mAttackTarget->SetNormalTexture();
 		mAttackTarget = nullptr;
 	}
 
@@ -150,6 +151,7 @@ void CWorker::LoadIModel()
 //-----------------------------------------------------
 bool CWorker::Attack(CGameObject* target, float hitMod, float damageMod)
 {
+	mAttackTarget->SetNormalTexture();
 	mAttackTarget = nullptr;
 	return false;
 }

@@ -123,6 +123,7 @@ bool CGroundUnit::Update()
 		// Check if target is dead
 		if (mAttackTarget->GetHealth() <= 0.0f)
 		{
+			mAttackTarget->SetNormalTexture();
 			mAttackTarget = nullptr;
 		}
 		// Check which faction the unit is from
@@ -131,6 +132,7 @@ bool CGroundUnit::Update()
 			// Check if the rebels have fled
 			if (mAttackTarget->GetWorldXPos() < -2500.0f)
 			{
+				mAttackTarget->SetNormalTexture();
 				mAttackTarget = nullptr;
 			}
 		}
@@ -139,6 +141,7 @@ bool CGroundUnit::Update()
 			// Check if the rebels have fled
 			if (mAttackTarget->GetWorldZPos() > 4500.0f)
 			{
+				mAttackTarget->SetNormalTexture();
 				mAttackTarget = nullptr;
 			}
 		}

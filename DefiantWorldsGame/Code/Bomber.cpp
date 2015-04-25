@@ -53,6 +53,7 @@ void CBomber::UnloadIModel()
 		mspMshBomber->RemoveModel(mpObjModel);
 		mpObjModel = nullptr;
 		mHasPathTarget = false;
+		if (mAttackTarget) mAttackTarget->SetNormalTexture();
 		mAttackTarget = nullptr;
 	}
 
@@ -169,6 +170,7 @@ bool CBomber::Attack(CGameObject* target, float hitMod, float damageMod)
 	else
 	{
 		// WRong type of target selected
+		mAttackTarget->SetNormalTexture();
 		mAttackTarget = nullptr;
 	}
 	return false;
