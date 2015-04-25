@@ -35,6 +35,10 @@ private:
 	float mDamegMod;//modifys the ships damage acording to the chosen tactics
 	float mHitMod;//modifys the ships hit chance according to the choosen tactics
 
+	// FLEET STATUS VALUES
+	float mFleetCurrentHealth;
+	float mFleetMaxHealth;
+
 	// TACTICS
 	//---------------------------
 	Tactics mFleetTactics;
@@ -45,6 +49,9 @@ private:
 	int mShotsFired;
 	int mFleetSectionFiring;
 	const int mNumFleetSections;
+	float mSpecialAttackCooldownTimer;
+	const float mSpecialAttackCooldownTime;
+
 	// POSITIONING
 	//---------------------------
 	const int mFleetRowSize;//maximum size of a row of ships
@@ -75,9 +82,11 @@ public:
 	void UnloadLazers(); 
 	void MoveFleet();
 	void IdleFleet();//makes the shapes move slightly, to make the sceene more animated
-	void ChargeFleetLazers();
-	bool SpecialAttackLazerBarrage();
+	void ChargeFleetLazers();//used to slow down space lazer firing
 
+	//special attacks, used by the fleet
+	bool SpecialAttackLazerBarrage();
+	bool SpecialAttackMassHeal();
 
 
 	// ACCESSORS
@@ -89,7 +98,7 @@ public:
 
 	float GetFleetTotalHealth();
 	float GetFleetAvargeHealth();
-
+	float GetFleetMaxHealth();
 	inline int GetShotsFired()
 	{
 		return mShotsFired;

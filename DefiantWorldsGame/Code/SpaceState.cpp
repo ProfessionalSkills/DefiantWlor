@@ -14,7 +14,7 @@
 // SPACE STATE CLASS CONSTRUCTORS & DESTRUCTOR
 //-----------------------------------------------------
 CSpaceState::CSpaceState() :mTimeToUpdate(1.0f), mTimeToUpdateEffects(0.1f), mCamRotSpeed(0.7), mCamZAdjust(-10.4f), mBaseCamZ(-188.0f), mCameraMoveSpeed(4.0f),
-mDisplacement(30), mNumCamStates(4),mSpecialAttackCooldownTime(5), CGameState()
+mDisplacement(30), mNumCamStates(4), CGameState()
 {
 	mpMdlSkybox = 0;
 	mpMdlEarth = 0;
@@ -35,7 +35,6 @@ mDisplacement(30), mNumCamStates(4),mSpecialAttackCooldownTime(5), CGameState()
 
 	mpPlayerOneFleet = 0;
 	mpPlayerTwoFleet = 0;
-	mSpecialAttackCooldownTimer = 0;
 
 	//Set Camera Values
 	mCamZ = 0.0f;
@@ -118,6 +117,8 @@ void CSpaceState::StateSetup()
 	// CREATE SPRITES, BUTTONS & FONTS
 	//------------------------------
 	mpSprCursor = gpEngine->CreateSprite("BaseCursor.png", 5.0f, 50.0f, 0.0f);
+	mpSprHealth1 = gpEngine->CreateSprite("HealthBar100.png", 50.0f, 765.0f, 0.0f);
+	mpSprHealth2 = gpEngine->CreateSprite("HealthBar100.png", 1050.0f, 765.0f, 0.0f);
 
 	// Tactics Buttons
 	CAdvancedButton<CSpaceState, void>* pNewButton = new CAdvancedButton<CSpaceState, void>("NoTactics.png", "NoTacticsMO.png", SPointData(900, 750),
@@ -153,6 +154,16 @@ void CSpaceState::StateSetup()
 	mpButtonListDefeat.push_back(pNewButton);
 	mpButtonListVictory.push_back(pNewButton);
 
+	//special attack buttons
+	pNewButton = new CAdvancedButton<CSpaceState, void>("NoTactics.png", "NoTacticsMO.png", SPointData(650, 750),
+		DX::XMFLOAT2(50.0f, 50.0f), *this, &CSpaceState::SALazerBarrage, TR_UP, false, 0.2f);
+	mpButtonListAttacks.push_back(pNewButton);
+	mpButtonListAll.push_back(pNewButton);
+
+	pNewButton = new CAdvancedButton<CSpaceState, void>("NoTactics.png", "NoTacticsMO.png", SPointData(850, 750),
+		DX::XMFLOAT2(50.0f, 50.0f), *this, &CSpaceState::SAMassHeal, TR_UP, false, 0.2f);
+	mpButtonListAttacks.push_back(pNewButton);
+	mpButtonListAll.push_back(pNewButton);
 
 	// INITIALISE USER INTERFACE
 	//-----------------------------
@@ -164,7 +175,7 @@ void CSpaceState::StateSetup()
 void CSpaceState::StateUpdate()
 {
 	gpEngine->DrawScene();
-
+	FleetHealthPercentagePlayerOne();
 	// Controls
 	//-----------------------------
 	if (gpEngine->KeyHit(Key_R))
@@ -214,20 +225,10 @@ void CSpaceState::StateUpdate()
 			//Space Controls -Combat Controls
 			if (gpEngine->KeyHit(Key_B))
 			{
-				if (mSpecialAttackCooldownTimer <= 0)
-				{
-					mpPlayerOneFleet->SpecialAttackLazerBarrage();
-					gpNewsTicker->AddNewElement("Mothership Fired a Lazer Barrage", false);
-					mSpecialAttackCooldownTimer = mSpecialAttackCooldownTime;
-				}
-				else
-				{
-					gpNewsTicker->AddNewElement("Special Attacks are on Cooldown", false);
-				}
+				SALazerBarrage();
 			}
 
 			mTimeSinceUpdate += gFrameTime;
-			if (mSpecialAttackCooldownTimer >= 0)mSpecialAttackCooldownTimer -= gFrameTime;
 			mpPlayerOneFleet->ChargeFleetLazers();
 			mpPlayerTwoFleet->ChargeFleetLazers();
 
@@ -246,7 +247,6 @@ void CSpaceState::StateUpdate()
 					mpPlayerOneFleet->Fight();
 				}
 
-
 				//reset timer
 				mTimeSinceUpdate = 0.0f;
 				mTimeSinceEffectsUpdate = mTimeToUpdateEffects;
@@ -254,8 +254,6 @@ void CSpaceState::StateUpdate()
 
 			//update effects time
 			mTimeSinceEffectsUpdate -= gFrameTime;
-
-
 
 			if (mTimeSinceEffectsUpdate <= 0.0f)
 			{
@@ -270,6 +268,9 @@ void CSpaceState::StateUpdate()
 				//update fleet status
 				mpPlayerOneFleet->UpdateCondition();
 				mpPlayerTwoFleet->UpdateCondition();
+
+				//update health bars
+				UpdateHealthbars();
 
 				//reset timer
 				mTimeSinceEffectsUpdate = 0.0f;
@@ -375,7 +376,8 @@ void CSpaceState::StateCleanup()
 	// Unload fonts
 	gpEngine->RemoveFont(mpTitleFont);
 	gpEngine->RemoveFont(mpButtonFont);
-	
+	gpEngine->RemoveFont(mFntDebug);
+
 	// DISPLAY LOADING SCREEN
 	ISprite* pLoading = gpEngine->CreateSprite("Loading.png");
 	gpEngine->DrawScene();
@@ -384,7 +386,21 @@ void CSpaceState::StateCleanup()
 	gpEngine->RemoveSprite(pLoading);
 	
 	//remove sprites
-	gpEngine->RemoveSprite(mpSprCursor);
+	if (mpSprCursor!=0)
+	{
+		gpEngine->RemoveSprite(mpSprCursor);
+		mpSprCursor = 0;
+	}
+	if (mpSprHealth1 != 0)
+	{
+		gpEngine->RemoveSprite(mpSprHealth1);
+		mpSprHealth1 = 0;
+	}
+	if (mpSprHealth2 != 0)
+	{
+		gpEngine->RemoveSprite(mpSprHealth2);
+		mpSprHealth2 = 0;
+	}
 
 	//remove buttons
 	RemoveButtons();
@@ -515,6 +531,18 @@ void CSpaceState::LoadPlanets()
 	mpMdlNeptune->Scale(mNeptunePos.w);
 }
 
+int CSpaceState::FleetHealthPercentagePlayerOne()
+{
+	int health = (mpPlayerOneFleet->GetFleetTotalHealth() / mpPlayerOneFleet->GetFleetMaxHealth()) * 10;
+	return health;
+}
+
+int CSpaceState::FleetHealthPercentagePlayerTwo()
+{
+	int health = (mpPlayerTwoFleet->GetFleetTotalHealth() / mpPlayerTwoFleet->GetFleetMaxHealth()) * 10;
+	return health;
+}
+
 // Button Functions
 //-----------------------------
 
@@ -525,6 +553,7 @@ void CSpaceState::ChangeTacTargated()
 	gpNewsTicker->AddNewElement("Targeted space tactic selected.", false);
 	mTacticChoosen = true;
 	HideButtonsTactics();
+	ShowButtonsAttack();
 }
 
 void CSpaceState::ChangeTacNone()
@@ -533,6 +562,7 @@ void CSpaceState::ChangeTacNone()
 	gpNewsTicker->AddNewElement("No space tactic selected.", false);
 	mTacticChoosen = true;
 	HideButtonsTactics();
+	ShowButtonsAttack();
 }
 
 void CSpaceState::ChangeTacRapid()
@@ -541,6 +571,7 @@ void CSpaceState::ChangeTacRapid()
 	gpNewsTicker->AddNewElement("Rapid space tactic selected.", false);
 	mTacticChoosen = true;
 	HideButtonsTactics();
+	ShowButtonsAttack();
 }
 
 //cleanup buttons
@@ -557,6 +588,7 @@ void CSpaceState::RemoveButtons()
 	mpButtonListTactics.clear();
 	mpButtonListDefeat.clear();
 	mpButtonListVictory.clear();
+	mpButtonListAttacks.clear();
 }
 
 //Menu Button Functions
@@ -574,4 +606,29 @@ void CSpaceState::Resume()
 {
 	mPaused = false;
 	HideButtonsPaused();
+}
+
+//Special Attack Buttons
+void CSpaceState::SALazerBarrage()
+{
+	if (mpPlayerOneFleet->SpecialAttackLazerBarrage())
+	{
+		gpNewsTicker->AddNewElement("Mothership Fired a Lazer Barrage", false);
+	}
+	else
+	{
+		gpNewsTicker->AddNewElement("Special Attacks are on Cooldown", false);
+	}
+}
+
+void CSpaceState::SAMassHeal()
+{
+	if (mpPlayerOneFleet->SpecialAttackMassHeal())
+	{
+		gpNewsTicker->AddNewElement("Mothership Healed Fleet", false);
+	}
+	else
+	{
+		gpNewsTicker->AddNewElement("Special Attacks are on Cooldown", false);
+	}
 }
