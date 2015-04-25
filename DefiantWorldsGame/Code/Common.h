@@ -151,6 +151,16 @@ struct SBoundingCube
 	{
 		return mBox.Intersects(origin, direction, distance);
 	}
+
+	float GetWidthExtent()
+	{
+		return mBox.Extents.x;
+	}
+
+	float GetLengthExtent()
+	{
+		return mBox.Extents.z;
+	}
 };
 
 struct SBoundingSphere

@@ -12,9 +12,11 @@ protected:
 	float mEmitterCountdown;
 	float mScale;
 	float mRelativeHeight;			// Additional height on top of the current emitter height
+	float mWidth;
+	float mLength;
 
 public:
-	CSmoke(DX::XMFLOAT3 emitterPos, int particleNumber, float relativeHeight, float scale);
+	CSmoke(DX::XMFLOAT3 emitterPos, float relativeHeight, float scale, float width, float length);
 	~CSmoke();
 
 	void EmitParticle();

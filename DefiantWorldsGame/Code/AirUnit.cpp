@@ -77,7 +77,7 @@ bool CAirUnit::Update()
 			if (mWarningSmoke == nullptr)
 			{
 				if (mpObjModel)
-					mWarningSmoke = new CSmoke(mWorldPos, 20, 0.0f, 0.5f);
+					mWarningSmoke = new CSmoke(mWorldPos, 0.0f, 0.5f, 2.5f, 2.5f);
 			}
 		}
 

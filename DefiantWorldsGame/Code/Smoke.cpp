@@ -1,13 +1,14 @@
 #include "Smoke.h"
 
-CSmoke::CSmoke(DX::XMFLOAT3 emitterPos, int particleNumber, float relativeHeight, float scale)
+CSmoke::CSmoke(DX::XMFLOAT3 emitterPos, float relativeHeight, float scale, float width, float length)
 {
 	mRelativeHeight = relativeHeight;
 	SetEmitPosition(emitterPos);
 	mScale = scale;
+	mWidth = width;
+	mLength = length;
 
 	mEmitterCountdown = gpRandomiser->GetRandomFloat(0.05, 0.2);
-	mParticleNumber = particleNumber;
 }
 
 CSmoke::~CSmoke()
@@ -31,8 +32,8 @@ void CSmoke::SetEmitPosition(const DX::XMFLOAT3& emitterPos)
 void CSmoke::EmitParticle()
 {
 	CParticle* mNewParticle = new CParticle();
-	float mPosX = gpRandomiser->GetRandomFloat(mParticleOrigen.x - 3.0f, mParticleOrigen.x + 3.0f);
-	float mPosZ = gpRandomiser->GetRandomFloat(mParticleOrigen.z - 3.0f, mParticleOrigen.z + 3.0f);
+	float mPosX = gpRandomiser->GetRandomFloat(mParticleOrigen.x - mWidth, mParticleOrigen.x + mWidth);
+	float mPosZ = gpRandomiser->GetRandomFloat(mParticleOrigen.z - mLength, mParticleOrigen.z + mLength);
 
 	mNewParticle->mModel = mNewParticle->mspMshSmokeParticle->CreateModel(mPosX, mParticleOrigen.y, mPosZ);
 	mNewParticle->SetScale(mScale);
