@@ -40,8 +40,8 @@ CNewsTicker::~CNewsTicker()
 void CNewsTicker::Display()
 {
 	// Variables for deciding where to draw next element
-	int drawHeight = 645;
-	int leftPos = 5;
+	int drawHeight = 10;
+	int leftPos = 1580;
 	int textSize = mpFont->MeasureTextHeight("T") + 1.0f;
 
 	// Loop through news items & draw their text
@@ -50,15 +50,15 @@ void CNewsTicker::Display()
 		// If it's an error, draw it red. Otherwise draw it blue
 		if ((*mriterNews)->mError)
 		{
-			mpFont->Draw((*mriterNews)->mNewsText, leftPos, drawHeight, 0xCCCC0000, kLeft, kTop);
+			mpFont->Draw((*mriterNews)->mNewsText, leftPos, drawHeight, 0xCCCC0000, kRight, kTop);
 		}
 		else
 		{
-			mpFont->Draw((*mriterNews)->mNewsText, leftPos, drawHeight, kBlue, kLeft, kTop);
+			mpFont->Draw((*mriterNews)->mNewsText, leftPos, drawHeight, kCyan, kRight, kTop);
 		}
 
 		// Decrement draw height by text size amount
-		drawHeight -= textSize;
+		drawHeight += textSize;
 	}
 }
 

@@ -133,6 +133,7 @@ public:
 			{
 				tmp->SetState(OBJ_INSPACE);
 				tmp->UnloadIModel();
+				tmp->RemoveBoundingSphere();
 				return true;
 			}
 		}

@@ -16,10 +16,8 @@ TO DO: * = essential
 	- Change how units are saved - instead of just their position, save their entire matrix
 	*- Complete UI for news ticker
 	*- Remove debug information
-	*- Reposition news ticker
 	- Model arrow to show where unit is attempting to travel to
 	- Ability to heal/repair with worker units
-	*- Red beam from sky when unit is sent to transport ship
 	- Model around building being constructed for a more interesting constructing appearance
 	*- Retune AI to do attacking
 	*- Make required changes to the Rebels (currently they are too difficult and do not attack the AI's base)
@@ -161,6 +159,7 @@ void SetupEngine()
 	CWorldState::mspMshDrag = gpEngine->LoadMesh("DragSelection.x");
 	CWorldState::mspMshUnitShadow = gpEngine->LoadMesh("UnitShadow.x");
 	CMinerals::mspMshMineral = gpEngine->LoadMesh("Mineral2.x");
+	CTransportBeam::mspMshBeam = gpEngine->LoadMesh("Lazer.x");
 
 	//Structure Meshes
 	//Command Centre

@@ -222,7 +222,7 @@ void CGameAgent::LoadAgent(std::ifstream& inFile)
 void CGameAgent::SetSelectedTexture()
 {
 	// Change the shadow texture to the selected one
-	mpObjShadow->SetSkin("tlxmul_unitShadowSelected.tga");
+	if (mpObjShadow) mpObjShadow->SetSkin("tlxmul_unitShadowSelected.tga");
 
 	// If there is a selected target, set its texture to targeted
 	if (mAttackTarget)

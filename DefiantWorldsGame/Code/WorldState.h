@@ -17,6 +17,7 @@
 #include "NewsTicker.h"
 #include "SphericalCamera.h"
 #include "TypeBox.h"
+#include "TransportBeam.h"
 
 
 //-----------------------------------------------------
@@ -162,6 +163,8 @@ private:
 
 	std::vector<CGameAgent*> mpUnitSelectionList;
 	std::vector<CGameAgent*>::iterator miterUnitSelectionList;
+
+	std::vector<CTransportBeam*> mpTransportBeams;
 
 
 	// PAUSED SCREEN
