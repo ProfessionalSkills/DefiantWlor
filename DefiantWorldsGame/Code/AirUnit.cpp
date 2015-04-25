@@ -77,14 +77,14 @@ bool CAirUnit::Update()
 			if (mWarningSmoke == nullptr)
 			{
 				if (mpObjModel)
-					mWarningSmoke = new CSmoke(mpObjModel, 20, 0.0f, 0.5f);
+					mWarningSmoke = new CSmoke(mWorldPos, 20, 0.0f, 0.5f);
 			}
 		}
 
 		// Update smoke system
 		if (mWarningSmoke != nullptr)
 		{
-			mWarningSmoke->UpdateSystem();
+			mWarningSmoke->UpdateSystem(mWorldPos);
 		}
 
 		// Update explosions

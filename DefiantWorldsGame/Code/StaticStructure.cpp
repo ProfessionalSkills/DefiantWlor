@@ -46,7 +46,7 @@ bool CStaticStructure::Update(CRTSPlayer* pPlayer)
 		{
 			if (mWarningSmoke == nullptr)
 			{
-				mWarningSmoke = new CSmoke(mpObjModel, 30, 20.0f, 0.8f);
+				mWarningSmoke = new CSmoke(mWorldPos, 30, mHeight, 0.8f);
 			}
 			else
 			{
