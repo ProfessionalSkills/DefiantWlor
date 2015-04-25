@@ -1839,6 +1839,18 @@ void CWorldState::StateUpdate()
 		mMousePrevGridPos = mMouseGridPos;
 	}
 
+	// Update transport beams
+	for (auto iter = mpTransportBeams.begin(); iter != mpTransportBeams.end(); iter++)
+	{
+		if (!(*iter)->Update())
+		{
+			// Model has finished its animation - remove it
+			SafeDelete((*iter));
+			mpTransportBeams.erase(iter);
+			break;
+		}
+	}
+
 	/*if (mpCurSelectedAgent)
 	{
 		if (mpCurSelectedAgent->GetAttackTarget() == nullptr)
@@ -1971,6 +1983,13 @@ void CWorldState::StateCleanup()
 		CAdvancedButton<CWorldState, void, int>* pButton = mpUnitsButtonList.back();
 		SafeDelete(pButton);
 		mpUnitsButtonList.pop_back();
+	}
+
+	// Unload transport beams
+	while (!mpTransportBeams.empty())
+	{
+		SafeDelete(mpTransportBeams.back());
+		mpTransportBeams.pop_back();
 	}
 
 	// Unload trees
@@ -2312,18 +2331,19 @@ void CWorldState::OnUnitSelectChange(CGameAgent* pSelAgent, bool listSelection)
 			// Clear the selection
 			mpUnitSelectionList.clear();
 		}
-	}
-	// If no building is selected, show the other buttons
-	else if (!mpCurSelectedStructure)
-	{
-		// Nothing selected - hide buttons no longer required
-		mpButtonDelete->Hide();
-		mpButtonPutUnitIntoSpace->Hide();
 
-		// Show base buttons
-		mpButtonBarracks->Show();
-		mpButtonHellipad->Show();
-		mpButtonSpaceCentre->Show();
+		// If no building is selected, show the other buttons
+		if (!mpCurSelectedStructure)
+		{
+			// Nothing selected - hide buttons no longer required
+			mpButtonDelete->Hide();
+			mpButtonPutUnitIntoSpace->Hide();
+
+			// Show base buttons
+			mpButtonBarracks->Show();
+			mpButtonHellipad->Show();
+			mpButtonSpaceCentre->Show();
+		}
 	}
 }
 
@@ -2606,6 +2626,9 @@ void CWorldState::PutUnitIntoSpace()
 	// Check for a single selected unit
 	if (mpCurSelectedAgent)
 	{
+		// Get position of unit before it disappears
+		DX::XMFLOAT3 unitPos = mpCurSelectedAgent->GetWorldPos();
+		
 		if (mpHumanPlayer->PutUnitsOnShips(mpCurSelectedAgent))
 		{
 			gpNewsTicker->AddNewElement("Unit Boarded a Transport Ship.", false);
@@ -2615,10 +2638,13 @@ void CWorldState::PutUnitIntoSpace()
 			mpCurSelectedAgent->CancelPathTarget();
 
 			OnUnitSelectChange(nullptr, false);
+
+			// Create transport beams at position of unit
+			mpTransportBeams.push_back(new CTransportBeam(unitPos));
 		}
 		else
 		{
-			gpNewsTicker->AddNewElement("No Transport Ships Have Open Space For This Unit.", true);
+			gpNewsTicker->AddNewElement("No Transport ships to carry unit!", true);
 		}
 	}
 	// Check for a selection of units
@@ -2633,13 +2659,29 @@ void CWorldState::PutUnitIntoSpace()
 			pAgent->SetAttackTarget(nullptr);
 			pAgent->CancelPathTarget();
 
+			// Get position of unit before it disappears
+			DX::XMFLOAT3 unitPos = pAgent->GetWorldPos();
+
 			// Attempt to store unit on a ship
-			mpHumanPlayer->PutUnitsOnShips(pAgent);
+			if (!mpHumanPlayer->PutUnitsOnShips(pAgent))
+			{
+				gpNewsTicker->AddNewElement("No Transport ships to carry units!", true);
+				mLMouseClicked = false;
+				mpUnitSelectionList.clear();
+				OnUnitSelectChange(nullptr, false);
+				return;
+			}
+			else
+			{
+				// Create a beam at the unit's position
+				mpTransportBeams.push_back(new CTransportBeam(unitPos));
+			}
 		}
 
 		//Display message
 		gpNewsTicker->AddNewElement("Unit selection sent to transport ships.", false);
 
+		mpUnitSelectionList.clear();
 		OnUnitSelectChange(nullptr, false);
 	}
 

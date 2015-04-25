@@ -294,6 +294,9 @@
     <ClCompile Include="MovingUI.cpp">
       <Filter>Utilities\User Interface</Filter>
     </ClCompile>
+    <ClCompile Include="TransportBeam.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common.h">
@@ -451,6 +454,9 @@
     </ClInclude>
     <ClInclude Include="MovingUI.h">
       <Filter>Utilities\User Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="TransportBeam.h">
+      <Filter>Entities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

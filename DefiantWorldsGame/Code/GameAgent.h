@@ -152,7 +152,7 @@ public:
 			mAttackTarget = target;
 
 			// If the target is selected, highlight the target by giving it a red texture
-			if (mUnitSelected) mAttackTarget->SetTargetTexture();
+			if (mUnitSelected && mAttackTarget) mAttackTarget->SetTargetTexture();
 		}
 	}
 
@@ -197,6 +197,11 @@ public:
 	inline void SetOwner(CRTSPlayer* pPlayer)
 	{
 		mpOwner = pPlayer;
+	}
+
+	inline void RemoveBoundingSphere()
+	{
+		mBoundingSphere = SBoundingSphere();
 	}
 
 	eFleetPos GetPosType();

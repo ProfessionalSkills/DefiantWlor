@@ -161,6 +161,7 @@ void SetupEngine()
 	CWorldState::mspMshDrag = gpEngine->LoadMesh("DragSelection.x");
 	CWorldState::mspMshUnitShadow = gpEngine->LoadMesh("UnitShadow.x");
 	CMinerals::mspMshMineral = gpEngine->LoadMesh("Mineral2.x");
+	CTransportBeam::mspMshBeam = gpEngine->LoadMesh("Lazer.x");
 
 	//Structure Meshes
 	//Command Centre
