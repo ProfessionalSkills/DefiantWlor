@@ -45,6 +45,9 @@ private:
 	int mShotsFired;
 	int mFleetSectionFiring;
 	const int mNumFleetSections;
+	float mSpecialAttackCooldownTimer;
+	const float mSpecialAttackCooldownTime;
+
 	// POSITIONING
 	//---------------------------
 	const int mFleetRowSize;//maximum size of a row of ships
@@ -75,7 +78,9 @@ public:
 	void UnloadLazers(); 
 	void MoveFleet();
 	void IdleFleet();//makes the shapes move slightly, to make the sceene more animated
-	void ChargeFleetLazers();
+	void ChargeFleetLazers();//used to slow down space lazer firing
+
+	//special attacks, used by the fleet
 	bool SpecialAttackLazerBarrage();
 	bool SpecialAttackMassHeal();
 

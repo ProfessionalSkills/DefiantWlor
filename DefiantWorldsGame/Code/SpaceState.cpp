@@ -14,7 +14,7 @@
 // SPACE STATE CLASS CONSTRUCTORS & DESTRUCTOR
 //-----------------------------------------------------
 CSpaceState::CSpaceState() :mTimeToUpdate(1.0f), mTimeToUpdateEffects(0.1f), mCamRotSpeed(0.7), mCamZAdjust(-10.4f), mBaseCamZ(-188.0f), mCameraMoveSpeed(4.0f),
-mDisplacement(30), mNumCamStates(4),mSpecialAttackCooldownTime(5), CGameState()
+mDisplacement(30), mNumCamStates(4), CGameState()
 {
 	mpMdlSkybox = 0;
 	mpMdlEarth = 0;
@@ -35,7 +35,6 @@ mDisplacement(30), mNumCamStates(4),mSpecialAttackCooldownTime(5), CGameState()
 
 	mpPlayerOneFleet = 0;
 	mpPlayerTwoFleet = 0;
-	mSpecialAttackCooldownTimer = 0;
 
 	//Set Camera Values
 	mCamZ = 0.0f;
@@ -218,7 +217,6 @@ void CSpaceState::StateUpdate()
 			}
 
 			mTimeSinceUpdate += gFrameTime;
-			if (mSpecialAttackCooldownTimer >= 0)mSpecialAttackCooldownTimer -= gFrameTime;
 			mpPlayerOneFleet->ChargeFleetLazers();
 			mpPlayerTwoFleet->ChargeFleetLazers();
 
@@ -570,11 +568,9 @@ void CSpaceState::Resume()
 //Special Attack Buttons
 void CSpaceState::SALazerBarrage()
 {
-	if (mSpecialAttackCooldownTimer <= 0)
+	if (mpPlayerOneFleet->SpecialAttackLazerBarrage())
 	{
-		mpPlayerOneFleet->SpecialAttackLazerBarrage();
 		gpNewsTicker->AddNewElement("Mothership Fired a Lazer Barrage", false);
-		mSpecialAttackCooldownTimer = mSpecialAttackCooldownTime;
 	}
 	else
 	{
@@ -584,5 +580,12 @@ void CSpaceState::SALazerBarrage()
 
 void CSpaceState::SAMassHeal()
 {
-
+	if (mpPlayerOneFleet->SpecialAttackMassHeal();)
+	{
+		gpNewsTicker->AddNewElement("Mothership Healed Fleet", false);
+	}
+	else
+	{
+		gpNewsTicker->AddNewElement("Special Attacks are on Cooldown", false);
+	}
 }

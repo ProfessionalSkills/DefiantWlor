@@ -13,7 +13,8 @@
 //-----------------------------------------------------
 // FLEET CLASS CONSTRUCTORS & DESTRUCTOR
 //-----------------------------------------------------
-CFleet::CFleet() :mFleetRowSize(20), mFleetRowSeperation(7), mFleetZAdjust(8), mFleetYCyleHeight(0.01f), mNumFleetSections(5)
+CFleet::CFleet() :mFleetRowSize(20), mFleetRowSeperation(7), mFleetZAdjust(8), mFleetYCyleHeight(0.01f), mNumFleetSections(5),
+mSpecialAttackCooldownTime(5.0f)
 {
 	//Value Mods
 	mDamegMod = 1.0f;
@@ -27,6 +28,7 @@ CFleet::CFleet() :mFleetRowSize(20), mFleetRowSeperation(7), mFleetZAdjust(8), m
 	mShotsFired = 0;
 	mHits = 0;
 	mFleetSectionFiring = 0;
+
 	//Misc
 	mTarget = new CRandomiser();
 	mFleetYHeighCycle = mTarget->GetRandomFloat(0.0, 6.0);//starts the fleet adjust cycle on a random point, so both fleets dont just float at the same hight all the time
@@ -35,6 +37,8 @@ CFleet::CFleet() :mFleetRowSize(20), mFleetRowSeperation(7), mFleetZAdjust(8), m
 	mNumTransport = 0;
 	mUnitsLostValue = 0;
 
+	//used to determine weather or not the fleet can use its special attacks
+	mSpecialAttackCooldownTimer = 0.0f;
 	mFleetWidth = (mFleetRowSize/2)-1;
 }
 
@@ -132,6 +136,9 @@ void CFleet::Fight()
 
 void CFleet::UpdateCondition()
 {
+	//reduces the cooldown time for special attacks
+	if (mSpecialAttackCooldownTimer >= 0)mSpecialAttackCooldownTimer -= gFrameTime;
+
 	//gets the health of all the ships in the fleet, then gets rid of any that are less than zero
 	for (int i = 0; i < mSize; i++)
 	{
@@ -243,18 +250,22 @@ void CFleet::UnloadLazers()
 
 bool CFleet::SpecialAttackLazerBarrage()
 {
-	for (int i = 0; i < mSize; i++)
+	if (mSpecialAttackCooldownTimer <= 0)
 	{
-		if (mpFleet[i]->GetAgentData()->mAgentType == GAV_MOTHERSHIP)
+		for (int i = 0; i < mSize; i++)
 		{
-			int target = 0;
-			for (int j = 0 ; j < 10 ; j++)
+			if (mpFleet[i]->GetAgentData()->mAgentType == GAV_MOTHERSHIP)
 			{
-				target = mTarget->GetRandomInt(0, mpEnemyFleet->GetSize() - 1);
-				if (mpFleet[i]->Attack(mpEnemyFleet->GetShip(target), mHitMod, mDamegMod)) mHits++;
-				mShotsFired++;
+				int target = 0;
+				for (int j = 0; j < 10; j++)
+				{
+					target = mTarget->GetRandomInt(0, mpEnemyFleet->GetSize() - 1);
+					if (mpFleet[i]->Attack(mpEnemyFleet->GetShip(target), mHitMod, mDamegMod)) mHits++;
+					mShotsFired++;
+				}
+				mSpecialAttackCooldownTimer = mSpecialAttackCooldownTime;
+				return true;
 			}
-			return true;
 		}
 	}
 	return false;
