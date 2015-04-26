@@ -31,6 +31,8 @@ CTurretStructure::CTurretStructure(DX::XMFLOAT3 position)
 	mStructureType = STR_AA;
 	mHeight = 6.0f;
 
+	mIsGroundType = true;
+
 	CalculateBoundingBox();
 }
 
@@ -52,7 +54,7 @@ void CTurretStructure::CalculateBoundingBox()
 	float bottom = mWorldPos.z + ((float)mStructureBL.mPosY);
 	float right = mWorldPos.x + ((float)mStructureTR.mPosX);
 	float left = mWorldPos.x + ((float)mStructureBL.mPosX);
-	mBoundingBox = SBoundingCube(DX::XMFLOAT3(left, mWorldPos.y, bottom), DX::XMFLOAT3(right, mWorldPos.y + mHeight, top));
+	mBoundingBox = SBoundingCube(DX::XMFLOAT3(left, 0.0f, bottom), DX::XMFLOAT3(right, mWorldPos.y + mHeight, top));
 }
 
 bool CTurretStructure::Update(CRTSPlayer* pPlayer)
@@ -183,6 +185,8 @@ bool CTurretStructure::Update(CRTSPlayer* pPlayer)
 			explosions->UpdateSystem(); //Update systems 
 		}
 	}
+
+	return true;
 }
 
 void CTurretStructure::DisplayInfo(IFont* font)
