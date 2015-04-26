@@ -10,6 +10,8 @@
 
 IMesh* CTurretStructure::mspMshTurret = nullptr;
 IMesh* CTurretStructure::mspMshTurretShell = nullptr;
+
+
 //-----------------------------------------------------
 // STATIC STRUCTURE CLASS CONSTRUCTORS & DESTRUCTOR
 //-----------------------------------------------------
@@ -26,6 +28,7 @@ CTurretStructure::CTurretStructure(DX::XMFLOAT3 position)
 	mDamage = 150.0f;
 	mAttackTimer = 3.0f;
 	mFireRate = 0.3f;
+	mStructureType = STR_AA;
 }
 
 CTurretStructure::~CTurretStructure()
