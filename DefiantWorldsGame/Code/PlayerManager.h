@@ -46,6 +46,16 @@ public:
 		mTimeSinceGameStart = time;
 	}
 
+	inline void AddToEarthAirspace(CGameAgent* pAgent)
+	{
+		mpEarthAirspaceList.push_back(pAgent);
+	}
+
+	inline void AddToMarsAirspace(CGameAgent* pAgent)
+	{
+		mpMarsAirspaceList.push_back(pAgent);
+	}
+
 
 	// ACCESSORS
 	//---------------------------
@@ -74,6 +84,10 @@ private:
 	int mNumAI;
 
 	bool mPlayerDataInitialised;
+
+	// Airspace lists
+	std::vector<CGameAgent*> mpEarthAirspaceList;
+	std::vector<CGameAgent*> mpMarsAirspaceList;
 
 
 	// REBEL PLAYER DATA

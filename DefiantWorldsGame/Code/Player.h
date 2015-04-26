@@ -45,6 +45,8 @@ typedef std::unordered_multimap<EGameAgentVariations, CGameAgent*> GA_MultiMap;
 //-----------------------------------------------------
 // BASE CLASS FOR PLAYERS
 //-----------------------------------------------------
+class CPlayerManager;
+
 class CRTSPlayer
 {
 protected:
@@ -53,6 +55,7 @@ protected:
 	CRandomiser* mpRandomiser;
 	std::string mName;
 	EFactions mPlayerFaction;
+	CPlayerManager* pPlayerManager = nullptr;
 
 	int mNumMinerals;
 	int mMineralBaseAddition;
@@ -89,7 +92,7 @@ protected:
 	std::vector<CMinerals*> mpMineralsList;
 	std::vector<CMinerals*>::iterator miterMineralsList;
 
-	// List of units (not owned by this AI player) who are in its airspace
+	// List of units (not owned by this player) who are in its airspace
 	std::vector<CGameAgent*> mpAirspaceAgents;
 	
 
@@ -209,6 +212,11 @@ public:
 	inline int GetNumMothership()
 	{
 		return mNumMothership;
+	}
+
+	inline void SetAgentsInAirspace(std::vector<CGameAgent*>& pAgentsInAirspace)
+	{
+		mpAirspaceAgents = pAgentsInAirspace;
 	}
 
 	// Function to determine whether or not the player's command centre is still standing

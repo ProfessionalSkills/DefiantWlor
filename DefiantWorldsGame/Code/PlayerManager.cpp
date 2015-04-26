@@ -80,6 +80,11 @@ void CPlayerManager::RemovePlayers()
 
 int CPlayerManager::UpdatePlayers()
 {
+	//if (gpEngine->KeyHit(Key_G))
+	//{
+	//	InvadeMars();
+	//}
+	
 	// Update rebels
 	// Check how much time has passed since the game has begun - currently checking for 40 seconds into the game
 	if (mTimeSinceGameStart > 40.0f)
@@ -150,6 +155,9 @@ int CPlayerManager::UpdatePlayers()
 		}
 		else
 		{
+			// Add to earth airspace list
+			mpEarthAirspaceList.push_back(pAgent);
+			
 			// Check if their target is dead & roll dice to see if the unit should retreat or pick another target
 			if (!pAgent->GetAttackTarget())
 			{
@@ -197,7 +205,7 @@ int CPlayerManager::UpdatePlayers()
 	{
 		// Derference pointer to avoid numerous derefrencing
 		CGameAgent* pAgent = (*iter);
-		
+
 		// Call update function for this structure
 		if (!pAgent->Update())
 		{
@@ -216,6 +224,9 @@ int CPlayerManager::UpdatePlayers()
 		}
 		else
 		{
+			// Add to mars airspace list
+			mpMarsAirspaceList.push_back(pAgent);
+
 			// Check if their target is dead & roll dice to see if the unit should retreat or pick another target
 			if (!pAgent->GetAttackTarget())
 			{
@@ -258,14 +269,26 @@ int CPlayerManager::UpdatePlayers()
 		}
 	}
 	
+	// Send earth airspace units to human
+	mpHuman->SetAgentsInAirspace(mpEarthAirspaceList);
+
 	// Update human
 	mpHuman->Update();
+
+	// Clear earth airspace list
+	mpEarthAirspaceList.clear();
+
+	// Send mars airspace units to AI
+	mpAI[0]->SetAgentsInAirspace(mpMarsAirspaceList);
 
 	// Loop through and update each AI
 	for (int i = 0; i < mNumAI; i++)
 	{
 		mpAI[i]->Update();
 	}
+
+	// Clear mars airspace list
+	mpMarsAirspaceList.clear();
 
 	// Check if the players are alive
 	if (mpHuman->IsAlive())
