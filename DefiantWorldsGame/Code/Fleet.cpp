@@ -340,7 +340,7 @@ bool CFleet::SpecialAttackMassHeal(CRTSPlayer* player)
 
 bool CFleet::SceneSpaceFight()
 {
-
+	return false;
 }
 
 //-----------------------------------------------------
