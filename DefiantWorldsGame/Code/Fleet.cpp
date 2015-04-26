@@ -14,7 +14,8 @@
 // FLEET CLASS CONSTRUCTORS & DESTRUCTOR
 //-----------------------------------------------------
 CFleet::CFleet() :mFleetRowSize(20), mFleetRowSeperation(7), mFleetZAdjust(8), mFleetYCyleHeight(0.01f), mNumFleetSections(5),
-mSpecialAttackCooldownTime(5.0f), mExplosionTime(4.0f), mExplosionNumParticle(25.0f), mSpecialAttackCost(500.0f)
+mSpecialAttackCooldownTime(5.0f), mExplosionTime(4.0f), mExplosionNumParticle(25.0f), mSpecialAttackCost(500.0f),
+mSceneStartX(50.0f), mSceneDuration(6.0f)
 {
 	//Value Mods
 	mDamegMod = 1.0f;
@@ -28,6 +29,9 @@ mSpecialAttackCooldownTime(5.0f), mExplosionTime(4.0f), mExplosionNumParticle(25
 	mShotsFired = 0;
 	mHits = 0;
 	mFleetSectionFiring = 0;
+
+	//scene
+	mSceneTimeElapsed = 0.0f;
 
 	//Misc
 	mTarget = new CRandomiser();
@@ -247,6 +251,62 @@ void CFleet::LoadShipModels(float xPos)
 	}
 }
 
+void CFleet::SetShipPositions(float xPos)
+{
+	int SpaceFighterLoaded = 0;
+	int TransportLoaded = 0;
+	int MothershipLoaded = 0;
+
+	int SpaceFighterY = 0;
+	int TransportY = 0;
+	int MothershipY = 0;
+	int posMod = 1;
+	int TransportRowsBack = (mNumSpaceFighter / mFleetRowSize) + 1;
+	int MotherShipRowsBack = (mNumTransport / mFleetRowSize) + TransportRowsBack + 1;
+	float StartingX = 0;
+	if (xPos < 0.0f)
+	{
+		posMod = -1;
+		StartingX = -mSceneStartX;
+	}
+	else
+	{
+		posMod = 1;
+		StartingX = mSceneStartX;
+	}
+	CSpaceUnit* temp;
+
+	for (int i = 0; i < mSize; i++)
+	{
+		temp = (CSpaceUnit*)mpFleet[i];
+		//uses intager deviosion to seperate ships into rows of x, where x is the fleet row size, and each row is seperated by a distance of fleet row seperation
+		switch (mpFleet[i]->GetPosType())
+		{
+		case front:
+			temp->SetTargetPos(xPos + (float)((SpaceFighterLoaded / mFleetRowSize) * (mFleetRowSeperation)*posMod),
+				((float)SpaceFighterY*mFleetRowSeperation) + mFleetYAdjust, (float)mFleetZAdjust*SpaceFighterY);
+			SpaceFighterLoaded++;
+			SpaceFighterY = YSwitch(SpaceFighterY);
+			break;
+		case centre:
+			temp->SetTargetPos(xPos + (float)(((TransportLoaded / mFleetRowSize) + TransportRowsBack + mpFleet[i]->GetUnitSpacing()) * mFleetRowSeperation*posMod),
+				((float)TransportY*mFleetRowSeperation) + mFleetYAdjust, (float)mFleetZAdjust*TransportY);
+			TransportLoaded++;
+			TransportY = YSwitch(TransportY);
+			break;
+		case back:
+			temp->SetTargetPos(xPos + (float)(((MothershipLoaded / mFleetRowSize) + MotherShipRowsBack + mpFleet[i]->GetUnitSpacing()) * mFleetRowSeperation*posMod),
+				((float)MothershipY*mFleetRowSeperation) + mFleetYAdjust, (float)mFleetZAdjust*MothershipY);
+			MothershipLoaded++;
+			MothershipY = YSwitch(MothershipY);
+			break;
+		default:
+			break;
+		}
+		temp->CalculateSceneValues(mSceneDuration,StartingX);
+	}
+}
+
 void CFleet::UnloadShieldModels()
 {
 	for (int i = 0; i < mSize; i++)
@@ -340,7 +400,21 @@ bool CFleet::SpecialAttackMassHeal(CRTSPlayer* player)
 
 bool CFleet::SceneSpaceFight()
 {
-	return false;
+	if (mSceneTimeElapsed > mSceneDuration)
+	{
+		return true;
+	}
+	else
+	{
+		CSpaceUnit* temp;
+		for (auto x : mpFleet)
+		{
+			temp = (CSpaceUnit*)x;
+			temp->MoveInScene();
+		}
+		mSceneTimeElapsed += gFrameTime;
+		return false;
+	}
 }
 
 //-----------------------------------------------------

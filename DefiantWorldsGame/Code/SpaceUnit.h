@@ -48,9 +48,10 @@ protected:
 	string mSoundFileExplosion;
 
 	//scene variables
-	//DX::XMFLOAT3 mTargetPos;
-	float mTravelRadius;
-	float mTravelSpeed;
+	DX::XMFLOAT3 mTargetPos;
+	float mSceneTravelRadius;
+	float mSceneTravelSpeed;
+	float mSceneRotationSpeed;
 
 public:
 	// CONSTRUCTORS & DESTRUCTOR
@@ -62,10 +63,46 @@ public:
 	
 	// ACCESSORS
 	//---------------------------
+	inline bool GetChargiingLazer()
+	{
+		return mCharged;
+	}
 
+	inline int GetCargoValue()
+	{
+		return mCargoValue;
+	}
 
+	inline DX::XMFLOAT3 GetTargetPos()
+	{
+		return mTargetPos;
+	}
+
+	float GetTravelSpeed()
+	{
+		return mSceneTravelSpeed;
+	}
+
+	float GetTravelRadius()
+	{
+		return mSceneTravelRadius;
+	}
 	// MUTATORS
 	//---------------------------
+	inline void SetTargetPos(float x, float y, float z)
+	{
+		mTargetPos = { x, y, z };
+	}
+
+	void SetTargetTexture()
+	{
+		// Do nothing for space units
+	}
+
+	void SetNormalTexture()
+	{
+		// Do nothing for space units
+	}
 
 	// METHODS
 	//---------------------------
@@ -83,37 +120,35 @@ public:
 	virtual void UnloadIModel();
 	virtual void LoadIModel();
 	virtual void LoadModel(float x, float y, float z);
+	//manage shield
 	virtual void HitFlash()=0;
 	virtual void UnloadFlash() = 0;
+
 	virtual void MoveY(float yChange)=0;
 	virtual bool StoreUnits(CGameAgent* unit) = 0;
 	// Save the data for this unit
 	virtual void SaveAgent(std::ofstream& outFile) override;
 	virtual void LoadAgent(std::ifstream& inFile) override;
 
+	//manage lazer
 	void FireLazer(CGameObject* target);
 	void ChargeLazer();
-
-	inline bool GetChargiingLazer()
-	{
-		return mCharged;
-	}
-
-	inline int GetCargoValue()
-	{
-		return mCargoValue;
-	}
 	void UnloadLazer();
-
-	void SetTargetTexture()
+	//scene
+	inline void CalculateSceneValues(float sceneTime, float StartX)
 	{
-		// Do nothing for space units
+		mSceneTravelRadius = abs(StartX - mTargetPos.x);
+		float TravelDistance = (PI*mSceneTravelRadius) / 2;
+		mSceneTravelSpeed = TravelDistance / sceneTime;
+		mSceneRotationSpeed = 90.0f / sceneTime;
 	}
 
-	void SetNormalTexture()
+	inline void MoveInScene()
 	{
-		// Do nothing for space units
+		mpObjModel->MoveLocalZ(mSceneTravelSpeed*gFrameTime);
+		mpObjModel->RotateY(mSceneRotationSpeed*gFrameTime);
 	}
+
 };
 
 #endif /* _SPACE_UNIT_H_ */
