@@ -93,6 +93,7 @@ public:
 	}
 
 	// Method called each frome - boolean returns is false when the object has been destroyed
+	void CalculateBoundingBox();
 	virtual bool Update(CRTSPlayer* pPlayer);
 	virtual void DisplayInfo(IFont* font);
 	virtual void UnloadIModel();

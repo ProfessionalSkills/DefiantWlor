@@ -82,7 +82,6 @@ CWall::~CWall()
 //-----------------------------------------------------
 void CWall::CalculateBoundingBox()
 {
-	IMesh* pMesh = gpEngine->LoadMesh("Bullet.x");
 	// Determine if it is a horizontal wall or not
 	if (mIsHorizontal)
 	{

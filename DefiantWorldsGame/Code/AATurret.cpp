@@ -29,6 +29,9 @@ CTurretStructure::CTurretStructure(DX::XMFLOAT3 position)
 	mAttackTimer = 3.0f;
 	mFireRate = 0.3f;
 	mStructureType = STR_AA;
+	mHeight = 6.0f;
+
+	CalculateBoundingBox();
 }
 
 CTurretStructure::~CTurretStructure()
@@ -40,6 +43,18 @@ CTurretStructure::~CTurretStructure()
 //-----------------------------------------------------
 // STATIC STRUCTURE CLASS OVERRIDE METHODS
 //-----------------------------------------------------
+void CTurretStructure::CalculateBoundingBox()
+{
+	mStructureBL = SPointData(-6, -6);
+	mStructureTR = SPointData(6, 6);
+
+	float top = mWorldPos.z + ((float)mStructureTR.mPosY);
+	float bottom = mWorldPos.z + ((float)mStructureBL.mPosY);
+	float right = mWorldPos.x + ((float)mStructureTR.mPosX);
+	float left = mWorldPos.x + ((float)mStructureBL.mPosX);
+	mBoundingBox = SBoundingCube(DX::XMFLOAT3(left, mWorldPos.y, bottom), DX::XMFLOAT3(right, mWorldPos.y + mHeight, top));
+}
+
 bool CTurretStructure::Update(CRTSPlayer* pPlayer)
 {
 	// Determine state of the structure
