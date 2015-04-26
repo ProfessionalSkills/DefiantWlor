@@ -198,6 +198,11 @@ public:
 		return mIsHidden;
 	}
 
+	inline std::string GetHoverText()
+	{
+		return mHoverOverText;
+	}
+
 
 	// MUTATORS
 	//---------------------------
@@ -213,6 +218,10 @@ public:
 		}
 	}
 
+	void SetHoverOverText(std::string text)
+	{
+		mHoverOverText = text;
+	}
 
 private:
 	// FUNCTION POINTER
@@ -231,6 +240,7 @@ private:
 	//---------------------------
 	ISprite* mpSprBasic;			// basic sprite
 	ISprite* mpSprMO;				// mouse over sprite
+	std::string mHoverOverText;
 };
 
 
@@ -321,6 +331,8 @@ struct SStructureButtons
 			mpButtons[i]->UnloadButtons();
 		}
 	}
+
+
 };
 
 
