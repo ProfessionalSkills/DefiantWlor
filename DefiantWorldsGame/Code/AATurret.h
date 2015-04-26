@@ -99,7 +99,7 @@ public:
 	virtual void LoadIModel();
 
 	bool Attack(CGameObject* ptarget, float hitMod, float damageMod);
-	bool LookingAt();
+
 	// Save the structure's details
 	virtual void SaveStructure(std::ofstream& outFile) override;
 	virtual void LoadStructure(std::ifstream& inFile, CGrid* pGrid, CRTSPlayer* pPlayer) override;

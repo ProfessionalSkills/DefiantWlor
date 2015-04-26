@@ -16,13 +16,16 @@ IMesh* CTurretStructure::mspMshTurretShell = nullptr;
 CTurretStructure::CTurretStructure(DX::XMFLOAT3 position)
 {
 	mpObjModel = mspMshTurret->CreateModel(position.x, 73.0f, position.z); //Position Turret at top of tower
+	mpObjModel->SetSkin("bld-mt.jpg");
 	mpObjModel->Scale(5.0f);
-	mHealth = 100.0f;
-	mRange = 250.0f;
-	mWorldPos = { position.x, 70.0f, position.z };
+	mHealth = 150.0f;
+	mRange = 200.0f;
+	mWorldPos = { position.x, 73.0f, position.z };
 	mState = OBJ_BUILT;
-	mMaxHealth = 100.0f;
+	mMaxHealth = 150.0f;
 	mDamage = 14.0f;
+	mAttackTimer = 0.0f;
+	mFireRate = 10.0f;
 }
 
 CTurretStructure::~CTurretStructure()
@@ -119,8 +122,6 @@ bool CTurretStructure::Update(CRTSPlayer* pPlayer)
 			}
 		}
 
-		return true;
-
 		break;
 
 	case OBJ_DEAD:
@@ -169,19 +170,7 @@ bool CTurretStructure::Update(CRTSPlayer* pPlayer)
 void CTurretStructure::DisplayInfo(IFont* font)
 {
 	// Output selected building
-	switch (mStructureType)
-	{
-	case STR_HOUSE:
-		mStrDisplay << "House";
-		break;
-
-	case STR_WALL:
-		mStrDisplay << "Wall";
-		break;
-	}
-
-	font->Draw(mStrDisplay.str(), 610, 825, 0xff002930, kLeft, kTop);
-	mStrDisplay.str("");
+	font->Draw("Anti-Air Turret", 610, 825, 0xff002930, kLeft, kTop);
 }
 
 EErrorTypes CTurretStructure::AddToQueue(size_t agentIndex, CRTSPlayer* pPlayer)
@@ -193,6 +182,7 @@ void CTurretStructure::UnloadIModel()
 {
 
 }
+
 void CTurretStructure::LoadIModel()
 {
 
@@ -234,73 +224,80 @@ bool CTurretStructure::Attack(CGameObject* pTarget, float hitMod, float damageMo
 	float distance;
 
 	// Get the local Z axis of the turret
-	DX::XMFLOAT3 target = mAttackTarget->GetWorldPos();
 	DX::XMFLOAT4X4 objMatrix;
+	DX::XMFLOAT4X4 turMatrix;
 	mpObjModel->GetMatrix(&objMatrix.m[0][0]);
+	mpObjModel->GetNode(2)->GetMatrix(&turMatrix.m[0][0]);
 
-	DX::XMFLOAT3 localZ{ objMatrix.m[2][0], objMatrix.m[2][1], objMatrix.m[2][2] };
+	// As the matrix of the turret is RELATIVE to the base model matrix, you have to multiply them together to get the ACTUAL matrix for the turret
+	DX::XMFLOAT4X4 finalMatrix;
+	DX::XMMATRIX matMul = DX::XMMatrixMultiply(DX::XMLoadFloat4x4(&objMatrix), DX::XMLoadFloat4x4(&turMatrix));
+	DX::XMStoreFloat4x4(&finalMatrix, matMul);
+
+	DX::XMFLOAT3 localZ{ finalMatrix.m[2][0], finalMatrix.m[2][1], finalMatrix.m[2][2] };
+
+	DX::XMFLOAT3 target = mAttackTarget->GetWorldPos();
 
 	// Normalise this local axis
 	DX::XMVECTOR vecNormal = DX::XMVector4Normalize(DX::XMLoadFloat3(&localZ));
 	DX::XMStoreFloat3(&localZ, vecNormal);
-	DX::XMFLOAT3 worldPos = { mWorldPos.x, 75.0f, mWorldPos.z };
+	DX::XMFLOAT3 pos = { mWorldPos.x, 75.0f, mWorldPos.z };
+
 	// If the target is being looked at and is within range
-	if (mAttackTarget->RayCollision(worldPos, localZ, distance) && distance <= mRange)
+	if (mAttackTarget->RayCollision(mWorldPos, localZ, distance) && distance <= mRange)
 	{
-		// Calculate direction vector from the aircraft to the target
-		DX::XMFLOAT3 dir{ target.x - mWorldPos.x, target.y - mWorldPos.y, target.z - mWorldPos.z };
-
-		// Normalise direction vector
-		DX::XMVECTOR vecNormal = DX::XMVector4Normalize(DX::XMLoadFloat3(&dir));
-		DX::XMStoreFloat3(&dir, vecNormal);
-
 		if (mAttackTimer >= (1.0f / mFireRate)) //Control rate of fire of the unit
 		{
 			SProjectile* newProjectile = new SProjectile();
-			newProjectile->mModel = mspMshTurretShell->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
-			newProjectile->mDirection = dir;
-			newProjectile->mSpeed = 1000.0f;
-			newProjectile->mLifeTime = 10.0f;
+			newProjectile->mModel = mspMshTurretShell->CreateModel(mWorldPos.x, 75.0f, mWorldPos.z);
+			newProjectile->mDirection = localZ;
+			newProjectile->mSpeed = 300.0f;
+			newProjectile->mLifeTime = 3.0f;
 
 			mpProjectiles.push_back(newProjectile);
 			mAttackTimer = 0.0f;
 		}
 	}
-	else
+
+	// TURRET ROTATING
+	// Do this bit all the time so that if the target is moving, it follows it whilst still firing (for added effect)
+	DX::XMFLOAT3 vectorZ = { (target.x - mWorldPos.x), 0.0f, (target.z - mWorldPos.z) };
+	// Normalise vectorZ
+	vecNormal = DX::XMVector4Normalize(DX::XMLoadFloat3(&vectorZ));
+	DX::XMStoreFloat3(&vectorZ, vecNormal);
+
+	DX::XMFLOAT3 localX = { finalMatrix.m[0][0], finalMatrix.m[0][1], finalMatrix.m[0][2] };
+
+	// Normalise this local axis
+	vecNormal = DX::XMVector4Normalize(DX::XMLoadFloat3(&localX));
+	DX::XMStoreFloat3(&localX, vecNormal);
+
+	float dotProduct = Dot(localX, vectorZ);
+
+	if (dotProduct > 0.001f)
 	{
-		// Move the unit toward the target
-		LookingAt();
+		mpObjModel->GetNode(2)->RotateY(250.0f * gFrameTime);
 	}
+	else if (dotProduct < -0.001f)
+	{
+		mpObjModel->GetNode(2)->RotateY(-250.0f * gFrameTime);
+	}
+
+	// Check for is the dot product is in the range of -0.001 and 0.001. The reason for this is to make sure
+	// that the target is IN FRONT of the turret and not behind it
+	if (dotProduct > -0.001f && dotProduct < 0.001f)
+	{
+		// Do another dot product, this time checking for it being in front
+		dotProduct = Dot(localZ, vectorZ);
+
+		// Check for behind
+		if (dotProduct < 0.0f)
+		{
+			mpObjModel->GetNode(2)->RotateY(20.0f * gFrameTime);
+		}
+	}
+
 	// Increment attack timer
 	mAttackTimer += gFrameTime;
 	return true;
-}
-
-bool CTurretStructure::LookingAt()
-{
-	DX::XMFLOAT3 targetPosition = mAttackTarget->GetWorldPos();
-	DX::XMFLOAT3 vectorZ = { (targetPosition.x - mpObjModel->GetX()), 0.0f, (targetPosition.z - mpObjModel->GetZ()) };
-
-	float matrix[16];
-	mpObjModel->GetNode(2)->GetMatrix(matrix);
-
-	DX::XMFLOAT3 facingVector = { matrix[8], matrix[9], matrix[10] };
-	const DX::XMFLOAT3 kYAxis(0.0f, 1.0f, 0.0f);
-
-	float dotProduct = Dot(vectorZ, Cross(kYAxis, facingVector));
-
-	if (dotProduct > 0.01f)
-	{
-		mpObjModel->GetNode(2)->RotateY(100.0f * gFrameTime);
-		return false;
-	}
-	else if (dotProduct < -0.01f)
-	{
-		mpObjModel->GetNode(2)->RotateY(-100.0f * gFrameTime);
-		return false;
-	}
-	else
-	{
-		return true;
-	}
 }
