@@ -66,8 +66,11 @@ private:
 	const float mDisplacement;//distance from the centre of the screen. used when loading the ship models
 	int FleetHealthPercentagePlayerOne();
 	int FleetHealthPercentagePlayerTwo();
+
+	//updates the earth and martain fleets healthbars
 	inline void UpdateHealthbars()
 	{
+		//earth fleet
 		switch (FleetHealthPercentagePlayerOne())
 		{
 			case 0:
@@ -162,6 +165,7 @@ private:
 				break;
 		}
 
+		//martian fleet
 		switch (FleetHealthPercentagePlayerTwo())
 		{
 		case 0:

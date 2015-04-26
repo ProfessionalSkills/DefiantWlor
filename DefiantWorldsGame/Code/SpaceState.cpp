@@ -90,6 +90,7 @@ void CSpaceState::StateSetup()
 	}
 
 	mpCamMain = gpEngine->CreateCamera(kManual, 0.0f, 0.0f, mCamZ);
+	gpCurWorldCamera = mpCamMain;
 	ChangeCameraPosition();
 
 	// INITIALISE SKYBOX
@@ -337,6 +338,10 @@ void CSpaceState::DrawFontData()
 
 void CSpaceState::StateCleanup()
 {
+	//unload explosions
+	mpPlayerOneFleet->CleanUpExplosions();
+	mpPlayerTwoFleet->CleanUpExplosions();
+
 	// Unload fonts
 	gpEngine->RemoveFont(mpTitleFont);
 	gpEngine->RemoveFont(mpButtonFont);
