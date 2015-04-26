@@ -730,20 +730,36 @@ void CRTSPlayer::CreatePillars()
 	// Create the pillars and rotate them
 	mpPillars[0] = mspMshPillar->CreateModel(bottomLeft.x - 7.5f, 0.0f, bottomLeft.z - 7.5f);
 	mpPillars[0]->RotateY(-135.0f);
+
 	mpPillars[1] = mspMshPillar->CreateModel(bottomLeft.x - 15.0f, 0.0f, centre.z);
 	mpPillars[1]->RotateY(-90.0f);
+
 	mpPillars[2] = mspMshPillar->CreateModel(bottomLeft.x - 7.5f, 0.0f, topRight.z + 7.5f);
 	mpPillars[2]->RotateY(-45.0f);
+
 	mpPillars[3] = mspMshPillar->CreateModel(centre.x, 0.0f, topRight.z + 15.0f);
+
 	mpPillars[4] = mspMshPillar->CreateModel(topRight.x + 7.5f, 0.0f, topRight.z + 7.5f);
 	mpPillars[4]->RotateY(45.0f);
+
 	mpPillars[5] = mspMshPillar->CreateModel(topRight.x + 15.0f, 0.0f, centre.z);
 	mpPillars[5]->RotateY(90.0f);
+
 	mpPillars[6] = mspMshPillar->CreateModel(topRight.x + 7.5f, 0.0f, bottomLeft.z - 7.5f);
 	mpPillars[6]->RotateY(135.0f);
+
 	mpPillars[7] = mspMshPillar->CreateModel(centre.x, 0.0f, bottomLeft.z - 15.0f);
 	mpPillars[7]->RotateY(180.0f);
 
+	DX::XMFLOAT3 bottomLeftTurret = {bottomLeft.x - 7.5f, 0.0f, bottomLeft.z - 3.5f};
+	DX::XMFLOAT3 bottomRightTurret = { topRight.x + 7.5f, 0.0f, bottomLeft.z - 7.5f };
+	DX::XMFLOAT3 topLeftTurret = { bottomLeft.x - 7.5f, 0.0f, topRight.z + 7.5f };
+	DX::XMFLOAT3 topRightTurret = { topRight.x + 7.5f, 0.0f, topRight.z + 7.5f };
+
+	mpBaseTurretList[0] = new CTurretStructure(bottomLeftTurret);
+	mpBaseTurretList[1] = new CTurretStructure(bottomRightTurret);
+	mpBaseTurretList[2] = new CTurretStructure(topLeftTurret);
+	mpBaseTurretList[3] = new CTurretStructure(topRightTurret);
 	// Perform scales and texture changes to all pillars
 	for (int i = 0; i < 8; i++)
 	{

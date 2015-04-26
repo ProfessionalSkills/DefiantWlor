@@ -13,8 +13,10 @@ IMesh* CTurretStructure::mspMshTurretShell = nullptr;
 //-----------------------------------------------------
 // STATIC STRUCTURE CLASS CONSTRUCTORS & DESTRUCTOR
 //-----------------------------------------------------
-CTurretStructure::CTurretStructure()
+CTurretStructure::CTurretStructure(DX::XMFLOAT3 position)
 {
+	mpObjModel = mspMshTurret->CreateModel(position.x, 70.0f, position.z); //Position Turret at top of tower
+	mpObjModel->Scale(5.0f);
 	mHealth = 100.0f;
 }
 
@@ -62,10 +64,7 @@ bool CTurretStructure::Update(CRTSPlayer* pPlayer)
 			if (mDestructionExplosion == nullptr)
 			{
 				SafeDelete(mWarningSmoke);
-				if (mStructureType == STR_COM_CENTRE || mStructureType == STR_WALL)
-					mDestructionExplosion = new CExplosion({ mWorldPos.x, mWorldPos.y + 20.0f, mWorldPos.z }, 150, true);
-				else
-					mDestructionExplosion = new CExplosion({ mWorldPos.x, mWorldPos.y + 20.0f, mWorldPos.z }, 150, false);
+				mDestructionExplosion = new CExplosion({ mWorldPos.x, mWorldPos.y + 20.0f, mWorldPos.z }, 150, false);
 				Destroy();
 			}
 			else

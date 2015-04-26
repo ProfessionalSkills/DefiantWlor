@@ -91,6 +91,7 @@ protected:
 	std::vector<CMinerals*> mpMineralsList;
 	std::vector<CMinerals*>::iterator miterMineralsList;
 	
+	CTurretStructure* mpBaseTurretList[4];
 
 	// FLEET DATA
 	//---------------------------
