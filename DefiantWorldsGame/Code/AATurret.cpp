@@ -17,9 +17,7 @@ IMesh* CTurretStructure::mspMshTurretShell = nullptr;
 //-----------------------------------------------------
 CTurretStructure::CTurretStructure(DX::XMFLOAT3 position)
 {
-	mpObjModel = mspMshTurret->CreateModel(position.x, 73.0f, position.z); //Position Turret at top of tower
-	mpObjModel->SetSkin("bld-mt.jpg");
-	mpObjModel->Scale(5.0f);
+	mScale = 5.0f;
 	mHealth = 150.0f;
 	mRange = 150.0f;
 	mWorldPos = { position.x, 73.0f, position.z };
@@ -32,8 +30,6 @@ CTurretStructure::CTurretStructure(DX::XMFLOAT3 position)
 	mHeight = 6.0f;
 
 	mIsGroundType = true;
-
-	CalculateBoundingBox();
 }
 
 CTurretStructure::~CTurretStructure()
@@ -202,12 +198,34 @@ EErrorTypes CTurretStructure::AddToQueue(size_t agentIndex, CRTSPlayer* pPlayer)
 
 void CTurretStructure::UnloadIModel()
 {
-
+	if (mpObjModel != nullptr)
+	{
+		mspMshTurret->RemoveModel(mpObjModel);
+		mpObjModel = nullptr;
+	}
 }
 
 void CTurretStructure::LoadIModel()
 {
+	if (mpObjModel == nullptr)
+	{
+		// Create new model with original mesh
+		mpObjModel = mspMshTurret->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
+		mpObjModel->Scale(mScale);
+		mpObjModel->RotateY(mOrientation);
 
+		// If the x is beyond a certain distance, the object is on mars - set relevant skin
+		if (mFaction == FAC_THE_CRIMSON_LEGION)
+		{
+			mpObjModel->SetSkin("bld-mt-mars.jpg");
+		}
+		else
+		{
+			mpObjModel->SetSkin("bld-mt.jpg");
+		}
+
+		CalculateBoundingBox();
+	}
 }
 
 void CTurretStructure::SaveStructure(std::ofstream& outFile)

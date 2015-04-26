@@ -211,15 +211,23 @@ void CRTSPlayer::ConstructWalls()
 
 	// Creation and storage
 	CTurretStructure* pTurret = new CTurretStructure(bottomLeftTurret);
+	pTurret->SetFaction(mPlayerFaction);
+	pTurret->LoadIModel();
 	mpStructuresMap.insert(GS_MultiMap::value_type(pTurret->GetStructureType(), pTurret));
 
 	pTurret = new CTurretStructure(bottomRightTurret);
+	pTurret->SetFaction(mPlayerFaction);
+	pTurret->LoadIModel();
 	mpStructuresMap.insert(GS_MultiMap::value_type(pTurret->GetStructureType(), pTurret));
 
 	pTurret = new CTurretStructure(topLeftTurret);
+	pTurret->SetFaction(mPlayerFaction);
+	pTurret->LoadIModel();
 	mpStructuresMap.insert(GS_MultiMap::value_type(pTurret->GetStructureType(), pTurret));
 
 	pTurret = new CTurretStructure(topRightTurret);
+	pTurret->SetFaction(mPlayerFaction);
+	pTurret->LoadIModel();
 	mpStructuresMap.insert(GS_MultiMap::value_type(pTurret->GetStructureType(), pTurret));
 
 	// Pillars
