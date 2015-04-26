@@ -126,16 +126,19 @@ void CSpaceState::StateSetup()
 		DX::XMFLOAT2(50.0f, 50.0f), *this, &CSpaceState::ChangeTacNone, TR_UP, true, 1.2f);
 	mpButtonListTactics.push_back(pNewButton);
 	mpButtonListAll.push_back(pNewButton);
+	pNewButton->SetHoverOverText("Don't use any special tactics. cost:0");
 
 	pNewButton = new CAdvancedButton<CSpaceState, void>("DefRapidFireButton.png", "SelRapidFireButton.png", SPointData(750, 750),
 		DX::XMFLOAT2(50.0f, 50.0f), *this, &CSpaceState::ChangeTacRapid, TR_UP, true, 1.2f);
 	mpButtonListTactics.push_back(pNewButton);
 	mpButtonListAll.push_back(pNewButton);
+	pNewButton->SetHoverOverText("your fleet will fire twice as fast, but at the cost of some accuracy. cost:1000");
 
 	pNewButton = new CAdvancedButton<CSpaceState, void>("TargetButton.png", "TargetButtonMO.png", SPointData(600, 750),
 		DX::XMFLOAT2(50.0f, 50.0f), *this, &CSpaceState::ChangeTacTargated, TR_UP, true, 1.2f);
 	mpButtonListTactics.push_back(pNewButton);
 	mpButtonListAll.push_back(pNewButton);
+	pNewButton->SetHoverOverText("the fleet will target a smaller range of ships, killing them faster. however, his comes at the cost of some power cost:1000");
 
 	// Pause Buttons
 	pNewButton = new CAdvancedButton<CSpaceState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(600, 420),
@@ -160,11 +163,13 @@ void CSpaceState::StateSetup()
 		DX::XMFLOAT2(50.0f, 50.0f), *this, &CSpaceState::SALazerBarrage, TR_UP, false, 0.2f);
 	mpButtonListAttacks.push_back(pNewButton);
 	mpButtonListAll.push_back(pNewButton);
+	pNewButton->SetHoverOverText("mothership will fire a barrage of lazers at the enemy fleet. cost:500");
 
 	pNewButton = new CAdvancedButton<CSpaceState, void>("NoTactics.png", "NoTacticsMO.png", SPointData(850, 750),
 		DX::XMFLOAT2(50.0f, 50.0f), *this, &CSpaceState::SAMassHeal, TR_UP, false, 0.2f);
 	mpButtonListAttacks.push_back(pNewButton);
 	mpButtonListAll.push_back(pNewButton);
+	pNewButton->SetHoverOverText("the mothership will Heal your fleet. cost:500");
 
 	// INITIALISE USER INTERFACE
 	//-----------------------------

@@ -328,6 +328,11 @@ private:
 			// Check for click 
 			if (pButton->GetMouseOver())
 			{
+				//display hover text
+				strStream << pButton->GetHoverText();
+				mFntDebug->Draw(strStream.str(), 800, 710, kCyan, kCentre, kTop);
+				strStream.str("");
+
 				// Check if the mouse is over the button
 				if (leftClicked)
 				{
