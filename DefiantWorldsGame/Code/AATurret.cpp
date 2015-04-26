@@ -49,7 +49,7 @@ bool CTurretStructure::Update(CRTSPlayer* pPlayer)
 		{
 			if (mWarningSmoke == nullptr)
 			{
-				mWarningSmoke = new CSmoke(mpObjModel, 30, 20.0f, 0.8f);
+				mWarningSmoke = new CSmoke(mWorldPos, mHeight, 0.8f, mBoundingBox.GetWidthExtent() / 3.0f, mBoundingBox.GetLengthExtent() / 3.0f);
 			}
 			else
 			{
