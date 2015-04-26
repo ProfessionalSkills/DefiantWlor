@@ -73,7 +73,7 @@ bool CTurretStructure::Update(CRTSPlayer* pPlayer)
 		{
 			if (mWarningSmoke == nullptr)
 			{
-				mWarningSmoke = new CSmoke(mWorldPos, mHeight, 0.8f, mBoundingBox.GetWidthExtent() / 3.0f, mBoundingBox.GetLengthExtent() / 3.0f);
+				mWarningSmoke = new CSmoke(mWorldPos, mWorldPos.y + mHeight, 0.8f, mBoundingBox.GetWidthExtent() / 3.0f, mBoundingBox.GetLengthExtent() / 3.0f);
 			}
 			else
 			{
@@ -88,7 +88,7 @@ bool CTurretStructure::Update(CRTSPlayer* pPlayer)
 			if (mDestructionExplosion == nullptr)
 			{
 				SafeDelete(mWarningSmoke);
-				mDestructionExplosion = new CExplosion({ mWorldPos.x, mWorldPos.y + 20.0f, mWorldPos.z }, 150, false);
+				mDestructionExplosion = new CExplosion({ mWorldPos.x, mWorldPos.y + mHeight, mWorldPos.z }, 150, false);
 				Destroy();
 			}
 			else
