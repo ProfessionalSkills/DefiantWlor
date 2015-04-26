@@ -46,7 +46,20 @@ public:
 		return 0;
 	}
 
+	CGameObject* GetAttackTarget()
+	{
+		return mAttackTarget;
+	}
 
+	void SetAttackTarget(CGameObject* target)
+	{
+		mAttackTarget = target;
+	}
+
+	float GetRange()
+	{
+		return mRange;
+	}
 	// MUTATORS
 	//---------------------------
 
@@ -83,7 +96,8 @@ public:
 	virtual void UnloadIModel();
 	virtual void LoadIModel();
 
-	bool Attack(CGameObject* target, float hitMod, float damageMod);
+	bool Attack(CGameObject* ptarget, float hitMod, float damageMod);
+	bool LookingAt();
 	// Save the structure's details
 	virtual void SaveStructure(std::ofstream& outFile) override;
 	virtual void LoadStructure(std::ifstream& inFile, CGrid* pGrid, CRTSPlayer* pPlayer) override;

@@ -518,6 +518,32 @@ void CRTSPlayer::Update()
 			}
 		}
 	}
+
+	for (auto turret : mpBaseTurretList)
+	{
+		turret->Update(this);
+		float distance = 9999.0f;
+		if (turret->GetAttackTarget() == nullptr)
+		{
+			for (auto enemy : mpAirspaceAgents)
+			{
+				if (enemy->GetObjectType() == Q_BOMBER || enemy->GetObjectType() == Q_FIGHTER)
+				{
+					float distX = turret->GetWorldPos().x - enemy->GetWorldPos().x;
+					float distY = turret->GetWorldPos().y - enemy->GetWorldPos().y;
+					float distZ = turret->GetWorldPos().z - enemy->GetWorldPos().z;
+
+					distance = ((distX * distX) + (distY * distY) + (distZ * distZ));
+					if (distance <= (turret->GetRange() * turret->GetRange()))
+					{
+						turret->SetAttackTarget(enemy);
+						break;
+					}
+				}
+			}
+		}
+		
+	}
 }
 
 void CRTSPlayer::CreateResourcePiles()

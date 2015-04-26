@@ -21,7 +21,7 @@ CWorker::CWorker()
 	mAgentInfo = SAgentData(GAV_WORKER, "Worker");
 	mMaxHealth = 100.0f;
 	mHealth = 100.0f;
-	mSpeed = 12.0f;
+	mSpeed = 24.0f;
 	mProductionTime = 7.5f;
 	mCurProductionTimeLeft = mProductionTime;
 	mDamage = 0.0f;

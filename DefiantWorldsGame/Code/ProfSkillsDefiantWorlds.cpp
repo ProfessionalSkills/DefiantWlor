@@ -215,7 +215,7 @@ void SetupEngine()
 	CTurretStructure::mspMshTurretShell = gpEngine->LoadMesh("WorldLazer.x");
 
 	//Transport Beam
-	CTransportBeam::mspMshBeam = gpEngine->LoadMesh("Lazer.x");
+	CTransportBeam::mspMshBeam = gpEngine->LoadMesh("WorldLazer.x");
 }
 
 void CleanupEngine()
