@@ -61,7 +61,7 @@ bool CStaticStructure::Update(CRTSPlayer* pPlayer)
 			if (mDestructionExplosion == nullptr)
 			{
 				SafeDelete(mWarningSmoke);
-				if (mStructureType == STR_COM_CENTRE || mStructureType == STR_WALL)
+				if (mStructureType == STR_WALL)
 					mDestructionExplosion = new CExplosion({ mWorldPos.x, mWorldPos.y + 20.0f, mWorldPos.z }, 150, true);
 				else
 					mDestructionExplosion = new CExplosion({ mWorldPos.x, mWorldPos.y + 20.0f, mWorldPos.z }, 150, false);
@@ -78,6 +78,46 @@ bool CStaticStructure::Update(CRTSPlayer* pPlayer)
 				}
 			}
 		}
+
+		// Check if it has been requested to raise
+		if (mRaised)
+		{
+			// Varify height
+			if (mRaisedAmount < 20.0f)
+			{
+				// Raise the wall more
+				float movement = 50.0f * gFrameTime;
+				mRaisedAmount += movement;
+				mpObjModel->MoveY(movement);
+				mWorldPos.y = mpObjModel->GetY();
+				mBoundingBox.SetPosition(mWorldPos);
+			}
+			else
+			{
+				// Increment timer
+				mRaisedTimer += gFrameTime;
+				if (mRaisedTimer >= 3.5f)
+				{
+					// Start closing the wall
+					mRaised = false;
+					mRaised = 0.0f;
+				}
+			}
+		}
+		else
+		{
+			// Verify height back down to 0
+			if (mRaisedAmount > 0.0f)
+			{
+				// Lower the wall more
+				float movement = -50.0f * gFrameTime;
+				mRaisedAmount += movement;
+				mpObjModel->MoveY(movement);
+				mWorldPos.y = mpObjModel->GetY();
+				mBoundingBox.SetPosition(mWorldPos);
+			}
+		}
+
 		return true;
 
 		break;

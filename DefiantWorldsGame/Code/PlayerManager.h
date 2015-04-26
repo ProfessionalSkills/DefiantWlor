@@ -39,6 +39,9 @@ public:
 	void CheckRebelSelection(CStructure*& pStructure, CGameAgent*& pGameAgent, CMinerals*& pMinerals,
 		DX::XMFLOAT3 origin, DX::XMFLOAT3 direction, float& curDist);
 
+	// Get all walls still alive
+	void GetWorldWalls(std::vector<CStaticStructure*>& pWalls);
+
 
 	// MUTATORS
 	//---------------------------

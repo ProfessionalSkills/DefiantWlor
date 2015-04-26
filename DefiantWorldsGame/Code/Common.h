@@ -166,6 +166,11 @@ struct SBoundingCube
 	{
 		return mBox.Extents.z;
 	}
+
+	void SetPosition(DX::XMFLOAT3 position)
+	{
+		mBox.Center = position;
+	}
 };
 
 struct SBoundingSphere

@@ -418,6 +418,11 @@ void CRTSPlayer::Update()
 		}
 	}
 
+	// ADJUST TIMERS
+	mTimeToAttackCheckUpdate -= gFrameTime;
+	mTimeToWallCheckUpdate -= gFrameTime;
+
+
 	// Clear the airspace before more units are added in in the next section
 	if (mPlayerFaction == FAC_EARTH_DEFENSE_FORCE)
 	{
@@ -476,8 +481,8 @@ void CRTSPlayer::Update()
 			// Check attach update time
 			if (mTimeToAttackCheckUpdate <= 0.0f)
 			{
-				// Check if there are any units in this player's airspace - 10% chance of unit attacking those in their airspace
-				if (!pAgent->GetAttackTarget() && mpRandomiser->GetRandomFloat(0.0f, 100.0f) > 90.0f)
+				// Check if there are any units in this player's airspace - 40% chance of unit attacking those in their airspace
+				if (!pAgent->GetAttackTarget() && mpRandomiser->GetRandomFloat(0.0f, 100.0f) > 60.0f)
 				{
 					CGameAgent* pTarget = nullptr;
 					int index = 0;
@@ -501,20 +506,65 @@ void CRTSPlayer::Update()
 				// Reset timer
 				mTimeToAttackCheckUpdate = 0.3f;
 			}
-			else
-			{
-				mTimeToAttackCheckUpdate -= gFrameTime;
-			}
 
-			// Check for wall collisions - units should not be able to move through walls
+			// Wall check
 			if (mTimeToWallCheckUpdate <= 0.0f)
 			{
-				// Reset wall check timer
-				mTimeToWallCheckUpdate = 0.3f;
-			}
-			else
-			{
-				mTimeToWallCheckUpdate -= gFrameTime;
+				if (gpEngine->KeyHeld(Key_Numpad5))
+				{
+					int i = 5;
+				}
+				
+				// If air unit, ignore walls
+				EGameAgentVariations unitType = pAgent->GetAgentData()->mAgentType;
+				if (unitType != GAV_BOMBER && unitType != GAV_FIGHTER)
+				{
+					// Get all walls from all players
+					pPlayerManager->GetWorldWalls(mpWallCollection);
+
+					// Loop through walls checking if there is a collision with it
+					for (auto iter = mpWallCollection.begin(); iter != mpWallCollection.end(); iter++)
+					{
+						// Cache wall
+						CStaticStructure* pWall = (*iter);
+
+						// Check for a line of sight between the agent and the wall
+						bool wallInteraction = pAgent->CheckLOS(pWall);
+
+						// Check if the wall and the player are of the same faction
+						bool sameFaction = (mPlayerFaction == pWall->GetFaction());
+
+						if (wallInteraction)
+						{
+							// If they are of the same faction, raise the wall. Unless they are a worker
+							if (sameFaction)
+							{
+								if (unitType != GAV_WORKER)
+								{
+									pWall->SetRaised(true);
+								}
+								else
+								{
+									pWall->SetRaised(false);
+									pAgent->Stop();
+								}
+							}
+							else
+							{
+								// Otherwise ensure it is closed & attack it
+								pAgent->Stop();
+								pWall->SetRaised(false);
+								pAgent->SetAttackTarget(pWall);
+							}					
+						}
+					}
+
+					// Reset wall check timer
+					mTimeToWallCheckUpdate = 0.15f;
+
+					// Clear the wall list after finished using it
+					mpWallCollection.clear();
+				}
 			}
 		}
 	}
@@ -880,5 +930,23 @@ void CRTSPlayer::RemovePillars()
 	for (int i = 0; i < 8; i++)
 	{
 		mspMshPillar->RemoveModel(mpPillars[i]);
+	}
+}
+
+void CRTSPlayer::GetWalls(std::vector<CStaticStructure*>& pWalls)
+{
+	// Count how many workers the player has
+	auto range = mpStructuresMap.equal_range(STR_WALL);
+
+	// Check that some structures exist
+	if (range.first != mpStructuresMap.end())
+	{
+		// Loop through each worker unit & increment the counter
+		for (auto iter = range.first; iter != range.second; ++iter)
+		{
+			// Convert structure pointer into static structure pointer and add it to the list of walls
+			CStaticStructure* pWall = static_cast<CStaticStructure*>(iter->second);
+			pWalls.push_back(pWall);
+		}
 	}
 }
