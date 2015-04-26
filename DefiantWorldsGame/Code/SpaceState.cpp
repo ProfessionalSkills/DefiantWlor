@@ -590,24 +590,10 @@ void CSpaceState::Resume()
 //Special Attack Buttons
 void CSpaceState::SALazerBarrage()
 {
-	if (mpPlayerOneFleet->SpecialAttackLazerBarrage())
-	{
-		gpNewsTicker->AddNewElement("Mothership Fired a Lazer Barrage", false);
-	}
-	else
-	{
-		gpNewsTicker->AddNewElement("Special Attacks are on Cooldown", false);
-	}
+	mpPlayerOneFleet->SpecialAttackLazerBarrage(mpHumanPlayer);
 }
 
 void CSpaceState::SAMassHeal()
 {
-	if (mpPlayerOneFleet->SpecialAttackMassHeal())
-	{
-		gpNewsTicker->AddNewElement("Mothership Healed Fleet", false);
-	}
-	else
-	{
-		gpNewsTicker->AddNewElement("Special Attacks are on Cooldown", false);
-	}
+	mpPlayerOneFleet->SpecialAttackMassHeal(mpHumanPlayer);
 }

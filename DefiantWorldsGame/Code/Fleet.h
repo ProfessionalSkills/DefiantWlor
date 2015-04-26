@@ -56,6 +56,7 @@ private:
 	const int mNumFleetSections;
 	float mSpecialAttackCooldownTimer;
 	const float mSpecialAttackCooldownTime;
+	const float mSpecialAttackCost;
 
 	// POSITIONING
 	//---------------------------
@@ -90,8 +91,8 @@ public:
 	void ChargeFleetLazers();//used to slow down space lazer firing
 
 	//special attacks, used by the fleet
-	bool SpecialAttackLazerBarrage();
-	bool SpecialAttackMassHeal();
+	bool SpecialAttackLazerBarrage(CRTSPlayer* player);
+	bool SpecialAttackMassHeal(CRTSPlayer* player);
 	//deletes the explosions and clears the xplosion list
 	inline void CleanUpExplosions()
 	{

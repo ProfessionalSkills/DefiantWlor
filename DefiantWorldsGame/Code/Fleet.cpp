@@ -14,7 +14,7 @@
 // FLEET CLASS CONSTRUCTORS & DESTRUCTOR
 //-----------------------------------------------------
 CFleet::CFleet() :mFleetRowSize(20), mFleetRowSeperation(7), mFleetZAdjust(8), mFleetYCyleHeight(0.01f), mNumFleetSections(5),
-mSpecialAttackCooldownTime(5.0f), mExplosionTime(4.0f), mExplosionNumParticle(25.0f)
+mSpecialAttackCooldownTime(5.0f), mExplosionTime(4.0f), mExplosionNumParticle(25.0f), mSpecialAttackCost(500.0f)
 {
 	//Value Mods
 	mDamegMod = 1.0f;
@@ -267,42 +267,73 @@ void CFleet::UnloadLazers()
 	}
 }
 
-bool CFleet::SpecialAttackLazerBarrage()
+bool CFleet::SpecialAttackLazerBarrage(CRTSPlayer* player)
 {
-	if (mSpecialAttackCooldownTimer <= 0)
-	{
-		for (int i = 0; i < mSize; i++)
-		{
-			if (mpFleet[i]->GetAgentData()->mAgentType == GAV_MOTHERSHIP)
-			{
-				int target = 0;
-				for (int j = 0; j < 10; j++)
-				{
-					target = mTarget->GetRandomInt(0, mpEnemyFleet->GetSize() - 1);
-					if (mpFleet[i]->Attack(mpEnemyFleet->GetShip(target), mHitMod, mDamegMod)) mHits++;
-					mShotsFired++;
-				}
-				mSpecialAttackCooldownTimer = mSpecialAttackCooldownTime;
-				return true;
-			}
-		}
-	}
-	return false;
-}
-
-bool CFleet::SpecialAttackMassHeal()
-{
-	if (mNumMothership != 0)
+	if (player->GetMineralAmount()>mSpecialAttackCost)
 	{
 		if (mSpecialAttackCooldownTimer <= 0)
 		{
 			for (int i = 0; i < mSize; i++)
 			{
-				mpFleet[i]->Heal(10.0f);
+				if (mpFleet[i]->GetAgentData()->mAgentType == GAV_MOTHERSHIP)
+				{
+					int target = 0;
+					for (int j = 0; j < 10; j++)
+					{
+						target = mTarget->GetRandomInt(0, mpEnemyFleet->GetSize() - 1);
+						if (mpFleet[i]->Attack(mpEnemyFleet->GetShip(target), mHitMod, mDamegMod)) mHits++;
+						mShotsFired++;
+					}
+					mSpecialAttackCooldownTimer = mSpecialAttackCooldownTime;
+					player->MineralTransaction((int)-mSpecialAttackCost);
+					gpNewsTicker->AddNewElement("Mothership Fired a Lazer Barrage", false);
+					return true;
+				}
 			}
-			mSpecialAttackCooldownTimer = mSpecialAttackCooldownTime;
-			return true;
+			gpNewsTicker->AddNewElement("You need a mothership to use this attack", false);
 		}
+		else
+		{
+			gpNewsTicker->AddNewElement("Special attacks are on cooldown", false);
+		}
+	}
+	else
+	{
+		gpNewsTicker->AddNewElement("Not enough minerals to use this attack", false);
+	}
+	return false;
+}
+
+bool CFleet::SpecialAttackMassHeal(CRTSPlayer* player)
+{
+	if (player->GetMineralAmount() > mSpecialAttackCost)
+	{
+		if (mNumMothership != 0)
+		{
+			if (mSpecialAttackCooldownTimer <= 0)
+			{
+				for (int i = 0; i < mSize; i++)
+				{
+					mpFleet[i]->Heal(10.0f);
+				}
+				mSpecialAttackCooldownTimer = mSpecialAttackCooldownTime;
+				player->MineralTransaction((int)-mSpecialAttackCost);
+				gpNewsTicker->AddNewElement("Mothership Healed Fleet", false);
+				return true;
+			}
+			else
+			{
+				gpNewsTicker->AddNewElement("Special attacks are on cooldown", false);
+			}
+		}
+		else
+		{
+			gpNewsTicker->AddNewElement("You need a mothership to use this attack", false);
+		}
+	}
+	else
+	{
+		gpNewsTicker->AddNewElement("Not enough minerals to use this attack", false);
 	}
 	return false;
 }
