@@ -218,7 +218,7 @@ void SetupEngine()
 
 	//Base Turret Meshes
 	//Anti Air Turret
-	CTurretStructure::mspMshTurret = gpEngine->LoadMesh("anti-aircraft.x");
+	CTurretStructure::mspMshTurret = gpEngine->LoadMesh("HoverTank01.x");
 	CTurretStructure::mspMshTurretShell = gpEngine->LoadMesh("WorldLazer.x");
 
 	//Transport Beam
