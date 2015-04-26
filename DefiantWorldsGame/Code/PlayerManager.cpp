@@ -76,14 +76,21 @@ void CPlayerManager::RemovePlayers()
 		SafeDelete(pAgent);
 		mpRebelMarsList.pop_back();
 	}
+
+	while (!mpTransportBeams.empty())
+	{
+		CTransportBeam* pBeam = mpTransportBeams.back();
+		SafeDelete(pBeam);
+		mpTransportBeams.pop_back();
+	}
 }
 
 int CPlayerManager::UpdatePlayers()
 {
-	//if (gpEngine->KeyHit(Key_G))
-	//{
-	//	InvadeMars();
-	//}
+	if (gpEngine->KeyHit(Key_G))
+	{
+		InvadeMars();
+	}
 	
 	// Update rebels
 	// Check how much time has passed since the game has begun - currently checking for 40 seconds into the game
@@ -268,6 +275,21 @@ int CPlayerManager::UpdatePlayers()
 			}
 		}
 	}
+
+	// Update transport beams
+	for (auto iter = mpTransportBeams.begin(); iter != mpTransportBeams.end(); iter++)
+	{
+		// Cache transport beam pointer
+		CTransportBeam* pBeam = (*iter);
+
+		// Update and check if the beam has finished
+		if (!pBeam->Update())
+		{
+			SafeDelete(pBeam);
+			mpTransportBeams.erase(iter);
+			break;
+		}
+	}
 	
 	// Send earth airspace units to human
 	mpHuman->SetAgentsInAirspace(mpEarthAirspaceList);
@@ -428,6 +450,9 @@ void CPlayerManager::InvadeEarth()
 			mpRebelEarthList.push_back(pNewAgent);
 			break;
 		}
+
+		// Create transport beams
+		mpTransportBeams.push_back(new CTransportBeam(pNewAgent->GetWorldPos()));
 	}
 	else
 	{
@@ -532,6 +557,9 @@ void CPlayerManager::InvadeMars()
 			mpRebelMarsList.push_back(pNewAgent);
 			break;
 		}
+
+		// Create transport beams
+		mpTransportBeams.push_back(new CTransportBeam(pNewAgent->GetWorldPos()));
 	}
 	else
 	{

@@ -10,6 +10,7 @@
 // INCLUDES
 //-----------------------------------------------------
 #include "AIPlayer.h"
+#include "TransportBeam.h"
 
 
 //-----------------------------------------------------
@@ -98,8 +99,13 @@ private:
 
 	int mEarthUnits = 0;
 	int mMarsUnits = 0;
+
+	// Units list
 	std::vector<CGameAgent*> mpRebelEarthList;
 	std::vector<CGameAgent*> mpRebelMarsList;
+
+	// Transport beams
+	std::vector<CTransportBeam*> mpTransportBeams;
 };
 
 

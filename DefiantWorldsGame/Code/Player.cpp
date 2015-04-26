@@ -463,18 +463,27 @@ void CRTSPlayer::Update()
 				}
 			}
 
-			// Check if there are any units in this player's airspace - 30% chance of unit attacking those in their airspace
-			if (!pAgent->GetAttackTarget() && mpRandomiser->GetRandomFloat(0.0f, 100.0f) > 70.0f)
+			// Check if there are any units in this player's airspace - 10% chance of unit attacking those in their airspace
+			if (!pAgent->GetAttackTarget() && mpRandomiser->GetRandomFloat(0.0f, 100.0f) > 90.0f)
 			{
 				if (mpAirspaceAgents.size())
 				{
 					// Pick a random index of these units interfering
 					int index = mpRandomiser->GetRandomInt(0, mpAirspaceAgents.size() - 1);
 
-					// Give the target to this unit
-					pAgent->SetAttackTarget(mpAirspaceAgents[index]);
+					// Check target is viable for targeting
+					CGameAgent* pTarget = mpAirspaceAgents[index];
+
+					if (pTarget->GetHealth() > 0.0f)
+					{
+						// Give the target to this unit
+						pAgent->SetAttackTarget(pTarget);
+					}
 				}
 			}
+
+			// Check for wall collisions - units should not be able to move through walls
+
 		}
 	}
 }
