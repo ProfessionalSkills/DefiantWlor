@@ -21,8 +21,6 @@ TO DO: * = essential
 	*- AI to attack enemies when they are invading Earth
 	*- Have a timer for when a fleet attempts to travel across space
 	*- Launch button glows red and a timer appears when the enemy is launching their fleet
-	- Walls have a lower/raise ability
-	*- Ground units cannot move through walls
 	- Units collide with one another
 	- If time, decorate surrounding area
 	*- Create a saved game to load so that on demo day people are not bored whilst units are constructed etc.

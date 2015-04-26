@@ -482,11 +482,13 @@ void CRTSPlayer::Update()
 			if (mTimeToAttackCheckUpdate <= 0.0f)
 			{
 				// Check if there are any units in this player's airspace - 40% chance of unit attacking those in their airspace
-				if (!pAgent->GetAttackTarget() && mpRandomiser->GetRandomFloat(0.0f, 100.0f) > 60.0f)
+				if (!pAgent->GetAttackTarget() && mpRandomiser->GetRandomFloat(0.0f, 100.0f) > 30.0f)
 				{
 					CGameAgent* pTarget = nullptr;
 					int index = 0;
 					
+					if (mPlayerFaction == FAC_THE_CRIMSON_LEGION) std::cout << mpAirspaceAgents.size() << std::endl;
+
 					if (mpAirspaceAgents.size())
 					{
 						// Pick a random index of these units interfering
@@ -502,19 +504,11 @@ void CRTSPlayer::Update()
 						}
 					}
 				}
-
-				// Reset timer
-				mTimeToAttackCheckUpdate = 0.3f;
 			}
 
 			// Wall check
 			if (mTimeToWallCheckUpdate <= 0.0f)
 			{
-				if (gpEngine->KeyHeld(Key_Numpad5))
-				{
-					int i = 5;
-				}
-				
 				// If air unit, ignore walls
 				EGameAgentVariations unitType = pAgent->GetAgentData()->mAgentType;
 				if (unitType != GAV_BOMBER && unitType != GAV_FIGHTER)
@@ -539,14 +533,14 @@ void CRTSPlayer::Update()
 							// If they are of the same faction, raise the wall. Unless they are a worker
 							if (sameFaction)
 							{
-								if (unitType != GAV_WORKER)
-								{
-									pWall->SetRaised(true);
-								}
-								else
+								if (unitType == GAV_WORKER)
 								{
 									pWall->SetRaised(false);
 									pAgent->Stop();
+								}
+								else
+								{
+									pWall->SetRaised(true);
 								}
 							}
 							else
@@ -558,9 +552,6 @@ void CRTSPlayer::Update()
 							}					
 						}
 					}
-
-					// Reset wall check timer
-					mTimeToWallCheckUpdate = 0.15f;
 
 					// Clear the wall list after finished using it
 					mpWallCollection.clear();
@@ -592,7 +583,16 @@ void CRTSPlayer::Update()
 				}
 			}
 		}
-		
+	}
+
+	// If timers are up, reset them
+	if (mTimeToAttackCheckUpdate <= 0.0f)
+	{
+		mTimeToAttackCheckUpdate = 0.22f;
+	}
+	if (mTimeToWallCheckUpdate <= 0.0f)
+	{
+		mTimeToWallCheckUpdate = 0.15f;
 	}
 }
 

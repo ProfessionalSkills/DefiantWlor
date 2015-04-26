@@ -689,12 +689,6 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 				}
 			}
 
-			// Check if the unit has an attack target and is therefore busy
-			if (miterUnitsMap->second->GetAttackTarget())
-			{
-				return true;
-			}
-
 			// Pick a random location to move the unit to
 			DX::XMFLOAT3 newPos;
 
@@ -704,7 +698,11 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 			newPos.x = mpRandomiser->GetRandomFloat(start.x, end.x);
 			newPos.z = mpRandomiser->GetRandomFloat(start.z, end.z);
 
-			miterUnitsMap->second->SetPathTarget(newPos);
+			// Check if the unit has an attack target and is therefore busy
+			if (!miterUnitsMap->second->GetAttackTarget())
+			{
+				miterUnitsMap->second->SetPathTarget(newPos);
+			}
 
 			return true;
 			break;

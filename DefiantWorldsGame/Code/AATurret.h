@@ -60,6 +60,8 @@ public:
 	{
 		return mRange;
 	}
+
+
 	// MUTATORS
 	//---------------------------
 

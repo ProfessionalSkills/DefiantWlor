@@ -36,40 +36,6 @@ CTurretStructure::~CTurretStructure()
 //-----------------------------------------------------
 bool CTurretStructure::Update(CRTSPlayer* pPlayer)
 {
-	if (mpProjectiles.size() > 0)
-	{
-		for (auto iter = mpProjectiles.begin(); iter != mpProjectiles.end(); iter++) //For each projectile that unit has fired
-		{
-			SProjectile* projectile = (*iter);
-			projectile->Update();
-			DX::XMFLOAT3 position = { projectile->mModel->GetX(), projectile->mModel->GetY(), projectile->mModel->GetZ() }; //projectile's new position stored for collision detection
-
-			// Check to see if the attack target has been lost or it has been destroyed
-			if (mAttackTarget == nullptr)
-			{
-				SafeDelete(projectile);
-				mpProjectiles.erase(iter);
-				break;
-			}
-			else if (mAttackTarget->SphereCollision(projectile->mCollisionSphere)) //Point to Box collision between the projectile and the attack target
-			{
-				mAttackTarget->TakeDamage(mDamage);
-				mpAttackExplosions.push_back(new CExplosion(position, 25, false));
-				SafeDelete(projectile);
-				mpProjectiles.erase(iter);
-				break; //Breaks out of the loop as the vector size has been changed, comprimising the iterator loop
-			}
-		}
-	}
-
-	if (mpAttackExplosions.size() > 0)
-	{
-		for (auto explosions : mpAttackExplosions) //For each explosion resulting from a projectile colliding
-		{
-			explosions->UpdateSystem(); //Update systems 
-		}
-	}
-
 	// Determine state of the structure
 	switch (mState)
 	{
@@ -125,23 +91,13 @@ bool CTurretStructure::Update(CRTSPlayer* pPlayer)
 			{
 				mAttackTarget = nullptr;
 			}
-			// Check which faction the unit is from
-			else if (mFaction == FAC_EARTH_DEFENSE_FORCE)
+			// Check the target is not in space or constructing
+			else if (!mAttackTarget->GetModel() || mAttackTarget->GetState() == OBJ_CONSTRUCTING)
 			{
-				// Check if the rebels have fled
-				if (mAttackTarget->GetWorldXPos() < -2200.0f)
-				{
-					mAttackTarget = nullptr;
-				}
+				mAttackTarget = nullptr;
 			}
 			else
 			{
-				// Check if the rebels have fled
-				if (mAttackTarget->GetWorldZPos() > 4500.0f)
-				{
-					mAttackTarget = nullptr;
-				}
-
 				//Get the distance between target and turret
 				float distX = ((GetWorldPos().x - mAttackTarget->GetWorldPos().x) * (GetWorldPos().x - mAttackTarget->GetWorldPos().x));
 				float distY = ((GetWorldPos().y - mAttackTarget->GetWorldPos().y) * (GetWorldPos().y - mAttackTarget->GetWorldPos().y));
@@ -163,8 +119,6 @@ bool CTurretStructure::Update(CRTSPlayer* pPlayer)
 			}
 		}
 
-
-
 		return true;
 
 		break;
@@ -175,6 +129,40 @@ bool CTurretStructure::Update(CRTSPlayer* pPlayer)
 		return false;
 
 		break;
+	}
+
+	if (mpProjectiles.size() > 0)
+	{
+		for (auto iter = mpProjectiles.begin(); iter != mpProjectiles.end(); iter++) //For each projectile that unit has fired
+		{
+			SProjectile* projectile = (*iter);
+			projectile->Update();
+			DX::XMFLOAT3 position = { projectile->mModel->GetX(), projectile->mModel->GetY(), projectile->mModel->GetZ() }; //projectile's new position stored for collision detection
+
+			// Check to see if the attack target has been lost or it has been destroyed
+			if (mAttackTarget == nullptr)
+			{
+				SafeDelete(projectile);
+				mpProjectiles.erase(iter);
+				break;
+			}
+			else if (mAttackTarget->SphereCollision(projectile->mCollisionSphere)) //Point to Box collision between the projectile and the attack target
+			{
+				mAttackTarget->TakeDamage(mDamage);
+				mpAttackExplosions.push_back(new CExplosion(position, 25, false));
+				SafeDelete(projectile);
+				mpProjectiles.erase(iter);
+				break; //Breaks out of the loop as the vector size has been changed, comprimising the iterator loop
+			}
+		}
+	}
+
+	if (mpAttackExplosions.size() > 0)
+	{
+		for (auto explosions : mpAttackExplosions) //For each explosion resulting from a projectile colliding
+		{
+			explosions->UpdateSystem(); //Update systems 
+		}
 	}
 }
 
