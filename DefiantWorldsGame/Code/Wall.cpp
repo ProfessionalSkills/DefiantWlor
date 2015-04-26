@@ -23,8 +23,8 @@ CWall::CWall()
 	mScale = pRandom->GetRandomFloat(9.0f, 9.1f);
 
 	mIsHorizontal = false;
-	mHealth = 1000.0f;
-	mMaxHealth = 1000.0f;
+	mHealth = 2000.0f;
+	mMaxHealth = 2000.0f;
 	mBuildTime = 5.0f;
 	mRepairSpeed = 1.0f;
 	mCurBuildTimeLeft = mBuildTime;

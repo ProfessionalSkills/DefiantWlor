@@ -18,16 +18,18 @@ IMesh* CTurretStructure::mspMshTurretShell = nullptr;
 CTurretStructure::CTurretStructure(DX::XMFLOAT3 position)
 {
 	mScale = 5.0f;
-	mHealth = 150.0f;
+	mHealth = 400.0f;
 	mRange = 150.0f;
 	mWorldPos = { position.x, 73.0f, position.z };
 	mState = OBJ_BUILT;
-	mMaxHealth = 150.0f;
+	mMaxHealth = 400.0f;
 	mDamage = 150.0f;
 	mAttackTimer = 3.0f;
 	mFireRate = 0.3f;
 	mStructureType = STR_AA;
 	mHeight = 6.0f;
+
+	mpObjModel = nullptr;
 
 	mIsGroundType = true;
 }
@@ -85,6 +87,10 @@ bool CTurretStructure::Update(CRTSPlayer* pPlayer)
 		// Check if no health left
 		if ((mHealth <= 0.0f))
 		{
+			// No attack target
+			mAttackTarget = nullptr;
+
+			// Update destruction explosion
 			if (mDestructionExplosion == nullptr)
 			{
 				SafeDelete(mWarningSmoke);
