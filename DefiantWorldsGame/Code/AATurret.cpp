@@ -227,6 +227,7 @@ void CTurretStructure::LoadStructure(std::ifstream& inFile, CGrid* pGrid, CRTSPl
 	LoadIModel();
 	CalculateBoundingBox();
 }
+
 bool CTurretStructure::Attack(CGameObject* pTarget, float hitMod, float damageMod)
 {
 	// The RayCollision function calculates this value for us - so it needs no starting value. Only to be defined.
