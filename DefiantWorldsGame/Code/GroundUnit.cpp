@@ -318,7 +318,7 @@ void CGroundUnit::DetermineAirspace()
 	// Check Human player's airspace
 	bottomLeft = pHuman->GetPlayerGrid()->GetGridStartPos();
 	topRight = pHuman->GetPlayerGrid()->GetGridEndPos();
-	if (mWorldPos.x < bottomLeft.x || mWorldPos.x > topRight.x || mWorldPos.z < bottomLeft.z || mWorldPos.z > topRight.z)
+	if (mWorldPos.x < bottomLeft.x - 500.0f || mWorldPos.x > topRight.x + 500.0f || mWorldPos.z < bottomLeft.z - 500.0f || mWorldPos.z > topRight.z + 500.0f)
 	{
 		// Unit is in mars airspace
 		mAirspace = AS_EARTH;

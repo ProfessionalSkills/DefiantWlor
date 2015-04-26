@@ -458,23 +458,19 @@ void CRTSPlayer::Update()
 		}
 		else
 		{
-			// Compare faction of this unit against the player
-			if (pAgent->GetFaction() != mPlayerFaction)
+			// Check if it's in the wrong airspace
+			if (mPlayerFaction == FAC_EARTH_DEFENSE_FORCE)
 			{
-				// Check if it's in the wrong airspace
-				if (mPlayerFaction == FAC_EARTH_DEFENSE_FORCE)
+				if (pAgent->GetAirspacePosition() == AS_MARS)
 				{
-					if (pAgent->GetAirspacePosition() == AS_MARS)
-					{
-						pPlayerManager->AddToMarsAirspace(pAgent);
-					}
+					pPlayerManager->AddToMarsAirspace(pAgent);
 				}
-				else if (mPlayerFaction == FAC_THE_CRIMSON_LEGION)
+			}
+			else if (mPlayerFaction == FAC_THE_CRIMSON_LEGION)
+			{
+				if (pAgent->GetAirspacePosition() == AS_EARTH)
 				{
-					if (pAgent->GetAirspacePosition() == AS_EARTH)
-					{
-						pPlayerManager->AddToEarthAirspace(pAgent);
-					}
+					pPlayerManager->AddToEarthAirspace(pAgent);
 				}
 			}
 
