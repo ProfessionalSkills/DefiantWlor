@@ -20,6 +20,9 @@ class CStaticStructure : public CStructure
 private:
 	// DATA
 	//---------------------------
+	bool mRaised = false;				// Stores whether the wall is raised to allow units to pass
+	float mRaisedAmount = 0.0f;			// Stores how high off the ground this wall is
+	float mRaisedTimer = 0.0f;
 
 
 public:
@@ -36,14 +39,19 @@ public:
 		return 0;
 	}
 
+	inline bool IsRaised()
+	{
+		return mRaised;
+	}
+
 
 	// MUTATORS
 	//---------------------------
-
-
-
-	// METHODS
-	//---------------------------
+	inline void SetRaised(bool raised)
+	{
+		mRaised = raised;
+		mRaisedTimer = 0.0f;
+	}
 
 
 	// OVERRIDE METHODS

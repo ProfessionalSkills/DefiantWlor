@@ -40,6 +40,7 @@ struct SAgentData
 // GAME AGENT CLASS - CHILD OF GAME OBJECT
 //-----------------------------------------------------
 class CRTSPlayer;
+class CStructure;
 
 class CGameAgent : public CGameObject
 {
@@ -233,6 +234,7 @@ public:
 	void CalculateBoundingSphere();
 	void Destroy();
 	void SetAttackTarget(CGameObject* target);
+	void Stop();
 
 
 	// VIRTUAL METHODS
@@ -242,6 +244,7 @@ public:
 	bool RayCollision(DX::XMFLOAT3 origin, DX::XMFLOAT3 direction, float& distance);
 	bool SphereCollision(SBoundingSphere& sphere);
 	bool DragBoxCollision(DX::BoundingBox& box);
+	bool CheckLOS(CStructure* pStructure);			// Check if the object is in reaching distance of a wall
 	void DisplayInfo(IFont* font);
 	virtual bool Update() = 0;
 	virtual void UnloadIModel() = 0;

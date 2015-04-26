@@ -19,7 +19,7 @@ TO DO: * = essential
 	- Model around building being constructed for a more interesting constructing appearance
 	*- AI to load units to ships
 	*- AI to launch fleet
-	*- AI to attack enemies when they are near
+	*- AI to attack enemies when they are invading Earth
 	*- Have a timer for when a fleet attempts to travel across space
 	*- Launch button glows red and a timer appears when the enemy is launching their fleet
 	- Walls have a lower/raise ability

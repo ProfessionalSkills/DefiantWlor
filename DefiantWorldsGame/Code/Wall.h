@@ -28,6 +28,10 @@ public:
 	virtual ~CWall();
 
 
+	// ACCESSORS & MUTATORS
+	//---------------------------
+
+
 	// METHODS
 	//---------------------------
 	void CalculateBoundingBox();
@@ -37,7 +41,6 @@ public:
 
 private:
 	bool mIsHorizontal = false;
-
 };
 
 #endif /* _WALL_H_ */

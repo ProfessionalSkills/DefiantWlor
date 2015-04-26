@@ -598,3 +598,10 @@ void CPlayerManager::CheckRebelSelection(CStructure*& pStructure, CGameAgent*& p
 		}
 	}
 }
+
+void CPlayerManager::GetWorldWalls(std::vector<CStaticStructure*>& pWalls)
+{
+	// Get all the walls from the respective players
+	mpAI[0]->GetWalls(pWalls);
+	mpHuman->GetWalls(pWalls);
+}

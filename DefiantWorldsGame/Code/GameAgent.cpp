@@ -9,6 +9,7 @@
 #include "GameAgent.h"
 #include "GameStateControl.h"
 #include "PlayerManager.h"
+#include "StaticStructure.h"
 
 
 //-----------------------------------------------------
@@ -318,4 +319,40 @@ void CGameAgent::SetAttackTarget(CGameObject* target)
 		// If the target is selected, highlight the target by giving it a red texture
 		if (mUnitSelected && mAttackTarget) mAttackTarget->SetTargetTexture();
 	}
+}
+
+bool CGameAgent::CheckLOS(CStructure* pStructure)
+{
+	// Varify objects and health
+	if (!mpObjModel || mHealth <= 0.0f) return false;
+
+	// Get local Z axis
+	float distance;
+	DX::XMFLOAT4X4 objMatrix;
+	mpObjModel->GetMatrix(&objMatrix.m[0][0]);
+	DX::XMFLOAT3 localZ{ objMatrix.m[2][0], objMatrix.m[2][1], objMatrix.m[2][2] };
+
+	// Normalise this local axis
+	DX::XMVECTOR vecNormal = DX::XMVector4Normalize(DX::XMLoadFloat3(&localZ));
+	DX::XMStoreFloat3(&localZ, vecNormal);
+	
+	// Check if the object can see the wall
+	bool inLOS = pStructure->RayCollision(mWorldPos, localZ, distance);
+
+	// If in LOS and within threshold then return true
+	if (inLOS && distance < 10.0f)
+	{
+		return true;
+	}
+
+	// No LOS or not close enough
+	return false;
+}
+
+void CGameAgent::Stop()
+{
+	// Stop everything that the agent could be doing
+	mHasPathTarget = false;
+	if (mAttackTarget && mUnitSelected) mAttackTarget->SetNormalTexture();
+	mAttackTarget = nullptr;
 }
