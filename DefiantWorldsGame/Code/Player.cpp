@@ -418,6 +418,16 @@ void CRTSPlayer::Update()
 		}
 	}
 
+	// Clear the airspace before more units are added in in the next section
+	if (mPlayerFaction == FAC_EARTH_DEFENSE_FORCE)
+	{
+		pPlayerManager->ClearEarthAirspace();
+	}
+	else
+	{
+		pPlayerManager->ClearMarsAirspace();
+	}
+
 	// Loop through all units (NOT SPACE) & update them
 	for (miterUnitsMap = mpUnitsMap.begin(); miterUnitsMap != mpUnitsMap.end(); miterUnitsMap++)
 	{
@@ -443,35 +453,24 @@ void CRTSPlayer::Update()
 		}
 		else
 		{
-			// Check airspace update time
-			if (mTimeToAirspaceUpdate <= 0.0f)
+			// Compare faction of this unit against the player
+			if (pAgent->GetFaction() != mPlayerFaction)
 			{
-				// Compare faction of this unit against the player
-				if (pAgent->GetFaction() != mPlayerFaction)
+				// Check if it's in the wrong airspace
+				if (mPlayerFaction == FAC_EARTH_DEFENSE_FORCE)
 				{
-					// Check if it's in the wrong airspace
-					if (mPlayerFaction == FAC_EARTH_DEFENSE_FORCE)
+					if (pAgent->GetAirspacePosition() == AS_MARS)
 					{
-						if (pAgent->GetAirspacePosition() == AS_MARS)
-						{
-							pPlayerManager->AddToMarsAirspace(pAgent);
-						}
-					}
-					else if (mPlayerFaction == FAC_THE_CRIMSON_LEGION)
-					{
-						if (pAgent->GetAirspacePosition() == AS_EARTH)
-						{
-							pPlayerManager->AddToEarthAirspace(pAgent);
-						}
+						pPlayerManager->AddToMarsAirspace(pAgent);
 					}
 				}
-
-				// Reset counter
-				mTimeToAirspaceUpdate = 0.3f;
-			}
-			else
-			{
-				mTimeToAirspaceUpdate -= gFrameTime;
+				else if (mPlayerFaction == FAC_THE_CRIMSON_LEGION)
+				{
+					if (pAgent->GetAirspacePosition() == AS_EARTH)
+					{
+						pPlayerManager->AddToEarthAirspace(pAgent);
+					}
+				}
 			}
 
 			// Check attach update time
@@ -480,13 +479,18 @@ void CRTSPlayer::Update()
 				// Check if there are any units in this player's airspace - 10% chance of unit attacking those in their airspace
 				if (!pAgent->GetAttackTarget() && mpRandomiser->GetRandomFloat(0.0f, 100.0f) > 90.0f)
 				{
+					CGameAgent* pTarget = nullptr;
+					int index = 0;
+					
 					if (mpAirspaceAgents.size())
 					{
 						// Pick a random index of these units interfering
-						int index = mpRandomiser->GetRandomInt(0, mpAirspaceAgents.size() - 1);
+						index = mpRandomiser->GetRandomInt(0, mpAirspaceAgents.size() - 1);
 
 						// Check target is viable for targeting
-						CGameAgent* pTarget = mpAirspaceAgents[index];
+						pTarget = mpAirspaceAgents[index];
+
+						CGameAgent* pTAgent = dynamic_cast<CGameAgent*>(pTarget);
 
 						if (pTarget->GetHealth() > 0.0f)
 						{

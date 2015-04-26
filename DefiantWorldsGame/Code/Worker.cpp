@@ -83,7 +83,7 @@ void CWorker::UnloadIModel()
 		mspMshWorker->RemoveModel(mpObjModel);
 		mpObjModel = nullptr;
 		mHasPathTarget = false;
-		if (mAttackTarget) mAttackTarget->SetNormalTexture();
+		if (mAttackTarget && mUnitSelected) mAttackTarget->SetNormalTexture();
 		mAttackTarget = nullptr;
 	}
 

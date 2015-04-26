@@ -270,7 +270,16 @@ void CGameAgent::SetAttackTarget(CGameObject* target)
 	{
 		// Apply target
 		mAttackTarget = target;
-		
+
+		// Attempt casting
+		CGameAgent* pTAgent = dynamic_cast<CGameAgent*>(target);
+		CStructure* pTStructure = dynamic_cast<CStructure*>(target);
+
+		if (!pTAgent && !pTStructure)
+		{
+			mAttackTarget = nullptr;
+		}
+
 		// Check if a target exists
 		if (mAttackTarget)
 		{
