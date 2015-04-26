@@ -7,7 +7,6 @@ PROJECT NAME:
 ProfSkillsDefiantWorlds
 
 TO DO: * = essential
-	- Anti-aircraft turret structures on top of corner towers
 	*- UI for space buttons
 	*- UI for space
 	*- STOP button for units

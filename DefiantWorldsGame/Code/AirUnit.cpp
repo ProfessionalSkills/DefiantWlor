@@ -122,6 +122,7 @@ bool CAirUnit::Update()
 			{
 				if (mDestructionExplosion == nullptr)
 				{
+					mWorldPos = { mWorldPos.x, 0.0f, mWorldPos.z }; 
 					SafeDelete(mWarningSmoke);
 					mDestructionExplosion = new CExplosion(mWorldPos, 20, false);
 					Destroy();

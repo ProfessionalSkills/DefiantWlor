@@ -18,7 +18,7 @@ CTurretStructure::CTurretStructure(DX::XMFLOAT3 position)
 	mpObjModel = mspMshTurret->CreateModel(position.x, 73.0f, position.z); //Position Turret at top of tower
 	mpObjModel->Scale(5.0f);
 	mHealth = 100.0f;
-	mRange = 200.0f;
+	mRange = 250.0f;
 	mWorldPos = { position.x, 70.0f, position.z };
 	mState = OBJ_BUILT;
 	mMaxHealth = 100.0f;
@@ -121,7 +121,7 @@ bool CTurretStructure::Update(CRTSPlayer* pPlayer)
 		if (mAttackTarget != nullptr) //If the turret has a target
 		{
 			// Check if target is dead
-			if (mAttackTarget->GetHealth() <= 0.0f)
+ 			if (mAttackTarget->GetHealth() <= 0.0f)
 			{
 				mAttackTarget = nullptr;
 			}
@@ -293,7 +293,7 @@ bool CTurretStructure::LookingAt()
 	DX::XMFLOAT3 vectorZ = { (targetPosition.x - mpObjModel->GetX()), 0.0f, (targetPosition.z - mpObjModel->GetZ()) };
 
 	float matrix[16];
-	mpObjModel->GetMatrix(matrix);
+	mpObjModel->GetNode(2)->GetMatrix(matrix);
 
 	DX::XMFLOAT3 facingVector = { matrix[8], matrix[9], matrix[10] };
 	const DX::XMFLOAT3 kYAxis(0.0f, 1.0f, 0.0f);
@@ -302,12 +302,12 @@ bool CTurretStructure::LookingAt()
 
 	if (dotProduct > 0.01f)
 	{
-		mpObjModel->RotateY(100.0f * gFrameTime);
+		mpObjModel->GetNode(2)->RotateY(100.0f * gFrameTime);
 		return false;
 	}
 	else if (dotProduct < -0.01f)
 	{
-		mpObjModel->RotateY(-100.0f * gFrameTime);
+		mpObjModel->GetNode(2)->RotateY(-100.0f * gFrameTime);
 		return false;
 	}
 	else
