@@ -568,6 +568,32 @@ void CRTSPlayer::Update()
 			}
 		}
 	}
+
+	for (auto turret : mpBaseTurretList)
+	{
+		turret->Update(this);
+		float distance = 9999.0f;
+		if (turret->GetAttackTarget() == nullptr)
+		{
+			for (auto enemy : mpAirspaceAgents)
+			{
+				if (enemy->GetObjectType() == Q_BOMBER || enemy->GetObjectType() == Q_FIGHTER)
+				{
+					float distX = turret->GetWorldPos().x - enemy->GetWorldPos().x;
+					float distY = turret->GetWorldPos().y - enemy->GetWorldPos().y;
+					float distZ = turret->GetWorldPos().z - enemy->GetWorldPos().z;
+
+					distance = ((distX * distX) + (distY * distY) + (distZ * distZ));
+					if (distance <= (turret->GetRange() * turret->GetRange()))
+					{
+						turret->SetAttackTarget(enemy);
+						break;
+					}
+				}
+			}
+		}
+		
+	}
 }
 
 void CRTSPlayer::CreateResourcePiles()
@@ -880,7 +906,7 @@ void CRTSPlayer::CreatePillars()
 	mpPillars[7] = mspMshPillar->CreateModel(centre.x, 0.0f, bottomLeft.z - 15.0f);
 	mpPillars[7]->RotateY(180.0f);
 
-	DX::XMFLOAT3 bottomLeftTurret = {bottomLeft.x - 7.5f, 0.0f, bottomLeft.z - 3.5f};
+	DX::XMFLOAT3 bottomLeftTurret = {bottomLeft.x - 7.5f, 0.0f, bottomLeft.z - 7.5f};
 	DX::XMFLOAT3 bottomRightTurret = { topRight.x + 7.5f, 0.0f, bottomLeft.z - 7.5f };
 	DX::XMFLOAT3 topLeftTurret = { bottomLeft.x - 7.5f, 0.0f, topRight.z + 7.5f };
 	DX::XMFLOAT3 topRightTurret = { topRight.x + 7.5f, 0.0f, topRight.z + 7.5f };

@@ -26,6 +26,7 @@ public:
 		CMovingUI(pos, boxDimensions, transitionType, active, transitionTime), mTargetClass(targetClass),
 		mTargetMethod(targetMethod), mIsHidden(false), mMouseIsOver(false)
 	{
+		mHoverOverText = "";
 		mIsHidden = !active;
 		mpSprBasic = gpEngine->CreateSprite(defaultTex, mCurPosition.x, mCurPosition.y, 0.7f);
 		mpSprMO = gpEngine->CreateSprite(selectedTex, mCurPosition.x, mCurPosition.y, -1.0f);
@@ -36,6 +37,7 @@ public:
 		CMovingUI(pos, boxDimensions, transitionType, active, transitionTime), mTargetClass(targetClass),
 		mTargetMethod(targetMethod), mIsHidden(false), mMouseIsOver(false)
 	{
+		mHoverOverText = "";
 		mIsHidden = !active;
 		mpSprBasic = nullptr;
 		mpSprMO = nullptr;
@@ -198,6 +200,11 @@ public:
 		return mIsHidden;
 	}
 
+	inline std::string GetHoverText()
+	{
+		return mHoverOverText;
+	}
+
 
 	// MUTATORS
 	//---------------------------
@@ -213,6 +220,10 @@ public:
 		}
 	}
 
+	void SetHoverOverText(std::string text)
+	{
+		mHoverOverText = text;
+	}
 
 private:
 	// FUNCTION POINTER
@@ -231,6 +242,7 @@ private:
 	//---------------------------
 	ISprite* mpSprBasic;			// basic sprite
 	ISprite* mpSprMO;				// mouse over sprite
+	std::string mHoverOverText;
 };
 
 
@@ -321,6 +333,8 @@ struct SStructureButtons
 			mpButtons[i]->UnloadButtons();
 		}
 	}
+
+
 };
 
 

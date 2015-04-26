@@ -9,8 +9,7 @@
 #include "Common.h"
 #include "SpaceUnit.h"
 #include "Randomiser.h"
-
-
+#include <map>
 //-----------------------------------------------------
 // FLEET CLASS
 //-----------------------------------------------------
@@ -27,6 +26,12 @@ private:
 	int mNumMothership;
 	int mNumTransport;
 	int mUnitsLostValue;
+
+	// PARTICLES
+	std::map<CExplosion*, float> M_Explosions;
+	std::map<CExplosion*, float>::iterator mpParticleIt;
+	const float mExplosionTime;
+	const float mExplosionNumParticle;
 
 	CRTSPlayer* mpPlayer;
 
@@ -51,6 +56,7 @@ private:
 	const int mNumFleetSections;
 	float mSpecialAttackCooldownTimer;
 	const float mSpecialAttackCooldownTime;
+	const float mSpecialAttackCost;
 
 	// POSITIONING
 	//---------------------------
@@ -85,9 +91,20 @@ public:
 	void ChargeFleetLazers();//used to slow down space lazer firing
 
 	//special attacks, used by the fleet
-	bool SpecialAttackLazerBarrage();
-	bool SpecialAttackMassHeal();
+	bool SpecialAttackLazerBarrage(CRTSPlayer* player);
+	bool SpecialAttackMassHeal(CRTSPlayer* player);
+	//deletes the explosions and clears the xplosion list
+	inline void CleanUpExplosions()
+	{
+		for (auto x : M_Explosions)
+		{
+			mpParticleIt = M_Explosions.find(x.first);
+			delete x.first;
+		}
+		M_Explosions.clear();
+	}
 
+	void UpdateExplosions();
 
 	// ACCESSORS
 	//---------------------------
@@ -112,6 +129,8 @@ public:
 		if (mShotsFired!=0) return ((float)mHits / (float)mShotsFired)*100.0f;
 		else return 0;
 	}
+
+
 
 	// MUTATORS
 	//---------------------------
