@@ -9,8 +9,7 @@
 #include "Common.h"
 #include "SpaceUnit.h"
 #include "Randomiser.h"
-
-
+#include <map>
 //-----------------------------------------------------
 // FLEET CLASS
 //-----------------------------------------------------
@@ -27,6 +26,9 @@ private:
 	int mNumMothership;
 	int mNumTransport;
 	int mUnitsLostValue;
+	std::map<CExplosion*, float> M_Explosions;
+	std::map<CExplosion*, float>::iterator mpParticleIt;
+
 
 	CRTSPlayer* mpPlayer;
 
@@ -111,6 +113,17 @@ public:
 	{
 		if (mShotsFired!=0) return ((float)mHits / (float)mShotsFired)*100.0f;
 		else return 0;
+	}
+
+	//deletes the explosions and clears the xplosion list
+	inline void CleanUpExplosions()
+	{
+		for (auto x : M_Explosions)
+		{
+			mpParticleIt = M_Explosions.find(x.first);
+			delete x.first;
+		}
+		M_Explosions.clear();
 	}
 
 	// MUTATORS

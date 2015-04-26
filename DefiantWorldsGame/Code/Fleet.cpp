@@ -158,14 +158,28 @@ void CFleet::UpdateCondition()
 			default:
 				break;
 			}
-
 			
 			CSpaceUnit* mpTemp = (CSpaceUnit*)(mpFleet[i]);
 			mUnitsLostValue += mpTemp->GetPopValue()+mpTemp->GetCargoValue();
 			mpFleet[i] = mpFleet[mSize - 1];
 			mpFleet.pop_back();
+			CExplosion* temp = new CExplosion(mpTemp->GetWorldPos(), 25.0f, true);
+			M_Explosions.emplace(temp,5.0f);
+
 			delete mpTemp;
 			mSize--;
+		}
+	}
+	//updates the explosions, and then deletes them after they have been onscreen for a given amount of time
+	for (auto x : M_Explosions)
+	{
+		x.first->UpdateSystem();
+		x.second -= gFrameTime;
+		if (x.second < 0.0f)
+		{
+			mpParticleIt=M_Explosions.find(x.first);
+			delete x.first;
+			M_Explosions.erase(mpParticleIt);
 		}
 	}
 }
