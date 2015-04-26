@@ -14,7 +14,7 @@
 // FLEET CLASS CONSTRUCTORS & DESTRUCTOR
 //-----------------------------------------------------
 CFleet::CFleet() :mFleetRowSize(20), mFleetRowSeperation(7), mFleetZAdjust(8), mFleetYCyleHeight(0.01f), mNumFleetSections(5),
-mSpecialAttackCooldownTime(5.0f)
+mSpecialAttackCooldownTime(5.0f), mExplosionTime(4.0f), mExplosionNumParticle(25.0f)
 {
 	//Value Mods
 	mDamegMod = 1.0f;
@@ -163,13 +163,18 @@ void CFleet::UpdateCondition()
 			mUnitsLostValue += mpTemp->GetPopValue()+mpTemp->GetCargoValue();
 			mpFleet[i] = mpFleet[mSize - 1];
 			mpFleet.pop_back();
-			CExplosion* temp = new CExplosion(mpTemp->GetWorldPos(), 25.0f, true);
-			M_Explosions.emplace(temp,5.0f);
+			CExplosion* temp = new CExplosion(mpTemp->GetWorldPos(), mExplosionNumParticle, true);
+			M_Explosions.emplace(temp,mExplosionTime);
 
 			delete mpTemp;
 			mSize--;
 		}
 	}
+
+}
+
+void CFleet::UpdateExplosions()
+{
 	//updates the explosions, and then deletes them after they have been onscreen for a given amount of time
 	for (auto x : M_Explosions)
 	{
@@ -177,7 +182,7 @@ void CFleet::UpdateCondition()
 		x.second -= gFrameTime;
 		if (x.second < 0.0f)
 		{
-			mpParticleIt=M_Explosions.find(x.first);
+			mpParticleIt = M_Explosions.find(x.first);
 			delete x.first;
 			M_Explosions.erase(mpParticleIt);
 		}

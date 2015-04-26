@@ -311,6 +311,11 @@ void CSpaceState::StateUpdate()
 	// UPDATE VICTORY STATE
 	//------------------------------
 	CheckForVictory();
+
+	// UPDATE PARTICLE SYSTEMS
+	//------------------------------
+	mpPlayerOneFleet->UpdateExplosions();
+	mpPlayerTwoFleet->UpdateExplosions();
 }
 
 void CSpaceState::DrawFontData()
