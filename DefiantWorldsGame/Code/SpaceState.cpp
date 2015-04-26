@@ -223,6 +223,11 @@ void CSpaceState::StateUpdate()
 	mMousePos.y = (float)gpEngine->GetMouseY();
 	UpdateButtons();
 
+	if (!mpPlayerOneFleet->SceneSpaceFight() || !mpPlayerTwoFleet->SceneSpaceFight())
+	{
+		return;
+	}
+
 	if (!mPaused&&!PlayerOneVictory&&!PlayerTwoVictory)
 	{
 		if (mTacticChoosen)
