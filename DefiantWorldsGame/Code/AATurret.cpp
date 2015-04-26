@@ -19,13 +19,13 @@ CTurretStructure::CTurretStructure(DX::XMFLOAT3 position)
 	mpObjModel->SetSkin("bld-mt.jpg");
 	mpObjModel->Scale(5.0f);
 	mHealth = 150.0f;
-	mRange = 200.0f;
+	mRange = 150.0f;
 	mWorldPos = { position.x, 73.0f, position.z };
 	mState = OBJ_BUILT;
 	mMaxHealth = 150.0f;
-	mDamage = 14.0f;
-	mAttackTimer = 0.0f;
-	mFireRate = 10.0f;
+	mDamage = 150.0f;
+	mAttackTimer = 3.0f;
+	mFireRate = 0.3f;
 }
 
 CTurretStructure::~CTurretStructure()
@@ -102,11 +102,11 @@ bool CTurretStructure::Update(CRTSPlayer* pPlayer)
 			else
 			{
 				//Get the distance between target and turret
-				float distX = ((GetWorldPos().x - mAttackTarget->GetWorldPos().x) * (GetWorldPos().x - mAttackTarget->GetWorldPos().x));
-				float distY = ((GetWorldPos().y - mAttackTarget->GetWorldPos().y) * (GetWorldPos().y - mAttackTarget->GetWorldPos().y));
-				float distZ = ((GetWorldPos().z - mAttackTarget->GetWorldPos().z) * (GetWorldPos().z - mAttackTarget->GetWorldPos().z));
+				DX::XMFLOAT3 targetPos = mAttackTarget->GetWorldPos();
+				float distX = mWorldPos.x - targetPos.x;
+				float distZ = mWorldPos.z - targetPos.z;
 
-				float distance = distX + distY + distZ;
+				float distance = (distX * distX) + (distZ * distZ);
 
 				//If the target is out of range, remove it as a target
 				if (distance > (mRange * mRange))
@@ -251,7 +251,7 @@ bool CTurretStructure::Attack(CGameObject* pTarget, float hitMod, float damageMo
 			SProjectile* newProjectile = new SProjectile();
 			newProjectile->mModel = mspMshTurretShell->CreateModel(mWorldPos.x, 75.0f, mWorldPos.z);
 			newProjectile->mDirection = localZ;
-			newProjectile->mSpeed = 300.0f;
+			newProjectile->mSpeed = 700.0f;
 			newProjectile->mLifeTime = 3.0f;
 
 			mpProjectiles.push_back(newProjectile);
