@@ -23,21 +23,34 @@ class CSpaceUnit : public CGameAgent
 protected:
 	// DATA
 	//---------------------------
+
+	//ship attack chance
 	float mHitChance;
+	CRandomiser* mpToHitRoll;
 	float mUnitSpacing;
 	float mCargoValue;
+
+	//lazer/shield models
 	IModel* mpTempShield;
 	IModel* mpTempLazer;
+
+	//values to mange charging of lazers
 	const float mChargeTimeMax;//max time a laser should charge for
 	const float mChargeTimeMin;//minnimum time a lazer should charge for
 	float mChargeTime;//time laser is currently charging for
-	CRandomiser* mpToHitRoll;
 	bool mChargingLazers;
 	bool mCharged;
 	bool mFiredLazer;
+
+	//sound variables
 	CSound* mSoundExplosion;	
 	string  mSoundFileLazer;
 	string mSoundFileExplosion;
+
+	//scene variables
+	//DX::XMFLOAT3 mTargetPos;
+	float mTravelRadius;
+	float mTravelSpeed;
 
 public:
 	// CONSTRUCTORS & DESTRUCTOR
@@ -46,7 +59,7 @@ public:
 	virtual ~CSpaceUnit();
 	static IMesh* mspMshLazer;
 
-
+	
 	// ACCESSORS
 	//---------------------------
 

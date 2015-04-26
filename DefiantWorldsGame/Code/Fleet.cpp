@@ -338,6 +338,11 @@ bool CFleet::SpecialAttackMassHeal(CRTSPlayer* player)
 	return false;
 }
 
+bool CFleet::SceneSpaceFight()
+{
+
+}
+
 //-----------------------------------------------------
 // FLEET CLASS ACCESSORS
 //-----------------------------------------------------

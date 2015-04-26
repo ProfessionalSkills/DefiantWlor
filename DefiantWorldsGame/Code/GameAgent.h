@@ -227,6 +227,14 @@ public:
 		mBoundingSphere.MoveTo(mWorldPos);
 	}
 
+	inline void RotateModelY(float DegRot)
+	{
+		if (mpObjModel != 0)
+		{
+			mpObjModel->RotateY(DegRot);
+		}
+	}
+
 
 	// METHODS
 	//---------------------------

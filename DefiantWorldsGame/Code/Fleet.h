@@ -93,7 +93,9 @@ public:
 	//special attacks, used by the fleet
 	bool SpecialAttackLazerBarrage(CRTSPlayer* player);
 	bool SpecialAttackMassHeal(CRTSPlayer* player);
-	//deletes the explosions and clears the xplosion list
+
+	//particle effects
+	//deletes the explosions and clears the explosion list
 	inline void CleanUpExplosions()
 	{
 		for (auto x : M_Explosions)
@@ -105,6 +107,9 @@ public:
 	}
 
 	void UpdateExplosions();
+
+	//transistion scenes
+	bool SceneSpaceFight();
 
 	// ACCESSORS
 	//---------------------------
