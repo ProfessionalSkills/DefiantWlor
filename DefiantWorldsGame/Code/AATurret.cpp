@@ -10,22 +10,28 @@
 
 IMesh* CTurretStructure::mspMshTurret = nullptr;
 IMesh* CTurretStructure::mspMshTurretShell = nullptr;
+
+
 //-----------------------------------------------------
 // STATIC STRUCTURE CLASS CONSTRUCTORS & DESTRUCTOR
 //-----------------------------------------------------
 CTurretStructure::CTurretStructure(DX::XMFLOAT3 position)
 {
-	mpObjModel = mspMshTurret->CreateModel(position.x, 73.0f, position.z); //Position Turret at top of tower
-	mpObjModel->SetSkin("bld-mt.jpg");
-	mpObjModel->Scale(5.0f);
-	mHealth = 150.0f;
+	mScale = 5.0f;
+	mHealth = 400.0f;
 	mRange = 150.0f;
 	mWorldPos = { position.x, 73.0f, position.z };
 	mState = OBJ_BUILT;
-	mMaxHealth = 150.0f;
+	mMaxHealth = 400.0f;
 	mDamage = 150.0f;
 	mAttackTimer = 3.0f;
 	mFireRate = 0.3f;
+	mStructureType = STR_AA;
+	mHeight = 6.0f;
+
+	mpObjModel = nullptr;
+
+	mIsGroundType = true;
 }
 
 CTurretStructure::~CTurretStructure()
@@ -37,6 +43,18 @@ CTurretStructure::~CTurretStructure()
 //-----------------------------------------------------
 // STATIC STRUCTURE CLASS OVERRIDE METHODS
 //-----------------------------------------------------
+void CTurretStructure::CalculateBoundingBox()
+{
+	mStructureBL = SPointData(-6, -6);
+	mStructureTR = SPointData(6, 6);
+
+	float top = mWorldPos.z + ((float)mStructureTR.mPosY);
+	float bottom = mWorldPos.z + ((float)mStructureBL.mPosY);
+	float right = mWorldPos.x + ((float)mStructureTR.mPosX);
+	float left = mWorldPos.x + ((float)mStructureBL.mPosX);
+	mBoundingBox = SBoundingCube(DX::XMFLOAT3(left, 0.0f, bottom), DX::XMFLOAT3(right, mWorldPos.y + mHeight, top));
+}
+
 bool CTurretStructure::Update(CRTSPlayer* pPlayer)
 {
 	// Determine state of the structure
@@ -57,7 +75,7 @@ bool CTurretStructure::Update(CRTSPlayer* pPlayer)
 		{
 			if (mWarningSmoke == nullptr)
 			{
-				mWarningSmoke = new CSmoke(mWorldPos, mHeight, 0.8f, mBoundingBox.GetWidthExtent() / 3.0f, mBoundingBox.GetLengthExtent() / 3.0f);
+				mWarningSmoke = new CSmoke(mWorldPos, mWorldPos.y + mHeight, 0.8f, mBoundingBox.GetWidthExtent() / 3.0f, mBoundingBox.GetLengthExtent() / 3.0f);
 			}
 			else
 			{
@@ -69,10 +87,14 @@ bool CTurretStructure::Update(CRTSPlayer* pPlayer)
 		// Check if no health left
 		if ((mHealth <= 0.0f))
 		{
+			// No attack target
+			mAttackTarget = nullptr;
+
+			// Update destruction explosion
 			if (mDestructionExplosion == nullptr)
 			{
 				SafeDelete(mWarningSmoke);
-				mDestructionExplosion = new CExplosion({ mWorldPos.x, mWorldPos.y + 20.0f, mWorldPos.z }, 150, false);
+				mDestructionExplosion = new CExplosion({ mWorldPos.x, mWorldPos.y + mHeight, mWorldPos.z }, 150, false);
 				Destroy();
 			}
 			else
@@ -165,6 +187,8 @@ bool CTurretStructure::Update(CRTSPlayer* pPlayer)
 			explosions->UpdateSystem(); //Update systems 
 		}
 	}
+
+	return true;
 }
 
 void CTurretStructure::DisplayInfo(IFont* font)
@@ -180,12 +204,34 @@ EErrorTypes CTurretStructure::AddToQueue(size_t agentIndex, CRTSPlayer* pPlayer)
 
 void CTurretStructure::UnloadIModel()
 {
-
+	if (mpObjModel != nullptr)
+	{
+		mspMshTurret->RemoveModel(mpObjModel);
+		mpObjModel = nullptr;
+	}
 }
 
 void CTurretStructure::LoadIModel()
 {
+	if (mpObjModel == nullptr)
+	{
+		// Create new model with original mesh
+		mpObjModel = mspMshTurret->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
+		mpObjModel->Scale(mScale);
+		mpObjModel->RotateY(mOrientation);
 
+		// If the x is beyond a certain distance, the object is on mars - set relevant skin
+		if (mFaction == FAC_THE_CRIMSON_LEGION)
+		{
+			mpObjModel->SetSkin("bld-mt-mars.jpg");
+		}
+		else
+		{
+			mpObjModel->SetSkin("bld-mt.jpg");
+		}
+
+		CalculateBoundingBox();
+	}
 }
 
 void CTurretStructure::SaveStructure(std::ofstream& outFile)

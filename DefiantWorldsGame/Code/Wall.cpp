@@ -23,8 +23,8 @@ CWall::CWall()
 	mScale = pRandom->GetRandomFloat(9.0f, 9.1f);
 
 	mIsHorizontal = false;
-	mHealth = 1000.0f;
-	mMaxHealth = 1000.0f;
+	mHealth = 2000.0f;
+	mMaxHealth = 2000.0f;
 	mBuildTime = 5.0f;
 	mRepairSpeed = 1.0f;
 	mCurBuildTimeLeft = mBuildTime;
@@ -85,11 +85,11 @@ void CWall::CalculateBoundingBox()
 	// Determine if it is a horizontal wall or not
 	if (mIsHorizontal)
 	{
-		mStructureBL = SPointData(-15, 1);
-		mStructureTR = SPointData(15, -1);
+		mStructureBL = SPointData(-15, -1);
+		mStructureTR = SPointData(15, 1);
 		
-		float top = mWorldPos.z + ((float)mStructureTR.mPosY * GRID_TILE_SIZE) + (GRID_TILE_SIZE / 2.0f);
-		float bottom = mWorldPos.z + ((float)mStructureBL.mPosY * GRID_TILE_SIZE) - (GRID_TILE_SIZE / 2.0f);
+		float top = mWorldPos.z + (0.4f * GRID_TILE_SIZE) + (GRID_TILE_SIZE / 2.0f);
+		float bottom = mWorldPos.z + (-0.4f * GRID_TILE_SIZE) - (GRID_TILE_SIZE / 2.0f);
 		float right = mWorldPos.x + ((float)mStructureTR.mPosX * GRID_TILE_SIZE) + (GRID_TILE_SIZE / 2.0f);
 		float left = mWorldPos.x + ((float)mStructureBL.mPosX * GRID_TILE_SIZE) - (GRID_TILE_SIZE / 2.0f);
 		mBoundingBox = SBoundingCube(DX::XMFLOAT3(left, 0.0f, bottom), DX::XMFLOAT3(right, mHeight, top));
@@ -101,8 +101,8 @@ void CWall::CalculateBoundingBox()
 
 		float top = mWorldPos.z + ((float)mStructureTR.mPosY * GRID_TILE_SIZE) + (GRID_TILE_SIZE / 2.0f);
 		float bottom = mWorldPos.z + ((float)mStructureBL.mPosY * GRID_TILE_SIZE) - (GRID_TILE_SIZE / 2.0f);
-		float right = mWorldPos.x + ((float)mStructureTR.mPosX * GRID_TILE_SIZE) + (GRID_TILE_SIZE / 2.0f);
-		float left = mWorldPos.x + ((float)mStructureBL.mPosX * GRID_TILE_SIZE) - (GRID_TILE_SIZE / 2.0f);
+		float right = mWorldPos.x + (0.4f * GRID_TILE_SIZE) + (GRID_TILE_SIZE / 2.0f);
+		float left = mWorldPos.x + (-0.4f * GRID_TILE_SIZE) - (GRID_TILE_SIZE / 2.0f);
 		mBoundingBox = SBoundingCube(DX::XMFLOAT3(left, 0.0f, bottom), DX::XMFLOAT3(right, mHeight, top));
 	}
 }

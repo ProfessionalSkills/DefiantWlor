@@ -250,7 +250,7 @@ void CStructure::Destroy()
 		mStrDisplay.str("");
 	}
 	
-	if (mStructureType != STR_WALL)
+	if (mStructureType != STR_WALL && mStructureType != STR_AA)
 	{
 		// Mark the building's grid area as in use
 		CTile* pNextTile;
