@@ -28,11 +28,9 @@ TO DO: * = essential
 	- If time, decorate surrounding area
 	*- Create a saved game to load so that on demo day people are not bored whilst units are constructed etc.
 	*- Fix game loading bugs
-	- Add houses??
 	*- Update population costs of units
 	*- Add UI for button mouse over descriptions
 	*- LIMITS - no more than ONE mothership per player at any given point
-	- Add cost to buttons if applicable
 */
 
 

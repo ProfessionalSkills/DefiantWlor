@@ -490,8 +490,6 @@ void CRTSPlayer::Update()
 						// Check target is viable for targeting
 						pTarget = mpAirspaceAgents[index];
 
-						CGameAgent* pTAgent = dynamic_cast<CGameAgent*>(pTarget);
-
 						if (pTarget->GetHealth() > 0.0f)
 						{
 							// Give the target to this unit
@@ -509,7 +507,15 @@ void CRTSPlayer::Update()
 			}
 
 			// Check for wall collisions - units should not be able to move through walls
-
+			if (mTimeToWallCheckUpdate <= 0.0f)
+			{
+				// Reset wall check timer
+				mTimeToWallCheckUpdate = 0.3f;
+			}
+			else
+			{
+				mTimeToWallCheckUpdate -= gFrameTime;
+			}
 		}
 	}
 }
