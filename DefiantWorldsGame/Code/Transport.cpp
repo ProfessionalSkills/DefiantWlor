@@ -86,7 +86,7 @@ void CTransport::HitFlash()
 	{
 		mpTempShield = mspMshSheild->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
 		mpTempShield->Scale(mScale + 0.03f);
-		mpTempShield->RotateX(-35.0f);
+		//mpTempShield->RotateX(-35.0f);
 	}
 }
 
@@ -127,9 +127,15 @@ void CTransport::LoadModel(float x, float y, float z)
 	mGenSound = new CSound(mSoundFileLazer, mSourcePos, mSourceVel, false, volume, listenerPos, listenerVel);
 	mSoundExplosion = new CSound(mSoundFileExplosion, mSourcePos, mSourceVel, false, volume, listenerPos, listenerVel);
 
-	mpObjModel->RotateX(-35.0f);
-
 	mpObjModel->Scale(mScale);
+	if (mWorldPos.x < 0)
+	{
+		mpObjModel->RotateY(90.0f);
+	}
+	else
+	{
+		mpObjModel->RotateY(-90.0f);
+	}
 }
 
 

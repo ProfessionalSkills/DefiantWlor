@@ -15,7 +15,7 @@
 //-----------------------------------------------------
 CFleet::CFleet() :mFleetRowSize(20), mFleetRowSeperation(7), mFleetZAdjust(8), mFleetYCyleHeight(0.01f), mNumFleetSections(5),
 mSpecialAttackCooldownTime(5.0f), mExplosionTime(4.0f), mExplosionNumParticle(25.0f), mSpecialAttackCost(500.0f),
-mSceneStartX(50.0f), mSceneDuration(6.0f)
+mSceneStartX(200.0f), mSceneDuration(6.0f)
 {
 	//Value Mods
 	mDamegMod = 1.0f;
@@ -202,17 +202,9 @@ int CFleet::YSwitch(int x)
 
 void CFleet::LoadShipModels(float xPos)
 {
-	int SpaceFighterLoaded = 0;
-	int TransportLoaded = 0;
-	int MothershipLoaded = 0;
-
-	int SpaceFighterY = 0;
-	int TransportY = 0;
-	int MothershipY = 0;
-	int posMod = 1;
-	int TransportRowsBack = (mNumSpaceFighter / mFleetRowSize)+1;
-	int MotherShipRowsBack = (mNumTransport / mFleetRowSize) + TransportRowsBack + 1;
-
+	SetShipPositions(xPos);
+	int posMod;
+	CSpaceUnit* temp;
 	if (xPos < 0.0f)
 	{
 		posMod = -1;
@@ -222,32 +214,10 @@ void CFleet::LoadShipModels(float xPos)
 		posMod = 1;
 	}
 
-	for (int i = 0; i < mSize; i++)
+	for (auto unit: mpFleet)
 	{
-		//uses intager deviosion to seperate ships into rows of x, where x is the fleet row size, and each row is seperated by a distance of fleet row seperation
-		switch (mpFleet[i]->GetPosType())
-		{
-		case front:
-			mpFleet[i]->LoadModel(xPos + (float)((SpaceFighterLoaded / mFleetRowSize) * (mFleetRowSeperation)*posMod),
-				((float)SpaceFighterY*mFleetRowSeperation) + mFleetYAdjust, (float)mFleetZAdjust*SpaceFighterY);
-			SpaceFighterLoaded++;
-			SpaceFighterY = YSwitch(SpaceFighterY);
-			break;
-		case centre:
-			mpFleet[i]->LoadModel(xPos + (float)(((TransportLoaded / mFleetRowSize) + TransportRowsBack + mpFleet[i]->GetUnitSpacing()) * mFleetRowSeperation*posMod),
-				((float)TransportY*mFleetRowSeperation) + mFleetYAdjust, (float)mFleetZAdjust*TransportY);
-			TransportLoaded++;
-			TransportY = YSwitch(TransportY);
-			break;
-		case back:
-			mpFleet[i]->LoadModel(xPos + (float)(((MothershipLoaded / mFleetRowSize) + MotherShipRowsBack + mpFleet[i]->GetUnitSpacing()) * mFleetRowSeperation*posMod),
-				((float)MothershipY*mFleetRowSeperation) + mFleetYAdjust, (float)mFleetZAdjust*MothershipY);
-			MothershipLoaded++;
-			MothershipY = YSwitch(MothershipY);
-			break;
-		default:
-			break;
-		}
+		temp = (CSpaceUnit*)unit;
+		unit->LoadModel(posMod*mSceneStartX, temp->GetTargetPos().y, temp->GetTargetPos().z - temp->GetTravelRadius());
 	}
 }
 

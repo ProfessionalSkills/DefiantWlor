@@ -127,7 +127,14 @@ void CMothership::LoadModel(float x, float y, float z)
 	// .cpp file ONLY otherwise you'll get cyclic redundancy
 	mGenSound = new CSound(mSoundFileLazer, mSourcePos, mSourceVel, false, volume, listenerPos, listenerVel);
 	mSoundExplosion = new CSound(mSoundFileExplosion, mSourcePos, mSourceVel, false, volume, listenerPos, listenerVel);
-	mpObjModel->RotateX(-35.0f);
+	if (mWorldPos.x < 0)
+	{
+		mpObjModel->RotateY(90.0f);
+	}
+	else
+	{
+		mpObjModel->RotateY(-90.0f);
+	}
 	mpObjModel->Scale(mScale);
 }
 
