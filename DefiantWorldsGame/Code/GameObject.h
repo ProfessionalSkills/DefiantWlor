@@ -12,6 +12,7 @@
 #include "Common.h"
 #include "Explosion.h"
 #include "Smoke.h"
+#include "Spark.h"
 
 
 //-----------------------------------------------------

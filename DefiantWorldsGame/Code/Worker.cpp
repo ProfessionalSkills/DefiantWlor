@@ -270,6 +270,14 @@ bool CWorker::Update()
 			// Simple animation of making the model rotate
 			mpMdlHarvest->RotateLocalZ(50.0f * gFrameTime);
 		}
+		if (!mpCollectionSpark)
+		{
+			mpCollectionSpark = new CSpark(mpActiveMineral->GetWorldPos());
+		}
+		else
+		{
+			mpCollectionSpark->UpdateSystem();
+		}
 	}
 	else
 	{
@@ -278,6 +286,11 @@ bool CWorker::Update()
 		{
 			mspMshWorkerLaser->RemoveModel(mpMdlHarvest);
 			mpMdlHarvest = nullptr;
+		}
+		if (mpCollectionSpark)
+		{
+			mpCollectionSpark->~CSpark();
+			mpCollectionSpark = nullptr;
 		}
 	}
 

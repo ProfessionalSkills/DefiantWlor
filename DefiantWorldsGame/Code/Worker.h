@@ -24,6 +24,7 @@ private:
 	bool mHarvesting = false;
 	CMinerals* mpActiveMineral = nullptr;			// Stores a pointer to the mineral which is being harvested by this worker unit
 	IModel* mpMdlHarvest = nullptr;
+	CSpark* mpCollectionSpark = nullptr;
 
 
 public:
