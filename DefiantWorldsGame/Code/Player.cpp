@@ -856,7 +856,7 @@ void CRTSPlayer::CreatePillars()
 	mpPillars[7] = mspMshPillar->CreateModel(centre.x, 0.0f, bottomLeft.z - 15.0f);
 	mpPillars[7]->RotateY(180.0f);
 
-	DX::XMFLOAT3 bottomLeftTurret = {bottomLeft.x - 7.5f, 0.0f, bottomLeft.z - 3.5f};
+	DX::XMFLOAT3 bottomLeftTurret = {bottomLeft.x - 7.5f, 0.0f, bottomLeft.z - 7.5f};
 	DX::XMFLOAT3 bottomRightTurret = { topRight.x + 7.5f, 0.0f, bottomLeft.z - 7.5f };
 	DX::XMFLOAT3 topLeftTurret = { bottomLeft.x - 7.5f, 0.0f, topRight.z + 7.5f };
 	DX::XMFLOAT3 topRightTurret = { topRight.x + 7.5f, 0.0f, topRight.z + 7.5f };

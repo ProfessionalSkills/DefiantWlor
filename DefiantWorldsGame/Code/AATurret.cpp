@@ -15,7 +15,7 @@ IMesh* CTurretStructure::mspMshTurretShell = nullptr;
 //-----------------------------------------------------
 CTurretStructure::CTurretStructure(DX::XMFLOAT3 position)
 {
-	mpObjModel = mspMshTurret->CreateModel(position.x, 70.0f, position.z); //Position Turret at top of tower
+	mpObjModel = mspMshTurret->CreateModel(position.x, 73.0f, position.z); //Position Turret at top of tower
 	mpObjModel->Scale(5.0f);
 	mHealth = 100.0f;
 	mRange = 200.0f;
