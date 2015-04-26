@@ -74,8 +74,14 @@ protected:
 	int mNumBomber;
 	CGrid* mpPlayerGrid;
 
+
+	// COUNTDOWN/UPDATE TIME VARIABLES
+	//---------------------------
 	const float MINERAL_UPDATE_TIME;
 	float mTimeToMineralUpdate;
+	float mTimeToAirspaceUpdate = 0.3f;
+	float mTimeToWallCheckUpdate = 0.23f;
+	float mTimeToAttackCheckUpdate = 0.17;
 
 
 	// LISTS

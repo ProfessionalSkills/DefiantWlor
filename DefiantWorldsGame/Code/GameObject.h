@@ -29,8 +29,8 @@ protected:
 	float mScale;
 	int mBuildCost;
 	int mPopCost = 0;
-	float mMaxHealth;
-	float mHealth;
+	float mMaxHealth = -1.0f;
+	float mHealth = -1.0f;
 
 	// Store whether or not this entity is of ground or air type
 	bool mIsGroundType = true;
@@ -45,8 +45,8 @@ protected:
 	IModel* mpObjModel = nullptr;
 	IModel* mpObjShadow = nullptr;
 
-	CExplosion* mDestructionExplosion;
-	CSmoke* mWarningSmoke;
+	CExplosion* mDestructionExplosion = nullptr;
+	CSmoke* mWarningSmoke = nullptr;
 
 
 	// SOUND
@@ -142,6 +142,11 @@ public:
 	inline bool IsGroundType()
 	{
 		return mIsGroundType;
+	}
+
+	inline EObjectStates GetState()
+	{
+		return mState;
 	}
 
 

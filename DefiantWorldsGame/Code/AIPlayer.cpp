@@ -141,10 +141,10 @@ void CRTSAIPlayer::Update()
 				mpTaskQ.pop();
 			}
 		}
-		if (mpTaskQ.size() > 100)
+		if (mpTaskQ.size() > 50)
 		{
 			// Too many items in the list - clear it
-			for (int i = 0; i < 95; i++)
+			for (int i = 0; i < 45; i++)
 			{
 				// Remove most of the items
 				CBuildRequest* pRequest = mpTaskQ.top();

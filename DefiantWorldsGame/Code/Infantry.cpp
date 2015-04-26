@@ -287,7 +287,7 @@ bool CInfantry::Update()
 			else if (mAttackTarget->SphereCollision(projectile->mCollisionSphere)) //Point to Box collision between the projectile and the attack target
 			{
 				mAttackTarget->TakeDamage(mDamage);
-				mpAttackExplosions.push_back(new CExplosion(projectile->mModel, 10, false));
+				mpAttackExplosions.push_back(new CExplosion(position, 10, false));
 				SafeDelete(projectile);
 				mpProjectiles.erase(iter);
 				break; //Breaks out of the loop as the vector size has been changed, comprimising the iterator loop

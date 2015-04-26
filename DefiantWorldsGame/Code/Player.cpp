@@ -443,43 +443,65 @@ void CRTSPlayer::Update()
 		}
 		else
 		{
-			// Compare faction of this unit against the player
-			if (pAgent->GetFaction() != mPlayerFaction)
+			// Check airspace update time
+			if (mTimeToAirspaceUpdate <= 0.0f)
 			{
-				// Check if it's in the wrong airspace
-				if (mPlayerFaction == FAC_EARTH_DEFENSE_FORCE)
+				// Compare faction of this unit against the player
+				if (pAgent->GetFaction() != mPlayerFaction)
 				{
-					if (pAgent->GetAirspacePosition() == AS_MARS)
+					// Check if it's in the wrong airspace
+					if (mPlayerFaction == FAC_EARTH_DEFENSE_FORCE)
 					{
-						pPlayerManager->AddToMarsAirspace(pAgent);
+						if (pAgent->GetAirspacePosition() == AS_MARS)
+						{
+							pPlayerManager->AddToMarsAirspace(pAgent);
+						}
+					}
+					else if (mPlayerFaction == FAC_THE_CRIMSON_LEGION)
+					{
+						if (pAgent->GetAirspacePosition() == AS_EARTH)
+						{
+							pPlayerManager->AddToEarthAirspace(pAgent);
+						}
 					}
 				}
-				else if (mPlayerFaction == FAC_THE_CRIMSON_LEGION)
-				{
-					if (pAgent->GetAirspacePosition() == AS_EARTH)
-					{
-						pPlayerManager->AddToEarthAirspace(pAgent);
-					}
-				}
+
+				// Reset counter
+				mTimeToAirspaceUpdate = 0.3f;
+			}
+			else
+			{
+				mTimeToAirspaceUpdate -= gFrameTime;
 			}
 
-			// Check if there are any units in this player's airspace - 10% chance of unit attacking those in their airspace
-			if (!pAgent->GetAttackTarget() && mpRandomiser->GetRandomFloat(0.0f, 100.0f) > 90.0f)
+			// Check attach update time
+			if (mTimeToAttackCheckUpdate <= 0.0f)
 			{
-				if (mpAirspaceAgents.size())
+				// Check if there are any units in this player's airspace - 10% chance of unit attacking those in their airspace
+				if (!pAgent->GetAttackTarget() && mpRandomiser->GetRandomFloat(0.0f, 100.0f) > 90.0f)
 				{
-					// Pick a random index of these units interfering
-					int index = mpRandomiser->GetRandomInt(0, mpAirspaceAgents.size() - 1);
-
-					// Check target is viable for targeting
-					CGameAgent* pTarget = mpAirspaceAgents[index];
-
-					if (pTarget->GetHealth() > 0.0f)
+					if (mpAirspaceAgents.size())
 					{
-						// Give the target to this unit
-						pAgent->SetAttackTarget(pTarget);
+						// Pick a random index of these units interfering
+						int index = mpRandomiser->GetRandomInt(0, mpAirspaceAgents.size() - 1);
+
+						// Check target is viable for targeting
+						CGameAgent* pTarget = mpAirspaceAgents[index];
+
+						if (pTarget->GetHealth() > 0.0f)
+						{
+							// Give the target to this unit
+							pAgent->SetAttackTarget(pTarget);
+						}
 					}
 				}
+
+				// Reset timer
+				mTimeToAttackCheckUpdate = 0.3f;
+			}
+			else
+			{
+				mTimeToAttackCheckUpdate -= gFrameTime;
 			}
 
 			// Check for wall collisions - units should not be able to move through walls

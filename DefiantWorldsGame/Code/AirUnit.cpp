@@ -123,7 +123,7 @@ bool CAirUnit::Update()
 				if (mDestructionExplosion == nullptr)
 				{
 					SafeDelete(mWarningSmoke);
-					mDestructionExplosion = new CExplosion(mpObjModel, 20, false);
+					mDestructionExplosion = new CExplosion(mWorldPos, 20, false);
 					Destroy();
 				}
 			}
@@ -145,6 +145,12 @@ bool CAirUnit::Update()
 	if (mAttackTarget != nullptr)
 	{
 		if (mAttackTarget->GetHealth() <= 0.0f)
+		{
+			if (mUnitSelected) mAttackTarget->SetNormalTexture();
+			mAttackTarget = nullptr;
+		}
+		// Check the target is not in space or constructing
+		else if (!mAttackTarget->GetModel() || mAttackTarget->GetState() == OBJ_CONSTRUCTING)
 		{
 			if (mUnitSelected) mAttackTarget->SetNormalTexture();
 			mAttackTarget = nullptr;

@@ -83,7 +83,7 @@ bool CGroundUnit::Update()
 			if (mDestructionExplosion == nullptr)
 			{
 				SafeDelete(mWarningSmoke);
-				mDestructionExplosion = new CExplosion(mpObjModel, 20, false);
+				mDestructionExplosion = new CExplosion(mWorldPos, 20, false);
 				Destroy();
 			}
 			else
@@ -129,6 +129,12 @@ bool CGroundUnit::Update()
 			if (mUnitSelected) mAttackTarget->SetNormalTexture();
 			mAttackTarget = nullptr;
 		}
+		// Check the target is not in space or constructing
+		else if (!mAttackTarget->GetModel() || mAttackTarget->GetState() == OBJ_CONSTRUCTING)
+		{
+			if (mUnitSelected) mAttackTarget->SetNormalTexture();
+			mAttackTarget = nullptr;
+		}
 		// Check which faction the unit is from
 		else if (mFaction == FAC_EARTH_DEFENSE_FORCE)
 		{
@@ -142,7 +148,7 @@ bool CGroundUnit::Update()
 		else
 		{
 			// Check if the rebels have fled
-			if (mAttackTarget->GetWorldZPos() > 4500.0f)
+			if (mAttackTarget->GetWorldXPos() > 6000.0f)
 			{
 				if (mUnitSelected) mAttackTarget->SetNormalTexture();
 				mAttackTarget = nullptr;

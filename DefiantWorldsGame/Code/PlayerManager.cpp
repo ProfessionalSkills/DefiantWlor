@@ -297,9 +297,6 @@ int CPlayerManager::UpdatePlayers()
 	// Update human
 	mpHuman->Update();
 
-	// Clear earth airspace list
-	mpEarthAirspaceList.clear();
-
 	// Send mars airspace units to AI
 	mpAI[0]->SetAgentsInAirspace(mpMarsAirspaceList);
 
@@ -308,9 +305,6 @@ int CPlayerManager::UpdatePlayers()
 	{
 		mpAI[i]->Update();
 	}
-
-	// Clear mars airspace list
-	mpMarsAirspaceList.clear();
 
 	// Check if the players are alive
 	if (mpHuman->IsAlive())

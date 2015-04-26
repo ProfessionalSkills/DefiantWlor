@@ -57,6 +57,16 @@ public:
 		mpMarsAirspaceList.push_back(pAgent);
 	}
 
+	inline void ClearMarsAirspace()
+	{
+		mpMarsAirspaceList.clear();
+	}
+
+	inline void ClearEarthAirspace()
+	{
+		mpEarthAirspaceList.clear();
+	}
+
 
 	// ACCESSORS
 	//---------------------------

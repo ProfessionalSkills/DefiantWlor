@@ -20,14 +20,12 @@ public:
 
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
-	CExplosion(IModel* emitter, float particleNumber, bool ball);
 	CExplosion(DX::XMFLOAT3 emitterPos, float particleNumber, bool ball);
 	~CExplosion();
 
 	//METHODS
 	//---------------------------
 	void EmitParticle();
-	void SetEmitPosition();
 	bool UpdateSystem();
 };
 
