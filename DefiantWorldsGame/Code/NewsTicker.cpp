@@ -113,11 +113,11 @@ void CNewsTicker::AddNewElement(std::string elementText, bool error)
 	// Check whether it is an erro
 	if (error)
 	{
-		pNewItem->mpSprBG = gpEngine->CreateSprite("NewsTickerUIError.png");
+		pNewItem->mpSprBG = gpEngine->CreateSprite("NewsTickerUIError.png", 0.0f, -50.0f);
 	}
 	else
 	{
-		pNewItem->mpSprBG = gpEngine->CreateSprite("NewsTickerUI.png");
+		pNewItem->mpSprBG = gpEngine->CreateSprite("NewsTickerUI.png", 0.0f, -50.0f);
 	}
 
 	mNews.push_back(pNewItem);

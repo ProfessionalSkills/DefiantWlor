@@ -141,10 +141,10 @@ void CRTSAIPlayer::Update()
 				mpTaskQ.pop();
 			}
 		}
-		if (mpTaskQ.size() > 100)
+		if (mpTaskQ.size() > 50)
 		{
 			// Too many items in the list - clear it
-			for (int i = 0; i < 95; i++)
+			for (int i = 0; i < 45; i++)
 			{
 				// Remove most of the items
 				CBuildRequest* pRequest = mpTaskQ.top();
@@ -193,13 +193,15 @@ void CRTSAIPlayer::AssessWorkers()
 				// Identify a mineral it can harvest
 				for (miterMineralsList = mpMineralsList.begin(); miterMineralsList != mpMineralsList.end(); miterMineralsList++)
 				{
+					// Cache mineral
+					CMinerals* pMineral = (*miterMineralsList);
+					
 					// If the mineral is not in use, harvest from it with the currently selected worker
-					if (!(*miterMineralsList)->IsBeingUsed())
+					if (!pMineral->IsBeingUsed())
 					{
 						// Mineral not being used, so harvest from it
-						pWorker->SetMineral((*miterMineralsList));
-						(*miterMineralsList)->SetUsage(true);
-						pWorker->SetPathTarget((*miterMineralsList)->GetWorldPos());
+						pWorker->SetMineral(pMineral);
+						pMineral->SetUsage(true);
 						break;
 					}
 				}
@@ -687,6 +689,12 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 				}
 			}
 
+			// Check if the unit has an attack target and is therefore busy
+			if (miterUnitsMap->second->GetAttackTarget())
+			{
+				return true;
+			}
+
 			// Pick a random location to move the unit to
 			DX::XMFLOAT3 newPos;
 
@@ -737,10 +745,13 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 			// Loop through the selected agents and set their new position
 			for (miterSelectedAgents = mpSelectedAgents.begin(); miterSelectedAgents != mpSelectedAgents.end(); miterSelectedAgents++)
 			{
+				// Cache unit
+				CGameAgent* pSelAgent = (*miterSelectedAgents);
+				
 				// Check to see if the unit picked is a worker unit which is busy harvesting
-				if ((*miterSelectedAgents)->GetAgentData()->mAgentType == GAV_WORKER)
+				if (pSelAgent->GetAgentData()->mAgentType == GAV_WORKER)
 				{
-					CWorker* pWorker = static_cast<CWorker*>(miterUnitsMap->second);
+					CWorker* pWorker = static_cast<CWorker*>(pSelAgent);
 					if (!pWorker->GetMineral())
 					{
 						// There is no mineral as a target - safe to move. WILL LATER CHECK FOR OTHER THINGS THE WORKER COULD BE DOING
@@ -749,8 +760,11 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 				}
 				else
 				{
-					// Every other unit just move - WILL CHANGE LATER FOR COMBAT PURPOSES
-					(*miterSelectedAgents)->SetPathTarget(newPos);
+					// Check if the unit has an attack target and is therefore busy
+					if (!miterUnitsMap->second->GetAttackTarget())
+					{
+						pSelAgent->SetPathTarget(newPos);
+					}
 				}
 			}
 

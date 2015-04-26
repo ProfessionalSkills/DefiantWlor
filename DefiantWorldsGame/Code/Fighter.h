@@ -50,7 +50,7 @@ public:
 
 	// OVERRIDE METHODS
 	//---------------------------
-	bool Attack(CGameObject* target, float hitMod, float damageMod);
+	bool Attack(CGameObject* pTarget, float hitMod, float damageMod);
 	bool Update();
 
 	void SetTargetTexture();

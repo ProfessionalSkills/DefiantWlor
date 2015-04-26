@@ -45,6 +45,8 @@ typedef std::unordered_multimap<EGameAgentVariations, CGameAgent*> GA_MultiMap;
 //-----------------------------------------------------
 // BASE CLASS FOR PLAYERS
 //-----------------------------------------------------
+class CPlayerManager;
+
 class CRTSPlayer
 {
 protected:
@@ -53,6 +55,7 @@ protected:
 	CRandomiser* mpRandomiser;
 	std::string mName;
 	EFactions mPlayerFaction;
+	CPlayerManager* pPlayerManager = nullptr;
 
 	int mNumMinerals;
 	int mMineralBaseAddition;
@@ -71,8 +74,14 @@ protected:
 	int mNumBomber;
 	CGrid* mpPlayerGrid;
 
+
+	// COUNTDOWN/UPDATE TIME VARIABLES
+	//---------------------------
 	const float MINERAL_UPDATE_TIME;
 	float mTimeToMineralUpdate;
+	float mTimeToAirspaceUpdate = 0.3f;
+	float mTimeToWallCheckUpdate = 0.23f;
+	float mTimeToAttackCheckUpdate = 0.17;
 
 
 	// LISTS
@@ -83,13 +92,14 @@ protected:
 	GS_MultiMap::iterator miterStructuresMap;
 	GA_MultiMap::iterator miterUnitsMap;
 
-
-
 	std::vector<CGameAgent*> mpSpaceUnitsList;
 	std::vector<CGameAgent*>::iterator mpiterSpaceUnits;
 
 	std::vector<CMinerals*> mpMineralsList;
 	std::vector<CMinerals*>::iterator miterMineralsList;
+
+	// List of units (not owned by this player) who are in its airspace
+	std::vector<CGameAgent*> mpAirspaceAgents;
 	
 	CTurretStructure* mpBaseTurretList[4];
 
@@ -209,6 +219,11 @@ public:
 	inline int GetNumMothership()
 	{
 		return mNumMothership;
+	}
+
+	inline void SetAgentsInAirspace(std::vector<CGameAgent*>& pAgentsInAirspace)
+	{
+		mpAirspaceAgents = pAgentsInAirspace;
 	}
 
 	// Function to determine whether or not the player's command centre is still standing

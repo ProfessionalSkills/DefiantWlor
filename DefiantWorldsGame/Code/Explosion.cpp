@@ -2,29 +2,6 @@
 
 IMesh* CExplosion::mspMshExplosionBall = nullptr;
 
-CExplosion::CExplosion(IModel* emitter, float particleNumber, bool ball)
-{
-	mEmitter = emitter;
-	mParticleNumber = particleNumber;
-	SetEmitPosition();
-
-	for (int i = 0; i < mParticleNumber; i++)
-	{
-		EmitParticle();
-	}
-
-	// If there is an exploding ball, create one
-	if (ball)
-	{
-		mHasExplodingBall = true;
-		mpMdlExplosionBall = mspMshExplosionBall->CreateModel(mParticleOrigen.x, 0.0f, mParticleOrigen.z);
-
-		// Change the scale
-		mpMdlExplosionBall->Scale(1.0f);
-		mExplosionBallSize = 1.0f;
-	}
-}
-
 CExplosion::CExplosion(DX::XMFLOAT3 emitterPos, float particleNumber, bool ball)
 {
 	mParticleNumber = particleNumber;
@@ -65,12 +42,6 @@ CExplosion::~CExplosion()
 		mspMshExplosionBall->RemoveModel(mpMdlExplosionBall);
 	}
 }
-
-void CExplosion::SetEmitPosition()
-{
-	mParticleOrigen = { mEmitter->GetX(), mEmitter->GetY(), mEmitter->GetZ() };
-}
-
 
 void CExplosion::EmitParticle()
 {

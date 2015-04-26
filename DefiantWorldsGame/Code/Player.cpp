@@ -30,6 +30,9 @@ CRTSPlayer::CRTSPlayer(EFactions playerFaction, int startingResources) : MINERAL
 	mpPlayerGrid = nullptr;
 	mpRandomiser = new CRandomiser();
 	mWonLastSpaceBattle = false;
+
+	// Get the player manager
+	pPlayerManager = CStateControl::GetInstance()->GetPlayerManager();
 }
 
 CRTSPlayer::~CRTSPlayer()
@@ -418,25 +421,91 @@ void CRTSPlayer::Update()
 	// Loop through all units (NOT SPACE) & update them
 	for (miterUnitsMap = mpUnitsMap.begin(); miterUnitsMap != mpUnitsMap.end(); miterUnitsMap++)
 	{
-		if (!miterUnitsMap->second->Update())
+		// The current unit has been destroyed
+		CGameAgent* pAgent = miterUnitsMap->second;
+		
+		if (!pAgent->Update())
 		{
-			// The current unit has been destroyed
-			CGameAgent* tmp = miterUnitsMap->second;
-
 			// Before deleting, check if the agent is a worker unit
-			if (tmp->GetAgentData()->mAgentType == GAV_WORKER)
+			if (pAgent->GetAgentData()->mAgentType == GAV_WORKER)
 			{
 				// Check if the worker is responsible for any mineral deposits
-				CWorker* pWorker = static_cast<CWorker*>(tmp);
+				CWorker* pWorker = static_cast<CWorker*>(pAgent);
 				if (pWorker->GetMineral())
 				{
 					pWorker->GetMineral()->SetUsage(false);
 				}
 			}
 
-			SafeDelete(tmp);
+			SafeDelete(pAgent);
 			mpUnitsMap.erase(miterUnitsMap);
 			break;
+		}
+		else
+		{
+			// Check airspace update time
+			if (mTimeToAirspaceUpdate <= 0.0f)
+			{
+				// Compare faction of this unit against the player
+				if (pAgent->GetFaction() != mPlayerFaction)
+				{
+					// Check if it's in the wrong airspace
+					if (mPlayerFaction == FAC_EARTH_DEFENSE_FORCE)
+					{
+						if (pAgent->GetAirspacePosition() == AS_MARS)
+						{
+							pPlayerManager->AddToMarsAirspace(pAgent);
+						}
+					}
+					else if (mPlayerFaction == FAC_THE_CRIMSON_LEGION)
+					{
+						if (pAgent->GetAirspacePosition() == AS_EARTH)
+						{
+							pPlayerManager->AddToEarthAirspace(pAgent);
+						}
+					}
+				}
+
+				// Reset counter
+				mTimeToAirspaceUpdate = 0.3f;
+			}
+			else
+			{
+				mTimeToAirspaceUpdate -= gFrameTime;
+			}
+
+			// Check attach update time
+			if (mTimeToAttackCheckUpdate <= 0.0f)
+			{
+				// Check if there are any units in this player's airspace - 10% chance of unit attacking those in their airspace
+				if (!pAgent->GetAttackTarget() && mpRandomiser->GetRandomFloat(0.0f, 100.0f) > 90.0f)
+				{
+					if (mpAirspaceAgents.size())
+					{
+						// Pick a random index of these units interfering
+						int index = mpRandomiser->GetRandomInt(0, mpAirspaceAgents.size() - 1);
+
+						// Check target is viable for targeting
+						CGameAgent* pTarget = mpAirspaceAgents[index];
+
+						if (pTarget->GetHealth() > 0.0f)
+						{
+							// Give the target to this unit
+							pAgent->SetAttackTarget(pTarget);
+						}
+					}
+				}
+
+				// Reset timer
+				mTimeToAttackCheckUpdate = 0.3f;
+			}
+			else
+			{
+				mTimeToAttackCheckUpdate -= gFrameTime;
+			}
+
+			// Check for wall collisions - units should not be able to move through walls
+
 		}
 	}
 }

@@ -74,6 +74,7 @@ protected:
 	CRTSPlayer* mpOwner = nullptr;
 
 	eFleetPos mFleetPosition;
+	EAirspaces mAirspace;						// Stores which airspace this unit is currently flying in
 
 
 public:
@@ -142,20 +143,6 @@ public:
 		}
 	}
 
-	inline void SetAttackTarget(CGameObject* target)
-	{
-		// If there is already a target selected, and this unit is selected, change the target's texture back to normal
-		if (mAttackTarget) mAttackTarget->SetNormalTexture();
-		
-		if (target != this)
-		{
-			mAttackTarget = target;
-
-			// If the target is selected, highlight the target by giving it a red texture
-			if (mUnitSelected && mAttackTarget) mAttackTarget->SetTargetTexture();
-		}
-	}
-
 	inline CGameObject* GetAttackTarget()
 	{
 		return mAttackTarget;
@@ -204,6 +191,11 @@ public:
 		mBoundingSphere = SBoundingSphere();
 	}
 
+	inline EAirspaces GetAirspacePosition()
+	{
+		return mAirspace;
+	}
+
 	eFleetPos GetPosType();
 
 	virtual float GetUnitSpacing();
@@ -240,6 +232,8 @@ public:
 	bool Construct();
 	void CalculateBoundingSphere();
 	void Destroy();
+	void SetAttackTarget(CGameObject* target);
+
 
 	// VIRTUAL METHODS
 	//---------------------------

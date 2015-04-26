@@ -11,15 +11,12 @@ TO DO: * = essential
 	*- UI for space buttons
 	*- UI for space
 	*- STOP button for units
-	- Fix bug where human units spawning in Mars would attempt to make their way back home as they are 'out of their boundary'
 	- Change the save log so that Rebel units get saved
 	- Change how units are saved - instead of just their position, save their entire matrix
 	*- Remove debug information
 	- Model arrow to show where unit is attempting to travel to
-	- Ability to heal/repair with worker units
+	*- Ability to heal/repair with worker units
 	- Model around building being constructed for a more interesting constructing appearance
-	*- Retune AI to do attacking
-	*- Make required changes to the Rebels (currently they are too difficult and do not attack the AI's base)
 	*- AI to load units to ships
 	*- AI to launch fleet
 	*- AI to attack enemies when they are near
@@ -33,8 +30,6 @@ TO DO: * = essential
 	*- Fix game loading bugs
 	- Add houses??
 	*- Update population costs of units
-	- Change the way smoke is produced so it is not concentrated in one position for buildings &
-		remove smoke limit - simply create a smoke particle every so often
 	*- Add UI for button mouse over descriptions
 	*- LIMITS - no more than ONE mothership per player at any given point
 	- Add cost to buttons if applicable

@@ -112,7 +112,7 @@ void CInfantry::LoadIModel()
 //-----------------------------------------------------
 // INFANTRY CLASS OVERRIDE METHODS
 //-----------------------------------------------------
-bool CInfantry::Attack(CGameObject* target, float hitMod, float damageMod)
+bool CInfantry::Attack(CGameObject* pTarget, float hitMod, float damageMod)
 {
 	// The RayCollision function calculates this value for us - so it needs no starting value. Only to be defined.
 	float distance;
@@ -129,6 +129,8 @@ bool CInfantry::Attack(CGameObject* target, float hitMod, float damageMod)
 	DX::XMStoreFloat4x4(&finalMatrix, matMul);
 
 	DX::XMFLOAT3 localZ{ finalMatrix.m[2][0], finalMatrix.m[2][1], finalMatrix.m[2][2] };
+
+	DX::XMFLOAT3 target = mAttackTarget->GetWorldPos();
 
 	// Normalise this local axis
 	DX::XMVECTOR vecNormal = DX::XMVector4Normalize(DX::XMLoadFloat3(&localZ));
@@ -153,7 +155,6 @@ bool CInfantry::Attack(CGameObject* target, float hitMod, float damageMod)
 	{
 		// The attack was unsuccessful - most likely reason is the target is too far away
 		// Get the direction vector from the tank to the target
-		DX::XMFLOAT3 target = mAttackTarget->GetWorldPos();
 		DX::XMFLOAT3 length{ target.x - mWorldPos.x, target.y - mWorldPos.y, target.z - mWorldPos.z };
 
 		// Find out the distance to the target
@@ -171,7 +172,7 @@ bool CInfantry::Attack(CGameObject* target, float hitMod, float damageMod)
 
 	// TURRET ROTATING
 	// Do this bit all the time so that if the target is moving, it follows it whilst still firing (for added effect)
-	DX::XMFLOAT3 vectorZ = { (target->GetWorldPos().x - mWorldPos.x), 0.0f, (target->GetWorldPos().z - mWorldPos.z) };
+	DX::XMFLOAT3 vectorZ = { (target.x - mWorldPos.x), 0.0f, (target.z - mWorldPos.z) };
 	// Normalise vectorZ
 	vecNormal = DX::XMVector4Normalize(DX::XMLoadFloat3(&vectorZ));
 	DX::XMStoreFloat3(&vectorZ, vecNormal);
@@ -286,7 +287,7 @@ bool CInfantry::Update()
 			else if (mAttackTarget->SphereCollision(projectile->mCollisionSphere)) //Point to Box collision between the projectile and the attack target
 			{
 				mAttackTarget->TakeDamage(mDamage);
-				mpAttackExplosions.push_back(new CExplosion(projectile->mModel, 10, false));
+				mpAttackExplosions.push_back(new CExplosion(position, 10, false));
 				SafeDelete(projectile);
 				mpProjectiles.erase(iter);
 				break; //Breaks out of the loop as the vector size has been changed, comprimising the iterator loop

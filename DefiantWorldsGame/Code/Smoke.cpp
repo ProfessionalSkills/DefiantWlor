@@ -1,15 +1,14 @@
 #include "Smoke.h"
 
-CSmoke::CSmoke(IModel* emitter, int particleNumber, float relativeHeight, float scale)
+CSmoke::CSmoke(DX::XMFLOAT3 emitterPos, float relativeHeight, float scale, float width, float length)
 {
-	mEmitter = emitter;
-
-	SetEmitPosition(emitter->GetX(), emitter->GetY() + relativeHeight, emitter->GetZ());
-	mScale = scale;
 	mRelativeHeight = relativeHeight;
+	SetEmitPosition(emitterPos);
+	mScale = scale;
+	mWidth = width;
+	mLength = length;
 
-	mEmitterCountdown = kEmitTime;
-	mParticleNumber = particleNumber;
+	mEmitterCountdown = gpRandomiser->GetRandomFloat(0.05, 0.2);
 }
 
 CSmoke::~CSmoke()
@@ -25,39 +24,32 @@ CSmoke::~CSmoke()
 	}
 }
 
-void CSmoke::SetEmitPosition(float x, float y, float z)
+void CSmoke::SetEmitPosition(const DX::XMFLOAT3& emitterPos)
 {
-	mParticleOrigen = { x, y, z };
+	mParticleOrigen = { emitterPos.x, emitterPos.y + mRelativeHeight + 1.0f, emitterPos.z };
 }
 
 void CSmoke::EmitParticle()
 {
 	CParticle* mNewParticle = new CParticle();
-	float mPosX = gpRandomiser->GetRandomFloat(mParticleOrigen.x - 3.0f, mParticleOrigen.x + 3.0f);
-	float mPosZ = gpRandomiser->GetRandomFloat(mParticleOrigen.z - 3.0f, mParticleOrigen.z + 3.0f);
+	float mPosX = gpRandomiser->GetRandomFloat(mParticleOrigen.x - mWidth, mParticleOrigen.x + mWidth);
+	float mPosZ = gpRandomiser->GetRandomFloat(mParticleOrigen.z - mLength, mParticleOrigen.z + mLength);
 
 	mNewParticle->mModel = mNewParticle->mspMshSmokeParticle->CreateModel(mPosX, mParticleOrigen.y, mPosZ);
 	mNewParticle->SetScale(mScale);
 
-	mNewParticle->SetVector(gpRandomiser->GetRandomFloat(-kVelocity.x, kVelocity.x), kVelocity.y, gpRandomiser->GetRandomFloat(-kVelocity.z, kVelocity.z));
+	mNewParticle->SetVector(gpRandomiser->GetRandomFloat(-1.0f, 1.0f), gpRandomiser->GetRandomFloat(3.0f, 5.0f), gpRandomiser->GetRandomFloat(-1.0f, 1.0f));
 
-	mNewParticle->SetPosition(mParticleOrigen);
 	mNewParticle->SetLifeTime(kSmokeLifeTime);
 	mParticles.push_back(mNewParticle);
 }
 
 bool CSmoke::UpdateSystem()
 {
-	// Update emitter position
-	SetEmitPosition(mEmitter->GetX(), mEmitter->GetY() + mRelativeHeight, mEmitter->GetZ());
-	
 	if (mEmitterCountdown <= 0.0f)
 	{
-		if (mParticles.size() <= mParticleNumber)
-		{
-			EmitParticle();
-			mEmitterCountdown = kEmitTime;
-		}
+		EmitParticle();
+		mEmitterCountdown = gpRandomiser->GetRandomFloat(0.05, 0.2);;
 	}
 
 	vector<CParticle*>::iterator itParticle = mParticles.begin();
@@ -92,4 +84,13 @@ bool CSmoke::UpdateSystem()
 	}
 	mEmitterCountdown -= gFrameTime;
 	return true;
+}
+
+bool CSmoke::UpdateSystem(const DX::XMFLOAT3& emitterPos)
+{
+	// Update emitter position
+	SetEmitPosition(emitterPos);
+	
+	// Call the base function
+	return UpdateSystem();
 }

@@ -55,6 +55,8 @@ public:
 	}
 
 	void Spawn(CGrid* pGrid, SPointData pCentre);
+	void DetermineAirspace();
+
 
 private:
 	virtual IModel* CreateModel(DX::XMFLOAT3 pos) = 0;

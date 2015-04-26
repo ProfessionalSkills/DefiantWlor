@@ -71,6 +71,11 @@ enum EErrorTypes
 	ERR_INCORRECT_INDEX, ERR_POP_LIMIT,
 };
 
+enum EAirspaces
+{
+	AS_NONE, AS_EARTH, AS_MARS
+};
+
 
 //-----------------------------------------------------
 // GLOBAL VARIABLES
@@ -150,6 +155,16 @@ struct SBoundingCube
 		float& distance)
 	{
 		return mBox.Intersects(origin, direction, distance);
+	}
+
+	float GetWidthExtent()
+	{
+		return mBox.Extents.x;
+	}
+
+	float GetLengthExtent()
+	{
+		return mBox.Extents.z;
 	}
 };
 

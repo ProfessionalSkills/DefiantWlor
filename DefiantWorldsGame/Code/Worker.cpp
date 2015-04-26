@@ -148,9 +148,9 @@ void CWorker::LoadIModel()
 //-----------------------------------------------------
 // WORKER CLASS OVERRIDE METHODS
 //-----------------------------------------------------
-bool CWorker::Attack(CGameObject* target, float hitMod, float damageMod)
+bool CWorker::Attack(CGameObject* pTarget, float hitMod, float damageMod)
 {
-	mAttackTarget->SetNormalTexture();
+	if (mUnitSelected) mAttackTarget->SetNormalTexture();
 	mAttackTarget = nullptr;
 	return false;
 }

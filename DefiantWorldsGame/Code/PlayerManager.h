@@ -10,6 +10,7 @@
 // INCLUDES
 //-----------------------------------------------------
 #include "AIPlayer.h"
+#include "TransportBeam.h"
 
 
 //-----------------------------------------------------
@@ -46,6 +47,26 @@ public:
 		mTimeSinceGameStart = time;
 	}
 
+	inline void AddToEarthAirspace(CGameAgent* pAgent)
+	{
+		mpEarthAirspaceList.push_back(pAgent);
+	}
+
+	inline void AddToMarsAirspace(CGameAgent* pAgent)
+	{
+		mpMarsAirspaceList.push_back(pAgent);
+	}
+
+	inline void ClearMarsAirspace()
+	{
+		mpMarsAirspaceList.clear();
+	}
+
+	inline void ClearEarthAirspace()
+	{
+		mpEarthAirspaceList.clear();
+	}
+
 
 	// ACCESSORS
 	//---------------------------
@@ -75,6 +96,10 @@ private:
 
 	bool mPlayerDataInitialised;
 
+	// Airspace lists
+	std::vector<CGameAgent*> mpEarthAirspaceList;
+	std::vector<CGameAgent*> mpMarsAirspaceList;
+
 
 	// REBEL PLAYER DATA
 	//---------------------------
@@ -84,8 +109,13 @@ private:
 
 	int mEarthUnits = 0;
 	int mMarsUnits = 0;
+
+	// Units list
 	std::vector<CGameAgent*> mpRebelEarthList;
 	std::vector<CGameAgent*> mpRebelMarsList;
+
+	// Transport beams
+	std::vector<CTransportBeam*> mpTransportBeams;
 };
 
 
