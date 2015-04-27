@@ -10,7 +10,6 @@ TO DO: * = essential
 	*- Particle effects for worker mining & worker healing (the latter for when added)
 	*- UI for space buttons
 	*- UI for space
-	*- STOP button for units
 	- Change the save log so that Rebel units get saved
 	*- Remove debug information
 	- Model arrow to show where unit is attempting to travel to
