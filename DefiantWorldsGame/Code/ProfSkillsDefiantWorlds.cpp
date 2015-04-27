@@ -7,13 +7,11 @@ PROJECT NAME:
 ProfSkillsDefiantWorlds
 
 TO DO: * = essential
-	*- Particle effects for worker mining & worker healing (the latter for when added)
 	*- UI for space buttons
 	*- UI for space
 	- Change the save log so that Rebel units get saved
 	*- Remove debug information
 	- Model arrow to show where unit is attempting to travel to
-	*- Ability to heal/repair with worker units
 	- Model around building being constructed for a more interesting constructing appearance
 	*- AI to load units to ships
 	*- AI to launch fleet

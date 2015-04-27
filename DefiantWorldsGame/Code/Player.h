@@ -319,6 +319,10 @@ public:
 			mNumMothership++;
 		}
 	}
+	inline void RefundUnit(CGameAgent* unit)
+	{
+		mNumMinerals += (unit->GetBuildCost() * 0.75);
+	}
 
 	bool MineralTransaction(int amount);
 
