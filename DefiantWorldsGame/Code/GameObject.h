@@ -38,7 +38,6 @@ protected:
 
 	EObjectStates mState;
 	EFactions mFaction;
-	EQueueObjectType mObjectType;
 
 
 	// TLE OBJECT DATA
@@ -108,11 +107,6 @@ public:
 	inline EFactions GetFaction()
 	{
 		return mFaction;
-	}
-
-	inline EQueueObjectType GetObjectType()
-	{
-		return mObjectType;
 	}
 
 	inline int GetBuildCost()

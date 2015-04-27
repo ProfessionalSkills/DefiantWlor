@@ -35,7 +35,6 @@ CArtillery::CArtillery()
 	mBuildCost = 500;
 	mPopCost = 4;
 	mTurretNode = 0;
-	mObjectType = Q_ARTILLERY;
 	mRange = 60.0f;
 }
 

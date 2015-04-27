@@ -35,7 +35,6 @@ CFighter::CFighter()
 	mBuildCost = 400;
 	mRotarSpeed = 2000.0f;
 	mPopCost = 3;
-	mObjectType = Q_FIGHTER;
 }
 
 CFighter::~CFighter()
