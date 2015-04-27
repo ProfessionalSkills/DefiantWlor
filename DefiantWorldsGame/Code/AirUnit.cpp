@@ -440,11 +440,11 @@ void CAirUnit::SaveAgent(std::ofstream& outFile)
 	mHasModelMatrix = true;
 
 	// Save the data for this unit
-	outFile << mAgentInfo.mAgentType << " " << mFaction << " " << mState << " "
-		<< mModelMatrix.m[0][0] << " " << mModelMatrix.m[0][1] << " " << mModelMatrix.m[0][2]
-		<< mModelMatrix.m[1][0] << " " << mModelMatrix.m[1][1] << " " << mModelMatrix.m[1][2]
-		<< mModelMatrix.m[2][0] << " " << mModelMatrix.m[2][1] << " " << mModelMatrix.m[2][2]
-		<< mModelMatrix.m[3][0] << " " << mModelMatrix.m[3][1] << " " << mModelMatrix.m[3][2]
+	outFile << mAgentInfo.mAgentType << " " << mFaction << " " << mState
+		<< " " << mModelMatrix.m[0][0] << " " << mModelMatrix.m[0][1] << " " << mModelMatrix.m[0][2]
+		<< " " << mModelMatrix.m[1][0] << " " << mModelMatrix.m[1][1] << " " << mModelMatrix.m[1][2]
+		<< " " << mModelMatrix.m[2][0] << " " << mModelMatrix.m[2][1] << " " << mModelMatrix.m[2][2]
+		<< " " << mModelMatrix.m[3][0] << " " << mModelMatrix.m[3][1] << " " << mModelMatrix.m[3][2]
 		<< " " << mHealth << " " << mYaw << std::endl;
 }
 
