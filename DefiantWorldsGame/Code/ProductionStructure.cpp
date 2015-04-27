@@ -81,6 +81,29 @@ EErrorTypes CProductionStructure::AddToQueue(size_t agentIndex, CRTSPlayer* pPla
 		break;
 
 	case GAV_MOTHERSHIP:
+		// Check production queue for another mothership
+		for (auto iter : mpProductionQueue)
+		{
+			if (iter->GetAgentData()->mAgentType == GAV_MOTHERSHIP)
+			{
+				// Show error message through the ticker, but return no error for AI purposes
+				if (pPlayer->GetPlayerFaction() == FAC_EARTH_DEFENSE_FORCE) gpNewsTicker->AddNewElement("Mothership already under construction!", true);
+				return ERR_NONE;
+			}
+		}
+
+		// Check if there is already a mothership in the player's arsenal
+		for (auto iter : (*pPlayer->GetSpaceUnitList()))
+		{
+			if (iter->GetAgentData()->mAgentType == GAV_MOTHERSHIP)
+			{
+				// Show error message through the ticker, but return no error for AI purposes
+				if (pPlayer->GetPlayerFaction() == FAC_EARTH_DEFENSE_FORCE) gpNewsTicker->AddNewElement("You already own a Mothership!", true);
+				return ERR_NONE;
+			}
+		}
+
+		// Unit is fine to build
 		mpProductionQueue.push_back(new CMothership());
 		break;
 
