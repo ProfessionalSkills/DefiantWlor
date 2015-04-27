@@ -7,6 +7,7 @@ PROJECT NAME:
 ProfSkillsDefiantWorlds
 
 TO DO: * = essential
+	*- Particle effects for worker mining & worker healing (the latter for when added)
 	*- UI for space buttons
 	*- UI for space
 	*- STOP button for units

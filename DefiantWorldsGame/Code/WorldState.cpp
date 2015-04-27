@@ -336,7 +336,7 @@ void CWorldState::CheckKeyPresses()
 
 			if (pTargetStructure != nullptr)
 			{
-				if (pTargetStructure->GetFaction() == FAC_EARTH_DEFENSE_FORCE)
+				if (pTargetStructure->GetFaction() != FAC_EARTH_DEFENSE_FORCE)
 				{
 					mpCurSelectedAgent->SetAttackTarget(pTargetStructure);
 				}
@@ -403,12 +403,11 @@ void CWorldState::CheckKeyPresses()
 			case MS_NO_AREA:
 			case MS_EARTH_EDGE:
 			case MS_EARTH_GRID:
-				mpHumanPlayer->CheckGameObjectSelection(pTargetStructure, pTargetGameAgent, pTargetMinerals, mMouseOrigin, mMouseDirection, tmpDistance, true);
-				break;
-
 			case MS_MARS_EDGE:
 			case MS_MARS_GRID:
+				mpHumanPlayer->CheckGameObjectSelection(pTargetStructure, pTargetGameAgent, pTargetMinerals, mMouseOrigin, mMouseDirection, tmpDistance, true);
 				mpAIPlayer->CheckGameObjectSelection(pTargetStructure, pTargetGameAgent, pTargetMinerals, mMouseOrigin, mMouseDirection, tmpDistance, true);
+				mpPlayerManager->CheckRebelSelection(pTargetStructure, pTargetGameAgent, pTargetMinerals, mMouseOrigin, mMouseDirection, tmpDistance);
 				break;
 
 			case MS_UI:
@@ -417,7 +416,7 @@ void CWorldState::CheckKeyPresses()
 
 			if (pTargetStructure != nullptr)
 			{
-				if (pTargetStructure->GetFaction() == FAC_EARTH_DEFENSE_FORCE)
+				if (pTargetStructure->GetFaction() != FAC_EARTH_DEFENSE_FORCE)
 				{
 					for (miterUnitSelectionList = mpUnitSelectionList.begin(); miterUnitSelectionList != mpUnitSelectionList.end(); miterUnitSelectionList++)
 					{
@@ -1851,49 +1850,6 @@ void CWorldState::StateUpdate()
 		}
 	}
 
-	/*if (mpCurSelectedAgent)
-	{
-		if (mpCurSelectedAgent->GetAttackTarget() == nullptr)
-		{
-			mpCurSelectedAgent->SetAutoTimer(mpCurSelectedAgent->GetAutoTimer() + gFrameTime);
-			if (mpCurSelectedAgent->GetAutoTimer() >= mpCurSelectedAgent->GetAttackTimer())
-			{
-				float shortestDistance = 9999.0f;
-				CGameObject* newTarget;
-				GA_MultiMap* enemyUnits = mpHumanPlayer->GetWorldUnitList();
-				GS_MultiMap* enemyStructures = mpHumanPlayer->GetStructuresList();
-				GA_MultiMap::iterator miterEnemyUnits;
-				GS_MultiMap::iterator miterEnemyStructures;
-
-				for (miterEnemyUnits = enemyUnits->begin(); miterEnemyUnits != enemyUnits->end(); miterEnemyUnits++)
-				{
-					if (miterEnemyUnits->second != mpCurSelectedAgent)
-					{
-						float dist = distance((miterEnemyUnits->second->GetWorldXPos() - mpCurSelectedAgent->GetWorldXPos()), 0.0f, (miterEnemyUnits->second->GetWorldXPos() - mpCurSelectedAgent->GetWorldXPos()));
-						if (dist < shortestDistance)
-						{
-							shortestDistance = dist;
-							newTarget = miterEnemyUnits->second;
-						}
-					}
-					
-				}
-				for (miterEnemyStructures = enemyStructures->begin(); miterEnemyStructures != enemyStructures->end(); miterEnemyStructures++)
-				{
-					float dist = distance((miterEnemyStructures->second->GetWorldXPos() - mpCurSelectedAgent->GetWorldXPos()), 0.0f, (miterEnemyStructures->second->GetWorldXPos() - mpCurSelectedAgent->GetWorldXPos()));
-					if ( dist < shortestDistance)
-					{
-						shortestDistance = dist;
-						newTarget = miterEnemyStructures->second;
-					}
-				}
-				mpCurSelectedAgent->SetAttackTarget(newTarget);
-				mpCurSelectedAgent->SetAutoTimer(0.0f);
-				mpCurSelectedAgent->SetAttackTimer(gpRandomiser->GetRandomFloat(5.0f, 10.0f));
-				
-			}
-		}
-	}*/
 
 	// UPDATE PLAYERS
 	//------------------------------

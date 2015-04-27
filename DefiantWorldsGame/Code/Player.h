@@ -101,8 +101,6 @@ protected:
 	// List of units (not owned by this player) who are in its airspace
 	std::vector<CGameAgent*> mpAirspaceAgents;
 	std::vector<CStaticStructure*> mpWallCollection;
-	
-	CTurretStructure* mpBaseTurretList[4];
 
 
 	// FLEET DATA

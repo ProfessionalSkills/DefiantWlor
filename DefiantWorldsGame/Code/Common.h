@@ -57,7 +57,7 @@ enum EGameAgentVariations
 enum EGameStructureTypes
 {
 	STR_HOUSE, STR_COM_CENTRE, STR_SPACE_CENTRE, STR_BARRACKS,
-	STR_HELLIPAD, STR_WALL
+	STR_HELLIPAD, STR_AA, STR_WALL
 };
 
 enum EFactions

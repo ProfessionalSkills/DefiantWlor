@@ -93,13 +93,14 @@ public:
 	}
 
 	// Method called each frome - boolean returns is false when the object has been destroyed
+	void CalculateBoundingBox();
 	virtual bool Update(CRTSPlayer* pPlayer);
 	virtual void DisplayInfo(IFont* font);
 	virtual void UnloadIModel();
 	virtual void LoadIModel();
 
 	bool Attack(CGameObject* ptarget, float hitMod, float damageMod);
-	bool LookingAt();
+
 	// Save the structure's details
 	virtual void SaveStructure(std::ofstream& outFile) override;
 	virtual void LoadStructure(std::ifstream& inFile, CGrid* pGrid, CRTSPlayer* pPlayer) override;
