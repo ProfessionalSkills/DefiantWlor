@@ -185,7 +185,7 @@ void CGameAgent::SaveAgent(std::ofstream& outFile)
 {
 	// Get the matrix for the unit
 	mpObjModel->GetMatrix(&mModelMatrix.m[0][0]);
-	bool mHasModelMatrix = true;
+	mHasModelMatrix = true;
 	
 	// Save the data for this unit
 	outFile << mAgentInfo.mAgentType << " " << mFaction << " " << mState << " " 
@@ -224,7 +224,7 @@ void CGameAgent::LoadAgent(std::ifstream& inFile)
 
 	// Store world position
 	mWorldPos = { mModelMatrix.m[3][0], mModelMatrix.m[3][1], mModelMatrix.m[3][2] };
-	bool mHasModelMatrix = true;
+	mHasModelMatrix = true;
 
 	// Load a pointer to the player based on the faction
 	if (mFaction == FAC_EARTH_DEFENSE_FORCE)
