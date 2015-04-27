@@ -38,11 +38,6 @@ void CSpark::EmitParticle()
 
 bool CSpark::UpdateSystem()
 {
-	if (mParticles.size() <= 0)
-	{
-		return false;
-	}
-
 	vector<CParticle*>::iterator itParticle = mParticles.begin();
 
 	while (itParticle != mParticles.end())
@@ -78,6 +73,7 @@ bool CSpark::UpdateSystem()
 		mSparkCountdown = kSparkTimer;
 		EmitParticle();
 	}
+
 	mSparkCountdown -= gFrameTime;
 	return true;
 }

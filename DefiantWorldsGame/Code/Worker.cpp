@@ -259,6 +259,16 @@ bool CWorker::Update()
 			mHealing = false;
 		}
 	}
+
+	// Check if the heal target has beend estroyed
+	if (mpHealTarget)
+	{
+		if (mpHealTarget->GetHealth() <= 0.0f)
+		{
+			mpHealTarget = nullptr;
+		}
+	}
+
 	//If it has a heal target
 	if (mpHealTarget)
 	{

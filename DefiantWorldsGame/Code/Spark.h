@@ -4,11 +4,11 @@
 
 #include "ParticleEmitter.h"
 const float kSparkVelocity = 20.0f;
-const float kSparkTimer = 0.02f;
+const float kSparkTimer = 0.2f;
 class CSpark : public CParticleEmitter
 {
 protected:
-	float mSparkCountdown;
+	float mSparkCountdown = 0.0f;
 public:
 
 	// CONSTRUCTORS & DESTRUCTOR
