@@ -52,7 +52,8 @@ void CBomber::UnloadIModel()
 	{
 		// Get the matrix for the unit
 		mpObjModel->GetMatrix(&mModelMatrix.m[0][0]);
-		
+		mHasModelMatrix = true;
+
 		mspMshBomber->RemoveModel(mpObjModel);
 		mpObjModel = nullptr;
 		mHasPathTarget = false;
@@ -106,7 +107,11 @@ void CBomber::LoadIModel()
 		}
 
 		// Set model matrix from what was saved
-		mpObjModel->SetMatrix(&mModelMatrix.m[0][0]);
+		if (mHasModelMatrix)
+		{
+			mpObjModel->SetMatrix(&mModelMatrix.m[0][0]);
+			mHasModelMatrix = false;
+		}
 	}
 
 	// Create shadow

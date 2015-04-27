@@ -53,6 +53,7 @@ void CInfantry::UnloadIModel()
 	{
 		// Get the matrix for the unit
 		mpObjModel->GetMatrix(&mModelMatrix.m[0][0]);
+		mHasModelMatrix = true;
 		
 		mspMshInfantry->RemoveModel(mpObjModel);
 		mpObjModel = nullptr;
@@ -107,7 +108,11 @@ void CInfantry::LoadIModel()
 		}
 
 		// Set model matrix from what was saved
-		mpObjModel->SetMatrix(&mModelMatrix.m[0][0]);
+		if (mHasModelMatrix)
+		{
+			mpObjModel->SetMatrix(&mModelMatrix.m[0][0]);
+			mHasModelMatrix = false;
+		}
 	}
 
 	// Create shadow
