@@ -36,7 +36,6 @@ CInfantry::CInfantry()
 	mPopCost = 2;
 	mTurretNode = 3;
 	mRange = 50.0f;
-	mObjectType = Q_INFANTRY;
 }
 
 CInfantry::~CInfantry()

@@ -35,7 +35,6 @@ CTank::CTank()
 	mBuildCost = 3000;
 	mPopCost = 3;
 	mTurretNode = 4;
-	mObjectType = Q_TANK;
 	mRange = 20.0f;
 }
 

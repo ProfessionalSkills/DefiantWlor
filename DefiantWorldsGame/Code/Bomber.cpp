@@ -34,7 +34,6 @@ CBomber::CBomber()
 	mScale = 1.5f;
 	mBuildCost = 600;
 	mPopCost = 3;
-	mObjectType = Q_BOMBER;
 	mRange = 10.0f;
 }
 

@@ -598,7 +598,10 @@ void CRTSPlayer::Update()
 			{
 				for (auto enemy : mpAirspaceAgents)
 				{
-					if (enemy->GetObjectType() == Q_BOMBER || enemy->GetObjectType() == Q_FIGHTER)
+					// Get unit type
+					EGameAgentVariations unitType = enemy->GetAgentData()->mAgentType;
+
+					if (unitType == GAV_BOMBER || unitType == GAV_FIGHTER)
 					{
 						DX::XMFLOAT3 turretPos = pTurret->GetWorldPos();
 						DX::XMFLOAT3 enemyPos = enemy->GetWorldPos();
