@@ -82,8 +82,8 @@ public:
 	virtual void LoadIModel();
 
 	// Save the structure's details
-	virtual void SaveStructure(std::ofstream& outFile) override;
-	virtual void LoadStructure(std::ifstream& inFile, CGrid* pGrid, CRTSPlayer* pPlayer) override;
+	virtual void SaveStructure(std::ofstream& outFile);
+	virtual void LoadStructure(std::ifstream& inFile, CGrid* pGrid, CRTSPlayer* pPlayer);
 };
 
 #endif /* _STATIC_STRUCTURE_H_ */
