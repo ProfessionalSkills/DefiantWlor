@@ -12,7 +12,6 @@ TO DO: * = essential
 	*- UI for space
 	*- STOP button for units
 	- Change the save log so that Rebel units get saved
-	- Change how units are saved - instead of just their position, save their entire matrix
 	*- Remove debug information
 	- Model arrow to show where unit is attempting to travel to
 	*- Ability to heal/repair with worker units
@@ -25,7 +24,6 @@ TO DO: * = essential
 	- Units collide with one another
 	- If time, decorate surrounding area
 	*- Create a saved game to load so that on demo day people are not bored whilst units are constructed etc.
-	*- Fix game loading bugs
 	*- Update population costs of units
 	*- Add UI for button mouse over descriptions
 	*- LIMITS - no more than ONE mothership per player at any given point

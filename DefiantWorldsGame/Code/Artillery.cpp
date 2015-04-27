@@ -51,6 +51,9 @@ void CArtillery::UnloadIModel()
 {
 	if (mpObjModel != 0)
 	{
+		// Get the matrix for the unit
+		mpObjModel->GetMatrix(&mModelMatrix.m[0][0]);
+		
 		mspMshArtillery->RemoveModel(mpObjModel);
 		mpObjModel = nullptr;
 		mHasPathTarget = false;
@@ -102,6 +105,9 @@ void CArtillery::LoadIModel()
 		{
 			mpObjModel->SetSkin("marsAARebel.jpg");
 		}
+
+		// Set model matrix from what was saved
+		mpObjModel->SetMatrix(&mModelMatrix.m[0][0]);
 	}
 
 	// Create shadow

@@ -759,7 +759,7 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 				else
 				{
 					// Check if the unit has an attack target and is therefore busy
-					if (!miterUnitsMap->second->GetAttackTarget())
+					if (!pSelAgent->GetAttackTarget())
 					{
 						pSelAgent->SetPathTarget(newPos);
 					}

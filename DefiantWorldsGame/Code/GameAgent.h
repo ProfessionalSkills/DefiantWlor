@@ -49,6 +49,7 @@ protected:
 	//---------------------------
 	SAgentData mAgentInfo;
 	DX::XMFLOAT3 mPathTarget;
+	DX::XMFLOAT4X4 mModelMatrix;
 	std::stringstream mStrDisplay;
 	SBoundingSphere mBoundingSphere;
 

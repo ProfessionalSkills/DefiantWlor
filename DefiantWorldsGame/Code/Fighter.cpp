@@ -50,6 +50,9 @@ void CFighter::UnloadIModel()
 {
 	if (mpObjModel != 0)
 	{
+		// Get the matrix for the unit
+		mpObjModel->GetMatrix(&mModelMatrix.m[0][0]);
+		
 		mspMshFighter->RemoveModel(mpObjModel);
 		mpObjModel = nullptr;
 		mHasPathTarget = false;
@@ -100,6 +103,9 @@ void CFighter::LoadIModel()
 		{
 			mpObjModel->SetSkin("machineRebel.jpg");
 		}
+
+		// Set model matrix from what was saved
+		mpObjModel->SetMatrix(&mModelMatrix.m[0][0]);
 	}
 
 	// Create shadow
