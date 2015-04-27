@@ -9,7 +9,6 @@ ProfSkillsDefiantWorlds
 TO DO: * = essential
 	*- UI for space buttons
 	*- UI for space
-	- Change the save log so that Rebel units get saved
 	*- Remove debug information
 	- Model arrow to show where unit is attempting to travel to
 	- Model around building being constructed for a more interesting constructing appearance
@@ -18,7 +17,7 @@ TO DO: * = essential
 	*- AI to attack enemies when they are invading Earth
 	*- Have a timer for when a fleet attempts to travel across space
 	*- Launch button glows red and a timer appears when the enemy is launching their fleet
-	- Units collide with one another
+	- Units collide with one another /* SAVE FOR LAST - EFFICIENCY ISSUES
 	- If time, decorate surrounding area
 	*- Create a saved game to load so that on demo day people are not bored whilst units are constructed etc.
 	*- Update population costs of units

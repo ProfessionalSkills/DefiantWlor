@@ -26,7 +26,7 @@ mDisplacement(30), mNumCamStates(4), CGameState()
 	mpMdlMercury = 0;
 	mpMdlNeptune = 0;
 	mpMdlEarthAtmos = 0;
-
+	mCutScene = false;
 	PlayerOneVictory = false;
 	PlayerTwoVictory = false;
 	mTacticChoosen = false;
@@ -176,6 +176,10 @@ void CSpaceState::StateSetup()
 	mFntDebug = gpEngine->LoadFont("Calibri", 20U);
 	mpButtonFont = gpEngine->LoadFont("font2.bmp", 15U);
 	mpTitleFont = gpEngine->LoadFont("font2.bmp", 35U);
+
+	//temp change camera
+	mCamState = 3;
+	ChangeCameraPosition();
 } 
 
 void CSpaceState::StateUpdate()
@@ -222,6 +226,13 @@ void CSpaceState::StateUpdate()
 	mMousePos.x = (float)gpEngine->GetMouseX();
 	mMousePos.y = (float)gpEngine->GetMouseY();
 	UpdateButtons();
+
+	if (!mCutScene)
+	{
+		mpPlayerOneFleet->SceneSpaceFight();
+		mCutScene=mpPlayerTwoFleet->SceneSpaceFight();
+		return;
+	}
 
 	if (!mPaused&&!PlayerOneVictory&&!PlayerTwoVictory)
 	{

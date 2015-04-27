@@ -69,6 +69,14 @@ private:
 	int mFleetWidth;//number of ships that can be in a row. specifcally, the number of ships beyond the centre ship in a given direction
 	int YSwitch(int x);
 
+
+	// SCENE
+	//---------------------------
+	const float mSceneStartX;
+	const float mSceneDuration;
+	float mSceneTimeElapsed;
+	void SetShipPositions();
+
 	// SOUND
 	//---------------------------
 	CSound* mGenSound;
@@ -89,7 +97,8 @@ public:
 	void MoveFleet();
 	void IdleFleet();//makes the shapes move slightly, to make the sceene more animated
 	void ChargeFleetLazers();//used to slow down space lazer firing
-
+	//scene functions
+	void SetShipPositions(float xPos);
 	//special attacks, used by the fleet
 	bool SpecialAttackLazerBarrage(CRTSPlayer* player);
 	bool SpecialAttackMassHeal(CRTSPlayer* player);

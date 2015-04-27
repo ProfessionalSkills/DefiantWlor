@@ -104,7 +104,7 @@ int CPlayerManager::UpdatePlayers()
 			if (gpRandomiser->GetRandomInt(0, 1))
 			{
 				// Run the course of an earth invasion
-				//InvadeEarth();
+				InvadeEarth();
 			}
 			else
 			{
@@ -339,6 +339,22 @@ void CPlayerManager::SavePlayers(std::ofstream& outFile)
 	{
 		mpAI[i]->SavePlayerData(outFile);
 	}
+
+	// Save earth rebel units
+	// Start by saving the number of Earth rebels
+	outFile << mpRebelEarthList.size() << std::endl;
+	for (auto pEarthUnit : mpRebelEarthList)
+	{
+		pEarthUnit->SaveAgent(outFile);
+	}
+
+	// Save mars rebel units
+	// Start by saving the number of Mars rebels
+	outFile << mpRebelMarsList.size() << std::endl;
+	for (auto pMarsUnit : mpRebelMarsList)
+	{
+		pMarsUnit->SaveAgent(outFile);
+	}
 }
 
 void CPlayerManager::LoadPlayers(std::ifstream& inFile)
@@ -350,6 +366,65 @@ void CPlayerManager::LoadPlayers(std::ifstream& inFile)
 	for (int i = 0; i < mNumAI; i++)
 	{
 		mpAI[i]->LoadPlayerData(inFile);
+	}
+
+	// Get the number of earth units
+	int earthUnits = 0;
+	int unitType = 0;
+	CGameAgent* pLoadedAgent = nullptr;
+	inFile >> earthUnits;
+	// Loop through saved units (if any)
+	for (int i = 0; i < earthUnits; i++)
+	{
+		inFile >> unitType;
+		// Determine type of unit
+		switch (unitType)
+		{
+		case GAV_FIGHTER:
+			pLoadedAgent = new CFighter();
+			break;
+		case GAV_BOMBER:
+			pLoadedAgent = new CBomber();
+			break;
+		case GAV_INFANTRY:
+			pLoadedAgent = new CInfantry();
+			break;
+		}
+
+		// Load the agent's data
+		pLoadedAgent->LoadAgent(inFile);
+
+		// Store in earth rebel list
+		mpRebelEarthList.push_back(pLoadedAgent);
+	}
+
+	// Get the number of mars units
+	int marsUnits = 0;
+	pLoadedAgent = nullptr;
+	inFile >> earthUnits;
+	// Loop through saved units (if any)
+	for (int i = 0; i < marsUnits; i++)
+	{
+		inFile >> unitType;
+		// Determine type of unit
+		switch (unitType)
+		{
+		case GAV_FIGHTER:
+			pLoadedAgent = new CFighter();
+			break;
+		case GAV_BOMBER:
+			pLoadedAgent = new CBomber();
+			break;
+		case GAV_INFANTRY:
+			pLoadedAgent = new CInfantry();
+			break;
+		}
+
+		// Load the agent's data
+		pLoadedAgent->LoadAgent(inFile);
+
+		// Store in earth rebel list
+		mpRebelMarsList.push_back(pLoadedAgent);
 	}
 }
 
