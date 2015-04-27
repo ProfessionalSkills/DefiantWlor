@@ -347,6 +347,18 @@ void CWorldState::CheckKeyPresses()
 				{
 					mpCurSelectedAgent->SetAttackTarget(pTargetGameAgent);
 				}
+				else
+				{
+					if (pTargetGameAgent->GetHealth() < pTargetGameAgent->GetMaxHealth())
+					{
+						if (mpCurSelectedAgent->GetAgentData()->mAgentType == GAV_WORKER)
+						{
+							CWorker* pWorker = static_cast<CWorker*>(mpCurSelectedAgent);
+							pWorker->SetHealTarget(pTargetGameAgent);
+						}
+					}
+					
+				}
 			}
 			else if (pTargetMinerals)
 			{
@@ -432,6 +444,18 @@ void CWorldState::CheckKeyPresses()
 					{
 						(*miterUnitSelectionList)->SetAttackTarget(pTargetGameAgent);
 					}
+				}
+				else
+				{
+					if (pTargetGameAgent->GetHealth() < pTargetGameAgent->GetMaxHealth())
+					{
+						if ((*miterUnitSelectionList)->GetAgentData()->mAgentType == GAV_WORKER)
+						{
+							CWorker* pWorker = static_cast<CWorker*>((*miterUnitSelectionList));
+							pWorker->SetHealTarget(pTargetGameAgent);
+						}
+					}
+
 				}
 			}
 			else if (pTargetMinerals)
@@ -592,9 +616,10 @@ void CWorldState::CheckKeyPresses()
 
 	if (gpEngine->KeyHit(Key_H))
 	{
+		//For each selected unit
 		for (auto unit : mpUnitSelectionList)
 		{
-			unit->Stop();
+			unit->Stop(); //Stop what the unit is doing
 		}
 	}
 
