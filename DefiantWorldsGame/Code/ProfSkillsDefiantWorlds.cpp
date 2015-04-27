@@ -21,7 +21,6 @@ TO DO: * = essential
 	*- Create a saved game to load so that on demo day people are not bored whilst units are constructed etc.
 	*- Update population costs of units
 	*- Add UI for button mouse over descriptions
-	*- LIMITS - no more than ONE mothership per player at any given point
 */
 
 
