@@ -50,6 +50,9 @@ void CBomber::UnloadIModel()
 {
 	if (mpObjModel != nullptr)
 	{
+		// Get the matrix for the unit
+		mpObjModel->GetMatrix(&mModelMatrix.m[0][0]);
+		
 		mspMshBomber->RemoveModel(mpObjModel);
 		mpObjModel = nullptr;
 		mHasPathTarget = false;
@@ -101,6 +104,9 @@ void CBomber::LoadIModel()
 		{
 			mpObjModel->SetSkin("heliRebel.jpg");
 		}
+
+		// Set model matrix from what was saved
+		mpObjModel->SetMatrix(&mModelMatrix.m[0][0]);
 	}
 
 	// Create shadow

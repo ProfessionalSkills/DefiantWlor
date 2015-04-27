@@ -36,6 +36,7 @@ public:
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
 	CTurretStructure(DX::XMFLOAT3 position);
+	CTurretStructure();
 	virtual ~CTurretStructure();
 
 

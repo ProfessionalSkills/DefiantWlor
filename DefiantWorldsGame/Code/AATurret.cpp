@@ -34,6 +34,24 @@ CTurretStructure::CTurretStructure(DX::XMFLOAT3 position)
 	mIsGroundType = true;
 }
 
+CTurretStructure::CTurretStructure()
+{
+	mScale = 5.0f;
+	mHealth = 400.0f;
+	mRange = 150.0f;
+	mState = OBJ_BUILT;
+	mMaxHealth = 400.0f;
+	mDamage = 150.0f;
+	mAttackTimer = 3.0f;
+	mFireRate = 0.3f;
+	mStructureType = STR_AA;
+	mHeight = 6.0f;
+
+	mpObjModel = nullptr;
+
+	mIsGroundType = true;
+}
+
 CTurretStructure::~CTurretStructure()
 {
 

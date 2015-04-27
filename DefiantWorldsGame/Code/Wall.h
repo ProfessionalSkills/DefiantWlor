@@ -38,6 +38,9 @@ public:
 	void UnloadIModel() override;
 	void LoadIModel() override;
 
+	void SaveStructure(std::ofstream& outFile) override;
+	void LoadStructure(std::ifstream& inFile, CGrid* pGrid, CRTSPlayer* pPlayer) override;
+
 
 private:
 	bool mIsHorizontal = false;

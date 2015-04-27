@@ -46,8 +46,8 @@ CWall::CWall(bool horizontal)
 	mScale = pRandom->GetRandomFloat(9.0f, 9.1f);
 
 	mIsHorizontal = horizontal;
-	mHealth = 1000.0f;
-	mMaxHealth = 1000.0f;
+	mHealth = 2000.0f;
+	mMaxHealth = 2000.0f;
 	mBuildTime = 5.0f;
 	mRepairSpeed = 1.0f;
 	mCurBuildTimeLeft = mBuildTime;
@@ -134,4 +134,43 @@ void CWall::LoadIModel()
 
 		CalculateBoundingBox();
 	}
+}
+
+void CWall::SaveStructure(std::ofstream& outFile)
+{
+	// Save to the output file all the required data
+	outFile << mStructureType << " " << mGridPos.mPosX << " " << mGridPos.mPosY << " " << mFaction << " " << mState
+		<< " " << mWorldPos.x << " " << mWorldPos.y << " " << mWorldPos.z << " " << mHealth << " " << 0 << " ";
+
+	outFile << mOrientation << std::endl;
+}
+
+void CWall::LoadStructure(std::ifstream& inFile, CGrid* pGrid, CRTSPlayer* pPlayer)
+{
+	// Ensure no model is already loaded for it
+	UnloadIModel();
+
+	// Store the required data for the structure
+	int faction;
+	int state;
+	int pad;
+	inFile >> mGridPos.mPosX >> mGridPos.mPosY >> faction >> state >> mWorldPos.x >> mWorldPos.y
+		>> mWorldPos.z >> mHealth >> pad >> mOrientation;
+
+	if (mOrientation == 90.0f)
+	{
+		mIsHorizontal = true;
+	}
+	else
+	{
+		mIsHorizontal = false;
+	}
+
+	// Convert required values to enums
+	mFaction = static_cast<EFactions>(faction);
+	mState = static_cast<EObjectStates>(state);
+
+	// Load the 3D model
+	LoadIModel();
+	CalculateBoundingBox();
 }
