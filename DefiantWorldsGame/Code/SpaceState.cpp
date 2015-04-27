@@ -26,7 +26,7 @@ mDisplacement(30), mNumCamStates(4), CGameState()
 	mpMdlMercury = 0;
 	mpMdlNeptune = 0;
 	mpMdlEarthAtmos = 0;
-
+	mCutScene = false;
 	PlayerOneVictory = false;
 	PlayerTwoVictory = false;
 	mTacticChoosen = false;
@@ -227,8 +227,10 @@ void CSpaceState::StateUpdate()
 	mMousePos.y = (float)gpEngine->GetMouseY();
 	UpdateButtons();
 
-	if (!mpPlayerOneFleet->SceneSpaceFight() || !mpPlayerTwoFleet->SceneSpaceFight())
+	if (!mCutScene)
 	{
+		mpPlayerOneFleet->SceneSpaceFight();
+		mCutScene=mpPlayerTwoFleet->SceneSpaceFight();
 		return;
 	}
 

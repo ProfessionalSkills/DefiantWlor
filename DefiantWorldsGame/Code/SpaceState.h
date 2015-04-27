@@ -440,6 +440,9 @@ private:
 
 	void LoadPlanets();
 
+	// SCENE
+	//---------------------------
+	bool mCutScene;
 	// MISC
 	//---------------------------
 	const float mTimeToUpdate;
