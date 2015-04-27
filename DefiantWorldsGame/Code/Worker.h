@@ -22,10 +22,15 @@ private:
 	// DATA
 	//---------------------------
 	bool mHarvesting = false;
+	bool mHealing = false;
+
+	const float mHealingTime = 0.1f;
+	float mHealCountdown;
 	CMinerals* mpActiveMineral = nullptr;			// Stores a pointer to the mineral which is being harvested by this worker unit
+	CGameAgent* mpHealTarget = nullptr;
 	IModel* mpMdlHarvest = nullptr;
 	CSpark* mpCollectionSpark = nullptr;
-
+	CSpark* mpHealingSpark = nullptr;
 
 public:
 	static IMesh* mspMshWorker;
@@ -60,12 +65,18 @@ public:
 		mHarvesting = false;
 	}
 
+	inline void SetHealTarget(CGameAgent* healTarget)
+	{
+		mpHealTarget = healTarget;
+		mHealing = false;
+	}
+
 
 	// METHODS
 	//---------------------------
 	//bool RepairBuilding(CStructure* structure);
 	bool IsHarvestingMineral();
-	bool RepairUnit(CGroundUnit* unit);
+	bool RepairUnit();
 	void UnloadIModel();
 	void LoadIModel();
 

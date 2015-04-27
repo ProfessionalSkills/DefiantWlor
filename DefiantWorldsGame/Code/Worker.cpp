@@ -24,6 +24,7 @@ CWorker::CWorker()
 	mSpeed = 12.0f;
 	mProductionTime = 7.5f;
 	mCurProductionTimeLeft = mProductionTime;
+	mHealCountdown = mHealingTime;
 	mDamage = 0.0f;
 	mFireRate = 0.1f;
 	mAttackTimer = 1.0f / mFireRate;
@@ -70,8 +71,29 @@ bool CWorker::IsHarvestingMineral()
 	return false;
 }
 
-bool CWorker::RepairUnit(CGroundUnit* unit)
+bool CWorker::RepairUnit()
 {
+	if (mpHealTarget->GetHealth() == mpHealTarget->GetMaxHealth())
+	{
+		mHealing = false;
+		return false;
+	}
+	//Count down to next heal on unit
+	mHealCountdown -= gFrameTime;
+	//When timer reaches 0, heal unit and reset timer
+	if (mHealCountdown <= 0.0f)
+	{
+		mHealCountdown = mHealingTime;
+		mpHealTarget->Heal(1.0f);
+	}
+	if (!mpHealingSpark)
+	{
+		mpHealingSpark = new CSpark(mpHealTarget->GetWorldPos());
+	}
+	else
+	{
+		mpHealingSpark->UpdateSystem();
+	}
 	return false;
 }
 
@@ -230,6 +252,47 @@ bool CWorker::Update()
 			mpActiveMineral = nullptr;
 			mHarvesting = false;
 		}
+		//Cannot have a heal target and path target
+		if (mpHealTarget)
+		{
+			mpHealTarget = nullptr;
+			mHealing = false;
+		}
+	}
+	//If it has a heal target
+	if (mpHealTarget)
+	{
+		//Cannot have a heal target and mineral target
+		if (mpActiveMineral)
+		{
+			mpActiveMineral->SetUsage(false);
+			mpActiveMineral = nullptr;
+			mHarvesting = false;
+		}
+
+		if (mpObjModel)
+		{
+			float threshold = 5.0f;
+			float distance;
+
+			DX::XMFLOAT4X4 objMatrix;
+			mpObjModel->GetMatrix(&objMatrix.m[0][0]);
+			DX::XMFLOAT3 localZ{ objMatrix.m[2][0], objMatrix.m[2][1], objMatrix.m[2][2] };
+
+			bool rayCollision = mpHealTarget->RayCollision(mWorldPos, localZ, distance);
+
+			// Check the distance is less than the threshold
+			if (distance <= threshold && rayCollision)
+			{
+				mHealing = true;
+			}
+			else
+			{
+				mHealing = false;
+				LookingAt(mpHealTarget->GetWorldPos());
+				Move();
+			}
+		}
 	}
 
 	// Check if the worker has an active material (and is still alive)
@@ -256,6 +319,19 @@ bool CWorker::Update()
 			mHarvesting = false;
 			LookingAt(mpActiveMineral->GetWorldPos());
 			Move();
+		}
+	}
+	//If the worker is currently healing a unit
+	if (mHealing)
+	{
+		RepairUnit();
+	}
+	else
+	{
+		if (mpHealingSpark)
+		{
+			mpHealingSpark->~CSpark();
+			mpHealingSpark = nullptr;
 		}
 	}
 

@@ -20,7 +20,7 @@ CInfantry::CInfantry()
 {
 	mAgentInfo = SAgentData(GAV_INFANTRY, "Light Tank");
 	mMaxHealth = 250.0f;
-	mHealth = 250.0f;
+	mHealth = 200.0f;
 	mSpeed = 18.0f;
 	mProductionTime = 12.0f;
 	mCurProductionTimeLeft = mProductionTime;
