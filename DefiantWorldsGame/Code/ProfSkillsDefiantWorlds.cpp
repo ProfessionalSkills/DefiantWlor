@@ -10,7 +10,6 @@ TO DO: * = essential
 	*- UI for space buttons
 	*- UI for space
 	*- Remove debug information
-	- Model arrow to show where unit is attempting to travel to
 	- Model around building being constructed for a more interesting constructing appearance
 	*- AI to load units to ships
 	*- AI to launch fleet

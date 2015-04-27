@@ -2550,7 +2550,8 @@ void CWorldState::QueueUnit(int index)
 void CWorldState::UnqueueUnit(int index)
 {
 	if (!mpCurSelectedStructure) return;
-
+	CGameAgent* unit = mpCurSelectedStructure->GetQueue()->at(index);
+	mpHumanPlayer->RefundUnit(unit);
 	mpCurSelectedStructure->RemoveFromQueue(index, mpHumanPlayer);
 	mLMouseClicked = false;
 }

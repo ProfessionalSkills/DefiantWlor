@@ -128,7 +128,6 @@ void CProductionStructure::RemoveFromQueue(size_t agentIndex,CRTSPlayer* pPlayer
 	miterProdQ = mpProductionQueue.begin();
 	std::advance(miterProdQ, agentIndex);
 	pPlayer->IncreasePopValue(-(*miterRespectiveAgents)->GetPopValue());
-	pPlayer->RefundUnit((*miterRespectiveAgents));
 	// Remove the unit at the given location
 	CGameAgent* tmp = (*miterProdQ);
 	SafeDelete(tmp);
