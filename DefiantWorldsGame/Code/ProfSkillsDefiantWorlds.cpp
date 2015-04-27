@@ -161,7 +161,10 @@ void SetupEngine()
 	CWall::mspMshStructure = gpEngine->LoadMesh("wall_A1_01.x");
 	CRTSPlayer::mspMshPillar = gpEngine->LoadMesh("Pillar.x");
 
-	
+	//Game Agent Meshes
+	//Waypoint Arrow
+	CGameAgent::mspMshWaypointArrow = gpEngine->LoadMesh("Arrow.x");
+
 	//Spaceship Meshes
 	//Space Fighter
 	CSpaceFighter::mspMshSpaceFighter = gpEngine->LoadMesh("SciFiBattleship01.x");

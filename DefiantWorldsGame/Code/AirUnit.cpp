@@ -206,6 +206,7 @@ bool CAirUnit::Update()
 
 					// Move unit to the new target area
 					mPathTarget = { targetX, 0.0f, targetZ };
+					SetWaypointArrow();
 					mHasPathTarget = true;
 				}
 			}
@@ -226,6 +227,7 @@ bool CAirUnit::Update()
 
 					// Move unit to the new target area
 					mPathTarget = { targetX, 0.0f, targetZ };
+					SetWaypointArrow();
 					mHasPathTarget = true;
 				}
 			}
@@ -380,6 +382,7 @@ void CAirUnit::Move()
 		if (mWorldPos.x > MinX && mWorldPos.x < MaxX && mWorldPos.z > MinZ && mWorldPos.z < MaxZ)
 		{
 			// Set path target to null
+			DeleteWaypointArrow();
 			mHasPathTarget = false;
 		}
 		else

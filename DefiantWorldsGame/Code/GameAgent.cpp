@@ -11,7 +11,7 @@
 #include "PlayerManager.h"
 #include "StaticStructure.h"
 
-
+IMesh* CGameAgent::mspMshWaypointArrow = nullptr;
 //-----------------------------------------------------
 // GAME AGENT CLASS CONSTRUCTORS & DESTRUCTOR
 //-----------------------------------------------------
@@ -257,6 +257,7 @@ void CGameAgent::SetSelectedTexture()
 	// If there is a path target, place an arrow there
 	if (mHasPathTarget)
 	{
+		SetWaypointArrow();
 		// * TO DO *
 	}
 
@@ -278,12 +279,14 @@ void CGameAgent::SetDeselectedTexture()
 	// If there is a path target, remove the waypoint arrow
 	if (mHasPathTarget)
 	{
-		// * TO DO *
+		DeleteWaypointArrow();
 	}
 
 	// Lower selected flag
 	mUnitSelected = false;
 }
+
+
 
 void CGameAgent::SetAttackTarget(CGameObject* target)
 {
@@ -376,6 +379,7 @@ void CGameAgent::Stop()
 {
 	// Stop everything that the agent could be doing
 	mHasPathTarget = false;
+	DeleteWaypointArrow();
 	if (mAttackTarget && mUnitSelected) mAttackTarget->SetNormalTexture();
 	mAttackTarget = nullptr;
 }

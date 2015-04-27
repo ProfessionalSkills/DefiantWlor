@@ -44,7 +44,7 @@ protected:
 	//---------------------------
 	IModel* mpObjModel = nullptr;
 	IModel* mpObjShadow = nullptr;
-
+	IModel* mpObjWaypoint = nullptr;
 	CExplosion* mDestructionExplosion = nullptr;
 	CSmoke* mWarningSmoke = nullptr;
 
