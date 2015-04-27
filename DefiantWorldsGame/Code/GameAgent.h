@@ -45,6 +45,7 @@ class CStructure;
 class CGameAgent : public CGameObject
 {
 protected:
+
 	// DATA
 	//---------------------------
 	SAgentData mAgentInfo;
@@ -81,6 +82,8 @@ protected:
 
 
 public:
+	// Waypoint Arrow Mesh
+	static IMesh* mspMshWaypointArrow;
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
 	CGameAgent();
@@ -142,6 +145,7 @@ public:
 		// Place a waypoint at the target if it is selected
 		if (mUnitSelected)
 		{
+			SetWaypointArrow();
 			// *TO DO *
 		}
 	}
@@ -237,7 +241,37 @@ public:
 		}
 	}
 
+	inline void SetWaypointArrow()
+	{
+		if (!mpObjWaypoint)
+		{
+			mpObjWaypoint = mspMshWaypointArrow->CreateModel(mPathTarget.x, 20.0f, mPathTarget.z);
+			mpObjWaypoint->RotateX(90.0f);
+		}
+		else
+		{
+			mpObjWaypoint->SetPosition(mPathTarget.x, 10.0f, mPathTarget.z);
+		}
+		
+	}
 
+	inline void UpdateWaypointArrow()
+	{
+		if (mpObjWaypoint != nullptr)
+		{
+			mpObjWaypoint->RotateY(50.0f * gFrameTime);
+		}
+	}
+
+	inline void DeleteWaypointArrow()
+	{
+		if (mpObjWaypoint)
+		{
+			mspMshWaypointArrow->RemoveModel(mpObjWaypoint);
+			mpObjWaypoint = nullptr; 
+			//SafeDelete(mpObjWaypoint);
+		}
+	}
 	// METHODS
 	//---------------------------
 	bool Construct();

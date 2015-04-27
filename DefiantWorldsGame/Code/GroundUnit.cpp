@@ -117,6 +117,7 @@ bool CGroundUnit::Update()
 	// ALL THESE UPDATES OCCUR IF THE UNIT IS NOT DEAD OR IN SPACE
 	if (HasTarget() && !mAttackTarget) //If there is a path target
 	{
+		UpdateWaypointArrow();
 		//Move the unit towards the path target
 		LookingAt(mPathTarget); //Rotates the unit to face the path target
 		Move();
@@ -189,6 +190,7 @@ bool CGroundUnit::Update()
 
 				// Move unit to the new target area
 				mPathTarget = { targetX, 0.0f, targetZ };
+				SetWaypointArrow();
 				mHasPathTarget = true;
 			}
 		}
@@ -209,6 +211,7 @@ bool CGroundUnit::Update()
 
 				// Move unit to the new target area
 				mPathTarget = { targetX, 0.0f, targetZ };
+				SetWaypointArrow();
 				mHasPathTarget = true;
 			}
 		}
@@ -276,6 +279,7 @@ void CGroundUnit::Move()
 
 		if (mWorldPos.x > MinX && mWorldPos.x < MaxX && mWorldPos.z > MinZ && mWorldPos.z < MaxZ)
 		{
+			DeleteWaypointArrow();
 			mHasPathTarget = false;
 		}
 		else
