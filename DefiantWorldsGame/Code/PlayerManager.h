@@ -42,6 +42,9 @@ public:
 	// Get all walls still alive
 	void GetWorldWalls(std::vector<CStaticStructure*>& pWalls);
 
+	// Create a red spawn beam at a given location
+	void NewSpawnBeam(DX::XMFLOAT3& pos);
+
 
 	// MUTATORS
 	//---------------------------

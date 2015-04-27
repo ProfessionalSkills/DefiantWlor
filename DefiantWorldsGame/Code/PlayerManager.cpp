@@ -681,3 +681,9 @@ void CPlayerManager::GetWorldWalls(std::vector<CStaticStructure*>& pWalls)
 	mpAI[0]->GetWalls(pWalls);
 	mpHuman->GetWalls(pWalls);
 }
+
+void CPlayerManager::NewSpawnBeam(DX::XMFLOAT3& pos)
+{
+	// Create transport beams
+	mpTransportBeams.push_back(new CTransportBeam(pos));
+}

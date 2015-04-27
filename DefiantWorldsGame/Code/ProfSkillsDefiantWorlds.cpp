@@ -11,7 +11,6 @@ TO DO: * = essential
 	*- UI for space
 	*- Remove debug information
 	- Model around building being constructed for a more interesting constructing appearance
-	*- AI to load units to ships
 	*- AI to launch fleet
 	*- AI to attack enemies when they are invading Earth
 	*- Have a timer for when a fleet attempts to travel across space
@@ -21,6 +20,8 @@ TO DO: * = essential
 	*- Create a saved game to load so that on demo day people are not bored whilst units are constructed etc.
 	*- Update population costs of units
 	*- Add UI for button mouse over descriptions
+	*- Fix bug where population unit is not saved/loaded
+	*- Add camera shaking when there are building explosions nearby
 */
 
 

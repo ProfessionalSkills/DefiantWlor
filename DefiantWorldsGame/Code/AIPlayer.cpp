@@ -7,6 +7,7 @@
 // INCLUDES
 //-----------------------------------------------------
 #include "AIPlayer.h"
+#include "GameStateControl.h"
 
 
 //-----------------------------------------------------
@@ -772,6 +773,85 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 			return true;
 			break;
 		}
+	case Q_SEND_TO_SPACE:
+		{
+			// Count how many units are not in space & not a worker
+			int counter = 0;
+			for (miterUnitsMap = mpUnitsMap.begin(); miterUnitsMap != mpUnitsMap.end(); miterUnitsMap++)
+			{
+				// Check if in space
+				if (miterUnitsMap->second->GetState() != OBJ_INSPACE && miterUnitsMap->second->GetAgentData()->mAgentType != GAV_WORKER)
+				{
+					counter++;
+				}
+			}
+
+			// Ensure there are at least 5 units in the world
+			if (counter < 5)
+			{
+				// Return true to remove this as a task for the AI player
+				return true;
+			}
+			
+			// If there are enough units
+			int size = mpUnitsMap.size();
+			if (size == 0)
+			{
+				return true;
+			}
+
+			// Pick a random unit and move it to an arbitrary location
+			int unitNum = mpRandomiser->GetRandomInt(0, size - 1);
+
+			miterUnitsMap = mpUnitsMap.begin();
+			std::advance(miterUnitsMap, unitNum);
+
+			// Check to see if the unit picked is a worker unit which is busy harvesting
+			if (miterUnitsMap->second->GetAgentData()->mAgentType == GAV_WORKER)
+			{
+				// Cannot send workers to space
+				return false;
+			}
+
+			// Check if the unit is already in space
+			if (miterUnitsMap->second->GetState() == OBJ_INSPACE)
+			{
+				// Try a different unit
+				return false;
+			}
+
+			// if the unit is attacking, leave it alone
+			if (miterUnitsMap->second->GetAttackTarget())
+			{
+				return false;
+			}
+
+			// Get unit's position before it disappears
+			DX::XMFLOAT3 pos = miterUnitsMap->second->GetWorldPos();
+
+			// Attempt to put the unit into space
+			if (PutUnitsOnShips(miterUnitsMap->second))
+			{
+				// Add new beam at the unit's position
+				pPlayerManager->NewSpawnBeam(pos);
+				// Success
+				return true;
+			}
+			else
+			{
+				// Failed to put unit into space
+				// Queue a new transport ship
+				mpTaskQ.push(new CBuildRequest(Q_TRANSPORT, 1));
+				return false;
+			}
+		}
+		break;
+	case Q_LAUNCH_FLEET:
+		{
+			// Not yet implemented
+			return true;
+		}
+		break;
 	}
 
 	// If it was a unit being built, simply build unit & return true (for now)
