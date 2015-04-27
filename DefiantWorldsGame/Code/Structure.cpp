@@ -244,6 +244,10 @@ void CStructure::Destroy()
 		case STR_WALL:
 			mStrDisplay << "A Defensive Wall";
 			break;
+
+		case STR_AA:
+			mStrDisplay << "An Anti-Aircraft Structure";
+			break;
 		}
 		mStrDisplay << " has been destroyed!";
 		gpNewsTicker->AddNewElement(mStrDisplay.str(), true);

@@ -808,6 +808,9 @@ void CRTSPlayer::LoadPlayerData(std::ifstream& inFile)
 		case STR_WALL:
 			pLoadedStructure = new CWall();
 			break;
+		case STR_AA:
+			pLoadedStructure = new CTurretStructure();
+			break;
 		}
 
 		// Load saved information for the structure
