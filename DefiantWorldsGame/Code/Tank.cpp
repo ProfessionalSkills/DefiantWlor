@@ -35,7 +35,6 @@ CTank::CTank()
 	mBuildCost = 3000;
 	mPopCost = 3;
 	mTurretNode = 4;
-	mObjectType = Q_TANK;
 	mRange = 20.0f;
 }
 
@@ -53,6 +52,7 @@ void CTank::UnloadIModel()
 	{
 		// Get the matrix for the unit
 		mpObjModel->GetMatrix(&mModelMatrix.m[0][0]);
+		mHasModelMatrix = true;
 		
 		mspMshTank->RemoveModel(mpObjModel);
 		mpObjModel = nullptr;
@@ -107,7 +107,11 @@ void CTank::LoadIModel()
 		}
 
 		// Set model matrix from what was saved
-		mpObjModel->SetMatrix(&mModelMatrix.m[0][0]);
+		if (mHasModelMatrix)
+		{
+			mpObjModel->SetMatrix(&mModelMatrix.m[0][0]);
+			mHasModelMatrix = false;
+		}
 	}
 
 	// Create shadow

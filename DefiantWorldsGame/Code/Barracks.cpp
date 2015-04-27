@@ -29,7 +29,6 @@ CBarracks::CBarracks()
 
 	mState = OBJ_CONSTRUCTING;
 	mStructureType = STR_BARRACKS;
-	mObjectType = Q_BARRACKS;
 	mStructureBL = SPointData(-1, -1);
 	mStructureTR = SPointData(1, 1);
 	mGridSpawnLoc = SPointData(0, -2);

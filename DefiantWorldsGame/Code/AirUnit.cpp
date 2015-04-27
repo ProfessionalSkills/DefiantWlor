@@ -437,6 +437,7 @@ void CAirUnit::SaveAgent(std::ofstream& outFile)
 {
 	// Get the matrix for the unit
 	mpObjModel->GetMatrix(&mModelMatrix.m[0][0]);
+	mHasModelMatrix = true;
 
 	// Save the data for this unit
 	outFile << mAgentInfo.mAgentType << " " << mFaction << " " << mState << " "
@@ -466,6 +467,16 @@ void CAirUnit::LoadAgent(std::ifstream& inFile)
 	// Convert required values to enums
 	mFaction = static_cast<EFactions>(faction);
 	mState = static_cast<EObjectStates>(state);
+
+	// Set identity to fourth column
+	mModelMatrix.m[0][3] = 0.0f;
+	mModelMatrix.m[1][3] = 0.0f;
+	mModelMatrix.m[2][3] = 0.0f;
+	mModelMatrix.m[3][3] = 1.0f;
+
+	// Store world position
+	mWorldPos = { mModelMatrix.m[3][0], mModelMatrix.m[3][1], mModelMatrix.m[3][2] };
+	mHasModelMatrix = true;
 
 	// Load a pointer to the player based on the faction
 	if (mFaction == FAC_EARTH_DEFENSE_FORCE)

@@ -106,6 +106,7 @@ private:
 
 	CAdvancedButton<CWorldState, void>* mpButtonDelete;
 	CAdvancedButton<CWorldState, void>* mpButtonPutUnitIntoSpace;
+	CAdvancedButton<CWorldState, void>* mpButtonUnitStop;
 
 	CAdvancedButton<CWorldState, void>* mpButtonBarracks;
 	CAdvancedButton<CWorldState, void>* mpButtonHellipad;
@@ -230,10 +231,8 @@ public:
 	void CreateHouse();
 	void DeleteSelection();
 	void LaunchAttack();
-	//void ChangeTacNone();
-	//void ChangeTacRapid();
-	//void ChangeTacTargated();
 	void PutUnitIntoSpace();
+	void UnitStop();
 
 	// Paused menu buttons methods
 	void Continue();

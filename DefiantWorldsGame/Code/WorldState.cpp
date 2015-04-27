@@ -347,6 +347,18 @@ void CWorldState::CheckKeyPresses()
 				{
 					mpCurSelectedAgent->SetAttackTarget(pTargetGameAgent);
 				}
+				else
+				{
+					if (pTargetGameAgent->GetHealth() < pTargetGameAgent->GetMaxHealth())
+					{
+						if (mpCurSelectedAgent->GetAgentData()->mAgentType == GAV_WORKER)
+						{
+							CWorker* pWorker = static_cast<CWorker*>(mpCurSelectedAgent);
+							pWorker->SetHealTarget(pTargetGameAgent);
+						}
+					}
+					
+				}
 			}
 			else if (pTargetMinerals)
 			{
@@ -432,6 +444,18 @@ void CWorldState::CheckKeyPresses()
 					{
 						(*miterUnitSelectionList)->SetAttackTarget(pTargetGameAgent);
 					}
+				}
+				else
+				{
+					if (pTargetGameAgent->GetHealth() < pTargetGameAgent->GetMaxHealth())
+					{
+						if ((*miterUnitSelectionList)->GetAgentData()->mAgentType == GAV_WORKER)
+						{
+							CWorker* pWorker = static_cast<CWorker*>((*miterUnitSelectionList));
+							pWorker->SetHealTarget(pTargetGameAgent);
+						}
+					}
+
 				}
 			}
 			else if (pTargetMinerals)
@@ -592,10 +616,8 @@ void CWorldState::CheckKeyPresses()
 
 	if (gpEngine->KeyHit(Key_H))
 	{
-		for (auto unit : mpUnitSelectionList)
-		{
-			unit->Stop();
-		}
+		// Stop the selected units
+		UnitStop();
 	}
 
 	mRMouseClicked = false;
@@ -950,7 +972,7 @@ void CWorldState::StateSetup()
 	mpButtonSpaceCentre = pNewButton;
 	mpGenericButtonList.push_back(pNewButton);
 
-	pNewButton = new CAdvancedButton<CWorldState, void>("DefDeleteButton.png", "SelDeleteButton.png", SPointData(450, 765),
+	pNewButton = new CAdvancedButton<CWorldState, void>("DefDeleteButton.png", "SelDeleteButton.png", SPointData(440, 765),
 		DX::XMFLOAT2(90.0f, 90.0f), *this, &CWorldState::DeleteSelection, TR_UP, false, 0.2f);
 	pNewButton->Hide();
 	mpButtonDelete = pNewButton;
@@ -959,6 +981,10 @@ void CWorldState::StateSetup()
 	mpButtonPutUnitIntoSpace = new CAdvancedButton<CWorldState, void>("DefBeamUpButton.png", "SelBeamUpButton.png",
 		SPointData(260, 765), DX::XMFLOAT2(90.0f, 90.0f), *this, &CWorldState::PutUnitIntoSpace, TR_UP, false, 0.2f);
 	mpGenericButtonList.push_back(mpButtonPutUnitIntoSpace);
+
+	mpButtonUnitStop = new CAdvancedButton<CWorldState, void>("DefStopButton.png", "SelStopButton.png",
+		SPointData(350, 765), DX::XMFLOAT2(90.0f, 90.0f), *this, &CWorldState::UnitStop, TR_UP, false, 0.2f);
+	mpGenericButtonList.push_back(mpButtonUnitStop);
 
 	// Barracks units buttons
 	mpBarracksButtons = new SStructureButtons<CWorldState>(3);
@@ -2036,6 +2062,7 @@ void CWorldState::OnStructureSelectChange(CStructure* pSelStructure)
 			mpButtonHellipad->Hide();
 			mpButtonSpaceCentre->Hide();
 			mpButtonPutUnitIntoSpace->Hide();
+			mpButtonUnitStop->Hide();
 
 			// Show specific structure buttons
 			mpButtonDelete->Show();
@@ -2191,6 +2218,7 @@ void CWorldState::OnStructureSelectChange(CStructure* pSelStructure)
 		mpHellipadButtons->Hide();
 		mpComCentreButtons->Hide();
 		mpButtonPutUnitIntoSpace->Hide();
+		mpButtonUnitStop->Hide();
 
 		// Show base buttons
 		mpButtonBarracks->Show();
@@ -2216,6 +2244,7 @@ void CWorldState::OnUnitSelectChange(CGameAgent* pSelAgent, bool listSelection)
 		// Show the buttons specific to units
 		mpButtonDelete->Show();
 		mpButtonPutUnitIntoSpace->Show();
+		mpButtonUnitStop->Show();
 
 		// Hide base buttons
 		mpButtonBarracks->Hide();
@@ -2249,6 +2278,7 @@ void CWorldState::OnUnitSelectChange(CGameAgent* pSelAgent, bool listSelection)
 		// Show the buttons specific to units
 		mpButtonDelete->Show();
 		mpButtonPutUnitIntoSpace->Show();
+		mpButtonUnitStop->Show();
 
 		// Hide base buttons
 		mpButtonBarracks->Hide();
@@ -2302,6 +2332,7 @@ void CWorldState::OnUnitSelectChange(CGameAgent* pSelAgent, bool listSelection)
 			// Nothing selected - hide buttons no longer required
 			mpButtonDelete->Hide();
 			mpButtonPutUnitIntoSpace->Hide();
+			mpButtonUnitStop->Hide();
 
 			// Show base buttons
 			mpButtonBarracks->Show();
@@ -2703,4 +2734,22 @@ void CWorldState::SaveGame()
 void CWorldState::QuitGame()
 {
 	gCurState = GS_MAIN_MENU;
+}
+
+void CWorldState::UnitStop()
+{
+	// If there is one unit selected - stop it
+	if (mpCurSelectedAgent)
+	{
+		mpCurSelectedAgent->Stop();
+	}
+
+	// If there is a selection of units, stop them all
+	if (mpUnitSelectionList.size())
+	{
+		for (miterUnitSelectionList = mpUnitSelectionList.begin(); miterUnitSelectionList != mpUnitSelectionList.end(); miterUnitSelectionList++)
+		{
+			(*miterUnitSelectionList)->Stop();
+		}
+	}
 }
