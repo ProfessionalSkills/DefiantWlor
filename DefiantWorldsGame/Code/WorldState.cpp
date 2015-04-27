@@ -590,6 +590,14 @@ void CWorldState::CheckKeyPresses()
 		mpAIPlayer->AddShips();
 	}
 
+	if (gpEngine->KeyHit(Key_H))
+	{
+		for (auto unit : mpUnitSelectionList)
+		{
+			unit->Stop();
+		}
+	}
+
 	mRMouseClicked = false;
 }
 
