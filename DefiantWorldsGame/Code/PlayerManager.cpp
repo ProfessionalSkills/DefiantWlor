@@ -90,6 +90,7 @@ int CPlayerManager::UpdatePlayers()
 	if (gpEngine->KeyHit(Key_G))
 	{
 		InvadeMars();
+		InvadeEarth();
 	}
 	
 	// Update rebels
@@ -103,7 +104,7 @@ int CPlayerManager::UpdatePlayers()
 			if (gpRandomiser->GetRandomInt(0, 1))
 			{
 				// Run the course of an earth invasion
-				InvadeEarth();
+				//InvadeEarth();
 			}
 			else
 			{

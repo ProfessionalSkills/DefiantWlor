@@ -51,6 +51,10 @@ void CInfantry::UnloadIModel()
 {
 	if (mpObjModel != 0)
 	{
+		// Get the matrix for the unit
+		mpObjModel->GetMatrix(&mModelMatrix.m[0][0]);
+		mHasModelMatrix = true;
+		
 		mspMshInfantry->RemoveModel(mpObjModel);
 		mpObjModel = nullptr;
 		mHasPathTarget = false;
@@ -101,6 +105,13 @@ void CInfantry::LoadIModel()
 		else
 		{
 			mpObjModel->SetSkin("tigerRebel.jpg");
+		}
+
+		// Set model matrix from what was saved
+		if (mHasModelMatrix)
+		{
+			mpObjModel->SetMatrix(&mModelMatrix.m[0][0]);
+			mHasModelMatrix = false;
 		}
 	}
 

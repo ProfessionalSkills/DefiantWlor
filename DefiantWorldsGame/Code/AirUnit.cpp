@@ -422,7 +422,7 @@ void CAirUnit::DetermineAirspace()
 	// Check Human player's airspace
 	bottomLeft = pHuman->GetPlayerGrid()->GetGridStartPos();
 	topRight = pHuman->GetPlayerGrid()->GetGridEndPos();
-	if (mWorldPos.x < bottomLeft.x || mWorldPos.x > topRight.x || mWorldPos.z < bottomLeft.z || mWorldPos.z > topRight.z)
+	if (mWorldPos.x < bottomLeft.x - 500.0f || mWorldPos.x > topRight.x + 500.0f || mWorldPos.z < bottomLeft.z - 500.0f || mWorldPos.z > topRight.z + 500.0f)
 	{
 		// Unit is in mars airspace
 		mAirspace = AS_EARTH;
@@ -431,4 +431,66 @@ void CAirUnit::DetermineAirspace()
 
 	// Unit is in no one's airspace
 	AS_NONE;
+}
+
+void CAirUnit::SaveAgent(std::ofstream& outFile)
+{
+	// Get the matrix for the unit
+	mpObjModel->GetMatrix(&mModelMatrix.m[0][0]);
+	mHasModelMatrix = true;
+
+	// Save the data for this unit
+	outFile << mAgentInfo.mAgentType << " " << mFaction << " " << mState << " "
+		<< mModelMatrix.m[0][0] << " " << mModelMatrix.m[0][1] << " " << mModelMatrix.m[0][2]
+		<< mModelMatrix.m[1][0] << " " << mModelMatrix.m[1][1] << " " << mModelMatrix.m[1][2]
+		<< mModelMatrix.m[2][0] << " " << mModelMatrix.m[2][1] << " " << mModelMatrix.m[2][2]
+		<< mModelMatrix.m[3][0] << " " << mModelMatrix.m[3][1] << " " << mModelMatrix.m[3][2]
+		<< " " << mHealth << " " << mYaw << std::endl;
+}
+
+void CAirUnit::LoadAgent(std::ifstream& inFile)
+{
+	// Ensure the model for the unit is not already loaded
+	UnloadIModel();
+
+	// Store the required data for the structure
+	int faction;
+	int state;
+	int qSize;
+	inFile >> faction >> state >>
+		mModelMatrix.m[0][0] >> mModelMatrix.m[0][1] >> mModelMatrix.m[0][2] >>
+		mModelMatrix.m[1][0] >> mModelMatrix.m[1][1] >> mModelMatrix.m[1][2] >>
+		mModelMatrix.m[2][0] >> mModelMatrix.m[2][1] >> mModelMatrix.m[2][2] >>
+		mModelMatrix.m[3][0] >> mModelMatrix.m[3][1] >> mModelMatrix.m[3][2] >>
+		mHealth >> mYaw;
+
+	// Convert required values to enums
+	mFaction = static_cast<EFactions>(faction);
+	mState = static_cast<EObjectStates>(state);
+
+	// Set identity to fourth column
+	mModelMatrix.m[0][3] = 0.0f;
+	mModelMatrix.m[1][3] = 0.0f;
+	mModelMatrix.m[2][3] = 0.0f;
+	mModelMatrix.m[3][3] = 1.0f;
+
+	// Store world position
+	mWorldPos = { mModelMatrix.m[3][0], mModelMatrix.m[3][1], mModelMatrix.m[3][2] };
+	mHasModelMatrix = true;
+
+	// Load a pointer to the player based on the faction
+	if (mFaction == FAC_EARTH_DEFENSE_FORCE)
+	{
+		mpOwner = CStateControl::GetInstance()->GetPlayerManager()->GetHumanPlayer();
+	}
+	else if (mFaction == FAC_THE_CRIMSON_LEGION)
+	{
+		mpOwner = CStateControl::GetInstance()->GetPlayerManager()->GetAIPlayer(0);
+	}
+
+	// Load the model
+	LoadIModel();
+
+	// Calculate the bounding sphere
+	CalculateBoundingSphere();
 }

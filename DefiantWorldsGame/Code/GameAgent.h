@@ -49,6 +49,8 @@ protected:
 	//---------------------------
 	SAgentData mAgentInfo;
 	DX::XMFLOAT3 mPathTarget;
+	bool mHasModelMatrix = false;
+	DX::XMFLOAT4X4 mModelMatrix;
 	std::stringstream mStrDisplay;
 	SBoundingSphere mBoundingSphere;
 

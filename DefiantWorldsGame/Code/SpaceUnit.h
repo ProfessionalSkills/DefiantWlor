@@ -88,8 +88,8 @@ public:
 	virtual void MoveY(float yChange)=0;
 	virtual bool StoreUnits(CGameAgent* unit) = 0;
 	// Save the data for this unit
-	virtual void SaveAgent(std::ofstream& outFile) override;
-	virtual void LoadAgent(std::ifstream& inFile) override;
+	void SaveAgent(std::ofstream& outFile) override;
+	void LoadAgent(std::ifstream& inFile) override;
 
 	void FireLazer(CGameObject* target);
 	void ChargeLazer();
