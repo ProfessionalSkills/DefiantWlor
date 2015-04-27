@@ -176,6 +176,10 @@ void CSpaceState::StateSetup()
 	mFntDebug = gpEngine->LoadFont("Calibri", 20U);
 	mpButtonFont = gpEngine->LoadFont("font2.bmp", 15U);
 	mpTitleFont = gpEngine->LoadFont("font2.bmp", 35U);
+
+	//temp change camera
+	mCamState = 3;
+	ChangeCameraPosition();
 } 
 
 void CSpaceState::StateUpdate()
