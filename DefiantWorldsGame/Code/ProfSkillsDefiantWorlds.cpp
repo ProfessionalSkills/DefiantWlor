@@ -13,6 +13,7 @@ TO DO: * = essential
 	- Model around building being constructed for a more interesting constructing appearance
 	*- AI to attack enemies when they are invading Earth
 	*- Have a timer for when a fleet attempts to travel across space
+	*- Save units saved in transport ships
 	*- Launch button glows red and a timer appears when the enemy is launching their fleet
 	- Units collide with one another /* SAVE FOR LAST - EFFICIENCY ISSUES
 	- If time, decorate surrounding area

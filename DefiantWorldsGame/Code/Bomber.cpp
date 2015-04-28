@@ -49,10 +49,6 @@ void CBomber::UnloadIModel()
 {
 	if (mpObjModel != nullptr)
 	{
-		// Get the matrix for the unit
-		mpObjModel->GetMatrix(&mModelMatrix.m[0][0]);
-		mHasModelMatrix = true;
-
 		mspMshBomber->RemoveModel(mpObjModel);
 		mpObjModel = nullptr;
 		mHasPathTarget = false;
@@ -103,13 +99,6 @@ void CBomber::LoadIModel()
 		else
 		{
 			mpObjModel->SetSkin("heliRebel.jpg");
-		}
-
-		// Set model matrix from what was saved
-		if (mHasModelMatrix)
-		{
-			mpObjModel->SetMatrix(&mModelMatrix.m[0][0]);
-			mHasModelMatrix = false;
 		}
 	}
 

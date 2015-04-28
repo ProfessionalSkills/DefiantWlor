@@ -101,10 +101,6 @@ void CWorker::UnloadIModel()
 {
 	if (mpObjModel != 0)
 	{
-		// Get the matrix for the unit
-		mpObjModel->GetMatrix(&mModelMatrix.m[0][0]);
-		mHasModelMatrix = true;
-		
 		mspMshWorker->RemoveModel(mpObjModel);
 		mpObjModel = nullptr;
 		mHasPathTarget = false;
@@ -162,13 +158,6 @@ void CWorker::LoadIModel()
 		else
 		{
 			mpObjModel->SetSkin("ttruckGermanRebel.jpg");
-		}
-
-		// Set model matrix from what was saved
-		if (mHasModelMatrix)
-		{
-			mpObjModel->SetMatrix(&mModelMatrix.m[0][0]);
-			mHasModelMatrix = false;
 		}
 	}
 

@@ -49,10 +49,6 @@ void CFighter::UnloadIModel()
 {
 	if (mpObjModel != 0)
 	{
-		// Get the matrix for the unit
-		mpObjModel->GetMatrix(&mModelMatrix.m[0][0]);
-		mHasModelMatrix = true;
-		
 		mspMshFighter->RemoveModel(mpObjModel);
 		mpObjModel = nullptr;
 		mHasPathTarget = false;
@@ -102,13 +98,6 @@ void CFighter::LoadIModel()
 		else
 		{
 			mpObjModel->SetSkin("machineRebel.jpg");
-		}
-
-		// Set model matrix from what was saved
-		if (mHasModelMatrix)
-		{
-			mpObjModel->SetMatrix(&mModelMatrix.m[0][0]);
-			mHasModelMatrix = false;
 		}
 	}
 

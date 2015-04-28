@@ -57,10 +57,6 @@ public:
 	void Spawn(CGrid* pGrid, SPointData pCentre);
 	void DetermineAirspace();
 
-	// Save the data for this unit
-	void SaveAgent(std::ofstream& outFile) override;
-	void LoadAgent(std::ifstream& inFile) override;
-
 
 private:
 	virtual IModel* CreateModel(DX::XMFLOAT3 pos) = 0;

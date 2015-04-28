@@ -50,10 +50,6 @@ void CTank::UnloadIModel()
 {
 	if (mpObjModel != 0)
 	{
-		// Get the matrix for the unit
-		mpObjModel->GetMatrix(&mModelMatrix.m[0][0]);
-		mHasModelMatrix = true;
-		
 		mspMshTank->RemoveModel(mpObjModel);
 		mpObjModel = nullptr;
 		mHasPathTarget = false;
@@ -104,13 +100,6 @@ void CTank::LoadIModel()
 		else
 		{
 			mpObjModel->SetSkin("Hovertank01Rebel.jpg");
-		}
-
-		// Set model matrix from what was saved
-		if (mHasModelMatrix)
-		{
-			mpObjModel->SetMatrix(&mModelMatrix.m[0][0]);
-			mHasModelMatrix = false;
 		}
 	}
 
