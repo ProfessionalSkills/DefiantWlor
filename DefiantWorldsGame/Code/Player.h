@@ -143,6 +143,7 @@ public:
 			if (mpTemp->StoreUnits(tmp))
 			{
 				tmp->SetState(OBJ_INSPACE);
+				tmp->Stop();
 				tmp->UnloadIModel();
 				tmp->RemoveBoundingSphere();
 				return true;

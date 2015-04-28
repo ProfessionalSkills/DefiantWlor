@@ -206,7 +206,7 @@ bool CAirUnit::Update()
 
 					// Move unit to the new target area
 					mPathTarget = { targetX, 0.0f, targetZ };
-					SetWaypointArrow();
+					if (mUnitSelected) SetWaypointArrow();
 					mHasPathTarget = true;
 				}
 			}
@@ -227,7 +227,7 @@ bool CAirUnit::Update()
 
 					// Move unit to the new target area
 					mPathTarget = { targetX, 0.0f, targetZ };
-					SetWaypointArrow();
+					if (mUnitSelected) SetWaypointArrow();
 					mHasPathTarget = true;
 				}
 			}
