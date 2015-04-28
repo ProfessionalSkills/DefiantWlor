@@ -90,7 +90,7 @@ void CSpaceState::StateSetup()
 	}
 
 	mpCamMain = gpEngine->CreateCamera(kManual, 0.0f, 0.0f, mCamZ);
-	gpCurWorldCamera = mpCamMain;
+	gpCam = mpCamMain;
 	ChangeCameraPosition();
 
 	// INITIALISE SKYBOX

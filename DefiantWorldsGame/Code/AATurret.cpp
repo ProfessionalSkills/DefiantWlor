@@ -111,6 +111,12 @@ bool CTurretStructure::Update(CRTSPlayer* pPlayer)
 			// Update destruction explosion
 			if (mDestructionExplosion == nullptr)
 			{
+				// Check the faction of the structure
+				if (gpCurWorldCamera->GetFaction() == mFaction)
+				{
+					gpCurWorldCamera->SetShaking(true);
+				}
+				
 				SafeDelete(mWarningSmoke);
 				mDestructionExplosion = new CExplosion({ mWorldPos.x, mWorldPos.y + mHeight, mWorldPos.z }, 150, false);
 				Destroy();

@@ -22,6 +22,9 @@ namespace DX = DirectX;
 
 
 extern I3DEngine* gpEngine;
+extern CRandomiser* gpRandomiser;
+extern float gFrameTime;
+
 
 //-----------------------------------------------------
 // PARTICLE CLASS

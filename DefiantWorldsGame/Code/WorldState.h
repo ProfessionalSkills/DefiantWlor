@@ -15,7 +15,6 @@
 #include "Grid.h"
 #include "AdvancedButton.h"
 #include "NewsTicker.h"
-#include "SphericalCamera.h"
 #include "TypeBox.h"
 #include "TransportBeam.h"
 

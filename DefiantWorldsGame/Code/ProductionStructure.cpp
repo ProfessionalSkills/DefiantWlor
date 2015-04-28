@@ -297,6 +297,12 @@ bool CProductionStructure::Update(CRTSPlayer* pPlayer)
 			{
 				if (mDestructionExplosion == nullptr)
 				{	
+					// Check the faction of the structure
+					if (gpCurWorldCamera->GetFaction() == mFaction)
+					{
+						gpCurWorldCamera->SetShaking(true);
+					}
+					
 					SafeDelete(mWarningSmoke);
 					if (mStructureType == STR_COM_CENTRE)
 						mDestructionExplosion = new CExplosion({mWorldPos.x, mWorldPos.y + 20.0f, mWorldPos.z}, 150, true);

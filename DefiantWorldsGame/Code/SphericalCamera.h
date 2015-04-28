@@ -8,7 +8,19 @@
 //-----------------------------------------------------
 // INCLUDES
 //-----------------------------------------------------
-#include "Common.h"
+#include "Particles.h"
+
+const float NEAR_CLIP = 1.0f;
+const float FAR_CLIP = 10000.0f;
+
+// Game factions
+enum EFactions
+{
+	FAC_EARTH_DEFENSE_FORCE, FAC_THE_CRIMSON_LEGION, FAC_REBELS
+};
+
+// Clamp function
+float Clampf(float inMin, float inMax, float inVal);
 
 
 //-----------------------------------------------------
@@ -67,6 +79,17 @@ public:
 		mθ = Clampf(DX::XMConvertToRadians(10.0f), DX::XMConvertToRadians(50.0f), mθ + amount / 2.0f);
 	}
 
+	inline void SetShaking(bool shake)
+	{
+		mShaking = shake;
+		mShakingTimer = 0.0f;
+	}
+
+	inline void SetFaction(EFactions faction)
+	{
+		mFaction = faction;
+	}
+
 
 	// ACCESSORS
 	//---------------------------
@@ -80,6 +103,11 @@ public:
 		point = mPivotPoint;
 	}
 
+	inline EFactions GetFaction()
+	{
+		return mFaction;
+	}
+
 
 	// METHODS
 	//---------------------------
@@ -91,9 +119,12 @@ private:
 	//---------------------------
 	ICamera* mpCamera;
 	DX::XMFLOAT3 mPivotPoint;
+	EFactions mFaction;
 	float mρ;
 	float mφ;
 	float mθ;
+	bool mShaking = false;
+	float mShakingTimer = 0.0f;
 };
 
 #endif /* _SPHERICAL_CAMERA_H_ */

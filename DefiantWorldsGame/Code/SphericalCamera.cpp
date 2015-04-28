@@ -31,6 +31,23 @@ CSphericalCamera::~CSphericalCamera()
 //-----------------------------------------------------
 void CSphericalCamera::Update()
 {
+	// Check if the camera is shaking
+	if (mShaking)
+	{
+		// Randomly move the pivot point around
+		AdjustPhi(gpRandomiser->GetRandomFloat(-3.0f, 3.0f) * gFrameTime);
+		AdjustRho(gpRandomiser->GetRandomFloat(-3.0f, 3.0f) * gFrameTime);
+		AdjustTheta(gpRandomiser->GetRandomFloat(-3.0f, 3.0f) * gFrameTime);
+
+		// Increase shaking timer
+		mShakingTimer += gFrameTime;
+		if (mShakingTimer > 0.5f)
+		{
+			mShaking = false;
+			mShakingTimer = 0.0f;
+		}
+	}
+	
 	// Calculate the camera's position based on the pivot point
 	float x = mρ * sinf(mθ) * cosf(mφ);
 	x += mPivotPoint.x;
@@ -42,4 +59,22 @@ void CSphericalCamera::Update()
 	mpCamera->SetPosition(x, y, z);
 
 	mpCamera->LookAt(mPivotPoint.x, mPivotPoint.y, mPivotPoint.z);
+}
+
+// Clamp function
+float Clampf(float inMin, float inMax, float inVal)
+{
+	if (inVal < inMin)
+	{
+		// Too small - return minimum
+		return inMin;
+	}
+	else if (inVal > inMax)
+	{
+		// too great - return maximum
+		return inMax;
+	}
+
+	// Values is fine
+	return inVal;
 }
