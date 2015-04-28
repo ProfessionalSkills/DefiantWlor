@@ -15,7 +15,7 @@
 //-----------------------------------------------------
 CFleet::CFleet() :mFleetRowSize(20), mFleetRowSeperation(7), mFleetZAdjust(8), mFleetYCyleHeight(0.01f), mNumFleetSections(5),
 mSpecialAttackCooldownTime(5.0f), mExplosionTime(4.0f), mExplosionNumParticle(25.0f), mSpecialAttackCost(500.0f),
-mSceneStartX(200.0f), mSceneDuration(6.0f)
+mSceneStartX(500.0f), mSceneDuration(5.0f)
 {
 	//Value Mods
 	mDamegMod = 1.0f;
@@ -217,7 +217,7 @@ void CFleet::LoadShipModels(float xPos)
 	for (auto unit: mpFleet)
 	{
 		temp = (CSpaceUnit*)unit;
-		unit->LoadModel(posMod*mSceneStartX, temp->GetTargetPos().y, temp->GetTargetPos().z - temp->GetTravelRadius());
+		unit->LoadModel(posMod*mSceneStartX, 0.0f, temp->GetTargetPos().z - temp->GetTravelRadius());
 	}
 }
 

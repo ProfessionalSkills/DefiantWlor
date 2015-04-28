@@ -18,7 +18,7 @@ CSpaceUnit::CSpaceUnit() :mChargeTimeMax(3.0f), mChargeTimeMin(1.0f)
 	mpTempShield = nullptr;
 	mpTempLazer = nullptr;
 	mCargoValue = 0;
-
+	mOrientation = 180.0f;
 	mpToHitRoll = new CRandomiser();
 	mChargingLazers = true;
 	mCharged = false;

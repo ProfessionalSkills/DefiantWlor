@@ -49,6 +49,7 @@ protected:
 
 	//scene variables
 	DX::XMFLOAT3 mTargetPos;
+	DX::XMFLOAT3 mPivotPos;
 	float mSceneTravelRadius;
 	float mSceneTravelSpeed;
 	float mSceneRotationSpeed;
@@ -141,13 +142,20 @@ public:
 		float TravelDistance = (PI*mSceneTravelRadius) / 2;
 		mSceneTravelSpeed = TravelDistance / sceneTime;
 		mSceneRotationSpeed = 90.0f / sceneTime;
+		if (StartX < 0)
+		{
+			mSceneRotationSpeed = mSceneRotationSpeed *- 1.0f;
+		}
+		mPivotPos.x = StartX;
+		mPivotPos.z = mTargetPos.z;
 	}
 
 	inline void MoveInScene()
 	{
-		mOrientation += mSceneRotationSpeed*gFrameTime;
-		mpObjModel->MoveLocalZ(mSceneTravelSpeed*gFrameTime);
-		mpObjModel->RotateY(mSceneRotationSpeed*gFrameTime);
+		mOrientation -= mSceneRotationSpeed*gFrameTime;
+		mpObjModel->SetX(-mPivotPos.x+(mSceneTravelRadius*sinf(ToRadians(mOrientation))));
+		mpObjModel->SetZ(-mPivotPos.z+(mSceneTravelRadius*cosf(ToRadians(mOrientation))));
+		mpObjModel->RotateY(-mSceneRotationSpeed*gFrameTime);
 		mWorldPos.x = mpObjModel->GetX();
 		mWorldPos.y = mpObjModel->GetY();
 		mWorldPos.z = mpObjModel->GetZ();

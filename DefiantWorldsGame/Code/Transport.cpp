@@ -130,11 +130,11 @@ void CTransport::LoadModel(float x, float y, float z)
 	mpObjModel->Scale(mScale);
 	if (mWorldPos.x < 0)
 	{
-		mpObjModel->RotateY(90.0f);
+		mpObjModel->RotateY(-90.0f);
 	}
 	else
 	{
-		mpObjModel->RotateY(-90.0f);
+		mpObjModel->RotateY(90.0f);
 	}
 }
 
