@@ -358,8 +358,14 @@ void CRTSPlayer::CheckGameObjectSelection(CStructure*& pStructure, CGameAgent*& 
 				case STR_SPACE_CENTRE:
 					selectBuffer = alutCreateBufferFromFile("SpaceCentre.Select.wav");
 					break;
-				}
+				case STR_AA:
+					selectBuffer = alutCreateBufferFromFile("Barracks.Select.wav");
+					break;
+				case STR_WALL:
+					selectBuffer = alutCreateBufferFromFile("");
 
+
+				}
 				float volume = CStateControl::GetInstance()->GetSettingsManager()->GetEffectsVolume();		// MAKE SURE TO INCLUDE GameStateControl in the
 																											// .cpp file ONLY otherwise you'll get cyclic redundancy
 
