@@ -116,9 +116,10 @@ public:
 			// Set the unit to the new position
 			pAgent->SetState(OBJ_BUILT);
 			pAgent->SetWorldPos(Pos);
-			pAgent->UpdateBoundingSphere();
 			pAgent->SetOrientation(90.0f);
 			pAgent->LoadIModel();
+			pAgent->Stop();
+			pAgent->CalculateBoundingSphere();
 		}
 
 		mpSpaceUnitsList.clear();

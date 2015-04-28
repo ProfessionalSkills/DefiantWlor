@@ -139,6 +139,13 @@ void CWorker::UnloadIModel()
 		mpMdlHarvest = nullptr;
 		mHarvesting = false;
 	}
+
+	// Remove arrow
+	if (mpObjWaypoint)
+	{
+		mspMshWaypointArrow->RemoveModel(mpObjWaypoint);
+		mpObjWaypoint = nullptr;
+	}
 }
 
 void CWorker::LoadIModel()

@@ -231,6 +231,13 @@ public:
 	inline void CancelPathTarget()
 	{
 		mHasPathTarget = false;
+		if (mUnitSelected)
+		{
+			if (mpObjWaypoint)
+			{
+				mspMshWaypointArrow->RemoveModel(mpObjWaypoint);
+			}
+		}
 	}
 
 	inline void UpdateBoundingSphere()
@@ -248,16 +255,19 @@ public:
 
 	inline void SetWaypointArrow()
 	{
-		if (!mpObjWaypoint)
+		// ensure this object is selected
+		if (mUnitSelected)
 		{
-			mpObjWaypoint = mspMshWaypointArrow->CreateModel(mPathTarget.x, 20.0f, mPathTarget.z);
-			mpObjWaypoint->RotateX(90.0f);
+			if (!mpObjWaypoint)
+			{
+				mpObjWaypoint = mspMshWaypointArrow->CreateModel(mPathTarget.x, 20.0f, mPathTarget.z);
+				mpObjWaypoint->RotateX(90.0f);
+			}
+			else
+			{
+				mpObjWaypoint->SetPosition(mPathTarget.x, 10.0f, mPathTarget.z);
+			}
 		}
-		else
-		{
-			mpObjWaypoint->SetPosition(mPathTarget.x, 10.0f, mPathTarget.z);
-		}
-		
 	}
 
 	inline void UpdateWaypointArrow()
@@ -274,7 +284,6 @@ public:
 		{
 			mspMshWaypointArrow->RemoveModel(mpObjWaypoint);
 			mpObjWaypoint = nullptr; 
-			//SafeDelete(mpObjWaypoint);
 		}
 	}
 

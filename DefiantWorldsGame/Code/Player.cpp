@@ -587,43 +587,39 @@ void CRTSPlayer::Update()
 					// Get all walls from all players
 					pPlayerManager->GetWorldWalls(mpWallCollection);
 
-					// If the unit doe snot already have a target, look through the walls
-					if (!pAgent->GetAttackTarget())
+					// Loop through walls checking if there is a collision with it
+					for (auto iter = mpWallCollection.begin(); iter != mpWallCollection.end(); iter++)
 					{
-						// Loop through walls checking if there is a collision with it
-						for (auto iter = mpWallCollection.begin(); iter != mpWallCollection.end(); iter++)
+						// Cache wall
+						CStaticStructure* pWall = (*iter);
+
+						// Check for a line of sight between the agent and the wall
+						bool wallInteraction = pAgent->CheckLOS(pWall);
+
+						// Check if the wall and the player are of the same faction
+						bool sameFaction = (mPlayerFaction == pWall->GetFaction());
+
+						if (wallInteraction)
 						{
-							// Cache wall
-							CStaticStructure* pWall = (*iter);
-
-							// Check for a line of sight between the agent and the wall
-							bool wallInteraction = pAgent->CheckLOS(pWall);
-
-							// Check if the wall and the player are of the same faction
-							bool sameFaction = (mPlayerFaction == pWall->GetFaction());
-
-							if (wallInteraction)
+							// If they are of the same faction, raise the wall. Unless they are a worker
+							if (sameFaction)
 							{
-								// If they are of the same faction, raise the wall. Unless they are a worker
-								if (sameFaction)
+								if (unitType == GAV_WORKER)
 								{
-									if (unitType == GAV_WORKER)
-									{
-										pWall->SetRaised(false);
-										pAgent->Stop();
-									}
-									else
-									{
-										pWall->SetRaised(true);
-									}
+									pWall->SetRaised(false);
+									pAgent->Stop();
 								}
 								else
 								{
-									// Otherwise ensure it is closed & attack it
-									pAgent->Stop();
-									pWall->SetRaised(false);
-									pAgent->SetAttackTarget(pWall);
+									pWall->SetRaised(true);
 								}
+							}
+							else
+							{
+								// Otherwise ensure it is closed & attack it
+								pAgent->Stop();
+								pWall->SetRaised(false);
+								pAgent->SetAttackTarget(pWall);
 							}
 						}
 					}

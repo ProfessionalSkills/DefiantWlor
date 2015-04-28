@@ -698,6 +698,7 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 		}
 	case Q_MOVE_UNIT:
 		{
+			return true;
 			// If there are enough units
 			int size = mpUnitsMap.size();
 			if (size == 0)
@@ -728,6 +729,12 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 				return true;
 			}
 
+			// Check if the unit is in another airspace
+			if (miterUnitsMap->second->GetState() == OBJ_INSPACE)
+			{
+				return true;
+			}
+
 			// Pick a random location to move the unit to
 			DX::XMFLOAT3 newPos;
 
@@ -748,6 +755,7 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 		}
 	case Q_MOVE_UNIT_GROUP:
 		{
+			return true;
 			// If there are enough units
 			int size = mpUnitsMap.size();
 			if (size < 4)
@@ -795,7 +803,17 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 						pWorker->SetPathTarget(newPos);
 					}
 				}
-				else if (pSelAgent->GetAirspacePosition() == AS_MARS)
+
+				if (pSelAgent->GetAirspacePosition() == AS_MARS)
+				{
+					// Check if the unit has an attack target and is therefore busy
+					if (!pSelAgent->GetAttackTarget())
+					{
+						pSelAgent->SetPathTarget(newPos);
+					}
+				}
+
+				if (pSelAgent->GetState() != OBJ_INSPACE)
 				{
 					// Check if the unit has an attack target and is therefore busy
 					if (!pSelAgent->GetAttackTarget())

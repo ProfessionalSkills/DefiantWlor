@@ -80,6 +80,13 @@ void CArtillery::UnloadIModel()
 		CWorldState::mspMshUnitShadow->RemoveModel(mpObjShadow);
 		mpObjShadow = nullptr;
 	}
+
+	// Remove arrow
+	if (mpObjWaypoint)
+	{
+		mspMshWaypointArrow->RemoveModel(mpObjWaypoint);
+		mpObjWaypoint = nullptr;
+	}
 }
 
 void CArtillery::LoadIModel()
