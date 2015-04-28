@@ -96,6 +96,8 @@ CRTSAIPlayer::CRTSAIPlayer(EFactions playerFaction, int startingResources, int d
 		mpTaskQ.push(new CBuildRequest(Q_WORKER, 1));
 		mpTaskQ.push(new CBuildRequest(Q_WORKER, 1));
 		mpTaskQ.push(new CBuildRequest(Q_WORKER, 1));
+		mpTaskQ.push(new CBuildRequest(Q_WORKER, 1));
+		mpTaskQ.push(new CBuildRequest(Q_WORKER, 1));
 		mpTaskQ.push(new CBuildRequest(Q_CHANGE_TACTIC, 2));
 		mpTaskQ.push(new CBuildRequest(Q_INFANTRY, 2));
 		mpTaskQ.push(new CBuildRequest(Q_FIGHTER, 4));
@@ -181,6 +183,7 @@ void CRTSAIPlayer::AssessWorkers()
 	auto range = mpUnitsMap.equal_range(GAV_WORKER);
 
 	// Check that some structures exist
+	int numWorkers = 0;
 	if (range.first != mpUnitsMap.end())
 	{
 		// Loop through each worker unit & increment the counter
@@ -207,7 +210,16 @@ void CRTSAIPlayer::AssessWorkers()
 					}
 				}
 			}
+
+			// Increment number of workers
+			numWorkers++;
 		}
+	}
+
+	// Check how many workers there are
+	if (numWorkers < 6)
+	{
+		mpTaskQ.push(new CBuildRequest(Q_WORKER, 1));
 	}
 }
 
@@ -524,6 +536,26 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 
 	case Q_WORKER:
 		{
+			// Check how many workers the player already has
+			auto workers = mpUnitsMap.equal_range(GAV_WORKER);
+
+			// Check that some structures exist
+			int numWorkers = 0;
+			if (workers.first != mpUnitsMap.end())
+			{
+				// Loop through each worker unit & increment the counter
+				for (auto iter = workers.first; iter != workers.second; ++iter)
+				{
+					// Increment number of workers
+					numWorkers++;
+				}
+			}
+			
+			if (numWorkers > 6)
+			{
+				return true;
+			}
+
 			// Tank is from barracks - get all instances of barracks
 			auto range = mpStructuresMap.equal_range(STR_COM_CENTRE);
 
@@ -848,7 +880,62 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 		break;
 	case Q_LAUNCH_FLEET:
 		{
-			// Not yet implemented
+			// Check size of fleet
+			if (mpSpaceUnitsList.size() < 9)
+			{
+				// Queue more space units
+				mpTaskQ.push(new CBuildRequest(Q_TRANSPORT, 1));
+				mpTaskQ.push(new CBuildRequest(Q_TRANSPORT, 1));
+				mpTaskQ.push(new CBuildRequest(Q_SPACE_FIGHTER, 1));
+				mpTaskQ.push(new CBuildRequest(Q_SPACE_FIGHTER, 1));
+				mpTaskQ.push(new CBuildRequest(Q_SPACE_FIGHTER, 1));
+				mpTaskQ.push(new CBuildRequest(Q_SPACE_FIGHTER, 1));
+			}
+
+			// Check if there is at least one transport ship & mothership
+			bool mothership = false;
+			bool transport = false;
+			for (auto iter = mpSpaceUnitsList.begin(); iter != mpSpaceUnitsList.end(); iter++)
+			{
+				// Check motherships
+				if (!mothership)
+				{
+					if ((*iter)->GetAgentData()->mAgentType == GAV_MOTHERSHIP)
+					{
+						mothership = true;
+					}
+				}
+				// Check transport
+				if (!transport)
+				{
+					if ((*iter)->GetAgentData()->mAgentType == GAV_TRANSPORT)
+					{
+						transport = true;
+					}
+				}
+
+				if (transport && mothership)
+				{
+					break;
+				}
+			}
+
+			// If either of those are still false, return & make more units
+			if (!mothership)
+			{
+				mpTaskQ.push(new CBuildRequest(Q_MOTHERSHIP, 1));
+				return false;
+			}
+			if (!transport)
+			{
+				mpTaskQ.push(new CBuildRequest(Q_TRANSPORT, 1));
+				return false;
+			}
+
+			// Send attack
+			pPlayerManager->GetHumanPlayer()->LaunchAttack();
+			LaunchAttack();
+			gCurState = GS_SPACE;
 			return true;
 		}
 		break;
