@@ -80,7 +80,7 @@ protected:
 	eFleetPos mFleetPosition;
 	EAirspaces mAirspace;						// Stores which airspace this unit is currently flying in
 
-	CSound* mAttackSound;
+	CSound* mAttackSound = nullptr;
 
 public:
 	// Waypoint Arrow Mesh

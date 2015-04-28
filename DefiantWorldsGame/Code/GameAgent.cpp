@@ -100,9 +100,15 @@ void CGameAgent::DisplayInfo(IFont* font)
 
 void CGameAgent::SetAttackSound(string soundFile)
 {
-	DX::XMFLOAT3 mSourcePos = { mpObjModel->GetX(), mpObjModel->GetY(), mpObjModel->GetZ() };
+	if (mAttackSound)
+	{
+		SafeDelete(mAttackSound);
+	}
+	
+	DX::XMFLOAT3 mSourcePos = { mWorldPos.x, mWorldPos.y, mWorldPos.z };
 	DX::XMFLOAT3 mSourceVel = { 0.0f, 0.0f, 0.0f };
-	DX::XMFLOAT3 listenerPos = { mpObjModel->GetX(), 50.0f, mpObjModel->GetZ() };
+	ICamera* pCamera = gpCurWorldCamera->GetCamera();
+	DX::XMFLOAT3 listenerPos = { pCamera->GetX(), pCamera->GetY(), pCamera->GetZ() };
 	DX::XMFLOAT3 listenerVel = { 0.0f, 0.0f, 0.0f };
 
 	float volume = CStateControl::GetInstance()->GetSettingsManager()->GetEffectsVolume();	// MAKE SURE TO INCLUDE GameStateControl in the
