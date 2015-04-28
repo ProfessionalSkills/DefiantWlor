@@ -2004,6 +2004,8 @@ void CWorldState::StateUpdate()
 			mpAIPlayer->GetFleet()->ReturnFleet(mpAIPlayer, true);
 			mpAIPlayer->SetWonLastSpaceBattle(true);
 			mpHumanPlayer->SetWonLastSpaceBattle(false);
+			mpSpaceButtonList[0]->Hide();
+			mpSpaceButtonList[2]->Show();
 		}
 	}
 }
@@ -2083,7 +2085,7 @@ void CWorldState::StateCleanup()
 		SafeDelete(pButton);
 		mpGenericButtonList.pop_back();
 	}
-
+	mpSpaceButtonList.clear();
 	while (!mpUnitsButtonList.empty())
 	{
 		CAdvancedButton<CWorldState, void, int>* pButton = mpUnitsButtonList.back();
@@ -2804,7 +2806,7 @@ void CWorldState::LaunchAttack()
 {
 	if (!mHumanPlayerAttacking&&!mAIPlayerAttacking)
 	{
-		if (mpHumanPlayer->GetNumMothership() != 0)
+		if (mpHumanPlayer->CheckForMothership())
 		{
 			mHumanPlayerAttacking = true;
 			mTimeTillEnterSpace = mEnterSpaceTime;
