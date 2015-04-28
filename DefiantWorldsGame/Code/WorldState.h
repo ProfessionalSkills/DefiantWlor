@@ -152,7 +152,7 @@ private:
 	// SOUND
 	//---------------------------
 	CSound* mMusic; //Music
-
+	CSound* unitLoad;
 
 	// SELECTION DATA
 	//---------------------------

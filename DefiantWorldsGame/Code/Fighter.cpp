@@ -152,6 +152,10 @@ bool CFighter::Attack(CGameObject* pTarget, float hitMod, float damageMod)
 		
 		if (mAttackTimer >= (1.0f / mFireRate)) //Control rate of fire of the unit
 		{
+			string mMusicFile = "minigun.wav"; //Sets the music file
+			SetAttackSound(mMusicFile);
+
+
 			SProjectile* newProjectile = new SProjectile();
 			newProjectile->mModel = mspMshFighterBullet->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
 			newProjectile->mDirection = dir;
