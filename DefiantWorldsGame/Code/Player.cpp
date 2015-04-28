@@ -512,7 +512,53 @@ void CRTSPlayer::Update()
 					CGameAgent* pTarget = nullptr;
 					int index = 0;
 					
-					if (mPlayerFaction == FAC_THE_CRIMSON_LEGION) std::cout << mpAirspaceAgents.size() << std::endl;
+					// Check if a unit is in the opposing area & select a target there
+					if (mPlayerFaction == FAC_THE_CRIMSON_LEGION)
+					{
+						// Check if it is Earth's airspace
+						if (pAgent->GetAirspacePosition() != AS_MARS)
+						{
+							// Select a random unit or building
+							if (gpRandomiser->GetRandomInt(0, 1))
+							{
+								// Attack a building on earth
+								pAgent->SetAttackTarget(pPlayerManager->GetHumanPlayer()->GetRandomStructure());
+							}
+							else
+							{
+								// Get a random target
+								pTarget = pPlayerManager->GetHumanPlayer()->GetRandomAgent();
+								// Ensure the airspace of this target is in earth - otherwise do not attack it
+								if (pTarget && pTarget->GetAirspacePosition() == AS_EARTH)
+								{
+									pAgent->SetAttackTarget(pTarget);
+								}
+							}
+						}
+					}
+					else
+					{
+						// Check if it is Mars' airspace
+						if (pAgent->GetAirspacePosition() == AS_MARS)
+						{
+							// Select a random unit or building
+							if (gpRandomiser->GetRandomInt(0, 1))
+							{
+								// Attack a building on earth
+								pAgent->SetAttackTarget(pPlayerManager->GetAIPlayer()->GetRandomStructure());
+							}
+							else
+							{
+								// Get a random target
+								pTarget = pPlayerManager->GetAIPlayer()->GetRandomAgent();
+								// Ensure the airspace of this target is in Mars - otherwise do not attack it
+								if (pTarget && pTarget->GetAirspacePosition() == AS_MARS)
+								{
+									pAgent->SetAttackTarget(pTarget);
+								}
+							}
+						}
+					}
 
 					if (mpAirspaceAgents.size())
 					{

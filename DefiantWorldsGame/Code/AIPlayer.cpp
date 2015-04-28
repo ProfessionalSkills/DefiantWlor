@@ -722,6 +722,12 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 				}
 			}
 
+			// Check if the unit is in another airspace
+			if (miterUnitsMap->second->GetAirspacePosition() != AS_MARS)
+			{
+				return true;
+			}
+
 			// Pick a random location to move the unit to
 			DX::XMFLOAT3 newPos;
 
@@ -789,7 +795,7 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 						pWorker->SetPathTarget(newPos);
 					}
 				}
-				else
+				else if (pSelAgent->GetAirspacePosition() == AS_MARS)
 				{
 					// Check if the unit has an attack target and is therefore busy
 					if (!pSelAgent->GetAttackTarget())
