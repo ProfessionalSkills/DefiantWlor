@@ -80,6 +80,7 @@ protected:
 	eFleetPos mFleetPosition;
 	EAirspaces mAirspace;						// Stores which airspace this unit is currently flying in
 
+	CSound* mAttackSound;
 
 public:
 	// Waypoint Arrow Mesh
@@ -213,6 +214,12 @@ public:
 	bool Heal(float amount);
 	void SetState(EObjectStates newState);
 	
+	inline void SetAttackSound(CSound* newSound)
+	{
+		mAttackSound = newSound;
+	}
+
+
 	inline void SetProdTimeLeft(float timeLeft)
 	{
 		mCurProductionTimeLeft = timeLeft;
@@ -272,6 +279,7 @@ public:
 			//SafeDelete(mpObjWaypoint);
 		}
 	}
+
 	// METHODS
 	//---------------------------
 	bool Construct();
@@ -279,7 +287,7 @@ public:
 	void Destroy();
 	void SetAttackTarget(CGameObject* target);
 	void Stop();
-
+	void SetAttackSound(string soundFile);
 
 	// VIRTUAL METHODS
 	//---------------------------
