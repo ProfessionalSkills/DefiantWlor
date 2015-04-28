@@ -86,7 +86,6 @@ void CTransport::HitFlash()
 	{
 		mpTempShield = mspMshSheild->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
 		mpTempShield->Scale(mScale + 0.03f);
-		//mpTempShield->RotateX(-35.0f);
 	}
 }
 
@@ -103,6 +102,7 @@ void CTransport::UnloadFlash()
 
 void CTransport::LoadModel(float x, float y, float z)
 {
+	mOrientation = 180.0f;
 
 	mChargeTime = mChargeTimeMax;
 	mChargingLazers = false;
@@ -130,11 +130,11 @@ void CTransport::LoadModel(float x, float y, float z)
 	mpObjModel->Scale(mScale);
 	if (mWorldPos.x < 0)
 	{
-		mpObjModel->RotateY(90.0f);
+		mpObjModel->RotateY(-90.0f);
 	}
 	else
 	{
-		mpObjModel->RotateY(-90.0f);
+		mpObjModel->RotateY(90.0f);
 	}
 }
 

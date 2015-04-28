@@ -59,6 +59,8 @@ CSpaceFighter::~CSpaceFighter()
 //-----------------------------------------------------
 void CSpaceFighter::LoadModel(float x,float y, float z)
 {
+	mOrientation = 180.0f;
+
 	mChargeTime = mChargeTimeMax;
 	mChargingLazers=false;
 	mCharged = false;
@@ -81,11 +83,11 @@ void CSpaceFighter::LoadModel(float x,float y, float z)
 
 	if (mWorldPos.x < 0)
 	{
-		mpObjModel->RotateY(90.0f);
+		mpObjModel->RotateY(-90.0f);
 	}
 	else
 	{
-		mpObjModel->RotateY(-90.0f);
+		mpObjModel->RotateY(90.0f);
 	}
 	mpObjModel->Scale(mScale);
 
@@ -162,7 +164,6 @@ void CSpaceFighter::HitFlash()
 	{
 		mpTempShield = mspMshSheild->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
 		mpTempShield->Scale(mScale + 0.05f);
-		mpTempShield->RotateX(-35.0f);
 	}
 }
 

@@ -15,7 +15,7 @@
 //-----------------------------------------------------
 CFleet::CFleet() :mFleetRowSize(20), mFleetRowSeperation(7), mFleetZAdjust(8), mFleetYCyleHeight(0.01f), mNumFleetSections(5),
 mSpecialAttackCooldownTime(5.0f), mExplosionTime(4.0f), mExplosionNumParticle(25.0f), mSpecialAttackCost(500.0f),
-mSceneStartX(200.0f), mSceneDuration(6.0f)
+mSceneStartX(500.0f), mSceneDuration(5.0f)
 {
 	//Value Mods
 	mDamegMod = 1.0f;
@@ -70,7 +70,7 @@ void CFleet::IdleFleet()
 	for (int i = 0; i < mSize; i++)
 	{
 		mpTemp = (CSpaceUnit*)(mpFleet[i]);
-		mpTemp->MoveY(yChange);
+		mpTemp->MoveY(yChange*0.1f);
 	}
 }
 
@@ -167,7 +167,7 @@ void CFleet::UpdateCondition()
 			mUnitsLostValue += mpTemp->GetPopValue()+mpTemp->GetCargoValue();
 			mpFleet[i] = mpFleet[mSize - 1];
 			mpFleet.pop_back();
-			CExplosion* temp = new CExplosion(mpTemp->GetWorldPos(), mExplosionNumParticle, true);
+			CExplosion* temp = new CExplosion(mpTemp->GetWorldPos(), mExplosionNumParticle, false);
 			M_Explosions.emplace(temp,mExplosionTime);
 
 			delete mpTemp;
@@ -205,6 +205,9 @@ void CFleet::LoadShipModels(float xPos)
 	SetShipPositions(xPos);
 	int posMod;
 	CSpaceUnit* temp;
+	//reset scene
+	mSceneTimeElapsed = 0;
+
 	if (xPos < 0.0f)
 	{
 		posMod = -1;
@@ -217,7 +220,7 @@ void CFleet::LoadShipModels(float xPos)
 	for (auto unit: mpFleet)
 	{
 		temp = (CSpaceUnit*)unit;
-		unit->LoadModel(posMod*mSceneStartX, temp->GetTargetPos().y, temp->GetTargetPos().z - temp->GetTravelRadius());
+		unit->LoadModel(posMod*mSceneStartX, 0.0f, temp->GetTargetPos().z - temp->GetTravelRadius());
 	}
 }
 
@@ -226,7 +229,6 @@ void CFleet::SetShipPositions(float xPos)
 	int SpaceFighterLoaded = 0;
 	int TransportLoaded = 0;
 	int MothershipLoaded = 0;
-
 	int SpaceFighterY = 0;
 	int TransportY = 0;
 	int MothershipY = 0;

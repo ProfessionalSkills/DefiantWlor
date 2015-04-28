@@ -55,7 +55,6 @@ void CMothership::HitFlash()
 	{
 		mpTempShield = mspMshSheild->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
 		mpTempShield->Scale(mScale + 0.1f);
-		mpTempShield->RotateX(-35.0f);
 	}
 	else
 	{
@@ -106,6 +105,8 @@ bool CMothership::StoreUnits(CGameAgent* unit)
 
 void CMothership::LoadModel(float x, float y, float z)
 {
+	mOrientation = 180.0f;
+
 	mpObjModel = mspMshMothership->CreateModel(x, y, z);
 	mWorldPos.x = x;
 	mWorldPos.y = y;
@@ -130,11 +131,11 @@ void CMothership::LoadModel(float x, float y, float z)
 
 	if (mWorldPos.x < 0)
 	{
-		mpObjModel->RotateY(90.0f);
+		mpObjModel->RotateY(-90.0f);
 	}
 	else
 	{
-		mpObjModel->RotateY(-90.0f);
+		mpObjModel->RotateY(90.0f);
 	}
 	mpObjModel->Scale(mScale);
 }

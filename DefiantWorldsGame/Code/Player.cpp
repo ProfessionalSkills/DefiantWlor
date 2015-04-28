@@ -279,7 +279,10 @@ bool CRTSPlayer::QueueUnit(CStructure* structure, CGameAgent* unit)
 
 void CRTSPlayer::LaunchAttack()
 {
-	mpSpaceUnitsList = (*mpFleet->LaunchFleet(&mpSpaceUnitsList));
+	if (mNumMothership)
+	{
+		mpSpaceUnitsList = (*mpFleet->LaunchFleet(&mpSpaceUnitsList));
+	}
 }
 
 void CRTSPlayer::CheckGameObjectSelection(CStructure*& pStructure, CGameAgent*& pGameAgent,
