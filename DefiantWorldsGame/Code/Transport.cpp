@@ -86,7 +86,6 @@ void CTransport::HitFlash()
 	{
 		mpTempShield = mspMshSheild->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
 		mpTempShield->Scale(mScale + 0.03f);
-		//mpTempShield->RotateX(-35.0f);
 	}
 }
 

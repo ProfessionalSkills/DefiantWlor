@@ -70,7 +70,7 @@ void CFleet::IdleFleet()
 	for (int i = 0; i < mSize; i++)
 	{
 		mpTemp = (CSpaceUnit*)(mpFleet[i]);
-		mpTemp->MoveY(yChange);
+		mpTemp->MoveY(yChange*0.1f);
 	}
 }
 
@@ -167,7 +167,7 @@ void CFleet::UpdateCondition()
 			mUnitsLostValue += mpTemp->GetPopValue()+mpTemp->GetCargoValue();
 			mpFleet[i] = mpFleet[mSize - 1];
 			mpFleet.pop_back();
-			CExplosion* temp = new CExplosion(mpTemp->GetWorldPos(), mExplosionNumParticle, true);
+			CExplosion* temp = new CExplosion(mpTemp->GetWorldPos(), mExplosionNumParticle, false);
 			M_Explosions.emplace(temp,mExplosionTime);
 
 			delete mpTemp;

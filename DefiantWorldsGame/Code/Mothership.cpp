@@ -55,7 +55,6 @@ void CMothership::HitFlash()
 	{
 		mpTempShield = mspMshSheild->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
 		mpTempShield->Scale(mScale + 0.1f);
-		mpTempShield->RotateX(-35.0f);
 	}
 	else
 	{
