@@ -13,7 +13,7 @@
 IMesh* CSpaceFighter::mspMshSpaceFighter = nullptr;
 IMesh* CSpaceFighter::mspMshSheild = nullptr;
 ALuint CSpaceFighter::alAttackSound = 0;
-
+ALuint CSpaceFighter::alAttackSource = 0;
 
 //-----------------------------------------------------
 // SPACE FIGHTER CLASS CONSTRUCTORS & DESTRUCTOR
@@ -80,7 +80,7 @@ void CSpaceFighter::LoadModel(float x,float y, float z)
 	else  mSourceVel.x = {-100.0f};
 	float volume = CStateControl::GetInstance()->GetSettingsManager()->GetEffectsVolume();		// MAKE SURE TO INCLUDE GameStateControl in the
 																								// .cpp file ONLY otherwise you'll get cyclic redundancy
-	mGenSound = new CSound(alLazerBuffer, mSourcePos, mSourceVel, false, volume, listenerPos, listenerVel);
+	mGenSound = new CSound(alLazerBuffer, mSourcePos, mSourceVel, false, volume, listenerPos, listenerVel, alAttackSource);
 
 	if (mWorldPos.x < 0)
 	{

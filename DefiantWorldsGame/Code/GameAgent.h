@@ -288,7 +288,7 @@ public:
 	void Destroy();
 	void SetAttackTarget(CGameObject* target);
 	void Stop();
-	void SetAttackSound(ALuint attackBuffer);
+	void SetAttackSound(ALuint attackBuffer,ALuint attackSource);
 
 	// VIRTUAL METHODS
 	//---------------------------

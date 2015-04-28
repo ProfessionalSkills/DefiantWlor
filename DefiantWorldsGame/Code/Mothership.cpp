@@ -12,6 +12,7 @@
 IMesh* CMothership::mspMshMothership = nullptr;
 IMesh* CMothership::mspMshSheild = nullptr;
 ALuint CMothership::alAttackSound = 0;
+ALuint CMothership::alAttackSource = 0;
 //-----------------------------------------------------
 // MOTHERSHIP CLASS CONSTRUCTORS & DESTRUCTOR
 //-----------------------------------------------------
@@ -127,8 +128,8 @@ void CMothership::LoadModel(float x, float y, float z)
 	float volume = CStateControl::GetInstance()->GetSettingsManager()->GetEffectsVolume();		// MAKE SURE TO INCLUDE GameStateControl in the
 
 	// .cpp file ONLY otherwise you'll get cyclic redundancy
-	mGenSound = new CSound(alAttackSound, mSourcePos, mSourceVel, false, volume, listenerPos, listenerVel);
-	mSoundExplosion = new CSound(alExplosionBuffer, mSourcePos, mSourceVel, false, volume, listenerPos, listenerVel);
+	mGenSound = new CSound(alAttackSound, mSourcePos, mSourceVel, false, volume, listenerPos, listenerVel, alAttackSource);
+	mSoundExplosion = new CSound(alExplosionBuffer, mSourcePos, mSourceVel, false, volume, listenerPos, listenerVel, alAttackSource);
 
 	if (mWorldPos.x < 0)
 	{

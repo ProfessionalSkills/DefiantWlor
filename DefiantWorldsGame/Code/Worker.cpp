@@ -12,7 +12,7 @@
 IMesh* CWorker::mspMshWorker = nullptr;
 IMesh* CWorker::mspMshWorkerLaser = nullptr;
 ALuint CWorker::alAttackSound = 0;
-
+ALuint CWorker::alAttackSource = 0;
 
 //-----------------------------------------------------
 // WORKER CLASS CONSTRUCTORS & DESTRUCTOR
