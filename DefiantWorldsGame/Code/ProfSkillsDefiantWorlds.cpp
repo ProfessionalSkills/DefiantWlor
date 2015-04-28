@@ -21,7 +21,6 @@ TO DO: * = essential
 	*- Update population costs of units
 	*- Add UI for button mouse over descriptions
 	*- Fix bug where population unit is not saved/loaded
-	*- Add camera shaking when there are building explosions nearby
 */
 
 
