@@ -698,7 +698,6 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 		}
 	case Q_MOVE_UNIT:
 		{
-			return true;
 			// If there are enough units
 			int size = mpUnitsMap.size();
 			if (size == 0)
@@ -755,7 +754,6 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 		}
 	case Q_MOVE_UNIT_GROUP:
 		{
-			return true;
 			// If there are enough units
 			int size = mpUnitsMap.size();
 			if (size < 4)

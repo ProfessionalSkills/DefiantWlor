@@ -101,15 +101,15 @@ int CPlayerManager::UpdatePlayers()
 		if (mTimeToEarthInvasion < 0.0f)
 		{
 			// 50% chance of an attack actually occuring
-			if (gpRandomiser->GetRandomInt(0, 1))
+			if (gpRandomiser->GetRandomInt(0, 3))
 			{
 				// Run the course of an earth invasion
-				//InvadeEarth();
+				InvadeEarth();
 			}
 			else
 			{
 				// Add a new delay
-				mEarthUnits = gpRandomiser->GetRandomInt(2, 5);
+				mEarthUnits = gpRandomiser->GetRandomInt(2, 7);
 				mTimeToEarthInvasion = gpRandomiser->GetRandomFloat(60.0f, 100.0f);
 			}
 		}
@@ -121,15 +121,15 @@ int CPlayerManager::UpdatePlayers()
 		if (mTimeToMarsInvasion < 0.0f)
 		{
 			// 50% chance of an attack actually occuring
-			if (gpRandomiser->GetRandomInt(0, 1))
+			if (gpRandomiser->GetRandomInt(0, 3))
 			{
 				// Run the course of an earth invasion
-				//InvadeMars();
+				InvadeMars();
 			}
 			else
 			{
 				// Add a new delay
-				mMarsUnits = gpRandomiser->GetRandomInt(2, 5);
+				mMarsUnits = gpRandomiser->GetRandomInt(2, 7);
 				mTimeToMarsInvasion = gpRandomiser->GetRandomFloat(60.0f, 100.0f);
 			}
 		}
