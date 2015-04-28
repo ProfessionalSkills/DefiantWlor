@@ -26,8 +26,8 @@ CPlayerManager::CPlayerManager()
 	mPlayerDataInitialised = false;
 
 	// Get random invasion times & unit numbers
-	mEarthUnits = gpRandomiser->GetRandomInt(2, 5);
-	mMarsUnits = gpRandomiser->GetRandomInt(2, 5);
+	mEarthUnits = gpRandomiser->GetRandomInt(1, 2);
+	mMarsUnits = gpRandomiser->GetRandomInt(1, 2);
 	mTimeToEarthInvasion = gpRandomiser->GetRandomFloat(20.0f, 60.0f);
 	mTimeToMarsInvasion = gpRandomiser->GetRandomFloat(20.0f, 60.0f);
 }
@@ -95,48 +95,45 @@ int CPlayerManager::UpdatePlayers()
 	
 	// Update rebels
 	// Check how much time has passed since the game has begun - currently checking for 40 seconds into the game
-	if (mTimeSinceGameStart > 40.0f)
+	// Check to see if it is time to invade earth or mars
+	if (mTimeToEarthInvasion < 0.0f)
 	{
-		// Check to see if it is time to invade earth or mars
-		if (mTimeToEarthInvasion < 0.0f)
+		// 50% chance of an attack actually occuring
+		if (gpRandomiser->GetRandomInt(0, 3))
 		{
-			// 50% chance of an attack actually occuring
-			if (gpRandomiser->GetRandomInt(0, 3))
-			{
-				// Run the course of an earth invasion
-				InvadeEarth();
-			}
-			else
-			{
-				// Add a new delay
-				mEarthUnits = gpRandomiser->GetRandomInt(2, 7);
-				mTimeToEarthInvasion = gpRandomiser->GetRandomFloat(60.0f, 100.0f);
-			}
+			// Run the course of an earth invasion
+			InvadeEarth();
 		}
 		else
 		{
-			mTimeToEarthInvasion -= gFrameTime;
+			// Add a new delay
+			mEarthUnits = gpRandomiser->GetRandomInt(2, 7);
+			mTimeToEarthInvasion = gpRandomiser->GetRandomFloat(60.0f, 100.0f);
 		}
+	}
+	else
+	{
+		mTimeToEarthInvasion -= gFrameTime;
+	}
 
-		if (mTimeToMarsInvasion < 0.0f)
+	if (mTimeToMarsInvasion < 0.0f)
+	{
+		// 50% chance of an attack actually occuring
+		if (gpRandomiser->GetRandomInt(0, 3))
 		{
-			// 50% chance of an attack actually occuring
-			if (gpRandomiser->GetRandomInt(0, 3))
-			{
-				// Run the course of an earth invasion
-				InvadeMars();
-			}
-			else
-			{
-				// Add a new delay
-				mMarsUnits = gpRandomiser->GetRandomInt(2, 7);
-				mTimeToMarsInvasion = gpRandomiser->GetRandomFloat(60.0f, 100.0f);
-			}
+			// Run the course of an earth invasion
+			InvadeMars();
 		}
 		else
 		{
-			mTimeToMarsInvasion -= gFrameTime;
+			// Add a new delay
+			mMarsUnits = gpRandomiser->GetRandomInt(2, 7);
+			mTimeToMarsInvasion = gpRandomiser->GetRandomFloat(60.0f, 100.0f);
 		}
+	}
+	else
+	{
+		mTimeToMarsInvasion -= gFrameTime;
 	}
 
 	// Update rebel earth units
@@ -436,6 +433,7 @@ void CPlayerManager::InvadeEarth()
 		// Get a random unit to spawn
 		EGameAgentVariations unit = static_cast<EGameAgentVariations>(gpRandomiser->GetRandomInt(GAV_FIGHTER, GAV_ARTILLERY));
 		CGameAgent* pNewAgent = nullptr;
+		CGameAgent* pTarget = nullptr;
 
 		// create a unit based on the unit chosen
 		switch (unit)
@@ -443,6 +441,11 @@ void CPlayerManager::InvadeEarth()
 		case GAV_MOTHERSHIP:
 		case GAV_ARTILLERY:
 		case GAV_BOMBER:
+			// No bombers before around 120 seconds into the game
+			if (mTimeSinceGameStart < 120.0f)
+			{
+				return;
+			}
 			// Create a new bomber agent
 			pNewAgent = new CBomber();
 
@@ -450,7 +453,7 @@ void CPlayerManager::InvadeEarth()
 			pNewAgent->SetAttackTarget(mpHuman->GetRandomStructure());
 
 			// Set attributes for the new agent
-			pNewAgent->SetWorldPos({ -2000.0f, 75.0f, 0.0f });
+			pNewAgent->SetWorldPos({ -2500.0f, 75.0f, 0.0f });
 			pNewAgent->SetFaction(FAC_REBELS);
 			pNewAgent->SetState(OBJ_BUILT);
 
@@ -463,21 +466,28 @@ void CPlayerManager::InvadeEarth()
 		case GAV_TRANSPORT:
 		case GAV_SPACE_FIGHTER:
 		case GAV_FIGHTER:
+			// No bombers before around 80 seconds into the game
+			if (mTimeSinceGameStart < 80.0f)
+			{
+				return;
+			}
+
 			// Create a new fighter agent
 			pNewAgent = new CFighter();
 
 			// Target a random agent
-			pNewAgent->SetAttackTarget(mpHuman->GetRandomAgent());
+			pTarget = mpHuman->GetRandomAgent();
+			pNewAgent->SetAttackTarget(pTarget);
 
 			// Check if there is no agents available to target
-			if (!pNewAgent)
+			if (!pTarget)
 			{
 				// target a structure instead
 				pNewAgent->SetAttackTarget(mpHuman->GetRandomStructure());
 			}
 
 			// Set attributes for the new agent
-			pNewAgent->SetWorldPos({ -2000.0f, 75.0f, 0.0f });
+			pNewAgent->SetWorldPos({ -2500.0f, 75.0f, 0.0f });
 			pNewAgent->SetFaction(FAC_REBELS);
 			pNewAgent->SetState(OBJ_BUILT);
 
@@ -489,15 +499,22 @@ void CPlayerManager::InvadeEarth()
 		case GAV_WORKER:
 		case GAV_INFANTRY:
 		case GAV_TANK:
+			// No bombers before around 60 seconds into the game
+			if (mTimeSinceGameStart < 60.0f)
+			{
+				return;
+			}
+
 			// Create a new infantry agent
 			pNewAgent = new CInfantry();
 
 			// Target a random agent & store the type
-			pNewAgent->SetAttackTarget(mpHuman->GetRandomAgent());
+			pTarget = mpHuman->GetRandomAgent();
+			pNewAgent->SetAttackTarget(pTarget);
 			EGameAgentVariations targetType = pNewAgent->GetAgentData()->mAgentType;
 
 			// Check if there is no agents available to target
-			if (!pNewAgent)
+			if (!pTarget)
 			{
 				// target a structure instead
 				pNewAgent->SetAttackTarget(mpHuman->GetRandomStructure());
@@ -510,7 +527,7 @@ void CPlayerManager::InvadeEarth()
 			}
 
 			// Set attributes for the new agent
-			pNewAgent->SetWorldPos({ -2000.0f, 1.0f, 0.0f });
+			pNewAgent->SetWorldPos({ -2500.0f, 1.0f, 0.0f });
 			pNewAgent->SetFaction(FAC_REBELS);
 			pNewAgent->SetState(OBJ_BUILT);
 
@@ -543,6 +560,7 @@ void CPlayerManager::InvadeMars()
 		// Get a random unit to spawn
 		EGameAgentVariations unit = static_cast<EGameAgentVariations>(gpRandomiser->GetRandomInt(GAV_FIGHTER, GAV_ARTILLERY));
 		CGameAgent* pNewAgent = nullptr;
+		CGameAgent* pTarget = nullptr;
 
 		// create a unit based on the unit chosen
 		switch (unit)
@@ -550,6 +568,12 @@ void CPlayerManager::InvadeMars()
 		case GAV_MOTHERSHIP:
 		case GAV_ARTILLERY:
 		case GAV_BOMBER:
+			// No bombers before around 120 seconds into the game
+			if (mTimeSinceGameStart < 120.0f)
+			{
+				return;
+			}
+
 			// Create a new bomber agent
 			pNewAgent = new CBomber();
 
@@ -557,7 +581,7 @@ void CPlayerManager::InvadeMars()
 			pNewAgent->SetAttackTarget(mpAI[0]->GetRandomStructure());
 
 			// Set attributes for the new agent
-			pNewAgent->SetWorldPos({ 4600.0f, 75.0f, 0.0f });
+			pNewAgent->SetWorldPos({ 4100.0f, 75.0f, 0.0f });
 			pNewAgent->SetFaction(FAC_REBELS);
 			pNewAgent->SetState(OBJ_BUILT);
 
@@ -570,21 +594,28 @@ void CPlayerManager::InvadeMars()
 		case GAV_TRANSPORT:
 		case GAV_SPACE_FIGHTER:
 		case GAV_FIGHTER:
+			// No bombers before around 80 seconds into the game
+			if (mTimeSinceGameStart < 80.0f)
+			{
+				return;
+			}
+
 			// Create a new fighter agent
 			pNewAgent = new CFighter();
 
 			// Target a random agent
-			pNewAgent->SetAttackTarget(mpAI[0]->GetRandomAgent());
+			pTarget = mpAI[0]->GetRandomAgent();
+			pNewAgent->SetAttackTarget(pTarget);
 
 			// Check if there is no agents available to target
-			if (!pNewAgent)
+			if (!pTarget)
 			{
 				// target a structure instead
 				pNewAgent->SetAttackTarget(mpAI[0]->GetRandomStructure());
 			}
 
 			// Set attributes for the new agent
-			pNewAgent->SetWorldPos({ 4600.0f, 75.0f, 0.0f });
+			pNewAgent->SetWorldPos({ 4100.0f, 75.0f, 0.0f });
 			pNewAgent->SetFaction(FAC_REBELS);
 			pNewAgent->SetState(OBJ_BUILT);
 
@@ -596,15 +627,22 @@ void CPlayerManager::InvadeMars()
 		case GAV_WORKER:
 		case GAV_INFANTRY:
 		case GAV_TANK:
+			// No bombers before around 40 seconds into the game
+			if (mTimeSinceGameStart < 60.0f)
+			{
+				return;
+			}
+
 			// Create a new infantry agent
 			pNewAgent = new CInfantry();
 
 			// Target a random agent & store the type
-			pNewAgent->SetAttackTarget(mpAI[0]->GetRandomAgent());
+			pTarget = mpAI[0]->GetRandomAgent();
+			pNewAgent->SetAttackTarget(pTarget);
 			EGameAgentVariations targetType = pNewAgent->GetAgentData()->mAgentType;
 
 			// Check if there is no agents available to target
-			if (!pNewAgent)
+			if (!pTarget)
 			{
 				// target a structure instead
 				pNewAgent->SetAttackTarget(mpAI[0]->GetRandomStructure());
@@ -617,7 +655,7 @@ void CPlayerManager::InvadeMars()
 			}
 
 			// Set attributes for the new agent
-			pNewAgent->SetWorldPos({ 4600.0f, 1.0f, 0.0f });
+			pNewAgent->SetWorldPos({ 4100.0f, 1.0f, 0.0f });
 			pNewAgent->SetFaction(FAC_REBELS);
 			pNewAgent->SetState(OBJ_BUILT);
 
