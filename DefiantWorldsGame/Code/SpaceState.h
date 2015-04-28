@@ -282,6 +282,31 @@ private:
 	void DrawFontData();
 	ISprite* mpSprHealth1;
 	ISprite* mpSprHealth2;
+
+	ISprite* mpCoolDownTimer1=nullptr;
+	ISprite* mpCoolDownTimer2 = nullptr;
+	inline void ChanageSprite(std::string name)
+	{
+		if (mpCoolDownTimer1)
+		{
+			delete mpCoolDownTimer1;
+			mpCoolDownTimer1 = gpEngine->CreateSprite(name, 650, 750, 0.0f);
+		}															  
+		else														  
+		{															  
+			mpCoolDownTimer1 = gpEngine->CreateSprite(name, 650, 750, 0.0f);
+		}															  
+		if (mpCoolDownTimer2)										  
+		{															  
+			delete mpCoolDownTimer2;								  
+			mpCoolDownTimer2 = gpEngine->CreateSprite(name, 850, 750, 0.0f);
+		}															  
+		else														  
+		{															  
+			mpCoolDownTimer2 = gpEngine->CreateSprite(name, 850, 750, 0.0f);
+		}
+	}
+
 	// BUTTON
 	//---------------------------
 	std::vector<CAdvancedButton<CSpaceState, void>*> mpButtonListAll;
@@ -311,7 +336,6 @@ private:
 
 	inline void UpdateButtons()
 	{
-
 		for (miterButtons = mpButtonListAll.begin(); miterButtons != mpButtonListAll.end(); miterButtons++)
 		{
 			CAdvancedButton<CSpaceState, void>* pButton = (*miterButtons);
