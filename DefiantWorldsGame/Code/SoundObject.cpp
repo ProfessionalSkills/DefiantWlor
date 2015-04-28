@@ -14,15 +14,11 @@ using namespace std;
 // SOUND CLASS CONSTRUCTORS & DESTRUCTOR
 //-----------------------------------------------------
 
-CSound::CSound(string mSoundFile, XMFLOAT3 mSourcePos, XMFLOAT3 mSourceVel, bool loop, float gain,
+CSound::CSound(ALuint buffer, XMFLOAT3 mSourcePos, XMFLOAT3 mSourceVel, bool loop, float gain,
 	XMFLOAT3 mListenerPos, XMFLOAT3 mListenerVel)
 {
-	//Start up OpenAL
-	alutInit(0, 0);
-
 	//Obtains sound file 
-	mBuffer = alutCreateBufferFromFile(mSoundFile.c_str());
-
+	mBuffer = buffer;
 	
 	//Generates sounds source
 	alGenSources(1, &mSource);

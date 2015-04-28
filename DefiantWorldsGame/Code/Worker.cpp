@@ -11,6 +11,7 @@
 
 IMesh* CWorker::mspMshWorker = nullptr;
 IMesh* CWorker::mspMshWorkerLaser = nullptr;
+ALuint CWorker::alAttackSound = 0;
 
 
 //-----------------------------------------------------

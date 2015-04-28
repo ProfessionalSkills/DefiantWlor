@@ -11,6 +11,7 @@
 
 IMesh* CMothership::mspMshMothership = nullptr;
 IMesh* CMothership::mspMshSheild = nullptr;
+ALuint CMothership::alAttackSound = 0;
 //-----------------------------------------------------
 // MOTHERSHIP CLASS CONSTRUCTORS & DESTRUCTOR
 //-----------------------------------------------------
@@ -116,7 +117,7 @@ void CMothership::LoadModel(float x, float y, float z)
 	mChargingLazers = false;
 	mCharged = false;
 	mFiredLazer = false;
-
+	ALuint alExplosionBuffer = alutCreateBufferFromFile("SpaceShip_Explosion.wav");
 	DX::XMFLOAT3 mSourcePos = { mWorldPos.x, mWorldPos.y, mWorldPos.z };
 	DX::XMFLOAT3 mSourceVel = { 0.0F, 0.0f, 0.0f };
 	DX::XMFLOAT3 listenerPos = { 0.0f, 0.0f, -150.0f };
@@ -126,8 +127,8 @@ void CMothership::LoadModel(float x, float y, float z)
 	float volume = CStateControl::GetInstance()->GetSettingsManager()->GetEffectsVolume();		// MAKE SURE TO INCLUDE GameStateControl in the
 
 	// .cpp file ONLY otherwise you'll get cyclic redundancy
-	mGenSound = new CSound(mSoundFileLazer, mSourcePos, mSourceVel, false, volume, listenerPos, listenerVel);
-	mSoundExplosion = new CSound(mSoundFileExplosion, mSourcePos, mSourceVel, false, volume, listenerPos, listenerVel);
+	mGenSound = new CSound(alAttackSound, mSourcePos, mSourceVel, false, volume, listenerPos, listenerVel);
+	mSoundExplosion = new CSound(alExplosionBuffer, mSourcePos, mSourceVel, false, volume, listenerPos, listenerVel);
 
 	if (mWorldPos.x < 0)
 	{

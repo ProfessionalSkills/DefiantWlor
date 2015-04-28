@@ -64,7 +64,7 @@ public:
 
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
-	CSound(string mSoundFile, XMFLOAT3 mSourcePos, XMFLOAT3 mSourceVel, bool loop, float gain,
+	CSound(ALuint buffer, XMFLOAT3 mSourcePos, XMFLOAT3 mSourceVel, bool loop, float gain,
 		XMFLOAT3 mListenerPos, XMFLOAT3 mListenerVel);
 	~CSound();
 

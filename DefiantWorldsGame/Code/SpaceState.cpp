@@ -100,13 +100,13 @@ void CSpaceState::StateSetup()
 
 	// INITIALISE MUSIC
 	//------------------------------
-	string mMusicFile = "Space_Music.wav";
+	ALuint alMusicBuffer = alutCreateBufferFromFile("Space_Music.wav");
 	DX::XMFLOAT3 mSourcePos = { mpCamMain->GetX(), mpCamMain->GetY(), mpCamMain->GetZ() };
 	DX::XMFLOAT3 mSourceVel = { 0.0f, 0.0f, 0.0f };
 	DX::XMFLOAT3 listenerPos = { mpCamMain->GetX(), mpCamMain->GetY(), mpCamMain->GetZ() };
 	DX::XMFLOAT3 listenerVel = { 0.0f, 0.0f, 0.0f };
 	float volume = CStateControl::GetInstance()->GetSettingsManager()->GetMusicVolume();
-	mMusic = new CSound(mMusicFile, mSourcePos, mSourceVel, true, volume, listenerPos, listenerVel);
+	mMusic = new CSound(alMusicBuffer, mSourcePos, mSourceVel, true, volume, listenerPos, listenerVel);
 	mMusic->PlaySound();
 
 	// LOAD MODELS

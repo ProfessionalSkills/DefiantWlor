@@ -11,6 +11,7 @@
 
 IMesh* CArtillery::mspMshArtillery = nullptr;
 IMesh* CArtillery::mspMshArtilleryShell = nullptr;
+ALuint CArtillery::alAttackSound = 0;
 
 
 //-----------------------------------------------------
@@ -146,6 +147,7 @@ bool CArtillery::Attack(CGameObject* pTarget, float hitMod, float damageMod)
 
 		if (mAttackTimer >= (1.0f / mFireRate)) //Control rate of fire of the unit
 		{
+			SetAttackSound(alAttackSound);
 			SProjectile* newProjectile = new SProjectile();
 			newProjectile->mModel = mspMshArtilleryShell->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
 			newProjectile->mDirection = dir;

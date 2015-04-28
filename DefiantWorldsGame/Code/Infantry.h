@@ -25,7 +25,7 @@ private:
 public:
 	static IMesh* mspMshInfantry;
 	static IMesh* mspMshInfantryBullet;
-
+	static ALuint alAttackSound;
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
 	CInfantry();

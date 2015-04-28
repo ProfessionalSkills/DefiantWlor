@@ -33,13 +33,13 @@ CStateControl::CStateControl(EGameStates inStartState)
 	mCurState = inStartState;
 
 	// Initialise music
-	string mMusicFile = "Intro.wav";
+	ALuint musicBuffer = alutCreateBufferFromFile("Intro.wav");
 	DX::XMFLOAT3 mSourcePos = { 0.0f, 0.0f, 0.0f };
 	DX::XMFLOAT3 mSourceVel = { 0.0f, 0.0f, 0.0f };
 	DX::XMFLOAT3 listenerPos = { 0.0f, 0.0f, 0.0f };
 	DX::XMFLOAT3 listenerVel = { 0.0f, 0.0f, 0.0f };
 	float volume = 0.6f;
-	mMusic = new CSound(mMusicFile, mSourcePos, mSourceVel, true, volume, listenerPos, listenerVel);
+	mMusic = new CSound(musicBuffer, mSourcePos, mSourceVel, true, volume, listenerPos, listenerVel);
 
 
 	// Set current state

@@ -25,7 +25,7 @@ private:
 public:
 	static IMesh* mspMshTank;
 	static IMesh* mspMshTankShell;
-
+	static ALuint alAttackSound;
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
 	CTank();

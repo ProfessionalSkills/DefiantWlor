@@ -330,8 +330,7 @@ void CRTSPlayer::CheckGameObjectSelection(CStructure*& pStructure, CGameAgent*& 
 		if (miterStructuresMap->second->RayCollision(origin, direction, newDist) && newDist < curDist)
 		{
 			pStructure = miterStructuresMap->second;
-
-			string mMusicFile = "";
+			ALuint selectBuffer;
 			DX::XMFLOAT3 mSourcePos;
 			DX::XMFLOAT3 mSourceVel;
 			DX::XMFLOAT3 listenerPos;
@@ -346,24 +345,31 @@ void CRTSPlayer::CheckGameObjectSelection(CStructure*& pStructure, CGameAgent*& 
 				switch (pStructure->GetStructureType())
 				{
 				case STR_BARRACKS:
-					mMusicFile = "Barracks.Select.wav"; //Sets the music file
+					selectBuffer = alutCreateBufferFromFile("Barracks.Select.wav"); //Sets the music file
 					break;
 				case STR_COM_CENTRE:
-					mMusicFile = "Barracks.Select.wav";
+					selectBuffer = alutCreateBufferFromFile("Barracks.Select.wav");
 					break;
 
 				case STR_HELLIPAD:
-					mMusicFile = "Helipad.Select.wav";
+					selectBuffer = alutCreateBufferFromFile("Helipad.Select.wav");
 					break;
 
 				case STR_SPACE_CENTRE:
-					mMusicFile = "SpaceCentre.Select.wav";
+					selectBuffer = alutCreateBufferFromFile("SpaceCentre.Select.wav");
 					break;
-				}
+				case STR_AA:
+					selectBuffer = alutCreateBufferFromFile("Barracks.Select.wav");
+					break;
+				case STR_WALL:
+					selectBuffer = alutCreateBufferFromFile("");
 
+
+				}
 				float volume = CStateControl::GetInstance()->GetSettingsManager()->GetEffectsVolume();		// MAKE SURE TO INCLUDE GameStateControl in the
 																											// .cpp file ONLY otherwise you'll get cyclic redundancy
-				pStructure->SetSelectSound(new CSound(mMusicFile, mSourcePos, mSourceVel, false, volume, listenerPos, listenerVel));
+
+				pStructure->SetSelectSound(new CSound(selectBuffer, mSourcePos, mSourceVel, false, volume, listenerPos, listenerVel));
 			}
 
 			pStructure->GetSelectSound()->PlaySound();

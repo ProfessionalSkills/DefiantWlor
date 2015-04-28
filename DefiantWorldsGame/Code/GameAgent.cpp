@@ -98,7 +98,7 @@ void CGameAgent::DisplayInfo(IFont* font)
 	mStrDisplay.str("");
 }
 
-void CGameAgent::SetAttackSound(string soundFile)
+void CGameAgent::SetAttackSound(ALuint attackBuffer)
 {
 	if (mAttackSound)
 	{
@@ -114,7 +114,7 @@ void CGameAgent::SetAttackSound(string soundFile)
 	float volume = CStateControl::GetInstance()->GetSettingsManager()->GetEffectsVolume();	// MAKE SURE TO INCLUDE GameStateControl in the
 
 	// .cpp file ONLY otherwise you'll get cyclic redundancy
-	mAttackSound = new CSound(soundFile, mSourcePos, mSourceVel, false, volume, listenerPos, listenerVel);
+	mAttackSound = new CSound(attackBuffer, mSourcePos, mSourceVel, false, volume, listenerPos, listenerVel);
 	mAttackSound->PlaySound(); //construction sound
 }
 

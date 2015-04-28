@@ -12,6 +12,7 @@
 
 IMesh* CSpaceFighter::mspMshSpaceFighter = nullptr;
 IMesh* CSpaceFighter::mspMshSheild = nullptr;
+ALuint CSpaceFighter::alAttackSound = 0;
 
 
 //-----------------------------------------------------
@@ -70,7 +71,7 @@ void CSpaceFighter::LoadModel(float x,float y, float z)
 	mWorldPos.x = x;
 	mWorldPos.y = y;
 	mWorldPos.z = z;
-
+	ALuint alLazerBuffer = alutCreateBufferFromFile("shoot.wav");
 	DX::XMFLOAT3 mSourcePos = { mWorldPos.x, mWorldPos.y, mWorldPos.z };
 	DX::XMFLOAT3 mSourceVel = { 0.0F, 0.0f, 0.0f };
 	DX::XMFLOAT3 listenerPos = { 0.0f, 0.0f, -150.0f };
@@ -79,7 +80,7 @@ void CSpaceFighter::LoadModel(float x,float y, float z)
 	else  mSourceVel.x = {-100.0f};
 	float volume = CStateControl::GetInstance()->GetSettingsManager()->GetEffectsVolume();		// MAKE SURE TO INCLUDE GameStateControl in the
 																								// .cpp file ONLY otherwise you'll get cyclic redundancy
-	mGenSound = new CSound(mSoundFileLazer, mSourcePos, mSourceVel, false, volume, listenerPos, listenerVel);
+	mGenSound = new CSound(alLazerBuffer, mSourcePos, mSourceVel, false, volume, listenerPos, listenerVel);
 
 	if (mWorldPos.x < 0)
 	{

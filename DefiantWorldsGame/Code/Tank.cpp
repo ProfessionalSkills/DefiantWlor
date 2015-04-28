@@ -11,7 +11,7 @@
 
 IMesh* CTank::mspMshTank = nullptr;
 IMesh* CTank::mspMshTankShell = nullptr;
-
+ALuint CTank::alAttackSound = 0;		
 
 //-----------------------------------------------------
 // TANK CLASS CONSTRUCTORS & DESTRUCTOR
@@ -147,8 +147,7 @@ bool CTank::Attack(CGameObject* pTarget, float hitMod, float damageMod)
 	{
 		if (mAttackTimer >= (1.0f / mFireRate)) //Control rate of fire of the unit
 		{
-			string mMusicFile = "tank-firing.wav"; //Sets the music file
-			SetAttackSound(mMusicFile);
+			SetAttackSound(alAttackSound);
 			SProjectile* newProjectile = new SProjectile();
 			newProjectile->mModel = mspMshTankShell->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
 			newProjectile->mDirection = localZ;
