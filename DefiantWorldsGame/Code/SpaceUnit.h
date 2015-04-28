@@ -145,8 +145,12 @@ public:
 
 	inline void MoveInScene()
 	{
+		mOrientation += mSceneRotationSpeed*gFrameTime;
 		mpObjModel->MoveLocalZ(mSceneTravelSpeed*gFrameTime);
 		mpObjModel->RotateY(mSceneRotationSpeed*gFrameTime);
+		mWorldPos.x = mpObjModel->GetX();
+		mWorldPos.y = mpObjModel->GetY();
+		mWorldPos.z = mpObjModel->GetZ();
 	}
 
 };
