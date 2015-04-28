@@ -140,6 +140,18 @@ CStructure* CRTSPlayer::GetRandomStructure()
 //-----------------------------------------------------
 // PLAYER CLASS METHODS
 //-----------------------------------------------------
+bool CRTSPlayer::CheckForMothership()
+{
+	for (auto ship : mpSpaceUnitsList)
+	{
+		if (ship->GetAgentData()->mAgentType == GAV_MOTHERSHIP)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
 void CRTSPlayer::ConstructWalls()
 {
 	DX::XMFLOAT3 gridCentre = mpPlayerGrid->GetGridCentrePos();

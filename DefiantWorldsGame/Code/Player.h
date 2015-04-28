@@ -356,7 +356,7 @@ public:
 	void LoadPlayerGridModels();
 	void UnloadPlayerGridModels();
 	bool PopLimitReached(int popValue);
-
+	bool CheckForMothership();
 	// Function to create the walls surrounding the player's building area
 	void ConstructWalls();
 
