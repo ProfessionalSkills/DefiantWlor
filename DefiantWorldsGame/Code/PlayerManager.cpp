@@ -104,7 +104,7 @@ int CPlayerManager::UpdatePlayers()
 			if (gpRandomiser->GetRandomInt(0, 1))
 			{
 				// Run the course of an earth invasion
-				InvadeEarth();
+				//InvadeEarth();
 			}
 			else
 			{
@@ -124,7 +124,7 @@ int CPlayerManager::UpdatePlayers()
 			if (gpRandomiser->GetRandomInt(0, 1))
 			{
 				// Run the course of an earth invasion
-				InvadeMars();
+				//InvadeMars();
 			}
 			else
 			{

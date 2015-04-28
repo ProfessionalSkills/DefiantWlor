@@ -842,20 +842,26 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 			if (miterUnitsMap->second->GetAgentData()->mAgentType == GAV_WORKER)
 			{
 				// Cannot send workers to space
-				return false;
+				return true;
 			}
 
 			// Check if the unit is already in space
 			if (miterUnitsMap->second->GetState() == OBJ_INSPACE)
 			{
 				// Try a different unit
-				return false;
+				return true;
 			}
 
 			// if the unit is attacking, leave it alone
 			if (miterUnitsMap->second->GetAttackTarget())
 			{
-				return false;
+				return true;
+			}
+
+			// Check if the unit is already on earth
+			if (miterUnitsMap->second->GetAirspacePosition() == AS_EARTH)
+			{
+				return true;
 			}
 
 			// Get unit's position before it disappears
@@ -880,6 +886,12 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 		break;
 	case Q_LAUNCH_FLEET:
 		{
+			// Player won previous battle
+			if (mWonLastSpaceBattle)
+			{
+				return true;
+			}
+			
 			// Check size of fleet
 			if (mpSpaceUnitsList.size() < 9)
 			{
@@ -890,6 +902,8 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 				mpTaskQ.push(new CBuildRequest(Q_SPACE_FIGHTER, 1));
 				mpTaskQ.push(new CBuildRequest(Q_SPACE_FIGHTER, 1));
 				mpTaskQ.push(new CBuildRequest(Q_SPACE_FIGHTER, 1));
+
+				return true;
 			}
 
 			// Check if there is at least one transport ship & mothership
@@ -924,12 +938,12 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 			if (!mothership)
 			{
 				mpTaskQ.push(new CBuildRequest(Q_MOTHERSHIP, 1));
-				return false;
+				return true;
 			}
 			if (!transport)
 			{
 				mpTaskQ.push(new CBuildRequest(Q_TRANSPORT, 1));
-				return false;
+				return true;
 			}
 
 			// Send attack
