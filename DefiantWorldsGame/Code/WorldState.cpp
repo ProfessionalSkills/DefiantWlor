@@ -1066,6 +1066,21 @@ void CWorldState::StateSetup()
 	mpSpaceAtaackButtons = new CAdvancedButton<CWorldState, void>("AttackButton.png", "AttackButtonMO.png", SPointData(165, 765),
 		DX::XMFLOAT2(90.0f, 90.0f), *this, &CWorldState::LaunchAttack);
 	mpGenericButtonList.push_back(mpSpaceAtaackButtons);
+	mpSpaceButtonList.push_back(mpSpaceAtaackButtons);
+
+	// AI attacking
+	mpSpaceAtaackButtons = new CAdvancedButton<CWorldState, void>("AttackButtonAttacking.png", "AttackButtonMO.png", SPointData(165, 765),
+		DX::XMFLOAT2(90.0f, 90.0f), *this, &CWorldState::LaunchAttack);
+	mpSpaceAtaackButtons->Hide();
+	mpGenericButtonList.push_back(mpSpaceAtaackButtons);
+	mpSpaceButtonList.push_back(mpSpaceAtaackButtons);
+
+	// Player attacking
+	mpSpaceAtaackButtons = new CAdvancedButton<CWorldState, void>("AttackButtonEnemyAttacking.png", "AttackButtonMO.png", SPointData(165, 765),
+		DX::XMFLOAT2(90.0f, 90.0f), *this, &CWorldState::LaunchAttack);
+	mpGenericButtonList.push_back(mpSpaceAtaackButtons);
+	mpSpaceAtaackButtons->Hide();
+	mpSpaceButtonList.push_back(mpSpaceAtaackButtons);
 
 	// Health bar variables
 	mpSprHealth = nullptr;
@@ -1273,7 +1288,7 @@ void CWorldState::StateSetup()
 	// INITIALISE CAMERAS
 	//-----------------------------
 	mpCamEarth = new CSphericalCamera(mpEarthGrid->GetGridCentrePos(), 350.0f, DX::XMConvertToRadians(-90.0f), DX::XMConvertToRadians(50.0f));
-	mpCamMars = new CSphericalCamera(mpMarsGrid->GetGridCentrePos(), 350.0f, DX::XMConvertToRadians(-90.0f), DX::XMConvertToRadians(50.0f));
+	mpCamMars = new CSphericalCamera({ mpMarsGrid->GetGridStartPos().x-20.0f, 0.0f, mpMarsGrid->GetGridCentrePos().z-40.0f }, 450.0f, DX::XMConvertToRadians(-90.0f), DX::XMConvertToRadians(50.0f));
 	mpCamEarth->SetFaction(FAC_EARTH_DEFENSE_FORCE);
 	mpCamMars->SetFaction(FAC_THE_CRIMSON_LEGION);
 	mpCamEarth->Update();
@@ -1902,9 +1917,13 @@ void CWorldState::StateUpdate()
 		mAIPlayerAttacking = mpPlayerManager->GetIsAIAttacking();
 		mTimeTillEnterSpace = mAIEnterSpaceTime;
 		prevtime = mTimeTillEnterSpace+1;
+		mpSpaceButtonList[0]->Hide();
+		mpSpaceButtonList[2]->Show();
 	}
 	if (mHumanPlayerAttacking)
 	{
+		mpSpaceButtonList[0]->Hide();
+		mpSpaceButtonList[1]->Show();
 		int TimeTillLaunch = (int)mTimeTillEnterSpace;
 		if (mHumanPlayerAttacking)
 		{
@@ -1940,6 +1959,8 @@ void CWorldState::StateUpdate()
 				mpAIPlayer->LaunchAttack();
 				gCurState = GS_SPACE;
 				mHumanPlayerAttacking = false;
+				mpSpaceButtonList[2]->Hide();
+				mpSpaceButtonList[0]->Show();
 			}
 		}
 	}
@@ -2796,6 +2817,8 @@ void CWorldState::LaunchAttack()
 	{
 		mHumanPlayerAttacking = false;
 		gpNewsTicker->AddNewElement("Canceled attack.", false);
+		mpSpaceButtonList[1]->Hide();
+		mpSpaceButtonList[0]->Show();
 	}
 	else if (mAIPlayerAttacking)
 	{
