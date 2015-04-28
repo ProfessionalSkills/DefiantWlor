@@ -121,6 +121,8 @@ void CSpaceState::StateSetup()
 	mpSprHealth1 = gpEngine->CreateSprite("HealthBar100.png", 50.0f, 765.0f, 0.0f);
 	mpSprHealth2 = gpEngine->CreateSprite("HealthBar100.png", 1050.0f, 765.0f, 0.0f);
 
+	
+
 	// Tactics Buttons
 	CAdvancedButton<CSpaceState, void>* pNewButton = new CAdvancedButton<CSpaceState, void>("NoTactics.png", "NoTacticsMO.png", SPointData(900, 750),
 		DX::XMFLOAT2(50.0f, 50.0f), *this, &CSpaceState::ChangeTacNone, TR_UP, true, 1.2f);
@@ -232,6 +234,61 @@ void CSpaceState::StateUpdate()
 		mpPlayerOneFleet->SceneSpaceFight();
 		mCutScene=mpPlayerTwoFleet->SceneSpaceFight();
 		return;
+	}
+
+	if (mpPlayerOneFleet->GetCooldownTimer() > 0)
+	{
+		float time = mpPlayerOneFleet->GetCooldownTimer();
+		if (time > 4.5f)
+		{
+			ChanageSprite("ButtonProg1.png");
+		}
+		else if (time > 4.0f)
+		{
+			ChanageSprite("ButtonProg2.png");
+		}
+		else if (time > 3.5f)
+		{
+			ChanageSprite("ButtonProg3.png");
+		}
+		else if (time > 3.0f)
+		{
+			ChanageSprite("ButtonProg4.png");
+		}
+		else if (time > 2.5f)
+		{
+			ChanageSprite("ButtonProg5.png");
+		}
+		else if (time > 2.0f)
+		{
+			ChanageSprite("ButtonProg6.png");
+		}
+		else if (time > 1.5f)
+		{
+			ChanageSprite("ButtonProg7.png");
+		}
+		else if (time > 1.0f)
+		{
+			ChanageSprite("ButtonProg8.png");
+		}
+		else if (time > 0.5f)
+		{
+			ChanageSprite("ButtonProg9.png");
+		}
+		else
+		{
+			if (mpCoolDownTimer1)
+			{
+				delete mpCoolDownTimer1;
+				mpCoolDownTimer1 = nullptr;
+			}
+			if (mpCoolDownTimer2)
+			{
+				delete mpCoolDownTimer2;
+				mpCoolDownTimer2 = nullptr;
+			}
+		}
+	
 	}
 
 	if (!mPaused&&!PlayerOneVictory&&!PlayerTwoVictory)
