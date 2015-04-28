@@ -1960,6 +1960,8 @@ void CWorldState::StateCleanup()
 		mpMdlDragBox = nullptr;
 	}
 
+	gpCurWorldCamera = nullptr;
+
 	mMusic->StopSound();
 
 	// Unload buttons

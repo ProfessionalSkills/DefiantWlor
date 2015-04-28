@@ -96,8 +96,16 @@ bool CExplosion::UpdateSystem()
 
 		DX::XMFLOAT3 movement = pParticle->GetMoveVector();
 		pParticle->mModel->Move(movement.x * gFrameTime, movement.y * gFrameTime, movement.z * gFrameTime);
-		pParticle->mModel->LookAt(gpCurWorldCamera->GetCamera());
 
+		if (gpCurWorldCamera)
+		{
+			pParticle->mModel->LookAt(gpCurWorldCamera->GetCamera());
+		}
+		else
+		{
+			pParticle->mModel->LookAt(gpCam);
+		}
+		
 		// Rescale after lookat
 		pParticle->mModel->Scale(0.1f);
 
