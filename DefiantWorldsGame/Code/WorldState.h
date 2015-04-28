@@ -189,7 +189,12 @@ private:
 	CPlayerManager* mpPlayerManager;
 	CRTSPlayer* mpHumanPlayer;
 	CRTSAIPlayer* mpAIPlayer;
-
+	bool mHumanPlayerAttacking=false;
+	bool mAIPlayerAttacking=false;
+	float mTimeTillEnterSpace = 0.0f;
+	const float mEnterSpaceTime=6.0f;
+	const float mAIEnterSpaceTime = 30.0f;
+	int prevtime = 10;
 
 public:
 	// STATIC MESHES
@@ -230,6 +235,7 @@ public:
 	void CreateHouse();
 	void DeleteSelection();
 	void LaunchAttack();
+	void AIlaunchAttack();
 	void PutUnitIntoSpace();
 	void UnitStop();
 

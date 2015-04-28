@@ -227,7 +227,7 @@ bool CBomber::Update()
 	if (mHealth <= 0.0f) return CAirUnit::Update();
 	
 	// Check if it has a target
-	if (mHasPathTarget) //If there is a path target
+	if (mHasPathTarget && mpObjModel) //If there is a path target
 	{
 		//Move the unit towards the path target
 		LookingAt(mPathTarget);

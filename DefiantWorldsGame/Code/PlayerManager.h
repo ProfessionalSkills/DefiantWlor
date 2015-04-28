@@ -73,6 +73,10 @@ public:
 		mpEarthAirspaceList.clear();
 	}
 
+	inline void SetAIPlayerLaunchedAttack(bool attacking)
+	{
+		mAIPlayerLaunchedAttack = attacking;
+	}
 
 	// ACCESSORS
 	//---------------------------
@@ -91,6 +95,11 @@ public:
 		return mPlayerDataInitialised;
 	}
 
+	inline bool GetIsAIAttacking()
+	{
+		return mAIPlayerLaunchedAttack;
+	}
+
 
 private:
 	// PLAYERS
@@ -101,7 +110,7 @@ private:
 	int mNumAI;
 
 	bool mPlayerDataInitialised;
-
+	bool mAIPlayerLaunchedAttack = false;
 	// Airspace lists
 	std::vector<CGameAgent*> mpEarthAirspaceList;
 	std::vector<CGameAgent*> mpMarsAirspaceList;

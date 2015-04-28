@@ -1894,6 +1894,94 @@ void CWorldState::StateUpdate()
 	{
 		OnEnd();
 	}
+
+	// UPDATE ENTER SPACE
+	//------------------------------
+	if (mAIPlayerAttacking != mpPlayerManager->GetIsAIAttacking())
+	{
+		mAIPlayerAttacking = mpPlayerManager->GetIsAIAttacking();
+		mTimeTillEnterSpace = mAIEnterSpaceTime;
+	}
+	if (mHumanPlayerAttacking)
+	{
+		int TimeTillLaunch = (int)mTimeTillEnterSpace;
+		if (mHumanPlayerAttacking)
+		{
+			if (TimeTillLaunch < prevtime)
+			{
+				switch (TimeTillLaunch)
+				{
+				case 5:
+					gpNewsTicker->AddNewElement("Launching Attack in 5", false);
+					break;
+				case 4:
+					gpNewsTicker->AddNewElement("Launching Attack in 4", false);
+					break;
+				case 3:
+					gpNewsTicker->AddNewElement("Launching Attack in 3", false);
+					break;
+				case 2:
+					gpNewsTicker->AddNewElement("Launching Attack in 2", false);
+					break;
+				case 1:
+					gpNewsTicker->AddNewElement("Launching Attack in 1", false);
+					break;
+				default:
+					break;
+				}
+				prevtime = TimeTillLaunch;
+			}
+			mTimeTillEnterSpace -= gFrameTime;
+
+			if (mTimeTillEnterSpace < 0.0f)
+			{
+				mpHumanPlayer->LaunchAttack();
+				mpAIPlayer->LaunchAttack();
+				gCurState = GS_SPACE;
+				mHumanPlayerAttacking = false;
+			}
+		}
+	}
+	else if (mAIPlayerAttacking)
+	{
+		int TimeTillLaunch = (int)mTimeTillEnterSpace;
+		if (TimeTillLaunch < prevtime)
+		{
+			switch (TimeTillLaunch)
+			{
+			case 30:
+				gpNewsTicker->AddNewElement("Enemy Attacking in 30s! Launch fleet to defend Earth ", false);
+				break;
+			case 25:
+				gpNewsTicker->AddNewElement("Enemy Attacking in 25s! Launch fleet to defend Earth ", false);
+				break;
+			case 20:
+				gpNewsTicker->AddNewElement("Enemy Attacking in 20s! Launch fleet to defend Earth ", false);
+				break;
+			case 15:
+				gpNewsTicker->AddNewElement("Enemy Attacking in 15s! Launch fleet to defend Earth ", false);
+				break;
+			case 10:
+				gpNewsTicker->AddNewElement("Enemy Attacking in 10s! Launch fleet to defend Earth ", false);
+				break;
+			case 5:
+				gpNewsTicker->AddNewElement("Enemy Attacking in 5s! Launch fleet to defend Earth ", false);
+				break;
+			default:
+				break;
+			}
+			prevtime = TimeTillLaunch;
+		}
+		mTimeTillEnterSpace -= gFrameTime;
+		if (mTimeTillEnterSpace < 0.0f)
+		{
+
+			mpPlayerManager->SetAIPlayerLaunchedAttack(false);
+			mpAIPlayer->GetFleet()->ReturnFleet(mpAIPlayer, true);
+			mpAIPlayer->SetWonLastSpaceBattle(true);
+			mpHumanPlayer->SetWonLastSpaceBattle(false);
+		}
+	}
 }
 
 void CWorldState::StateCleanup()
@@ -2690,9 +2778,33 @@ void CWorldState::PutUnitIntoSpace()
 
 void CWorldState::LaunchAttack()
 {
-	mpHumanPlayer->LaunchAttack();
-	mpAIPlayer->LaunchAttack();
-	gCurState = GS_SPACE;
+	if (!mHumanPlayerAttacking&&!mAIPlayerAttacking)
+	{
+		if (mpHumanPlayer->GetNumMothership() != 0)
+		{
+			mHumanPlayerAttacking = true;
+			mTimeTillEnterSpace = mEnterSpaceTime;
+			prevtime = 10;
+		}
+		else
+		{
+			gpNewsTicker->AddNewElement("Build a Mothership to launch an attack on Mars.", false);
+		}
+	}
+	else if (mHumanPlayerAttacking)
+	{
+		mHumanPlayerAttacking = false;
+		gpNewsTicker->AddNewElement("Canceled attack.", false);
+	}
+	else if (mAIPlayerAttacking)
+	{
+		mpHumanPlayer->LaunchAttack();
+		mpAIPlayer->LaunchAttack();
+		gCurState = GS_SPACE;
+		mHumanPlayerAttacking = false;
+		mAIPlayerAttacking = false;
+		mpPlayerManager->SetAIPlayerLaunchedAttack(false);
+	}
 }
 
 void CWorldState::Continue()

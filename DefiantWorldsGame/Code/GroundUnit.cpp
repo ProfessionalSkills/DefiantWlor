@@ -115,7 +115,7 @@ bool CGroundUnit::Update()
 	}
 
 	// ALL THESE UPDATES OCCUR IF THE UNIT IS NOT DEAD OR IN SPACE
-	if (HasTarget() && !mAttackTarget) //If there is a path target
+	if (HasTarget() && !mAttackTarget && mpObjModel) //If there is a path target
 	{
 		UpdateWaypointArrow();
 		//Move the unit towards the path target

@@ -925,6 +925,18 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 					if ((*iter)->GetAgentData()->mAgentType == GAV_TRANSPORT)
 					{
 						transport = true;
+
+						// Check for cargo
+						CTransport* pCargo = static_cast<CTransport*>((*iter));
+						if (!pCargo->GetCargoValue())
+						{
+							mpTaskQ.push(new CBuildRequest(Q_SEND_TO_SPACE, 1));
+							mpTaskQ.push(new CBuildRequest(Q_SEND_TO_SPACE, 1));
+							mpTaskQ.push(new CBuildRequest(Q_SEND_TO_SPACE, 1));
+							mpTaskQ.push(new CBuildRequest(Q_SEND_TO_SPACE, 1));
+							mpTaskQ.push(new CBuildRequest(Q_SEND_TO_SPACE, 1));
+							transport = false;
+						}
 					}
 				}
 
@@ -947,9 +959,8 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 			}
 
 			// Send attack
-			pPlayerManager->GetHumanPlayer()->LaunchAttack();
+			pPlayerManager->SetAIPlayerLaunchedAttack(true);
 			LaunchAttack();
-			gCurState = GS_SPACE;
 			return true;
 		}
 		break;
