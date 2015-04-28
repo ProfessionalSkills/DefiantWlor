@@ -35,12 +35,7 @@ private:
 	//Sound data
 	//--------------------------- 
 	ALuint mBuffer;
-
-
-	//Sound source
-	//---------------------------
 	ALuint mSource;
-
 
 	//Source Position and Velocity 
 	//---------------------------
@@ -65,7 +60,7 @@ public:
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
 	CSound(ALuint buffer, XMFLOAT3 mSourcePos, XMFLOAT3 mSourceVel, bool loop, float gain,
-		XMFLOAT3 mListenerPos, XMFLOAT3 mListenerVel);
+		XMFLOAT3 mListenerPos, XMFLOAT3 mListenerVel, ALuint );
 	~CSound();
 
 

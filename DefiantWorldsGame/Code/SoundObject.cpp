@@ -15,13 +15,13 @@ using namespace std;
 //-----------------------------------------------------
 
 CSound::CSound(ALuint buffer, XMFLOAT3 mSourcePos, XMFLOAT3 mSourceVel, bool loop, float gain,
-	XMFLOAT3 mListenerPos, XMFLOAT3 mListenerVel)
+	XMFLOAT3 mListenerPos, XMFLOAT3 mListenerVel, ALuint source)
 {
 	//Obtains sound file 
 	mBuffer = buffer;
-	
+	mSource = source;
 	//Generates sounds source
-	alGenSources(1, &mSource);
+	//alGenSources(1, &mSource);
 
 	//sets up sound positions
 	sourcesPos[0] = mSourcePos.x;

@@ -12,6 +12,7 @@
 IMesh* CFighter::mspMshFighter = nullptr;
 IMesh* CFighter::mspMshFighterBullet = nullptr;
 ALuint CFighter::alAttackSound = 0;
+ALuint CFighter::alAttackSource = 0;
 //-----------------------------------------------------
 // FIGHTER CLASS CONSTRUCTORS & DESTRUCTOR
 //-----------------------------------------------------
@@ -148,7 +149,7 @@ bool CFighter::Attack(CGameObject* pTarget, float hitMod, float damageMod)
 		
 		if (mAttackTimer >= (1.0f / mFireRate)) //Control rate of fire of the unit
 		{
-			SetAttackSound(alAttackSound);
+			SetAttackSound(alAttackSound, alAttackSource);
 
 
 			SProjectile* newProjectile = new SProjectile();

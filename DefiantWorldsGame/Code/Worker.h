@@ -36,7 +36,7 @@ public:
 	static IMesh* mspMshWorker;
 	static IMesh* mspMshWorkerLaser;
 	static ALuint alAttackSound;
-
+	static ALuint alAttackSource;
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
 	CWorker();

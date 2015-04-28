@@ -1335,12 +1335,14 @@ void CWorldState::StateSetup()
 	// INITIALISE MUSIC
 	//-----------------------------
 	ALuint alMusicBuffer = alutCreateBufferFromFile("Perpetual Tension.wav"); //Sets the music file
+	ALuint alMusicSource;
+	alGenSources(1, &alMusicSource);
 	DX::XMFLOAT3 mSourcePos = { mpCamEarth->GetCamera()->GetX(), mpCamEarth->GetCamera()->GetY(), mpCamEarth->GetCamera()->GetZ() };
 	DX::XMFLOAT3 mSourceVel = { 0.0f, 0.0f, 0.0f };
 	DX::XMFLOAT3 listenerPos = { mpCamEarth->GetCamera()->GetX(), mpCamEarth->GetCamera()->GetY(), mpCamEarth->GetCamera()->GetZ() };
 	DX::XMFLOAT3 listenerVel = { 0.0f, 0.0f, 0.0f };
 	float volume = CStateControl::GetInstance()->GetSettingsManager()->GetMusicVolume();
-	mMusic = new CSound(alMusicBuffer, mSourcePos, mSourceVel, true, volume, listenerPos, listenerVel); //Initialise music
+	mMusic = new CSound(alMusicBuffer, mSourcePos, mSourceVel, true, volume, listenerPos, listenerVel, alMusicSource); //Initialise music
 	mMusic->PlaySound(); //Play music on loop
 }
 

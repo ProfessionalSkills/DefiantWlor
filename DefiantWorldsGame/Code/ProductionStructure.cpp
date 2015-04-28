@@ -218,13 +218,15 @@ bool CProductionStructure::Update(CRTSPlayer* pPlayer)
 				if (mStructureType != STR_COM_CENTRE && pPlayer->GetPlayerFaction() == FAC_EARTH_DEFENSE_FORCE) //If the structure is not the player's command centre and belongs to the human player
 				{
 					ALuint alBuildBuffer = alutCreateBufferFromFile("drill.wav"); //Sets the music file
+					ALuint alBuildSource;
+					alGenSources(1, &alBuildSource);
 					DX::XMFLOAT3 mSourcePos = { mpObjModel->GetX(), mpObjModel->GetY(), mpObjModel->GetZ() };
 					DX::XMFLOAT3 mSourceVel = { 0.0f, 0.0f, 0.0f };
 					DX::XMFLOAT3 listenerPos = { mpObjModel->GetX(), 50.0f, mpObjModel->GetZ() };
 					DX::XMFLOAT3 listenerVel = { 0.0f, 0.0f, 0.0f };
 					float volume = CStateControl::GetInstance()->GetSettingsManager()->GetEffectsVolume();		// MAKE SURE TO INCLUDE GameStateControl in the
 																												// .cpp file ONLY otherwise you'll get cyclic redundancy
-					mGenSound = new CSound(alBuildBuffer, mSourcePos, mSourceVel, false, volume, listenerPos, listenerVel);
+					mGenSound = new CSound(alBuildBuffer, mSourcePos, mSourceVel, false, volume, listenerPos, listenerVel, alBuildSource);
 					mGenSound->PlaySound(); //construction sound
 
 					// Display on ticker

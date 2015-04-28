@@ -343,6 +343,8 @@ void CRTSPlayer::CheckGameObjectSelection(CStructure*& pStructure, CGameAgent*& 
 		{
 			pStructure = miterStructuresMap->second;
 			ALuint selectBuffer;
+			ALuint selectSource;
+			alGenSources(1, &selectSource);
 			DX::XMFLOAT3 mSourcePos;
 			DX::XMFLOAT3 mSourceVel;
 			DX::XMFLOAT3 listenerPos;
@@ -381,7 +383,7 @@ void CRTSPlayer::CheckGameObjectSelection(CStructure*& pStructure, CGameAgent*& 
 				float volume = CStateControl::GetInstance()->GetSettingsManager()->GetEffectsVolume();		// MAKE SURE TO INCLUDE GameStateControl in the
 																											// .cpp file ONLY otherwise you'll get cyclic redundancy
 
-				pStructure->SetSelectSound(new CSound(selectBuffer, mSourcePos, mSourceVel, false, volume, listenerPos, listenerVel));
+				pStructure->SetSelectSound(new CSound(selectBuffer, mSourcePos, mSourceVel, false, volume, listenerPos, listenerVel, selectSource));
 			}
 
 			pStructure->GetSelectSound()->PlaySound();

@@ -25,7 +25,7 @@ public:
 	static IMesh* mspMshArtillery;
 	static IMesh* mspMshArtilleryShell;
 	static ALuint alAttackSound;
-
+	static ALuint alAttackSource;
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
 	CArtillery();
