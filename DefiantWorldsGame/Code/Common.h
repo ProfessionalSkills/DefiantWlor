@@ -18,8 +18,8 @@
 #include <sstream>
 #include <iostream>
 #include "SoundObject.h"
-#include "Particles.h"
 #include "NewsTicker.h"
+#include "SphericalCamera.h"
 
 
 //-----------------------------------------------------
@@ -60,11 +60,6 @@ enum EGameStructureTypes
 	STR_HELLIPAD, STR_AA, STR_WALL
 };
 
-enum EFactions
-{
-	FAC_EARTH_DEFENSE_FORCE, FAC_THE_CRIMSON_LEGION, FAC_REBELS
-};
-
 enum EErrorTypes
 {
 	ERR_NONE, ERR_NO_SPACE, ERR_NO_MINERALS, ERR_MAX_QUEUE_SIZE, ERR_NOT_READY,
@@ -93,9 +88,6 @@ const int GRID_SIZE_X = 60;
 const int GRID_SIZE_Y = 60;
 const float GRID_TILE_SIZE = 10.0f;
 
-const float NEAR_CLIP = 1.0f;
-const float FAR_CLIP = 10000.0f;
-
 const float CAM_MOVE_SPEED = 200.0f;
 const float CAM_SCROLL_SPEED = 5000.0f;
 const float CAM_MAX_HEIGHT = 250.0f;
@@ -110,15 +102,14 @@ const int MAX_STRUCTURE_BUTTONS = 5;
 extern EGameStates gCurState;
 
 // Global pointer to the engine. Can be used by anything including this file
-extern CRandomiser* gpRandomiser;
 extern CNewsTicker* gpNewsTicker;
 
 // Global frametime & mouse wheel delta
-extern float gFrameTime;
 extern float gMouseWheelDelta;
 
 // Global pointer to the current camera - for lookat functions when doing particles and other various things
-extern ICamera* gpCurWorldCamera;
+extern CSphericalCamera* gpCurWorldCamera;
+extern ICamera* gpCam;
 
 
 //-----------------------------------------------------
@@ -299,7 +290,6 @@ void SafeDelete(GenericPtr*& inPtr)
 //-----------------------------------------------------
 // HELPER MATHS FUNCTIONS
 //-----------------------------------------------------
-float Clampf(float inMin, float inMax, float inVal);
 float ToRadians(float inDegrees);
 float ToDegrees(float inRadians);
 

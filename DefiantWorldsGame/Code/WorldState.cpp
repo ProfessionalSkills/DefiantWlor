@@ -582,7 +582,7 @@ void CWorldState::CheckKeyPresses()
 		}
 
 		// Ensure global pointer holds correct camera
-		gpCurWorldCamera = mpCamCurrent->GetCamera();
+		gpCurWorldCamera = mpCamCurrent;
 
 		// Ensure no buildings can be brought over
 		OnPlacingStructureChange(nullptr);
@@ -1274,13 +1274,15 @@ void CWorldState::StateSetup()
 	//-----------------------------
 	mpCamEarth = new CSphericalCamera(mpEarthGrid->GetGridCentrePos(), 350.0f, DX::XMConvertToRadians(-90.0f), DX::XMConvertToRadians(50.0f));
 	mpCamMars = new CSphericalCamera(mpMarsGrid->GetGridCentrePos(), 350.0f, DX::XMConvertToRadians(-90.0f), DX::XMConvertToRadians(50.0f));
+	mpCamEarth->SetFaction(FAC_EARTH_DEFENSE_FORCE);
+	mpCamMars->SetFaction(FAC_THE_CRIMSON_LEGION);
 	mpCamEarth->Update();
 	mpCamMars->Update();
 
 	mpCamCurrent = mpCamEarth;
 
 	// Ensure global pointer holds correct camera
-	gpCurWorldCamera = mpCamCurrent->GetCamera();
+	gpCurWorldCamera = mpCamCurrent;
 
 	// Camera limitations
 	float threshold = 50.0f;
@@ -1904,7 +1906,7 @@ void CWorldState::StateCleanup()
 	
 	// DISPLAY LOADING SCREEN
 	ISprite* pLoading = gpEngine->CreateSprite("Loading.png");
-	gpEngine->DrawScene(gpCurWorldCamera);
+	gpEngine->DrawScene(gpCurWorldCamera->GetCamera());
 
 	// Remove loading screen sprite
 	gpEngine->RemoveSprite(pLoading);

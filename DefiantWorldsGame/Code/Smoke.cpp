@@ -64,7 +64,7 @@ bool CSmoke::UpdateSystem()
 
 		// Changed to one function call instead of 3
 		pParticle->mModel->Move(movement.x * gFrameTime, movement.y * gFrameTime, movement.z * gFrameTime);
-		pParticle->mModel->LookAt(gpCurWorldCamera);
+		pParticle->mModel->LookAt(gpCurWorldCamera->GetCamera());
 
 		// Rescale after lookat
 		pParticle->mModel->Scale(mScale);
