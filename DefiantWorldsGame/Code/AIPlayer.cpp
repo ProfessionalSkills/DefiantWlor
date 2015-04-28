@@ -790,6 +790,8 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 			{
 				// Cache unit
 				CGameAgent* pSelAgent = (*miterSelectedAgents);
+				bool agentRejected = false;
+				bool agentMoved = false;
 				
 				// Check to see if the unit picked is a worker unit which is busy harvesting
 				if (pSelAgent->GetAgentData()->mAgentType == GAV_WORKER)
@@ -799,24 +801,45 @@ bool CRTSAIPlayer::ResolveItem(EQueueObjectType qObject)
 					{
 						// There is no mineral as a target - safe to move. WILL LATER CHECK FOR OTHER THINGS THE WORKER COULD BE DOING
 						pWorker->SetPathTarget(newPos);
+						agentMoved = true;
+					}
+					else
+					{
+						agentRejected = true;
 					}
 				}
 
-				if (pSelAgent->GetAirspacePosition() == AS_MARS)
+				if (!agentRejected && !agentMoved)
 				{
-					// Check if the unit has an attack target and is therefore busy
-					if (!pSelAgent->GetAttackTarget())
+					if (pSelAgent->GetAirspacePosition() == AS_MARS)
 					{
-						pSelAgent->SetPathTarget(newPos);
+						// Check if the unit has an attack target and is therefore busy
+						if (!pSelAgent->GetAttackTarget())
+						{
+							pSelAgent->SetPathTarget(newPos);
+							agentMoved = true;
+						}
+					}
+					else
+					{
+						agentRejected = true;
 					}
 				}
 
-				if (pSelAgent->GetState() != OBJ_INSPACE)
+				if (!agentRejected && !agentMoved)
 				{
-					// Check if the unit has an attack target and is therefore busy
-					if (!pSelAgent->GetAttackTarget())
+					if (pSelAgent->GetState() != OBJ_INSPACE)
 					{
-						pSelAgent->SetPathTarget(newPos);
+						// Check if the unit has an attack target and is therefore busy
+						if (!pSelAgent->GetAttackTarget())
+						{
+							pSelAgent->SetPathTarget(newPos);
+							agentMoved = true;
+						}
+					}
+					else
+					{
+						agentRejected = true;
 					}
 				}
 			}
