@@ -1901,6 +1901,7 @@ void CWorldState::StateUpdate()
 	{
 		mAIPlayerAttacking = mpPlayerManager->GetIsAIAttacking();
 		mTimeTillEnterSpace = mAIEnterSpaceTime;
+		prevtime = mTimeTillEnterSpace+1;
 	}
 	if (mHumanPlayerAttacking)
 	{
