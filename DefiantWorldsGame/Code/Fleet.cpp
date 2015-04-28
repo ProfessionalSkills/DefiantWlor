@@ -205,6 +205,9 @@ void CFleet::LoadShipModels(float xPos)
 	SetShipPositions(xPos);
 	int posMod;
 	CSpaceUnit* temp;
+	//reset scene
+	mSceneTimeElapsed = 0;
+
 	if (xPos < 0.0f)
 	{
 		posMod = -1;
@@ -226,7 +229,6 @@ void CFleet::SetShipPositions(float xPos)
 	int SpaceFighterLoaded = 0;
 	int TransportLoaded = 0;
 	int MothershipLoaded = 0;
-
 	int SpaceFighterY = 0;
 	int TransportY = 0;
 	int MothershipY = 0;

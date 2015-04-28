@@ -368,8 +368,11 @@ void CSpaceState::StateCleanup()
 	gpEngine->RemoveFont(mpButtonFont);
 	gpEngine->RemoveFont(mFntDebug);
 
+	//reset scene
+	mCutScene = false;
 	// DISPLAY LOADING SCREEN
 	ISprite* pLoading = gpEngine->CreateSprite("Loading.png");
+
 	gpEngine->DrawScene();
 
 	// Remove loading screen sprite
@@ -445,25 +448,21 @@ void CSpaceState::ChangeCameraPosition()
 		mpCamMain->ResetOrientation();
 		mpCamMain->SetPosition(0.0f, 10.0f, mCamZ + mCamZMovement);
 		mpCamMain->LookAt(0.0f, 0.0f, mCamZMovement);
-		
 		break;
 	case 1:
 		mpCamMain->ResetOrientation();
 		mpCamMain->SetPosition(mCamZ, -mCamZ / 2.0f, mCamZMovement);
 		mpCamMain->LookAt(0.0f, 0.0f, mCamZMovement);
-		mpCamMain->RotateX(-40.0f);
 		break;
 	case 2:
 		mpCamMain->ResetOrientation();
 		mpCamMain->SetPosition(-mCamZ , -mCamZ / 2.0f, mCamZMovement);
 		mpCamMain->LookAt(0.0f, 0.0f, mCamZMovement);
-		mpCamMain->RotateX(-40.0f);
 		break;
 	case 3:
 		mpCamMain->ResetOrientation();
 		mpCamMain->SetPosition(0.0f, 160.0f, -mCamZ + mCamZMovement);
 		mpCamMain->LookAt(0.0f, 0.0f, mCamZMovement);
-		
 		break;
 	default:
 		break;

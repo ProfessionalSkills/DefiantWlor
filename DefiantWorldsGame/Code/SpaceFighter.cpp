@@ -59,6 +59,8 @@ CSpaceFighter::~CSpaceFighter()
 //-----------------------------------------------------
 void CSpaceFighter::LoadModel(float x,float y, float z)
 {
+	mOrientation = 180.0f;
+
 	mChargeTime = mChargeTimeMax;
 	mChargingLazers=false;
 	mCharged = false;

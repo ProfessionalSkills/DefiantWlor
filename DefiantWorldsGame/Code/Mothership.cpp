@@ -106,6 +106,8 @@ bool CMothership::StoreUnits(CGameAgent* unit)
 
 void CMothership::LoadModel(float x, float y, float z)
 {
+	mOrientation = 180.0f;
+
 	mpObjModel = mspMshMothership->CreateModel(x, y, z);
 	mWorldPos.x = x;
 	mWorldPos.y = y;
