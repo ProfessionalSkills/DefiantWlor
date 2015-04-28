@@ -33,7 +33,7 @@ CArtillery::CArtillery()
 	mAttackTarget = nullptr;
 	mScale = 1.5f;
 	mBuildCost = 500;
-	mPopCost = 4;
+	mPopCost = 10;
 	mTurretNode = 0;
 	mRange = 60.0f;
 }
