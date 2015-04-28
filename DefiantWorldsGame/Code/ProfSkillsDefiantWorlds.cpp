@@ -122,6 +122,10 @@ void SetupEngine()
 	SetWindowPos((HWND)gpEngine->GetWindow(), HWND_TOP, WINDOW_POS_X, WINDOW_POS_Y, WINDOW_WIDTH, WINDOW_HEIGHT, 0U);
 	ShowCursor(false);
 
+	//Start up OpenAL
+	alutInit(0, 0);
+
+
 	//Get Media Folders
 	gpEngine->AddMediaFolder("..\\Media\\Models\\Skybox");
 	gpEngine->AddMediaFolder("..\\Media\\Models\\Planets");
@@ -168,12 +172,15 @@ void SetupEngine()
 	//Space Fighter
 	CSpaceFighter::mspMshSpaceFighter = gpEngine->LoadMesh("SciFiBattleship01.x");
 	CSpaceFighter::mspMshSheild = gpEngine->LoadMesh("SciFiBattleship01Shield.x");
+	CSpaceFighter::alAttackSound = alutCreateBufferFromFile("shoot.wav");
 	//Mothership
 	CMothership::mspMshMothership = gpEngine->LoadMesh("Spaceship02Battlecruiser.x");
 	CMothership::mspMshSheild = gpEngine->LoadMesh("Spaceship02BattlecruiserShield.x");
+	CMothership::alAttackSound = alutCreateBufferFromFile("shoot.wav");
 	//Transport
 	CTransport::mspMshTransport = gpEngine->LoadMesh("Spaceship01Battlecruiser.x");
 	CTransport::mspMshSheild = gpEngine->LoadMesh("Spaceship01BattlecruiserShield.x");
+	CTransport::alAttackSound = alutCreateBufferFromFile("shoot.wav");
 
 	//lazer
 	CSpaceUnit::mspMshLazer = gpEngine->LoadMesh("Lazer.x");
@@ -182,21 +189,27 @@ void SetupEngine()
 	//Bomber
 	CBomber::mspMshBomber = gpEngine->LoadMesh("HeliScout.x");
 	CBomber::mspMshBomb = gpEngine->LoadMesh("WorldLazer.x");
+	CBomber::alAttackSound = alutCreateBufferFromFile("BomberShell.wav");
 	//Fighter
 	CFighter::mspMshFighter = gpEngine->LoadMesh("Helicopter.x");
 	CFighter::mspMshFighterBullet = gpEngine->LoadMesh("WorldLazer.x");
+	CFighter::alAttackSound = alutCreateBufferFromFile("minigun.wav");
 	//Worker
 	CWorker::mspMshWorker = gpEngine->LoadMesh("transportTruck_german.x");
 	CWorker::mspMshWorkerLaser = gpEngine->LoadMesh("Lazer.x");
+	CWorker::alAttackSound = alutCreateBufferFromFile("minigun.wav");
 	//Tank
 	CTank::mspMshTank = gpEngine->LoadMesh("HoverTank01.x");
 	CTank::mspMshTankShell = gpEngine->LoadMesh("WorldLazer.x");
+	CTank::alAttackSound = alutCreateBufferFromFile("tank-firing.wav");
 	//Infantry
 	CInfantry::mspMshInfantry = gpEngine->LoadMesh("tigerAusfH.x");
 	CInfantry::mspMshInfantryBullet = gpEngine->LoadMesh("WorldLazer.x");
+	CInfantry::alAttackSound = alutCreateBufferFromFile("tank-firing.wav");
 	//Artillery
 	CArtillery::mspMshArtillery = gpEngine->LoadMesh("marsAA.x");
 	CArtillery::mspMshArtilleryShell = gpEngine->LoadMesh("WorldLazer.x");
+	CArtillery::alAttackSound = alutCreateBufferFromFile("ArtilleryGunfire.wav");
 	//Particle Mesh
 	CParticle::mspMshExplosionParticle = gpEngine->LoadMesh("ExplosionParticle.x");
 	CParticle::mspMshSmokeParticle = gpEngine->LoadMesh("SmokeParticle.x");

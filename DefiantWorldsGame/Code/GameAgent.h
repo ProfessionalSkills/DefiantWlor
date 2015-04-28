@@ -211,12 +211,6 @@ public:
 	//---------------------------
 	bool Heal(float amount);
 	void SetState(EObjectStates newState);
-	
-	inline void SetAttackSound(CSound* newSound)
-	{
-		mAttackSound = newSound;
-	}
-
 
 	inline void SetProdTimeLeft(float timeLeft)
 	{
@@ -285,7 +279,7 @@ public:
 	void Destroy();
 	void SetAttackTarget(CGameObject* target);
 	void Stop();
-	void SetAttackSound(string soundFile);
+	void SetAttackSound(ALuint attackBuffer);
 
 	// VIRTUAL METHODS
 	//---------------------------

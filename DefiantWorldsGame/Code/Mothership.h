@@ -25,6 +25,7 @@ private:
 public:
 	static IMesh* mspMshMothership;
 	static IMesh* mspMshSheild;
+	static ALuint alAttackSound;
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
 	CMothership();

@@ -25,6 +25,7 @@ private:
 public:
 	static IMesh* mspMshBomber;
 	static IMesh* mspMshBomb;
+	static ALuint alAttackSound;
 
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------

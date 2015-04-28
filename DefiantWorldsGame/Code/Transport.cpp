@@ -11,6 +11,7 @@
 
 IMesh* CTransport::mspMshTransport = nullptr;
 IMesh* CTransport::mspMshSheild = nullptr;
+ALuint CTransport::alAttackSound = 0;
 
 //-----------------------------------------------------
 // TRANSPORT CLASS CONSTRUCTORS & DESTRUCTOR
@@ -114,7 +115,7 @@ void CTransport::LoadModel(float x, float y, float z)
 	mWorldPos.x = x;
 	mWorldPos.y = y;
 	mWorldPos.z = z;
-
+	ALuint alExplosionBuffer = alutCreateBufferFromFile("Spaceship_Explosion.wav");
 	DX::XMFLOAT3 mSourcePos = { mWorldPos.x, mWorldPos.y, mWorldPos.z };
 	DX::XMFLOAT3 mSourceVel = { 0.0F, 0.0f, 0.0f };
 	DX::XMFLOAT3 listenerPos = { 0.0f, 0.0f, -150.0f };
@@ -124,8 +125,8 @@ void CTransport::LoadModel(float x, float y, float z)
 	float volume = CStateControl::GetInstance()->GetSettingsManager()->GetEffectsVolume();		// MAKE SURE TO INCLUDE GameStateControl in the
 
 	// .cpp file ONLY otherwise you'll get cyclic redundancy
-	mGenSound = new CSound(mSoundFileLazer, mSourcePos, mSourceVel, false, volume, listenerPos, listenerVel);
-	mSoundExplosion = new CSound(mSoundFileExplosion, mSourcePos, mSourceVel, false, volume, listenerPos, listenerVel);
+	mGenSound = new CSound(alAttackSound, mSourcePos, mSourceVel, false, volume, listenerPos, listenerVel);
+	mSoundExplosion = new CSound(alExplosionBuffer, mSourcePos, mSourceVel, false, volume, listenerPos, listenerVel);
 
 	mpObjModel->Scale(mScale);
 	if (mWorldPos.x < 0)

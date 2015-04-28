@@ -11,7 +11,7 @@
 
 IMesh* CInfantry::mspMshInfantry = nullptr;
 IMesh* CInfantry::mspMshInfantryBullet = nullptr;
-
+ALuint CInfantry::alAttackSound = 0;
 
 //-----------------------------------------------------
 // INFANTRY CLASS CONSTRUCTORS & DESTRUCTOR
@@ -285,6 +285,8 @@ bool CInfantry::Update()
 			}
 			else if (mAttackTarget->SphereCollision(projectile->mCollisionSphere)) //Point to Box collision between the projectile and the attack target
 			{
+				SetAttackSound(alAttackSound);
+
 				mAttackTarget->TakeDamage(mDamage);
 				mpAttackExplosions.push_back(new CExplosion(position, 10, false));
 				SafeDelete(projectile);

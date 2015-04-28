@@ -26,6 +26,8 @@ public:
 	static IMesh* mspMshSpaceFighter;
 	static IMesh* mspMshSheild;
 
+	static ALuint alAttackSound;
+
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
 	CSpaceFighter();

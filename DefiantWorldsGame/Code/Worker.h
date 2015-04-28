@@ -35,6 +35,7 @@ private:
 public:
 	static IMesh* mspMshWorker;
 	static IMesh* mspMshWorkerLaser;
+	static ALuint alAttackSound;
 
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------

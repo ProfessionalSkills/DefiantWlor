@@ -26,7 +26,7 @@ private:
 public:
 	static IMesh* mspMshTransport;
 	static IMesh* mspMshSheild;
-
+	static ALuint alAttackSound;
 	// CONSTRUCTORS & DESTRUCTOR
 	//---------------------------
 	CTransport();
