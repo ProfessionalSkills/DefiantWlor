@@ -33,7 +33,7 @@ CTank::CTank()
 	mIsMoving = false;
 	mScale = 1.5f;
 	mBuildCost = 3000;
-	mPopCost = 3;
+	mPopCost = 20;
 	mTurretNode = 4;
 	mRange = 20.0f;
 }

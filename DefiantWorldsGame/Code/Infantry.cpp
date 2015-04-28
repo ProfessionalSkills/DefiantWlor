@@ -33,7 +33,7 @@ CInfantry::CInfantry()
 	mIsMoving = false;
 	mScale = 1.5f;
 	mBuildCost = 300;
-	mPopCost = 2;
+	mPopCost = 4;
 	mTurretNode = 3;
 	mRange = 50.0f;
 }

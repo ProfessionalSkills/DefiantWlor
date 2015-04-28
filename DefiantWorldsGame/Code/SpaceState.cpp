@@ -125,19 +125,19 @@ void CSpaceState::StateSetup()
 
 	// Tactics Buttons
 	CAdvancedButton<CSpaceState, void>* pNewButton = new CAdvancedButton<CSpaceState, void>("NoTactics.png", "NoTacticsMO.png", SPointData(900, 750),
-		DX::XMFLOAT2(50.0f, 50.0f), *this, &CSpaceState::ChangeTacNone, TR_UP, true, 1.2f);
+		DX::XMFLOAT2(80.0f, 80.0f), *this, &CSpaceState::ChangeTacNone, TR_UP, true, 0.8f);
 	mpButtonListTactics.push_back(pNewButton);
 	mpButtonListAll.push_back(pNewButton);
 	pNewButton->SetHoverOverText("Don't use any special tactics. cost:0");
 
 	pNewButton = new CAdvancedButton<CSpaceState, void>("DefRapidFireButton.png", "SelRapidFireButton.png", SPointData(750, 750),
-		DX::XMFLOAT2(50.0f, 50.0f), *this, &CSpaceState::ChangeTacRapid, TR_UP, true, 1.2f);
+		DX::XMFLOAT2(80.0f, 80.0f), *this, &CSpaceState::ChangeTacRapid, TR_UP, true, 0.8f);
 	mpButtonListTactics.push_back(pNewButton);
 	mpButtonListAll.push_back(pNewButton);
 	pNewButton->SetHoverOverText("your fleet will fire twice as fast, but at the cost of some accuracy. cost:1000");
 
 	pNewButton = new CAdvancedButton<CSpaceState, void>("TargetButton.png", "TargetButtonMO.png", SPointData(600, 750),
-		DX::XMFLOAT2(50.0f, 50.0f), *this, &CSpaceState::ChangeTacTargated, TR_UP, true, 1.2f);
+		DX::XMFLOAT2(80.0f, 80.0f), *this, &CSpaceState::ChangeTacTargated, TR_UP, true, 0.8f);
 	mpButtonListTactics.push_back(pNewButton);
 	mpButtonListAll.push_back(pNewButton);
 	pNewButton->SetHoverOverText("the fleet will target a smaller range of ships, killing them faster. however, his comes at the cost of some power cost:1000");
@@ -149,12 +149,12 @@ void CSpaceState::StateSetup()
 	mpButtonListAll.push_back(pNewButton);
 
 	pNewButton = new CAdvancedButton<CSpaceState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(600, 470),
-		DX::XMFLOAT2(400.0f, 50.0f), *this, &CSpaceState::GoToMainMenu, TR_RIGHT, false, 0.001f);
+		DX::XMFLOAT2(400.0f, 50.0f), *this, &CSpaceState::GoToMainMenu, TR_RIGHT, false, 0.0001f);
 	mpButtonListPause.push_back(pNewButton);
 	mpButtonListAll.push_back(pNewButton);
 
 	pNewButton = new CAdvancedButton<CSpaceState, void>("DefMenuButton.png", "SelMenuButton.png", SPointData(600, 520),
-		DX::XMFLOAT2(400.0f, 50.0f), *this, &CSpaceState::ReturnToEarth, TR_RIGHT, false, 0.001f);
+		DX::XMFLOAT2(400.0f, 50.0f), *this, &CSpaceState::ReturnToEarth, TR_RIGHT, false, 0.0001f);
 	mpButtonListPause.push_back(pNewButton);
 	mpButtonListAll.push_back(pNewButton);
 	mpButtonListDefeat.push_back(pNewButton);
@@ -162,13 +162,13 @@ void CSpaceState::StateSetup()
 
 	//special attack buttons
 	pNewButton = new CAdvancedButton<CSpaceState, void>("NoTactics.png", "NoTacticsMO.png", SPointData(650, 750),
-		DX::XMFLOAT2(50.0f, 50.0f), *this, &CSpaceState::SALazerBarrage, TR_UP, false, 0.2f);
+		DX::XMFLOAT2(80.0f, 80.0f), *this, &CSpaceState::SALazerBarrage, TR_UP, false, 0.8f);
 	mpButtonListAttacks.push_back(pNewButton);
 	mpButtonListAll.push_back(pNewButton);
 	pNewButton->SetHoverOverText("mothership will fire a barrage of lazers at the enemy fleet. cost:500");
 
 	pNewButton = new CAdvancedButton<CSpaceState, void>("NoTactics.png", "NoTacticsMO.png", SPointData(850, 750),
-		DX::XMFLOAT2(50.0f, 50.0f), *this, &CSpaceState::SAMassHeal, TR_UP, false, 0.2f);
+		DX::XMFLOAT2(80.0f, 80.0f), *this, &CSpaceState::SAMassHeal, TR_UP, false, 0.8f);
 	mpButtonListAttacks.push_back(pNewButton);
 	mpButtonListAll.push_back(pNewButton);
 	pNewButton->SetHoverOverText("the mothership will Heal your fleet. cost:500");
@@ -411,6 +411,10 @@ void CSpaceState::DrawFontData()
 	{
 		mpTitleFont->Draw("Victory", 800, 90, kCyan, kCentre, kTop);
 		mpButtonFont->Draw("Land On Mars", 800, 535, kCyan, kCentre, kTop);
+	}
+	if (!mTacticChoosen&&mCutScene)
+	{
+		mpTitleFont->Draw("Choose A Tactic", 800, 120, kCyan, kCentre, kTop);
 	}
 }
 

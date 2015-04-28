@@ -87,8 +87,11 @@ private:
 
 	std::vector<CAdvancedButton<CWorldState, void>*> mpGenericButtonList;
 	std::vector<CAdvancedButton<CWorldState, void>*>::iterator miterGenericButtons;
-	
 
+	//used to switch between colours of button
+	std::vector<CAdvancedButton<CWorldState, void>*> mpSpaceButtonList;
+	std::vector<CAdvancedButton<CWorldState, void>*>::iterator miterSpaceButtonList;
+	
 	std::vector<CAdvancedButton<CWorldState, void, int>*> mpUnitsButtonList;
 	std::vector<CAdvancedButton<CWorldState, void, int>*>::iterator miterUnitsButtons;
 
