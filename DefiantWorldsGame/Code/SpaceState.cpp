@@ -189,7 +189,7 @@ void CSpaceState::StateSetup()
 void CSpaceState::StateUpdate()
 {
 	gpEngine->DrawScene();
-	FleetHealthPercentagePlayerOne();
+
 	// Controls
 	//-----------------------------
 	if (gpEngine->KeyHit(Key_R))
@@ -233,8 +233,8 @@ void CSpaceState::StateUpdate()
 
 	if (!mCutScene)
 	{
-		mpPlayerOneFleet->SceneSpaceFight();
-		mCutScene=mpPlayerTwoFleet->SceneSpaceFight();
+		mCutScene = mpPlayerOneFleet->SceneSpaceFight();
+		mpPlayerTwoFleet->SceneSpaceFight();
 		return;
 	}
 

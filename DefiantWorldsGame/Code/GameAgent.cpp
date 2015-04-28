@@ -107,14 +107,24 @@ void CGameAgent::SetAttackSound(ALuint attackBuffer, ALuint attackSource)
 	
 	DX::XMFLOAT3 mSourcePos = { mWorldPos.x, mWorldPos.y, mWorldPos.z };
 	DX::XMFLOAT3 mSourceVel = { 0.0f, 0.0f, 0.0f };
-	ICamera* pCamera = gpCurWorldCamera->GetCamera();
-	DX::XMFLOAT3 listenerPos = { pCamera->GetX(), pCamera->GetY(), pCamera->GetZ() };
+	DX::XMFLOAT3 listenerPos = { 0.0f,0.0f,0.0f};
+	ICamera* pCamera;
+	//checks to make sure gpworldcam is pointing to somthing
+	if (gpCurWorldCamera)
+	{
+		pCamera = gpCurWorldCamera->GetCamera();
+		listenerPos = { pCamera->GetX(), pCamera->GetY(), pCamera->GetZ() };
+	}
+	else if (gpCam)
+	{
+		listenerPos = { gpCam->GetX(), gpCam->GetY(), gpCam->GetZ() };
+	}
 	DX::XMFLOAT3 listenerVel = { 0.0f, 0.0f, 0.0f };
 
 	float volume = CStateControl::GetInstance()->GetSettingsManager()->GetEffectsVolume();	// MAKE SURE TO INCLUDE GameStateControl in the
 
 	// .cpp file ONLY otherwise you'll get cyclic redundancy
-	mAttackSound = new CSound(attackBuffer, mSourcePos, mSourceVel, false, volume, listenerPos, listenerVel, attackSource );
+	mAttackSound = new CSound(attackBuffer, mSourcePos, mSourceVel, false, volume, listenerPos, listenerVel, attackSource);
 	mAttackSound->PlaySound(); //construction sound
 }
 
