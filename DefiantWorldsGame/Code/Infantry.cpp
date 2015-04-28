@@ -147,6 +147,7 @@ bool CInfantry::Attack(CGameObject* pTarget, float hitMod, float damageMod)
 	{
 		if (mAttackTimer >= (1.0f / mFireRate)) //Control rate of fire of the unit
 		{
+			SetAttackSound(alAttackSound);
 			SProjectile* newProjectile = new SProjectile();
 			newProjectile->mModel = mspMshInfantryBullet->CreateModel(mWorldPos.x, mWorldPos.y, mWorldPos.z);
 			newProjectile->mDirection = localZ;
@@ -292,8 +293,6 @@ bool CInfantry::Update()
 			}
 			else if (mAttackTarget->SphereCollision(projectile->mCollisionSphere)) //Point to Box collision between the projectile and the attack target
 			{
-				SetAttackSound(alAttackSound);
-
 				mAttackTarget->TakeDamage(mDamage);
 				mpAttackExplosions.push_back(new CExplosion(position, 10, false));
 				SafeDelete(projectile);
