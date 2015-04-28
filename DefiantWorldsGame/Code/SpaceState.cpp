@@ -161,17 +161,17 @@ void CSpaceState::StateSetup()
 	mpButtonListVictory.push_back(pNewButton);
 
 	//special attack buttons
-	pNewButton = new CAdvancedButton<CSpaceState, void>("NoTactics.png", "NoTacticsMO.png", SPointData(650, 750),
+	pNewButton = new CAdvancedButton<CSpaceState, void>("LaserBarrage.png", "LaserBarrageMO.png", SPointData(650, 750),
 		DX::XMFLOAT2(80.0f, 80.0f), *this, &CSpaceState::SALazerBarrage, TR_UP, false, 0.8f);
 	mpButtonListAttacks.push_back(pNewButton);
 	mpButtonListAll.push_back(pNewButton);
-	pNewButton->SetHoverOverText("mothership will fire a barrage of lazers at the enemy fleet. cost:500");
+	pNewButton->SetHoverOverText("The Mothership will fire a barrage of lasers at the enemy fleet. Cost: 500 Minerals");
 
-	pNewButton = new CAdvancedButton<CSpaceState, void>("NoTactics.png", "NoTacticsMO.png", SPointData(850, 750),
+	pNewButton = new CAdvancedButton<CSpaceState, void>("UnitsHeal.png", "UnitsHealMO.png", SPointData(850, 750),
 		DX::XMFLOAT2(80.0f, 80.0f), *this, &CSpaceState::SAMassHeal, TR_UP, false, 0.8f);
 	mpButtonListAttacks.push_back(pNewButton);
 	mpButtonListAll.push_back(pNewButton);
-	pNewButton->SetHoverOverText("the mothership will Heal your fleet. cost:500");
+	pNewButton->SetHoverOverText("The Mothership will Heal your fleet. Cost: 500 Minerals");
 
 	// INITIALISE USER INTERFACE
 	//-----------------------------

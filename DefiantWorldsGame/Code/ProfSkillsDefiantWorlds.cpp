@@ -7,8 +7,6 @@ PROJECT NAME:
 ProfSkillsDefiantWorlds
 
 TO DO: * = essential
-	*- UI for space buttons
-	*- UI for space
 	*- Remove debug information
 	- Model around building being constructed for a more interesting constructing appearance
 	*- AI to attack enemies when they are invading Earth
