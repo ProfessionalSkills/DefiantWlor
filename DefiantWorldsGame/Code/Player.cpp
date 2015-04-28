@@ -507,71 +507,87 @@ void CRTSPlayer::Update()
 			if (mTimeToAttackCheckUpdate <= 0.0f)
 			{
 				// Check if there are any units in this player's airspace - 40% chance of unit attacking those in their airspace
-				if (!pAgent->GetAttackTarget() && mpRandomiser->GetRandomFloat(0.0f, 100.0f) > 30.0f)
+				if (!pAgent->GetAttackTarget())
 				{
-					CGameAgent* pTarget = nullptr;
-					int index = 0;
-					
-					// Check if a unit is in the opposing area & select a target there
-					if (mPlayerFaction == FAC_THE_CRIMSON_LEGION)
+					if (mpRandomiser->GetRandomFloat(0.0f, 100.0f) > 30.0f)
 					{
-						// Check if it is Earth's airspace
-						if (pAgent->GetAirspacePosition() != AS_MARS)
+						CGameAgent* pTarget = nullptr;
+						int index = 0;
+
+						// Check if a unit is in the opposing area & select a target there
+						if (mPlayerFaction == FAC_THE_CRIMSON_LEGION)
 						{
-							// Select a random unit or building
-							if (gpRandomiser->GetRandomInt(0, 1))
+							// Check if it is Earth's airspace
+							if (pAgent->GetAirspacePosition() != AS_MARS)
 							{
-								// Attack a building on earth
-								pAgent->SetAttackTarget(pPlayerManager->GetHumanPlayer()->GetRandomStructure());
-							}
-							else
-							{
-								// Get a random target
-								pTarget = pPlayerManager->GetHumanPlayer()->GetRandomAgent();
-								// Ensure the airspace of this target is in earth - otherwise do not attack it
-								if (pTarget && pTarget->GetAirspacePosition() == AS_EARTH)
+								// Select a random unit or building
+								if (gpRandomiser->GetRandomInt(0, 1))
 								{
-									pAgent->SetAttackTarget(pTarget);
+									// Attack a building on earth
+									pAgent->SetAttackTarget(pPlayerManager->GetHumanPlayer()->GetRandomStructure());
+								}
+								else
+								{
+									// Get a random target
+									pTarget = pPlayerManager->GetHumanPlayer()->GetRandomAgent();
+									// Ensure the airspace of this target is in earth - otherwise do not attack it
+									if (pTarget && pTarget->GetAirspacePosition() == AS_EARTH)
+									{
+										pAgent->SetAttackTarget(pTarget);
+									}
 								}
 							}
 						}
-					}
-					else
-					{
-						// Check if it is Mars' airspace
-						if (pAgent->GetAirspacePosition() == AS_MARS)
+						else
 						{
-							// Select a random unit or building
-							if (gpRandomiser->GetRandomInt(0, 1))
+							// Check if it is Mars' airspace
+							if (pAgent->GetAirspacePosition() == AS_MARS)
 							{
-								// Attack a building on earth
-								pAgent->SetAttackTarget(pPlayerManager->GetAIPlayer()->GetRandomStructure());
-							}
-							else
-							{
-								// Get a random target
-								pTarget = pPlayerManager->GetAIPlayer()->GetRandomAgent();
-								// Ensure the airspace of this target is in Mars - otherwise do not attack it
-								if (pTarget && pTarget->GetAirspacePosition() == AS_MARS)
+								// Select a random unit or building
+								if (gpRandomiser->GetRandomInt(0, 1))
 								{
-									pAgent->SetAttackTarget(pTarget);
+									// Attack a building on earth
+									pAgent->SetAttackTarget(pPlayerManager->GetAIPlayer()->GetRandomStructure());
+								}
+								else
+								{
+									// Get a random target
+									pTarget = pPlayerManager->GetAIPlayer()->GetRandomAgent();
+									// Ensure the airspace of this target is in Mars - otherwise do not attack it
+									if (pTarget && pTarget->GetAirspacePosition() == AS_MARS)
+									{
+										pAgent->SetAttackTarget(pTarget);
+									}
 								}
 							}
 						}
-					}
 
-					if (mpAirspaceAgents.size())
-					{
-						// Pick a random index of these units interfering
-						index = mpRandomiser->GetRandomInt(0, mpAirspaceAgents.size() - 1);
-
-						// Check target is viable for targeting
-						pTarget = mpAirspaceAgents[index];
-
-						if (pTarget->GetHealth() > 0.0f)
+						if (mpAirspaceAgents.size())
 						{
-							// Give the target to this unit
-							pAgent->SetAttackTarget(pTarget);
+							bool toContinue = false;
+							if (mPlayerFaction == FAC_EARTH_DEFENSE_FORCE)
+							{
+								toContinue = (pAgent->GetAirspacePosition() != AS_MARS);
+							}
+							else
+							{
+								toContinue = (pAgent->GetAirspacePosition() != AS_EARTH);
+							}
+
+							if (toContinue)
+							{
+								// Pick a random index of these units interfering
+								index = mpRandomiser->GetRandomInt(0, mpAirspaceAgents.size() - 1);
+
+								// Check target is viable for targeting
+								pTarget = mpAirspaceAgents[index];
+
+								if (pTarget->GetHealth() > 0.0f)
+								{
+									// Give the target to this unit
+									pAgent->SetAttackTarget(pTarget);
+								}
+							}
 						}
 					}
 				}
