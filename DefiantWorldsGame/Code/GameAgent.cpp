@@ -117,7 +117,7 @@ void CGameAgent::SetAttackSound(ALuint attackBuffer, ALuint attackSource)
 	}
 	else if (gpCam)
 	{
-		listenerPos = { gpCam->GetX(), gpCam->GetY(), gpCam->GetZ() };
+		listenerPos = mSourcePos;
 	}
 	DX::XMFLOAT3 listenerVel = { 0.0f, 0.0f, 0.0f };
 

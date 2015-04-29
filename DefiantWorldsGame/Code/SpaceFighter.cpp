@@ -142,6 +142,7 @@ bool CSpaceFighter::Attack(CGameObject* target, float hitMod, float damageMod)
 		CSpaceUnit* mpTemp = (CSpaceUnit*)(target);
 		mpTemp->HitFlash();
 		FireLazer(target);
+		SetAttackSound(alAttackSound, alAttackSource);
 		return true;
 	}
 	mChargingLazers = true;

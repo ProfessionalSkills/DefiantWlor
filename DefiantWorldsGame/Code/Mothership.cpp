@@ -86,6 +86,7 @@ bool CMothership::Attack(CGameObject* target, float hitMod, float damageMod)
 		FireLazer(target);
 		CSpaceUnit* mpTemp = (CSpaceUnit*)(target);
 		mpTemp->HitFlash();
+		SetAttackSound(alAttackSound, alAttackSource);
 		return true;
 	}
 	return false;
