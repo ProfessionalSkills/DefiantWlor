@@ -961,30 +961,35 @@ void CWorldState::StateSetup()
 		DX::XMFLOAT2(90.0f, 90.0f), *this, &CWorldState::CreateBarracks, TR_UP, true, 0.2f);
 	mpButtonBarracks = pNewButton;
 	mpGenericButtonList.push_back(pNewButton);
-
+	pNewButton->SetHoverOverText("Barracks produce ground units Cost: 700");
 	pNewButton = new CAdvancedButton<CWorldState, void>("DefHellipadButton2.png", "SelHellipadButton2.png", SPointData(1145, 765),
 		DX::XMFLOAT2(90.0f, 90.0f), *this, &CWorldState::CreateHellipad, TR_UP, true, 0.2f);
 	mpButtonHellipad = pNewButton;
 	mpGenericButtonList.push_back(pNewButton);
+	pNewButton->SetHoverOverText("helipads produce Air units Cost: 1500");
 
 	pNewButton = new CAdvancedButton<CWorldState, void>("DefSpaceCentreButton2.png", "SelSpaceCentreButton2.png", SPointData(1240, 765),
 		DX::XMFLOAT2(90.0f, 90.0f), *this, &CWorldState::CreateSpaceCentre, TR_UP, true, 0.2f);
 	mpButtonSpaceCentre = pNewButton;
 	mpGenericButtonList.push_back(pNewButton);
+	pNewButton->SetHoverOverText("space centre produce space units Cost: 2000");
 
 	pNewButton = new CAdvancedButton<CWorldState, void>("DefDeleteButton.png", "SelDeleteButton.png", SPointData(440, 765),
 		DX::XMFLOAT2(90.0f, 90.0f), *this, &CWorldState::DeleteSelection, TR_UP, false, 0.2f);
 	pNewButton->Hide();
 	mpButtonDelete = pNewButton;
 	mpGenericButtonList.push_back(pNewButton);
+	pNewButton->SetHoverOverText("Delete the building");
 
 	mpButtonPutUnitIntoSpace = new CAdvancedButton<CWorldState, void>("DefBeamUpButton.png", "SelBeamUpButton.png",
 		SPointData(260, 765), DX::XMFLOAT2(90.0f, 90.0f), *this, &CWorldState::PutUnitIntoSpace, TR_UP, false, 0.2f);
 	mpGenericButtonList.push_back(mpButtonPutUnitIntoSpace);
+	pNewButton->SetHoverOverText("send the unit into space");
 
 	mpButtonUnitStop = new CAdvancedButton<CWorldState, void>("DefStopButton.png", "SelStopButton.png",
 		SPointData(350, 765), DX::XMFLOAT2(90.0f, 90.0f), *this, &CWorldState::UnitStop, TR_UP, false, 0.2f);
 	mpGenericButtonList.push_back(mpButtonUnitStop);
+	pNewButton->SetHoverOverText("stop the unit");
 
 	// Barracks units buttons
 	mpBarracksButtons = new SStructureButtons<CWorldState>(3);
@@ -1804,6 +1809,10 @@ void CWorldState::StateUpdate()
 		// Check for click 
 		if (pButton->GetMouseOver())
 		{
+			//display hover text
+			strStream << pButton->GetHoverText();
+			mFntDebug->Draw(strStream.str(), 800, 710, kCyan, kCentre, kTop);
+			strStream.str("");
 			// Check if the mouse is over the button
 			if (mLMouseClicked)
 			{
